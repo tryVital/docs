@@ -24,14 +24,8 @@ const MDXComponents = {
   details: MDXDetails,
   ul: MDXUl,
   img: MDXImg,
-  h1: (props) => <MDXHeading as="h1" style={{ color: "#202d4a" }} {...props} />,
-  h2: (props) => (
-    <MDXHeading
-      as="h2"
-      style={{ fontWeight: 300, color: "#202d4a", fontSize: "2rem" }}
-      {...props}
-    />
-  ),
+  h1: (props) => <MDXHeading as="h1" {...props} />,
+  h2: (props) => <MDXHeading as="h2" {...props} />,
   h3: (props) => <MDXHeading as="h3" {...props} />,
   h4: (props) => <MDXHeading as="h4" {...props} />,
   h5: (props) => <MDXHeading as="h5" {...props} />,

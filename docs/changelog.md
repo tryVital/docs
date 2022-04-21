@@ -1,7 +1,7 @@
 ---
 sidebar_position: 10
-slug: /test
-title: Test
+slug: /changelog
+title: Changlelog
 ---
 
 ## Test page

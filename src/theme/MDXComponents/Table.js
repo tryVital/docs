@@ -37,7 +37,7 @@ export const THead = (props) => (
 export const TData = (props) => {
   const mapToIcon = (text) => {
     if (!text) return text;
-    if (text.includes("@@")) {
+    if (typeof text == "string" && text.includes("@@")) {
       const results = text.split(/(\s+)/);
       const components = results.map((el) => {
         if (el.startsWith("@@")) {
