@@ -1,0 +1,68 @@
+---
+title: "Creating your first user"
+slug: "creating-your-first-user"
+excerpt: "Create a user in Vital"
+hidden: false
+createdAt: "2022-04-06T13:50:38.782Z"
+updatedAt: "2022-04-08T15:06:38.782Z"
+---
+
+import { ParamTable } from "@theme/param";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import { CodeBlock } from "@theme/codeblock";
+import { ParamsAndCodeBlock } from "@theme/ScrollStack";
+import { Swagger } from "@theme/swagger";
+
+Once you have your API Keys you are ready to create your first user!
+
+Almost all API requests will interact with a _user_. To allow a _user_ to connect to the API, first create a `user_id` using the `/user/` endpoint. A `user_id` is the unique key we use to lookup users in our database. This should be a unique ID generated from your application - upon user sign up.
+
+:::caution
+Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
+:::
+
+:::warning
+Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
+:::
+
+## Create user endpoint
+
+This is how you create a user `user_id` ad alsajdsak jkdsla
+
+<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
+
+```js
+function helloWorld() {
+  console.log("Hello, world!");
+}
+```
+
+```python
+def helloWorld():
+  print("Hello, world!");
+```
+
+</Swagger>
+
+<Swagger endpoint={"/testkit/orders/"} method={"get"} title={"Create a testkit order"}>
+
+```js
+function helloWorld() {
+  console.log("Hello, world!");
+}
+```
+
+```python
+def helloWorld():
+  print("Hello, world!");
+```
+
+</Swagger>
+
+## Test menu 2
+
+```python
+def helloWorld():
+  print("Hello, world!");
+```
