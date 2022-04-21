@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Vital",
-  tagline: "Dinosaurs are cool",
+  tagline: "API for wearables and labs",
   url: "https://tryvital.io",
   baseUrl: "/",
   onBrokenLinks: "throw",
