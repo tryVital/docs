@@ -3,7 +3,7 @@ import SwaggerParser from "@apidevtools/swagger-parser";
 import { useEffect } from "react";
 import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
-import { chakra } from "@chakra-ui/react";
+import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
 
 const mapSchemaToJson = (schema) => {
   if (!schema) return {};
@@ -115,6 +115,9 @@ export const Swagger = ({ endpoint, method, title, children }) => {
         const requestBodyParams = mapSchemaToJson(requestBody);
 
         const data = {
+          description: schema.description
+            ? schema.description.replace(method.toUpperCase(), "")
+            : "",
           body: mapBody(requestBodyParams),
           params: mapParameters(schema.parameters),
         };
@@ -137,8 +140,39 @@ export const Swagger = ({ endpoint, method, title, children }) => {
     parseSwagger();
   }, []);
 
+  const colorMap = {
+    POST: "#0272d9",
+    GET: "#0E9B71",
+    DELETE: "#C71B29",
+  };
+
   return (
     <>
+      <HStack>
+        <Badge
+          sx={{
+            textTransform: "uppercase",
+            bg: colorMap[method.toUpperCase()],
+            px: "10px",
+            fontSize: "12px",
+            color: "white",
+            borderRadius: 20,
+            fontWeight: 600,
+          }}
+        >
+          {method}
+        </Badge>
+        <chakra.h3 fontFamily={"monospace"}>{`/v2${endpoint}`}</chakra.h3>
+      </HStack>
+
+      <HStack mt={20}>
+        <Text>{endpointData.description}</Text>
+      </HStack>
+
+      <chakra.span>
+        <chakra.span sx={{ fontWeight: 600 }}>Request fields</chakra.span> and
+        example
+      </chakra.span>
       <ParamsAndCodeBlock
         title={title}
         params={[...endpointData.params, ...endpointData.body]}

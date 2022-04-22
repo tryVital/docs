@@ -2,9 +2,8 @@
 title: "Privacy"
 slug: "privacy"
 hidden: false
-createdAt: "2022-04-06T15:34:38.484Z"
-updatedAt: "2022-04-08T15:00:34.175Z"
 ---
+
 Privacy is at the heart of everything we do at Vital. We are committed to protecting your privacy and your data and have built our service with those values in mind.
 
 To do this we've taken a number of precautions.
@@ -21,34 +20,35 @@ When we pull data from various wearable provider's this data goes through the Ev
 
 [block:image]
 {
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/c7c0fe0-storing.png",
-        "storing.png",
-        1680,
-        400,
-        "#bdd0ca"
-      ]
-    }
-  ]
+"images": [
+{
+"image": [
+"https://files.readme.io/c7c0fe0-storing.png",
+"storing.png",
+1680,
+400,
+"#bdd0ca"
+]
+}
+]
 }
 [/block]
+
 ### Retrieving Data
 
 When you request data from the Vital API, it is decrypted via the Evervault encryption proxy before being returned.
 [block:image]
 {
-  "images": [
-    {
-      "image": [
-        "https://files.readme.io/8723655-retreiving.png",
-        "retreiving.png",
-        1788,
-        394,
-        "#b7d1d0"
-      ]
-    }
-  ]
+"images": [
+{
+"image": [
+"https://files.readme.io/8723655-retreiving.png",
+"retreiving.png",
+1788,
+394,
+"#b7d1d0"
+]
+}
+]
 }
 [/block]

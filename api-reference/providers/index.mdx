@@ -1,0 +1,43 @@
+import { Swagger } from "@theme/swagger";
+
+# Overview
+
+## List of supported providers
+
+<Swagger endpoint={"/providers/"} method={"get"} title={"Get list of providers"}>
+
+```bash
+curl --request POST \
+     --url https://example.com/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "client_user_id": "string",
+     "team_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "id": "string"
+}
+'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.create(client_user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.create(client_user_id)
+```
+
+</Swagger>

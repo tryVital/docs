@@ -1,0 +1,235 @@
+import { Swagger } from "@theme/swagger";
+
+# Overview
+
+## Create user
+
+<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
+
+```bash
+curl --request POST \
+     --url https://example.com/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "client_user_id": "string",
+     "team_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     "id": "string"
+}
+'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.create(client_user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.create(client_user_id)
+```
+
+</Swagger>
+
+## Get user
+
+<Swagger endpoint={"/user/{user_id}"} method={"get"} title={"Get a Vital User"}>
+
+```bash
+curl --request GET \
+     --url https://example.com/v2/user/user_id \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.get(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.get(user_id)
+```
+
+</Swagger>
+
+## Delete user
+
+<Swagger endpoint={"/user/{user_id}"} method={"delete"} title={"Delete a Vital User"}>
+
+```bash
+curl --request DELETE \
+     --url https://example.com/v2/user/user_id \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.delete(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.delete(user_id)
+```
+
+</Swagger>
+
+## Get all users for team
+
+<Swagger endpoint={"/user/"} method={"get"} title={"Delete a Vital User"}>
+
+```bash
+curl --request DELETE \
+     --url https://example.com/v2/user/user_id \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.delete(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.delete(user_id)
+```
+
+</Swagger>
+
+## Get users connected providers
+
+<Swagger endpoint={"/user/providers/{user_id}"} method={"get"} title={"Delete a Vital User"}>
+
+```bash
+curl --request DELETE \
+     --url https://example.com/v2/user/user_id \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.delete(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.delete(user_id)
+```
+
+</Swagger>
+
+## Refresh users data
+
+<Swagger endpoint={"/user/refresh/{user_id}"} method={"post"} title={"Refresh data for Vital User"}>
+
+```bash
+curl --request DELETE \
+     --url https://example.com/v2/user/user_id \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.delete(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.delete(user_id)
+```
+
+</Swagger>
+
+## Deregister provider for user
+
+<Swagger endpoint={"/user/{user_id}/{provider}"} method={"delete"} title={"Refresh data for Vital User"}>
+
+```bash
+curl --request DELETE \
+     --url https://example.com/v2/user/user_id/provider \
+     --header 'Accept: application/json'
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+});
+
+const user = await client.User.delete(user_id)
+
+```
+
+```python
+from vital import Client
+
+client = Client(api_key=<API_KEY>, environment='sandbox')
+
+user = client.User.delete(user_id)
+```
+
+</Swagger>

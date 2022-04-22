@@ -24,6 +24,8 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
           editUrl: "https://github.com/",
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
         },
         blog: false,
         theme: {
@@ -36,18 +38,43 @@ const config = {
       },
     ],
   ],
-  plugins: ["docusaurus-node-polyfills"],
+  plugins: [
+    "docusaurus-node-polyfills",
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "api-reference",
+        path: "api-reference",
+        routeBasePath: "api-reference",
+        sidebarPath: require.resolve("./sidebars_api.js"),
+        // ... other options
+      },
+    ],
+  ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
+        hideOnScroll: true,
         title: "Vital",
         logo: {
           alt: "My Site Logo",
           src: "img/logo.svg",
         },
         items: [
+          {
+            type: "doc",
+            position: "left",
+            docId: "welcome/Quickstart",
+            label: "Overview",
+            className: "navbar-item-link",
+          },
+          {
+            href: "/api-reference/user",
+            label: "API Reference",
+            className: "navbar-item-link",
+          },
           {
             href: "https://github.com/facebook/docusaurus",
             label: "GitHub",
@@ -58,7 +85,7 @@ const config = {
       footer: {
         style: "dark",
         links: [],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()}`,
       },
       prism: {
         theme: lightCodeTheme,
