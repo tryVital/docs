@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  chakra,
-  VStack,
-  useDisclosure,
-  Collapse,
-  Box,
-  HStack,
-} from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { chakra, useDisclosure, Collapse, Text, Box } from "@chakra-ui/react";
 
 export const Param = ({ name, type, required, description, ...props }) => {
   return (
@@ -65,7 +57,6 @@ export const Param = ({ name, type, required, description, ...props }) => {
 
 const ParamObject = ({ items, ...props }) => {
   const { isOpen, onToggle } = useDisclosure();
-
   return (
     <chakra.tr
       flexDirection={"column"}
@@ -97,7 +88,7 @@ const ParamObject = ({ items, ...props }) => {
       <Collapse in={isOpen} animateOpacity style={{ width: "100% !important" }}>
         <Box width={"100%"} pl={20}>
           {items.map((el, i) => {
-            if (el.type === "object") {
+            if (el.type === "object" || el.type === "array") {
               return <ParamObject key={i} {...el} />;
             } else {
               return <Param key={i} {...el} />;
@@ -110,7 +101,9 @@ const ParamObject = ({ items, ...props }) => {
 };
 
 export const ParamTable = ({ data }) => {
-  return (
+  return data.length == 0 ? (
+    <Text>No parameters</Text>
+  ) : (
     <chakra.table border={"2px solid #ededed"} width={"100%"}>
       {data.map((el, i) => {
         if (el.type === "object" || el.type === "[object]") {

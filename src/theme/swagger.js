@@ -9,7 +9,11 @@ const mapSchemaToJson = (schema) => {
   if (!schema) return {};
   const { properties, required, type, description, ...others } = schema;
   const json = {};
-  if (type === "object") {
+  if (schema.additionalProperties) {
+    json.items = mapSchemaToJson(schema.additionalProperties);
+    json.type = "array";
+    json.name = schema.additionalProperties.title;
+  } else if (type === "object") {
     Object.keys(properties).forEach((key) => {
       json[key] = mapSchemaToJson(properties[key]);
     });
@@ -68,6 +72,15 @@ const mapParameters = (parameters) => {
 
 const mapBody = (body) => {
   if (!body) return [];
+  if (body.items) {
+    return [
+      {
+        name: "body",
+        type: "[object]",
+        items: mapBody(body.items),
+      },
+    ];
+  }
   const data = Object.keys(body)
     .map((el) => {
       if (body[el].type == "array") {
@@ -100,6 +113,18 @@ const mapBody = (body) => {
   return data;
 };
 
+const getExampleResponse = (schema) => {
+  const responseSchema =
+    schema.responses["200"].content["application/json"]?.schema;
+  if (responseSchema.example) {
+    return responseSchema.example;
+  } else if (responseSchema.items) {
+    return [responseSchema.items.example];
+  } else if (responseSchema.additionalProperties) {
+    return [responseSchema.additionalProperties.items.example];
+  }
+  console.log("FAILED", responseSchema);
+};
 export const Swagger = ({ endpoint, method, title, children }) => {
   const [endpointData, setEndpointData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
@@ -110,6 +135,9 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       try {
         let api = await SwaggerParser.dereference(swaggerObject);
         const schema = api.paths[`/v2${endpoint}`][method];
+        if (endpoint == "/user/providers/{user_id}") {
+          console.log({ schema, endpoint: `/v2${endpoint}` });
+        }
         const requestBody =
           schema.requestBody?.content["application/json"]?.schema;
         const requestBodyParams = mapSchemaToJson(requestBody);
@@ -122,15 +150,24 @@ export const Swagger = ({ endpoint, method, title, children }) => {
           params: mapParameters(schema.parameters),
         };
         setEndpointData(data);
+        console.log("GETTING RESPONSE");
         const responseSchema = mapSchemaToJson(
           schema.responses["200"].content["application/json"]?.schema
         );
+        if (endpoint == "/user/providers/{user_id}") {
+          console.log({
+            schema,
+            responseSchema,
+            endpoint: `/v2${endpoint}`,
+            method,
+          });
+        }
         const response = {
           body: mapBody(responseSchema),
         };
         setResponseData(response);
-        const exampleResponse =
-          schema.responses["200"].content["application/json"]?.schema.example;
+        const exampleResponse = getExampleResponse(schema);
+        // console.log({ exampleResponse, endpoint: `/v2${endpoint}` });
 
         setResponseExample(JSON.stringify(exampleResponse, null, 2));
       } catch (err) {

@@ -202,7 +202,6 @@ export const ResponseBlock = ({ title, code }) => {
 };
 
 export const MDXCodeBlock = ({ children }) => {
-  console.log(children);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isCopied, setCopied] = useState(false);
 
