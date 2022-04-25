@@ -1,5 +1,38 @@
 import { Swagger } from "@theme/swagger";
 
-# Overiew
+# Overview
 
-## List of supported providers
+## Summary
+
+<Swagger endpoint={"/summary/activity/{user_id}"} method={"get"} title={"Get activity data"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Activity.get(user_id=*,
+    start_date="2020-01-01",
+    end_date="2021-01-01"
+    )
+```
+
+</Swagger>
+
+## Raw
+
+<Swagger endpoint={"/summary/activity/{user_id}/raw"} method={"get"} title={"Get Raw activity Data"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.ProviderSpecific.get(user_id=*,
+          provider="oura"
+          start_date="2020-01-01",
+          end_date="2021-01-01"
+          )
+```
+
+</Swagger>

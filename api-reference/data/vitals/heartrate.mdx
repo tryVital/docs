@@ -1,1 +1,18 @@
+import { Swagger } from "@theme/swagger";
+
 # Heartrate
+
+<Swagger endpoint={"/timeseries/{user_id}/heartrate"} method={"get"} title={"Get heartrate data"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Vitals.heartrate(user_id=*,
+        start_date="2020-01-01",
+        end_date="2021-01-01"
+        )
+```
+
+</Swagger>

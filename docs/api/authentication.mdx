@@ -1,0 +1,58 @@
+---
+sidebar_position: 2
+---
+
+import { Swagger } from "@theme/swagger";
+import { ParamsAndResponseBlock } from "@theme/ScrollStack";
+import { CodeBlock, ResponseBlock } from "@theme/codeblock";
+
+# Authentication
+
+Authentication is currently done through `api_key` authentication. You can retrieve these keys from the
+[dashboard](https://app.tryvital.io). You can then provide the `api_key` in the `x-vital-api-key` header of your
+request. For instance:
+
+```bash
+curl --request GET
+  --url 'https://api.tryvital.io/v2/providers'
+  --header 'x-vital-api-key: <YOUR-API-KEY>'
+```
+
+## Legacy
+
+Authentication was previously handled using [Bearer tokens](https://oauth.net/2/bearer-tokens/).
+To generate a token use your
+`client_id` and `client_secret` and make a call to the respective auth endpoint.
+
+|                    |                                              |
+| ------------------ | -------------------------------------------- |
+| @@FiBox sandbox    | https://auth.sandbox.tryvital.io/oauth/token |
+| @@FiZap production | https://auth.tryvital.io/oauth/token         |
+
+<br />
+
+```bash
+curl --request POST
+  --url 'https://auth.sandbox.tryvital.io/oauth/token'
+  --header 'content-type: application/x-www-form-urlencoded'
+  --data grant_type=client_credentials
+  --data client_id=**
+  --data client_secret=**
+  --data audience=https://api.sandbox.tryvital.io
+```
+
+<br />
+
+<ResponseBlock
+  title={"Response"}
+  code={`{
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6....5taYq45_BU7Wts37cRCjHazA",
+    "scope": "client-grant",
+    "expires_in": 86400,
+    "token_type": "Bearer"
+}`}
+/>
+
+We have both [NodeJs and Python](../welcome/libraries) Clients which handle authentication
+and refresh tokens. In the case you want to request these yourself you can make the request
+as outlined below.

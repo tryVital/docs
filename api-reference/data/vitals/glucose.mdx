@@ -1,1 +1,20 @@
+import { Swagger } from "@theme/swagger";
+
 # Glucose
+
+<Swagger endpoint={"/timeseries/{user_id}/glucose"} method={"get"} title={"Get Glucose Data"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Vitals.glucose(
+        "glucose",
+        user_id=*,
+        start_date="2020-01-01",
+        end_date="2021-01-01"
+        )
+```
+
+</Swagger>
