@@ -1,5 +1,45 @@
 import { Swagger } from "@theme/swagger";
 
-# Overiew
+# Overview
 
 ## Get Results
+
+<Swagger endpoint={"/testkit/orders/{order_id}/results"} method={"get"} title={"Get result"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Testkits.result("2021-01-01", "2022-12-02")
+```
+
+</Swagger>
+
+## Get Results Raw
+
+<Swagger endpoint={"/testkit/orders/{order_id}/results/raw"} method={"get"} title={"Get result raw"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Testkits.result("2021-01-01", "2022-12-02")
+```
+
+</Swagger>
+
+## Get Result Metadata
+
+<Swagger endpoint={"/testkit/orders/{order_id}/results/metadata"} method={"get"} title={"Get result metadata"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Testkits.result("2021-01-01", "2022-12-02")
+```
+
+</Swagger>
