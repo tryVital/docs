@@ -2,4 +2,140 @@
 sidebar_position: 4
 ---
 
+import { CodeBlock } from "@theme/codeblock";
+
 # Customization
+
+You may want to have your own custom Link widget to match your app's UI. This is useful for users who don't want to use Vital link but still want to use the Vital API.
+To authenticate without Vital link, you need to first generate a `link_token` for a specific user.
+
+<CodeBlock title={"Generating a Vital-Link"}>
+
+```python
+from vital import Client
+
+client = Client(
+     client_id,
+     client_secret,
+     environment="sandbox"
+     )
+
+token = client.Link.create(user_id)
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  client_id: <CLIENT_ID>,
+  client_secret:  <CLIENT_SECRET>,
+  environment: "sandbox",
+});
+
+const resp = await client.Link.create(client_user_id)
+```
+
+```bash
+curl --request POST \
+     --url https://api.tryvital.io/v2/link/token \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json'
+     --header 'x-vital-api-key: <API-KEY>'
+```
+
+</CodeBlock>
+
+Once you have your Vital link token, you can use this to connect to a specific provider. Providers are split by their authentication flows: `EMAIL`, `OAUTH`, `PASSWORD`.
+
+### `Email`
+
+Current email providers are:
+
+| Provider  | Description                        |
+| --------- | ---------------------------------- |
+| Freestyle | Abbott CGM Glucose monitor         |
+| Beurer    | Blood Pressure monitors and scales |
+
+### `Password`
+
+Current email providers are:
+
+| Provider | Description                  |
+| -------- | ---------------------------- |
+| Renpho   | Fitness Scales               |
+| Zwift    | Virtual cycling and running  |
+| Peloton  | Popular Indoor Exercise bike |
+
+To connect a password provider:
+
+<CodeBlock title={"Connecting a password provider:"}>
+
+```python
+from vital import Client
+
+client = Client(
+     client_id,
+     client_secret,
+     environment="sandbox"
+     )
+
+token = client.Link.create(user_id)
+resp = client.Link.password_provider(link_token, "oura", username, password)
+```
+
+```js
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  client_id: <CLIENT_ID>,
+  client_secret:  <CLIENT_SECRET>,
+  environment: "sandbox",
+});
+
+const token = await client.Link.create(client_user_id, "oura")
+const resp = await client.Link.connectProvider(token, "oura", username, password)
+```
+
+</CodeBlock>
+
+### `OAuth`
+
+Current OAuth providers are:
+
+| Provider | Description                      |
+| -------- | -------------------------------- |
+| Fitbit   | Activity Trackers (all devices)  |
+| Garmin   | Fitness watches (all devices)    |
+| Oura     | Smart Sleep tracking ring        |
+| Strava   | Running & Cycling Social Network |
+| Wahoo    | Cycling Equipment                |
+
+<br />
+
+<CodeBlock title={"Connecting a password provider:"}>
+
+```python
+from vital import Client
+
+client = Client(
+     client_id,
+     client_secret,
+     environment="sandbox"
+     )
+
+token = client.Link.create(user_id)
+oauth_url = client.Link.oauth_provider(link_token, "fitbit")
+# redirect user to returned oauth_url
+```
+
+</CodeBlock>
+<br />
+
+For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
+
+The possible error codes that are returned are as follows:
+`401 INVALID_REQUEST` Link Token is Invalid
+`400 MISSING_LINK_TOKEN` Missing link token
+`400 INVALID_PROVIDER` Provider is not supported
+`400 INVALID_USER_ID` User id is incorrect
+`400 INVALID_CREDENTIALS` Credentials for provider are incorrect

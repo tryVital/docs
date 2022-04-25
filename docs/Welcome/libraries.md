@@ -10,8 +10,8 @@ We have created a few libraries to help you integrate with the Vital API. We'll 
 
 ### Supported Libraries
 
-<!-- [block:html]
-{
-  "html": "<div class=\"wide\">\n  <div class=\"inline\">\n    <div class=\"padded\"><a href=\"https://pypi.org/project/vital/\">vital-python</a></div>\n    <div class=\"padded\"><a href=\"https://www.npmjs.com/package/@tryvital/vital-link\">vital-link</a></div>\n    <div class=\"padded\"><a href=\"https://www.npmjs.com/package/@tryvital/vital-node\">vital-node</a></div>\n  </div>\n  <div class=\"inline\">\n    <div class=\"padded\">Python library for calling Vital API on your backend</div>\n    <div class=\"padded\">React Library for initializing link</div>\n    <div class=\"padded\">Vital Node Client</div>\n  </div>\n</div>\n\n<style>\n  .inline {\n    display: inline-block;\n    margin: 10;\n  }\n  .wide {\n    width: 100%;\n    border-top: 1px solid lightgray;  \n    border-bottom: 1px solid lightgray;\n  }\n  .padded {\n    padding: 10px;\n  }\n</style>\n\n"
-}
-[/block] -->
+|                                                                  |
+| ---------------------------------------------------------------- | ---------------------------------------------------- |
+| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
+| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
+| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
