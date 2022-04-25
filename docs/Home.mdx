@@ -1,0 +1,56 @@
+---
+sidebar_position: 1
+slug: /
+title: Home
+---
+
+import { Flex, Image, Heading } from "@chakra-ui/react";
+
+# Welcome to the Docs
+
+<Flex
+  sx={{
+    borderBottom: "1px Solid rgba(0,0,0,0.1)",
+    paddingBottom: 50,
+    alignItems: "center",
+    justifyContent: "space-around",
+  }}
+>
+  <Box sx={{ width: ["100%", "100%", "40%", "40%"] }}>
+    <Box>
+      <Heading
+        sx={{
+          fontWeight: 700,
+          textAlign: ["center", "center", "left", "left"],
+          fontSize: "4xl",
+          maxWidth: ["100%", "80%"],
+        }}
+      ></Heading>
+      <Heading
+        sx={{
+          fontWeight: 300,
+          mt: 15,
+          fontSize: 25,
+          // lineHeight: 1.3,
+          textAlign: ["center", "center", "left", "left"],
+          color: "#1B1B1B",
+        }}
+      >
+        Here you'll find guides, resources, and references to build with Vital.
+      </Heading>
+    </Box>
+  </Box>
+  <Box
+    sx={{
+      width: ["100%", "100%", "30%", "30%"],
+      textAlign: ["center", "center", "left", "left"],
+      alignItems: "center",
+    }}
+  >
+    <Image src={"/img/developer.svg"} width={"100%"} />
+  </Box>
+</Flex>
+
+<br />
+
+To get started, check out the quickstart guide.
