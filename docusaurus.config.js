@@ -67,7 +67,7 @@ const config = {
           {
             type: "doc",
             position: "left",
-            docId: "welcome/quickstart",
+            docId: "Welcome/quickstart",
             label: "Overview",
             className: "navbar-item-link",
           },
@@ -93,7 +93,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       posthog: {
-        apiKey: "process.env.NEXT_PUBLIC_POSTHOG_API_KEY",
+        apiKey: process.env.NEXT_PUBLIC_POSTHOG_API_KEY,
         enableInDevelopment: false,
       },
     }),
