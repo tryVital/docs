@@ -51,20 +51,22 @@ Once you have your Vital link token, you can use this to connect to a specific p
 
 Current email providers are:
 
-| Provider  | Description                        |
-| --------- | ---------------------------------- |
-| Freestyle | Abbott CGM Glucose monitor         |
-| Beurer    | Blood Pressure monitors and scales |
+| Provider  | Description                |
+| --------- | -------------------------- |
+| Freestyle | Abbott CGM Glucose monitor |
 
 ### `Password`
 
 Current email providers are:
 
-| Provider | Description                  |
-| -------- | ---------------------------- |
-| Renpho   | Fitness Scales               |
-| Zwift    | Virtual cycling and running  |
-| Peloton  | Popular Indoor Exercise bike |
+| Provider    | Description                  |
+| ----------- | ---------------------------- |
+| Renpho      | Fitness Scales               |
+| Zwift       | Virtual cycling and running  |
+| Peloton     | Popular Indoor Exercise bike |
+| Eight Sleep |                              |
+| Beurer      |                              |
+| Whoop       |                              |
 
 To connect a password provider:
 
@@ -102,13 +104,15 @@ const resp = await client.Link.connectProvider(token, "oura", username, password
 
 Current OAuth providers are:
 
-| Provider | Description                      |
-| -------- | -------------------------------- |
-| Fitbit   | Activity Trackers (all devices)  |
-| Garmin   | Fitness watches (all devices)    |
-| Oura     | Smart Sleep tracking ring        |
-| Strava   | Running & Cycling Social Network |
-| Wahoo    | Cycling Equipment                |
+| Provider | Description                                                   |
+| -------- | ------------------------------------------------------------- |
+| Fitbit   | Activity Trackers (all devices)                               |
+| Garmin   | Fitness watches (all devices)                                 |
+| Oura     | Smart Sleep tracking ring                                     |
+| Strava   | Running & Cycling Social Network                              |
+| Wahoo    | Cycling Equipment                                             |
+| iHealth  | Blood pressure, Fitness scales, Glucometers & Fitness watches |
+| Withings | Fitness scales, watches and health monitors                   |
 
 <br />
 

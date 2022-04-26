@@ -4,4 +4,6 @@ slug: /changelog
 title: Changlelog
 ---
 
-## Test page
+# Changelog
+
+- documentation migrated
