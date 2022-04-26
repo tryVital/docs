@@ -1,24 +1,32 @@
 import React, { useState } from "react";
-import { chakra, VStack, HStack, Flex } from "@chakra-ui/react";
+import { Box, VStack, HStack, Flex } from "@chakra-ui/react";
 import { CodeBlock, ResponseBlock } from "../codeblock";
 import { ParamTable } from "../param";
-
+import { useMediaQuery } from "@chakra-ui/react";
 export const ScrollStack = ({ children }) => {
-  return (
-    <VStack width={"100%"} alignItems={"flex-start"} py={10}>
-      <HStack spacing={10} width={"100%"} alignItems={"flex-start"}>
+  const [isLargerThan1280] = useMediaQuery("(min-width: 960px)");
+  if (isLargerThan1280) {
+    return (
+      <VStack width={"100%"} alignItems={"flex-start"} py={10} wrap={"wrap"}>
+        <HStack spacing={10} width={"100%"} alignItems={"flex-start"}>
+          {children}
+        </HStack>
+      </VStack>
+    );
+  } else {
+    return (
+      <Box spacing={10} width={"100%"} alignItems={"flex-start"}>
         {children}
-      </HStack>
-      ;
-    </VStack>
-  );
+      </Box>
+    );
+  }
 };
 
 export const ParamsAndCodeBlock = ({ title, params, children }) => {
   return (
     <ScrollStack>
       <Flex
-        width={"50%"}
+        width={["50%", "50%", "100%"]}
         sx={{
           position: "sticky",
           top: "75px",
@@ -27,7 +35,7 @@ export const ParamsAndCodeBlock = ({ title, params, children }) => {
         <ParamTable data={params} width={"100%"} />
       </Flex>
       <Flex
-        width={"50%"}
+        width={["50%", "50%", "100%"]}
         sx={{
           position: "sticky",
           top: "75px",
@@ -44,7 +52,7 @@ export const ParamsAndResponseBlock = ({ title, params, code }) => {
   return (
     <ScrollStack>
       <Flex
-        width={"50%"}
+        width={["50%", "50%", "100%"]}
         sx={{
           position: "sticky",
           top: "75px",
@@ -53,7 +61,7 @@ export const ParamsAndResponseBlock = ({ title, params, code }) => {
         <ParamTable data={params} width={"100%"} />
       </Flex>
       <Flex
-        width={"50%"}
+        width={["50%", "50%", "100%"]}
         sx={{
           position: "sticky",
           top: "75px",

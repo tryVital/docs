@@ -3,7 +3,16 @@ import SwaggerParser from "@apidevtools/swagger-parser";
 import { useEffect } from "react";
 import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
-import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
+import {
+  chakra,
+  Badge,
+  HStack,
+  Text,
+  Flex,
+  Wrap,
+  WrapItem,
+  Box,
+} from "@chakra-ui/react";
 
 const mapSchemaToJson = (schema) => {
   if (!schema) return {};
@@ -123,10 +132,12 @@ const getExampleResponse = (schema) => {
   } else if (responseSchema.additionalProperties) {
     return [responseSchema.additionalProperties.items.example];
   } else if (responseSchema?.properties) {
+    console.log(schema);
     return [responseSchema?.properties];
   }
   console.log("FAILED", responseSchema);
 };
+
 export const Swagger = ({ endpoint, method, title, children }) => {
   const [endpointData, setEndpointData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
@@ -146,11 +157,12 @@ export const Swagger = ({ endpoint, method, title, children }) => {
         if (endpoint == "/user/providers/{user_id}") {
           console.log({ schema, endpoint: `/v2${endpoint}` });
         }
+
         let requestBody =
           schema.requestBody?.content["application/json"]?.schema;
         if (!requestBody) {
           requestBody = schema;
-          console.error("No request body found");
+          console.error("No request body found", endpoint);
         }
         const requestBodyParams = mapSchemaToJson(requestBody);
 
@@ -209,7 +221,7 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       <HStack mt={20}>
         <Text>{endpointData.description}</Text>
       </HStack>
-
+      {/* <Flex flexDirection={"row"} flexWrap={"wrap"}> */}
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Request fields</chakra.span> and
         example
@@ -220,6 +232,7 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       >
         {children}
       </ParamsAndCodeBlock>
+
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Response fields</chakra.span> and
         example
@@ -229,6 +242,7 @@ export const Swagger = ({ endpoint, method, title, children }) => {
         title={"Response"}
         code={responseExample}
       />
+      {/* </Flex> */}
     </>
   );
 };

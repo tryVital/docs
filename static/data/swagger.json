@@ -1481,6 +1481,342 @@
         }
       }
     },
+    "/v2/timeseries/{user_id}/glucose": {
+      "get": {
+        "tags": ["vital-api", "timeseries"],
+        "summary": "Get Glucose Data",
+        "description": "Get Glucose data for user.",
+        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingGlucoseTimeseries"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/heartrate": {
+      "get": {
+        "tags": ["vital-api", "timeseries"],
+        "summary": "Get Heartrate Data",
+        "description": "Get Heartrate data for user.",
+        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingHeartrateTimeseries"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/ige": {
+      "get": {
+        "tags": ["vital-api", "timeseries"],
+        "summary": "Get ige Data",
+        "description": "Get ige data for user.",
+        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingIGETimeseries"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/igg": {
+      "get": {
+        "tags": ["vital-api", "timeseries"],
+        "summary": "Get igg Data",
+        "description": "Get igg data for user.",
+        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingIGGTimeseries"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/timeseries/{user_id}/{resource}": {
       "get": {
         "tags": ["vital-api", "timeseries"],
@@ -2217,7 +2553,7 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TestkitsResults"} } }
           },
           "422": {
             "description": "Validation Error",
@@ -2564,6 +2900,107 @@
             "diastolic": "75",
             "type": "cuff",
             "unit": "mmHg"
+          }
+        }
+      },
+      "ClientFacingGlucoseTimeseries": {
+        "title": "ClientFacingGlucoseTimeseries",
+        "required": ["timestamp", "value"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": { "title": "value", "type": "string" },
+          "type": { "title": "Type", "type": "string" },
+          "unit": { "title": "Unit", "type": "string" }
+        },
+        "example": {
+          "glucose": {
+            "id": 2,
+            "timestamp": "2022-04-20T13:02:01.123664+00:00",
+            "value": "0.50",
+            "type": "automatic | manual_scan",
+            "unit": "mg/dL"
+          }
+        }
+      },
+      "ClientFacingHeartrateTimeseries": {
+        "title": "ClientFacingHeartrateTimeseries",
+        "required": ["timestamp", "value"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": { "title": "value", "type": "string" },
+          "type": { "title": "Type", "type": "string" },
+          "unit": { "title": "Unit", "type": "string" }
+        },
+        "example": {
+          "heartrate": {
+            "id": 123,
+      "timestamp": "2022-04-20T13:02:01.123771+00:00",
+      "value": "70",
+      "type": "automatic",
+      "unit": "bpm"
+          }
+        }
+      },
+      "ClientFacingIGETimeseries": {
+        "title": "ClientFacingIGETimeseries",
+        "required": ["timestamp", "value"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": { "title": "value", "type": "string" },
+          "type": { "title": "Type", "type": "string" },
+          "unit": { "title": "Unit", "type": "string" }
+        },
+        "example": {
+          "ige": {
+            
+      "id": 232,
+      "timestamp": "2022-04-20T13:02:01.123778+00:00",
+      "value": "70",
+      "type": "baha_grass",
+      "unit": "FSU"
+          }
+        }
+      },
+      "ClientFacingIGGTimeseries": {
+        "title": "ClientFacingIGGTimeseries",
+        "required": ["timestamp", "value"],
+        "type": "object",
+        "properties": {
+          "id": { "title": "Id", "type": "integer" },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": { "title": "value", "type": "string" },
+          "type": { "title": "Type", "type": "string" },
+          "unit": { "title": "Unit", "type": "string" }
+        },
+        "example": {
+          "igg": {
+      "id": 232,
+      "timestamp": "2022-04-20T13:02:01.123778+00:00",
+      "value": "70",
+      "type": "dairy",
+      "unit": "FSU"
           }
         }
       },
@@ -3569,6 +4006,53 @@
           "date_collected": { "title": "Date Collected", "type": "string" },
           "specimen_number": { "title": "Specimen Number", "type": "string" },
           "date_received": { "title": "Date Received", "type": "string" }
+        },
+        "example": {
+          "age": "30",
+          "dob": "1980-01-01",
+          "clia_#": "123456789",
+          "patient": "John Doe",
+          "provider": "Dr. John Doe",
+          "laboratory": "ABC Labs",
+          "date_reported": "2020-01-01",
+          "date_collected": "2020-01-01",
+          "specimen_number": "123456789",
+          "date_received": "2020-01-01"
+        }
+      },
+      "Testkit": {
+        "title": "Testkit",
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "example": {
+            "id": "9u0ash8Hjghas-...",
+            "name": "CGM",
+            "description": "Freestyle libre CGM"
+        }
+      },
+      "TestkitsResults": {
+        "title": "TestkitsResults",
+        "required": ["metadata", "results"],
+        "type": "object",
+        "properties": {
+          "testkits": { 
+            "title": "Testkits", 
+            "type": "array", 
+            "items": { "$ref": "#/components/schemas/Testkit" } 
+          }
+        },
+        "example": {
+          "testkits": [
+            {
+            "id": "9u0ash8Hjghas-...",
+            "name": "CGM",
+            "description": "Freestyle libre CGM"
+            }
+          ]
         }
       },
       "LabResultsRaw": {
@@ -3578,6 +4062,21 @@
         "properties": {
           "metadata": { "$ref": "#/components/schemas/LabResultsMetadata" },
           "results": { "title": "Results", "type": "object" }
+        },
+        "example": {
+            "metadata": {
+              "age": "30",
+              "dob": "1980-01-01",
+              "clia_#": "123456789",
+              "patient": "John Doe",
+              "provider": "Dr. John Doe",
+              "laboratory": "ABC Labs",
+              "date_reported": "2020-01-01",
+              "date_collected": "2020-01-01",
+              "specimen_number": "123456789",
+              "date_received": "2020-01-01"
+            },
+            "results": {}
         }
       },
       "LinkTokenExchange": {
