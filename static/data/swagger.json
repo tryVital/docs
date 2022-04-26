@@ -3370,34 +3370,34 @@
           }
         },
         "example": {
-          "hrv": {
+          "hrv": [{
             "id": "123",
             "timestamp": "2020-04-20T13:02:01.142646+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
-          },
-          "heartrate": {
+          }],
+          "heartrate": [{
             "id": "123",
             "timestamp": "2020-04-20T13:02:01.142646+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
-          },
-          "hypnogram": {
+          }],
+          "hypnogram": [{
             "id": "123",
             "timestamp": "2020-04-20T13:02:01.142646+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
-          },
-          "respiratory_rate": {
+          }],
+          "respiratory_rate": [{
             "id": "123",
             "timestamp": "2020-04-20T13:02:01.142646+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
-          }
+          }]
         }
       },
       "ClientFacingSource": {
@@ -4536,6 +4536,26 @@
           "order": { "$ref": "#/components/schemas/ClientFacingOrder" },
           "status": { "title": "Status", "type": "string" },
           "message": { "title": "Message", "type": "string" }
+        },
+        "example": {
+          "status": "cancelled",
+          "message": "success",
+          "order": {
+            "id": "01fd24c8-f67d-46f4-8b26-a69ee7715164",
+          "team_id": "d47c7f77-d08c-4913-9d86-d6014b9ce3cf",
+          "created_on": "2022-04-20T13:02:01.973898+00:00",
+          "updated_on": "2022-04-20T13:02:01.973944+00:00",
+          "status": "ordered",
+          "user_id": "b1a34c5c-32a2-441d-a366-920fe077efec",
+          "testkit_id": "0df6938d-ec51-4365-b833-e7c337b7760a",
+          "inbound_tracking_number": "<inbound_tracking_number>",
+          "outbound_tracking_number": "<outbound_tracking_number>",
+          "inbound_tracking_url": "<inbound_tracking_urlr>",
+          "outbound_tracking_url": "<outbound_tracking_url>",
+          "outbound_courier": "usps",
+          "inbound_courier": "usps",
+          "testkit": { "name": "CGM", "description": "Glucose CGM" }
+          }
         }
       },
       "OrderStatus": {
