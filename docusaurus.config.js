@@ -67,7 +67,7 @@ const config = {
           {
             type: "doc",
             position: "left",
-            docId: "introduction/quickstart",
+            docId: "welcome/quickstart",
             label: "Overview",
             className: "navbar-item-link",
           },
