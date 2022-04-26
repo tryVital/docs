@@ -2,20 +2,6 @@ import { Swagger } from "@theme/swagger";
 
 # Overview
 
-## Get Orders
-
-<Swagger endpoint={"/testkit/orders/"} method={"get"} title={"Get Teams orders"}>
-
-```python
-from vital import Client
-
-client = Client(client_id, client_secret, "sandbox")
-
-data = client.Testkits.get_orders("2021-01-01", "2022-12-02")
-```
-
-</Swagger>
-
 ## Create Orders
 
 <Swagger endpoint={"/testkit/orders/"} method={"post"} title={"Create order"}>
@@ -48,7 +34,7 @@ data = client.Testkits.order(user_id=*,
 
 ## Cancel Order
 
-<Swagger endpoint={"/testkit/orders/{order_id}/cancel"} method={"DELETE"} title={"Create order"}>
+<Swagger endpoint={"/testkit/orders/{order_id}/cancel"} method={"post"} title={"Cancel order"}>
 
 ```python
 from vital import Client

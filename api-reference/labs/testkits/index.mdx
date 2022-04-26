@@ -3,3 +3,15 @@ import { Swagger } from "@theme/swagger";
 # Overview
 
 ## Get Testkits
+
+<Swagger endpoint={"/testkit/orders/"} method={"get"} title={"Get Teams orders"}>
+
+```python
+from vital import Client
+
+client = Client(client_id, client_secret, "sandbox")
+
+data = client.Testkits.get_orders("2021-01-01", "2022-12-02")
+```
+
+</Swagger>

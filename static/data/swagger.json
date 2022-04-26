@@ -3225,6 +3225,7 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
+            "description": "Deprecated. Please use user_id instead.",
             "format": "uuid"
           },
           "client_user_id": {
