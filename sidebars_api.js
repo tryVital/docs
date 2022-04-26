@@ -114,11 +114,6 @@ const sidebars = {
           label: "Stream",
           href: "/api-reference/data/sleep#stream", // Generate sidebar slice from docs/tutorials/easy
         },
-        {
-          type: "link",
-          label: "Raw",
-          href: "/api-reference/data/sleep#raw", // Generate sidebar slice from docs/tutorials/easy
-        },
       ],
     },
 
@@ -134,11 +129,6 @@ const sidebars = {
           type: "link",
           label: "Summary",
           href: "/api-reference/data/workouts#summary", // Generate sidebar slice from docs/tutorials/easy
-        },
-        {
-          type: "link",
-          label: "Stream",
-          href: "/api-reference/data/workouts#stream", // Generate sidebar slice from docs/tutorials/easy
         },
         {
           type: "link",

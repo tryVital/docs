@@ -3172,6 +3172,18 @@
           "dob": { "title": "Dob", "type": "string" },
           "age": { "title": "Age", "type": "integer" },
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
+        },
+        "example": {
+          "id": "01fd24c8-f67d-46f4-8b26-a69ee7715164",
+          "height": 180,
+          "gender": "male",
+          "dob": "2022-01-01",
+          "age": 1,
+          "source": {
+          "name": "Oura",
+          "slug": "oura",
+          "logo": "https://logo_url.com"
+          }
         }
       },
       "ClientFacingSleep": {
@@ -3355,6 +3367,36 @@
             "title": "Respiratory Rate",
             "type": "array",
             "items": { "$ref": "#/components/schemas/ClientFacingTimeseries" }
+          }
+        },
+        "example": {
+          "hrv": {
+            "id": "123",
+            "timestamp": "2020-04-20T13:02:01.142646+00:00",
+            "value": "70",
+            "type": "automatic",
+            "unit": "bpm"
+          },
+          "heartrate": {
+            "id": "123",
+            "timestamp": "2020-04-20T13:02:01.142646+00:00",
+            "value": "70",
+            "type": "automatic",
+            "unit": "bpm"
+          },
+          "hypnogram": {
+            "id": "123",
+            "timestamp": "2020-04-20T13:02:01.142646+00:00",
+            "value": "70",
+            "type": "automatic",
+            "unit": "bpm"
+          },
+          "respiratory_rate": {
+            "id": "123",
+            "timestamp": "2020-04-20T13:02:01.142646+00:00",
+            "value": "70",
+            "type": "automatic",
+            "unit": "bpm"
           }
         }
       },
