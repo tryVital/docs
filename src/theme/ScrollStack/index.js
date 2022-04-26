@@ -3,6 +3,7 @@ import { Box, VStack, HStack, Flex } from "@chakra-ui/react";
 import { CodeBlock, ResponseBlock } from "../codeblock";
 import { ParamTable } from "../param";
 import { useMediaQuery } from "@chakra-ui/react";
+
 export const ScrollStack = ({ children }) => {
   const [isLargerThan1280] = useMediaQuery("(min-width: 960px)");
   if (isLargerThan1280) {
@@ -23,10 +24,11 @@ export const ScrollStack = ({ children }) => {
 };
 
 export const ParamsAndCodeBlock = ({ title, params, children }) => {
+  const [isLargerThan1280] = useMediaQuery("(min-width: 960px)");
   return (
     <ScrollStack>
       <Flex
-        width={["50%", "50%", "100%"]}
+        width={isLargerThan1280 ? "40%" : "100%"}
         sx={{
           position: "sticky",
           top: "75px",
@@ -35,7 +37,7 @@ export const ParamsAndCodeBlock = ({ title, params, children }) => {
         <ParamTable data={params} width={"100%"} />
       </Flex>
       <Flex
-        width={["50%", "50%", "100%"]}
+        width={isLargerThan1280 ? "60%" : "100%"}
         sx={{
           position: "sticky",
           top: "75px",
@@ -49,10 +51,12 @@ export const ParamsAndCodeBlock = ({ title, params, children }) => {
 };
 
 export const ParamsAndResponseBlock = ({ title, params, code }) => {
+  const [isLargerThan1280] = useMediaQuery("(min-width: 960px)");
+
   return (
     <ScrollStack>
       <Flex
-        width={["50%", "50%", "100%"]}
+        width={isLargerThan1280 ? "40%" : "100%"}
         sx={{
           position: "sticky",
           top: "75px",
@@ -61,7 +65,7 @@ export const ParamsAndResponseBlock = ({ title, params, code }) => {
         <ParamTable data={params} width={"100%"} />
       </Flex>
       <Flex
-        width={["50%", "50%", "100%"]}
+        width={isLargerThan1280 ? "60%" : "100%"}
         sx={{
           position: "sticky",
           top: "75px",

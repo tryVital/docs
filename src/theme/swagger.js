@@ -221,7 +221,6 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       <HStack mt={20}>
         <Text>{endpointData.description}</Text>
       </HStack>
-      {/* <Flex flexDirection={"row"} flexWrap={"wrap"}> */}
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Request fields</chakra.span> and
         example
@@ -242,7 +241,6 @@ export const Swagger = ({ endpoint, method, title, children }) => {
         title={"Response"}
         code={responseExample}
       />
-      {/* </Flex> */}
     </>
   );
 };
