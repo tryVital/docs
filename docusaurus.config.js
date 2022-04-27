@@ -23,7 +23,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
-          editUrl: "https://github.com/",
+          editUrl: "https://github.com/adeptlabs/vital-docs-new/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
