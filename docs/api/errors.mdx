@@ -1,0 +1,38 @@
+---
+sidebar_position: 4
+---
+
+import { ParamTable } from "@theme/param";
+
+# Errors
+
+| Errors overview |                                                                     |                                                              |
+| --------------- | ------------------------------------------------------------------- | ------------------------------------------------------------ |
+| Link Errors     | Errors that occur during the [Link](/vital-link/link_flow) process. | LINK_TOKEN_MISSING, INVALID_EMAIL_CREDENTIALS, INVALID_TOKEN |
+
+### Error Schema
+
+We use HTTP status codes to signify if a request was successful or not.
+
+<ParamTable
+  data={[
+    {
+      name: "error_type",
+      type: "string",
+      description:
+        "A taxanomy of the error. This is used to group errors together. This is safe for programmatic use.",
+    },
+    {
+      name: "error_message",
+      type: "string",
+      description:
+        "A human-readable representation of the error. This is not intended to be static, and may change at any time.",
+    },
+    {
+      name: "error_code",
+      type: "integer",
+      description:
+        "A HTTP status code. This code is intended to be used by the client for programmatic processing of errors.",
+    },
+  ]}
+/>

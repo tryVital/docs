@@ -35,21 +35,3 @@ data = client.Vitals.heartrate(user_id=*,
 ```
 
 </Swagger>
-
-## Raw
-
-<Swagger endpoint={"/timeseries/sleep/{sleep_id}/raw"} method={"get"} title={"Get Raw Sleep Data"}>
-
-```python
-from vital import Client
-
-client = Client(client_id, client_secret, "sandbox")
-
-data = client.ProviderSpecific.get(user_id=*,
-          provider="oura"
-          start_date="2020-01-01",
-          end_date="2021-01-01"
-          )
-```
-
-</Swagger>

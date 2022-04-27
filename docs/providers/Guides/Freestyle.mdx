@@ -1,1 +1,32 @@
 # Freestyle
+
+To connect a user to Freestyle Libre provider:
+
+:::note
+A user must have a Freestyle Libre account.
+:::
+import { Flex, Image, Heading } from "@chakra-ui/react";
+
+Your user must first connect their Freestyle Libre account to the vital libre practice. This
+allows Vital to start pulling data from their account. This can be done by instructing
+your user to the Libre app. Then heading to _Connected Apps_ and clicking on
+the _Connect to a practice_ button. From there, they should enter `tryvital` or `tryvital-sandbox`
+depending on which environment.
+
+<br />
+
+<Image src={"/img/connect_libreview.png"} width={"40%"} ml={"20%"} />
+
+<br />
+<br />
+
+Once connected, launch a [Vital-Link](../../vital-link/launching_link) for your user to connect their Libre account.
+
+<br />
+
+<Image src={"/img/libre_connect.png"} width={"40%"} ml={"20%"} />
+
+<br />
+<br />
+
+Once this is complete we will start syncing data from their Libre account.

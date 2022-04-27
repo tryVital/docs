@@ -3,7 +3,16 @@ import SwaggerParser from "@apidevtools/swagger-parser";
 import { useEffect } from "react";
 import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
-import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
+import {
+  chakra,
+  Badge,
+  HStack,
+  Text,
+  Flex,
+  Wrap,
+  WrapItem,
+  Box,
+} from "@chakra-ui/react";
 
 const mapSchemaToJson = (schema) => {
   if (!schema) return {};
@@ -13,7 +22,7 @@ const mapSchemaToJson = (schema) => {
     json.items = mapSchemaToJson(schema.additionalProperties);
     json.type = "array";
     json.name = schema.additionalProperties.title;
-  } else if (type === "object") {
+  } else if (type === "object" && properties) {
     Object.keys(properties).forEach((key) => {
       json[key] = mapSchemaToJson(properties[key]);
     });
@@ -83,29 +92,29 @@ const mapBody = (body) => {
   }
   const data = Object.keys(body)
     .map((el) => {
-      if (body[el].type == "array") {
+      if (body[el]?.type == "array") {
         return {
           name: el,
           type: "[object]",
-          description: body[el].description,
+          description: body[el]?.description,
           items: mapBody(body[el].items),
         };
-      } else if (body[el].type == "object") {
+      } else if (body[el]?.type == "object") {
         return {
           name: el,
           type: "object",
           description:
-            typeof body[el].description === "string"
-              ? body[el].description
+            typeof body[el]?.description === "string"
+              ? body[el]?.description
               : "",
           items: mapBody(body[el]),
         };
       } else {
         return {
           name: el,
-          type: body[el].type,
-          description: body[el].description,
-          required: body.required.indexOf(el) > -1,
+          type: body[el]?.type,
+          description: body[el]?.description,
+          required: body?.required?.indexOf(el) > -1,
         };
       }
     })
@@ -122,9 +131,13 @@ const getExampleResponse = (schema) => {
     return [responseSchema.items.example];
   } else if (responseSchema.additionalProperties) {
     return [responseSchema.additionalProperties.items.example];
+  } else if (responseSchema?.properties) {
+    console.log(schema);
+    return [responseSchema?.properties];
   }
   console.log("FAILED", responseSchema);
 };
+
 export const Swagger = ({ endpoint, method, title, children }) => {
   const [endpointData, setEndpointData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
@@ -134,12 +147,23 @@ export const Swagger = ({ endpoint, method, title, children }) => {
     const parseSwagger = async () => {
       try {
         let api = await SwaggerParser.dereference(swaggerObject);
-        const schema = api.paths[`/v2${endpoint}`][method];
+        // will raise typeerror if it cannot index into api.paths
+        const schema = api?.paths[`/v2${endpoint}`][method];
+        if (!schema) {
+          throw Error(
+            "No schema found - please check your endpoint and method"
+          );
+        }
         if (endpoint == "/user/providers/{user_id}") {
           console.log({ schema, endpoint: `/v2${endpoint}` });
         }
-        const requestBody =
+
+        let requestBody =
           schema.requestBody?.content["application/json"]?.schema;
+        if (!requestBody) {
+          requestBody = schema;
+          console.error("No request body found", endpoint);
+        }
         const requestBodyParams = mapSchemaToJson(requestBody);
 
         const data = {
@@ -150,18 +174,10 @@ export const Swagger = ({ endpoint, method, title, children }) => {
           params: mapParameters(schema.parameters),
         };
         setEndpointData(data);
-        console.log("GETTING RESPONSE");
         const responseSchema = mapSchemaToJson(
           schema.responses["200"].content["application/json"]?.schema
         );
-        if (endpoint == "/user/providers/{user_id}") {
-          console.log({
-            schema,
-            responseSchema,
-            endpoint: `/v2${endpoint}`,
-            method,
-          });
-        }
+
         const response = {
           body: mapBody(responseSchema),
         };
@@ -205,7 +221,6 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       <HStack mt={20}>
         <Text>{endpointData.description}</Text>
       </HStack>
-
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Request fields</chakra.span> and
         example
@@ -216,6 +231,7 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       >
         {children}
       </ParamsAndCodeBlock>
+
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Response fields</chakra.span> and
         example

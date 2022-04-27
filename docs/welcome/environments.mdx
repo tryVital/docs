@@ -1,0 +1,33 @@
+---
+title: "Environments"
+slug: "environments"
+hidden: false
+createdAt: "2022-04-06T15:32:26.145Z"
+updatedAt: "2022-04-08T13:17:12.162Z"
+---
+
+import { Grid, GridItem, Box, Heading } from "@chakra-ui/react";
+
+When you sign up to Vital you get access to two envrionments, Sandbox and Production.
+
+| Environment |
+| ----------- | ------------------------------- |
+| Production  | https://api.tryvital.io         |
+| Sandbox     | https://api.sandbox.tryvital.io |
+
+<Grid templateColumns="repeat(2, 1fr)" gap={6}>
+  <Box>
+    <Heading>Sandbox</Heading>
+    <li>For app integration</li>
+    <li>For formal integration testing</li>
+    <li>Up to 20 live devices</li>
+    <li>Stateful, data is persisted</li>
+    <li>Requires authentication</li>
+  </Box>
+  <Box>
+    <Heading>Production</Heading>
+    <li>Uses production data</li>
+    <li>Should not be used for testing</li>
+    <li>Unlimited devices</li>
+  </Box>
+</Grid>

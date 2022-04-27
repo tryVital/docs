@@ -23,7 +23,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
-          editUrl: "https://github.com/",
+          editUrl: "https://github.com/adeptlabs/vital-docs-new/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -93,7 +93,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       posthog: {
-        apiKey: process.env.NEXT_PUBLIC_POSTHOG_API_KEY,
+        apiKey: "process.env.NEXT_PUBLIC_POSTHOG_API_KEY",
         enableInDevelopment: false,
       },
     }),
