@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## 1. Intro
 
-The iOS SDK is split into three main components: VitalCore, VitalHealthKit and VitalDevices. VitalCore holds common components to both VitalHealthKit and VitalDevices. Among other things, it has the network layer that allows us to send data from a device to a server.
+The iOS SDK is split into three main components: VitalCore, VitalHealthKit and VitalDevices. VitalCore holds common components to both VitalHealthKit and VitalDevices. Among other things, it has the network layer that allows us to send data from a device to a server. As their name hint, VitalHealthKit and VitalDevices are an abstraction over HealthKit and specific Bluetooth devices. If your app is generating data without independently, you can use VitalCore directly to push data.
 
 ---
 
@@ -24,22 +24,15 @@ To use our SDK, start by setting up `VitalNetworkClient`:
 import VitalCore
 
 VitalNetworkClient.configure(
-    clientId: "xyz",
-    clientSecret: "zyx",
+    apiKey: "xyz",
     environment: .sandbox(.us)
 )
 ```
 
-If you don't follow this step, when you try to push data to the server, the app will crash. If you are not comfortable about storing a plain `clientId` and `clientSecret` in your app, you can:
+<br />
+<br />
 
-1. Use obfuscation.
-2. Create an endpoint from which the clients can fetch these values.
-
-We found [this](https://nshipster.com/secrets/) article quite helpful.
-
----
-
-Among other capabilities, there are two main topics you should be aware:
+There are two main topics you should be aware:
 
 1. `userId`.
 2. Connected source.
@@ -55,13 +48,17 @@ let result = try await VitalNetworkClient.shared.user.create(
 )
 ```
 
+<br />
+<br />
+
 A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 
 ```swift
 VitalNetworkClient.setUserId(result.userId)
 ```
 
-<br/>
+<br />
+<br />
 
 :::note
 
@@ -71,18 +68,25 @@ By default, when you create a `userId`, we call `VitalNetworkClient.setUserId` o
 
 ### 2. Connected Source
 
-A connected source is a link between a provider (e.g. Omron) and your user. When you push information, it is expected that a connected source exists for that user and the source of information you are using. If it doesn't exist, the request will fail.
+A connected source is a link between a provider (e.g. Omron) and your user. When you post information, it is expected that a connected source exists for that user and the source of information you are using. If it doesn't exist, the request will fail.
 
-Example: You want to push Ben's Omron data. Two things need to exist: 1) Ben is a user in Vital. 2) A connected source linking Ben's user to Omron.
+Example: You want to post Ben's Omron data to Vital. Two things need to exist: 1) Ben is a user in Vital 2) A connected source linking Ben's user to Omron.
 
 To achieve this from the SDK you can simply:
 
 ```swift
-let payload = CreateConnectedSourceRequest(userId: result.userId, connectedSource: .omron)
-let result = try await VitalNetworkClient.shared.user.createConnectedSource(payload)
+
+/// 1)
+let benUser = try await VitalNetworkClient.shared.user.create(clientUserId: "ben_user_id")
+
+/// 2)
+let result = try await VitalNetworkClient.shared.user.createConnectedSource(for: .omron)
 ```
 
-With these two things in place, you can now push Ben's Omron data.
+<br />
+<br />
+
+With these two things in place, you can now post Ben's Omron data.
 
 ---
 
@@ -100,6 +104,9 @@ let brands = DevicesManager.brands()
 let devices = DevicesManager.devices(for: brands[0])
 ```
 
+<br />
+<br />
+
 Based on the `device`, you start scanning your surroundings to find it. This approach filters out devices we are not interested in:
 
 ```swift
@@ -108,6 +115,9 @@ let device = devices[0]
 let manager = DevicesManager()
 let publisher: AnyPublisher<ScannedDevice, Never> = manager.search(for: device)
 ```
+
+<br />
+<br />
 
 You can observe the publisher (e.g. via `sink`) until you find a device. Once you find a device you create a reader:
 
@@ -123,6 +133,9 @@ if scannedDevice.kind == .glucoseMeter {
 }
 ```
 
+<br />
+<br />
+
 Depending on the flow of your app, and/or the device you are working with, you can either just pair, or pair and read. The "just" pair might be needed for devices that can only pair while in pairing mode. The devices we tested were able to pair and read while not in pairing mode, but your experience might be different.
 
 For blood pressure monitors:
@@ -134,6 +147,9 @@ let justPair: AnyPublisher<Void, Error> = reader.pair(device: scannedDevice)
 let pairAndRead: AnyPublisher<[BloodPressureSample], Error> = reader.read(device: scannedDevice)
 ```
 
+<br />
+<br />
+
 And for glucose meters:
 
 ```swift
@@ -143,26 +159,48 @@ let justPair: AnyPublisher<Void, Error> = reader.pair(device: scannedDevice)
 let pairAndRead: AnyPublisher<[QuantitySample], Error> = reader.read(device: scannedDevice)
 ```
 
+<br />
+<br />
+
 Finally, you can monitor the connection to the device itself via:
 
 ```swift
 let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: device)
 ```
 
-<br/>
+<br />
+<br />
 
-:::note
-
+:::caution
 When you finish scanning for a device, you need to terminate the scanning. If you don't do this, you won't be able to connect and extract data from the device. You can achieve this by holding onto a `Cancellable` (via `sink`) and call `cancel()`. Or by using a more declarative approach (e.g. `publisher.first()`).
+
+You can check our example app, to see how we do this.
 :::
 
 ---
 
-## 5. Sending data via VitalNetwork
+## 5. VitalNetwork
 
-For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalNetworkClient.shared.<domain>`.
+For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalNetworkClient.shared.<domain>`. VitalNetwork allows you to do exactly that. For VitalHealkit on the other hand, the framework will send the data on your behalf.
 
-### 1. Summaries
+### 1. TimeSeries and Summaries
+
+There are two main sources of data: time series and summaries. Time series data correspond to points in time (e.g. glucose, heart rate, etc). Summaries are a digest of a particular activity (e.g. workout, sleep, etc). Summaries can have time series data. For example an workout has an array of heart rate data points. For data generated by VitalDevices, typically this will be time series.
+
+For time series we support:
+
+- Glucose
+- Blood Pressure
+
+For summaries:
+
+- Workout
+- Activity
+- Sleep
+- Profile
+- Body
+
+Posting time series data is as simple as:
 
 ```swift
 let sample = QuantitySample(
@@ -173,17 +211,38 @@ let sample = QuantitySample(
     unit: "mg/dl"
 )
 
-let patch = GlucosePatch(glucose: [sample])
+let samples: [BloodPressureSample] = [sample]
 
-try await VitalNetworkClient.shared.summary.post(
-      resource: .glucose(patch, .daily, .omron)
+try await VitalNetworkClient.shared.timeSeries.post(
+    .bloodPressure(samples),
+    stage: .daily,
+    provider: .appleHealthKit
 )
 ```
 
-It's important to notice two things in the above snippet:
+<br />
+<br />
 
-1. We set the stage of data as `.daily`. If you are sending old data, please use `.historical` instead. This distinction is used for the Webhooks. If you are not sure if `.historical` data makes sense, you can stick with `.daily`. A `.daily` will always generate a webhook with the full payload of data. For more information, please read the [Webhook Flow](https://vital-docs.readme.io/docs/webhook-data-flow)
-2. The provider (`.omron`) must match an existing connected source for that user. This means that if there's no connected source linking the user and `.omron`, the request will fail.
+Likewise for summaries:
+
+```swift
+let workoutPatch: WorkoutPatch = ...
+
+try await VitalNetworkClient.shared.summary.post(
+    .workout(workoutPatch),
+    stage: .daily,
+    provider: .appleHealthKit
+)
+```
+
+<br />
+<br />
+
+It's important to notice two things in the above snippets:
+
+1. We set the stage of data as `.daily`. If you are sending old data, please use `.historical` instead. This distinction is used for the Webhooks. If you are not sure if `.historical` data makes sense, you can stick with `.daily`. A `.daily` will always generate a webhook with the full payload of data. For more information, please read the [Webhook Flow](https://vital-docs.readme.io/docs/webhook-data-flow).
+2. The provider (`.appleHealthKit`) must match an existing connected source for that user. This means that if there's no connected source linking the user and `.appleHealthKit`, the request will fail.
+3. Finally if you are generating your own fitness or medical data, use the `.manual` provider.
 
 ## 6. VitalHealthKit
 
