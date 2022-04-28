@@ -6,10 +6,20 @@ A user must have a Freestyle Libre account.
 import { Flex, Image, Heading } from "@chakra-ui/react";
 import { CodeBlock } from "@theme/codeblock";
 
-To connect a user to the Freestyle Libre provider, your user must first connect their
-Freestyle Libre account to the vital libre practice. This
-allows Vital to start pulling data from their account. This can be done by instructing
-your user to the Libre app. Then heading to _Connected Apps_ and clicking on
+To connect a user to Vital you must first connect your Freestyle practice to Vital.
+Vital has two practices (depending on environment):
+
+| Environment |                  |
+| ----------- | ---------------- |
+| Sandbox     | tryVital-sandbox |
+| Production  | tryVital         |
+
+Once your Freestyle practice is connected to the Vital practice,
+you need to instruct your user's to connect their Libre account to your practice.
+This allows Vital to start pulling data from their account.
+
+This can be through the Libre app. In the app,
+instruct your user's to head to _Connected Apps_ and clicking on
 the _Connect to a practice_ button. From there, they should enter `tryvital` or `tryvital-sandbox`
 depending on which environment.
 
