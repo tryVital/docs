@@ -111,8 +111,8 @@ user = client.User.delete(user_id)
 <Swagger endpoint={"/user/"} method={"get"} title={"Delete a Vital User"}>
 
 ```bash
-curl --request DELETE \
-     --url https://example.com/v2/user/user_id \
+curl --request GET \
+     --url https://example.com/v2/user/ \
      --header 'Accept: application/json'
 ```
 
@@ -124,7 +124,7 @@ const client = new VitalClient({
   environment: "sandbox",
 });
 
-const user = await client.User.delete(user_id)
+const user = await client.User.getAll()
 
 ```
 
@@ -133,7 +133,7 @@ from vital import Client
 
 client = Client(api_key=<API_KEY>, environment='sandbox')
 
-user = client.User.delete(user_id)
+user = client.User.get_all(user_id)
 ```
 
 </Swagger>
@@ -143,8 +143,8 @@ user = client.User.delete(user_id)
 <Swagger endpoint={"/user/providers/{user_id}"} method={"get"} title={"Delete a Vital User"}>
 
 ```bash
-curl --request DELETE \
-     --url https://example.com/v2/user/user_id \
+curl --request GET \
+     --url https://example.com/v2/user/providers/user_id \
      --header 'Accept: application/json'
 ```
 
@@ -156,7 +156,7 @@ const client = new VitalClient({
   environment: "sandbox",
 });
 
-const user = await client.User.delete(user_id)
+const user = await client.User.providers(user_id)
 
 ```
 
@@ -165,7 +165,7 @@ from vital import Client
 
 client = Client(api_key=<API_KEY>, environment='sandbox')
 
-user = client.User.delete(user_id)
+user = client.User.providers(user_id)
 ```
 
 </Swagger>
@@ -175,8 +175,8 @@ user = client.User.delete(user_id)
 <Swagger endpoint={"/user/refresh/{user_id}"} method={"post"} title={"Refresh data for Vital User"}>
 
 ```bash
-curl --request DELETE \
-     --url https://example.com/v2/user/user_id \
+curl --request POST \
+     --url https://example.com/v2/user/refresh/user_id \
      --header 'Accept: application/json'
 ```
 
@@ -188,7 +188,7 @@ const client = new VitalClient({
   environment: "sandbox",
 });
 
-const user = await client.User.delete(user_id)
+const user = await client.User.refresh(user_id)
 
 ```
 
@@ -197,7 +197,7 @@ from vital import Client
 
 client = Client(api_key=<API_KEY>, environment='sandbox')
 
-user = client.User.delete(user_id)
+user = client.User.refresh(user_id)
 ```
 
 </Swagger>
@@ -220,7 +220,7 @@ const client = new VitalClient({
   environment: "sandbox",
 });
 
-const user = await client.User.delete(user_id)
+const user = await client.User.deregisterProvider(user_id)
 
 ```
 
@@ -229,7 +229,7 @@ from vital import Client
 
 client = Client(api_key=<API_KEY>, environment='sandbox')
 
-user = client.User.delete(user_id)
+user = client.User.deregister_provider(user_id)
 ```
 
 </Swagger>
