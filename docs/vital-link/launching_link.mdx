@@ -7,9 +7,19 @@ import { Image } from "@chakra-ui/react";
 
 # Launching link
 
-You may want to launch Vital Link for an individual provider. This launches the Vital Link widget straight into the login flow for the specified provider.
+Vital Link can easily be integrated into your applications via our Python and React libraries,
+which you can use with your credentials to get started today.
 
-To do so, you just pass in the provider name as one of the parameter's to the link create endpoint:
+### Vital Link Walkthrough
+
+1. Once you have a `user_id`, you can use this to generate a link token.
+
+:::note
+You may want to launch Vital Link for an individual provider.
+This launches the Vital Link widget straight into the login flow for the specified provider.
+
+To do so, you just pass in the provider name as one of the parameter's to the link create endpoint.
+:::
 
 <CodeBlock title={"Launching Vital-Link"}>
 
@@ -45,7 +55,86 @@ curl --request POST \
 
 </CodeBlock>
 
-Use the link token to [launch the link widget](https://vital-docs.readme.io/docs/vital-link-1#vital-link-flow)
-on your frontend. This will launch link widget straight into the login flow for the provider.
+<br />
 
-<Image src="/img/link_specific.png" />
+2. Use the link token to [launch the link
+   widget](https://vital-docs.readme.io/docs/vital-link-1#vital-link-flow) on your
+   frontend. This will launch link widget straight into the login flow for the
+   provider.
+
+<br />
+
+<CodeBlock title={"Launching Vital-Link"}>
+
+```js
+import 'react-app-polyfill/ie11';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { useCallback } from 'react';
+
+import { useVitalLink } from '@tryvital/vital-link';
+import { useState } from 'react';
+
+const API_URL = process.env.API_URL ? process.env.API_URL : "http://localhost:3001"
+
+const getTokenFromBackend = async (userKey: string, env: string) => {
+  const resp = await fetch(<backend_url>);
+  return await resp.json();
+};
+
+const App = props => {
+  const userKey = '560596b9-924b-4af9-a670-cf21870fdac5';
+  const [isLoading, setLoading] = useState(false);
+
+  const onSuccess = useCallback(metadata => {
+    // Device is now connected.
+  }, []);
+
+  const onExit = useCallback(metadata => {
+    // User has quit the link flow.
+  }, []);
+
+  const onError = useCallback(metadata => {
+    // Error encountered in connecting device.
+  }, []);
+
+  const config = {
+    onSuccess,
+    onExit,
+    onError,
+    env: "sandbox"
+  };
+
+  const { open, ready, error } = useVitalLink(config);
+
+  const handleVitalOpen = async () => {
+    setLoading(true);
+    const token = await getTokenFromBackend(userKey, "sandbox");
+    open(token);
+    setLoading(false);
+  };
+
+  return (
+    <button
+      type="button"
+      className="button"
+      onClick={handleVitalOpen}
+      disabled={isLoading || !ready}
+    >
+      Open Vital Link
+    </button>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+</CodeBlock>
+
+<br />
+
+3. This will launch the Vital Link widget, where your user can connect their account to Vital.
+
+<br />
+
+<Image src="/img/link_specific.png" width={"50%"} />
