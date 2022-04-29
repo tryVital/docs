@@ -2,6 +2,8 @@
 sidebar_position: 1
 ---
 
+import { Image } from "@chakra-ui/react";
+
 # iOS
 
 ## 1. Intro
@@ -77,7 +79,7 @@ To achieve this from the SDK you can simply:
 ```swift
 
 /// 1)
-let benUser = try await VitalNetworkClient.shared.user.create(clientUserId: "ben_user_id")
+let benUser = try await VitalNetworkClient.shared.user.create(clientUserId: "white_bear")
 
 /// 2)
 let result = try await VitalNetworkClient.shared.user.createConnectedSource(for: .omron)
@@ -97,6 +99,8 @@ VitalDevices connects your app to other devices via bluetooth. Currently we supp
 You start by fetching all devices supported:
 
 ```swift
+import VitalDevices
+
 /// Get the brands
 let brands = DevicesManager.brands()
 
@@ -246,4 +250,99 @@ It's important to notice two things in the above snippets:
 
 ## 6. VitalHealthKit
 
-Still in progress. :)
+VitalHealthKit is an abstraction on top of HealthKit that 1) automates the extraction of data 2) pushs that data to Vital.
+
+You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
+
+<Image src="/img/iOS/health_kit_permissions.png" />
+
+<br />
+<br />
+
+You then set-up the client:
+
+```swift
+import VitalHealthKit
+
+VitalHealthKitClient.configure()
+```
+
+<br />
+<br />
+
+You need to call this method, before doing anything else with the `VitalHealthKitClient`. Otherwise you will have a `fatalError`.
+
+Just like VitalDevices, you are also required to setup the VitalNetworkClient:
+
+```swift
+import VitalCore
+
+VitalNetworkClient.configure(
+    apiKey: "xyz",
+    environment: .sandbox(.us)
+)
+```
+
+<br />
+<br />
+
+This is required, because we use VitalNetworkClient to push HealthKit data.
+
+:::note
+When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immeaditly try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalNetworkClient` beforehand, otherwise the app will crash.
+:::
+
+After this initial setup, you need to ask permission to acccess the user's data:
+
+```swift
+let resources = [.profile, .body]
+let outcome = await VitalHealthKitClient.shared.ask(for: resources)
+```
+
+<br />
+<br />
+
+After calling `ask(for:)`, check the `outcome` to see if the user granted permission. On success, you can start syncing data:
+
+```swift
+import VitalHealthKit
+
+let resources = [.profile, .body]
+VitalHealthKitClient.shared.syncData(for: resources)
+
+
+/// You can also sync all resources
+VitalHealthKitClient.shared.syncData()
+```
+
+<br />
+<br />
+
+Although `syncData()` and `syncData(for:)` make your life easier, they can sometimes feel like a blackbox. To help you understand what's happening under the hood, we expose an `status: AnyPublisher<Status, Never>`. A `Status` looks like this:
+
+```swift
+  public enum Status {
+    case syncing(VitalResource)
+    case failedSyncing(VitalResource, Error?)
+    case successSyncing(VitalResource)
+    case nothingToSync(VitalResource)
+  }
+```
+
+<br />
+<br />
+
+You can observe and convey this information like this:
+
+```swift
+cancellable = VitalHealthKitClient.shared.status.sink { value in
+    print(value)
+}
+```
+
+<br />
+<br />
+
+:::caution
+Everything that holds true for HealthKit, holds true for VitalHealthKit. For example, if someone declines to give permission to a particular data point, the SDK won't be aware. For more information please read [HealthKit's Protecting User Privacy](https://developer.apple.com/documentation/healthkit/protecting_user_privacy).
+:::
