@@ -8,7 +8,7 @@ import { Image } from "@chakra-ui/react";
 
 ## 1. Intro
 
-The iOS SDK is split into three main components: VitalCore, VitalHealthKit and VitalDevices. VitalCore holds common components to both VitalHealthKit and VitalDevices. Among other things, it has the network layer that allows us to send data from a device to a server. As their name hint, VitalHealthKit and VitalDevices are an abstraction over HealthKit and specific Bluetooth devices. If your app is generating data without independently, you can use VitalCore directly to push data.
+The iOS SDK is split into three main components: VitalCore, VitalHealthKit and VitalDevices. VitalCore holds common components to both VitalHealthKit and VitalDevices. Among other things, it has the network layer that allows us to send data from a device to a server. As their name hint, VitalHealthKit and VitalDevices are an abstraction over HealthKit and specific Bluetooth devices. If your app is generating data independently, you can use VitalCore directly to push data.
 
 ---
 
@@ -41,7 +41,7 @@ There are two main topics you should be aware:
 
 ### 1. `userId`
 
-A `userId` serves as a unique identifier of your user in Vital. You create one by sending us an id representing that user in your system (e.g. `white_bear`, `12832001`, `b5d36dbe-b745-11ec-b909-0242ac120002`, etc). We do advise against the use of PII (Personal Identifiable Information). It should also be unique across the users that belong to your team. You can create a `userId` like this:
+A `userId` serves as a unique identifier of your user in Vital. You create one by sending us an id representing that user in your system (e.g. `white_bear`, `12832001`, `b5d36dbe-b745-11ec-b909-0242ac120002`, etc). We advise against the use of PII (Personal Identifiable Information). It should also be unique across the users that belong to your team. You can create a `userId` like this:
 
 ```swift
 let result = try await VitalNetworkClient.shared.user.create(
@@ -64,7 +64,7 @@ VitalNetworkClient.setUserId(result.userId)
 
 :::note
 
-By default, when you create a `userId`, we call `VitalNetworkClient.setUserId` on your behalf. If you don't want this to happen call `VitalNetworkClient.setUserId(result.userId, setUserIdOnSuccess: false)`.
+By default, when you create a `userId`, we call `VitalNetworkClient.setUserId` internally. If you don't want this to happen call `VitalNetworkClient.setUserId(result.userId, setUserIdOnSuccess: false)`.
 
 :::
 
@@ -74,7 +74,7 @@ A connected source is a link between a provider (e.g. Omron) and your user. When
 
 Example: You want to post Ben's Omron data to Vital. Two things need to exist: 1) Ben is a user in Vital 2) A connected source linking Ben's user to Omron.
 
-To achieve this from the SDK you can simply:
+To achieve this you can:
 
 ```swift
 
@@ -140,7 +140,7 @@ if scannedDevice.kind == .glucoseMeter {
 <br />
 <br />
 
-Depending on the flow of your app, and/or the device you are working with, you can either just pair, or pair and read. The "just" pair might be needed for devices that can only pair while in pairing mode. The devices we tested were able to pair and read while not in pairing mode, but your experience might be different.
+Depending on the flow of your app, and/or the device you are working with, you can either just pair, or pair and read. The "just" pair is needed for devices that can only pair while in pairing mode. The devices we tested were able to pair and read while not in pairing mode, but your experience might be different.
 
 For blood pressure monitors:
 
@@ -185,7 +185,7 @@ You can check our example app, to see how we do this.
 
 ## 5. VitalNetwork
 
-For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalNetworkClient.shared.<domain>`. VitalNetwork allows you to do exactly that. For VitalHealkit on the other hand, the framework will send the data on your behalf.
+For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalNetworkClient.shared.<domain>`. VitalNetwork allows you to do exactly that. VitalHealkit however will send the data automatically.
 
 ### 1. TimeSeries and Summaries
 
@@ -289,7 +289,7 @@ VitalNetworkClient.configure(
 This is required, because we use VitalNetworkClient to push HealthKit data.
 
 :::note
-When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immeaditly try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalNetworkClient` beforehand, otherwise the app will crash.
+When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalNetworkClient` beforehand, otherwise the app will crash.
 :::
 
 After this initial setup, you need to ask permission to acccess the user's data:
