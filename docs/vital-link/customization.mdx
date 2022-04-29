@@ -15,8 +15,7 @@ To authenticate without Vital link, you need to first generate a `link_token` fo
 from vital import Client
 
 client = Client(
-     client_id,
-     client_secret,
+     api_key,
      environment="sandbox"
      )
 
@@ -27,12 +26,11 @@ token = client.Link.create(user_id)
 const { VitalClient } = require("Vital");
 
 const client = new VitalClient({
-  client_id: <CLIENT_ID>,
-  client_secret:  <CLIENT_SECRET>,
+  api_key: <API_KEY>,
   environment: "sandbox",
 });
 
-const resp = await client.Link.create(client_user_id)
+const resp = await client.Link.create(client_user_id);
 ```
 
 ```bash
@@ -76,8 +74,7 @@ To connect a password provider:
 from vital import Client
 
 client = Client(
-     client_id,
-     client_secret,
+     api_key,
      environment="sandbox"
      )
 
@@ -89,13 +86,17 @@ resp = client.Link.password_provider(link_token, "oura", username, password)
 const { VitalClient } = require("Vital");
 
 const client = new VitalClient({
-  client_id: <CLIENT_ID>,
-  client_secret:  <CLIENT_SECRET>,
+  api_key: <API_KEY>,
   environment: "sandbox",
 });
 
-const token = await client.Link.create(client_user_id, "oura")
-const resp = await client.Link.connectProvider(token, "oura", username, password)
+const token = await client.Link.create(client_user_id, "oura");
+const resp = await client.Link.connectProvider(
+  token,
+  "oura",
+  username,
+  password
+);
 ```
 
 </CodeBlock>
@@ -122,8 +123,7 @@ Current OAuth providers are:
 from vital import Client
 
 client = Client(
-     client_id,
-     client_secret,
+     api_key,
      environment="sandbox"
      )
 

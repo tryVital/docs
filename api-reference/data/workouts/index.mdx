@@ -9,7 +9,7 @@ import { Swagger } from "@theme/swagger";
 ```python
 from vital import Client
 
-client = Client(client_id, client_secret, "sandbox")
+client = Client(api_key, "sandbox")
 
 data = client.Workouts.get(user_id=*,
       start_date="2020-01-01",
@@ -26,7 +26,7 @@ data = client.Workouts.get(user_id=*,
 ```python
 from vital import Client
 
-client = Client(client_id, client_secret, "sandbox")
+client = Client(api_key, "sandbox")
 
 data = client.ProviderSpecific.get(user_id=*,
           provider="oura"

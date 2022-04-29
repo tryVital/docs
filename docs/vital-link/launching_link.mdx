@@ -17,8 +17,7 @@ To do so, you just pass in the provider name as one of the parameter's to the li
 from vital import Client
 
 client = Client(
-     client_id,
-     client_secret,
+     api_key,
      environment="sandbox"
      )
 
@@ -29,8 +28,7 @@ token = client.Link.create(user_id, "oura")
 const { VitalClient } = require("Vital");
 
 const client = new VitalClient({
-  client_id: <CLIENT_ID>,
-  client_secret:  <CLIENT_SECRET>,
+  api_key:  <API_KEY>,
   environment: "sandbox",
 });
 
