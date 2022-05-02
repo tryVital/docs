@@ -14,12 +14,14 @@ which you can use with your credentials to get started today.
 
 1. Once you have a `user_id`, you can use this to generate a link token.
 
-:::note
+:::info
 You may want to launch Vital Link for an individual provider.
 This launches the Vital Link widget straight into the login flow for the specified provider.
 
 To do so, you just pass in the provider name as one of the parameter's to the link create endpoint.
 :::
+
+<br />
 
 <CodeBlock title={"Launching Vital-Link"}>
 
@@ -38,7 +40,7 @@ token = client.Link.create(user_id, "oura")
 const { VitalClient } = require("Vital");
 
 const client = new VitalClient({
-  api_key:  <API_KEY>,
+  api_key: <API_KEY>,
   environment: "sandbox",
 });
 
@@ -55,6 +57,7 @@ curl --request POST \
 
 </CodeBlock>
 
+<br />
 <br />
 
 2. Use the link token to [launch the link
@@ -131,6 +134,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 </CodeBlock>
 
+<br />
 <br />
 
 3. This will launch the Vital Link widget, where your user can connect their account to Vital.

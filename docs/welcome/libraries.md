@@ -10,8 +10,10 @@ We have created a few libraries to help you integrate with the Vital API. We'll 
 
 ### Supported Libraries
 
-|                                                                  |
+|                                                                  |                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
 | [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
 | [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
 | [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
+| Java                                                             | Soon to be added                                     |
+| Go                                                               | Soon to be added                                     |

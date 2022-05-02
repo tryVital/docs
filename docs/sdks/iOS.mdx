@@ -62,7 +62,7 @@ VitalNetworkClient.setUserId(result.userId)
 <br />
 <br />
 
-:::note
+:::tip
 
 By default, when you create a `userId`, we call `VitalNetworkClient.setUserId` internally. If you don't want this to happen call `VitalNetworkClient.setUserId(result.userId, setUserIdOnSuccess: false)`.
 
@@ -242,7 +242,7 @@ try await VitalNetworkClient.shared.summary.post(
 <br />
 <br />
 
-It's important to notice two things in the above snippets:
+It's important to notice a few things in the above snippet:
 
 1. We set the stage of data as `.daily`. If you are sending old data, please use `.historical` instead. This distinction is used for the Webhooks. If you are not sure if `.historical` data makes sense, you can stick with `.daily`. A `.daily` will always generate a webhook with the full payload of data. For more information, please read the [Webhook Flow](https://vital-docs.readme.io/docs/webhook-data-flow).
 2. The provider (`.appleHealthKit`) must match an existing connected source for that user. This means that if there's no connected source linking the user and `.appleHealthKit`, the request will fail.
@@ -288,7 +288,7 @@ VitalNetworkClient.configure(
 
 This is required, because we use VitalNetworkClient to push HealthKit data.
 
-:::note
+:::info
 When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalNetworkClient` beforehand, otherwise the app will crash.
 :::
 
@@ -318,6 +318,10 @@ VitalHealthKitClient.shared.syncData()
 <br />
 <br />
 
+:::caution
+Everything that holds true for HealthKit, holds true for VitalHealthKit. For example, if someone declines to give permission to a particular data point, the SDK won't be aware. For more information please read [HealthKit's Protecting User Privacy](https://developer.apple.com/documentation/healthkit/protecting_user_privacy).
+:::
+
 Although `syncData()` and `syncData(for:)` make your life easier, they can sometimes feel like a blackbox. To help you understand what's happening under the hood, we expose an `status: AnyPublisher<Status, Never>`. A `Status` looks like this:
 
 ```swift
@@ -342,7 +346,3 @@ cancellable = VitalHealthKitClient.shared.status.sink { value in
 
 <br />
 <br />
-
-:::caution
-Everything that holds true for HealthKit, holds true for VitalHealthKit. For example, if someone declines to give permission to a particular data point, the SDK won't be aware. For more information please read [HealthKit's Protecting User Privacy](https://developer.apple.com/documentation/healthkit/protecting_user_privacy).
-:::

@@ -24,11 +24,10 @@ To get more details of which provider's see the [Provider's Guide](/providers/In
 For some user's they want near real-time data updates. We provider a [`refresh`](http://localhost:3000/api-reference/user#refresh-users-data) API endpoint
 that will allow you to request a refresh of the data for a user at any point in time.
 
-:::note
+:::caution
 
 Vital will only refresh data for users that have connected to Vital via a provider.
 If you have not connected to Vital via a provider, you will not be able to use the refresh API.
 
-The refresh endpoint is also a paid service.
-
+**The refresh endpoint is a paid service.**
 :::

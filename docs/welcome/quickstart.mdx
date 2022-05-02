@@ -40,23 +40,20 @@ our Sandbox and Production environments, and be given a unique API key for each 
 <br />
 
 :::info
-
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
-
 :::
 
 ## Quickstart Setup
 
 We offer different SDKs so you can start building your app right away.
 
-|                   |                                                                                        |
-| ----------------- | -------------------------------------------------------------------------------------- |
-| Python            | [https://github.com/adeptlabs/vital-python](https://github.com/adeptlabs/vital-python) |
-| Node (TypeScript) | [https://github.com/adeptlabs/vital-node](https://github.com/adeptlabs/vital-node)     |
-| Java              | WIP                                                                                    |
-| Go                | WIP                                                                                    |
-
-Please refer to the repository for more details.
+|                                                                  |                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------- |
+| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
+| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
+| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
+| Java                                                             | Soon to be added                                     |
+| Go                                                               | Soon to be added                                     |
 
 ## Creating Your First User
 
@@ -67,6 +64,9 @@ Almost all API requests will interact with a _user_. To allow a _user_ to connec
 :::caution
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
 :::
+
+<br />
+<br />
 
 <Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
 
@@ -121,11 +121,11 @@ The Vital flow begins when your user wants to connect their device to your appli
   >
     <OrderedList height={"100%"}>
       <ListItem height={"29%"} mt={"200px"}>
-        To launch Vital link, first generate a link_token by passing the
+        To launch Vital link, first generate a `link_token` by passing the
         `user_id` to the `/link/token` endpoint.
       </ListItem>
       <ListItem height={"33%"}>
-        Pass the link_token into the Vital link component to open the link for
+        Pass the `link_token` into the Vital link component to open the link for
         the user. Please note: the `link_token` is a short-lived one-time use
         token.
       </ListItem>
@@ -146,7 +146,7 @@ The Vital flow begins when your user wants to connect their device to your appli
 
 Now that we've gone over the Link flow and token exchange process, we can explore what happens
 when you press a button in the Quickstart to make an API call. As an example, we'll look at the
-Quickstart's call to `/summary/sleep`, which retrieves sleep information, for a user. The call
+Quickstart's call to `/summary/sleep`, which retrieves sleep information for a user. The call
 is fairly straightforward and uses the `start_date` and `end_date` as arguments to the Vital
 client object.
 
