@@ -4,13 +4,16 @@ import { Swagger } from "@theme/swagger";
 
 ## Summary
 
-<Swagger endpoint={"/summary/workouts/{user_id}"} method={"get"} title={"Get workouts data"}>
+<Swagger endpoint={"/summary/workouts/{user_id}"} method={"get"} title={"Get workouts data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/workouts/{user_id} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
-
-client = Client(api_key, "sandbox")
-
 data = client.Workouts.get(user_id=*,
       start_date="2020-01-01",
       end_date="2021-01-01"
@@ -19,16 +22,36 @@ data = client.Workouts.get(user_id=*,
 
 </Swagger>
 
-## Raw
+## Stream
 
-<Swagger endpoint={"/summary/workouts/{user_id}/raw"} method={"get"} title={"Get Raw workouts Data"}>
+<Swagger endpoint={"/timeseries/workouts/{workout_id}/stream"} method={"get"} title={"Get workouts stream data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/workouts/{workout_id}/stream \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
+data = client.Workouts.get_stream(workout_id=*)
+```
 
-client = Client(api_key, "sandbox")
+</Swagger>
 
-data = client.ProviderSpecific.get(user_id=*,
+## Raw
+
+<Swagger endpoint={"/summary/workouts/{user_id}/raw"} method={"get"} title={"Get Raw workouts Data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/workouts/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python
+data = client.Workouts.get_raw(user_id=*,
           provider="oura"
           start_date="2020-01-01",
           end_date="2021-01-01"

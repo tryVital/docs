@@ -1,0 +1,21 @@
+import { Swagger } from "@theme/swagger";
+
+# Blood Oxygen
+
+<Swagger endpoint={"/timeseries/{user_id}/blood_oxygen"} method={"get"} title={"Get blood oxygen data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url https://api.tryvital.io/v2/timeseries/{user_id}/blood_oxygen?start_date=2021-01-01&end_date=2021-02-01 \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python
+data = client.Vitals.blood_oxygen(user_id=*,
+        start_date="2020-01-01",
+        end_date="2021-01-01"
+        )
+```
+
+</Swagger>

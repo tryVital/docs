@@ -15,7 +15,12 @@ const config = {
   favicon: "img/favicon.ico",
   organizationName: "vital", // Usually your GitHub org/user name.
   projectName: "vital", // Usually your repo name.
-
+  customFields: {
+    sandbox_us_url: "https://api.sandbox.tryvital.io",
+    sandbox_eu_url: "https://api.sandbox.tryvital.io",
+    prod_us_url: "https://api.tryvital.io",
+    prod_eu_url: "https://api.eu.tryvital.io",
+  },
   presets: [
     [
       "@docusaurus/preset-classic",

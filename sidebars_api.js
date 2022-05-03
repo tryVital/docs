@@ -15,7 +15,6 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   docs: [
-    "Overview",
     {
       type: "html",
       value: "Vital API", // The HTML to be rendered
@@ -86,8 +85,23 @@ const sidebars = {
         },
         {
           type: "link",
-          label: "Create a new link token",
-          href: "/api-reference/link#create-a-new-link-token", // Generate sidebar slice from docs/tutorials/easy
+          label: "Generate a link token",
+          href: "/api-reference/link#generate-link-token", // Generate sidebar slice from docs/tutorials/easy
+        },
+        {
+          type: "link",
+          label: "Link OAuth provider",
+          href: "/api-reference/link#link-oauth-provider", // Generate sidebar slice from docs/tutorials/easy
+        },
+        {
+          type: "link",
+          label: "Link Password provider",
+          href: "/api-reference/link#link-password-provider", // Generate sidebar slice from docs/tutorials/easy
+        },
+        {
+          type: "link",
+          label: "Link Email provider",
+          href: "/api-reference/link#link-email-provider", // Generate sidebar slice from docs/tutorials/easy
         },
       ],
     },
@@ -114,6 +128,11 @@ const sidebars = {
           label: "Stream",
           href: "/api-reference/data/sleep#stream", // Generate sidebar slice from docs/tutorials/easy
         },
+        {
+          type: "link",
+          label: "Raw",
+          href: "/api-reference/data/sleep#raw", // Generate sidebar slice from docs/tutorials/easy
+        },
       ],
     },
 
@@ -129,6 +148,11 @@ const sidebars = {
           type: "link",
           label: "Summary",
           href: "/api-reference/data/workouts#summary", // Generate sidebar slice from docs/tutorials/easy
+        },
+        {
+          type: "link",
+          label: "Stream",
+          href: "/api-reference/data/workouts#stream", // Generate sidebar slice from docs/tutorials/easy
         },
         {
           type: "link",

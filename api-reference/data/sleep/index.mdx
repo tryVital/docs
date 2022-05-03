@@ -4,14 +4,24 @@ import { Swagger } from "@theme/swagger";
 
 ## Summary
 
-<Swagger endpoint={"/summary/sleep/{user_id}"} method={"get"} title={"Get Sleep stream"}>
+<Swagger endpoint={"/summary/sleep/{user_id}"} method={"get"} title={"Get Sleep stream"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/sleep/{user_id}?start_date=2021-01-01&end_date=2021-02-01 \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```js
+data = client.Sleep.get(user_id=*,
+    start_date="2020-01-01",
+    end_date="2021-01-01"
+)
+```
 
 ```python
-from vital import Client
-
-client = Client(api_key, "sandbox")
-
-data = client.Vitals.heartrate(user_id=*,
+data = client.Sleep.get(user_id=*,
     start_date="2020-01-01",
     end_date="2021-01-01"
 )
@@ -21,17 +31,42 @@ data = client.Vitals.heartrate(user_id=*,
 
 ## Stream
 
-<Swagger endpoint={"/timeseries/sleep/{sleep_id}/stream"} method={"get"} title={"Get Sleep stream"}>
+<Swagger endpoint={"/timeseries/sleep/{sleep_id}/stream"} method={"get"} title={"Get Sleep stream"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/sleep/{sleep_id}/stream \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
+data = client.Sleep.getStream(sleep_id=*)
+```
 
-client = Client(api_key, "sandbox")
+```js
+data = client.Sleep.getStream(sleep_id=*)
+```
 
-data = client.Vitals.heartrate(user_id=*,
-        start_date="2020-01-01",
-        end_date="2021-01-01"
-        )
+</Swagger>
+
+## Raw
+
+<Swagger endpoint={"/summary/sleep/{user_id}/raw"} method={"get"} title={"Get raw sleep data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/sleep/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```js
+data = client.Sleep.getRaw(sleep_id=*)
+```
+
+```python
+data = client.Sleep.get_raw(sleep_id=*)
 ```
 
 </Swagger>

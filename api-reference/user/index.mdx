@@ -4,11 +4,11 @@ import { Swagger } from "@theme/swagger";
 
 ## Create user
 
-<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
+<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"} include_client_instantiation >
 
 ```bash
 curl --request POST \
-     --url https://example.com/v2/user/ \
+     --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --data '
@@ -21,22 +21,10 @@ curl --request POST \
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
-
+const user = await client.User.create(client_user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.create(client_user_id)
 ```
 
@@ -44,31 +32,19 @@ user = client.User.create(client_user_id)
 
 ## Get user
 
-<Swagger endpoint={"/user/{user_id}"} method={"get"} title={"Get a Vital User"}>
+<Swagger endpoint={"/user/{user_id}"} method={"get"} title={"Get a Vital User"} include_client_instantiation>
 
 ```bash
 curl --request GET \
-     --url https://example.com/v2/user/user_id \
+     --url {{BASE_URL}}/v2/user/{user_id} \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.get(user_id)
-
+const user = await client.User.get(user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.get(user_id)
 ```
 
@@ -76,31 +52,19 @@ user = client.User.get(user_id)
 
 ## Delete user
 
-<Swagger endpoint={"/user/{user_id}"} method={"delete"} title={"Delete a Vital User"}>
+<Swagger endpoint={"/user/{user_id}"} method={"delete"} title={"Delete a Vital User"} include_client_instantiation>
 
 ```bash
 curl --request DELETE \
-     --url https://example.com/v2/user/user_id \
+     --url {{BASE_URL}}/v2/user/{user_id} \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.delete(user_id)
-
+const user = await client.User.delete(user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.delete(user_id)
 ```
 
@@ -108,31 +72,19 @@ user = client.User.delete(user_id)
 
 ## Get all users for team
 
-<Swagger endpoint={"/user/"} method={"get"} title={"Delete a Vital User"}>
+<Swagger endpoint={"/user/"} method={"get"} title={"Delete a Vital User"} include_client_instantiation>
 
 ```bash
 curl --request GET \
-     --url https://example.com/v2/user/ \
+     --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.getAll()
-
+const user = await client.User.getAll();
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.get_all(user_id)
 ```
 
@@ -140,31 +92,19 @@ user = client.User.get_all(user_id)
 
 ## Get users connected providers
 
-<Swagger endpoint={"/user/providers/{user_id}"} method={"get"} title={"Delete a Vital User"}>
+<Swagger endpoint={"/user/providers/{user_id}"} method={"get"} title={"Delete a Vital User"} include_client_instantiation>
 
 ```bash
 curl --request GET \
-     --url https://example.com/v2/user/providers/user_id \
+     --url {{BASE_URL}}/v2/user/providers/{user_id} \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.providers(user_id)
-
+const user = await client.User.providers(user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.providers(user_id)
 ```
 
@@ -172,31 +112,19 @@ user = client.User.providers(user_id)
 
 ## Refresh users data
 
-<Swagger endpoint={"/user/refresh/{user_id}"} method={"post"} title={"Refresh data for Vital User"}>
+<Swagger endpoint={"/user/refresh/{user_id}"} method={"post"} title={"Refresh data for Vital User"} include_client_instantiation>
 
 ```bash
 curl --request POST \
-     --url https://example.com/v2/user/refresh/user_id \
+     --url {{BASE_URL}}/v2/user/refresh/{user_id} \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.refresh(user_id)
-
+const user = await client.User.refresh(user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.refresh(user_id)
 ```
 
@@ -204,31 +132,19 @@ user = client.User.refresh(user_id)
 
 ## Deregister provider for user
 
-<Swagger endpoint={"/user/{user_id}/{provider}"} method={"delete"} title={"Refresh data for Vital User"}>
+<Swagger endpoint={"/user/{user_id}/{provider}"} method={"delete"} title={"Refresh data for Vital User"} include_client_instantiation>
 
 ```bash
 curl --request DELETE \
-     --url https://example.com/v2/user/user_id/provider \
+     --url {{BASE_URL}}/v2/user/{user_id}/provider \
      --header 'Accept: application/json'
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.deregisterProvider(user_id)
-
+const user = await client.User.deregisterProvider(user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 user = client.User.deregister_provider(user_id)
 ```
 

@@ -2,13 +2,16 @@ import { Swagger } from "@theme/swagger";
 
 # IGG
 
-<Swagger endpoint={"/timeseries/{user_id}/igg"} method={"get"} title={"Get heartrate data"}>
+<Swagger endpoint={"/timeseries/{user_id}/igg"} method={"get"} title={"Get igg data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url https://api.tryvital.io/v2/timeseries/{user_id}/igg?start_date=2021-01-01&end_date=2021-02-01 \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
-
-client = Client(api_key, "sandbox")
-
 data = client.Vitals.igg(user_id=*,
         start_date="2020-01-01",
         end_date="2021-01-01"

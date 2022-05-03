@@ -1,7 +1,15 @@
 import React from "react";
 import { chakra, useDisclosure, Collapse, Text, Box } from "@chakra-ui/react";
 
-export const Param = ({ name, type, required, description, ...props }) => {
+export const Param = ({
+  name,
+  type,
+  required,
+  description,
+  deprecated,
+  ...props
+}) => {
+  if (deprecated) return null;
   return (
     <chakra.tr
       sx={{

@@ -19,6 +19,7 @@ import {
   OrderedList,
   ListItem,
   Image,
+  Button,
 } from "@chakra-ui/react";
 
 # Introduction
@@ -36,6 +37,28 @@ our Sandbox and Production environments, and be given a unique API key for each 
 | ------------------ | ------------------------------------------- |
 | @@FiBox sandbox    | Integration Testing                         |
 | @@FiZap production | Live environment to use with real customers |
+
+| API Urls              |                                    |
+| --------------------- | ---------------------------------- |
+| @@FiZap production    | https://api.tryvital.io            |
+| @@FiZap production-eu | https://api.eu.tryvital.io         |
+| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
+| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
+
+Example API collection can be downloaded from [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
+
+<Button
+  mb={"30px"}
+  href={"postman:https://www.getpostman.com/collections/d4580c54f85374bd7cc5"}
+  sx={{ ":hover": { cursor: "pointer" }, border: 0, bg: "white" }}
+  onClick={() =>
+    window.open(
+      "postman:https://www.getpostman.com/collections/d4580c54f85374bd7cc5"
+    )
+  }
+>
+  <Image src={"/img/postman.png"} width={"100px"} />
+</Button>
 
 <br />
 
@@ -72,7 +95,7 @@ Personally identifiable information (PII), such as an email address or phone num
 
 ```bash
 curl --request POST \
-     --url https://example.com/v2/user/ \
+     --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --data '

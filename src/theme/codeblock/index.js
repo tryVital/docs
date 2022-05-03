@@ -13,10 +13,19 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
-import { Select } from "@chakra-ui/react";
+import useGlobalData from "@docusaurus/useGlobalData";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function mapLanugageToLabel(string) {
+  const map = {
+    js: "node",
+    bash: "shell",
+    python: "python",
+  };
+  return map[string] ? map[string] : string;
 }
 
 export const CodeResponse = ({ language, code }) => {
@@ -78,21 +87,67 @@ const getCodeJson = (markdownNode) => {
   }
 };
 
-export const CodeBlock = ({ title, children, response }) => {
+const injectVariables = (code, region) => {
+  const urls = {
+    eu: "https://api.eu.tryvital.io",
+    us: "https://api.tryvital.io",
+  };
+  return code
+    .replace("{{BASE_URL}}", urls[region])
+    .replace("{{REGION}}", `"${region}"`);
+};
+
+const addInstantiationCode = (code, language, include_client_instantiation) => {
+  if (!include_client_instantiation) return code;
+  const initCode = {
+    js: `const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+      api_key: <API_KEY>,
+      environment: "sandbox",
+      region: {{REGION}}
+    });
+
+`,
+    python: `from vital import Client
+
+client = Client(
+         api_key=<API_KEY>,
+         environment="sandbox",
+         region={{REGION}}
+        )
+
+`,
+  };
+  return initCode[language] ? initCode[language] + code : code;
+};
+
+export const CodeBlock = ({
+  title,
+  children,
+  include_client_instantiation,
+  response,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isCopied, setCopied] = useState(false);
+  const [region, setRegion] = useState("us");
 
   const codeJson = getCodeJson(children);
+  const codeWithInstantiation = addInstantiationCode(
+    codeJson[activeIndex].code,
+    codeJson[activeIndex].language,
+    include_client_instantiation
+  );
+  const selectedCode = injectVariables(codeWithInstantiation, region);
   const handleCopied = () => {
     setTimeout(() => {
       setCopied(true);
     }, 100);
-    navigator.clipboard.writeText(codeJson[activeIndex].code);
+    navigator.clipboard.writeText(selectedCode);
     setTimeout(() => {
       setCopied(false);
     }, 1500);
   };
-
   const codeBgPrimary = "#1A2652";
   const codeBgSecondary = null;
   return (
@@ -104,6 +159,20 @@ export const CodeBlock = ({ title, children, response }) => {
     >
       <HStack width={"100%"} justifyContent="space-between">
         <HStack pl={10}>
+          <chakra.select
+            onChange={(e) => setRegion(e.target.value)}
+            bg={codeBgPrimary}
+            color={"white"}
+            borderColor={codeBgPrimary}
+            fontSize={"15px"}
+            fontWeight={600}
+            sx={{ _hover: { cursor: "pointer" }, textAlign: "left" }}
+          >
+            <option value={"us"}>🇺🇸</option>
+            <option value={"eu"} color={"white"}>
+              🇪🇺
+            </option>
+          </chakra.select>
           <chakra.div
             py="5px"
             color={response ? "#4f566b" : "#ADADAD"}
@@ -127,7 +196,7 @@ export const CodeBlock = ({ title, children, response }) => {
             >
               {codeJson.map((el, i) => (
                 <option key={i} value={i} color={"white"}>
-                  {capitalizeFirstLetter(el.language)}
+                  {capitalizeFirstLetter(mapLanugageToLabel(el.language))}
                 </option>
               ))}
             </chakra.select>
@@ -168,7 +237,7 @@ export const CodeBlock = ({ title, children, response }) => {
       </HStack>
       <Code
         language={codeJson[activeIndex].language}
-        code={codeJson[activeIndex].code}
+        code={selectedCode}
         response={response}
         bgColor={codeBgSecondary}
       />
@@ -206,11 +275,13 @@ export const MDXCodeBlock = ({ children }) => {
   const [isCopied, setCopied] = useState(false);
 
   const codeJson = getCodeJson(children);
+  const selectedCode = injectVariables(codeJson[activeIndex].code, "us");
+
   const handleCopied = () => {
     setTimeout(() => {
       setCopied(true);
     }, 100);
-    navigator.clipboard.writeText(codeJson[activeIndex].code);
+    navigator.clipboard.writeText(selectedCode);
     setTimeout(() => {
       setCopied(false);
     }, 1500);
@@ -277,7 +348,7 @@ export const MDXCodeBlock = ({ children }) => {
       </HStack>
       <Code
         language={codeJson[activeIndex].language}
-        code={codeJson[activeIndex].code}
+        code={selectedCode}
         response={false}
       />
     </VStack>

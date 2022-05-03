@@ -3,20 +3,13 @@ import SwaggerParser from "@apidevtools/swagger-parser";
 import { useEffect } from "react";
 import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
-import {
-  chakra,
-  Badge,
-  HStack,
-  Text,
-  Flex,
-  Wrap,
-  WrapItem,
-  Box,
-} from "@chakra-ui/react";
+import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
+import Examples from "../data/examplesOverride";
 
 const mapSchemaToJson = (schema) => {
   if (!schema) return {};
-  const { properties, required, type, description, ...others } = schema;
+  const { properties, required, type, description, deprecated, ...others } =
+    schema;
   const json = {};
   if (schema.additionalProperties) {
     json.items = mapSchemaToJson(schema.additionalProperties);
@@ -42,6 +35,7 @@ const mapSchemaToJson = (schema) => {
   if (required) {
     json.required = required;
   }
+  json.deprecated = deprecated ? true : false;
   return json;
 };
 
@@ -62,7 +56,6 @@ const getType = (schema) => {
       })
       .join(",");
   } else if (schema.allOf) {
-    console.log("ALL OF", schema.allOf);
   } else if (schema.type) {
     if (schema.format) return `${schema.type}:${schema.format}`;
     return schema.type;
@@ -115,10 +108,17 @@ const mapBody = (body) => {
           type: body[el]?.type,
           description: body[el]?.description,
           required: body?.required?.indexOf(el) > -1,
+          deprecated: body[el]?.deprecated ? true : false,
         };
       }
     })
-    .filter((el) => el.name !== "required" && el.name !== "type");
+    .filter(
+      (el) =>
+        el.name !== "required" &&
+        el.name !== "type" &&
+        el.name !== "deprecated" &&
+        el.name !== "description"
+    );
   return data;
 };
 
@@ -132,13 +132,18 @@ const getExampleResponse = (schema) => {
   } else if (responseSchema.additionalProperties) {
     return [responseSchema.additionalProperties.items.example];
   } else if (responseSchema?.properties) {
-    console.log(schema);
     return [responseSchema?.properties];
   }
   console.log("FAILED", responseSchema);
 };
 
-export const Swagger = ({ endpoint, method, title, children }) => {
+export const Swagger = ({
+  endpoint,
+  method,
+  title,
+  children,
+  include_client_instantiation,
+}) => {
   const [endpointData, setEndpointData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
   const [responseExample, setResponseExample] = useState("");
@@ -154,10 +159,6 @@ export const Swagger = ({ endpoint, method, title, children }) => {
             "No schema found - please check your endpoint and method"
           );
         }
-        if (endpoint == "/user/providers/{user_id}") {
-          console.log({ schema, endpoint: `/v2${endpoint}` });
-        }
-
         let requestBody =
           schema.requestBody?.content["application/json"]?.schema;
         if (!requestBody) {
@@ -183,9 +184,11 @@ export const Swagger = ({ endpoint, method, title, children }) => {
         };
         setResponseData(response);
         const exampleResponse = getExampleResponse(schema);
-        // console.log({ exampleResponse, endpoint: `/v2${endpoint}` });
-
-        setResponseExample(JSON.stringify(exampleResponse, null, 2));
+        setResponseExample(
+          Examples[`/v2${endpoint}`]
+            ? JSON.stringify(Examples[`/v2${endpoint}`], null, 2)
+            : JSON.stringify(exampleResponse, null, 2)
+        );
       } catch (err) {
         console.error(err);
       }
@@ -228,6 +231,7 @@ export const Swagger = ({ endpoint, method, title, children }) => {
       <ParamsAndCodeBlock
         title={title}
         params={[...endpointData.params, ...endpointData.body]}
+        include_client_instantiation={include_client_instantiation}
       >
         {children}
       </ParamsAndCodeBlock>
