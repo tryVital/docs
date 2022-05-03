@@ -1,9 +1,10 @@
+import { Flex, Image, Heading } from "@chakra-ui/react";
+import { CodeBlock } from "@theme/codeblock";
+
 # Freestyle
 
-:::note
-Please make sure you invite Vital to your practice as a clinician with admin rights.
-
-To connect a user to Vital you must first connect your Freestyle practice to Vital.
+:::caution
+Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital.
 Vital has two practices (depending on environment):
 
 | Environment |                  |
@@ -11,17 +12,11 @@ Vital has two practices (depending on environment):
 | Sandbox     | tryVital-sandbox |
 | Production  | tryVital         |
 
+If you get stuck at any point, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
 :::
-import { Flex, Image, Heading } from "@chakra-ui/react";
-import { CodeBlock } from "@theme/codeblock";
 
-Once your Freestyle practice is connected to the Vital practice,
-you need to instruct your user's to connect their Libre account to your practice.
-This allows Vital to start pulling data from their account.
-This can be through the Libre app. In the app,
-instruct your user's to head to _Connected Apps_ and clicking on
-the _Connect to a practice_ button. From there, they should enter `tryvital` or `tryvital-sandbox`
-depending on which environment.
+Once your Freestyle practice is connected to the Vital practice, you need to instruct your user's to connect their Libre account to your practice.
+This allows Vital to start pulling data from their account. This can be through the Libre app.
 
 <br />
 
@@ -50,7 +45,6 @@ To connect your user to Vital via the Widget you can follow the guide [here](../
 <CodeBlock title={"Connecting email provider"}>
 
 ```python
-
 from vital import Client
 
 client = Client(api_key=<API_KEY>, environment='sandbox')

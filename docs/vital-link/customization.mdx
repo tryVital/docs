@@ -42,6 +42,8 @@ curl --request POST \
 ```
 
 </CodeBlock>
+<br />
+<br />
 
 Once you have your Vital link token, you can use this to connect to a specific provider. Providers are split by their authentication flows: `EMAIL`, `OAUTH`, `PASSWORD`.
 
@@ -53,18 +55,18 @@ Current email providers are:
 | --------- | -------------------------- |
 | Freestyle | Abbott CGM Glucose monitor |
 
-### `Password`
+### `Email + Password`
 
-Current email providers are:
+Current email and password providers are:
 
-| Provider    | Description                  |
-| ----------- | ---------------------------- |
-| Renpho      | Fitness Scales               |
-| Zwift       | Virtual cycling and running  |
-| Peloton     | Popular Indoor Exercise bike |
-| Eight Sleep |                              |
-| Beurer      |                              |
-| Whoop       |                              |
+| Provider    | Description                        |
+| ----------- | ---------------------------------- |
+| Renpho      | Fitness Scales                     |
+| Zwift       | Virtual cycling and running        |
+| Peloton     | Popular Indoor Exercise bike       |
+| Eight Sleep | Smart Mattress                     |
+| Beurer      | Blood pressure and glucose devices |
+| Whoop       | Smart Activity Watches             |
 
 To connect a password provider:
 
@@ -100,6 +102,8 @@ const resp = await client.Link.connectProvider(
 ```
 
 </CodeBlock>
+<br />
+<br />
 
 ### `OAuth`
 
@@ -115,6 +119,7 @@ Current OAuth providers are:
 | iHealth  | Blood pressure, Fitness scales, Glucometers & Fitness watches |
 | Withings | Fitness scales, watches and health monitors                   |
 
+<br />
 <br />
 
 <CodeBlock title={"Connecting a password provider:"}>
