@@ -186,7 +186,10 @@ The `redirectURL` is the URL that's called after the authentication is done. For
 <br />
 <br />
 
-After having the `url`, you can open it via `SFSafariViewController` or `WKWebView`. On completion, your app will be called with an URL with the following shape: `vitalExample://?state=<state>&isMobile=true&provider=<provider>`. The `state` param is either `success` or `error`.
+After having the `url`, you can open it with `SFSafariViewController` or `WKWebView`. On completion, your app will be called with an URL with the following shape:
+
+1. On success: `vitalExample://?state=success&isMobile=true&provider=<provider>`.
+2. On failure: `vitalExample://?state=error&isMobile=true&provider=<provider>&error=<error description>`.
 
 ---
 
