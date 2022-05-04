@@ -4,7 +4,7 @@
   "paths": {
     "/v2/link/token": {
       "post": {
-        "tags": ["vital-api", "link"],
+        "tags": ["link"],
         "summary": "Generate Vital Link Token",
         "description": "POST Generate user Link token using user_id.",
         "operationId": "generate_vital_link_token_v2_link_token_post",
@@ -40,9 +40,9 @@
     },
     "/v2/link/provider/oauth/{oauth_provider}": {
       "get": {
-        "tags": ["vital-api", "link"],
+        "tags": ["link"],
         "summary": "Get Oauth Provider",
-        "description": "REQUEST_SOURCE: CUSTOMER\nPROVIDER_TYPE: OAUTH-PROVIDER\nThis function is hit by custom-ui to get an oauth link.",
+        "description": "This endpoint generates an OAuth link for oauth provider",
         "operationId": "get_oauth_provider_v2_link_provider_oauth__oauth_provider__get",
         "parameters": [
           {
@@ -74,9 +74,9 @@
     },
     "/v2/link/provider/password/{provider}": {
       "post": {
-        "tags": ["vital-api", "link"],
+        "tags": ["link"],
         "summary": "Connect Individual Provider",
-        "description": "REQUEST_SOURCE: CUSTOMER\nPROVIDER_TYPE: PASSWORD-AUTH\nThis connects auth providers that are password based.",
+        "description": "This connects auth providers that are password based.",
         "operationId": "connect_individual_provider_v2_link_provider_password__provider__post",
         "parameters": [
           {
@@ -121,9 +121,54 @@
         }
       }
     },
+    "/v2/link/provider/email/{provider}": {
+      "post": {
+        "tags": ["link"],
+        "summary": "Connect Email Auth Provider",
+        "description": "This connects auth providers that are email based.",
+        "operationId": "connect_email_auth_provider_v2_link_provider_email__provider__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Email providers that require emails freestyle_auth",
+              "allOf": [{ "$ref": "#/components/schemas/EmailProviders" }]
+            },
+            "name": "provider",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EmailProviderAuthLink" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ConnectionStatus" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/summary/profile/{user_id}": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Profile",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_v2_summary_profile__user_id__get",
@@ -171,7 +216,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Post User Profile",
         "operationId": "post_user_profile_v2_summary_profile__user_id__post",
         "parameters": [
@@ -221,7 +266,7 @@
     },
     "/v2/summary/profile/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Profile Raw",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_raw_v2_summary_profile__user_id__raw_get",
@@ -271,7 +316,7 @@
     },
     "/v2/summary/devices/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Devices Raw",
         "description": "Get Devices for user_id",
         "operationId": "get_user_devices_raw_v2_summary_devices__user_id__raw_get",
@@ -321,7 +366,7 @@
     },
     "/v2/summary/activity/{user_id}": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Activity",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_v2_summary_activity__user_id__get",
@@ -399,7 +444,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Post User Activity",
         "operationId": "post_user_activity_v2_summary_activity__user_id__post",
         "parameters": [
@@ -449,7 +494,7 @@
     },
     "/v2/summary/activity/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Activity Raw",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_raw_v2_summary_activity__user_id__raw_get",
@@ -527,7 +572,7 @@
     },
     "/v2/summary/workouts/{user_id}": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Workouts",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_v2_summary_workouts__user_id__get",
@@ -605,7 +650,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Post User Workout",
         "operationId": "post_user_workout_v2_summary_workouts__user_id__post",
         "parameters": [
@@ -655,7 +700,7 @@
     },
     "/v2/summary/workouts/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Workouts Raw",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_raw_v2_summary_workouts__user_id__raw_get",
@@ -733,7 +778,7 @@
     },
     "/v2/summary/sleep/{user_id}": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Sleep",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_v2_summary_sleep__user_id__get",
@@ -809,7 +854,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Post User Sleep",
         "operationId": "post_user_sleep_v2_summary_sleep__user_id__post",
         "parameters": [
@@ -859,7 +904,7 @@
     },
     "/v2/summary/sleep/{user_id}/stream": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Sleep Stream",
         "description": "Get Daily sleep stream for user_id",
         "operationId": "get_user_sleep_stream_v2_summary_sleep__user_id__stream_get",
@@ -937,7 +982,7 @@
     },
     "/v2/summary/sleep/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Sleep Raw",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_raw_v2_summary_sleep__user_id__raw_get",
@@ -1015,7 +1060,7 @@
     },
     "/v2/summary/body/{user_id}": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Body",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_v2_summary_body__user_id__get",
@@ -1091,7 +1136,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Post User Body",
         "operationId": "post_user_body_v2_summary_body__user_id__post",
         "parameters": [
@@ -1141,7 +1186,7 @@
     },
     "/v2/summary/body/{user_id}/raw": {
       "get": {
-        "tags": ["vital-api", "summary"],
+        "tags": ["summary"],
         "summary": "Get User Body Raw",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_raw_v2_summary_body__user_id__raw_get",
@@ -1217,115 +1262,9 @@
         }
       }
     },
-    "/v2/summary/vitals/{user_id}/blood_pressure": {
-      "post": {
-        "tags": ["vital-api", "summary"],
-        "summary": "Post User Blood Pressure",
-        "operationId": "post_user_blood_pressure_v2_summary_vitals__user_id__blood_pressure_post",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "user_id",
-            "in": "path"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManualBloodPressureCreationPayload"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "Response Post User Blood Pressure V2 Summary Vitals  User Id  Blood Pressure Post",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/summary/vitals/{user_id}/{resource}": {
-      "post": {
-        "tags": ["vital-api", "summary"],
-        "summary": "Post User Vitals",
-        "operationId": "post_user_vitals_v2_summary_vitals__user_id___resource__post",
-        "parameters": [
-          {
-            "required": true,
-            "schema": { "$ref": "#/components/schemas/VitalsResource" },
-            "name": "resource",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "user_id",
-            "in": "path"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ManualTimeseriesCreationPayload"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "Response Post User Vitals V2 Summary Vitals  User Id   Resource  Post",
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v2/timeseries/sleep/{sleep_id}/stream": {
       "get": {
-        "tags": ["vital-api", "timeseries"],
+        "tags": ["timeseries"],
         "summary": "Get User Sleep Stream",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_sleep_stream_v2_timeseries_sleep__sleep_id__stream_get",
@@ -1361,7 +1300,7 @@
     },
     "/v2/timeseries/workouts/{workout_id}/stream": {
       "get": {
-        "tags": ["vital-api", "timeseries"],
+        "tags": ["timeseries"],
         "summary": "Get User Workouts",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_workouts_v2_timeseries_workouts__workout_id__stream_get",
@@ -1399,7 +1338,7 @@
     },
     "/v2/timeseries/{user_id}/blood_pressure": {
       "get": {
-        "tags": ["vital-api", "timeseries"],
+        "tags": ["timeseries"],
         "summary": "Get Blood Pressure Data",
         "description": "Get blood pressure data for user.",
         "operationId": "get_blood_pressure_data_v2_timeseries__user_id__blood_pressure_get",
@@ -1479,14 +1418,11 @@
             }
           }
         }
-      }
-    },
-    "/v2/timeseries/{user_id}/glucose": {
-      "get": {
-        "tags": ["vital-api", "timeseries"],
-        "summary": "Get Glucose Data",
-        "description": "Get Glucose data for user.",
-        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
+      },
+      "post": {
+        "tags": ["timeseries"],
+        "summary": "Post User Blood Pressure",
+        "operationId": "post_user_blood_pressure_v2_timeseries__user_id__blood_pressure_post",
         "parameters": [
           {
             "required": true,
@@ -1497,311 +1433,26 @@
             },
             "name": "user_id",
             "in": "path"
-          },
-          {
-            "description": "Provider oura/strava etc.",
-            "required": false,
-            "schema": {
-              "title": "Provider",
-              "type": "string",
-              "description": "Provider oura/strava etc.",
-              "default": ""
-            },
-            "name": "provider",
-            "in": "query"
-          },
-          {
-            "description": "Date from in YYYY-MM-DD",
-            "required": true,
-            "schema": {
-              "title": "Start Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date from in YYYY-MM-DD"
-            },
-            "name": "start_date",
-            "in": "query"
-          },
-          {
-            "description": "Date to in YYYY-MM-DD",
-            "required": false,
-            "schema": {
-              "title": "End Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date to in YYYY-MM-DD"
-            },
-            "name": "end_date",
-            "in": "query"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualBloodPressureCreationPayload"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientFacingGlucoseTimeseries"
-                  }
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/timeseries/{user_id}/heartrate": {
-      "get": {
-        "tags": ["vital-api", "timeseries"],
-        "summary": "Get Heartrate Data",
-        "description": "Get Heartrate data for user.",
-        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "user_id",
-            "in": "path"
-          },
-          {
-            "description": "Provider oura/strava etc.",
-            "required": false,
-            "schema": {
-              "title": "Provider",
-              "type": "string",
-              "description": "Provider oura/strava etc.",
-              "default": ""
-            },
-            "name": "provider",
-            "in": "query"
-          },
-          {
-            "description": "Date from in YYYY-MM-DD",
-            "required": true,
-            "schema": {
-              "title": "Start Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date from in YYYY-MM-DD"
-            },
-            "name": "start_date",
-            "in": "query"
-          },
-          {
-            "description": "Date to in YYYY-MM-DD",
-            "required": false,
-            "schema": {
-              "title": "End Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date to in YYYY-MM-DD"
-            },
-            "name": "end_date",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientFacingHeartrateTimeseries"
-                  }
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/timeseries/{user_id}/ige": {
-      "get": {
-        "tags": ["vital-api", "timeseries"],
-        "summary": "Get ige Data",
-        "description": "Get ige data for user.",
-        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "user_id",
-            "in": "path"
-          },
-          {
-            "description": "Provider oura/strava etc.",
-            "required": false,
-            "schema": {
-              "title": "Provider",
-              "type": "string",
-              "description": "Provider oura/strava etc.",
-              "default": ""
-            },
-            "name": "provider",
-            "in": "query"
-          },
-          {
-            "description": "Date from in YYYY-MM-DD",
-            "required": true,
-            "schema": {
-              "title": "Start Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date from in YYYY-MM-DD"
-            },
-            "name": "start_date",
-            "in": "query"
-          },
-          {
-            "description": "Date to in YYYY-MM-DD",
-            "required": false,
-            "schema": {
-              "title": "End Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date to in YYYY-MM-DD"
-            },
-            "name": "end_date",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientFacingIGETimeseries"
-                  }
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/timeseries/{user_id}/igg": {
-      "get": {
-        "tags": ["vital-api", "timeseries"],
-        "summary": "Get igg Data",
-        "description": "Get igg data for user.",
-        "operationId": "get_glucose_data_v2_timeseries__user_id__glucose_get",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-              "type": "string",
-              "format": "uuid"
-            },
-            "name": "user_id",
-            "in": "path"
-          },
-          {
-            "description": "Provider oura/strava etc.",
-            "required": false,
-            "schema": {
-              "title": "Provider",
-              "type": "string",
-              "description": "Provider oura/strava etc.",
-              "default": ""
-            },
-            "name": "provider",
-            "in": "query"
-          },
-          {
-            "description": "Date from in YYYY-MM-DD",
-            "required": true,
-            "schema": {
-              "title": "Start Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date from in YYYY-MM-DD"
-            },
-            "name": "start_date",
-            "in": "query"
-          },
-          {
-            "description": "Date to in YYYY-MM-DD",
-            "required": false,
-            "schema": {
-              "title": "End Date",
-              "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
-              ],
-              "description": "Date to in YYYY-MM-DD"
-            },
-            "name": "end_date",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "title": "Response Get Blood Pressure Data V2 Timeseries  User Id  Blood Pressure Get",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientFacingIGGTimeseries"
-                  }
+                  "title": "Response Post User Blood Pressure V2 Timeseries  User Id  Blood Pressure Post",
+                  "type": "string"
                 }
               }
             }
@@ -1819,7 +1470,7 @@
     },
     "/v2/timeseries/{user_id}/{resource}": {
       "get": {
-        "tags": ["vital-api", "timeseries"],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id___resource__get",
@@ -1905,11 +1556,865 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": ["timeseries"],
+        "summary": "Post User Vitals",
+        "operationId": "post_user_vitals_v2_timeseries__user_id___resource__post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/VitalsResource" },
+            "name": "resource",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ManualTimeseriesCreationPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Post User Vitals V2 Timeseries  User Id   Resource  Post",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/heartrate": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__heartrate_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/blood_oxygen": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__blood_oxygen_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/ige": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__ige_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/igg": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__igg_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/glucose": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__glucose_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/cholesterol/triglycerides": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_triglycerides_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/cholesterol/ldl": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_ldl_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/cholesterol/hdl": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_hdl_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/cholesterol/total": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_total_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/timeseries/{user_id}/cholesterol": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "name": "resource",
+            "in": "query"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                { "type": "string" },
+                { "type": "string", "format": "date-time" }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
       }
     },
     "/v2/user/": {
       "get": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Get Teams Users",
         "description": "GET All users for team.",
         "operationId": "get_teams_users_v2_user__get",
@@ -1929,7 +2434,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Create User",
         "description": "POST Create's a vital user given a client_user_id and returns the user_id",
         "operationId": "create_user_v2_user__post",
@@ -1963,7 +2468,7 @@
     },
     "/v2/user/providers/{user_id}": {
       "get": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Get Connected Providers",
         "description": "GET Users connected providers",
         "operationId": "get_connected_providers_v2_user_providers__user_id__get",
@@ -2010,7 +2515,7 @@
     },
     "/v2/user/{user_id}": {
       "get": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Get User",
         "description": "GET User details given the user_id.",
         "operationId": "get_user_v2_user__user_id__get",
@@ -2046,7 +2551,7 @@
         }
       },
       "delete": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Delete User",
         "operationId": "delete_user_v2_user__user_id__delete",
         "parameters": [
@@ -2083,7 +2588,7 @@
     },
     "/v2/user/{user_id}/{provider}": {
       "delete": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Deregister Provider",
         "operationId": "deregister_provider_v2_user__user_id___provider__delete",
         "parameters": [
@@ -2126,7 +2631,7 @@
     },
     "/v2/user/refresh/{user_id}": {
       "post": {
-        "tags": ["vital-api", "user"],
+        "tags": ["user"],
         "summary": "Refresh User Id",
         "description": "Trigger a manual refresh for a specific user",
         "operationId": "refresh_user_id_v2_user_refresh__user_id__post",
@@ -2164,7 +2669,7 @@
     },
     "/v2/providers/": {
       "get": {
-        "tags": ["vital-api", "providers"],
+        "tags": ["providers"],
         "summary": "Get List Of Providers",
         "description": "Get Provider list",
         "operationId": "get_list_of_providers_v2_providers__get",
@@ -2188,7 +2693,7 @@
     },
     "/v2/testkit/orders": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Orders",
         "description": "Get testkit order for team",
         "operationId": "get_orders_v2_testkit_orders_get",
@@ -2288,7 +2793,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders_post",
@@ -2322,7 +2827,7 @@
     },
     "/v2/testkit/orders/": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Orders",
         "description": "Get testkit order for team",
         "operationId": "get_orders_v2_testkit_orders__get",
@@ -2422,7 +2927,7 @@
         }
       },
       "post": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders__post",
@@ -2456,7 +2961,7 @@
     },
     "/v2/testkit/orders/{order_id}": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Order",
         "description": "Get individual order",
         "operationId": "get_order_v2_testkit_orders__order_id__get",
@@ -2496,7 +3001,7 @@
     },
     "/v2/testkit/orders/{order_id}/cancel": {
       "post": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Cancel Order",
         "description": "DELETE Delete User Order",
         "operationId": "cancel_order_v2_testkit_orders__order_id__cancel_post",
@@ -2534,7 +3039,7 @@
     },
     "/v2/testkit/orders/{order_id}/results": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result",
         "description": "Get available test kits.",
         "operationId": "get_testkit_result_v2_testkit_orders__order_id__results_get",
@@ -2553,7 +3058,7 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/TestkitsResults"} } }
+            "content": { "application/json": { "schema": {} } }
           },
           "422": {
             "description": "Validation Error",
@@ -2568,7 +3073,7 @@
     },
     "/v2/testkit/orders/{order_id}/test": {
       "post": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Test Testkit Process",
         "description": "Get available test kits.",
         "operationId": "test_testkit_process_v2_testkit_orders__order_id__test_post",
@@ -2602,7 +3107,7 @@
     },
     "/v2/testkit/orders/{order_id}/results/metadata": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result Metadata",
         "description": "1. Get order result by order_id\n2. Return results as Lab Results Metadata and data as raw json",
         "operationId": "get_testkit_result_metadata_v2_testkit_orders__order_id__results_metadata_get",
@@ -2640,7 +3145,7 @@
     },
     "/v2/testkit/orders/{order_id}/results/raw": {
       "get": {
-        "tags": ["vital-api", "testkit_orders"],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result Raw",
         "description": "1. Get order result by order_id\n2. Return results as Lab Results Metadata and data as raw json",
         "operationId": "get_testkit_result_raw_v2_testkit_orders__order_id__results_raw_get",
@@ -2746,7 +3251,7 @@
         "example": {
           "activity": [
             {
-              "date": "2022-04-20",
+              "date": "2022-05-04",
               "calories_total": 100,
               "calories_active": 2000,
               "steps": 10000,
@@ -2759,7 +3264,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "11eb3e52-cf8d-4a88-a828-c7aa1ab71ad2"
+              "user_id": "1469480d-787b-4546-bf1e-96c025a61039"
             }
           ]
         }
@@ -2778,8 +3283,8 @@
         "example": {
           "body": [
             {
-              "id": "50abf6b9-6097-4d05-8299-f4995d929f68",
-              "date": "2022-04-20",
+              "id": "0559dcf5-3282-4763-93fb-00590d922c82",
+              "date": "2022-05-04",
               "weight": "80kg",
               "fat": "30%",
               "age": 28,
@@ -2790,7 +3295,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "7ef0901b-3e43-466f-b7d9-d150896fc082"
+              "user_id": "7e94d384-fd20-4e93-a9ef-111ffdc62a12"
             }
           ]
         }
@@ -2809,7 +3314,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "date": {
@@ -2860,7 +3367,7 @@
           }
         },
         "example": {
-          "date": "2022-04-20",
+          "date": "2022-05-04",
           "calories_total": 100,
           "calories_active": 2000,
           "steps": 10000,
@@ -2873,7 +3380,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "bb6929ad-0793-46c7-9e96-c045f01d3535"
+          "user_id": "5d63d273-9cc6-4f3b-b642-7c6377416581"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
@@ -2893,115 +3400,12 @@
           "unit": { "title": "Unit", "type": "string" }
         },
         "example": {
-          "blood_pressure": {
-            "id": 2,
-            "timestamp": "2022-04-20T13:02:02.079776+00:00",
-            "systolic": "125",
-            "diastolic": "75",
-            "type": "cuff",
-            "unit": "mmHg"
-          }
-        }
-      },
-      "ClientFacingGlucoseTimeseries": {
-        "title": "ClientFacingGlucoseTimeseries",
-        "required": ["timestamp", "value"],
-        "type": "object",
-        "properties": {
-          "id": { "title": "Id", "type": "integer" },
-          "timestamp": {
-            "title": "Timestamp",
-            "type": "string",
-            "format": "date-time"
-          },
-          "value": { "title": "value", "type": "string" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
-        },
-        "example": {
-          "glucose": {
-            "id": 2,
-            "timestamp": "2022-04-20T13:02:01.123664+00:00",
-            "value": "0.50",
-            "type": "automatic | manual_scan",
-            "unit": "mg/dL"
-          }
-        }
-      },
-      "ClientFacingHeartrateTimeseries": {
-        "title": "ClientFacingHeartrateTimeseries",
-        "required": ["timestamp", "value"],
-        "type": "object",
-        "properties": {
-          "id": { "title": "Id", "type": "integer" },
-          "timestamp": {
-            "title": "Timestamp",
-            "type": "string",
-            "format": "date-time"
-          },
-          "value": { "title": "value", "type": "string" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
-        },
-        "example": {
-          "heartrate": {
-            "id": 123,
-      "timestamp": "2022-04-20T13:02:01.123771+00:00",
-      "value": "70",
-      "type": "automatic",
-      "unit": "bpm"
-          }
-        }
-      },
-      "ClientFacingIGETimeseries": {
-        "title": "ClientFacingIGETimeseries",
-        "required": ["timestamp", "value"],
-        "type": "object",
-        "properties": {
-          "id": { "title": "Id", "type": "integer" },
-          "timestamp": {
-            "title": "Timestamp",
-            "type": "string",
-            "format": "date-time"
-          },
-          "value": { "title": "value", "type": "string" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
-        },
-        "example": {
-          "ige": {
-            
-      "id": 232,
-      "timestamp": "2022-04-20T13:02:01.123778+00:00",
-      "value": "70",
-      "type": "baha_grass",
-      "unit": "FSU"
-          }
-        }
-      },
-      "ClientFacingIGGTimeseries": {
-        "title": "ClientFacingIGGTimeseries",
-        "required": ["timestamp", "value"],
-        "type": "object",
-        "properties": {
-          "id": { "title": "Id", "type": "integer" },
-          "timestamp": {
-            "title": "Timestamp",
-            "type": "string",
-            "format": "date-time"
-          },
-          "value": { "title": "value", "type": "string" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
-        },
-        "example": {
-          "igg": {
-      "id": 232,
-      "timestamp": "2022-04-20T13:02:01.123778+00:00",
-      "value": "70",
-      "type": "dairy",
-      "unit": "FSU"
-          }
+          "id": 2,
+          "timestamp": "2022-05-04T11:38:32.897908+00:00",
+          "systolic": "125",
+          "diastolic": "75",
+          "type": "cuff",
+          "unit": "mmHg"
         }
       },
       "ClientFacingBody": {
@@ -3018,7 +3422,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "date": { "title": "Date", "type": "string", "format": "date-time" },
@@ -3050,7 +3456,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": {
             "title": "Id",
@@ -3134,13 +3542,13 @@
           }
         },
         "example": {
-          "id": "01fd24c8-f67d-46f4-8b26-a69ee7715164",
-          "team_id": "d47c7f77-d08c-4913-9d86-d6014b9ce3cf",
-          "created_on": "2022-04-20T13:02:01.973898+00:00",
-          "updated_on": "2022-04-20T13:02:01.973944+00:00",
+          "id": "a6454c84-051b-4889-b559-156e464286a6",
+          "team_id": "35609dd1-d497-4c61-a4e6-bad696939285",
+          "created_on": "2022-05-04T11:38:32.835979+00:00",
+          "updated_on": "2022-05-04T11:38:32.835998+00:00",
           "status": "ordered",
-          "user_id": "b1a34c5c-32a2-441d-a366-920fe077efec",
-          "testkit_id": "0df6938d-ec51-4365-b833-e7c337b7760a",
+          "user_id": "4139d04b-7b55-4af5-baed-c365e55ad622",
+          "testkit_id": "f335505b-533d-41b9-ab03-83a24977e520",
           "inbound_tracking_number": "<inbound_tracking_number>",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -3164,7 +3572,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "height": { "title": "Height", "type": "integer" },
@@ -3174,16 +3584,17 @@
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         },
         "example": {
-          "id": "01fd24c8-f67d-46f4-8b26-a69ee7715164",
-          "height": 180,
+          "id": "4d9e57e3-24cb-4919-a30c-f230f689d13e",
+          "date": "2022-05-04",
+          "age": 28,
+          "height": 183,
           "gender": "male",
-          "dob": "2022-01-01",
-          "age": 1,
           "source": {
-          "name": "Oura",
-          "slug": "oura",
-          "logo": "https://logo_url.com"
-          }
+            "name": "Oura",
+            "slug": "oura",
+            "logo": "https://logo_url.com"
+          },
+          "user_id": "5de215ac-08a3-4bdb-b272-3dffb493adc0"
         }
       },
       "ClientFacingSleep": {
@@ -3213,7 +3624,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "date": {
@@ -3318,10 +3731,10 @@
           }
         },
         "example": {
-          "id": "695d1f4b-36cc-43a1-9dfe-a8288fbe640d",
-          "date": "2022-04-20",
-          "bedtime_start": "2022-04-20T13:02:01.142646+00:00",
-          "bedtime_stop": "2022-04-20T13:02:01.142667+00:00",
+          "id": "1ec76932-49c1-484f-a916-1bb79507399e",
+          "date": "2022-05-04",
+          "bedtime_start": "2022-05-04T11:38:32.671854+00:00",
+          "bedtime_stop": "2022-05-04T11:38:32.671862+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -3341,11 +3754,11 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "e5c7111c-6e56-42fb-841e-452e5a7b93ba"
+          "user_id": "4b861c39-1d6d-4cb9-a2c5-210c2ab51ca9"
         }
       },
       "ClientFacingSleepStream": {
-        "title": "ClientFacingSleepStream",
+        "title": "Sleep stream data",
         "type": "object",
         "properties": {
           "hrv": {
@@ -3370,34 +3783,10 @@
           }
         },
         "example": {
-          "hrv": [{
-            "id": "123",
-            "timestamp": "2020-04-20T13:02:01.142646+00:00",
-            "value": "70",
-            "type": "automatic",
-            "unit": "bpm"
-          }],
-          "heartrate": [{
-            "id": "123",
-            "timestamp": "2020-04-20T13:02:01.142646+00:00",
-            "value": "70",
-            "type": "automatic",
-            "unit": "bpm"
-          }],
-          "hypnogram": [{
-            "id": "123",
-            "timestamp": "2020-04-20T13:02:01.142646+00:00",
-            "value": "70",
-            "type": "automatic",
-            "unit": "bpm"
-          }],
-          "respiratory_rate": [{
-            "id": "123",
-            "timestamp": "2020-04-20T13:02:01.142646+00:00",
-            "value": "70",
-            "type": "automatic",
-            "unit": "bpm"
-          }]
+          "hrv": [14, 12, 13, 12],
+          "heartrate": [50, 60, 70, 60],
+          "hypnogram": [1, 2, 3, 4, 5],
+          "respiratory_rate": [14.1, 14.2, 13.2, 12.5]
         }
       },
       "ClientFacingSource": {
@@ -3577,56 +3966,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-04-20T13:02:01.123664+00:00",
+            "timestamp": "2022-05-04T11:38:32.665775+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-04-20T13:02:01.123733+00:00",
+            "timestamp": "2022-05-04T11:38:32.665794+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-04-20T13:02:01.123745+00:00",
+            "timestamp": "2022-05-04T11:38:32.665798+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-04-20T13:02:01.123754+00:00",
+            "timestamp": "2022-05-04T11:38:32.665801+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-04-20T13:02:01.123763+00:00",
+            "timestamp": "2022-05-04T11:38:32.665804+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-04-20T13:02:01.123771+00:00",
+            "timestamp": "2022-05-04T11:38:32.665807+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-04-20T13:02:01.123778+00:00",
+            "timestamp": "2022-05-04T11:38:32.665810+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-04-20T13:02:01.123786+00:00",
+            "timestamp": "2022-05-04T11:38:32.665812+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -3653,7 +4042,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "team_id": {
             "title": "Team Id",
@@ -3682,9 +4073,9 @@
           }
         },
         "example": {
-          "user_id": "a48de09a-5da4-4674-9728-94f87c2aaa41",
-          "team_id": "689b9455-9f9b-4596-ad16-87af0be98d45",
-          "client_user_id": "ff1d2016-ae1c-4ebd-95db-e3883b67543f",
+          "user_id": "d21d18c2-2831-48a5-959f-3e58cc4b36cb",
+          "team_id": "6025917d-c884-40f9-809e-c562a12bb50f",
+          "client_user_id": "e45af08d-155c-4ddd-a801-1c77128d1ee5",
           "connected_sources": [
             { "source": { "name": "Oura", "slug": "oura", "logo": "logo_url" } }
           ]
@@ -3704,8 +4095,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "description": "Deprecated. Please use user_id instead.",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "client_user_id": {
             "title": "Client User Id",
@@ -3714,8 +4106,8 @@
           }
         },
         "example": {
-          "client_user_id": "50e07fa5-e9d9-4845-acf5-730a55903724",
-          "user_id": "b62f7860-4f0d-4aa6-8dae-a427f620f415"
+          "client_user_id": "0ef2f514-21af-4550-8aed-8cb847b0b03e",
+          "user_id": "5b5b3586-a976-4696-88d3-1c2cac5654bb"
         }
       },
       "ClientFacingWorkout": {
@@ -3742,7 +4134,9 @@
           "user_key": {
             "title": "User Key",
             "type": "string",
-            "format": "uuid"
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
           },
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "title": {
@@ -3853,12 +4247,12 @@
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         },
         "example": {
-          "id": "76600991-8444-4b51-8a3d-c59601594069",
+          "id": "4dab4b52-4741-4f69-ae0e-acaf500bc65f",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-04-20T12:02:01.270584+00:00",
-          "time_end": "2022-04-20T13:02:01.270716+00:00",
+          "time_start": "2022-05-04T10:38:32.702018+00:00",
+          "time_end": "2022-05-04T11:38:32.702097+00:00",
           "calories": 300,
           "sport": { "id": 1, "name": "football" },
           "source": {
@@ -3867,7 +4261,7 @@
             "logo": "https://logo_url.com"
           },
           "hr_zones": [100, 90, 10, 10, 200],
-          "user_id": "b62b500a-6b1f-410d-b77a-5f97677ac233",
+          "user_id": "a9056556-6dc0-4f75-9a54-c49a5ddf7236",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -3897,10 +4291,10 @@
         "example": {
           "sleep": [
             {
-              "id": "30639f2e-971c-49b2-8373-6d55966b6134",
-              "date": "2022-04-20",
-              "bedtime_start": "2022-04-20T13:02:01.154714+00:00",
-              "bedtime_stop": "2022-04-20T13:02:01.154739+00:00",
+              "id": "f6a0def0-cd74-4a0e-a8c5-e41851e6b266",
+              "date": "2022-05-04",
+              "bedtime_start": "2022-05-04T11:38:32.674978+00:00",
+              "bedtime_stop": "2022-05-04T11:38:32.674986+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -3920,7 +4314,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "7a649dac-3ef9-4e2d-bd6c-7b11185447b5"
+              "user_id": "037b0f34-acf5-4285-8567-be60ca6f42f4"
             }
           ]
         }
@@ -3938,12 +4332,12 @@
         },
         "example": {
           "workouts": {
-            "id": "917aac3a-c4dc-4256-a6a7-f2e69367cf66",
+            "id": "fea9a271-d9ae-441f-96d6-ef258bbe128f",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-04-20T12:02:01.273866+00:00",
-            "time_end": "2022-04-20T13:02:01.273971+00:00",
+            "time_start": "2022-05-04T10:38:32.702970+00:00",
+            "time_end": "2022-05-04T11:38:32.702995+00:00",
             "calories": 300,
             "sport": { "id": 1, "name": "football" },
             "source": {
@@ -3952,7 +4346,7 @@
               "logo": "https://logo_url.com"
             },
             "hr_zones": [100, 90, 10, 10, 200],
-            "user_id": "22b92942-6ca0-4069-8f5e-9f082117ce2c",
+            "user_id": "8e1047c8-14c9-4866-8ec3-c6786fc730b9",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -3976,6 +4370,13 @@
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         }
       },
+      "ConnectionStatus": {
+        "title": "ConnectionStatus",
+        "required": ["success"],
+        "type": "object",
+        "properties": { "success": { "title": "Success", "type": "boolean" } },
+        "example": { "sucess": true }
+      },
       "DataStage": {
         "title": "DataStage",
         "enum": ["daily", "historical"],
@@ -3997,6 +4398,20 @@
           "id": { "title": "Id", "type": "string", "format": "uuid" },
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         }
+      },
+      "EmailProviderAuthLink": {
+        "title": "EmailProviderAuthLink",
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": { "title": "Email", "type": "string" },
+          "provider": { "$ref": "#/components/schemas/Providers" }
+        }
+      },
+      "EmailProviders": {
+        "title": "EmailProviders",
+        "enum": ["freestyle_libre"],
+        "description": "An enumeration."
       },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
@@ -4048,53 +4463,6 @@
           "date_collected": { "title": "Date Collected", "type": "string" },
           "specimen_number": { "title": "Specimen Number", "type": "string" },
           "date_received": { "title": "Date Received", "type": "string" }
-        },
-        "example": {
-          "age": "30",
-          "dob": "1980-01-01",
-          "clia_#": "123456789",
-          "patient": "John Doe",
-          "provider": "Dr. John Doe",
-          "laboratory": "ABC Labs",
-          "date_reported": "2020-01-01",
-          "date_collected": "2020-01-01",
-          "specimen_number": "123456789",
-          "date_received": "2020-01-01"
-        }
-      },
-      "Testkit": {
-        "title": "Testkit",
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "description": { "type": "string" }
-        },
-        "example": {
-            "id": "9u0ash8Hjghas-...",
-            "name": "CGM",
-            "description": "Freestyle libre CGM"
-        }
-      },
-      "TestkitsResults": {
-        "title": "TestkitsResults",
-        "required": ["metadata", "results"],
-        "type": "object",
-        "properties": {
-          "testkits": { 
-            "title": "Testkits", 
-            "type": "array", 
-            "items": { "$ref": "#/components/schemas/Testkit" } 
-          }
-        },
-        "example": {
-          "testkits": [
-            {
-            "id": "9u0ash8Hjghas-...",
-            "name": "CGM",
-            "description": "Freestyle libre CGM"
-            }
-          ]
         }
       },
       "LabResultsRaw": {
@@ -4104,21 +4472,6 @@
         "properties": {
           "metadata": { "$ref": "#/components/schemas/LabResultsMetadata" },
           "results": { "title": "Results", "type": "object" }
-        },
-        "example": {
-            "metadata": {
-              "age": "30",
-              "dob": "1980-01-01",
-              "clia_#": "123456789",
-              "patient": "John Doe",
-              "provider": "Dr. John Doe",
-              "laboratory": "ABC Labs",
-              "date_reported": "2020-01-01",
-              "date_collected": "2020-01-01",
-              "specimen_number": "123456789",
-              "date_received": "2020-01-01"
-            },
-            "results": {}
         }
       },
       "LinkTokenExchange": {
@@ -4220,7 +4573,7 @@
       },
       "ManualBloodPressureCreation": {
         "title": "ManualBloodPressureCreation",
-        "required": ["diastolic", "systolic", "pulse"],
+        "required": ["diastolic", "systolic"],
         "type": "object",
         "properties": {
           "diastolic": { "$ref": "#/components/schemas/QuantitySample" },
@@ -4536,26 +4889,6 @@
           "order": { "$ref": "#/components/schemas/ClientFacingOrder" },
           "status": { "title": "Status", "type": "string" },
           "message": { "title": "Message", "type": "string" }
-        },
-        "example": {
-          "status": "cancelled",
-          "message": "success",
-          "order": {
-            "id": "01fd24c8-f67d-46f4-8b26-a69ee7715164",
-          "team_id": "d47c7f77-d08c-4913-9d86-d6014b9ce3cf",
-          "created_on": "2022-04-20T13:02:01.973898+00:00",
-          "updated_on": "2022-04-20T13:02:01.973944+00:00",
-          "status": "ordered",
-          "user_id": "b1a34c5c-32a2-441d-a366-920fe077efec",
-          "testkit_id": "0df6938d-ec51-4365-b833-e7c337b7760a",
-          "inbound_tracking_number": "<inbound_tracking_number>",
-          "outbound_tracking_number": "<outbound_tracking_number>",
-          "inbound_tracking_url": "<inbound_tracking_urlr>",
-          "outbound_tracking_url": "<outbound_tracking_url>",
-          "outbound_courier": "usps",
-          "inbound_courier": "usps",
-          "testkit": { "name": "CGM", "description": "Glucose CGM" }
-          }
         }
       },
       "OrderStatus": {
@@ -4632,13 +4965,13 @@
         "example": {
           "orders": [
             {
-              "id": "08daca65-4de0-4f4f-b9a1-2b5d356b3b6d",
-              "team_id": "3e2d7ca4-1f42-4fa2-ad13-61bcab8291ae",
-              "created_on": "2022-04-20T13:02:01.980402+00:00",
-              "updated_on": "2022-04-20T13:02:01.980441+00:00",
+              "id": "b58d583e-624e-451d-810f-85758eeb538e",
+              "team_id": "c3406038-91a7-4a36-a9dd-1d7fb2323572",
+              "created_on": "2022-05-04T11:38:32.838137+00:00",
+              "updated_on": "2022-05-04T11:38:32.838151+00:00",
               "status": "ordered",
-              "user_id": "f6d58738-b4eb-40aa-a58d-a316a5840237",
-              "testkit_id": "0f83b2f6-a0d0-4f4e-9678-eeb481ef60ec",
+              "user_id": "0602fd7f-23fb-45fb-9d22-6bc7ea92ff57",
+              "testkit_id": "6bfd59e5-7dc4-41c0-bf41-f123a6a7feeb",
               "testkit": { "name": "CGM", "description": "Glucose CGM" }
             }
           ],
@@ -4689,7 +5022,8 @@
         "type": "object",
         "properties": {
           "dob": { "title": "Dob", "type": "string", "format": "date-time" },
-          "gender": { "title": "Gender", "type": "string" }
+          "gender": { "title": "Gender", "type": "string" },
+          "email": { "title": "Email", "type": "string" }
         }
       },
       "Physician": {
@@ -4805,10 +5139,10 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-04-20T13:02:01.179034+00:00",
+              "timestamp": "2022-05-04T11:38:32.681249+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "e9e4f814-c79c-419e-841a-4fac6824b14d",
-              "user_id": "1da6e6df-f25b-40f6-b420-a5d015a0bb80",
+              "provider_id": "3af3e600-3648-4e9b-962f-75fb130f8685",
+              "user_id": "bf0851ff-8241-48df-8e93-211c44e02aa1",
               "source_id": 1,
               "priority_id": 1
             }
@@ -4829,10 +5163,10 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-04-20T13:02:01.187055+00:00",
+              "timestamp": "2022-05-04T11:38:32.684127+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "c124eb27-82fa-4648-9f2b-ca24c1f5d6b0",
-              "user_id": "43fd810c-ad5b-4380-af3c-877e844b9ba4",
+              "provider_id": "3d008168-5836-4207-8659-e336b54064f0",
+              "user_id": "19144ea3-ad41-4ee8-809a-96ed297ccc80",
               "source_id": 1,
               "priority_id": 1
             }
@@ -4854,8 +5188,8 @@
           "devices": [
             {
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "a94a1283-afa8-4cad-ad10-db1aec638fdb",
-              "user_id": "19f57a50-1164-4a76-a791-d78fd5f99cc0",
+              "provider_id": "c956936f-3fe6-4fd9-afb7-562fc94702b6",
+              "user_id": "007ee2cc-50b3-42e5-a65e-e18418f29a97",
               "source_id": 1
             }
           ]
@@ -4872,8 +5206,8 @@
           "profile": [
             {
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "3e23b3d9-c62a-45a2-a0b3-055b1124ac59",
-              "user_id": "d7b561d9-8f9f-4d94-b8cb-003af9adfa2e",
+              "provider_id": "bda0d770-4d77-4ec3-a95b-a497a5ce5afc",
+              "user_id": "2ac83783-7eac-4324-a4de-c5f71419f7ee",
               "source_id": 1
             }
           ]
@@ -4893,10 +5227,10 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-04-20T13:02:01.203450+00:00",
+              "timestamp": "2022-05-04T11:38:32.688081+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "47f247f4-5e04-4ace-a856-77dc6632c7c4",
-              "user_id": "d468dcdf-0784-4260-a334-539eb149d2ad",
+              "provider_id": "8dca1dce-65c2-48b7-a339-3875efc7f3f6",
+              "user_id": "102d192e-6c77-477a-b305-189c1cb746bd",
               "source_id": 1,
               "priority_id": 1
             }
@@ -4917,10 +5251,10 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-04-20T13:02:01.216855+00:00",
+              "timestamp": "2022-05-04T11:38:32.692121+00:00",
               "data": { "provider_specific": "..._data" },
-              "provider_id": "2cb9b107-34c5-4bab-b667-61c19b9b103a",
-              "user_id": "79d4967e-1065-4e4b-9692-ed5e9e802f96",
+              "provider_id": "f70c4b3c-04e3-4228-aee8-cdbf76dcc443",
+              "user_id": "dccff4f6-eae2-490a-b302-ad2615986005",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
@@ -5094,7 +5428,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "29432536-2859-48cf-90ed-89916a06f3d3"
+          "user_id": "d71ae1a8-49ca-4bce-82e5-8f1ae4069ccf"
         }
       },
       "UserSuccessResponse": {

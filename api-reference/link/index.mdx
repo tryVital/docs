@@ -2,42 +2,111 @@ import { Swagger } from "@theme/swagger";
 
 # Overview
 
-## Link
+## Generate Link Token
 
-<Swagger endpoint={"/link/token"} method={"post"} title={"Create a new link token"}>
+<Swagger endpoint={"/link/token"} method={"post"} title={"Create a new link token"} include_client_instantiation>
 
 ```bash
 curl --request POST \
-     --url https://example.com/v2/user/ \
+     --url {{BASE_URL}}/v2/link/token \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
      --data '
 {
-     "client_user_id": "string",
-     "team_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     "id": "string"
+     "user_id": "1875c190-0cd6-46c1-8670-5b56a7794b78",
 }
 '
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
-
+const user = await client.Link.create(user_id);
 ```
 
 ```python
-from vital import Client
+user = client.Link.create(user_id)
+```
 
-client = Client(api_key=<API_KEY>, environment='sandbox')
+</Swagger>
 
-user = client.User.create(client_user_id)
+## Link OAuth provider
+
+<Swagger endpoint={"/link/provider/oauth/{oauth_provider}"} method={"get"} title={"Link an OAuth Provider"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/link/provider/oauth/{provider} \
+     --header 'Accept: application/json'
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+```
+
+```js
+const user = await client.Link.getOAuthLink(provider);
+```
+
+```python
+user = client.Link.oauth_provider(provider)
+```
+
+</Swagger>
+
+## Link Password Provider
+
+<Swagger endpoint={"/link/provider/password/{provider}"} method={"post"} title={"Link a password provider"} include_client_instantiation>
+
+```bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/provider/password/{provider} \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+     --data '
+{
+     "username": "test",
+     "password": "test"
+}
+'
+```
+
+```js
+const user = await client.Link.connectProvider(
+  linkToken,
+  provider,
+  username,
+  password
+);
+```
+
+```python
+user = client.Link.password_provider(link_token, provider, username, password)
+```
+
+</Swagger>
+
+## Link Email Provider
+
+<Swagger endpoint={"/link/provider/email/{provider}"} method={"post"} title={"Link an email provider"} include_client_instantiation>
+
+```bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/provider/email/{provider} \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+     --data '
+{
+     "email": "test@email.com",
+}
+'
+```
+
+```js
+const user = await client.Link.connectEmailProvider(linkToken, provider, email);
+```
+
+```python
+user = client.Link.email_provider(link_token, provider, email)
 ```
 
 </Swagger>

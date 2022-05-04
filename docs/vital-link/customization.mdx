@@ -9,33 +9,19 @@ import { CodeBlock } from "@theme/codeblock";
 You may want to have your own custom Link widget to match your app's UI. This is useful for users who don't want to use Vital link but still want to use the Vital API.
 To authenticate without Vital link, you need to first generate a `link_token` for a specific user.
 
-<CodeBlock title={"Generating a Vital-Link"}>
+<CodeBlock title={"Generating a Vital-Link"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(
-     api_key,
-     environment="sandbox"
-     )
-
 token = client.Link.create(user_id)
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
 const resp = await client.Link.create(client_user_id);
 ```
 
 ```bash
 curl --request POST \
-     --url https://api.tryvital.io/v2/link/token \
+     --url {{BASE_URL}}/v2/link/token \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json'
      --header 'x-vital-api-key: <API-KEY>'
@@ -70,28 +56,14 @@ Current email and password providers are:
 
 To connect a password provider:
 
-<CodeBlock title={"Connecting a password provider:"}>
+<CodeBlock title={"Connecting a password provider:"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(
-     api_key,
-     environment="sandbox"
-     )
-
 token = client.Link.create(user_id)
 resp = client.Link.password_provider(link_token, "oura", username, password)
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
 const token = await client.Link.create(client_user_id, "oura");
 const resp = await client.Link.connectProvider(
   token,
@@ -122,16 +94,9 @@ Current OAuth providers are:
 <br />
 <br />
 
-<CodeBlock title={"Connecting a password provider:"}>
+<CodeBlock title={"Connecting a password provider:"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(
-     api_key,
-     environment="sandbox"
-     )
-
 token = client.Link.create(user_id)
 oauth_url = client.Link.oauth_provider(link_token, "fitbit")
 # redirect user to returned oauth_url

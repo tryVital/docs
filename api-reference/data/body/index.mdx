@@ -4,35 +4,42 @@ import { Swagger } from "@theme/swagger";
 
 ## Summary
 
-<Swagger endpoint={"/summary/body/{user_id}"} method={"get"} title={"Get body data"}>
+<Swagger endpoint={"/summary/body/{user_id}"} method={"get"} title={"Get body data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/body/{user_id} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
-
-client = Client(api_key, "sandbox")
-
-data = client.Body.get(user_id=*,
-      start_date="2020-01-01",
-      end_date="2021-01-01"
-      )
+data = client.Body.get(
+    user_id=*,
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
+)
 ```
 
 </Swagger>
 
 ## Raw
 
-<Swagger endpoint={"/summary/body/{user_id}/raw"} method={"get"} title={"Get Raw body Data"}>
+<Swagger endpoint={"/summary/body/{user_id}/raw"} method={"get"} title={"Get Raw body Data"} include_client_instantiation>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/body/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
 
 ```python
-from vital import Client
-
-client = Client(api_key, "sandbox")
-
-data = client.ProviderSpecific.get(user_id=*,
-          provider="oura"
-          start_date="2020-01-01",
-          end_date="2021-01-01"
-          )
+data = client.Body.get_raw(
+    user_id="*",
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
+)
 ```
 
 </Swagger>

@@ -23,33 +23,19 @@ To do so, you just pass in the provider name as one of the parameter's to the li
 
 <br />
 
-<CodeBlock title={"Launching Vital-Link"}>
+<CodeBlock title={"Launching Vital-Link"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(
-     api_key,
-     environment="sandbox"
-     )
-
 token = client.Link.create(user_id, "oura")
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const resp = await client.Link.create(client_user_id, "oura")
+const resp = await client.Link.create(client_user_id, "oura");
 ```
 
 ```bash
 curl --request POST \
-     --url https://api.tryvital.io/v2/link/token \
+     --url {{BASE_URL}}/v2/link/token \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json'
      --header 'x-vital-api-key: <API-KEY>'

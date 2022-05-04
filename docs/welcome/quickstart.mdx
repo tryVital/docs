@@ -19,6 +19,7 @@ import {
   OrderedList,
   ListItem,
   Image,
+  Button,
 } from "@chakra-ui/react";
 
 # Introduction
@@ -36,6 +37,28 @@ our Sandbox and Production environments, and be given a unique API key for each 
 | ------------------ | ------------------------------------------- |
 | @@FiBox sandbox    | Integration Testing                         |
 | @@FiZap production | Live environment to use with real customers |
+
+| API Urls              |                                    |
+| --------------------- | ---------------------------------- |
+| @@FiZap production    | https://api.tryvital.io            |
+| @@FiZap production-eu | https://api.eu.tryvital.io         |
+| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
+| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
+
+Example API collection can be downloaded from [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
+
+<Button
+  mb={"30px"}
+  href={"postman:https://www.getpostman.com/collections/d4580c54f85374bd7cc5"}
+  sx={{ ":hover": { cursor: "pointer" }, border: 0, bg: "white" }}
+  onClick={() =>
+    window.open(
+      "postman:https://www.getpostman.com/collections/d4580c54f85374bd7cc5"
+    )
+  }
+>
+  <Image src={"/img/postman.png"} width={"100px"} />
+</Button>
 
 <br />
 
@@ -68,11 +91,11 @@ Personally identifiable information (PII), such as an email address or phone num
 <br />
 <br />
 
-<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
+<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"} include_client_instantiation={true}>
 
 ```bash
 curl --request POST \
-     --url https://example.com/v2/user/ \
+     --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --data '
@@ -85,21 +108,10 @@ curl --request POST \
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
-
+const user = await client.User.create(client_user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
 
 user = client.User.create(client_user_id)
 ```
@@ -112,7 +124,7 @@ As you might have noticed, you use both a server and a client-side component to 
 
 The Vital flow begins when your user wants to connect their device to your application.
 
-<HStack alignItems={"flex-start"} height={"900px"} overflow={"hidden"}>
+<HStack alignItems={"flex-start"} height={"700px"} overflow={"hidden"}>
   <VStack
     style={{
       height: "100%",
@@ -120,7 +132,7 @@ The Vital flow begins when your user wants to connect their device to your appli
     width={"50%"}
   >
     <OrderedList height={"100%"}>
-      <ListItem height={"29%"} mt={"200px"}>
+      <ListItem height={"20%"} mt={"170px"}>
         To launch Vital link, first generate a `link_token` by passing the
         `user_id` to the `/link/token` endpoint.
       </ListItem>
@@ -136,7 +148,10 @@ The Vital flow begins when your user wants to connect their device to your appli
     </OrderedList>
   </VStack>
   <VStack>
-    <Image src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png" />
+    <Image
+      src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png"
+      height={"700px"}
+    />
   </VStack>
 </HStack>
 
@@ -152,25 +167,14 @@ client object.
 
 <br />
 
-<CodeBlock title={"Getting User sleep data"}>
+<CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 sleep_data = client.Sleep.get(start_date, end_date)
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-api_key: <API_KEY>,
-environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
+const user = await client.User.create(client_user_id);
 ```
 
 </CodeBlock>

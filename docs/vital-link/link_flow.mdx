@@ -19,15 +19,15 @@ To start integrating Vital Link make sure you have your `api_key` from your team
 
 Before initialising the link flow, ensure you have generated a `user_id` for the specific user. This should be done when a user signs up to your service and is to be stored alongside your user entry in your database. [See](https://vital-docs.readme.io/docs/creating-your-first-user) for more details on how to create a `user_id`.
 
-<HStack alignItems={"flex-start"} height={"900px"} overflow={"hidden"}>
+<HStack alignItems={"flex-start"} overflow={"hidden"}>
   <VStack
     style={{
       height: "100%",
     }}
     width={"50%"}
   >
-    <OrderedList height={"100%"}>
-      <ListItem height={"29%"} mt={"200px"}>
+    <OrderedList height={"700px"}>
+      <ListItem height={"20%"} mt={"160px"}>
         To launch Vital link, first generate a link_token by passing the
         `user_id` to the `/link/token` endpoint.
       </ListItem>
@@ -43,6 +43,9 @@ Before initialising the link flow, ensure you have generated a `user_id` for the
     </OrderedList>
   </VStack>
   <VStack>
-    <Image src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png" />
+    <Image
+      src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png"
+      height={"700px"}
+    />
   </VStack>
 </HStack>

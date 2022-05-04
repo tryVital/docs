@@ -15,7 +15,6 @@ const config = {
   favicon: "img/favicon.ico",
   organizationName: "vital", // Usually your GitHub org/user name.
   projectName: "vital", // Usually your repo name.
-
   presets: [
     [
       "@docusaurus/preset-classic",
