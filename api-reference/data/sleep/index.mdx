@@ -14,7 +14,7 @@ curl --request GET \
 ```
 
 ```js
-data = client.Sleep.get(
+data = await client.Sleep.get(
     user_id=*,
     start_date={{START_DATE}},
     end_date={{END_DATE}}
@@ -47,7 +47,7 @@ data = client.Sleep.getStream(sleep_id=*)
 ```
 
 ```js
-data = client.Sleep.getStream(sleep_id=*)
+data = await client.Sleep.getStream(sleep_id=*)
 ```
 
 </Swagger>
