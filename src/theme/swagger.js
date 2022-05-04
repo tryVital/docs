@@ -5,8 +5,6 @@ import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
 import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
 import Examples from "../data/examplesOverride";
-import { CurlGenerator } from "curl-generator";
-import HTTPSnippet from "httpsnippet";
 import {
   mapBody,
   mapSchemaToJson,
