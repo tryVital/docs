@@ -15,8 +15,8 @@ curl --request GET \
 data = client.Vitals.cholesterol(
     type="total",
     user_id=*,
-    start_date="2020-01-01",
-    end_date="2021-01-01"
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
 )
 ```
 
@@ -26,7 +26,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json'
 ```
 
@@ -34,8 +34,8 @@ curl --request GET \
 data = client.Vitals.cholesterol(
     type="hdl",
     user_id=*,
-    start_date="2020-01-01",
-    end_date="2021-01-01"
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
 )
 ```
 
@@ -45,7 +45,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/ldl?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/ldl?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json'
 ```
 
@@ -53,8 +53,8 @@ curl --request GET \
 data = client.Vitals.cholesterol(
     type="ldl",
     user_id=*,
-    start_date="2020-01-01",
-    end_date="2021-01-01"
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
 )
 ```
 
@@ -64,7 +64,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/triglycerides?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/triglycerides?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json'
 ```
 
@@ -72,8 +72,8 @@ curl --request GET \
 data = client.Vitals.cholesterol(
     type="ldl",
     user_id=*,
-    start_date="2020-01-01",
-    end_date="2021-01-01"
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
 )
 ```
 

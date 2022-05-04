@@ -6,7 +6,7 @@ import { Swagger } from "@theme/swagger";
 
 ```bash
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/heartrate?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/heartrate?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json'
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -14,8 +14,8 @@ curl --request GET \
 ```python
 data = client.Vitals.heartrate(
     user_id=*,
-    start_date="2020-01-01",
-    end_date="2021-01-01"
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
 )
 ```
 

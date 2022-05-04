@@ -84,7 +84,9 @@ const injectVariables = (code, region) => {
   };
   return code
     .replace("{{BASE_URL}}", urls[region])
-    .replace("{{REGION}}", `"${region}"`);
+    .replace("{{REGION}}", `"${region}"`)
+    .replace("{{START_DATE}}", `"2022-05-01"`)
+    .replace("{{END_DATE}}", `"2022-06-01"`);
 };
 
 const addInstantiationCode = (code, language, include_client_instantiation) => {
