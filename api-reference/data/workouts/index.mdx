@@ -14,10 +14,11 @@ curl --request GET \
 ```
 
 ```python
-data = client.Workouts.get(user_id=*,
-      start_date="2020-01-01",
-      end_date="2021-01-01"
-      )
+data = client.Workouts.get(
+     user_id=*,
+     start_date="2020-01-01",
+     end_date="2021-01-01"
+)
 ```
 
 </Swagger>
@@ -51,11 +52,12 @@ curl --request GET \
 ```
 
 ```python
-data = client.Workouts.get_raw(user_id=*,
-          provider="oura"
-          start_date="2020-01-01",
-          end_date="2021-01-01"
-          )
+data = client.Workouts.get_raw(
+     user_id=*,
+     provider="oura"
+     start_date="2020-01-01",
+     end_date="2021-01-01"
+)
 ```
 
 </Swagger>

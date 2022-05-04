@@ -2,16 +2,7 @@ import React, { useState } from "react";
 import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import style from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import lightStyle from "react-syntax-highlighter/dist/cjs/styles/prism/duotone-light";
-import {
-  VStack,
-  Box,
-  HStack,
-  Image,
-  Flex,
-  Button,
-  Spacer,
-  chakra,
-} from "@chakra-ui/react";
+import { VStack, Box, HStack, Spacer, chakra } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
 
 function capitalizeFirstLetter(string) {
