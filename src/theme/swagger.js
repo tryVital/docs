@@ -1,126 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, version } from "react";
 import SwaggerParser from "@apidevtools/swagger-parser";
 import { useEffect } from "react";
 import swaggerObject from "../../static/data/swagger.json";
 import { ParamsAndCodeBlock, ParamsAndResponseBlock } from "./ScrollStack";
 import { chakra, Badge, HStack, Text } from "@chakra-ui/react";
 import Examples from "../data/examplesOverride";
-
-const mapSchemaToJson = (schema) => {
-  if (!schema) return {};
-  const { properties, required, type, description, deprecated, ...others } =
-    schema;
-  const json = {};
-  if (schema.additionalProperties) {
-    json.items = mapSchemaToJson(schema.additionalProperties);
-    json.type = "array";
-    json.name = schema.additionalProperties.title;
-  } else if (type === "object" && properties) {
-    Object.keys(properties).forEach((key) => {
-      json[key] = mapSchemaToJson(properties[key]);
-    });
-    json.type = "object";
-  } else if (type === "array") {
-    if (schema.items) {
-      json.items = mapSchemaToJson(schema.items);
-      json.type = "array";
-    } else {
-      json.items = mapSchemaToJson(properties);
-    }
-  } else {
-    const { allOf } = others;
-    json.type = allOf ? "enum" : type;
-    json.description = description;
-  }
-  if (required) {
-    json.required = required;
-  }
-  json.deprecated = deprecated ? true : false;
-  return json;
-};
-
-const getType = (schema) => {
-  if (schema.anyOf) {
-    const types = schema.anyOf.map((el) => ({
-      format: el.format,
-      type: el.type,
-    }));
-    const key = "type";
-    const unique_objects = [
-      ...new Map(types.map((item) => [item[key], item])).values(),
-    ];
-    return unique_objects
-      .map((el) => {
-        if (el.format) return `${el.type}:${el.format}`;
-        return el.type;
-      })
-      .join(",");
-  } else if (schema.allOf) {
-  } else if (schema.type) {
-    if (schema.format) return `${schema.type}:${schema.format}`;
-    return schema.type;
-  }
-};
-
-const mapParameters = (parameters) => {
-  if (!parameters) return [];
-  return parameters.map((el) => ({
-    name: el.name,
-    required: el.required,
-    description: el.description,
-    type: getType(el.schema),
-  }));
-};
-
-const mapBody = (body) => {
-  if (!body) return [];
-  if (body.items) {
-    return [
-      {
-        name: "body",
-        type: "[object]",
-        items: mapBody(body.items),
-      },
-    ];
-  }
-  const data = Object.keys(body)
-    .map((el) => {
-      if (body[el]?.type == "array") {
-        return {
-          name: el,
-          type: "[object]",
-          description: body[el]?.description,
-          items: mapBody(body[el].items),
-        };
-      } else if (body[el]?.type == "object") {
-        return {
-          name: el,
-          type: "object",
-          description:
-            typeof body[el]?.description === "string"
-              ? body[el]?.description
-              : "",
-          items: mapBody(body[el]),
-        };
-      } else {
-        return {
-          name: el,
-          type: body[el]?.type,
-          description: body[el]?.description,
-          required: body?.required?.indexOf(el) > -1,
-          deprecated: body[el]?.deprecated ? true : false,
-        };
-      }
-    })
-    .filter(
-      (el) =>
-        el.name !== "required" &&
-        el.name !== "type" &&
-        el.name !== "deprecated" &&
-        el.name !== "description"
-    );
-  return data;
-};
+import { CurlGenerator } from "curl-generator";
+import HTTPSnippet from "httpsnippet";
+import {
+  mapBody,
+  mapSchemaToJson,
+  mapParameters,
+} from "../lib/CustomSwaggerParser";
 
 const getExampleResponse = (schema) => {
   const responseSchema =
@@ -134,7 +25,51 @@ const getExampleResponse = (schema) => {
   } else if (responseSchema?.properties) {
     return [responseSchema?.properties];
   }
-  console.log("FAILED", responseSchema);
+  console.log("Failed to get example", responseSchema);
+  return "";
+};
+
+const applyOverrides = (endpoint, exampleResponse) => {
+  return Examples[endpoint]
+    ? JSON.stringify(Examples[endpoint], null, 2)
+    : JSON.stringify(exampleResponse, null, 2);
+};
+
+const getRequestBodyData = (endpoint, schema, method) => {
+  let requestBody = schema.requestBody?.content["application/json"]?.schema;
+  if (!requestBody) {
+    requestBody = schema;
+    console.warn("No request body found", { endpoint, schema });
+  }
+
+  const requestBodyParams = mapSchemaToJson(requestBody);
+  return {
+    description: schema.description
+      ? schema.description.replace(method.toUpperCase(), "")
+      : "",
+    body: mapBody(requestBodyParams),
+    params: mapParameters(schema.parameters),
+  };
+};
+
+const getEndpointSchema = async (endpoint, method) => {
+  let api = await SwaggerParser.dereference(swaggerObject);
+  // will raise typeerror if it cannot index into api.paths
+  const schema = api?.paths[endpoint][method];
+  if (!schema) {
+    throw Error("No schema found - please check your endpoint and method");
+  }
+  return schema;
+};
+
+const getResponseData = (endpoint, schema) => {
+  const responseSchema = mapSchemaToJson(
+    schema.responses["200"].content["application/json"]?.schema
+  );
+  return {
+    body: mapBody(responseSchema),
+    example: applyOverrides(endpoint, getExampleResponse(schema)),
+  };
 };
 
 export const Swagger = ({
@@ -144,51 +79,19 @@ export const Swagger = ({
   children,
   include_client_instantiation,
 }) => {
-  const [endpointData, setEndpointData] = useState({ params: [], body: [] });
+  const [requestData, setRequestData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
-  const [responseExample, setResponseExample] = useState("");
 
   useEffect(() => {
     const parseSwagger = async () => {
       try {
-        let api = await SwaggerParser.dereference(swaggerObject);
-        // will raise typeerror if it cannot index into api.paths
-        const schema = api?.paths[`/v2${endpoint}`][method];
-        if (!schema) {
-          throw Error(
-            "No schema found - please check your endpoint and method"
-          );
-        }
-        let requestBody =
-          schema.requestBody?.content["application/json"]?.schema;
-        if (!requestBody) {
-          requestBody = schema;
-          console.error("No request body found", endpoint);
-        }
-        const requestBodyParams = mapSchemaToJson(requestBody);
-
-        const data = {
-          description: schema.description
-            ? schema.description.replace(method.toUpperCase(), "")
-            : "",
-          body: mapBody(requestBodyParams),
-          params: mapParameters(schema.parameters),
-        };
-        setEndpointData(data);
-        const responseSchema = mapSchemaToJson(
-          schema.responses["200"].content["application/json"]?.schema
-        );
-
-        const response = {
-          body: mapBody(responseSchema),
-        };
+        const version = "v2";
+        const fullEndpoint = `/${version}${endpoint}`;
+        const schema = await getEndpointSchema(fullEndpoint, method);
+        const request = getRequestBodyData(fullEndpoint, schema, method);
+        const response = getResponseData(fullEndpoint, schema);
+        setRequestData(request);
         setResponseData(response);
-        const exampleResponse = getExampleResponse(schema);
-        setResponseExample(
-          Examples[`/v2${endpoint}`]
-            ? JSON.stringify(Examples[`/v2${endpoint}`], null, 2)
-            : JSON.stringify(exampleResponse, null, 2)
-        );
       } catch (err) {
         console.error(err);
       }
@@ -222,7 +125,7 @@ export const Swagger = ({
       </HStack>
 
       <HStack mt={20}>
-        <Text>{endpointData.description}</Text>
+        <Text>{requestData.description}</Text>
       </HStack>
       <chakra.span>
         <chakra.span sx={{ fontWeight: 600 }}>Request fields</chakra.span> and
@@ -230,7 +133,7 @@ export const Swagger = ({
       </chakra.span>
       <ParamsAndCodeBlock
         title={title}
-        params={[...endpointData.params, ...endpointData.body]}
+        params={[...requestData.params, ...requestData.body]}
         include_client_instantiation={include_client_instantiation}
       >
         {children}
@@ -243,7 +146,7 @@ export const Swagger = ({
       <ParamsAndResponseBlock
         params={responseData.body}
         title={"Response"}
-        code={responseExample}
+        code={responseData.example}
       />
     </>
   );

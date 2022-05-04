@@ -13,7 +13,6 @@ import {
   chakra,
 } from "@chakra-ui/react";
 import { CopyIcon, CheckIcon } from "@chakra-ui/icons";
-import useGlobalData from "@docusaurus/useGlobalData";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

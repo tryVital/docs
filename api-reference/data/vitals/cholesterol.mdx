@@ -6,7 +6,7 @@ import { Swagger } from "@theme/swagger";
 
 ```bash
 curl --request GET \
-     --url https://api.tryvital.io/v2/timeseries/{user_id}/cholesterol/hdl?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date=2021-01-01&end_date=2021-02-01 \
      --header 'Accept: application/json'
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -26,7 +26,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url https://api.tryvital.io/v2/timeseries/{user_id}/cholesterol/hdl?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date=2021-01-01&end_date=2021-02-01 \
      --header 'Accept: application/json'
 ```
 
@@ -45,7 +45,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url https://api.tryvital.io/v2/timeseries/{user_id}/cholesterol/ldl?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/ldl?start_date=2021-01-01&end_date=2021-02-01 \
      --header 'Accept: application/json'
 ```
 
@@ -64,7 +64,7 @@ data = client.Vitals.cholesterol(
 
 ```bash
 curl --request GET \
-     --url https://api.tryvital.io/v2/timeseries/{user_id}/cholesterol/triglycerides?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/triglycerides?start_date=2021-01-01&end_date=2021-02-01 \
      --header 'Accept: application/json'
 ```
 

@@ -2,11 +2,11 @@ import { Swagger } from "@theme/swagger";
 
 # Glucose
 
-<Swagger endpoint={"/timeseries/{user_id}/glucose"} method={"get"} title={"Get glucose Data"} include_client_instantiation>
+<Swagger endpoint={"/timeseries/{user_id}/glucose"} method={"get"} title={"Get glucose data"} include_client_instantiation>
 
 ```bash
 curl --request GET \
-     --url https://api.tryvital.io/v2/timeseries/{user_id}/glucose?start_date=2021-01-01&end_date=2021-02-01 \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/glucose?start_date=2021-01-01&end_date=2021-02-01 \
      --header 'Accept: application/json'
      --header 'x-vital-api-key: <API_KEY>'
 ```
