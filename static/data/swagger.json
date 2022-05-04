@@ -2441,7 +2441,7 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserCreate" }
+              "schema": { "$ref": "#/components/schemas/UserCreateBody" }
             }
           },
           "required": true
@@ -3264,7 +3264,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "37b56cff-d478-4683-a486-540dc32c2729"
+              "user_id": "3eb9b58d-27f3-4dbd-8f59-d84542e2a70c"
             }
           ]
         }
@@ -3283,7 +3283,7 @@
         "example": {
           "body": [
             {
-              "id": "225a58a9-6fc2-4dbc-9144-0caa67fd84b3",
+              "id": "5dd64c4b-9afc-4430-917b-b949988d6e8f",
               "date": "2022-05-04",
               "weight": "80kg",
               "fat": "30%",
@@ -3295,7 +3295,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "19783a44-2117-4f3a-b61c-190cab7ee473"
+              "user_id": "e6765c60-1391-4cbc-89ed-3719472a4997"
             }
           ]
         }
@@ -3380,7 +3380,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "a960ab45-2248-4217-8959-87447a2d7a89"
+          "user_id": "80af1e84-b390-4efc-a0ff-f56efb27283e"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
@@ -3401,7 +3401,7 @@
         },
         "example": {
           "id": 2,
-          "timestamp": "2022-05-04T22:31:17.520630+00:00",
+          "timestamp": "2022-05-04T22:40:55.702877+00:00",
           "systolic": "125",
           "diastolic": "75",
           "type": "cuff",
@@ -3542,13 +3542,13 @@
           }
         },
         "example": {
-          "id": "302b6254-f311-4394-9f74-9ac0d0095855",
-          "team_id": "6eade1f9-24bf-4952-8abb-cd9c3998232f",
-          "created_on": "2022-05-04T22:31:17.460437+00:00",
-          "updated_on": "2022-05-04T22:31:17.460451+00:00",
+          "id": "e954988e-e384-4113-a02c-fcd008068177",
+          "team_id": "191885fb-9959-4474-9290-4d6716f2a02c",
+          "created_on": "2022-05-04T22:40:55.645203+00:00",
+          "updated_on": "2022-05-04T22:40:55.645220+00:00",
           "status": "ordered",
-          "user_id": "3810796d-a44b-4c9c-bc60-1cac37a1caf9",
-          "testkit_id": "088a357f-4123-4f48-a9c5-af3266d5d862",
+          "user_id": "97662d03-d64c-4114-bebf-a41c2ebcc216",
+          "testkit_id": "344528f5-9d15-4414-9282-593ed74110f3",
           "inbound_tracking_number": "<inbound_tracking_number>",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -3584,7 +3584,7 @@
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         },
         "example": {
-          "id": "87f0b3ea-5b41-4618-8ae4-d05696380099",
+          "id": "4384940c-ed46-416d-adc9-3d7c7aca2a70",
           "date": "2022-05-04",
           "age": 28,
           "height": 183,
@@ -3594,7 +3594,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "4f283733-b2a1-4ff2-b145-eb4cce114372"
+          "user_id": "dc6edc2e-6906-479b-b546-6a4751d6b6a7"
         }
       },
       "ClientFacingSleep": {
@@ -3731,10 +3731,10 @@
           }
         },
         "example": {
-          "id": "23ad8e17-a9d4-4a78-8e7f-2285d6361081",
+          "id": "08e5f223-8f88-433d-a319-0b7b40eab312",
           "date": "2022-05-04",
-          "bedtime_start": "2022-05-04T22:31:17.271114+00:00",
-          "bedtime_stop": "2022-05-04T22:31:17.271120+00:00",
+          "bedtime_start": "2022-05-04T22:40:55.484500+00:00",
+          "bedtime_stop": "2022-05-04T22:40:55.484506+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -3754,7 +3754,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "77682490-8e6f-4d7d-8be3-aac6e4b3e337"
+          "user_id": "e9bf3278-731f-4cfa-89cd-140ae5c549d6"
         }
       },
       "ClientFacingSleepStream": {
@@ -3966,56 +3966,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-05-04T22:31:17.263697+00:00",
+            "timestamp": "2022-05-04T22:40:55.478758+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-05-04T22:31:17.263726+00:00",
+            "timestamp": "2022-05-04T22:40:55.478772+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-05-04T22:31:17.263731+00:00",
+            "timestamp": "2022-05-04T22:40:55.478776+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-05-04T22:31:17.263735+00:00",
+            "timestamp": "2022-05-04T22:40:55.478779+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-05-04T22:31:17.263739+00:00",
+            "timestamp": "2022-05-04T22:40:55.478782+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-05-04T22:31:17.263743+00:00",
+            "timestamp": "2022-05-04T22:40:55.478785+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-05-04T22:31:17.263746+00:00",
+            "timestamp": "2022-05-04T22:40:55.478787+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-05-04T22:31:17.263750+00:00",
+            "timestamp": "2022-05-04T22:40:55.478790+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -4073,9 +4073,9 @@
           }
         },
         "example": {
-          "user_id": "ec5b88a6-2855-48e4-ae18-13f65f3387cf",
-          "team_id": "9d8d8e21-20f9-4af0-8ec4-94f0b9eae85a",
-          "client_user_id": "966c6ad7-5baa-403c-a5e3-abc505bc47f3",
+          "user_id": "dc42be22-c713-42df-90f0-6ac930187500",
+          "team_id": "52f559f8-be4f-43a5-a6d6-0e082fce5bb0",
+          "client_user_id": "540130a5-ef4b-439f-ab66-f028d684383f",
           "connected_sources": [
             { "source": { "name": "Oura", "slug": "oura", "logo": "logo_url" } }
           ]
@@ -4106,8 +4106,8 @@
           }
         },
         "example": {
-          "client_user_id": "898f17d4-c813-44b3-85a2-84cf621a5f5e",
-          "user_id": "65ce4350-cd15-4eee-89f7-d60787ce1191"
+          "client_user_id": "d0dfa966-4967-4b62-ae97-bae61b72f311",
+          "user_id": "73fc37f1-8c46-4355-99ad-527e0cc89b93"
         }
       },
       "ClientFacingWorkout": {
@@ -4247,12 +4247,12 @@
           "source": { "$ref": "#/components/schemas/ClientFacingSource" }
         },
         "example": {
-          "id": "0ce56bce-b7be-4903-b656-654ece024902",
+          "id": "7f5ed31f-762d-48ab-8330-7c53b3fccf9c",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-05-04T21:31:17.301336+00:00",
-          "time_end": "2022-05-04T22:31:17.301386+00:00",
+          "time_start": "2022-05-04T21:40:55.512337+00:00",
+          "time_end": "2022-05-04T22:40:55.512387+00:00",
           "calories": 300,
           "sport": { "id": 1, "name": "football" },
           "source": {
@@ -4261,7 +4261,7 @@
             "logo": "https://logo_url.com"
           },
           "hr_zones": [100, 90, 10, 10, 200],
-          "user_id": "c9bbe8ac-cef3-418f-a6fe-cf4df48fc7c8",
+          "user_id": "d84a2685-066a-4d1d-b350-3d52696bd09e",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -4291,10 +4291,10 @@
         "example": {
           "sleep": [
             {
-              "id": "1cc4c089-7f97-44d2-ab0a-0df10e2c1a35",
+              "id": "634c6ccf-f826-4cb8-8e94-1b49411cf8bb",
               "date": "2022-05-04",
-              "bedtime_start": "2022-05-04T22:31:17.274819+00:00",
-              "bedtime_stop": "2022-05-04T22:31:17.274828+00:00",
+              "bedtime_start": "2022-05-04T22:40:55.487138+00:00",
+              "bedtime_stop": "2022-05-04T22:40:55.487143+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -4314,7 +4314,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "b27f8895-b179-4ca0-9db6-a665aa33f61d"
+              "user_id": "74d49b4a-7973-479e-91eb-560742c72ec5"
             }
           ]
         }
@@ -4332,12 +4332,12 @@
         },
         "example": {
           "workouts": {
-            "id": "3cd68a11-c40e-460e-b6e0-a16bb4edd569",
+            "id": "3003dd8a-41a4-4a2f-aedb-2560b9df62bc",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-05-04T21:31:17.302247+00:00",
-            "time_end": "2022-05-04T22:31:17.302270+00:00",
+            "time_start": "2022-05-04T21:40:55.513222+00:00",
+            "time_end": "2022-05-04T22:40:55.513244+00:00",
             "calories": 300,
             "sport": { "id": 1, "name": "football" },
             "source": {
@@ -4346,7 +4346,7 @@
               "logo": "https://logo_url.com"
             },
             "hr_zones": [100, 90, 10, 10, 200],
-            "user_id": "bec052d7-6a49-4b59-ad28-60182ea59c9b",
+            "user_id": "4f14e19a-1aa5-43c2-9199-c054b8c6aa6c",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -4965,13 +4965,13 @@
         "example": {
           "orders": [
             {
-              "id": "553fa672-0a05-4b5f-aa6f-9794ed09cceb",
-              "team_id": "dc768216-af9d-4fb9-9276-47484b82b52a",
-              "created_on": "2022-05-04T22:31:17.462253+00:00",
-              "updated_on": "2022-05-04T22:31:17.462259+00:00",
+              "id": "75a7da22-3bae-44fd-b0b7-7ed03072ee1e",
+              "team_id": "f94879a6-d277-43bd-ab30-e801daab8f32",
+              "created_on": "2022-05-04T22:40:55.647086+00:00",
+              "updated_on": "2022-05-04T22:40:55.647094+00:00",
               "status": "ordered",
-              "user_id": "c72ff6a0-6404-4117-ba8b-ae6cfb88caf1",
-              "testkit_id": "2ee4a848-dd03-497d-b4cb-cce177254724",
+              "user_id": "398e8547-61b2-420d-ae0a-6a906ec404ef",
+              "testkit_id": "ff76b437-7a37-4767-a845-4da8e63077c3",
               "testkit": { "name": "CGM", "description": "Glucose CGM" }
             }
           ],
@@ -5138,10 +5138,10 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-05-04T22:31:17.281796+00:00",
+              "timestamp": "2022-05-04T22:40:55.493226+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "a856f44f-6893-4b2c-9d9e-55cec5930910",
-              "user_id": "b480c14a-cc1d-431f-8778-983138678703",
+              "provider_id": "c167b247-4a58-491b-abef-5fd056021c39",
+              "user_id": "7122dc34-990b-4449-8e9b-5b383e0f83c1",
               "source_id": 1,
               "priority_id": 1
             }
@@ -5162,10 +5162,10 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-05-04T22:31:17.284273+00:00",
+              "timestamp": "2022-05-04T22:40:55.495567+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "aa78db75-cac4-49e5-80ff-6ee95b31d971",
-              "user_id": "adf55b66-2c4c-418c-870e-29e4a45c9b61",
+              "provider_id": "7ed10acd-f998-4d02-8064-b2eff3d7a100",
+              "user_id": "d52dda75-c305-440a-a3f1-e4aca6e983c0",
               "source_id": 1,
               "priority_id": 1
             }
@@ -5187,8 +5187,8 @@
           "devices": [
             {
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "4c37c533-0d44-4efe-a5be-f6219595e453",
-              "user_id": "f95efaa8-7fad-41c2-9bea-8859f57473f6",
+              "provider_id": "bc80b8a1-3f04-46df-a34a-449ed6d0c4aa",
+              "user_id": "341ffed3-fa0d-4b06-afd7-bc79958f004c",
               "source_id": 1
             }
           ]
@@ -5205,8 +5205,8 @@
           "profile": [
             {
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "2660162f-cd1b-40ba-b225-7a02ba12919a",
-              "user_id": "f16d941a-f142-4ef0-9b29-29c24586785e",
+              "provider_id": "f1b93514-f43b-4d35-a644-930bd61355c6",
+              "user_id": "54be421e-7f26-49b9-b834-424444b7368b",
               "source_id": 1
             }
           ]
@@ -5226,10 +5226,10 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-05-04T22:31:17.288504+00:00",
+              "timestamp": "2022-05-04T22:40:55.499924+00:00",
               "data": { "data": "...provider_specific_data" },
-              "provider_id": "81fc377a-85ec-4981-9627-a7fd1a48493e",
-              "user_id": "4aaa4665-29d9-400e-b0de-f8687744f3bc",
+              "provider_id": "c99fa596-f713-49f1-9e22-b307bef00f41",
+              "user_id": "689cc939-dd9a-438c-a54e-2004e471a0ca",
               "source_id": 1,
               "priority_id": 1
             }
@@ -5250,10 +5250,10 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-05-04T22:31:17.292020+00:00",
+              "timestamp": "2022-05-04T22:40:55.503462+00:00",
               "data": { "provider_specific": "..._data" },
-              "provider_id": "b5d1c401-8f33-40cc-b6e2-255a7eca077d",
-              "user_id": "78ceea26-55be-4954-a466-e5546d5558b1",
+              "provider_id": "c9fd5858-73b0-4c97-968e-802f88545486",
+              "user_id": "d815a044-5c54-4a27-babd-06f3694085ab",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
@@ -5399,8 +5399,8 @@
         ],
         "description": "An enumeration."
       },
-      "UserCreate": {
-        "title": "UserCreate",
+      "UserCreateBody": {
+        "title": "UserCreateBody",
         "required": ["client_user_id"],
         "type": "object",
         "properties": {
@@ -5408,9 +5408,7 @@
             "title": "Client User Id",
             "type": "string",
             "description": "A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id."
-          },
-          "team_id": { "title": "Team Id", "type": "string", "format": "uuid" },
-          "id": { "title": "Id", "type": "string" }
+          }
         }
       },
       "UserRefreshResponse": {
@@ -5428,7 +5426,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "7f90e884-d473-464f-8fd1-ccfeeae50d10"
+          "user_id": "6266f0b6-d0d4-437f-bb4b-68d2fb1786be"
         }
       },
       "UserSuccessResponse": {
