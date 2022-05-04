@@ -124,7 +124,7 @@ As you might have noticed, you use both a server and a client-side component to 
 
 The Vital flow begins when your user wants to connect their device to your application.
 
-<HStack alignItems={"flex-start"} height={"970px"} overflow={"hidden"}>
+<HStack alignItems={"flex-start"} height={"700px"} overflow={"hidden"}>
   <VStack
     style={{
       height: "100%",
@@ -132,7 +132,7 @@ The Vital flow begins when your user wants to connect their device to your appli
     width={"50%"}
   >
     <OrderedList height={"100%"}>
-      <ListItem height={"29%"} mt={"200px"}>
+      <ListItem height={"20%"} mt={"170px"}>
         To launch Vital link, first generate a `link_token` by passing the
         `user_id` to the `/link/token` endpoint.
       </ListItem>
@@ -148,7 +148,10 @@ The Vital flow begins when your user wants to connect their device to your appli
     </OrderedList>
   </VStack>
   <VStack>
-    <Image src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png" />
+    <Image
+      src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png"
+      height={"700px"}
+    />
   </VStack>
 </HStack>
 
