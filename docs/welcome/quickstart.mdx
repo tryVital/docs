@@ -91,7 +91,7 @@ Personally identifiable information (PII), such as an email address or phone num
 <br />
 <br />
 
-<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"}>
+<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"} include_client_instantiation={true}>
 
 ```bash
 curl --request POST \
@@ -108,21 +108,10 @@ curl --request POST \
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
-
+const user = await client.User.create(client_user_id);
 ```
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
 
 user = client.User.create(client_user_id)
 ```
@@ -175,25 +164,14 @@ client object.
 
 <br />
 
-<CodeBlock title={"Getting User sleep data"}>
+<CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 sleep_data = client.Sleep.get(start_date, end_date)
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-api_key: <API_KEY>,
-environment: "sandbox",
-});
-
-const user = await client.User.create(client_user_id)
+const user = await client.User.create(client_user_id);
 ```
 
 </CodeBlock>

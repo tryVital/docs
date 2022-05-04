@@ -42,27 +42,14 @@ To connect your user to Vital via the Widget you can follow the guide [here](../
 
 1. To connect to Freestyle Libre, you must create a Vital Link token.
 
-<CodeBlock title={"Connecting email provider"}>
+<CodeBlock title={"Connecting email provider"} include_client_instantiation={true}>
 
 ```python
-from vital import Client
-
-client = Client(api_key=<API_KEY>, environment='sandbox')
-
 link_token = client.Link.create(user_id)
 ```
 
 ```js
-const { VitalClient } = require("Vital");
-
-const client = new VitalClient({
-    api_key: <API_KEY>,
-    environment: "sandbox",
-});
-
-const { link_token } = await client.Link.create(
-    userId,
-)
+const { link_token } = await client.Link.create(userId);
 ```
 
 </CodeBlock>
@@ -73,7 +60,7 @@ const { link_token } = await client.Link.create(
    the connect email provider method, passing in the email of the user's Libre account.
    <br />
 
-<CodeBlock title={"Connecting email provider"}>
+<CodeBlock title={"Connecting email provider"} include_client_instantiation={true}>
 
 ```python
 client.Link.email_provider(link_token, provider, email)

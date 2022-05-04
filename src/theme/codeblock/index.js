@@ -103,19 +103,19 @@ const addInstantiationCode = (code, language, include_client_instantiation) => {
     js: `const { VitalClient } = require("Vital");
 
 const client = new VitalClient({
-      api_key: <API_KEY>,
-      environment: "sandbox",
-      region: {{REGION}}
-    });
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: {{REGION}}
+});
 
 `,
     python: `from vital import Client
 
 client = Client(
-         api_key=<API_KEY>,
-         environment="sandbox",
-         region={{REGION}}
-        )
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region={{REGION}}
+)
 
 `,
   };
