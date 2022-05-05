@@ -36,11 +36,13 @@ OURA_CLIENT_SECRET=
 Use the usual docker compose commands to launch Vital's stack:
 
 ```bash
->>> docker compose build
->>> docker compose up -d
+docker compose build
+docker compose up -d
 ```
 
 The following services are created:
+
+<br/>
 
 * `vital_api` - the user facing API.
 * `vital_background_pull` - the internal API used for fetching/polling of data from the various providers.
@@ -92,10 +94,9 @@ To create a connected source, you need two things:
 After you have the credentials, you can use the following script to create a connected source:
 
 ```bash
->>> docker compose run vital_api /bin/bash
->>> touch create_connected_source.py
-# Copy contents of the snippet below inside create_connected_source.py.
->>> python create_connected_source.py
+docker compose run vital_api /bin/bash
+touch create_connected_source.py # Copy snippet below here.
+python create_connected_source.py
 ```
 
 Use the following python snippet for `create_connected_source.py`:
