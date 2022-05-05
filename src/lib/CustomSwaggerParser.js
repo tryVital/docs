@@ -96,7 +96,7 @@ export const mapBody = (body) => {
         };
       } else {
         return {
-          name: el,
+          name: el == "user_key" ? "user_id" : el,
           type: body[el]?.type,
           description: body[el]?.description,
           required: body?.required?.indexOf(el) > -1,
