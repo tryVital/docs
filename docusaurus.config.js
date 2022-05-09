@@ -76,7 +76,7 @@ const config = {
             className: "navbar-item-link",
           },
           {
-            href: "https://github.com/facebook/docusaurus",
+            href: "https://github.com/adeptlabs/",
             label: "GitHub",
             position: "right",
           },
