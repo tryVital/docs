@@ -22,7 +22,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
-          editUrl: "https://github.com/adeptlabs/vital-docs-new/",
+          editUrl: "https://github.com/tryVital/vital-docs-new/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
@@ -76,7 +76,7 @@ const config = {
             className: "navbar-item-link",
           },
           {
-            href: "https://github.com/adeptlabs/",
+            href: "https://github.com/tryVital/",
             label: "GitHub",
             position: "right",
           },
