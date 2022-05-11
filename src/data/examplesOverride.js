@@ -80,4 +80,6 @@ export default {
       unit: "sp02",
     },
   ],
+  "/v2/testkit/orders/{order_id}/results":
+    "Returns PDF of test data - <specimen_number>.pdf",
 };
