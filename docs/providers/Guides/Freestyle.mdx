@@ -3,7 +3,7 @@ import { CodeBlock } from "@theme/codeblock";
 
 # Freestyle
 
-:::caution
+:::note
 Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital.
 Vital has two practices (depending on environment):
 
@@ -13,6 +13,15 @@ Vital has two practices (depending on environment):
 | Production  | tryVital         |
 
 If you get stuck at any point, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
+:::
+
+:::caution
+Libre's API unfortunately does not record the timestamp offset associated with each user.
+Although Vital reports a timestamp such as "2022-04-20T13:02:01.123664+00:00" this is not
+a true utc time for libre, this time will be the time in the users timezone.
+This is because libre does not report timezones via their API, Hence, Vital cannot infer the timezone offset.
+Our recommendation is for the developer integrating with Vital to record the timezone offset
+of each user and adjust the timestamps according to the users timezone.
 :::
 
 Once your Freestyle practice is connected to the Vital practice, you need to instruct your user's to connect their Libre account to your practice.
@@ -71,6 +80,8 @@ await client.Link.connectEmailProvider(link_token, "freestyle_libre", email);
 ```
 
 </CodeBlock>
+
+<br />
 
 <br />
 
