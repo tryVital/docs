@@ -203,6 +203,8 @@ After having the `url`, you can open it with `SFSafariViewController` or `WKWebV
 
 ## 5. VitalDevices
 
+### 1. Blueethooth
+
 VitalDevices connects your app to other devices via bluetooth. Currently we support glucose meters and blood pressure readers.
 
 You start by fetching all devices supported:
@@ -275,7 +277,7 @@ let pairAndRead: AnyPublisher<[QuantitySample], Error> = reader.read(device: sca
 <br />
 <br />
 
-Finally, you can monitor the connection to the device itself via:
+You can monitor the connection to the device itself via:
 
 ```swift
 let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: device)
@@ -288,6 +290,42 @@ let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: de
 When you finish scanning for a device, you need to terminate the scanning. If you don't do this, you won't be able to connect and extract data from the device. You can achieve this by holding onto a `Cancellable` (via `sink`) and call `cancel()`. Or by using a more declarative approach (e.g. `publisher.first()`).
 
 You can check our example app, to see how we do this.
+:::
+
+### 2. Freestyle Libre 1
+
+We currently support Libre 1 sensors. We use NFC for taking readings:
+
+```swift
+let reader = Libre1Reader(
+        readingMessage: "Ready for reading",
+        errorMessage: "Failed reading from sensor",
+        completionMessage: "Completed successfully!",
+        queue: mainQueue
+    )
+
+
+let reading = try await reader.read()
+```
+
+<br />
+<br />
+
+A `reading` is a payload with two properties: 1) the device information 2) an array of glucose readings
+
+```swift
+
+let device: Libre1Device = reading.device
+let samples: [QuantitySample] = reading.samples
+```
+
+<br />
+<br />
+
+As previously mentioned, you are responsible for sending the samples to the server.
+
+:::caution
+Readings taken using our SDK are not guaranteed to match the official Freestyle Libre app.
 :::
 
 ---
