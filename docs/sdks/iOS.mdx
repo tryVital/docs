@@ -277,7 +277,7 @@ let pairAndRead: AnyPublisher<[QuantitySample], Error> = reader.read(device: sca
 <br />
 <br />
 
-You can monitor the connection to the device itself via:
+You can monitor the connection to the device via:
 
 ```swift
 let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: device)
@@ -289,7 +289,7 @@ let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: de
 :::caution
 When you finish scanning for a device, you need to terminate the scanning. If you don't do this, you won't be able to connect and extract data from the device. You can achieve this by holding onto a `Cancellable` (via `sink`) and call `cancel()`. Or by using a more declarative approach (e.g. `publisher.first()`).
 
-You can check our example app, to see how we do this.
+You can check our example app, to see how we do it.
 :::
 
 ### 2. Freestyle Libre 1
@@ -311,18 +311,18 @@ let reading = try await reader.read()
 <br />
 <br />
 
-A `reading` is a payload with two properties: 1) the device information 2) an array of glucose readings
+A `reading` is a payload with two properties: 1) the sensor information 2) an array of glucose readings.
 
 ```swift
 
-let device: Libre1Device = reading.device
+let sensor: Libre1Sensor = reading.sensor
 let samples: [QuantitySample] = reading.samples
 ```
 
 <br />
 <br />
 
-As previously mentioned, you are responsible for sending the samples to the server.
+As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalNetworkClient.shared.timeSeries.post`.
 
 :::caution
 Readings taken using our SDK are not guaranteed to match the official Freestyle Libre app.
