@@ -16,12 +16,9 @@ If you get stuck at any point, help is just a click away! Join our Slack channel
 :::
 
 :::caution
-Libre's API unfortunately does not record the timestamp offset associated with each user.
-Although Vital reports a timestamp such as "2022-04-20T13:02:01.123664+00:00" this is not
-a true utc time for libre, this time will be the time in the users timezone.
-This is because libre does not report timezones via their API, Hence, Vital cannot infer the timezone offset.
-Our recommendation is for the developer integrating with Vital to record the timezone offset
-of each user and adjust the timestamps according to the users timezone.
+Libre's API does not record the timestamp's offset associated with a user's reading.
+Although Vital returns timestamps in the UTC format (e.g. `2022-04-20T13:02:01+00:00`) this doesn't hold true for Libre. The time returned is the user's timezone when they took a reading. Our recommendation is for you to record the timezone offset
+of each user and adjust the timestamps accordingly.
 :::
 
 Once your Freestyle practice is connected to the Vital practice, you need to instruct your user's to connect their Libre account to your practice.
