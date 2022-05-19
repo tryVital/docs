@@ -24,7 +24,7 @@ import {
 
 ## Step 1: API keys
 
-Start by creating an account at https://app.tryvital.io. After registered, you can create a team. A team is associated with a region (either EU, or US), please select the one most suitable for you. Once done, you will have access to API Keys for both Sandbox and Production.
+Start by creating an account at https://app.tryvital.io. Once registered, you can create a team. A team is associated with a region (either EU, or US), please select the one most suitable for you. Finally, you will have access to API Keys for both Sandbox and Production.
 
 :::info
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
@@ -36,7 +36,7 @@ If you get stuck at any point in the Quickstart, help is just a click away! Join
 
 ## Step 2: Creating Your First User
 
-You create a _user_ with the `/user/` endpoint. Once this is done, you will get an `user_id`. Most of our API requests require an `user_id` as input. When creating a user, you need to pass an unique id. This represents the user in your system.
+You create a _user_ with the `/user/` endpoint. Once done, you will get an `user_id`. Most of our API requests require an `user_id` as input. When creating a user, you need to pass an unique id. This represents the user in your system.
 
 :::caution
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
@@ -77,11 +77,11 @@ let user = try await VitalNetworkClient.shared.user.create(clientUserId)
 
 ## Step 3: Making your first API request
 
-Now that we've gone over the Link flow and token exchange process, we can explore what happens
-when you press a button in the Quickstart to make an API call. As an example, we'll look at the
-Quickstart's call to `/summary/sleep`, which retrieves sleep information for a user. The call
-is fairly straightforward and uses the `start_date` and `end_date` as arguments to the Vital
-client object.
+:::tip
+You can use our Quickstart project with a complete backend and frontend for you to get a feeling of our API. You can find it [here](https://github.com/tryVital/quickstart). You can also try our iOS demo to explore different ways of interacting with our services. You can find the demo [here](https://github.com/tryVital/vital-ios).
+:::
+
+For our first API request, we will our sleeping endpoint. It can be accessed with a call to `/summary/sleep`:
 
 <br />
 
@@ -121,7 +121,6 @@ We offer different SDKs so you can start building your app right away:
 You can also download our API collection [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
-
 
 | Environment URLs      |                                    |
 | --------------------- | ---------------------------------- |
