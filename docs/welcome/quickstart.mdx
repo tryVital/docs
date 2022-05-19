@@ -24,38 +24,19 @@ import {
 
 ## Step 1: API keys
 
-First you'll need API keys, which you can request by registering with us in the [Dashboard](https://app.tryvital.io).
-
-Once registered, you will be granted access to: the [Dashboard](https://app.tryvital.io),
-our Sandbox and Production environments, and be given a unique API key for each environment.
-
-| Keys            |
-| --------------- | -------------------------------- |
-| @@FiKey api_key | Private identifier for your team |
-
-| Environment        |                                             |
-| ------------------ | ------------------------------------------- |
-| @@FiBox sandbox    | Integration Testing                         |
-| @@FiZap production | Live environment to use with real customers |
-
-| API Urls              |                                    |
-| --------------------- | ---------------------------------- |
-| @@FiZap production    | https://api.tryvital.io            |
-| @@FiZap production-eu | https://api.eu.tryvital.io         |
-| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
-| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
-
-<br />
+Start by creating an account at https://app.tryvital.io. After registered, you can create a team. A team is associated with a region (either EU, or US), please select the one most suitable for you. Once done, you will have access to API Keys for both Sandbox and Production.
 
 :::info
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
 :::
 
+<br />
+
 ---
 
 ## Step 2: Creating Your First User
 
-Almost all API requests will interact with a _user_. To allow a _user_ to connect to the API, first create a `user_id` using the `/user/` endpoint. A `user_id` is the unique key we use to lookup users in our database. This should be a unique ID generated from your application - upon user sign up.
+You create a _user_ with the `/user/` endpoint. Once this is done, you will get an `user_id`. Most of our API requests require an `user_id` as input. When creating a user, you need to pass an unique id. This represents the user in your system.
 
 :::caution
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
@@ -71,13 +52,8 @@ curl --request POST \
      --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
-     --data '
-{
-     "client_user_id": "string",
-     "team_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     "id": "string"
-}
-'
+     --header 'x-vital-api-key: <your_api_key>' \
+     --data '{"client_user_id":"<your_user_id>"}'
 ```
 
 ```js
@@ -90,16 +66,16 @@ user = client.User.create(client_user_id)
 ```
 
 ```swift
-import VitalCore
-
 let user = try await VitalNetworkClient.shared.user.create(clientUserId)
 ```
 
 </CodeBlock>
 
+<br />
+
 ---
 
-## Step 3: Making API requests
+## Step 3: Making your first API request
 
 Now that we've gone over the Link flow and token exchange process, we can explore what happens
 when you press a button in the Quickstart to make an API call. As an example, we'll look at the
@@ -120,17 +96,18 @@ const sleepData = await client.Sleep.get(userId, startDate, endDate);
 ```
 
 ```swift
-import VitalCore
-
 let sleepData = try await VitalNetworkClient.shared.summary.sleep(userId, startDate, endDate)
 ```
 
 </CodeBlock>
 
 <br />
-<br />
 
-We offer different SDKs so you can start building your app right away.
+---
+
+## Step 4: More requests!
+
+We offer different SDKs so you can start building your app right away:
 
 |                                                                  |                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
@@ -141,18 +118,28 @@ We offer different SDKs so you can start building your app right away.
 | Java                                                             | Soon to be added                                     |
 | Go                                                               | Soon to be added                                     |
 
-You calso download our API collection [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
+You can also download our API collection [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
+
+
+| Environment URLs      |                                    |
+| --------------------- | ---------------------------------- |
+| @@FiZap production    | https://api.tryvital.io            |
+| @@FiZap production-eu | https://api.eu.tryvital.io         |
+| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
+| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
+
+<br />
 
 ---
 
 ## Next Steps
 
-Congratulations, you have completed the Vital Quickstart! From here, we invite you
-to modify the Quickstart code in order to get more practice with the Vital API.
+Congratulations, you have completed the Vital Quickstart!
 
 There are a few directions you can go in now:
 
 - [Vital Link](/vital-link/introduction)
 - [Vital SDKs](/sdks/ios)
+- [Vital Webhooks](/webhooks/Introduction)

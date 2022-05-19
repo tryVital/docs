@@ -110,6 +110,15 @@ client = Client(
 )
 
 `,
+swift: `
+import VitalCore
+
+VitalNetworkClient.configure(
+  apiKey: <API_KEY>,
+  environment: .sandbox(.us)
+)
+
+`
   };
   return initCode[language] ? initCode[language] + code : code;
 };
