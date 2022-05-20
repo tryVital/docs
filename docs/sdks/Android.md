@@ -14,6 +14,6 @@ We use Gradle to manage dependencies. We will soon have the SDK publicly availab
 
 ## 3. Initial Setup
 
-To use our SDK, start by setting up `VitalNetworkClient`:
+To use our SDK, start by setting up `VitalClient`:
 
 Rest of the docs coming soon... :rocket:
