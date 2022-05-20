@@ -334,7 +334,7 @@ let samples: [QuantitySample] = reading.samples
 As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalNetworkClient.shared.timeSeries.post`.
 
 :::caution
-Readings taken with the SDK are not guaranteed to match the official Freestyle Libre app.
+Readings taken with the SDK are not guaranteed to match the official Freestyle Libre app. This mismatch happens due to the algorithm difference used by us, compared to the official Freestyle Libre.
 :::
 
 ---
