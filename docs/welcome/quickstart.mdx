@@ -18,32 +18,95 @@ import {
   Spacer,
   OrderedList,
   ListItem,
-  Image,
   Button,
 } from "@chakra-ui/react";
+import Quickstart from "@site/static/img/quickstart.jpg";
 
-## Step 1: API keys
+## 1. API keys
 
-Start by creating an account at https://app.tryvital.io. Once registered, you can create a team. A team is associated with a region (either EU, or US), please select the one most suitable for you. Finally, you will have access to API Keys for both Sandbox and Production.
+Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
+You’ll need API keys, which you can receive by signing up in the [Dashboard](https://app.tryvital.io).
+Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
+the region dictates where data is stored.
+
+You'll have two different API keys, and there are two different Vital environments.
+Today we'll start in the Sandbox environment. View the configuration section of the Dashboard to find your Sandbox API Key.
 
 :::info
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
 :::
 
-<br />
+| Environment        |                                             |                                 |
+| ------------------ | ------------------------------------------- | ------------------------------- |
+| @@FiBox sandbox    | Testing, Connect up to 10 live users        | https://api.tryvital.io         |
+| @@FiZap production | Live environment to use with real customers | https://api.sandbox.tryvital.io |
 
----
+## 2. Running Quickstart locally
 
-## Step 2: Creating Your First User
+Once you have your API keys, it's time to run the Vital Quickstart locally!
+The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
+customizing the .env file with your own Vital API_KEY and finally, building and running the app.
 
-You create a _user_ with the `/user/` endpoint. Once done, you will get an `user_id`. Most of our API requests require an `user_id` as input. When creating a user, you need to pass an unique id. This represents the user in your system.
+<CodeBlock title={"1. Clone quickstart and run locally"} include_client_instantiation={false} hide_region={true}>
+
+```bash
+# Note: If on Windows, run
+# git clone -c core.symlinks=true https://github.com/vital/quickstart
+# instead to ensure correct symlink behavior
+git clone https://github.com/vital/quickstart.git
+cd backend/python
+
+# Copy the .env.example file to .env, then fill
+# out VITAL_API_KEY and VITAL_ENV in .env
+cp .env.example .env
+
+# Note: must use python 3
+# For virtualenv users:
+# virtualenv venv
+# source venv/bin/activate
+poetry install
+
+# Start the backend app
+source ./start.sh
+```
+
+</CodeBlock>
+
+Open a new shell and start the frontend app. Your app will be running at `http://localhost:3000`.
+
+<CodeBlock title={"2. Run quickstart frontend"} include_client_instantiation={false} hide_region={true}>
+
+```bash
+# Install dependencies
+cd quickstart/frontend
+npm install
+
+# Start the frontend app
+npm dev
+
+# Go to http://localhost:3000
+```
+
+</CodeBlock>
+
+## 2. Creating your first User
+
+When retreiving data or connecting devices, Vital will require an `user_id` as input.
+This `user_id` is a unique representation that we hold for a user that allows you to fetch all the data for that user.
+To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
+to store the Vital `user_id` in your db against the user row.
 
 :::caution
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
 :::
 
+To do this, enter a test `client_user_id` tap the create_user_button.
+
+<img src={Quickstart} />
+
 <br />
-<br />
+
+This can also be achieved via the API as follows.
 
 <CodeBlock title={"Creating a Vital user"} include_client_instantiation={true}>
 
@@ -73,15 +136,135 @@ let user = try await VitalNetworkClient.shared.user.create(clientUserId)
 
 <br />
 
----
+## 3. Connecting a source
 
-## Step 3: Making your first API request
+A source in vital is a medical device, wearble, or lab. It is a source of information for health data.
+To connect a source tap the connect button, this will launch the Vital Link Widget for that user.
 
-:::tip
-You can use our [Quickstart project](https://github.com/tryVital/quickstart) with a complete backend and frontend for you to get a feeling of our API. You can also try our [iOS demo](https://github.com/tryVital/vital-ios) to explore different ways of interacting with our services.
-:::
+Once you have entered your credentials and moved to the next screen, you have connected your first source!
+You can now make API calls to retrieve data for that Source.
+In the next section, we'll explain what actually happened and how the Quickstart works.
 
-For our first API request, we will call `/summary/sleep`:
+# 4. How it works
+
+As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
+A full explanation on how this works can be found [here](/vital-link/link_flow)
+
+The first step is to create a new link_token by making a `/link/token` request and passing in the
+required configurations. This `link_token` is a short lived, one-time use token that authenticates your
+app with Vital Link, our frontend module.
+
+<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
+
+```python
+# TEST BACKEND IMPLEMENTATION
+from http.client import HTTPException
+from tracemalloc import start
+from typing import Optional
+from vital import Client
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+app = FastAPI()
+VITAL_API_KEY = os.getenv("VITAL_API_KEY")
+VITAL_ENVIRONMENT = os.getenv("VITAL_ENV")
+
+client = Client(api_key=VITAL_API_KEY, environment=VITAL_ENVIRONMENT)
+
+app.add_middleware(  # type: ignore
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/token/{user_key}")
+def get_token(user_key: str):
+    return client.Link.create(user_key)
+
+```
+
+</CodeBlock>
+
+Once you have a link_token, you can use it to initialize Link. Link is a drop-in client-side
+module available for web, iOS, and Android that handles the authentication process.
+The Quickstart uses Link on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
+This is what your users use to connect their medical device or wearables.
+
+<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
+
+```javascript
+import { Button } from "@chakra-ui/react";
+import { useState, useCallback } from "react";
+import { useVitalLink } from "@tryvital/vital-link";
+
+export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
+  const [isLoading, setLoading] = useState(false);
+
+  const onSuccess = useCallback((metadata) => {
+    // Device is now connected.
+    console.log("onSuccess", metadata);
+  }, []);
+
+  const onExit = useCallback((metadata) => {
+    // User has quit the link flow.
+    console.log("onExit", metadata);
+  }, []);
+
+  const onError = useCallback((metadata) => {
+    // Error encountered in connecting device.
+    console.log("onError", metadata);
+  }, []);
+
+  const config = {
+    onSuccess,
+    onExit,
+    onError,
+    env: "sandbox",
+    region: "us",
+  };
+
+  const { open, ready, error } = useVitalLink(config);
+
+  const handleVitalOpen = async () => {
+    setLoading(true);
+    const token = await getTokenFromBackend(userID);
+    open(token.link_token);
+    setLoading(false);
+  };
+
+  return (
+    <Button
+      bg="blue.400"
+      color="white"
+      fontSize={"12px"}
+      px={2}
+      py={0}
+      onClick={handleVitalOpen}
+      isLoading={isLoading || !ready}
+      isDisabled={userID ? false : true}
+    >
+      Connect
+    </Button>
+  );
+};
+```
+
+</CodeBlock>
+
+## 5. Making your first API request
+
+Now that we've gone over the Link flow process, we can explore what happens when
+you press the analyze button in the Quickstart to make an API call.
+As an example, we'll look at the Quickstart's call to /summary/sleep, which retrieves sleep
+summary data for a user. The request is simple and requires the Vital
+`user_id`, `start_date` and `end_date`.
 
 <br />
 
@@ -103,9 +286,7 @@ let sleepData = try await VitalNetworkClient.shared.summary.sleep(userId, startD
 
 <br />
 
----
-
-## Step 4: More requests!
+## 6. SDK's and Libraries
 
 We offer different SDKs so you can start building your app right away:
 
@@ -122,16 +303,7 @@ You can also download our API collection [here](https://www.getpostman.com/colle
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
 
-| Environment URLs      |                                    |
-| --------------------- | ---------------------------------- |
-| @@FiZap production    | https://api.tryvital.io            |
-| @@FiZap production-eu | https://api.eu.tryvital.io         |
-| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
-| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
-
 <br />
-
----
 
 ## Next Steps
 
