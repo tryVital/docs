@@ -1,12 +1,1 @@
-[
-  {
-    "release": "0.1.50",
-    "date": "2022-05-12T06:07:31Z",
-    "body": "- New docs released on docusaurus"
-  },
-  {
-    "body": "- Fix profile parsing error for zwift",
-    "release": "0.1.60",
-    "date": "2022-05-20T06:07:31Z"
-  }
-]
+[{"release": "0.1.50", "body": "- New docs released on docusaurus", "date": "2022-05-12T06:07:31Z"}, {"release": "0.1.60", "body": "- Fix profile parsing error for zwift", "date": "2022-05-20T06:07:31Z"}, {"release": "0.1.64", "body": "- Fix the email validation Libre issue, to accommodate the increase in users.\r\n", "date": "2022-05-24T08:31:03Z"}]
