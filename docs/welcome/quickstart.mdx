@@ -27,10 +27,10 @@ import Quickstart from "@site/static/img/quickstart.jpg";
 Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
 You’ll need API keys, which you can receive by signing up in the [Dashboard](https://app.tryvital.io).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
-the region dictates where data is stored.
+the region dictates where data is stored. More information on regions is available [here](/api/regions).
 
-You'll have two different API keys, and there are two different Vital environments.
-Today we'll start in the Sandbox environment. View the configuration section of the Dashboard to find your Sandbox API Key.
+For each region, you'll have access to two environments sandbox and production. We'll start in the Sandbox environment.
+View the configuration section of the Dashboard to find your Sandbox API Key.
 
 :::info
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
@@ -192,7 +192,7 @@ def get_token(user_key: str):
 
 </CodeBlock>
 
-Once you have a link_token, you can use it to initialize Link. Link is a drop-in client-side
+Once you have a `link_token`, you can use it to initialize Link. Link is a drop-in client-side
 module available for web, iOS, and Android that handles the authentication process.
 The Quickstart uses Link on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
 This is what your users use to connect their medical device or wearables.
@@ -262,7 +262,7 @@ export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
 
 Now that we've gone over the Link flow process, we can explore what happens when
 you press the analyze button in the Quickstart to make an API call.
-As an example, we'll look at the Quickstart's call to /summary/sleep, which retrieves sleep
+As an example, we'll look at the Quickstart's call to `/summary/sleep`, which retrieves sleep
 summary data for a user. The request is simple and requires the Vital
 `user_id`, `start_date` and `end_date`.
 
