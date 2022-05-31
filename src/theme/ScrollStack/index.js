@@ -33,6 +33,7 @@ export const ParamsAndCodeBlock = ({
   params,
   children,
   include_client_instantiation,
+  hide_region,
 }) => {
   const [isLargerThan1280] = useMediaQuery("(min-width: 960px)");
   const position = isLargerThan1280 ? "sticky" : "auto";
@@ -60,6 +61,7 @@ export const ParamsAndCodeBlock = ({
         <CodeBlock
           title={title}
           include_client_instantiation={include_client_instantiation}
+          hide_region={hide_region}
         >
           {children}
         </CodeBlock>

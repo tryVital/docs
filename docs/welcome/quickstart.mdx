@@ -10,6 +10,7 @@ updatedAt: "2022-04-07T19:41:06.827Z"
 
 import { Swagger } from "@theme/swagger";
 import { CodeBlock } from "@theme/codeblock";
+import { Image } from "@chakra-ui/react";
 
 import {
   HStack,
@@ -18,82 +19,109 @@ import {
   Spacer,
   OrderedList,
   ListItem,
-  Image,
   Button,
 } from "@chakra-ui/react";
+import Quickstart from "@site/static/img/quickstart.jpg";
 
-# Introduction
+## 1. API keys
 
-Let's get started, first you’ll need API keys, which you can request by registering with us in the [Dashboard](https://app.tryvital.io).
+Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
+You can get API keys by signing up in the [Dashboard](https://app.tryvital.io).
+Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
+the region dictates where data is stored. More information on regions is available [here](/api/regions).
 
-Once registered, you will be granted access to: the [Dashboard](https://app.tryvital.io),
-our Sandbox and Production environments, and be given a unique API key for each environment.
-
-| Keys            |
-| --------------- | -------------------------------- |
-| @@FiKey api_key | Private identifier for your team |
-
-| Environment        |                                             |
-| ------------------ | ------------------------------------------- |
-| @@FiBox sandbox    | Integration Testing                         |
-| @@FiZap production | Live environment to use with real customers |
-
-| API Urls              |                                    |
-| --------------------- | ---------------------------------- |
-| @@FiZap production    | https://api.tryvital.io            |
-| @@FiZap production-eu | https://api.eu.tryvital.io         |
-| @@FiBox sandbox       | https://api.sandbox.tryvital.io    |
-| @@FiBox sandbox-eu    | https://api.sandbox.eu.tryvital.io |
-
-Example API collection can be downloaded from [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
-
-<br />
+For each region, you'll have access to two environments Sandbox and Production. We'll start in the Sandbox environment.
+View the configuration section of the Dashboard to find your Sandbox API Key.
 
 :::info
 If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
 :::
 
-## Quickstart Setup
+| Environment        |                                             |                                 |
+| ------------------ | ------------------------------------------- | ------------------------------- |
+| @@FiBox sandbox    | Testing, Connect up to 10 live users        | https://api.tryvital.io         |
+| @@FiZap production | Live environment to use with real customers | https://api.sandbox.tryvital.io |
 
-We offer different SDKs so you can start building your app right away.
+## 2. Running Quickstart locally
 
-|                                                                  |                                                      |
-| ---------------------------------------------------------------- | ---------------------------------------------------- |
-| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
-| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
-| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
-| Java                                                             | Soon to be added                                     |
-| Go                                                               | Soon to be added                                     |
+Once you have your API keys, it's time to run the Vital Quickstart locally!
+The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
+customizing the `.env` file with your own Vital `API_KEY` and finally, building and running the app.
 
-## Creating Your First User
+<CodeBlock title={"1. Clone quickstart and run locally"} include_client_instantiation={false} hide_region={true}>
 
-Once you have your API Keys you are ready to create your first user!
+```bash
+# Note: If on Windows, run
+# git clone -c core.symlinks=true https://github.com/vital/quickstart
+# instead to ensure correct symlink behavior
+git clone https://github.com/vital/quickstart.git
+cd backend/python
 
-Almost all API requests will interact with a _user_. To allow a _user_ to connect to the API, first create a `user_id` using the `/user/` endpoint. A `user_id` is the unique key we use to lookup users in our database. This should be a unique ID generated from your application - upon user sign up.
+# Copy the .env.example file to .env, then fill
+# out VITAL_API_KEY and VITAL_ENV in .env
+cp .env.example .env
+
+# Note: must use python 3
+# For virtualenv users:
+# virtualenv venv
+# source venv/bin/activate
+poetry install
+
+# Start the backend app
+source ./start.sh
+```
+
+</CodeBlock>
+
+<br />
+
+Open a new shell and start the frontend app. Your app will be running at `http://localhost:3000`.
+
+<CodeBlock title={"2. Run quickstart frontend"} include_client_instantiation={false} hide_region={true}>
+
+```bash
+# Install dependencies
+cd quickstart/frontend
+npm install
+
+# Start the frontend app
+npm dev
+
+# Go to http://localhost:3000
+```
+
+</CodeBlock>
+
+<br />
+
+## 3. Creating your first User
+
+When retrieving data or connecting devices, Vital will require a `user_id` as input.
+A `user_id` is a unique representation that we hold for a user. It allows you to fetch data for that user.
+To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
+to store the Vital `user_id` in your db against the user row.
 
 :::caution
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
 :::
 
-<br />
+Enter a new `client_user_id` and tap Create:
+
+<img src={Quickstart} />
+
 <br />
 
-<Swagger endpoint={"/user/"} method={"post"} title={"Create a Vital User"} include_client_instantiation={true}>
+This can also be achieved via the API as follows.
+
+<CodeBlock title={"Creating a Vital user"} include_client_instantiation={true}>
 
 ```bash
 curl --request POST \
      --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
-     --data '
-{
-     "client_user_id": "string",
-     "team_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     "id": "string"
-}
-'
+     --header 'x-vital-api-key: <your_api_key>' \
+     --data '{"client_user_id":"<your_user_id>"}'
 ```
 
 ```js
@@ -105,75 +133,193 @@ const user = await client.User.create(client_user_id);
 user = client.User.create(client_user_id)
 ```
 
-</Swagger>
-
-## How it works
-
-As you might have noticed, you use both a server and a client-side component to access Vital APIs. The flow looks like this:
-
-The Vital flow begins when your user wants to connect their device to your application.
-
-<HStack alignItems={"flex-start"} height={"700px"} overflow={"hidden"}>
-  <VStack
-    style={{
-      height: "100%",
-    }}
-    width={"50%"}
-  >
-    <OrderedList height={"100%"}>
-      <ListItem height={"20%"} mt={"170px"}>
-        To launch Vital link, first generate a `link_token` by passing the
-        `user_id` to the `/link/token` endpoint.
-      </ListItem>
-      <ListItem height={"33%"}>
-        Pass the `link_token` into the Vital link component to open the link for
-        the user. Please note: the `link_token` is a short-lived one-time use
-        token.
-      </ListItem>
-      <ListItem>
-        Use the onSuccess, onError, onExit callbacks to handle different events
-        on your frontend.
-      </ListItem>
-    </OrderedList>
-  </VStack>
-  <VStack>
-    <Image
-      src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png"
-      height={"700px"}
-    />
-  </VStack>
-</HStack>
-
-<br />
-
-## Making API requests
-
-Now that we've gone over the Link flow and token exchange process, we can explore what happens
-when you press a button in the Quickstart to make an API call. As an example, we'll look at the
-Quickstart's call to `/summary/sleep`, which retrieves sleep information for a user. The call
-is fairly straightforward and uses the `start_date` and `end_date` as arguments to the Vital
-client object.
-
-<br />
-
-<CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
-
-```python
-sleep_data = client.Sleep.get(start_date, end_date)
-```
-
-```js
-const user = await client.User.create(client_user_id);
+```swift
+let user = try await VitalClient.shared.user.create(clientUserId)
 ```
 
 </CodeBlock>
 
+<br />
+
+## 4. Connecting a source
+
+A source, at Vital, is a medical device, wearable, or lab. It is a source of information for health data.
+To connect a source tap the connect button, this will launch the Vital Link Widget for that user.
+
+Once you have entered your credentials and moved to the next screen, you have connected your first source!
+You can now make API calls to retrieve data for that Source.
+
+### How it works
+
+As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
+A more detailed explanation on how linking works can be found [here](/vital-link/link_flow)
+
+The first step is to create a new `link_token` by making a `/link/token` request and passing in the
+required configuration. This `link_token` is a short lived, one-time use token that authenticates your
+app with Vital Link, our frontend module.
+
+<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
+
+```python
+# TEST BACKEND IMPLEMENTATION
+from http.client import HTTPException
+from tracemalloc import start
+from typing import Optional
+from vital import Client
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+app = FastAPI()
+VITAL_API_KEY = os.getenv("VITAL_API_KEY")
+VITAL_ENVIRONMENT = os.getenv("VITAL_ENV")
+
+client = Client(api_key=VITAL_API_KEY, environment=VITAL_ENVIRONMENT)
+
+app.add_middleware(  # type: ignore
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/token/{user_key}")
+def get_token(user_key: str):
+    return client.Link.create(user_key)
+
+```
+
+</CodeBlock>
+
+<br />
+
+Once you have a `link_token`, you can use it to initialize `Link`. `Link` is a drop-in client-side
+module available for web, iOS, and Android that handles the authentication process.
+The Quickstart uses `Link` on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
+
+<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
+
+```javascript
+import { Button } from "@chakra-ui/react";
+import { useState, useCallback } from "react";
+import { useVitalLink } from "@tryvital/vital-link";
+
+export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
+  const [isLoading, setLoading] = useState(false);
+
+  const onSuccess = useCallback((metadata) => {
+    // Device is now connected.
+    console.log("onSuccess", metadata);
+  }, []);
+
+  const onExit = useCallback((metadata) => {
+    // User has quit the link flow.
+    console.log("onExit", metadata);
+  }, []);
+
+  const onError = useCallback((metadata) => {
+    // Error encountered in connecting device.
+    console.log("onError", metadata);
+  }, []);
+
+  const config = {
+    onSuccess,
+    onExit,
+    onError,
+    env: "sandbox",
+    region: "us",
+  };
+
+  const { open, ready, error } = useVitalLink(config);
+
+  const handleVitalOpen = async () => {
+    setLoading(true);
+    const token = await getTokenFromBackend(userID);
+    open(token.link_token);
+    setLoading(false);
+  };
+
+  return (
+    <Button
+      bg="blue.400"
+      color="white"
+      fontSize={"12px"}
+      px={2}
+      py={0}
+      onClick={handleVitalOpen}
+      isLoading={isLoading || !ready}
+      isDisabled={userID ? false : true}
+    >
+      Connect
+    </Button>
+  );
+};
+```
+
+</CodeBlock>
+
+<br />
+
+This is what your users see to connect their medical device or wearables:
+
+<Image src="/img/link_specific.png" width={"50%"} />
+
+## 5. Making your first API request
+
+We can now explore what happens when
+you press the analyze button in the Quickstart to make an API call.
+As an example, we'll look at the Quickstart's call to `/summary/sleep`, which retrieves sleep
+summary data for a user. The request is simple and requires the Vital
+`user_id`, `start_date` and `end_date`.
+
+<CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
+
+```python
+sleep_data = client.Sleep.get(user_id, start_date, end_date)
+```
+
+```js
+const sleepData = await client.Sleep.get(userId, startDate, endDate);
+```
+
+```swift
+let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, endDate)
+```
+
+</CodeBlock>
+
+<br />
+
+## 6. SDK's and Libraries
+
+We offer different SDKs so you can start building your app right away:
+
+|                                                                  |                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------- |
+| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
+| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
+| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
+| [vital-ios](https://github.com/tryVital/vital-ios)               | Vital iOS Client                                     |
+| Java                                                             | Soon to be added                                     |
+| Go                                                               | Soon to be added                                     |
+
+You can also download our API collection [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
+
+<br />
+
 ## Next Steps
 
-Congratulations, you have completed the Vital Quickstart! From here, we invite you
-to modify the Quickstart code in order to get more practice with the Vital API.
+Congratulations, you have completed the Vital Quickstart!
 
 There are a few directions you can go in now:
 
 - [Vital Link](/vital-link/introduction)
 - [Vital SDKs](/sdks/ios)
+- [Vital Webhooks](/webhooks/Introduction)

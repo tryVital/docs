@@ -110,6 +110,15 @@ client = Client(
 )
 
 `,
+    swift: `
+import VitalCore
+
+VitalClient.configure(
+  apiKey: <API_KEY>,
+  environment: .sandbox(.us)
+)
+
+`,
   };
   return initCode[language] ? initCode[language] + code : code;
 };
@@ -119,6 +128,7 @@ export const CodeBlock = ({
   children,
   include_client_instantiation,
   response,
+  hide_region,
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isCopied, setCopied] = useState(false);
@@ -148,23 +158,27 @@ export const CodeBlock = ({
       alignItems={"flex-start"}
       background={response ? "rgb(229, 232, 247)" : codeBgPrimary}
       width={"100%"}
+      mb={"25px"}
+      maxH={"32rem"}
     >
       <HStack width={"100%"} justifyContent="space-between">
         <HStack pl={10}>
-          <chakra.select
-            onChange={(e) => setRegion(e.target.value)}
-            bg={codeBgPrimary}
-            color={"white"}
-            borderColor={codeBgPrimary}
-            fontSize={"15px"}
-            fontWeight={600}
-            sx={{ _hover: { cursor: "pointer" }, textAlign: "left" }}
-          >
-            <option value={"us"}>🇺🇸</option>
-            <option value={"eu"} color={"white"}>
-              🇪🇺
-            </option>
-          </chakra.select>
+          {!hide_region && (
+            <chakra.select
+              onChange={(e) => setRegion(e.target.value)}
+              bg={codeBgPrimary}
+              color={"white"}
+              borderColor={codeBgPrimary}
+              fontSize={"15px"}
+              fontWeight={600}
+              sx={{ _hover: { cursor: "pointer" }, textAlign: "left" }}
+            >
+              <option value={"us"}>🇺🇸</option>
+              <option value={"eu"} color={"white"}>
+                🇪🇺
+              </option>
+            </chakra.select>
+          )}
           <chakra.div
             py="5px"
             color={response ? "#4f566b" : "#ADADAD"}
