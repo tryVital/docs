@@ -113,7 +113,7 @@ client = Client(
     swift: `
 import VitalCore
 
-VitalNetworkClient.configure(
+VitalClient.configure(
   apiKey: <API_KEY>,
   environment: .sandbox(.us)
 )

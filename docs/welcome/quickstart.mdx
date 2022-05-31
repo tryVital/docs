@@ -10,6 +10,7 @@ updatedAt: "2022-04-07T19:41:06.827Z"
 
 import { Swagger } from "@theme/swagger";
 import { CodeBlock } from "@theme/codeblock";
+import { Image } from "@chakra-ui/react";
 
 import {
   HStack,
@@ -25,11 +26,11 @@ import Quickstart from "@site/static/img/quickstart.jpg";
 ## 1. API keys
 
 Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
-You’ll need API keys, which you can receive by signing up in the [Dashboard](https://app.tryvital.io).
+You can get API keys by signing up in the [Dashboard](https://app.tryvital.io).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
 the region dictates where data is stored. More information on regions is available [here](/api/regions).
 
-For each region, you'll have access to two environments sandbox and production. We'll start in the Sandbox environment.
+For each region, you'll have access to two environments Sandbox and Production. We'll start in the Sandbox environment.
 View the configuration section of the Dashboard to find your Sandbox API Key.
 
 :::info
@@ -45,7 +46,7 @@ If you get stuck at any point in the Quickstart, help is just a click away! Join
 
 Once you have your API keys, it's time to run the Vital Quickstart locally!
 The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
-customizing the .env file with your own Vital API_KEY and finally, building and running the app.
+customizing the `.env` file with your own Vital `API_KEY` and finally, building and running the app.
 
 <CodeBlock title={"1. Clone quickstart and run locally"} include_client_instantiation={false} hide_region={true}>
 
@@ -72,6 +73,8 @@ source ./start.sh
 
 </CodeBlock>
 
+<br />
+
 Open a new shell and start the frontend app. Your app will be running at `http://localhost:3000`.
 
 <CodeBlock title={"2. Run quickstart frontend"} include_client_instantiation={false} hide_region={true}>
@@ -89,10 +92,12 @@ npm dev
 
 </CodeBlock>
 
-## 2. Creating your first User
+<br />
 
-When retreiving data or connecting devices, Vital will require an `user_id` as input.
-This `user_id` is a unique representation that we hold for a user that allows you to fetch all the data for that user.
+## 3. Creating your first User
+
+When retrieving data or connecting devices, Vital will require an `user_id` as input.
+An `user_id` is a unique representation that we hold for a user. It allows you to fetch all the data for that user.
 To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
 to store the Vital `user_id` in your db against the user row.
 
@@ -100,7 +105,7 @@ to store the Vital `user_id` in your db against the user row.
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
 :::
 
-To do this, enter a test `client_user_id` tap the create_user_button.
+Enter a new `client_user_id` and tap Create:
 
 <img src={Quickstart} />
 
@@ -129,29 +134,28 @@ user = client.User.create(client_user_id)
 ```
 
 ```swift
-let user = try await VitalNetworkClient.shared.user.create(clientUserId)
+let user = try await VitalClient.shared.user.create(clientUserId)
 ```
 
 </CodeBlock>
 
 <br />
 
-## 3. Connecting a source
+## 4. Connecting a source
 
-A source in vital is a medical device, wearble, or lab. It is a source of information for health data.
+A source, at Vital, is a medical device, wearable, or lab. It is a source of information for health data.
 To connect a source tap the connect button, this will launch the Vital Link Widget for that user.
 
 Once you have entered your credentials and moved to the next screen, you have connected your first source!
 You can now make API calls to retrieve data for that Source.
-In the next section, we'll explain what actually happened and how the Quickstart works.
 
-# 4. How it works
+### How it works
 
 As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
-A full explanation on how this works can be found [here](/vital-link/link_flow)
+A more detailed explanation on how linking works can be found [here](/vital-link/link_flow)
 
-The first step is to create a new link_token by making a `/link/token` request and passing in the
-required configurations. This `link_token` is a short lived, one-time use token that authenticates your
+The first step is to create a new `link_token` by making a `/link/token` request and passing in the
+required configuration. This `link_token` is a short lived, one-time use token that authenticates your
 app with Vital Link, our frontend module.
 
 <CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
@@ -192,10 +196,11 @@ def get_token(user_key: str):
 
 </CodeBlock>
 
-Once you have a `link_token`, you can use it to initialize Link. Link is a drop-in client-side
+<br />
+
+Once you have a `link_token`, you can use it to initialize `Link`. `Link` is a drop-in client-side
 module available for web, iOS, and Android that handles the authentication process.
-The Quickstart uses Link on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
-This is what your users use to connect their medical device or wearables.
+The Quickstart uses `Link` on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
 
 <CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
 
@@ -258,15 +263,19 @@ export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
 
 </CodeBlock>
 
+<br />
+
+This is what your users see to connect their medical device or wearables:
+
+<Image src="/img/link_specific.png" width={"50%"} />
+
 ## 5. Making your first API request
 
-Now that we've gone over the Link flow process, we can explore what happens when
+We can now explore what happens when
 you press the analyze button in the Quickstart to make an API call.
 As an example, we'll look at the Quickstart's call to `/summary/sleep`, which retrieves sleep
 summary data for a user. The request is simple and requires the Vital
 `user_id`, `start_date` and `end_date`.
-
-<br />
 
 <CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
 
@@ -279,7 +288,7 @@ const sleepData = await client.Sleep.get(userId, startDate, endDate);
 ```
 
 ```swift
-let sleepData = try await VitalNetworkClient.shared.summary.sleep(userId, startDate, endDate)
+let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, endDate)
 ```
 
 </CodeBlock>

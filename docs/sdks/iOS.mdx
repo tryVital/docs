@@ -28,12 +28,12 @@ We use SPM (Swift Package Manager) to manage dependencies. You can add `https://
 
 ## 3. Initial Setup
 
-To use our SDK, start by setting up `VitalNetworkClient`:
+To use our SDK, start by setting up `VitalClient`:
 
 ```swift
 import VitalCore
 
-VitalNetworkClient.configure(
+VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
@@ -52,7 +52,7 @@ There are two main topics you should be aware:
 A `userId` serves as a unique identifier of your user in Vital. You create one by sending us an id representing that user in your system (e.g. `white_bear`, `12832001`, `b5d36dbe-b745-11ec-b909-0242ac120002`, etc). We advise against the use of PII (Personal Identifiable Information). It should also be unique across the users that belong to your team. You can create a `userId` like this:
 
 ```swift
-let result = try await VitalNetworkClient.shared.user.create(
+let result = try await VitalClient.shared.user.create(
     .init(clientUserId: "white_bear"),
     setUserIdOnSuccess: false
 )
@@ -64,7 +64,7 @@ let result = try await VitalNetworkClient.shared.user.create(
 A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 
 ```swift
-VitalNetworkClient.setUserId(result.userId)
+VitalClient.setUserId(result.userId)
 ```
 
 <br />
@@ -72,7 +72,7 @@ VitalNetworkClient.setUserId(result.userId)
 
 :::tip
 
-By default, when you create a `userId`, we call `VitalNetworkClient.setUserId` internally. If you don't want this to happen call `VitalNetworkClient.setUserId(result.userId, setUserIdOnSuccess: false)`.
+By default, when you create a `userId`, we call `VitalClient.setUserId` internally. If you don't want this to happen call `VitalClient.setUserId(result.userId, setUserIdOnSuccess: false)`.
 
 :::
 
@@ -87,10 +87,10 @@ To achieve this you can:
 ```swift
 
 /// 1)
-let benUser = try await VitalNetworkClient.shared.user.create(clientUserId: "white_bear")
+let benUser = try await VitalClient.shared.user.create(clientUserId: "white_bear")
 
 /// 2)
-let result = try await VitalNetworkClient.shared.user.createConnectedSource(for: .omron)
+let result = try await VitalClient.shared.user.createConnectedSource(for: .omron)
 ```
 
 <br />
@@ -100,9 +100,9 @@ With these two things in place, you can now post Ben's Omron data.
 
 ---
 
-## 4. VitalNetwork
+## 4. VitalCore
 
-For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalNetworkClient.shared.<domain>`. VitalNetwork allows you to do exactly that. VitalHealkit however will send the data automatically.
+For the most part, you won't need to instantiate model objects. VitalHealthKit and VitalDevices will generate these models on your behalf. For VitalDevices in particular, you are responsible for sending the data explicitly via `VitalClient.shared.<domain>`. VitalClient allows you to do exactly that. VitalHealkit however will send the data automatically.
 
 ### 1. TimeSeries and Summaries
 
@@ -134,7 +134,7 @@ let sample = QuantitySample(
 
 let samples: [BloodPressureSample] = [sample]
 
-try await VitalNetworkClient.shared.timeSeries.post(
+try await VitalClient.shared.timeSeries.post(
     .bloodPressure(samples),
     stage: .daily,
     provider: .appleHealthKit
@@ -149,7 +149,7 @@ Likewise for summaries:
 ```swift
 let workoutPatch: WorkoutPatch = ...
 
-try await VitalNetworkClient.shared.summary.post(
+try await VitalClient.shared.summary.post(
     .workout(workoutPatch),
     stage: .daily,
     provider: .appleHealthKit
@@ -172,7 +172,7 @@ The SDK provides two ways to create a connected source. The first method is a ma
 ```swift
 let userId: UUID = ...
 
-VitalNetworkClient.shared.link.createConnectedSource(userId, provider: .appleHealthKit)
+VitalClient.shared.link.createConnectedSource(userId, provider: .appleHealthKit)
 ```
 
 <br />
@@ -181,7 +181,7 @@ VitalNetworkClient.shared.link.createConnectedSource(userId, provider: .appleHea
 The second method uses web authentication:
 
 ```swift
-let url = try await VitalNetworkClient.shared.link.createProviderLink(redirectURL: "vitalExample://")
+let url = try await VitalClient.shared.link.createProviderLink(redirectURL: "vitalExample://")
 ```
 
 <br />
@@ -316,12 +316,12 @@ VitalHealthKitClient.configure()
 
 You need to call this method, before doing anything else with the `VitalHealthKitClient`. Otherwise you will have a `fatalError`.
 
-Just like VitalDevices, you are also required to setup the VitalNetworkClient:
+Just like VitalDevices, you are also required to setup the VitalClient:
 
 ```swift
 import VitalCore
 
-VitalNetworkClient.configure(
+VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
@@ -330,10 +330,10 @@ VitalNetworkClient.configure(
 <br />
 <br />
 
-This is required, because we use VitalNetworkClient to push HealthKit data.
+This is required, because we use VitalClient to push HealthKit data.
 
 :::info
-When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalNetworkClient` beforehand, otherwise the app will crash.
+When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalClient` beforehand, otherwise the app will crash.
 :::
 
 After this initial setup, you need to ask permission to acccess the user's data:
