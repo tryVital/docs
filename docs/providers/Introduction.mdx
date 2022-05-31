@@ -6,39 +6,41 @@ sidebar_position: 1
 
 We currently Support over 300+ devices, a full list can be seen below.
 
-| Provider                                             | Description                                                   |
-| ---------------------------------------------------- | ------------------------------------------------------------- |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/) | Abbott CGM Glucose monitor                                    |
-| [Fitbit](https://www.fitbit.com/global/uk/home)      | Activity Trackers (all devices)                               |
-| [Garmin](https://www.garmin.com)                     | Fitness watches (all devices)                                 |
-| [Oura](https://ouraring.com)                         | Smart Sleep tracking ring                                     |
-| [Peloton](https://www.onepeloton.com)                | Popular Indoor Exercise bike                                  |
-| [Renpho](https://renpho.com)                         | Fitness Scales                                                |
-| [Strava](https://www.strava.com)                     | Running & Cycling Social Network                              |
-| [Wahoo](https://wahoofitness.com)                    | Cycling Equipment                                             |
-| [Zwift](https://zwift.com)                           | Virtual cycling and running                                   |
-| [Withings](https://www.withings.com)                 | Fitness scales, watches and health monitors                   |
-| [iHealth](https://ihealthlabs.com)                   | Blood pressure, Fitness scales, Glucometers & Fitness watches |
-| [8Sleep](https://www.eightsleep.com)                 | Smart Mattress                                                |
-| [Omron](https://www.omron-healthcare.com) (SDK)      | Blood Pressure monitors and scales                            |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)   | Glucometers                                                   |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)         | Glucose Strips/MySugr App                                     |
+| Provider                                             | Slug              | Description                                                   |
+| ---------------------------------------------------- | ----------------- | ------------------------------------------------------------- |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/) | `freestyle_libre` | Abbott CGM Glucose monitor                                    |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Activity Trackers (all devices)                               |
+| [Garmin](https://www.garmin.com)                     | `garmin`          | Fitness watches (all devices)                                 |
+| [Oura](https://ouraring.com)                         | `oura`            | Smart Sleep tracking ring                                     |
+| [Peloton](https://www.onepeloton.com)                | `peloton`         | Popular Indoor Exercise bike                                  |
+| [Renpho](https://renpho.com)                         | `renpho`          | Fitness Scales                                                |
+| [Strava](https://www.strava.com)                     | `strava`          | Running & Cycling Social Network                              |
+| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | Cycling Equipment                                             |
+| [Whoop](https://www.whoop.com)                       | `whoop`           | Your Personal Digital Fitness and Health Coach                |
+| [Zwift](https://zwift.com)                           | `zwift`           | Virtual cycling and running                                   |
+| [Withings](https://www.withings.com)                 | `withings`        | Fitness scales, watches and health monitors                   |
+| [iHealth](https://ihealthlabs.com)                   | `ihealth`         | Blood pressure, Fitness scales, Glucometers & Fitness watches |
+| [8Sleep](https://www.eightsleep.com)                 | `eight_sleep`     | Smart Mattress                                                |
+| [Omron](https://www.omron-healthcare.com) (SDK)      | `omron_ble`       | Blood Pressure monitors and scales                            |
+| [Contour](https://www.diabetes.ascensia.com) (SDK)   | `contour_ble`     | Glucometers                                                   |
+| [Accu-Chek](https://www.accu-chek.com) (SDK)         | `accuchek_ble`    | Glucose Strips/MySugr App                                     |
 
 ## Providers under active development
 
 **Beta**: Currently under development
 **Planned**: On our roadmap
 
-| Provider                                                      | Description                                       | Stage   |
-| ------------------------------------------------------------- | ------------------------------------------------- | ------- |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK) | Health and fitness data on iPhone and Apple Watch | Beta    |
-| [Braun Healthcare](https://www.braunhealthcare.com)           | Blood Pressure Monitors                           | Beta    |
-| [Google Fit](https://www.google.com/fit/)                     | Activity Trackers (all devices)                   | Beta    |
-| [Suunto](https://www.suunto.com)                              | Fitness Watch                                     | Planned |
-| [Dexcom](https://www.dexcom.com)                              | Continuous glucose monitor                        | Planned |
-| [iGlucose](https://smartmeterrpm.com/iglucose/)               | Glucose Strips                                    | Planned |
-| [Polar](https://www.polar.com)                                | Activity Watch                                    | Planned |
-| [KetoMojo](https://keto-mojo.com)                             | Glucose, Ketones and more                         | Planned |
+| Provider                                                             | Slug                  | Description                                       | Stage   |
+| -------------------------------------------------------------------- | --------------------- | ------------------------------------------------- | ------- |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)        | `apple_health_kit`    | Health and fitness data on iPhone and Apple Watch | Beta    |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK) | `freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK       | Beta    |
+| [Braun Healthcare](https://www.braunhealthcare.com)                  | `braun`               | Blood Pressure Monitors                           | Beta    |
+| [Google Fit](https://www.google.com/fit/)                            | `google_fit`          | Activity Trackers (all devices)                   | Beta    |
+| [Suunto](https://www.suunto.com)                                     | TBD                   | Fitness Watch                                     | Planned |
+| [Dexcom](https://www.dexcom.com)                                     | TBD                   | Continuous glucose monitor                        | Planned |
+| [iGlucose](https://smartmeterrpm.com/iglucose/)                      | TBD                   | Glucose Strips                                    | Planned |
+| [Polar](https://www.polar.com)                                       | TBD                   | Activity Watch                                    | Planned |
+| [KetoMojo](https://keto-mojo.com)                                    | TBD                   | Glucose, Ketones and more                         | Planned |
 
 ## Full Device Support List
 
@@ -66,6 +68,7 @@ All data can be fetched instantaneously, some are configured via our live refres
 | [Renpho](https://renpho.com)                         | Live Refresh |
 | [Strava](https://www.strava.com)                     | Webhooks     |
 | [Wahoo](https://wahoofitness.com)                    | Webhooks     |
+| [Whoop](https://www.whoop.com)                       | Live Refresh |
 | [Zwift](https://zwift.com)                           | Live Refresh |
 | [Withings](https://www.withings.com)                 | Webhooks     |
 | [iHealth](https://ihealthlabs.com)                   | Webhooks     |

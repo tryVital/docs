@@ -7,14 +7,20 @@ title: Changelog
 import Changelog from "../static/data/changelog.json";
 import { Text, VStack } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
+import compareVersions from "compare-versions";
+import moment from "moment";
 
 <div>
-  {Changelog.map((el) => (
-    <VStack alignItems={"flex-start"} spacing={0} mb={30}>
-      <h2>
-        {el.release} ({el.date})
-      </h2>
-      <ReactMarkdown>{el.body}</ReactMarkdown>
-    </VStack>
-  ))}
+  {Changelog.sort((a, b) => compareVersions(a.release, b.release))
+    .reverse()
+    .map((el) => (
+      <VStack alignItems={"flex-start"} spacing={0} my={"20px"}>
+        <VStack alignItems={"flex-start"} spacing={0}>
+          <Text my={0} py={0} fontWeight={800} fontSize={18}>{moment(el.date).format("MMM Do yyyy")}</Text>
+          <Text my={0} py={0} fontSize={12}>{el.release}</Text>
+        </VStack>
+        <ReactMarkdown>{el.body}</ReactMarkdown>
+      </VStack>
+    ))}
+
 </div>
