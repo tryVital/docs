@@ -98,7 +98,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       posthog: {
-        apiKey: "phc_tJP23qu5Ecx0peR3enqP1HAZXeHvpKwZuR4Px7SyShv",
+        apiKey: "phc_sGkgfbOM9HoWM6oGcxjrOzIqOxyjZpSgBTYt9xNpN6n",
         enableInDevelopment: false,
       },
     }),
