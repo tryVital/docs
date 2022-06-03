@@ -50,6 +50,12 @@ const config = {
       },
     ],
     "posthog-docusaurus",
+    [
+      "docusaurus2-dotenv",
+      {
+        systemvars: true,
+      },
+    ],
   ],
 
   themeConfig:
@@ -92,7 +98,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       posthog: {
-        apiKey: process.env.NEXT_PUBLIC_POSTHOG_API_KEY || "dev",
+        apiKey: process.env.PATH.NEXT_PUBLIC_POSTHOG_API_KEY || "dev",
         enableInDevelopment: false,
       },
     }),
