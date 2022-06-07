@@ -58,6 +58,11 @@ const sidebars = {
           label: "Refresh User Data",
           href: "/api-reference/user#refresh-users-data",
         },
+        {
+          type: "link",
+          label: "Deregister a provider",
+          href: "/api-reference/user#deregister-provider-for-user",
+        },
       ],
     },
     {
