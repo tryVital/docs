@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Introduction
 
-Vital provides a simple way to order and manage lab tests. We handle all the logistics, packing and processing between a user taking the test and you getting the results.
+Vital provides a simple way to order and manage lab tests. We handle all the logistics, packing and processing between a user taking the test and the results being available through our API.
 
 ## 1. Types of tests
 
-As a first step, we need to define what type of testing you want to offer to your users. We will have an introduction call to go over the test, projected volumes, customizations for kits, etc. Once we have all this information, we can begin setting up the test kits and distribution. Finally, we can set up your integration and dashboard to start ordering tests via our API.
+As a first step, we need to define what type of testing you want to offer to your users. We will have an introduction call to go over the test, projected volumes, customizations for kits and other questions you might have. Once we have all this information, we can begin setting up the test kits and distribution. Finally, we can set up your integration and dashboard to start ordering tests via our API.
 
 Once this is done, you will have the tests available via our API:
 
@@ -48,7 +48,7 @@ You will then use the test's `id` when creating an order.
 
 ## 2. Ordering Tests
 
-Ordering a test is as simple as making an API call:
+Ordering a test for your user, is as simple as making an API call:
 
 ```bash
 curl --request POST \
@@ -96,20 +96,20 @@ Once an order status change, we will send you a webhook:
 
 The most important field is the `status`. It tells in what stage the order is. These are the currently possible values:
 
-```json
-    "ordered"
-    "transit_customer"
-    "out_for_delivery"
-    "with_customer"
-    "transit_lab"
-    "delivered_to_lab"
-    "processing_lab"
-    "completed"
-    "failure_to_deliver_to_customer"
-    "failure_to_deliver_to_lab"
-    "cancelled"
-    "do_not_process"
-    "unknown"
+```text
+"ordered"
+"transit_customer"
+"out_for_delivery"
+"with_customer"
+"transit_lab"
+"delivered_to_lab"
+"processing_lab"
+"completed"
+"failure_to_deliver_to_customer"
+"failure_to_deliver_to_lab"
+"cancelled"
+"do_not_process"
+"unknown"
 ```
 
 <br />
@@ -141,7 +141,7 @@ curl --request GET \
 <br />
 <br />
 
-Finally, you can also cancel an order:
+Finally, you can cancel an order:
 
 ```bash
 curl --request POST \
