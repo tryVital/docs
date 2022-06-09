@@ -22,7 +22,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           routeBasePath: "/",
-          editUrl: "https://github.com/tryVital/docs/",
+          editUrl: "https://github.com/tryVital/docs/blob/main",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
