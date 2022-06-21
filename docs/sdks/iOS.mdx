@@ -363,15 +363,18 @@ VitalHealthKitClient.configure()
 
 You need to call this method, before doing anything else with the `VitalHealthKitClient`. Otherwise you will have a `fatalError`.
 
-Just like VitalDevices, you are also required to setup the VitalClient:
+Just like VitalDevices, you are also required to setup the VitalClient. Your code should look like this:
 
 ```swift
 import VitalCore
+import VitalHealthKit
 
 VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
+
+VitalHealthKitClient.configure()
 ```
 
 <br />
@@ -435,5 +438,31 @@ cancellable = VitalHealthKitClient.shared.status.sink { value in
 }
 ```
 
+### 1. Background Delivery
+
+You can enable the SDK to deliver HealthKit data in background. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
+
+<Image src="/img/iOS/health_kit_permission_background_delivery.png" />
+
+Once this is done, you should setup the SDK like so:
+
+```swift
+import VitalHealthKit
+
+VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)
+```
+
 <br />
 <br />
+
+That's the only thing you need to do! If you are using background delivery, you also won't need to call `syncData:`. Depending on the `HKSampleType`, updates will come after a period of time.
+
+<br />
+
+:::caution
+As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery), keep in mind:
+
+> As soon as your app launches, HealthKit calls the update handler for any observer queries that match the newly saved data. If you plan on supporting background delivery, set up all your observer queries in your app delegate’s application(_:didFinishLaunchingWithOptions:) method. By setting up the queries in application(_:didFinishLaunchingWithOptions:), you ensure that you’ve instantiated your queries, and they’re ready to use before HealthKit delivers the updates.
+
+This means that you should make sure you call `VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)` in your app delegate's application(\_:didFinishLaunchingWithOptions:) method.
+:::
