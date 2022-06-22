@@ -4,7 +4,8 @@ import { CodeBlock } from "@theme/codeblock";
 # Freestyle
 
 :::note
-Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital.
+Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital in the appropriate Vital region for your Freestyle account.
+
 Vital has two practices (depending on environment):
 
 | Environment |                  |
@@ -44,6 +45,17 @@ To connect your user to Vital via the Widget you can follow the guide [here](../
 
 <br />
 
+Note, Freestyle Libre is available in different regions, ensure you select the correct region in the list of options above. Here are the regions that are available for Freestyle in each Vital region:
+
+
+| Vial Region          | Freestyle Region        |
+| -------------------- | ----------------------- |
+| United States (`us`) | United States (`us`) *  |
+| Europe (`eu`)        | Europe (`eu`) *         |
+|                      | Singapore (`sg`)        |
+| _ (*) Default Freestyle region if unspecified_ |
+
+
 ## Vital Link
 
 1. To connect to Freestyle Libre, you must create a Vital Link token.
@@ -63,17 +75,21 @@ const { link_token } = await client.Link.create(userId);
 
 2. Libre is an [_email_](../../vital-link/customization#email) provider.
    This means that when connecting a user we have to use
-   the connect email provider method, passing in the email of the user's Libre account.
+   the connect email provider method, passing in the email of the user's Libre account and region in short form.
    <br />
 
 <CodeBlock title={"Connecting email provider"} include_client_instantiation={true}>
 
 ```python
-client.Link.email_provider(link_token, provider, email)
+client.Link.email_provider(
+   link_token, provider, email, region
+)
 ```
 
 ```js
-await client.Link.connectEmailProvider(link_token, "freestyle_libre", email);
+await client.Link.connectEmailProvider(
+   link_token, "freestyle_libre", email, region
+);
 ```
 
 </CodeBlock>
