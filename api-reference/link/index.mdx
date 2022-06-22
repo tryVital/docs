@@ -99,16 +99,17 @@ curl --request POST \
      --data '
 {
      "email": "test@email.com"
+     "region": "us"
 }
 '
 ```
 
 ```js
-const user = await client.Link.connectEmailProvider(linkToken, provider, email);
+const user = await client.Link.connectEmailProvider(linkToken, provider, email, region);
 ```
 
 ```python
-user = client.Link.email_provider(link_token, provider, email)
+user = client.Link.email_provider(link_token, provider, email, region)
 ```
 
 </Swagger>

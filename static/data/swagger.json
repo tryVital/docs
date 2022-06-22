@@ -1,8 +1,9 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "FastAPI",
-    "version": "0.1.0"
+    "title": "Vital API",
+    "description": "API for at-home health Wearables and Lab test API for digital health companies.",
+    "version": "0.1.84"
   },
   "paths": {
     "/v2/link/token": {
@@ -1483,7 +1484,7 @@
           "timeseries"
         ],
         "summary": "Get User Sleep Stream",
-        "description": "Get Daily Activity for user_id",
+        "description": "Get Sleep stream for a user_id",
         "operationId": "get_user_sleep_stream_v2_timeseries_sleep__sleep_id__stream_get",
         "parameters": [
           {
@@ -3557,7 +3558,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ClientFacingOrder"
+                  "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder"
                 }
               }
             }
@@ -3625,7 +3626,7 @@
           "testkit_orders"
         ],
         "summary": "Get Testkit Result",
-        "description": "Get available test kits.",
+        "description": "This endpoint returns the lab results in PDF format.",
         "operationId": "get_testkit_result_v2_testkit_orders__order_id__results_get",
         "parameters": [
           {
@@ -3709,7 +3710,7 @@
           "testkit_orders"
         ],
         "summary": "Get Testkit Result Metadata",
-        "description": "1. Get order result by order_id\n2. Return results as Lab Results Metadata and data as raw json",
+        "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
         "operationId": "get_testkit_result_metadata_v2_testkit_orders__order_id__results_metadata_get",
         "parameters": [
           {
@@ -3753,8 +3754,518 @@
           "testkit_orders"
         ],
         "summary": "Get Testkit Result Raw",
-        "description": "1. Get order result by order_id\n2. Return results as Lab Results Metadata and data as raw json",
+        "description": "Return both metadata and raw json test data",
         "operationId": "get_testkit_result_raw_v2_testkit_orders__order_id__results_raw_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Order Id",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsRaw"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Orders",
+        "description": "GET many orders with filters.",
+        "operationId": "get_orders_v3_diagnostic_lab_test_order_get",
+        "parameters": [
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "Start Date",
+              "type": "string",
+              "description": "Date from in YYYY-MM-DD",
+              "format": "date-time"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "type": "string",
+              "description": "Date to in YYYY-MM-DD",
+              "format": "date-time"
+            },
+            "name": "end_date",
+            "in": "query"
+          },
+          {
+            "description": "Filter by user ID.",
+            "required": false,
+            "schema": {
+              "title": "User Id",
+              "type": "string",
+              "description": "Filter by user ID.",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "description": "Filter by patient name.",
+            "required": false,
+            "schema": {
+              "title": "Patient Name",
+              "type": "string",
+              "description": "Filter by patient name."
+            },
+            "name": "patient_name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrdersResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Create Order",
+        "description": "POST create new order",
+        "operationId": "create_order_v3_diagnostic_lab_test_order_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOrderResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Orders",
+        "description": "GET many orders with filters.",
+        "operationId": "get_orders_v3_diagnostic_lab_test_order__get",
+        "parameters": [
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "Start Date",
+              "type": "string",
+              "description": "Date from in YYYY-MM-DD",
+              "format": "date-time"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "type": "string",
+              "description": "Date to in YYYY-MM-DD",
+              "format": "date-time"
+            },
+            "name": "end_date",
+            "in": "query"
+          },
+          {
+            "description": "Filter by user ID.",
+            "required": false,
+            "schema": {
+              "title": "User Id",
+              "type": "string",
+              "description": "Filter by user ID.",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "description": "Filter by patient name.",
+            "required": false,
+            "schema": {
+              "title": "Patient Name",
+              "type": "string",
+              "description": "Filter by patient name."
+            },
+            "name": "patient_name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Page",
+              "minimum": 1,
+              "type": "integer",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Size",
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer",
+              "default": 50
+            },
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrdersResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Create Order",
+        "description": "POST create new order",
+        "operationId": "create_order_v3_diagnostic_lab_test_order__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOrderResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/{order_id}": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Order",
+        "description": "GET individual order by ID.",
+        "operationId": "get_order_v3_diagnostic_lab_test_order__order_id__get",
+        "parameters": [
+          {
+            "description": "Your Order ID.",
+            "required": true,
+            "schema": {
+              "title": "Order Id",
+              "type": "string",
+              "description": "Your Order ID.",
+              "format": "uuid"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__orderv2__ClientFacingOrder"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/{order_id}/cancel": {
+      "post": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Cancel Order",
+        "description": "POST cancel order",
+        "operationId": "cancel_order_v3_diagnostic_lab_test_order__order_id__cancel_post",
+        "parameters": [
+          {
+            "description": "Your Order ID.",
+            "required": true,
+            "schema": {
+              "title": "Order Id",
+              "type": "string",
+              "description": "Your Order ID.",
+              "format": "uuid"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostOrderResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/{order_id}/results": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Diagnostic Lab Test Result",
+        "description": "This endpoint returns the lab results for the order.",
+        "operationId": "get_diagnostic_lab_test_result_v3_diagnostic_lab_test_order__order_id__results_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Order Id",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/{order_id}/results/metadata": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Diagnostic Lab Test Result Metadata",
+        "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
+        "operationId": "get_diagnostic_lab_test_result_metadata_v3_diagnostic_lab_test_order__order_id__results_metadata_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Order Id",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "order_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsMetadata"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3/diagnostic_lab_test/order/{order_id}/results/raw": {
+      "get": {
+        "tags": [
+          "diagnostic_lab_test_orders"
+        ],
+        "summary": "Get Diagnostic Lab Test Result Raw",
+        "description": "Return both metadata and raw json test data",
+        "operationId": "get_diagnostic_lab_test_result_raw_v3_diagnostic_lab_test_order__order_id__results_raw_get",
         "parameters": [
           {
             "required": true,
@@ -3926,7 +4437,7 @@
         "example": {
           "activity": [
             {
-              "date": "2022-05-16",
+              "date": "2022-06-22",
               "calories_total": 100,
               "calories_active": 2000,
               "steps": 10000,
@@ -3939,7 +4450,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "934b53c4-988c-4bdc-a2db-0be8b1c30d09"
+              "user_id": "9db43f12-8807-4996-9c0f-e2d1ec9e4380"
             }
           ]
         }
@@ -3962,16 +4473,17 @@
         "example": {
           "body": [
             {
-              "id": "702bd523-dd0b-42ee-8fcf-872766b89c55",
-              "date": "2022-05-16",
+              "id": "d7f72cfd-c10e-485e-b2f2-69703084d237",
+              "date": "2022-06-22",
               "weight": "80kg",
               "fat": "30%",
+              "height": 183,
               "source": {
                 "name": "Oura",
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "f3329a1e-7088-4cf4-9889-7a20f6e2dda3"
+              "user_id": "1af91a7f-bdc6-461b-a543-2c178cb57197"
             }
           ]
         }
@@ -4056,7 +4568,7 @@
           }
         },
         "example": {
-          "date": "2022-05-16",
+          "date": "2022-06-22",
           "calories_total": 100,
           "calories_active": 2000,
           "steps": 10000,
@@ -4069,7 +4581,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "b4fa21a1-711e-48b5-ab21-e76ff10eee3b"
+          "user_id": "f9dbda89-1133-4b6b-8559-f826284eed7d"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
@@ -4110,7 +4622,7 @@
         },
         "example": {
           "id": 2,
-          "timestamp": "2022-05-16T11:31:30.671163+00:00",
+          "timestamp": "2022-06-22T13:54:33.091979+00:00",
           "systolic": "125",
           "diastolic": "75",
           "type": "cuff",
@@ -4163,148 +4675,6 @@
           }
         }
       },
-      "ClientFacingOrder": {
-        "title": "ClientFacingOrder",
-        "required": [
-          "user_id",
-          "team_id",
-          "created_on",
-          "updated_on",
-          "testkit_id",
-          "testkit",
-          "patient_address",
-          "patient_details"
-        ],
-        "type": "object",
-        "properties": {
-          "user_id": {
-            "title": "User Id",
-            "type": "string",
-            "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-            "format": "uuid"
-          },
-          "user_key": {
-            "title": "User Key",
-            "type": "string",
-            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
-            "format": "uuid",
-            "deprecated": true
-          },
-          "id": {
-            "title": "Id",
-            "type": "string",
-            "description": "The Vital Order ID",
-            "format": "uuid"
-          },
-          "team_id": {
-            "title": "Team Id",
-            "type": "string",
-            "description": "Your team id.",
-            "format": "uuid"
-          },
-          "created_on": {
-            "title": "Created On",
-            "type": "string",
-            "description": "When your order was created",
-            "format": "date-time"
-          },
-          "updated_on": {
-            "title": "Updated On",
-            "type": "string",
-            "description": "When your order status was last updated",
-            "format": "date-time"
-          },
-          "status": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/OrderStatus"
-              }
-            ],
-            "description": "Order status: ordered, transit_customer, out_for_delivery, with_customer, transit_lab, delivered_to_lab, processing_lab, completed, failure_to_deliver_to_customer, failure_to_deliver_to_lab, cancelled, do_not_process, unknown"
-          },
-          "testkit_id": {
-            "title": "Testkit Id",
-            "type": "string",
-            "description": "Testkit id",
-            "format": "uuid"
-          },
-          "testkit": {
-            "$ref": "#/components/schemas/TestkitClientFacing"
-          },
-          "inbound_tracking_number": {
-            "title": "Inbound Tracking Number",
-            "type": "string",
-            "description": "Tracking number for delivery to lab"
-          },
-          "outbound_tracking_number": {
-            "title": "Outbound Tracking Number",
-            "type": "string",
-            "description": "Tracking number for delivery to customer"
-          },
-          "inbound_tracking_url": {
-            "title": "Inbound Tracking Url",
-            "type": "string",
-            "description": "Tracking url for delivery to lab"
-          },
-          "outbound_tracking_url": {
-            "title": "Outbound Tracking Url",
-            "type": "string",
-            "description": "Tracking url for delivery to customer"
-          },
-          "outbound_courier": {
-            "title": "Outbound Courier",
-            "type": "string",
-            "description": "Courier used for delivery to customer"
-          },
-          "inbound_courier": {
-            "title": "Inbound Courier",
-            "type": "string",
-            "description": "Courier used for delivery to lab"
-          },
-          "patient_address": {
-            "title": "Patient Address",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PatientAddress"
-              }
-            ],
-            "description": "Patient Address"
-          },
-          "patient_details": {
-            "title": "Patient Details",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PatientDetails"
-              }
-            ],
-            "description": "Patient Details"
-          },
-          "sample_id": {
-            "title": "Sample Id",
-            "type": "string",
-            "description": "Sample ID"
-          }
-        },
-        "example": {
-          "id": "9491aab5-2e6f-418b-a674-84e2c3d1847e",
-          "team_id": "ae410349-e455-4a6e-8230-50730695d370",
-          "created_on": "2022-05-16T11:31:30.601542+00:00",
-          "updated_on": "2022-05-16T11:31:30.601566+00:00",
-          "status": "ordered",
-          "user_id": "b0a31ada-3bd5-4f1c-9f31-db08f3601ad0",
-          "testkit_id": "f374410d-ad81-45c7-b3b3-3f4bfdd5b775",
-          "inbound_tracking_number": "<inbound_tracking_number>",
-          "outbound_tracking_number": "<outbound_tracking_number>",
-          "inbound_tracking_url": "<inbound_tracking_urlr>",
-          "outbound_tracking_url": "<outbound_tracking_url>",
-          "outbound_courier": "usps",
-          "inbound_courier": "usps",
-          "testkit": {
-            "name": "CGM",
-            "description": "Glucose CGM"
-          }
-        }
-      },
       "ClientFacingProfile": {
         "title": "ClientFacingProfile",
         "required": [
@@ -4335,34 +4705,88 @@
             "title": "Height",
             "type": "integer"
           },
-          "gender": {
-            "title": "Gender",
-            "type": "string"
-          },
-          "dob": {
-            "title": "Dob",
-            "type": "string"
-          },
-          "age": {
-            "title": "Age",
-            "type": "integer"
-          },
           "source": {
             "$ref": "#/components/schemas/ClientFacingSource"
           }
         },
         "example": {
-          "id": "245c0845-700c-4081-88e7-ae0a446529cc",
-          "date": "2022-05-16",
-          "age": 28,
+          "id": "5e98cb5b-8457-4107-a401-19ac09a2edd2",
+          "date": "2022-06-22",
           "height": 183,
-          "gender": "male",
           "source": {
             "name": "Oura",
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "733ce9d6-0b31-44d8-982f-19afb5d97c97"
+          "user_id": "10653e51-1d45-4e5d-b968-b82aa5b198ad"
+        }
+      },
+      "ClientFacingShipment": {
+        "title": "ClientFacingShipment",
+        "required": [
+          "id",
+          "outbound_tracking_number",
+          "outbound_tracking_url",
+          "inbound_tracking_number",
+          "inbound_tracking_url",
+          "outbound_courier",
+          "inbound_courier",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The Vital Shipment ID",
+            "format": "uuid"
+          },
+          "outbound_tracking_number": {
+            "title": "Outbound Tracking Number",
+            "type": "string",
+            "description": "Tracking number for delivery to customer"
+          },
+          "outbound_tracking_url": {
+            "title": "Outbound Tracking Url",
+            "type": "string",
+            "description": "Tracking url for delivery to customer"
+          },
+          "inbound_tracking_number": {
+            "title": "Inbound Tracking Number",
+            "type": "string",
+            "description": "Tracking number for delivery to lab"
+          },
+          "inbound_tracking_url": {
+            "title": "Inbound Tracking Url",
+            "type": "string",
+            "description": "Tracking url for delivery to lab"
+          },
+          "outbound_courier": {
+            "title": "Outbound Courier",
+            "type": "string",
+            "description": "Courier used for delivery to customer"
+          },
+          "inbound_courier": {
+            "title": "Inbound Courier",
+            "type": "string",
+            "description": "Courier used for delivery to lab"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string",
+            "description": "Notes associated to the Vital shipment"
+          }
+        },
+        "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
+        "example": {
+          "id": "11cae8a8-5152-47a4-987e-66d38febd304",
+          "outbound_tracking_number": "<outbound_tracking_number>",
+          "outbound_tracking_url": "<outbound_tracking_url>",
+          "inbound_tracking_number": "<inbound_tracking_number>",
+          "inbound_tracking_url": "<inbound_tracking_url>",
+          "outbound_courier": "usps",
+          "inbound_courier": "usps",
+          "notes": "<notes>"
         }
       },
       "ClientFacingSleep": {
@@ -4482,7 +4906,7 @@
           "average_hrv": {
             "title": "Average Hrv",
             "type": "number",
-            "description": "The average heart rate registered during the sleep period.::beats per minute"
+            "description": "The average heart rate variability registered during the sleep period.::rmssd"
           },
           "respiratory_rate": {
             "title": "Respiratory Rate",
@@ -4509,10 +4933,10 @@
           }
         },
         "example": {
-          "id": "f2b5e843-4bf3-47ce-9b47-4385632d55c3",
-          "date": "2022-05-16",
-          "bedtime_start": "2022-05-16T11:31:30.392704+00:00",
-          "bedtime_stop": "2022-05-16T11:31:30.392711+00:00",
+          "id": "a5d10e84-3a1b-4be4-a647-b0acf5eb45f3",
+          "date": "2022-06-22",
+          "bedtime_start": "2022-06-22T13:54:25.552413+00:00",
+          "bedtime_stop": "2022-06-22T13:54:25.552438+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -4532,7 +4956,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "8a4b3d8a-be83-4e78-a573-b4869c7bd319"
+          "user_id": "c4dfd8d3-9973-4356-9fc0-3134432ed969"
         }
       },
       "ClientFacingSleepStream": {
@@ -4631,7 +5055,8 @@
         "title": "Provider",
         "required": [
           "name",
-          "slug"
+          "slug",
+          "description"
         ],
         "type": "object",
         "properties": {
@@ -4644,6 +5069,11 @@
             "title": "Slug",
             "type": "string",
             "description": "Slug for designated source"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "Description of source of information"
           },
           "logo": {
             "title": "Logo",
@@ -4859,6 +5289,60 @@
           ]
         }
       },
+      "ClientFacingTestkitOrder": {
+        "title": "ClientFacingTestkitOrder",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The Vital TestKit Order ID",
+            "format": "uuid"
+          },
+          "shipment": {
+            "title": "Shipment",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingShipment"
+              }
+            ],
+            "description": "Shipment object"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Schema for a testkit order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
+        "example": {
+          "id": "7cf63329-cc28-4187-88a5-8b5a4516ddb1",
+          "shipment": {
+            "id": "83a1cbaf-6c69-4028-af9f-59ec66654f49",
+            "outbound_tracking_number": "<outbound_tracking_number>",
+            "outbound_tracking_url": "<outbound_tracking_url>",
+            "inbound_tracking_number": "<inbound_tracking_number>",
+            "inbound_tracking_url": "<inbound_tracking_url>",
+            "outbound_courier": "usps",
+            "inbound_courier": "usps",
+            "notes": "<notes>",
+            "created_at": "2020-01-01T00:00:00.000Z",
+            "updated_at": "2020-01-01T00:00:00.000Z"
+          },
+          "created_at": "2020-01-01T00:00:00Z",
+          "updated_at": "2020-01-01T00:00:00Z"
+        }
+      },
       "ClientFacingTimeseries": {
         "title": "ClientFacingTimeseries",
         "required": [
@@ -4892,56 +5376,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-05-16T11:31:30.385280+00:00",
+            "timestamp": "2022-06-22T13:54:25.533483+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-05-16T11:31:30.385294+00:00",
+            "timestamp": "2022-06-22T13:54:25.533548+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-05-16T11:31:30.385300+00:00",
+            "timestamp": "2022-06-22T13:54:25.533564+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-05-16T11:31:30.385304+00:00",
+            "timestamp": "2022-06-22T13:54:25.533574+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-05-16T11:31:30.385308+00:00",
+            "timestamp": "2022-06-22T13:54:25.533583+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-05-16T11:31:30.385312+00:00",
+            "timestamp": "2022-06-22T13:54:25.533591+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-05-16T11:31:30.385316+00:00",
+            "timestamp": "2022-06-22T13:54:25.533600+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-05-16T11:31:30.385320+00:00",
+            "timestamp": "2022-06-22T13:54:25.533608+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -4999,9 +5483,9 @@
           }
         },
         "example": {
-          "user_id": "c7266546-7793-4e59-b527-17f897d70ddd",
-          "team_id": "c6dddfd3-76b2-4983-9739-be69e85eb52d",
-          "client_user_id": "ae98be4e-ffda-4b23-8851-63388814075e",
+          "user_id": "fc96243a-c275-4700-8017-3201a6cc4cc0",
+          "team_id": "d2e18cf5-4730-4899-85c3-9c205de5aed9",
+          "client_user_id": "e5a68691-2636-4cba-9ec7-0eb5a2c0da7a",
           "connected_sources": [
             {
               "source": {
@@ -5041,8 +5525,41 @@
           }
         },
         "example": {
-          "client_user_id": "afd218b8-776e-4419-b6ef-08b2f26824a1",
-          "user_id": "1f0acc2d-d8c7-4504-b006-1ad719288bff"
+          "client_user_id": "07c71ced-e95d-4c31-8598-b85757d354ce",
+          "user_id": "4baf7458-acec-49c8-a064-e6ee176187bb"
+        }
+      },
+      "ClientFacingWalkInTestOrder": {
+        "title": "ClientFacingWalkInTestOrder",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The Vital walk-in test Order ID",
+            "format": "uuid"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "Schema for a walk-in test order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
+        "example": {
+          "id": "5be2e05c-af1f-44dd-8768-0a8a71935964",
+          "created_at": "2020-01-01T00:00:00Z",
+          "updated_at": "2020-01-01T00:00:00Z"
         }
       },
       "ClientFacingWorkout": {
@@ -5052,7 +5569,6 @@
           "id",
           "time_start",
           "time_end",
-          "calories",
           "sport",
           "hr_zones",
           "provider_id",
@@ -5096,8 +5612,7 @@
           "distance": {
             "title": "Distance",
             "type": "number",
-            "description": "Cumulated distance for exercise.",
-            "default": []
+            "description": "Distance travelled during workout::meters"
           },
           "time_start": {
             "title": "Time Start",
@@ -5125,7 +5640,7 @@
             "items": {
               "type": "integer"
             },
-            "description": "Time in minutes spent in different heart rate zones <50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+::seconds"
+            "description": "Time in seconds spent in different heart rate zones <50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all HR Zones values is different than the total time of the workout. This field is not available for all providers. When this happens, expect an empty array::seconds"
           },
           "moving_time": {
             "title": "Moving Time",
@@ -5198,12 +5713,12 @@
           }
         },
         "example": {
-          "id": "8683a6d0-4992-4e34-b10f-99203b2cca2b",
+          "id": "b1f3cdf5-6587-4509-824c-00b585aef9ed",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-05-16T10:31:30.428642+00:00",
-          "time_end": "2022-05-16T11:31:30.428693+00:00",
+          "time_start": "2022-06-22T12:54:25.655178+00:00",
+          "time_end": "2022-06-22T13:54:25.655320+00:00",
           "calories": 300,
           "sport": {
             "id": 1,
@@ -5221,7 +5736,7 @@
             10,
             200
           ],
-          "user_id": "59dbfddc-3e9e-4446-ac4a-82b574a8b4be",
+          "user_id": "358280be-ea54-46c1-a6f2-501d01b060d4",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -5255,10 +5770,10 @@
         "example": {
           "sleep": [
             {
-              "id": "71bc4ca1-9ce0-48c8-a28a-71900cc873f5",
-              "date": "2022-05-16",
-              "bedtime_start": "2022-05-16T11:31:30.395838+00:00",
-              "bedtime_stop": "2022-05-16T11:31:30.395848+00:00",
+              "id": "041eb305-f9e3-4b30-bdff-3c7df74aa845",
+              "date": "2022-06-22",
+              "bedtime_start": "2022-06-22T13:54:25.559876+00:00",
+              "bedtime_stop": "2022-06-22T13:54:25.559899+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -5278,7 +5793,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "145bcaa5-d5e5-42b0-8696-6f339c304e5f"
+              "user_id": "d8e356b0-4105-4be8-bc8e-6fb86e346385"
             }
           ]
         }
@@ -5300,12 +5815,12 @@
         },
         "example": {
           "workouts": {
-            "id": "b34f9ef9-9bdf-4058-9f87-62dbd271bb57",
+            "id": "63933cea-e13e-4ead-8de1-fad3f7fa6d5f",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-05-16T10:31:30.429809+00:00",
-            "time_end": "2022-05-16T11:31:30.429840+00:00",
+            "time_start": "2022-06-22T12:54:25.660669+00:00",
+            "time_end": "2022-06-22T13:54:25.660778+00:00",
             "calories": 300,
             "sport": {
               "id": 1,
@@ -5323,7 +5838,7 @@
               10,
               200
             ],
-            "user_id": "b68c61cd-f9c4-4b7c-a0cb-57fc1347be82",
+            "user_id": "34556c1b-3222-49ab-932c-7c66e6fa7097",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -5375,6 +5890,38 @@
           "sucess": true
         }
       },
+      "CreateOrderRequest": {
+        "title": "CreateOrderRequest",
+        "required": [
+          "user_id",
+          "patient_details",
+          "patient_address",
+          "diagnostic_lab_test_id"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "patient_details": {
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientDetails"
+          },
+          "patient_address": {
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientAddress"
+          },
+          "diagnostic_lab_test_id": {
+            "title": "Diagnostic Lab Test Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "physician": {
+            "$ref": "#/components/schemas/PhysicianBase"
+          }
+        },
+        "description": "Schema for the create Order endpoint."
+      },
       "DataStage": {
         "title": "DataStage",
         "enum": [
@@ -5421,6 +5968,112 @@
           }
         }
       },
+      "DiagnosticLabTestInDB": {
+        "title": "DiagnosticLabTestInDB",
+        "required": [
+          "slug",
+          "name",
+          "sample_type",
+          "method",
+          "lab_id",
+          "price",
+          "is_active",
+          "created_at",
+          "updated_at",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "sample_type": {
+            "$ref": "#/components/schemas/DiagnosticLabTestSampleType"
+          },
+          "method": {
+            "$ref": "#/components/schemas/DiagnosticLabTestMethod"
+          },
+          "lab_id": {
+            "title": "Lab Id",
+            "type": "integer"
+          },
+          "skus": {
+            "title": "Skus",
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "price": {
+            "title": "Price",
+            "type": "number"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "turnaround_time_lower": {
+            "title": "Turnaround Time Lower",
+            "type": "integer"
+          },
+          "turnaround_time_upper": {
+            "title": "Turnaround Time Upper",
+            "type": "integer"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "lab": {
+            "$ref": "#/components/schemas/LabInDB"
+          },
+          "markers": {
+            "title": "Markers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarkerInDB"
+            }
+          }
+        },
+        "description": "Schema for a DiagnosticLabTest in the database."
+      },
+      "DiagnosticLabTestMethod": {
+        "title": "DiagnosticLabTestMethod",
+        "enum": [
+          "testkit",
+          "walk_in_test"
+        ],
+        "type": "string",
+        "description": "The method used to perform a diagnostic test."
+      },
+      "DiagnosticLabTestSampleType": {
+        "title": "DiagnosticLabTestSampleType",
+        "enum": [
+          "blood"
+        ],
+        "type": "string",
+        "description": "The type of sample used to perform a diagnostic test."
+      },
       "EmailProviderAuthLink": {
         "title": "EmailProviderAuthLink",
         "required": [
@@ -5434,6 +6087,9 @@
           },
           "provider": {
             "$ref": "#/components/schemas/Providers"
+          },
+          "region": {
+            "$ref": "#/components/schemas/Region"
           }
         }
       },
@@ -5444,6 +6100,37 @@
         ],
         "type": "string",
         "description": "An enumeration."
+      },
+      "GetOrdersResponse": {
+        "title": "GetOrdersResponse",
+        "required": [
+          "orders",
+          "total",
+          "page",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "orders": {
+            "title": "Orders",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__orderv2__ClientFacingOrder"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          }
+        }
       },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
@@ -5475,6 +6162,58 @@
             "title": "Password",
             "type": "string",
             "description": "Password for provider"
+          }
+        }
+      },
+      "LabInDB": {
+        "title": "LabInDB",
+        "required": [
+          "slug",
+          "name",
+          "first_line_address",
+          "city",
+          "zipcode",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "first_line_address": {
+            "title": "First Line Address",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "zipcode": {
+            "title": "Zipcode",
+            "type": "string"
+          },
+          "clia": {
+            "title": "Clia",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
           }
         }
       },
@@ -5530,6 +6269,18 @@
             "title": "Date Received",
             "type": "string"
           }
+        },
+        "example": {
+          "age": 19,
+          "dob": "18/08/1993",
+          "clia_number": "12331231",
+          "patient": "Bob Smith",
+          "provider": "Dr. Jack Smith",
+          "laboratory": "Quest Diagnostics",
+          "date_reported": "2020-01-01",
+          "date_collected": "2022-02-02",
+          "specimen_number": "123131",
+          "date_received": "2022-01-01"
         }
       },
       "LabResultsRaw": {
@@ -5546,6 +6297,25 @@
           "results": {
             "title": "Results",
             "type": "object"
+          }
+        },
+        "example": {
+          "metadata": {
+            "age": 19,
+            "dob": "18/08/1993",
+            "clia_number": "12331231",
+            "patient": "Bob Smith",
+            "provider": "Dr. Jack Smith",
+            "laboratory": "Quest Diagnostics",
+            "date_reported": "2020-01-01",
+            "date_collected": "2022-02-02",
+            "specimen_number": "123131",
+            "date_received": "2022-01-01"
+          },
+          "results": {
+            "[marker]": {},
+            "ige": {},
+            "fsh": {}
           }
         }
       },
@@ -5593,13 +6363,11 @@
         "required": [
           "date",
           "active_energy_burned",
-          "exercise_time",
-          "standing_time",
-          "move_time",
           "basal_energy_burned",
           "steps",
           "distance_walking_running",
-          "vo2_max"
+          "vo2_max",
+          "floors_climbed"
         ],
         "type": "object",
         "properties": {
@@ -5610,19 +6378,10 @@
           },
           "active_energy_burned": {
             "title": "Active Energy Burned",
-            "type": "number"
-          },
-          "exercise_time": {
-            "title": "Exercise Time",
-            "type": "number"
-          },
-          "standing_time": {
-            "title": "Standing Time",
-            "type": "number"
-          },
-          "move_time": {
-            "title": "Move Time",
-            "type": "number"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "basal_energy_burned": {
             "title": "Basal Energy Burned",
@@ -5647,6 +6406,13 @@
           },
           "vo2_max": {
             "title": "Vo2 Max",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
+          },
+          "floors_climbed": {
+            "title": "Floors Climbed",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/QuantitySample"
@@ -5850,6 +6616,7 @@
           "omron_ble",
           "accuchek_ble",
           "contour_ble",
+          "freestyle_libre_ble",
           "apple_health_kit",
           "manual"
         ],
@@ -6109,6 +6876,44 @@
           }
         }
       },
+      "MarkerInDB": {
+        "title": "MarkerInDB",
+        "required": [
+          "name",
+          "slug",
+          "description",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        }
+      },
       "OAuthProviders": {
         "title": "OAuthProviders",
         "enum": [
@@ -6134,7 +6939,7 @@
         "type": "object",
         "properties": {
           "order": {
-            "$ref": "#/components/schemas/ClientFacingOrder"
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder"
           },
           "status": {
             "title": "Status",
@@ -6144,6 +6949,29 @@
             "title": "Message",
             "type": "string"
           }
+        },
+        "example": {
+          "order": {
+            "id": "988f54b4-440a-4cd4-86ac-7c72b3f2a82d",
+            "team_id": "86ef6a09-a391-4ee0-a755-a063de0fd1f4",
+            "created_on": "2022-06-22T13:54:32.971133+00:00",
+            "updated_on": "2022-06-22T13:54:32.971172+00:00",
+            "status": "ordered",
+            "user_id": "d57699d4-5261-4a83-84a2-025efff5aceb",
+            "testkit_id": "aea2d541-1210-4250-a146-551621293f56",
+            "inbound_tracking_number": "<inbound_tracking_number>",
+            "outbound_tracking_number": "<outbound_tracking_number>",
+            "inbound_tracking_url": "<inbound_tracking_urlr>",
+            "outbound_tracking_url": "<outbound_tracking_url>",
+            "outbound_courier": "usps",
+            "inbound_courier": "usps",
+            "testkit": {
+              "name": "CGM",
+              "description": "Glucose CGM"
+            }
+          },
+          "status": "Success",
+          "message": "Order created successfully | Order cancelled successfully "
         }
       },
       "OrderStatus": {
@@ -6161,7 +6989,8 @@
           "failure_to_deliver_to_lab",
           "cancelled",
           "do_not_process",
-          "unknown"
+          "unknown",
+          "rejected"
         ],
         "type": "string",
         "description": "An enumeration."
@@ -6183,10 +7012,10 @@
             "format": "uuid"
           },
           "patient_address": {
-            "$ref": "#/components/schemas/PatientAddress"
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__PatientAddress"
           },
           "patient_details": {
-            "$ref": "#/components/schemas/PatientDetails"
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__PatientDetails"
           },
           "physician": {
             "$ref": "#/components/schemas/Physician"
@@ -6229,7 +7058,7 @@
             "title": "Orders",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ClientFacingOrder"
+              "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder"
             }
           },
           "total": {
@@ -6248,13 +7077,13 @@
         "example": {
           "orders": [
             {
-              "id": "987b78dc-11e8-49a5-85e9-ec68261bf6b8",
-              "team_id": "d518039b-ae58-4334-a7ae-0cb70e758925",
-              "created_on": "2022-05-16T11:31:30.603953+00:00",
-              "updated_on": "2022-05-16T11:31:30.603963+00:00",
+              "id": "154f543f-517a-413d-9a73-a5dce3131f8d",
+              "team_id": "660993cc-a5f4-40a8-8ea0-8deb1251973e",
+              "created_on": "2022-06-22T13:54:32.975163+00:00",
+              "updated_on": "2022-06-22T13:54:32.975202+00:00",
               "status": "ordered",
-              "user_id": "c08c56df-5f9d-4f70-a25a-3161d2beca0a",
-              "testkit_id": "1fac56a6-20ee-42b6-9f89-43cf6b1a7ffb",
+              "user_id": "24c10102-917c-4ce9-8323-5352e734b74a",
+              "testkit_id": "5c510e58-503f-4bb1-ab2c-e296006defdc",
               "testkit": {
                 "name": "CGM",
                 "description": "Glucose CGM"
@@ -6278,76 +7107,6 @@
         ],
         "type": "string",
         "description": "An enumeration."
-      },
-      "PatientAddress": {
-        "title": "PatientAddress",
-        "required": [
-          "receiver_name",
-          "street",
-          "city",
-          "state",
-          "zip",
-          "country",
-          "phone_number"
-        ],
-        "type": "object",
-        "properties": {
-          "receiver_name": {
-            "title": "Receiver Name",
-            "type": "string"
-          },
-          "street": {
-            "title": "Street",
-            "type": "string"
-          },
-          "street_number": {
-            "title": "Street Number",
-            "type": "string"
-          },
-          "city": {
-            "title": "City",
-            "type": "string"
-          },
-          "state": {
-            "title": "State",
-            "type": "string"
-          },
-          "zip": {
-            "title": "Zip",
-            "type": "string"
-          },
-          "country": {
-            "title": "Country",
-            "type": "string"
-          },
-          "phone_number": {
-            "title": "Phone Number",
-            "type": "string"
-          }
-        }
-      },
-      "PatientDetails": {
-        "title": "PatientDetails",
-        "required": [
-          "dob",
-          "gender"
-        ],
-        "type": "object",
-        "properties": {
-          "dob": {
-            "title": "Dob",
-            "type": "string",
-            "format": "date-time"
-          },
-          "gender": {
-            "title": "Gender",
-            "type": "string"
-          },
-          "email": {
-            "title": "Email",
-            "type": "string"
-          }
-        }
       },
       "Physician": {
         "title": "Physician",
@@ -6383,9 +7142,87 @@
             },
             "default": []
           },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
           "id": {
             "title": "Id",
-            "type": "integer"
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "PhysicianBase": {
+        "title": "PhysicianBase",
+        "required": [
+          "first_name",
+          "last_name",
+          "npi"
+        ],
+        "type": "object",
+        "properties": {
+          "first_name": {
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last Name",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "npi": {
+            "title": "Npi",
+            "type": "string"
+          },
+          "licensed_states": {
+            "title": "Licensed States",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": []
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "PostOrderResponse": {
+        "title": "PostOrderResponse",
+        "required": [
+          "order",
+          "status",
+          "message"
+        ],
+        "type": "object",
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__orderv2__ClientFacingOrder"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
           }
         }
       },
@@ -6465,6 +7302,7 @@
           "wahoo",
           "zwift",
           "freestyle_libre",
+          "freestyle_libre_ble",
           "eight_sleep",
           "withings",
           "apple_health_kit",
@@ -6519,6 +7357,10 @@
           "unit": {
             "title": "Unit",
             "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata",
+            "type": "object"
           }
         }
       },
@@ -6540,12 +7382,12 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-05-16T11:31:30.403317+00:00",
+              "timestamp": "2022-06-22T13:54:25.582885+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "254c4e1b-fe9c-4042-a836-d9852f24f353",
-              "user_id": "96babad9-bc72-462f-93c5-c55d5391b855",
+              "provider_id": "a687dacb-3955-47dc-a80d-ff7c42e0de47",
+              "user_id": "6b23a3d2-e82f-498b-be1a-6fc57d6d9e95",
               "source_id": 1,
               "priority_id": 1
             }
@@ -6570,12 +7412,12 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-05-16T11:31:30.406015+00:00",
+              "timestamp": "2022-06-22T13:54:25.591171+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "a0285bac-11cd-4e0d-9ecf-b95558c101ca",
-              "user_id": "5ee421bc-4aa6-43ac-8962-8c9226c960fb",
+              "provider_id": "d7caa979-c7b4-4653-8426-098e53557b2e",
+              "user_id": "b972ea94-e475-40f9-9ce0-7896a9d0e980",
               "source_id": 1,
               "priority_id": 1
             }
@@ -6603,8 +7445,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "c12f9e99-337d-4149-96ba-0c88704dd268",
-              "user_id": "d78bb3b3-9ef9-4a5b-997f-0ecff8a0dbda",
+              "provider_id": "98079550-33fe-4df7-9f72-324d4b9e15f5",
+              "user_id": "9d737657-e8fe-4cbf-997f-e7adacb92b18",
               "source_id": 1
             }
           ]
@@ -6627,8 +7469,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "3fd13598-e8c8-42ca-8b13-adaabaab7e9b",
-              "user_id": "af995ad0-c1f5-4c0e-9c09-f787e7c35f77",
+              "provider_id": "e6d81177-2d72-4304-8e7f-d9e03da81aef",
+              "user_id": "c82ba23f-e057-4436-9d82-f6be10abc18c",
               "source_id": 1
             }
           ]
@@ -6652,12 +7494,12 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-05-16T11:31:30.411814+00:00",
+              "timestamp": "2022-06-22T13:54:25.607072+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "bd11399e-1451-4cba-b7a8-8cdabffeecc0",
-              "user_id": "2bc70bd5-ee88-43fe-8503-4a2cd1003ee8",
+              "provider_id": "5156103a-30f2-4b0b-829c-a17e61157f80",
+              "user_id": "c5ceb716-ba0b-4d86-b44b-d8ae24ebbda9",
               "source_id": 1,
               "priority_id": 1
             }
@@ -6682,18 +7524,28 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-05-16T11:31:30.416445+00:00",
+              "timestamp": "2022-06-22T13:54:25.621599+00:00",
               "data": {
                 "provider_specific": "..._data"
               },
-              "provider_id": "099c1ec5-6fb6-4954-84a8-068f468033db",
-              "user_id": "359e4f4b-1d6d-4f84-a5e2-5172d05ea51b",
+              "provider_id": "1e719862-b48f-497b-88a7-439b7e7c43c6",
+              "user_id": "79fd3338-8198-4689-a831-45cdf1f85504",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
             }
           ]
         }
+      },
+      "Region": {
+        "title": "Region",
+        "enum": [
+          "us",
+          "eu",
+          "sg"
+        ],
+        "type": "string",
+        "description": "An enumeration."
       },
       "Resource": {
         "title": "Resource",
@@ -6942,7 +7794,7 @@
         },
         "example": {
           "success": false,
-          "user_id": "d0d0660c-6d5e-4649-af14-ffc50be7107e",
+          "user_id": "b9a53bfc-227d-4f04-aad8-71699edabc49",
           "error": "user has no connected sources",
           "failed_sources": []
         }
@@ -6987,7 +7839,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "5986e665-1321-4dff-94bb-32e8311286b6",
+          "user_id": "d129c9ff-cb22-477d-ade3-31430b2f2c64",
           "refreshed_sources": [
             "Withings/workouts",
             "Withings/sleep",
@@ -7114,6 +7966,440 @@
           },
           "sport": {
             "$ref": "#/components/schemas/ClientFacingSport"
+          }
+        }
+      },
+      "vital_core__schemas__db_schemas__diagnostic_lab_test__orderv2__ClientFacingOrder": {
+        "title": "ClientFacingOrder",
+        "required": [
+          "user_id",
+          "id",
+          "team_id",
+          "patient_details",
+          "patient_address",
+          "diagnostic_lab_test",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid"
+          },
+          "user_key": {
+            "title": "User Key",
+            "type": "string",
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The Vital Order ID",
+            "format": "uuid"
+          },
+          "team_id": {
+            "title": "Team Id",
+            "type": "string",
+            "description": "Your team id.",
+            "format": "uuid"
+          },
+          "patient_details": {
+            "title": "Patient Details",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientDetails"
+              }
+            ],
+            "description": "Patient Details"
+          },
+          "patient_address": {
+            "title": "Patient Address",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientAddress"
+              }
+            ],
+            "description": "Patient Address"
+          },
+          "diagnostic_lab_test": {
+            "title": "Diagnostic Lab Test",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DiagnosticLabTestInDB"
+              }
+            ],
+            "description": "The Vital Diagnostic Test associated with the order"
+          },
+          "testkit_order": {
+            "title": "Testkit Order",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingTestkitOrder"
+              }
+            ],
+            "description": "The Vital TestKit Order associated with the order"
+          },
+          "walk_in_test_order": {
+            "title": "Walk In Test Order",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingWalkInTestOrder"
+              }
+            ],
+            "description": "The Vital WalkInTest Order associated with the order"
+          },
+          "sample_id": {
+            "title": "Sample Id",
+            "type": "string",
+            "description": "Sample ID"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string",
+            "description": "Notes associated with the order"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "description": "When your order was created",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "description": "When your order was last updated",
+            "format": "date-time"
+          }
+        },
+        "example": {
+          "id": "be863857-0f23-4653-8194-e8edb6a82cfd",
+          "team_id": "3ac45158-6e09-49bd-b357-916f621514c9",
+          "user_id": "927a10be-c47e-4b8f-90da-8a6302d3f66b",
+          "patient_details": {
+            "dob": "2020-01-01",
+            "gender": "male"
+          },
+          "patient_address": {
+            "receiver_name": "John Doe",
+            "first_line": "123 Main St.",
+            "second_line": "Apt. 208",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "91189",
+            "country": "United States",
+            "phone_number": "+1123456789"
+          },
+          "diagnostic_lab_test": {
+            "name": "CGM",
+            "description": "CGM test"
+          },
+          "testkit_order": {
+            "id": "4e0925c4-f88a-457e-bce9-5cbf6f0ea5c8",
+            "shipment": {
+              "id": "e561e1c8-09f6-4854-8ffb-d7298d47ef0c",
+              "outbound_tracking_number": "<outbound_tracking_number>",
+              "outbound_tracking_url": "<outbound_tracking_url>",
+              "inbound_tracking_number": "<inbound_tracking_number>",
+              "inbound_tracking_url": "<inbound_tracking_url>",
+              "outbound_courier": "usps",
+              "inbound_courier": "usps",
+              "notes": "<notes>",
+              "created_at": "2020-01-01T00:00:00.000Z",
+              "updated_at": "2020-01-01T00:00:00.000Z"
+            },
+            "created_at": "2020-01-01T00:00:00Z",
+            "updated_at": "2020-01-01T00:00:00Z"
+          },
+          "sample_id": "123456789",
+          "notes": "This is a note",
+          "created_at": "2020-01-01T00:00:00Z",
+          "updated_at": "2020-01-01T00:00:00Z"
+        }
+      },
+      "vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientAddress": {
+        "title": "PatientAddress",
+        "required": [
+          "receiver_name",
+          "street",
+          "city",
+          "state",
+          "zip",
+          "country",
+          "phone_number"
+        ],
+        "type": "object",
+        "properties": {
+          "receiver_name": {
+            "title": "Receiver Name",
+            "type": "string"
+          },
+          "street": {
+            "title": "Street",
+            "type": "string"
+          },
+          "street_number": {
+            "title": "Street Number",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "title": "Zip",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          }
+        }
+      },
+      "vital_core__schemas__db_schemas__diagnostic_lab_test__patient__PatientDetails": {
+        "title": "PatientDetails",
+        "required": [
+          "dob",
+          "gender"
+        ],
+        "type": "object",
+        "properties": {
+          "dob": {
+            "title": "Dob",
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          }
+        }
+      },
+      "vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder": {
+        "title": "ClientFacingOrder",
+        "required": [
+          "user_id",
+          "team_id",
+          "created_on",
+          "updated_on",
+          "testkit_id",
+          "testkit",
+          "patient_address",
+          "patient_details"
+        ],
+        "type": "object",
+        "properties": {
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid"
+          },
+          "user_key": {
+            "title": "User Key",
+            "type": "string",
+            "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+            "format": "uuid",
+            "deprecated": true
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The Vital Order ID",
+            "format": "uuid"
+          },
+          "team_id": {
+            "title": "Team Id",
+            "type": "string",
+            "description": "Your team id.",
+            "format": "uuid"
+          },
+          "created_on": {
+            "title": "Created On",
+            "type": "string",
+            "description": "When your order was created",
+            "format": "date-time"
+          },
+          "updated_on": {
+            "title": "Updated On",
+            "type": "string",
+            "description": "When your order status was last updated",
+            "format": "date-time"
+          },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderStatus"
+              }
+            ],
+            "description": "Order status: ordered, transit_customer, out_for_delivery, with_customer, transit_lab, delivered_to_lab, processing_lab, completed, failure_to_deliver_to_customer, failure_to_deliver_to_lab, cancelled, do_not_process, unknown"
+          },
+          "testkit_id": {
+            "title": "Testkit Id",
+            "type": "string",
+            "description": "Testkit id",
+            "format": "uuid"
+          },
+          "testkit": {
+            "$ref": "#/components/schemas/TestkitClientFacing"
+          },
+          "inbound_tracking_number": {
+            "title": "Inbound Tracking Number",
+            "type": "string",
+            "description": "Tracking number for delivery to lab"
+          },
+          "outbound_tracking_number": {
+            "title": "Outbound Tracking Number",
+            "type": "string",
+            "description": "Tracking number for delivery to customer"
+          },
+          "inbound_tracking_url": {
+            "title": "Inbound Tracking Url",
+            "type": "string",
+            "description": "Tracking url for delivery to lab"
+          },
+          "outbound_tracking_url": {
+            "title": "Outbound Tracking Url",
+            "type": "string",
+            "description": "Tracking url for delivery to customer"
+          },
+          "outbound_courier": {
+            "title": "Outbound Courier",
+            "type": "string",
+            "description": "Courier used for delivery to customer"
+          },
+          "inbound_courier": {
+            "title": "Inbound Courier",
+            "type": "string",
+            "description": "Courier used for delivery to lab"
+          },
+          "patient_address": {
+            "title": "Patient Address",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__PatientAddress"
+              }
+            ],
+            "description": "Patient Address"
+          },
+          "patient_details": {
+            "title": "Patient Details",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__PatientDetails"
+              }
+            ],
+            "description": "Patient Details"
+          },
+          "sample_id": {
+            "title": "Sample Id",
+            "type": "string",
+            "description": "Sample ID"
+          }
+        },
+        "example": {
+          "id": "8597163a-dd1d-4ff1-9fc0-9b3834fdbcbb",
+          "team_id": "3d474ed5-1b64-4014-aa39-64326ae04ae6",
+          "created_on": "2022-06-22T13:54:32.968176+00:00",
+          "updated_on": "2022-06-22T13:54:32.968226+00:00",
+          "status": "ordered",
+          "user_id": "b622c493-a2a0-4da1-92cc-eea9e32bad68",
+          "testkit_id": "812e0a60-8583-4880-ae3f-9034c559ee4e",
+          "inbound_tracking_number": "<inbound_tracking_number>",
+          "outbound_tracking_number": "<outbound_tracking_number>",
+          "inbound_tracking_url": "<inbound_tracking_urlr>",
+          "outbound_tracking_url": "<outbound_tracking_url>",
+          "outbound_courier": "usps",
+          "inbound_courier": "usps",
+          "testkit": {
+            "name": "CGM",
+            "description": "Glucose CGM"
+          }
+        }
+      },
+      "vital_core__schemas__db_schemas__testkits__order__PatientAddress": {
+        "title": "PatientAddress",
+        "required": [
+          "receiver_name",
+          "street",
+          "city",
+          "state",
+          "zip",
+          "country",
+          "phone_number"
+        ],
+        "type": "object",
+        "properties": {
+          "receiver_name": {
+            "title": "Receiver Name",
+            "type": "string"
+          },
+          "street": {
+            "title": "Street",
+            "type": "string"
+          },
+          "street_number": {
+            "title": "Street Number",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "title": "Zip",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          }
+        }
+      },
+      "vital_core__schemas__db_schemas__testkits__order__PatientDetails": {
+        "title": "PatientDetails",
+        "required": [
+          "dob",
+          "gender"
+        ],
+        "type": "object",
+        "properties": {
+          "dob": {
+            "title": "Dob",
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
           }
         }
       }
