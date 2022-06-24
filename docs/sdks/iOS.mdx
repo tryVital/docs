@@ -161,7 +161,7 @@ try await VitalClient.shared.summary.post(
 
 It's important to notice a few things in the above snippet:
 
-1. We set the stage of data as `.daily`. If you are sending old data, please use `.historical` instead. This distinction is used for the Webhooks. If you are not sure if `.historical` data makes sense, you can stick with `.daily`. A `.daily` will always generate a webhook with the full payload of data. For more information, please read the [Webhook Flow](https://vital-docs.readme.io/docs/webhook-data-flow).
+1. We set the stage of data as `.daily`. If you are sending old data, please use `.historical` instead. This distinction is used for the Webhooks. If you are not sure if `.historical` data makes sense, you can stick with `.daily`. A `.daily` will always generate a webhook with the full payload of data. For more information, please read the [Webhook Flow](/webhooks/data_flow).
 2. The provider (`.appleHealthKit`) must match an existing connected source for that user. This means that if there's no connected source linking the user and `.appleHealthKit`, the request will fail.
 3. Finally if you are generating your own fitness or medical data, use the `.manual` provider.
 
