@@ -20,7 +20,7 @@ const config = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve("./sidebars/sidebars.js"),
           routeBasePath: "/",
           editUrl: "https://github.com/tryVital/docs/blob/main",
           showLastUpdateAuthor: true,
@@ -45,8 +45,17 @@ const config = {
         id: "api-reference",
         path: "api-reference",
         routeBasePath: "api-reference",
-        sidebarPath: require.resolve("./sidebars_api.js"),
+        sidebarPath: require.resolve("./sidebars/sidebars_api.js"),
         // ... other options
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "lab-testing",
+        path: "lab-testing",
+        routeBasePath: "lab-testing",
+        sidebarPath: require.resolve("./sidebars/sidebars_lab_testing.js"),
       },
     ],
     "posthog-docusaurus",
@@ -75,6 +84,16 @@ const config = {
             position: "left",
             docId: "welcome/quickstart",
             label: "Overview",
+            className: "navbar-item-link",
+          },
+          {
+            href: "/wearables/vital-link/introduction",
+            label: "Wearables",
+            className: "navbar-item-link",
+          },
+          {
+            href: "/lab-testing/process",
+            label: "Lab Testing",
             className: "navbar-item-link",
           },
           {
