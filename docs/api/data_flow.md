@@ -19,7 +19,7 @@ be retrieved from our database. For other providers, Vital will pull data from
 the provider's API on a schedule, multiple times a day. If new data is available,
 Vital will process it and send a Webhook event to you.
 
-To get more details of which provider's see the [Provider's Guide](/providers/Introduction#data-frequency).
+To get more details of which provider's see the [Provider's Guide](/wearables/providers/Introduction#data-frequency).
 
 For some user's they want near real-time data updates. We provider a [`refresh`](http://localhost:3000/api-reference/user#refresh-users-data) API endpoint
 that will allow you to request a refresh of the data for a user at any point in time.
