@@ -52,12 +52,22 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
+        id: "wearables",
+        path: "wearables",
+        routeBasePath: "wearables",
+        sidebarPath: require.resolve("./sidebars/sidebars_wearables.js"),
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
         id: "lab-testing",
         path: "lab-testing",
         routeBasePath: "lab-testing",
         sidebarPath: require.resolve("./sidebars/sidebars_lab_testing.js"),
       },
     ],
+
     "posthog-docusaurus",
     [
       "docusaurus2-dotenv",
@@ -92,7 +102,7 @@ const config = {
             className: "navbar-item-link",
           },
           {
-            href: "/lab-testing/process",
+            href: "/lab-testing/overview/Introduction",
             label: "Lab Testing",
             className: "navbar-item-link",
           },
@@ -107,6 +117,24 @@ const config = {
             position: "right",
           },
         ],
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "CNRV9KU9KI",
+
+        // Public API key: it is safe to commit it
+        apiKey: "428a4b4446022ad7fa54a36bb33cd9f5",
+
+        indexName: "YOUR_INDEX_NAME",
+        contextualSearch: true,
+
+        // Optional: Algolia search parameters
+        searchParameters: {},
+
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: false,
+
+        //... other Algolia params
       },
       footer: {
         style: "dark",

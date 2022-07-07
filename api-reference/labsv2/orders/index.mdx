@@ -1,0 +1,35 @@
+import { Swagger } from "@theme/swagger";
+
+# Overview
+
+## Create Orders
+
+<Swagger version={'v3'} endpoint={"/order"} method={"post"} title={"Create order"}>
+
+```python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Testkits.order(
+    user_id=*,
+    testkit_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    patient_details={
+        "dob": "2020-01-01",
+        "gender": "female"
+    },
+    patient_address={
+            "receiver_name": "john Doe",
+            "street": "606 Capp st.",
+            "street_number": "Apt 14",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "94107",
+            "country": "US",
+            "phone_number": "+181808433"
+            },
+    }
+)
+```
+
+</Swagger>

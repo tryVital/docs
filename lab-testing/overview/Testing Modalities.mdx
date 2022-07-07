@@ -1,0 +1,51 @@
+import { HStack, Box, Image, OrderedList, ListItem } from "@chakra-ui/react";
+import { CodeBlock, ResponseBlock } from "@theme/codeblock";
+
+# Testing Modalities
+
+Three types are currently supported:
+
+- At home test kit
+- At home phlebotomy visit
+- In lab phlebotmy visit
+
+### At-home test kits
+
+This involves sending a kit to a patients home that allows the patient to collect their
+sample specimen and send back to our lab networks in the mail.
+
+At home testing kits are kits are typically comprised of a number of
+components such as:
+
+<HStack>
+  <Box>
+    <OrderedList mb={"50px"}>
+      <ListItem>Mailer Box</ListItem>
+      <ListItem>Blade Lancers</ListItem>
+      <ListItem>Plasters</ListItem>
+      <ListItem>Gauze</ListItem>
+      <ListItem>ADX Card</ListItem>
+      <ListItem>Whatman Paper</ListItem>
+      <ListItem>Saliva Tubes</ListItem>
+      <ListItem>Collection Supplies</ListItem>
+      <ListItem>Instruction Booklet</ListItem>
+    </OrderedList>
+    <Text>
+      Additional components can be included in the test kit box, to fully
+      customize the kit, just contact us support@tryvital.io.
+    </Text>
+
+  </Box>
+  <Image src={"/img/wyndly.png"} width={"50%"} />
+</HStack>
+
+### In lab phlebotomy
+
+In lab draws involve the patient going to a lab location either Quest or Labcorp, to carry out the test.
+The requisition forms required to carry out this test can be generated using Vital's API, once a patient has
+met certain conditions. Results can then be retrieved through Vital's API.
+
+### At-home phlebotomy
+
+At-home phlebotomy involves mobile phlebotmists visiting a patient at their home and carrying out the phlebotomy draw.
+The sample is then delivered directly to the lab by the phlebotomist.

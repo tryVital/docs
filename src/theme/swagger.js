@@ -76,6 +76,7 @@ export const Swagger = ({
   title,
   children,
   include_client_instantiation,
+  version,
 }) => {
   const [requestData, setRequestData] = useState({ params: [], body: [] });
   const [responseData, setResponseData] = useState({ params: [], body: [] });
@@ -83,8 +84,8 @@ export const Swagger = ({
   useEffect(() => {
     const parseSwagger = async () => {
       try {
-        const version = "v2";
-        const fullEndpoint = `/${version}${endpoint}`;
+        const apiVersion = version ? version : "v2";
+        const fullEndpoint = `/${apiVersion}${endpoint}`;
         const schema = await getEndpointSchema(fullEndpoint, method);
         const request = getRequestBodyData(fullEndpoint, schema, method);
         const response = getResponseData(fullEndpoint, schema);
@@ -119,7 +120,9 @@ export const Swagger = ({
         >
           {method}
         </Badge>
-        <chakra.h3 fontFamily={"monospace"}>{`/v2${endpoint}`}</chakra.h3>
+        <chakra.h3 fontFamily={"monospace"}>{`/${
+          version ? version : "v2"
+        }${endpoint}`}</chakra.h3>
       </HStack>
 
       <HStack mt={20}>
