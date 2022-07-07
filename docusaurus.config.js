@@ -20,7 +20,7 @@ const config = {
       "@docusaurus/preset-classic",
       {
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          sidebarPath: require.resolve("./sidebars/sidebars.js"),
           routeBasePath: "/",
           editUrl: "https://github.com/tryVital/docs/blob/main",
           showLastUpdateAuthor: true,
@@ -45,10 +45,29 @@ const config = {
         id: "api-reference",
         path: "api-reference",
         routeBasePath: "api-reference",
-        sidebarPath: require.resolve("./sidebars_api.js"),
+        sidebarPath: require.resolve("./sidebars/sidebars_api.js"),
         // ... other options
       },
     ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "wearables",
+        path: "wearables",
+        routeBasePath: "wearables",
+        sidebarPath: require.resolve("./sidebars/sidebars_wearables.js"),
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "lab-testing",
+        path: "lab-testing",
+        routeBasePath: "lab-testing",
+        sidebarPath: require.resolve("./sidebars/sidebars_lab_testing.js"),
+      },
+    ],
+
     "posthog-docusaurus",
     [
       "docusaurus2-dotenv",
@@ -78,6 +97,16 @@ const config = {
             className: "navbar-item-link",
           },
           {
+            href: "/wearables/vital-link/introduction",
+            label: "Wearables",
+            className: "navbar-item-link",
+          },
+          {
+            href: "/lab-testing/overview/Introduction",
+            label: "Lab Testing",
+            className: "navbar-item-link",
+          },
+          {
             href: "/api-reference/user",
             label: "API Reference",
             className: "navbar-item-link",
@@ -88,6 +117,24 @@ const config = {
             position: "right",
           },
         ],
+      },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "CNRV9KU9KI",
+
+        // Public API key: it is safe to commit it
+        apiKey: "428a4b4446022ad7fa54a36bb33cd9f5",
+
+        indexName: "YOUR_INDEX_NAME",
+        contextualSearch: true,
+
+        // Optional: Algolia search parameters
+        searchParameters: {},
+
+        // Optional: path for search page that enabled by default (`false` to disable it)
+        searchPagePath: false,
+
+        //... other Algolia params
       },
       footer: {
         style: "dark",

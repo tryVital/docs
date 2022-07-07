@@ -1,0 +1,197 @@
+---
+sidebar_position: 2
+---
+
+import { CodeBlock, ResponseBlock } from "@theme/codeblock";
+
+# Ordering a Test
+
+## 1. Creating a Patient
+
+A patient in Vital terminology is considered a user. To create a user, you need to pass an unique id (`client_user_id`).
+This represents the user in your system. Our recommendation is to store the Vital `user_id` in your db against the user row.
+
+<CodeBlock title={"Creating a Vital user"} include_client_instantiation={true}>
+
+```bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <your_api_key>' \
+     --data '{"client_user_id":"<your_user_id>"}'
+```
+
+```js
+const user = await client.User.create(client_user_id);
+```
+
+```python
+
+user = client.User.create(client_user_id)
+```
+
+```swift
+let user = try await VitalClient.shared.user.create(clientUserId)
+```
+
+</CodeBlock>
+
+## 2. Listing Available Tests
+
+As a first step, we need to define what type of testing you want to offer to your users.
+We will have an introduction call to go over the test, projected volumes, customizations
+for kits and other questions you might have. Once we have all this information, we can begin
+setting up the test kits and distribution. Finally, we can set up your integration and
+dashboard to start ordering tests via our API.
+
+Once this is done, you will have the tests available via our API:
+
+<CodeBlock title={"Listing available tests for team"} include_client_instantiation={true}>
+
+```bash
+curl --request GET \
+     --url {{BASE_URL}}/v3/lab_tests/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+```
+
+</CodeBlock>
+
+This will return a list of all the available tests to you. They include a description, turnaround time and price:
+
+<ResponseBlock
+  title={"Response"}
+  code={` "lab_tests": [
+    {
+    "id": "e2eaa385-a311-4f17-b33f-2165e3d24dd9"
+    "name": "Lipids Panel",
+    "description": "Cholesterol tests",
+    "sample_type": "dried blood spot",
+    "method": "testkit",
+    "price": 10.0,
+    "is_active": True,
+    "lab": {
+        "slug": "USSL",
+        "name": "US Specialty Lab",
+        "first_line_address": "123 Main St",
+        "city": "New York",
+        "zipcode": "10001",
+    },
+    "markers": [
+        {
+            "name": "Thyroid Stimulating Hormone",
+            "slug": "tsh",
+            "description": "",
+        }
+    ],
+    }
+  ]`}
+/>
+
+<br />
+
+You can then use the test `id` when creating an order.
+
+## 3. Ordering a test
+
+Ordering a test for your user, is as simple as making an API call:
+
+<CodeBlock title={"Ordering a test"} include_client_instantiation={true}>
+
+```bash
+curl --request POST \
+     --url {{BASE_URL}}/v3/order/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "patient_details": {
+    "dob": "2022-07-06T22:20:26.796Z",
+    "gender": "male | female",
+    "email": "test@test.com"
+  },
+  "patient_address": {
+    "receiver_name": "John Doe",
+    "street": "Hazel Road",
+    "street_number": "102",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91789",
+    "country": "U.S.",
+    "phone_number": "+14158180852"
+  },
+  "diagnostic_lab_test_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "physician": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@doe.com",
+    "npi": "123456789",
+    "licensed_states": ["CA", "NY"],
+    "created_at": "2022-07-06T22:20:26.796Z",
+    "updated_at": "2022-07-06T22:20:26.796Z"
+  }
+}
+'
+```
+
+</CodeBlock>
+
+<ResponseBlock
+  title={"Response"}
+  code={`{
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "patient_details": {"dob": "2020-01-01", "gender": "male"},
+        "patient_address": {
+            "receiver_name": "John Doe",
+            "first_line": "123 Main St.",
+            "second_line": "Apt. 208",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "91189",
+            "country": "United States",
+            "phone_number": "+1123456789",
+        },
+        "details": {
+            "type": "testkit",
+            "data": {
+                "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+                "shipment": {
+                    "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+                    "outbound_tracking_number": "<outbound_tracking_number>",
+                    "outbound_tracking_url": "<outbound_tracking_url>",
+                    "inbound_tracking_number": "<inbound_tracking_number>",
+                    "inbound_tracking_url": "<inbound_tracking_url>",
+                    "outbound_courier": "usps",
+                    "inbound_courier": "usps",
+                    "notes": "<notes>",
+                    "created_at": "2020-01-01T00:00:00.000Z",
+                    "updated_at": "2020-01-01T00:00:00.000Z",
+                },
+                "created_at": "2020-01-01T00:00:00Z",
+                "updated_at": "2020-01-01T00:00:00Z",
+            },
+        },
+        "diagnostic_lab_test": {
+            "name": "Lipids Panel",
+            "description": "Cholesterol test",
+            "method": "testkit",
+        },
+        "sample_id": "123456789",
+        "notes": "This is a note",
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2020-01-01T00:00:00Z",
+        "status": "collecting_sample",
+        "events": [
+            {
+                "id": 1,
+                "created_at": "2022-01-01T00:00:00Z",
+                "status": "received.testkit.ordered",
+            }
+    ],
+}`}
+/>
