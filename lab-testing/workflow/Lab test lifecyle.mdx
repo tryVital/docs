@@ -4,9 +4,7 @@ sidebar_position: 1
 
 ## Introduction
 
-All lab test modalities are encapsulated in our `order` object. An order has a status which represents
-the high-level status of the order. Depending on the `modality` of testing there will be different sub statuses
-which are modality specific.
+We encapsulate our lab test modalities in the `order` object. An order has a status which represents the high-level status of the order. Each test has different sub-statuses which are modality specific.
 
 ## Statuses
 
@@ -21,8 +19,7 @@ The high level statuses of an order, are represented by `order.status`:
 - `cancelled`
 - `failed`
 
-Modality specific substatuses are encapsulated in the `order.events` list which
-includes a list of all the events for that test for example:
+Modality specific sub-statuses are encapsulated in the `order.events` list. These include a list of all the events for that test:
 
 <ResponseBlock
   title={"Test kit order status"}

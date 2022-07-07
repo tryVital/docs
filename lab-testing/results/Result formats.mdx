@@ -7,7 +7,7 @@ import { Image } from "@chakra-ui/react";
 
 ## Result Formats
 
-Vital's API returns results in a number of different formats. Current formats we support are:
+Vital's API returns results in a number of different formats. We currently support:
 
 - `PDF`
 - `JSON`
@@ -29,13 +29,15 @@ curl --request GET \
 
 </CodeBlock>
 
+<br />
+
 An example result:
 
 <Image src={"/img/test_result.jpg"} width={"60%"} />
 
 ## JSON Results
 
-We also return the parsed results in JSON format, so you can use the results to to produce/generate your own forms.
+We also return the parsed results in JSON format, so you can use them to generate your own forms.
 For example for a lipids panel:
 
 <CodeBlock title={"Get order json results"} include_client_instantiation={true}>
