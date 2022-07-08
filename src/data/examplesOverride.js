@@ -82,4 +82,6 @@ export default {
   ],
   "/v2/testkit/orders/{order_id}/results":
     "Returns PDF of test data - <specimen_number>.pdf",
+  "/v3/order/{order_id}/result/pdf":
+    "Returns PDF of test data - <specimen_number>.pdf",
 };
