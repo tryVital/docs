@@ -1,0 +1,17 @@
+import { Swagger } from "@theme/swagger";
+
+# Overview
+
+## Get Available Tests
+
+<Swagger version={'v3'} endpoint={"/lab_tests"} method={"get"} title={"Get Available test"}>
+
+```python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Order.Result.pdf("<order_id">)
+```
+
+</Swagger>
