@@ -4,9 +4,13 @@ sidebar_position: 4
 
 import { CodeBlock, ResponseBlock } from "@theme/codeblock";
 
-Cancelling an order depends how far along in the process the order is in. If an order is still
-in a state where the requisition form has not been generated, order has not been sent out, or
-phlebotmist has not been sent that it is possible to make the below request.
+Cancelling an order depends how far along in the process the order is in. If an order is not in a state such as:
+
+1. Requisition form is not generated.
+2. Order wasn't send.
+3. The phlebotomist is not on their way.
+
+It's possible to make the following request:
 
 <CodeBlock endpoint={"/lab_test/orders/{order_id}/cancel"} method={"post"} title={"Cancelling an order"} include_client_instantiation>
 

@@ -4,13 +4,13 @@ sidebar_position: 3
 
 import { CodeBlock, ResponseBlock } from "@theme/codeblock";
 
-Throughout the lifecyle of a test we will update you on the status of the order via our webhooks.
-Webhooks will have the event type `test.order.updated`, each webhook you receive will be the
+Throughout the lifecyle of a test we update you on the status of the order via our webhooks.
+Webhooks have the event type `test.order.updated`. Each webhook you receive have the
 base order object with the updated parameters.
 
-For example after ordering an at-home test kit, once the order is complete, picked by our warehouse
+For example: 1)after ordering an at-home test kit, once the order is complete, picked by our warehouse
 and is sent to the customer the order status will change to `collecting_sample.testkit.transit_customer`. And you will receive
-the following webhook.
+the following webhook:
 
 <ResponseBlock
   title={"Test order updated"}
