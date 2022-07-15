@@ -56,24 +56,32 @@ We currently Support over 300+ devices, a full list can be seen below.
 
 ## Data Frequency
 
+Whenever possible, we set up our integrations so that we are immediately notified when new data is available. These are the providers marked as `Webhook` in the table below. For these providers, we fetch the latest data as soon as it is available and we send a webhook update.
+
+For the other providers, marked as `Polling` below, we periodically fetch the latest data every 10-15 minutes. If you want more granular control over this, you can use the [refresh endpoint](/api-reference/user#refresh-users-data) to fetch the latest data immediately.
+
 All data can be fetched instantaneously, some are configured via our live refresh endpoint and others are automatically kept up to date via our webhook implementation.
 
 | Provider                                             | Description  |
 | ---------------------------------------------------- | ------------ |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/) | Live Refresh |
-| [Fitbit](https://www.fitbit.com/global/uk/home)      | Webhooks     |
-| [Garmin](https://www.garmin.com)                     | Webhooks     |
-| [Google Fit](https://www.google.com/fit/)            | Live Refresh |
-| [Oura](https://ouraring.com)                         | Live Refresh |
-| [Peloton](https://www.onepeloton.com)                | Live Refresh |
-| [Renpho](https://renpho.com)                         | Live Refresh |
-| [Strava](https://www.strava.com)                     | Webhooks     |
-| [Wahoo](https://wahoofitness.com)                    | Webhooks     |
-| [Whoop](https://www.whoop.com)                       | Live Refresh |
-| [Zwift](https://zwift.com)                           | Live Refresh |
-| [Withings](https://www.withings.com)                 | Webhooks     |
-| [iHealth](https://ihealthlabs.com)                   | Webhooks     |
-| [Omron](https://www.omron-healthcare.com) (SDK)      | Webhooks     |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)   | Webhooks     |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)         | Webhooks     |
-| [8Sleep](https://www.eightsleep.com)                 | Live Refresh |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | Webhook      |
+| [Garmin](https://www.garmin.com)                     | Webhook      |
+| [Strava](https://www.strava.com)                     | Webhook      |
+| [Wahoo](https://wahoofitness.com)                    | Webhook      |
+| [Withings](https://www.withings.com)                 | Webhook      |
+| [iHealth](https://ihealthlabs.com)                   | Webhook      |
+| [Omron](https://www.omron-healthcare.com) (SDK)      | Webhook      |
+| [Contour](https://www.diabetes.ascensia.com) (SDK)   | Webhook      |
+| [Accu-Chek](https://www.accu-chek.com) (SDK)         | Webhook      |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/) | Polling      |
+| [Google Fit](https://www.google.com/fit/)            | Polling      |
+| [Oura](https://ouraring.com)                         | Polling      |
+| [Peloton](https://www.onepeloton.com)                | Polling      |
+| [Renpho](https://renpho.com)                         | Polling      |
+| [Whoop](https://www.whoop.com)                       | Polling      |
+| [Zwift](https://zwift.com)                           | Polling      |
+| [8Sleep](https://www.eightsleep.com)                 | Polling      |
+
+:::note
+To provide you with the best possible experience, for some providers we implement a mix of Webhook and Polling for different resources. Check out the [resources page](https://docs.tryvital.io/wearables/providers/Resources) for more info.
+:::
