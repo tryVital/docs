@@ -56,6 +56,8 @@ We currently Support over 300+ devices, a full list can be seen below.
 
 ## Data Frequency
 
+This section describes how we fetch data from the different providers. For all of them, we send you webhook updates when new data is available. The differences are in the frequency with which we fetch the latest data.
+
 Whenever possible, we set up our integrations so that we are immediately notified when new data is available. These are the providers marked as `Webhook` in the table below. For these providers, we fetch the latest data as soon as it is available and we send a webhook update.
 
 For the other providers, marked as `Polling` below, we periodically fetch the latest data every 10-15 minutes. If you want more granular control over this, you can use the [refresh endpoint](/api-reference/user#refresh-users-data) to fetch the latest data immediately.
