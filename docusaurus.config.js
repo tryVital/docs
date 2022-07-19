@@ -125,16 +125,8 @@ const config = {
         // Public API key: it is safe to commit it
         apiKey: "428a4b4446022ad7fa54a36bb33cd9f5",
 
-        indexName: "YOUR_INDEX_NAME",
+        indexName: "vital_docs",
         contextualSearch: true,
-
-        // Optional: Algolia search parameters
-        searchParameters: {},
-
-        // Optional: path for search page that enabled by default (`false` to disable it)
-        searchPagePath: false,
-
-        //... other Algolia params
       },
       footer: {
         style: "dark",
