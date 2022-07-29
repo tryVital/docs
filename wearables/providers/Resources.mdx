@@ -2,10 +2,172 @@
 sidebar_position: 2
 ---
 
-Below are a list of our providers and the resources they provide:
+## Intro
+
+At Vital, a resource represents a set of fields. Each resource is an abstraction for the different categories of data available by each provider. We currently support two kinds of resources: summary and timeseries. Summary resources are made up of many fields. While timeseries represent the values of a single field over time.
+
+| Resource       | Type       |
+| -------------- | ---------- |
+| Activity       | summary    |
+| Body           | summary    |
+| Workouts       | summary    |
+| Sleep          | summary    |
+| Profile        | summary    |
+| Glucose        | timeseries |
+| Heartrate      | timeseries |
+| Bloodpressure  | timeseries |
+| Blood Oxygen   | timeseries |
+| Workout Stream | timeseries |
+| Sleep Stream   | timeseries |
+
+:::tip
+Summary resources can be fetched from our `/summary/<resource>` API, while everything else via `/timeseries/<resource>`.
+:::
+
+For example, `Workouts` is made up of fields specific to an workout, like calories, distance and duration. When you make a request to `summary/workouts` you get the following fields:
+
+```json
+{
+  "workouts": [
+    {
+      "user_id": "a6fea8eb-402f-4578-96ba-189df1a8ca75",
+      "user_key": "a6fea8eb-402f-4578-96ba-189df1a8ca75",
+      "id": "12398c74-ea41-4d9c-a1b7-8c529ee67e46",
+      "title": null,
+      "timezone_offset": 3600,
+      "average_hr": 147,
+      "max_hr": 178,
+      "distance": 31557.85,
+      "time_start": "2022-07-29T12:05:49+00:00",
+      "time_end": "2022-07-29T13:26:08+00:00",
+      "calories": 729.0,
+      "sport": {
+        "id": 108,
+        "name": "Road Biking",
+        "slug": "road_biking"
+      },
+      "hr_zones": [
+        5,
+        76,
+        288,
+        1467,
+        2148,
+        835
+      ],
+      "moving_time": 4819,
+      "total_elevation_gain": 374.0,
+      "elev_high": null,
+      "elev_low": null,
+      "average_speed": 6.548,
+      "max_speed": 17.448,
+      "average_watts": null,
+      "device_watts": null,
+      "max_watts": null,
+      "weighted_average_watts": null,
+      "map": null,
+      "provider_id": "9297103021",
+      "source": {
+        "name": "Garmin",
+        "slug": "garmin",
+        "logo": "https://storage.googleapis.com/vital-assets/garmin.png"
+      }
+    }
+}
+```
+
+<br />
+<br />
+
+Different providers (e.g. Garmin), only provide specific resources. As an example, Garmin doesn't have `Glucose` as a resource.
+
+The bellow list shows what resources are available for each provider:
 
 <iframe
-  src="https://airtable.com/embed/shrYd0PGVhx5lTemu"
+  src="https://airtable.com/embed/shrYd0PGVhx5lTemu?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="533"
+>
+  {" "}
+</iframe>
+
+<br />
+<br />
+
+## Fields by Provider
+
+Resources alone are not the whole story. Depending on the provider, a field might not be available. For example both Garmin and Strava provide `Workouts`, yet the former doesn't have `ele_high` nor `ele_low`.
+
+:::info
+Providers mark with `*` means that Vital calculates the field's value.
+:::
+
+:::caution
+Even if a field is available for a provider, it doesn't mean it's available. For example, Fitbit is capable of generating HRV data. However HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
+:::
+
+### Activity
+
+<iframe
+  src="https://airtable.com/embed/shrD7PACtmC22z1am?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="533"
+>
+  {" "}
+</iframe>
+
+<br />
+<br />
+
+### Body
+
+<iframe
+  src="https://airtable.com/embed/shrcmdPTp4rOx0mBp?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="533"
+>
+  {" "}
+</iframe>
+
+<br />
+<br />
+
+### Sleep
+
+<iframe
+  src="https://airtable.com/embed/shr6TCkBRAtQMza6v?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="533"
+>
+  {" "}
+</iframe>
+
+<br />
+<br />
+
+### Sleep Stream
+
+<iframe
+  src="https://airtable.com/embed/shrSXIIvttU9B9AcS?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="533"
+>
+  {" "}
+</iframe>
+
+### Workout
+
+<iframe
+  src="https://airtable.com/embed/shrUXlA77h6Leg7tD?backgroundColor=gray&layout=card"
   frameborder="0"
   allowfullscreen="true"
   width="100%"
