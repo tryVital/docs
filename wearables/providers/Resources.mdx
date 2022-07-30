@@ -4,7 +4,7 @@ sidebar_position: 2
 
 ## Intro
 
-At Vital, a resource represents a set of fields. Each resource is an abstraction for the different categories of data available by each provider. We currently support two kinds of resources: summary and timeseries. Summary resources are made up of many fields. While timeseries represent the values of a single field over time.
+At Vital, a resource represents a set of fields. Each resource is an abstraction for the different categories of data available for each provider. We currently support two kinds of resources: summary and timeseries. Summary resources are made up of many fields. While timeseries represent the values of a single field over time.
 
 | Resource       | Type       |
 | -------------- | ---------- |
@@ -21,10 +21,10 @@ At Vital, a resource represents a set of fields. Each resource is an abstraction
 | Sleep Stream   | timeseries |
 
 :::tip
-Summary resources can be fetched from our `/summary/<resource>` API, while everything else via `/timeseries/<resource>`.
+Summary resources can be fetched from our `/summary/<resource>/<user_id>` API, while everything else via `/timeseries/<user_id>/<resource>`.
 :::
 
-For example, `Workouts` is made up of fields specific to an workout, like calories, distance and duration. When you make a request to `summary/workouts` you get the following fields:
+For example, `Workouts` is made up of fields specific to an workout, like calories, distance and duration. When you make a request to `summary/<user_id>/workouts` you get the following fields:
 
 ```json
 {
@@ -78,9 +78,54 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
 <br />
 <br />
 
-Different providers (e.g. Garmin), only provide specific resources. As an example, Garmin doesn't have `Glucose` as a resource.
+`Heartrate` on the other hand, is a timeseries resources. You can fetch it via `timeseries/<user_id>/heartrate` and looks like this:
 
-The bellow list shows what resources are available for each provider:
+```json
+[
+  {
+    "id": 79009531,
+    "timestamp": "2022-04-29T08:35:57+00:00",
+    "value": 174.0,
+    "type": "automatic",
+    "unit": "bpm"
+  },
+  {
+    "id": 79005064,
+    "timestamp": "2022-04-30T11:22:38+00:00",
+    "value": 79.0,
+    "type": "automatic",
+    "unit": "bpm"
+  },
+  {
+    "id": 79005065,
+    "timestamp": "2022-04-30T11:22:39+00:00",
+    "value": 80.0,
+    "type": "automatic",
+    "unit": "bpm"
+  },
+  {
+    "id": 79005066,
+    "timestamp": "2022-04-30T11:22:40+00:00",
+    "value": 78.0,
+    "type": "automatic",
+    "unit": "bpm"
+  },
+  {
+    "id": 79005067,
+    "timestamp": "2022-04-30T11:22:41+00:00",
+    "value": 78.0,
+    "type": "automatic",
+    "unit": "bpm"
+  }
+]
+```
+
+<br />
+<br />
+
+Different providers (e.g. Garmin), have different resources available. As an example, Garmin doesn't have `Glucose` as a resource.
+
+The list bellow shows what resources are available for each provider:
 
 <iframe
   src="https://airtable.com/embed/shrYd0PGVhx5lTemu?backgroundColor=gray&layout=card"
