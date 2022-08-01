@@ -460,9 +460,19 @@ That's the only thing you need to do! If you are using background delivery, you 
 <br />
 
 :::caution
-As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery), keep in mind:
+As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery):
 
 > As soon as your app launches, HealthKit calls the update handler for any observer queries that match the newly saved data. If you plan on supporting background delivery, set up all your observer queries in your app delegate’s application(_:didFinishLaunchingWithOptions:) method. By setting up the queries in application(_:didFinishLaunchingWithOptions:), you ensure that you’ve instantiated your queries, and they’re ready to use before HealthKit delivers the updates.
 
 This means that you should make sure you call `VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)` in your app delegate's application(\_:didFinishLaunchingWithOptions:) method.
+:::
+
+:::caution
+As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery):
+
+> HealthKit wakes your app whenever a process saves or deletes samples of the specified type. The system wakes your app at most once per time period defined by the specified frequency. Some sample types have a maximum frequency of `HKUpdateFrequency.hourly`. The system enforces this frequency transparently.
+>
+> For example, on iOS, `stepCount` samples have an hourly maximum frequency.
+
+Although we have the frequency set to `.immediate`, we cannot guarantee syncing as soon as taken some steps.
 :::
