@@ -464,7 +464,7 @@ As per the [documentation](https://developer.apple.com/documentation/healthkit/h
 
 > As soon as your app launches, HealthKit calls the update handler for any observer queries that match the newly saved data. If you plan on supporting background delivery, set up all your observer queries in your app delegate’s application(_:didFinishLaunchingWithOptions:) method. By setting up the queries in application(_:didFinishLaunchingWithOptions:), you ensure that you’ve instantiated your queries, and they’re ready to use before HealthKit delivers the updates.
 
-This means that you should make sure you call `VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)` in your app delegate's application(\_:didFinishLaunchingWithOptions:) method.
+This means that you should make sure you call `VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)` in your app delegate's `application(\_:didFinishLaunchingWithOptions:)` method.
 :::
 
 :::caution
