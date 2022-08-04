@@ -341,7 +341,7 @@ Readings taken with the SDK are not guaranteed to match the official Freestyle L
 
 ## 6. VitalHealthKit
 
-VitalHealthKit is an abstraction on top of HealthKit that 1) automates the extraction of data 2) pushs that data to Vital.
+VitalHealthKit is an abstraction on top of HealthKit that 1) automates the extraction of data 2) pushs that data to Vital automatically.
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
@@ -363,18 +363,19 @@ VitalHealthKitClient.configure()
 
 You need to call this method, before doing anything else with the `VitalHealthKitClient`. Otherwise you will have a `fatalError`.
 
-Just like VitalDevices, you are also required to setup the VitalClient. Your code should look like this:
+Just like VitalDevices, you need to configure the `VitalClient` at some point. Your code should look like this:
 
 ```swift
-import VitalCore
 import VitalHealthKit
 
-VitalClient.configure(
-    apiKey: "xyz",
-    environment: .sandbox(.us)
+VitalHealthKitClient.configure(
+    .init(
+        autoSyncEnabled: ..., // false by default
+        backgroundDeliveryEnabled: ..., // false by default
+        logsEnabled: ..., // false by default
+        daysFetched: ..., // 90 by default
+    )
 )
-
-VitalHealthKitClient.configure()
 ```
 
 <br />
@@ -383,7 +384,7 @@ VitalHealthKitClient.configure()
 This is required, because we use VitalClient to push HealthKit data.
 
 :::info
-When configuring `VitalHealthKitClient`, you can enable `logs` and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalClient` beforehand, otherwise the app will crash.
+When configuring `VitalHealthKitClient`, you can enable `logs`, `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalClient` in order for data to be pushed. The `VitalHealthKitClient` is suspended until both `VitalClient.configure` and `VitalClient.setUserId` are called. This means that it's safe to configure `VitalHealthKitClient` before the `VitalClient`.
 :::
 
 After this initial setup, you need to ask permission to acccess the user's data:
@@ -430,7 +431,7 @@ Although `syncData()` and `syncData(for:)` make your life easier, they can somet
 <br />
 <br />
 
-You can observe and convey this information like this:
+You can observe and convey this information to your user like this:
 
 ```swift
 cancellable = VitalHealthKitClient.shared.status.sink { value in
@@ -455,7 +456,7 @@ VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)
 <br />
 <br />
 
-That's the only thing you need to do! If you are using background delivery, you also won't need to call `syncData:`. Depending on the `HKSampleType`, updates will come after a period of time.
+That's the only thing you need to do! If you are using background delivery, you also won't need to call `syncData:`. Depending on the `HKSampleType` syncing, updates will come after a period of time.
 
 <br />
 
