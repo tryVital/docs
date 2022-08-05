@@ -40,7 +40,6 @@ VitalClient.configure(
 ```
 
 <br />
-<br />
 
 There are two main topics you should be aware:
 
@@ -59,7 +58,6 @@ let result = try await VitalClient.shared.user.create(
 ```
 
 <br />
-<br />
 
 A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 
@@ -67,7 +65,6 @@ A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 VitalClient.setUserId(result.userId)
 ```
 
-<br />
 <br />
 
 :::tip
@@ -93,7 +90,6 @@ let benUser = try await VitalClient.shared.user.create(clientUserId: "white_bear
 let result = try await VitalClient.shared.user.createConnectedSource(for: .omron)
 ```
 
-<br />
 <br />
 
 With these two things in place, you can now post Ben's Omron data.
@@ -142,7 +138,6 @@ try await VitalClient.shared.timeSeries.post(
 ```
 
 <br />
-<br />
 
 Likewise for summaries:
 
@@ -156,7 +151,6 @@ try await VitalClient.shared.summary.post(
 )
 ```
 
-<br />
 <br />
 
 It's important to notice a few things in the above snippet:
@@ -176,7 +170,6 @@ VitalClient.shared.link.createConnectedSource(userId, provider: .appleHealthKit)
 ```
 
 <br />
-<br />
 
 The second method uses web authentication:
 
@@ -185,13 +178,11 @@ let url = try await VitalClient.shared.link.createProviderLink(redirectURL: "vit
 ```
 
 <br />
-<br />
 
 The `redirectURL` is the URL that's called after the authentication is done. For an iOS app, you add the following to your Info.plist:
 
 <Image src="/img/iOS/plist_url_identifier.jpg" />
 
-<br />
 <br />
 
 After having the `url`, you can open it with `SFSafariViewController` or `WKWebView`. On completion, your app will be called with an URL with the following shape:
@@ -220,7 +211,6 @@ let devices = DevicesManager.devices(for: brands[0])
 ```
 
 <br />
-<br />
 
 Based on the `device`, you start scanning your surroundings to find it. This approach filters out devices we are not interested in:
 
@@ -231,7 +221,6 @@ let manager = DevicesManager()
 let publisher: AnyPublisher<ScannedDevice, Never> = manager.search(for: device)
 ```
 
-<br />
 <br />
 
 You can observe the publisher (e.g. via `sink`) until you find a device. Once you find a device you create a reader:
@@ -249,7 +238,6 @@ if scannedDevice.kind == .glucoseMeter {
 ```
 
 <br />
-<br />
 
 Depending on the flow of your app, and/or the device you are working with, you can either just pair, or pair and read. The "just" pair is needed for devices that can only pair while in pairing mode. The devices we tested were able to pair and read while not in pairing mode, but your experience might be different.
 
@@ -263,7 +251,6 @@ let pairAndRead: AnyPublisher<[BloodPressureSample], Error> = reader.read(device
 ```
 
 <br />
-<br />
 
 And for glucose meters:
 
@@ -275,7 +262,6 @@ let pairAndRead: AnyPublisher<[QuantitySample], Error> = reader.read(device: sca
 ```
 
 <br />
-<br />
 
 You can monitor the connection to the device via:
 
@@ -283,7 +269,6 @@ You can monitor the connection to the device via:
 let monitorDevice: AnyPublisher<Bool, Never> = manager.monitorConnection(for: device)
 ```
 
-<br />
 <br />
 
 :::caution
@@ -298,7 +283,6 @@ We currently support Libre 1 sensors via NFC readings. Please make sure you add 
 
 <Image src="/img/iOS/nfc_permission.png" />
 
-<br />
 <br />
 
 Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
@@ -318,7 +302,6 @@ let reading = try await reader.read()
 ```
 
 <br />
-<br />
 
 A `reading` is a payload with two properties: 1) the sensor information 2) an array of glucose readings.
 
@@ -328,7 +311,6 @@ let sensor: Libre1Sensor = reading.sensor
 let samples: [QuantitySample] = reading.samples
 ```
 
-<br />
 <br />
 
 As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalNetworkClient.shared.timeSeries.post`.
@@ -348,22 +330,8 @@ You start by enabling HealthKit capabilities in your app. Please follow this [gu
 <Image src="/img/iOS/health_kit_permission.png" />
 
 <br />
-<br />
 
 You then set-up the client:
-
-```swift
-import VitalHealthKit
-
-VitalHealthKitClient.configure()
-```
-
-<br />
-<br />
-
-You need to call this method, before doing anything else with the `VitalHealthKitClient`. Otherwise you will have a `fatalError`.
-
-Just like VitalDevices, you need to configure the `VitalClient` at some point. Your code should look like this:
 
 ```swift
 import VitalHealthKit
@@ -379,12 +347,17 @@ VitalHealthKitClient.configure(
 ```
 
 <br />
-<br />
 
-This is required, because we use VitalClient to push HealthKit data.
+That's it!
+
+Just like VitalDevices, you need to configure the `VitalClient` at some point during your flow.
 
 :::info
-When configuring `VitalHealthKitClient`, you can enable `logs`, `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called. Be aware that you need to setup `VitalClient` in order for data to be pushed. The `VitalHealthKitClient` is suspended until both `VitalClient.configure` and `VitalClient.setUserId` are called. This means that it's safe to configure `VitalHealthKitClient` before the `VitalClient`.
+When configuring `VitalHealthKitClient`, you can enable logs, background delivery, number of days you want to backfill and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called.
+:::
+
+:::caution
+Be aware that you need to setup `VitalClient` in order for data to be pushed. The `VitalHealthKitClient` is suspended until both `VitalClient.configure` and `VitalClient.setUserId` are called. This means that it's safe to configure `VitalHealthKitClient` before the `VitalClient`.
 :::
 
 After this initial setup, you need to ask permission to acccess the user's data:
@@ -394,7 +367,6 @@ let resources = [.profile, .body]
 let outcome = await VitalHealthKitClient.shared.ask(for: resources)
 ```
 
-<br />
 <br />
 
 After calling `ask(for:)`, check the `outcome` to see if the user granted permission. On success, you can start syncing data:
@@ -411,10 +383,9 @@ VitalHealthKitClient.shared.syncData()
 ```
 
 <br />
-<br />
 
 :::caution
-Everything that holds true for HealthKit, holds true for VitalHealthKit. For example, if someone declines to give permission to a particular data point, the SDK won't be aware. For more information please read [HealthKit's Protecting User Privacy](https://developer.apple.com/documentation/healthkit/protecting_user_privacy).
+Everything that holds true for HealthKit, holds true for `VitalHealthKit`. For example, if someone declines to give permission to a particular type, the SDK won't be aware. For more information please read [HealthKit's Protecting User Privacy](https://developer.apple.com/documentation/healthkit/protecting_user_privacy).
 :::
 
 Although `syncData()` and `syncData(for:)` make your life easier, they can sometimes feel like a blackbox. To help you understand what's happening under the hood, we expose an `status: AnyPublisher<Status, Never>`. A `Status` looks like this:
@@ -428,7 +399,6 @@ Although `syncData()` and `syncData(for:)` make your life easier, they can somet
   }
 ```
 
-<br />
 <br />
 
 You can observe and convey this information to your user like this:
@@ -450,13 +420,14 @@ Once this is done, you should setup the SDK like so:
 ```swift
 import VitalHealthKit
 
-VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)
+VitalHealthKitClient.configure(
+    .init(backgroundDeliveryEnabled: true)
+)
 ```
 
 <br />
-<br />
 
-That's the only thing you need to do! If you are using background delivery, you also won't need to call `syncData:`. Depending on the `HKSampleType` syncing, updates will come after a period of time.
+That's the only thing you need to do! If you are using background delivery, you also don't need to call `syncData:`. Depending on the `HKSampleType` syncing, updates will come after a period of time.
 
 <br />
 
@@ -465,7 +436,7 @@ As per the [documentation](https://developer.apple.com/documentation/healthkit/h
 
 > As soon as your app launches, HealthKit calls the update handler for any observer queries that match the newly saved data. If you plan on supporting background delivery, set up all your observer queries in your app delegate’s application(_:didFinishLaunchingWithOptions:) method. By setting up the queries in application(_:didFinishLaunchingWithOptions:), you ensure that you’ve instantiated your queries, and they’re ready to use before HealthKit delivers the updates.
 
-This means that you should make sure you call `VitalHealthKitClient.configure(backgroundDeliveryEnabled: true)` in your app delegate's `application(\_:didFinishLaunchingWithOptions:)` method.
+This means that you should make sure you call `VitalHealthKitClient.configure(.init(backgroundDeliveryEnabled: true))` in your app delegate's `application(_:didFinishLaunchingWithOptions:)` method.
 :::
 
 :::caution
