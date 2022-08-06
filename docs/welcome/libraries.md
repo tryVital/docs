@@ -16,5 +16,7 @@ We have created a few libraries to help you integrate with the Vital API. We'll 
 | [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
 | [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
 | [vital-ios](https://github.com/tryVital/vital-ios)               | Vital iOS Client                                     |
+| [vital-flutter](https://github.com/tryVital/vital-flutter)       | Vital Flutter Client                                 |
+| vital-android                                                    | Vital Android Client (Soon to be Added)              |
 | Java                                                             | Soon to be added                                     |
 | Go                                                               | Soon to be added                                     |
