@@ -59,9 +59,3 @@ From here, everything works exactly the same as if you connected a real device. 
 * [Historical webhooks](/webhooks/data_flow#historical-data-flow). We simulate historical data for the demo device and send the corresponding webhook updates, as in the real-world scenario.
 * [Daily webhooks](/webhooks/data_flow#historical-data-flow). We also simulate updates to the device data every couple of hours so you can test receiving the data when a user recorded a workout or other activity.
 * [Refresh user data](/api-reference/user#refresh-users-data). You can also instantaneously refresh a user's data through this endpoint.
-
-:::caution
-Test data are automatically generated. This means that although it exactly follows the provider schema and looks somewhat realistic, you will still find things that are incorrect. E.g. you might see a sleep for which `start_date=2022-05-01` and `end_date=2022-03-01`. Thus, you can rely on the schema being correct, but not on the actual contents of the data.
-
-If you need the test data to be more consistent in terms of content, do not hesitate to contact us!
-:::
