@@ -1,0 +1,46 @@
+---
+title: "Raw"
+openapi: "GET /v2/summary/workouts/{user_id}/raw"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/workouts/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Workouts.get_raw(
+     user_id=*,
+     provider="oura"
+     start_date={{START_DATE}},
+     end_date={{END_DATE}}
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "workouts": [
+    {
+      "timestamp": "2022-08-04T12:42:44.857707+00:00",
+      "data": {
+        "provider_specific": "..._data"
+      },
+      "provider_id": "61709202-ab4d-480a-8cc0-254e64d7c33e",
+      "user_id": "ba6a785a-b3c3-4bda-ad8c-4571b67f6089",
+      "source_id": 1,
+      "priority_id": 1,
+      "sport_id": 3
+    }
+  ]
+}
+```
+
+</ResponseExample>

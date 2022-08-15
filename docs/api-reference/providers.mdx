@@ -1,0 +1,56 @@
+---
+title: "List of Providers"
+openapi: "GET /v2/providers/"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/providers/ \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>' \
+'
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const user = await client.User.create(client_user_id);
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+user = client.User.create(client_user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+[
+  {
+    "name": "Oura",
+    "slug": "oura",
+    "logo": "https://logo_url.com",
+    "auth_type": "oauth",
+    "supported_resources": ["workouts", "sleep"]
+  }
+]
+```
+
+</ResponseExample>

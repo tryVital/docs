@@ -1,0 +1,46 @@
+---
+openapi: "POST /v2/testkit/orders/{order_id}/cancel"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Testkits.cancel(user_id=\*)
+
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "order": {
+    "id": "84da57d1-2b6a-4a19-bacf-88a618160261",
+    "team_id": "925c4081-c254-48ac-9b12-99e7a15ffeec",
+    "created_on": "2022-08-04T12:42:45.697072+00:00",
+    "updated_on": "2022-08-04T12:42:45.697077+00:00",
+    "status": "ordered",
+    "user_id": "1381335e-ac3c-4088-bdff-6b840a84a928",
+    "testkit_id": "8da6c537-0453-46f5-91ee-824357fcd2d9",
+    "inbound_tracking_number": "<inbound_tracking_number>",
+    "outbound_tracking_number": "<outbound_tracking_number>",
+    "inbound_tracking_url": "<inbound_tracking_urlr>",
+    "outbound_tracking_url": "<outbound_tracking_url>",
+    "outbound_courier": "usps",
+    "inbound_courier": "usps",
+    "testkit": {
+      "name": "CGM",
+      "description": "Glucose CGM"
+    }
+  },
+  "status": "Success",
+  "message": "Order created successfully | Order cancelled successfully "
+}
+```
+
+</ResponseExample>

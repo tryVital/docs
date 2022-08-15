@@ -1,0 +1,40 @@
+---
+title: "Link OAuth provider"
+openapi: "GET /v2/link/provider/oauth/{oauth_provider}"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/link/provider/oauth/{oauth_provider} \
+     --header 'Accept: application/json'
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+```
+
+```js JavaScript
+const user = await client.Link.getOAuthLink(provider);
+```
+
+```python Python
+user = client.Link.oauth_provider(provider)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "name": "Garmin",
+  "slug": "hamin",
+  "logo": "https://garmin.com",
+  "description": "Garmin Watches",
+  "oauth_url": "https://garmin_aouth_url.com",
+  "auth_type": "oauth",
+  "id": 1
+}
+```
+
+</ResponseExample>

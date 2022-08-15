@@ -1,0 +1,25 @@
+---
+title: "Get Results PDF"
+openapi: "GET /v3/order/{order_id}/result/pdf"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Order.Result.pdf("<order_id">)
+
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+"Returns PDF of test data - <specimen_number>.pdf"
+```
+
+</ResponseExample>

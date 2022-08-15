@@ -1,0 +1,82 @@
+---
+title: "Result Formats"
+---
+
+Vital's API returns results in a number of different formats. We currently support:
+
+- `PDF`
+- `JSON`
+- `HL7`
+
+## PDF Results
+
+We return the raw results in PDF form, that we receive directly from our partner labs. This can be retrieved as follows:
+
+```bash Get order results PDF
+curl --request GET \
+     --url {{BASE_URL}}/v3/order/result/pdf \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/pdf' \
+     --header 'x-vital-api-key: <your_api_key>' \
+```
+
+An example result:
+
+<img src="../../img/test_result.jpg" className="w-2/3 h-2/3" />
+
+## JSON Results
+
+We also return the parsed results in JSON format, so you can use them to generate your own forms.
+For example for a lipids panel:
+
+```bash Get order json results
+curl --request GET \
+     --url {{BASE_URL}}/v3/order/result \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <your_api_key>' \
+```
+
+```json Response - Order result
+{
+  "metadata": {
+    "age": 19,
+    "dob": "18/08/1993",
+    "clia_number": "12331231",
+    "patient": "Bob Smith",
+    "provider": "Dr. Jack Smith",
+    "laboratory": "Quest Diagnostics",
+    "date_reported": "2020-01-01",
+    "date_collected": "2022-02-02",
+    "specimen_number": "123131",
+    "date_received": "2022-01-01"
+  },
+  "results": [
+    {
+      "marker": "total_cholesterol",
+      "value": 100,
+      "unit": "mg/dl",
+      "min_value": "50",
+      "max_value": "100"
+    },
+    {
+      "marker": "ldl_cholesterol",
+      "value": 120,
+      "unit": "mg/dl",
+      "min_value": "50",
+      "max_value": "150"
+    },
+    {
+      "marker": "hdl_cholesterol",
+      "value": 100,
+      "unit": "mg/dl",
+      "min_value": "80",
+      "max_value": "120"
+    }
+  ]
+}
+```
+
+## HL7 Results
+
+We can also export results to HL7 on request. Please let us know if this is required by contacting support.

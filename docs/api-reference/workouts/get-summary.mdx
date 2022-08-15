@@ -1,0 +1,74 @@
+---
+title: "Summary"
+openapi: "GET /v2/summary/workouts/{user_id}"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/summary/workouts/{user_id} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.Workouts.get(
+     user_id=*,
+     start_date="2022-05-01",
+     end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "workouts": {
+    "id": "f09c1083-701f-4030-b43d-e48825377de9",
+    "average_hr": 100,
+    "max_hr": 190,
+    "distance": 1700,
+    "time_start": "2022-08-04T11:42:44.864554+00:00",
+    "time_end": "2022-08-04T12:42:44.864576+00:00",
+    "calories": 300,
+    "sport": {
+      "id": 1,
+      "name": "football"
+    },
+    "source": {
+      "name": "Strava",
+      "slug": "strava",
+      "logo": "https://logo_url.com"
+    },
+    "hr_zones": [100, 90, 10, 10, 200],
+    "user_id": "701830a9-bd50-48d5-91e5-8c7485d95c12",
+    "moving_time": 100,
+    "total_elevation_gain": 10,
+    "elev_high": 20.2,
+    "elev_low": -10.2,
+    "average_speed": 4.2,
+    "max_speed": 7.8,
+    "average_watts": 100,
+    "device_watts": 80,
+    "max_watts": 200,
+    "weighted_average_watts": 250,
+    "map": {
+      "summary_polyline": "agn~Ftb{uOvr@daBunBjdBkHwiD????"
+    }
+  },
+  "title": "Workout Data"
+}
+```
+
+</ResponseExample>

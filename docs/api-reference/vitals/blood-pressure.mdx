@@ -1,0 +1,40 @@
+---
+title: "Blood Pressure"
+openapi: "GET /v2/timeseries/{user_id}/blood_pressure"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/blood_pressure?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Vitals.igg(
+    user_id=*,
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "id": 2,
+    "timestamp": "2022-08-04T12:42:45.727135+00:00",
+    "systolic": "125",
+    "diastolic": "75",
+    "type": "cuff",
+    "unit": "mmHg"
+  }
+]
+```
+
+</ResponseExample>

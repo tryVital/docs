@@ -1,0 +1,52 @@
+---
+title: "Test data"
+description: "Using demo users to build and test your Vital integration"
+---
+
+<Note>
+
+This feature is currently available for Fitbit and Oura. The others are coming soon!
+
+</Note>
+
+When integrating with Vital, you may not own a physical device for each provider you're planning to support. For this, we provide demo users with test data so you can build and test the whole integration without touching a real device.
+
+A demo user gives you the same experience as using a real one, the only difference is that you won't go through the [Vital Link](/wearables/vital-link/introduction) flow.
+
+## Usage
+
+First, you need a Vital user. You can create one either through the [dashboard](https://app.tryvital.io) or through the [API](/api-reference/user#create-user).
+
+After creating the user, the `Users` page of your dashboard will look like this:
+
+<img src="../../img/test_data_dashboard_before_connection.png" width={"100%"} />
+
+Now you can create a demo connection by hitting the following endpoint with the Vital user id, in this case `150db84c-537c-4cad-a6e9-24dc589d7fa2`:
+
+```bash Creating a demo connection
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/connect/demo \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <your_api_key>' \
+     --data '{"user_id": "150db84c-537c-4cad-a6e9-24dc589d7fa2", "provider": "fitbit"}'
+```
+
+After the demo connection is created, a Fitbit logo will appear beside your user.
+
+<img src="../../img/test_data_dashboard_after_connection.png" width={"100%"} />
+
+From here, everything works exactly the same as if you connected a real device. This means you will receive the following webhook updates:
+
+- [Connection created](/webhooks/data_flow#connection-created), as soon as the connection is created.
+- [Historical webhooks](/webhooks/data_flow#historical-data-flow). We simulate historical data for the demo device and send the corresponding webhook updates, as in the real-world scenario.
+- [Daily webhooks](/webhooks/data_flow#historical-data-flow). We also simulate updates to the device data every couple of hours so you can test receiving the data when a user recorded a workout or other activity.
+- [Refresh user data](/api-reference/user#refresh-users-data). You can also instantaneously refresh a user's data through this endpoint.
+
+<TipWarning>
+
+Test data are automatically generated. This means that although it exactly follows the provider schema and looks somewhat realistic, you will still find things that are incorrect. E.g. you might see a sleep for which `start_date=2022-05-01` and `end_date=2022-03-01`. Thus, you can rely on the schema being correct, but not on the actual contents of the data.
+
+If you need the test data to be more consistent in terms of content, do not hesitate to contact us!
+
+</TipWarning>

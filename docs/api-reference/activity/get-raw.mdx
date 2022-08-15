@@ -1,0 +1,52 @@
+---
+title: "Raw"
+openapi: "GET /v2/summary/activity/{user_id}/raw"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/summary/activity/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.Activity.get_raw(
+    user_id="*",
+    start_date="2022-05-01",
+    end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "activity": [
+    {
+      "timestamp": "2022-08-04T12:42:44.847351+00:00",
+      "data": {
+        "data": "...provider_specific_data"
+      },
+      "provider_id": "e2b25f37-846e-49a9-bf5b-5bb24d62b289",
+      "user_id": "8e837eec-0717-41df-b108-43f4f206582a",
+      "source_id": 1,
+      "priority_id": 1
+    }
+  ]
+}
+```
+
+</ResponseExample>

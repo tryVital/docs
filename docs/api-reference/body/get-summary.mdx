@@ -1,0 +1,55 @@
+---
+title: "Summary"
+openapi: "GET /v2/summary/body/{user_id}"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/summary/body/{user_id} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.Body.get(
+    user_id=*,
+    start_date="2022-05-01",
+    end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "body": [
+    {
+      "id": "4340a0fa-549c-4a47-bd83-b2af6bbeffa9",
+      "date": "2022-08-04",
+      "weight": "80kg",
+      "fat": "30%",
+      "height": 183,
+      "source": {
+        "name": "Oura",
+        "slug": "oura",
+        "logo": "https://logo_url.com"
+      },
+      "user_id": "7a9ca5ad-2a2c-4a11-a9ee-e7a06c219594"
+    }
+  ]
+}
+```
+
+</ResponseExample>

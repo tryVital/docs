@@ -1,0 +1,92 @@
+---
+title: "Freestyle Guide"
+---
+
+<Info>
+
+Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital in the appropriate Vital region for your Freestyle account (See [here](#vital-freestyle-supported-regions) for a breakdown or vital regions and supported Freestyle regions).
+
+Vital has two practices (depending on environment):
+
+| Environment |                  |
+| ----------- | ---------------- |
+| Sandbox     | tryVital-sandbox |
+| Production  | tryVital         |
+
+If you get stuck at any point, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
+
+</Info>
+
+<Warning>
+
+Libre's API does not record the timestamp's offset associated with a user's reading.
+Although Vital returns timestamps in the UTC format (e.g. `2022-04-20T13:02:01+00:00`) this doesn't hold true for Libre. The time returned is the user's timezone when they took a reading. Our recommendation is for you to record the timezone offset
+of each user and adjust the timestamps accordingly.
+
+</Warning>
+
+Once your Freestyle practice is connected to the Vital practice, you need to instruct your user's to connect their Libre account to your practice.
+This allows Vital to start pulling data from their account. This can be through the Libre app.
+
+<img src="../../img/connect_libreview.png" className="w-2/5 block mx-auto" />
+
+Once your user has connected their Libre account, you can connect your user to Vital
+either via the **widget** or the **API**.
+
+## Vital Widget
+
+To connect your user to Vital via the Widget you can follow the guide [here](../../vital-link/launching_link).
+
+<img src="../../img/libre_connect.png" className="w-2/5 block mx-auto" />
+
+Note, Freestyle Libre is available in different regions, ensure you select the correct region in the list of options above. Here are the regions that are available for Freestyle in each Vital region:
+
+<a name="vital-freestyle-supported-regions"></a>
+
+| Vial Region                                    | Freestyle Region        |
+| ---------------------------------------------- | ----------------------- |
+| United States (`us`)                           | United States (`us`) \* |
+| Europe (`eu`)                                  | Europe (`eu`) \*        |
+|                                                | Singapore (`sg`)        |
+| _(\*) Default Freestyle region if unspecified_ |
+
+## Vital Link
+
+1. To connect to Freestyle Libre, you must create a Vital Link token.
+
+<SnippetGroup>
+
+```python Connecting email provider
+link_token = client.Link.create(user_id)
+```
+
+```js JavaScript
+const { link_token } = await client.Link.create(userId);
+```
+
+</SnippetGroup>
+
+2. Libre is an [_email_](../../vital-link/customization#email) provider.
+   This means that when connecting a user we have to use
+   the connect email provider method, passing in the email of the user's Libre account and region in short form.
+
+<SnippetGroup>
+
+```python Connecting email provider
+client.Link.email_provider(
+   link_token, provider, email, region
+)
+```
+
+```js JavaScript
+await client.Link.connectEmailProvider(
+  link_token,
+  "freestyle_libre",
+  email,
+  region
+);
+```
+
+</SnippetGroup>
+
+Once this is complete we will start syncing data from their [Libre account](/api-details/data_flow).

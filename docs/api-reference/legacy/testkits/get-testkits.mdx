@@ -1,0 +1,18 @@
+---
+title: "Get Testkits"
+openapi: "GET /v2/testkit/orders/{order_id}"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Testkits.get_orders("2021-01-01", "2022-12-02")
+
+```
+
+</RequestExample>
+

@@ -1,0 +1,39 @@
+---
+title: "Generate a link token"
+openapi: "POST /v2/link/token"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/token \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+     "user_id": "1875c190-0cd6-46c1-8670-5b56a7794b78"
+}
+'
+```
+
+```js JavaScript
+const user = await client.Link.create(user_id);
+```
+
+```python Python
+user = client.Link.create(user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "link_token": "dGVzdCB0ZXN0IHRlc3Q="
+}
+```
+
+</ResponseExample>

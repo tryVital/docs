@@ -1,0 +1,43 @@
+---
+title: "Get Results Raw"
+openapi: "GET /v2/testkit/orders/{order_id}/results/raw"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Testkits.result("<order_id">)
+
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "metadata": {
+    "age": 19,
+    "dob": "18/08/1993",
+    "clia_number": "12331231",
+    "patient": "Bob Smith",
+    "provider": "Dr. Jack Smith",
+    "laboratory": "Quest Diagnostics",
+    "date_reported": "2020-01-01",
+    "date_collected": "2022-02-02",
+    "specimen_number": "123131",
+    "date_received": "2022-01-01"
+  },
+  "results": {
+    "[marker]": {},
+    "ige": {},
+    "fsh": {}
+  }
+}
+```
+
+</ResponseExample>

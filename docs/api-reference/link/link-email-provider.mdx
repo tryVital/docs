@@ -1,0 +1,45 @@
+---
+title: "Link Email provider"
+openapi: "POST /v2/link/provider/email/{provider}"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/provider/email/{provider} \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+     --data '
+{
+     "email": "test@email.com"
+     "region": "us"
+}
+'
+```
+
+```js JavaScript
+const user = await client.Link.connectEmailProvider(
+  linkToken,
+  provider,
+  email,
+  region
+);
+```
+
+```python Python
+user = client.Link.email_provider(link_token, provider, email, region)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "success": true
+}
+```
+
+</ResponseExample>

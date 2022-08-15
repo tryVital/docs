@@ -1,0 +1,46 @@
+---
+openapi: "GET /v2/user/"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url https://api.tryvital.io/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```js JavaScript
+const user = await client.User.getAll();
+```
+
+```python Python
+user = client.User.get_all(user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
+    "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
+    "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
+    "connected_sources": [
+      {
+        "source": {
+          "name": "Oura",
+          "slug": "oura",
+          "logo": "logo_url"
+        },
+        "created_on": "2022-08-04T12:42:45.596792+00:00"
+      }
+    ]
+  }
+]
+```
+
+</ResponseExample>

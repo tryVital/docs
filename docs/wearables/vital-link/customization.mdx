@@ -1,0 +1,99 @@
+---
+title: "Customization"
+---
+
+You may want to have your own custom Link widget to match your app's UI. This is useful for users who don't want to use Vital link but still want to use the Vital API.
+To authenticate without Vital link, you need to first generate a `link_token` for a specific user.
+
+<SnippetGroup>
+
+```python Generating a Vital-Link
+token = client.Link.create(user_id)
+```
+
+```js
+const resp = await client.Link.create(client_user_id);
+```
+
+```bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/token \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json'
+     --header 'x-vital-api-key: <API-KEY>'
+```
+
+</SnippetGroup>
+
+Once you have your Vital link token, you can use this to connect to a specific provider. Providers are split by their authentication flows: `EMAIL`, `OAUTH`, `PASSWORD`.
+
+### 'Email'
+
+Current email providers are:
+
+| Provider  | Description                |
+| --------- | -------------------------- |
+| `Freestyle` | Abbott CGM Glucose monitor |
+
+### 'Email + Password'
+
+Current email and password providers are:
+
+| Provider    | Description                        |
+| ----------- | ---------------------------------- |
+| `Renpho`      | Fitness Scales                     |
+| `Zwift`       | Virtual cycling and running        |
+| `Peloton`     | Popular Indoor Exercise bike       |
+| `Eight Sleep` | Smart Mattress                     |
+| `Beurer`      | Blood pressure and glucose devices |
+| `Whoop`       | Smart Activity Watches             |
+
+To connect a password provider:
+
+<SnippetGroup>
+
+```python Connecting a password provider:
+token = client.Link.create(user_id)
+resp = client.Link.password_provider(link_token, "oura", username, password)
+```
+
+```js JavaScript
+const token = await client.Link.create(client_user_id, "oura");
+const resp = await client.Link.connectProvider(
+  token,
+  "oura",
+  username,
+  password
+);
+```
+
+</SnippetGroup>
+
+### 'OAuth'
+
+Current OAuth providers are:
+
+| Provider | Description                                                   |
+| -------- | ------------------------------------------------------------- |
+| `Fitbit`   | Activity Trackers (all devices)                               |
+| `Garmin`   | Fitness watches (all devices)                                 |
+| `Oura`     | Smart Sleep tracking ring                                     |
+| `Strava`   | Running & Cycling Social Network                              |
+| `Wahoo`    | Cycling Equipment                                             |
+| `iHealth`  | Blood pressure, Fitness scales, Glucometers & Fitness watches |
+| `Withings` | Fitness scales, watches and health monitors                   |
+
+```python Connecting a password provider:
+token = client.Link.create(user_id)
+oauth_url = client.Link.oauth_provider(link_token, "fitbit")
+# redirect user to returned oauth_url
+```
+
+For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
+
+The possible error codes that are returned are as follows:
+`401 INVALID_REQUEST` Link Token is Invalid
+`400 MISSING_LINK_TOKEN` Missing link token
+`400 INVALID_PROVIDER` Provider is not supported
+`400 INVALID_USER_ID` User id is incorrect
+`400 INVALID_CREDENTIALS` Credentials for provider are incorrect

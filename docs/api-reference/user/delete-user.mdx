@@ -1,0 +1,32 @@
+---
+openapi: "DELETE /v2/user/{user_id}"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request DELETE \
+     --url https://api.tryvital.io/v2/user/{user_id} \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Accept: application/json'
+```
+
+```js JavaScript
+const user = await client.User.delete(user_id);
+```
+
+```python Python
+user = client.User.delete(user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "success": true
+}
+```
+
+</ResponseExample>

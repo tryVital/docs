@@ -1,0 +1,37 @@
+---
+title: "Summary"
+openapi: "GET /v2/summary/profile/{user_id}"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/profile/{user_id} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Profile.get(user_id=*)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
+  "date": "2022-08-04",
+  "height": 183,
+  "source": {
+    "name": "Oura",
+    "slug": "oura",
+    "logo": "https://logo_url.com"
+  },
+  "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
+}
+```
+
+</ResponseExample>

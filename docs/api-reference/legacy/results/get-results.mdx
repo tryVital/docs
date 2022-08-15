@@ -1,0 +1,25 @@
+---
+title: "Get Results"
+openapi: "GET /v2/testkit/orders/{order_id}/results"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.Testkits.result("<order_id>")
+
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```text Response
+"Returns PDF of test data - <specimen_number>.pdf"
+```
+
+</ResponseExample>

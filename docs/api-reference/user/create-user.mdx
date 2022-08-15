@@ -1,0 +1,55 @@
+---
+openapi: "POST /v2/user/"
+---
+
+<RequestExample>
+
+```shell Shell
+curl --request POST \
+     --url https://api.tryvital.io/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "client_user_id": "your_unique_id"
+}
+'
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const user = await client.User.create(client_user_id);
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+user = client.User.create(client_user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "client_user_id": "5269f80a-fb0b-432a-b311-c3eac1a46260",
+  "user_id": "e209947b-323e-4108-8e18-1518b80da0bd"
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,44 @@
+---
+title: "Raw"
+openapi: "GET /v2/summary/sleep/{user_id}/raw"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/sleep/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```js JavaScript
+data = await client.Sleep.getRaw(sleep_id=*)
+```
+
+```python Python
+data = client.Sleep.get_raw(sleep_id=*)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "sleep": [
+    {
+      "timestamp": "2022-08-04T12:42:44.853437+00:00",
+      "data": {
+        "data": "...provider_specific_data"
+      },
+      "provider_id": "acddfb23-a2fd-417b-82ac-37c060074bef",
+      "user_id": "8479b190-fff6-44cf-84f2-0e906457b343",
+      "source_id": 1,
+      "priority_id": 1
+    }
+  ]
+}
+```
+
+</ResponseExample>

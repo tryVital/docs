@@ -1,0 +1,42 @@
+---
+title: "Refresh User Data"
+openapi: "POST /v2/user/refresh/{user_id}"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/refresh/{user_id} \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```js JavaScript
+const user = await client.User.refresh(user_id);
+```
+
+```python Python
+user = client.User.refresh(user_id)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "success": true,
+  "user_id": "55c39ede-16b8-438f-bbb9-62591dc2400e",
+  "refreshed_sources": [
+    "Withings/workouts",
+    "Withings/sleep",
+    "Withings/body",
+    "Withings/vitals/blood_pressure",
+    "Withings/activity"
+  ],
+  "failed_sources": ["Oura/sleep"]
+}
+```
+
+</ResponseExample>

@@ -1,0 +1,39 @@
+---
+title: "Heartrate"
+openapi: "GET /v2/timeseries/{user_id}/heartrate"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/heartrate?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Vitals.heartrate(
+    user_id=*,
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "id": 123,
+    "timestamp": "2022-04-20T13:02:01.123771+00:00",
+    "value": "70",
+    "type": "automatic",
+    "unit": "bpm"
+  }
+]
+```
+
+</ResponseExample>

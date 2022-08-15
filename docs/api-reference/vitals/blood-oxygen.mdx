@@ -1,0 +1,39 @@
+---
+title: "Blood Oxygen"
+openapi: "GET /v2/timeseries/{user_id}/blood_oxygen"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/blood_oxygen?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Vitals.blood_oxygen(
+    user_id=*,
+    start_date={{START_DATE}},
+    end_date={{END_DATE}}
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "id": 100,
+    "timestamp": "2022-04-20T13:02:01.123763+00:00",
+    "value": "0.70",
+    "type": "ldl",
+    "unit": "sp02"
+  }
+]
+```
+
+</ResponseExample>

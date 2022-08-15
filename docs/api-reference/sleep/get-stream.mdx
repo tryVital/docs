@@ -1,0 +1,180 @@
+---
+title: "Stream"
+openapi: "GET /v2/timeseries/sleep/{sleep_id}/stream"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+    --url https://api.tryvital.io/v2/summary/sleep/{sleep_id}/stream \
+    --header 'Accept: application/json'
+    --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+data = client.Sleep.getStream(sleep_id=*)
+```
+
+```js JavaScript
+data = await client.Sleep.getStream(sleep_id=*)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "hrv": [
+    {
+      "id": 0,
+      "timestamp": "2022-08-04T12:42:45.722013+00:00",
+      "value": 98,
+      "type": "automatic",
+      "unit": "rmssd"
+    },
+    {
+      "id": 1,
+      "timestamp": "2022-08-04T12:43:15.722058+00:00",
+      "value": 44,
+      "type": "automatic",
+      "unit": "rmssd"
+    },
+    {
+      "id": 2,
+      "timestamp": "2022-08-04T12:43:45.722075+00:00",
+      "value": 75,
+      "type": "automatic",
+      "unit": "rmssd"
+    },
+    {
+      "id": 3,
+      "timestamp": "2022-08-04T12:44:15.722089+00:00",
+      "value": 100,
+      "type": "automatic",
+      "unit": "rmssd"
+    },
+    {
+      "id": 4,
+      "timestamp": "2022-08-04T12:44:45.722101+00:00",
+      "value": 59,
+      "type": "automatic",
+      "unit": "rmssd"
+    }
+  ],
+  "heartrate": [
+    {
+      "id": 0,
+      "timestamp": "2022-08-04T12:42:45.722112+00:00",
+      "value": 29,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 1,
+      "timestamp": "2022-08-04T12:43:15.722124+00:00",
+      "value": 162,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 2,
+      "timestamp": "2022-08-04T12:43:45.722135+00:00",
+      "value": 75,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 3,
+      "timestamp": "2022-08-04T12:44:15.722146+00:00",
+      "value": 11,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 4,
+      "timestamp": "2022-08-04T12:44:45.722157+00:00",
+      "value": 41,
+      "type": "automatic",
+      "unit": "bpm"
+    }
+  ],
+  "hypnogram": [
+    {
+      "id": 0,
+      "timestamp": "2022-08-04T12:42:45.722168+00:00",
+      "value": 1,
+      "type": "vital_hypnogram",
+      "unit": "vital_hypnogram"
+    },
+    {
+      "id": 1,
+      "timestamp": "2022-08-04T12:43:15.722179+00:00",
+      "value": 0,
+      "type": "vital_hypnogram",
+      "unit": "vital_hypnogram"
+    },
+    {
+      "id": 2,
+      "timestamp": "2022-08-04T12:43:45.722190+00:00",
+      "value": 4,
+      "type": "vital_hypnogram",
+      "unit": "vital_hypnogram"
+    },
+    {
+      "id": 3,
+      "timestamp": "2022-08-04T12:44:15.722201+00:00",
+      "value": 0,
+      "type": "vital_hypnogram",
+      "unit": "vital_hypnogram"
+    },
+    {
+      "id": 4,
+      "timestamp": "2022-08-04T12:44:45.722212+00:00",
+      "value": 4,
+      "type": "vital_hypnogram",
+      "unit": "vital_hypnogram"
+    }
+  ],
+  "respiratory_rate": [
+    {
+      "id": 0,
+      "timestamp": "2022-08-04T12:42:45.722223+00:00",
+      "value": 30,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 1,
+      "timestamp": "2022-08-04T12:43:15.722234+00:00",
+      "value": 29,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 2,
+      "timestamp": "2022-08-04T12:43:45.722245+00:00",
+      "value": 19,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 3,
+      "timestamp": "2022-08-04T12:44:15.722256+00:00",
+      "value": 14,
+      "type": "automatic",
+      "unit": "bpm"
+    },
+    {
+      "id": 4,
+      "timestamp": "2022-08-04T12:44:45.722266+00:00",
+      "value": 18,
+      "type": "automatic",
+      "unit": "bpm"
+    }
+  ]
+}
+```
+
+</ResponseExample>

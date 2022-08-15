@@ -1,46 +1,28 @@
 ---
 title: "Quickstart"
-slug: "quickstart"
-excerpt: "A quick introduction to building with Vital"
-sidebar_position: 1
-hidden: false
-createdAt: "2022-04-05T23:05:56.282Z"
-updatedAt: "2022-04-07T19:41:06.827Z"
+description: "A quick introduction to building with Vital"
 ---
-
-import { Swagger } from "@theme/swagger";
-import { CodeBlock } from "@theme/codeblock";
-import { Image } from "@chakra-ui/react";
-
-import {
-  HStack,
-  VStack,
-  Box,
-  Spacer,
-  OrderedList,
-  ListItem,
-  Button,
-} from "@chakra-ui/react";
-import Quickstart from "@site/static/img/quickstart.jpg";
 
 ## 1. API keys
 
 Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
 You can get API keys by signing up in the [Dashboard](https://app.tryvital.io).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
-the region dictates where data is stored. More information on regions is available [here](/api/regions).
+the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
 
 For each region, you'll have access to two environments Sandbox and Production. We'll start in the Sandbox environment.
 View the configuration section of the Dashboard to find your Sandbox API Key.
 
-:::info
-If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
-:::
+<Note>
 
-| Environment        |                                             |                                 |
-| ------------------ | ------------------------------------------- | ------------------------------- |
-| @@FiBox sandbox    | Testing, Connect up to 10 live users        | https://api.sandbox.tryvital.io |
-| @@FiZap production | Live environment to use with real customers | https://api.tryvital.io         |
+If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to [support@tryvital.io](mailto:support@tryvital.io)
+
+</Note>
+
+| Environment  |                                             |                                 |
+| ------------ | ------------------------------------------- | ------------------------------- |
+| `sandbox`    | Testing, Connect up to 10 live users        | https://api.sandbox.tryvital.io |
+| `production` | Live environment to use with real customers | https://api.tryvital.io         |
 
 ## 2. Running Quickstart locally
 
@@ -48,9 +30,7 @@ Once you have your API keys, it's time to run the Vital Quickstart locally!
 The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
 customizing the `.env` file with your own Vital `API_KEY` and finally, building and running the app.
 
-<CodeBlock title={"1. Clone quickstart and run locally"} include_client_instantiation={false} hide_region={true}>
-
-```bash
+```bash 1. Clone quickstart and run locally
 # Note: If on Windows, run
 # git clone -c core.symlinks=true https://github.com/tryVital/quickstart
 # instead to ensure correct symlink behavior
@@ -71,15 +51,9 @@ poetry install
 source ./start.sh
 ```
 
-</CodeBlock>
-
-<br />
-
 Open a new shell and start the frontend app. Your app will be running at `http://localhost:3000`.
 
-<CodeBlock title={"2. Run quickstart frontend"} include_client_instantiation={false} hide_region={true}>
-
-```bash
+```bash 2. Run quickstart frontend
 # Install dependencies
 cd quickstart/frontend
 npm install
@@ -90,10 +64,6 @@ npm dev
 # Go to http://localhost:3000
 ```
 
-</CodeBlock>
-
-<br />
-
 ## 3. Creating your first User
 
 When retrieving data or connecting devices, Vital will require a `user_id` as input.
@@ -101,21 +71,21 @@ A `user_id` is a unique representation that we hold for a user. It allows you to
 To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
 to store the Vital `user_id` in your db against the user row.
 
-:::caution
+<Warning>
+
 Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
-:::
+
+</Warning>
 
 Enter a new `client_user_id` and tap Create:
 
-<img src={Quickstart} />
-
-<br />
+<img src="../img/quickstart.jpg" alt="quickstart" />{" "}
 
 This can also be achieved via the API as follows.
 
-<CodeBlock title={"Creating a Vital user"} include_client_instantiation={true}>
+<SnippetGroup>
 
-```bash
+```bash Creating a Vital user (bash)
 curl --request POST \
      --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
@@ -124,22 +94,19 @@ curl --request POST \
      --data '{"client_user_id":"<your_user_id>"}'
 ```
 
-```js
+```js JavaScript
 const user = await client.User.create(client_user_id);
 ```
 
-```python
-
+```python Python
 user = client.User.create(client_user_id)
 ```
 
-```swift
+```swift Swift
 let user = try await VitalClient.shared.user.create(clientUserId)
 ```
 
-</CodeBlock>
-
-<br />
+</SnippetGroup>
 
 ## 4. Connecting a source
 
@@ -152,15 +119,13 @@ You can now make API calls to retrieve data for that Source.
 ### How it works
 
 As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
-A more detailed explanation on how linking works can be found [here](/wearables/vital-link/link_flow)
+A more detailed explanation on how linking works can be found in [link flow](/wearables/vital-link/link_flow)
 
 The first step is to create a new `link_token` by making a `/link/token` request and passing in the
 required configuration. This `link_token` is a short lived, one-time use token that authenticates your
 app with Vital Link, our frontend module.
 
-<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
-
-```python
+```python Generating a Link Token
 # TEST BACKEND IMPLEMENTATION
 from http.client import HTTPException
 from tracemalloc import start
@@ -194,17 +159,11 @@ def get_token(user_key: str):
 
 ```
 
-</CodeBlock>
-
-<br />
-
 Once you have a `link_token`, you can use it to initialize `Link`. `Link` is a drop-in client-side
 module available for web, iOS, and Android that handles the authentication process.
 The Quickstart uses `Link` on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
 
-<CodeBlock title={"Generating a Link Token"} include_client_instantiation={false} hide_region={true}>
-
-```javascript
+```javascript Generating a Link Token
 import { Button } from "@chakra-ui/react";
 import { useState, useCallback } from "react";
 import { useVitalLink } from "@tryvital/vital-link";
@@ -261,13 +220,9 @@ export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
 };
 ```
 
-</CodeBlock>
-
-<br />
-
 This is what your users see to connect their medical device or wearables:
 
-<Image src="/img/link_specific.png" width={"50%"} />
+<img src="../img/link_specific.png" width="75%" alt="Link specific" />
 
 ## 5. Making your first API request
 
@@ -277,23 +232,23 @@ As an example, we'll look at the Quickstart's call to `/summary/sleep`, which re
 summary data for a user. The request is simple and requires the Vital
 `user_id`, `start_date` and `end_date`.
 
-<CodeBlock title={"Getting User sleep data"} include_client_instantiation={true}>
+**Getting user sleep data**
 
-```python
+<SnippetGroup>
+
+```python Python
 sleep_data = client.Sleep.get(user_id, start_date, end_date)
 ```
 
-```js
+```js JavaScript
 const sleepData = await client.Sleep.get(userId, startDate, endDate);
 ```
 
-```swift
+```swift Swift
 let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, endDate)
 ```
 
-</CodeBlock>
-
-<br />
+</SnippetGroup>
 
 ## 6. SDK's and Libraries
 
@@ -308,11 +263,9 @@ We offer different SDKs so you can start building your app right away:
 | Java                                                             | Soon to be added                                     |
 | Go                                                               | Soon to be added                                     |
 
-You can also download our API collection [here](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
+You can also download our [API collection](https://www.getpostman.com/collections/d4580c54f85374bd7cc5) or by installing postman first and clicking on the below button.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/9932845-64856822-6be6-4b9d-b5f1-eefda49d4102?action=collection%2Ffork&collection-url=entityId%3D9932845-64856822-6be6-4b9d-b5f1-eefda49d4102%26entityType%3Dcollection%26workspaceId%3De5fa4775-e508-4e02-99ef-ff2d9bf9b8ca)
-
-<br />
 
 ## Next Steps
 

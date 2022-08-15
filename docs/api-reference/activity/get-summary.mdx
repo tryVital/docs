@@ -1,0 +1,58 @@
+---
+title: "Summary"
+openapi: "GET /v2/summary/activity/{user_id}"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/summary/activity/{user_id}/raw \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.Activity.get(
+    user_id=*,
+    start_date="2022-05-01",
+    end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "activity": [
+    {
+      "date": "2022-08-04",
+      "calories_total": 100,
+      "calories_active": 2000,
+      "steps": 10000,
+      "daily_movement": 200,
+      "low": 6400,
+      "medium": 6400,
+      "high": 6000,
+      "source": {
+        "name": "Oura",
+        "slug": "oura",
+        "logo": "https://logo_url.com"
+      },
+      "user_id": "70c64d5a-ff06-4c16-b137-361b2441d86e"
+    }
+  ]
+}
+```
+
+</ResponseExample>

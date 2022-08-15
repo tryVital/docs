@@ -1,0 +1,49 @@
+---
+title: "Cholesterol"
+openapi: "GET /v2/timeseries/{user_id}/cholesterol/total"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url https://api.tryvital.io/v2/timeseries/{user_id}/cholesterol/hdl?start_date="2022-05-01"&end_date="2022-06-01" \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.Vitals.cholesterol(
+    type="total",
+    user_id=*,
+    start_date="2022-05-01",
+    end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+[
+  {
+    "id": 100,
+    "timestamp": "2022-04-20T13:02:01.123763+00:00",
+    "value": "0.70",
+    "type": "triglycerides",
+    "unit": "mg/dL"
+  }
+]
+```
+
+</ResponseExample>
