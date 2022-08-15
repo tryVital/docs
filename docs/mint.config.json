@@ -96,7 +96,11 @@
     },
     {
       "group": "SDKs",
-      "pages": ["wearables/sdks/ios", "wearables/sdks/android"]
+      "pages": [
+        "wearables/sdks/ios",
+        "wearables/sdks/android",
+        "wearables/sdks/flutter"
+      ]
     },
     {
       "group": "Lab Testing",
