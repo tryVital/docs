@@ -21,7 +21,7 @@ A demo user gives you the same experience as using a real one, the only differen
 
 ## Usage
 
-First, you need a Vital user. You can create one either through the [dashboard](https://app.tryvital.io) or through the [API](/api-reference/user#create-user).
+First, you need a Vital user. You can create one either through the [dashboard](https://app.tryvital.io) or through the [API](/api-reference/user/create-user).
 
 After creating the user, the `Users` page of your dashboard will look like this:
 
@@ -74,5 +74,5 @@ From here, everything works exactly the same as if you connected a real device. 
 
 * [Connection created](/webhooks/data_flow#connection-created), as soon as the connection is created.
 * [Historical webhooks](/webhooks/data_flow#historical-data-flow). We simulate historical data for the demo device and send the corresponding webhook updates, as in the real-world scenario.
-* [Daily webhooks](/webhooks/data_flow#historical-data-flow). We also simulate updates to the device data every couple of hours so you can test receiving the data when a user recorded a workout or other activity.
-* [Refresh user data](/api-reference/user#refresh-users-data). You can also instantaneously refresh a user's data through this endpoint.
+* [Daily webhooks](/webhooks/data_flow#daily-data-flow). We also simulate updates to the device data every couple of hours so you can test receiving the data when a user recorded a workout or other activity.
+* [Refresh user data](/api-reference/user/refresh-user-data). You can also instantaneously refresh a user's data through this endpoint.
