@@ -27,7 +27,7 @@ After creating the user, the `Users` page of your dashboard will look like this:
 
 <img src="../../img/test_data_dashboard_before_connection.png" width={"100%"} />
 
-Now you can create a demo connection by hitting the following endpoint with the Vital user id, in this case `150db84c-537c-4cad-a6e9-24dc589d7fa2`:
+Now you can create a demo connection for the Vital user you just created, in this case `150db84c-537c-4cad-a6e9-24dc589d7fa2`. You can directly hit the [API endpoint](/api-reference/link/link-demo-provider) or using one of our client libraries, as shown below:
 
 <SnippetGroup>
 
@@ -41,10 +41,26 @@ curl --request POST \
 ```
 
 ```js Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
 const response = await client.Link.connectDemoProvider(userId, provider);
 ```
 
 ```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
 response = client.Link.demo_provider(user_id, provider)
 ```
 
