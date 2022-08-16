@@ -1,0 +1,41 @@
+---
+title: "Link Demo provider"
+openapi: "POST /v2/link/connect/demo"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/connect/demo \
+     --header 'Accept: application/json'
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
+     --data '
+{
+    "user_id": "1875c190-0cd6-46c1-8670-5b56a7794b78"
+    "provider": "fitbit"
+}
+'
+```
+
+```js JavaScript
+const response = await client.Link.connectDemoProvider(userId, provider);
+```
+
+```python Python
+response = client.Link.demo_provider(user_id, provider)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "success": true,
+  "redirect_url": null
+}
+```
+
+</ResponseExample>
