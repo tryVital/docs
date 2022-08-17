@@ -8,14 +8,18 @@
   "paths": {
     "/v2/link/token": {
       "post": {
-        "tags": ["link"],
+        "tags": [
+          "link"
+        ],
         "summary": "Generate Vital Link Token",
         "description": "Endpoint to generate a user link token, to be used throughout the vital\nlink process. The vital link token is a one time use token, that\nexpires after 10 minutes. If you would like vital-link widget to launch\nwith a specific provider, pass in a provider in the body. If you would\nlike to redirect to a custom url after successful or error connection,\npass in your own custom redirect_url parameter.",
         "operationId": "generate_vital_link_token_v2_link_token_post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LinkTokenExchange" }
+              "schema": {
+                "$ref": "#/components/schemas/LinkTokenExchange"
+              }
             }
           },
           "required": true
@@ -35,7 +39,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -44,14 +50,18 @@
     },
     "/v2/link/provider/oauth/{oauth_provider}": {
       "get": {
-        "tags": ["link"],
+        "tags": [
+          "link"
+        ],
         "summary": "Get Oauth Provider",
         "description": "This endpoint generates an OAuth link for oauth provider",
         "operationId": "get_oauth_provider_v2_link_provider_oauth__oauth_provider__get",
         "parameters": [
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/OAuthProviders" },
+            "schema": {
+              "$ref": "#/components/schemas/OAuthProviders"
+            },
             "name": "oauth_provider",
             "in": "path"
           }
@@ -61,7 +71,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/Source" }
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
               }
             }
           },
@@ -69,7 +81,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -78,7 +92,9 @@
     },
     "/v2/link/provider/password/{provider}": {
       "post": {
-        "tags": ["link"],
+        "tags": [
+          "link"
+        ],
         "summary": "Connect Individual Provider",
         "description": "This connects auth providers that are password based.",
         "operationId": "connect_individual_provider_v2_link_provider_password__provider__post",
@@ -87,7 +103,11 @@
             "required": true,
             "schema": {
               "title": "Providers that require password auth, whoop, renpho, peloton, zwift",
-              "allOf": [{ "$ref": "#/components/schemas/PasswordProviders" }]
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PasswordProviders"
+                }
+              ]
             },
             "name": "provider",
             "in": "path"
@@ -118,7 +138,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -127,7 +149,9 @@
     },
     "/v2/link/provider/email/{provider}": {
       "post": {
-        "tags": ["link"],
+        "tags": [
+          "link"
+        ],
         "summary": "Connect Email Auth Provider",
         "description": "This connects auth providers that are email based.",
         "operationId": "connect_email_auth_provider_v2_link_provider_email__provider__post",
@@ -136,7 +160,11 @@
             "required": true,
             "schema": {
               "title": "Email providers that require emails freestyle_auth",
-              "allOf": [{ "$ref": "#/components/schemas/EmailProviders" }]
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/EmailProviders"
+                }
+              ]
             },
             "name": "provider",
             "in": "path"
@@ -145,7 +173,9 @@
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/EmailProviderAuthLink" }
+              "schema": {
+                "$ref": "#/components/schemas/EmailProviderAuthLink"
+              }
             }
           },
           "required": true
@@ -155,7 +185,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ConnectionStatus" }
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionStatus"
+                }
               }
             }
           },
@@ -163,7 +195,52 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/link/connect/demo": {
+      "post": {
+        "tags": [
+          "link"
+        ],
+        "summary": "Connect Demo Provider",
+        "description": "Connect the given Vital user to a demo provider.",
+        "operationId": "connect_demo_provider_v2_link_connect_demo__post",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoConnectionCreationPayload"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoConnectionStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPException"
+                }
               }
             }
           }
@@ -172,7 +249,9 @@
     },
     "/v2/summary/profile/{user_id}": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Profile",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_v2_summary_profile__user_id__get",
@@ -205,7 +284,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientFacingProfile" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientFacingProfile"
+                }
               }
             }
           },
@@ -213,14 +294,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Post User Profile",
         "operationId": "post_user_profile_v2_summary_profile__user_id__post",
         "parameters": [
@@ -261,7 +346,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -270,7 +357,9 @@
     },
     "/v2/summary/profile/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Profile Raw",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_raw_v2_summary_profile__user_id__raw_get",
@@ -303,7 +392,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawProfile" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawProfile"
+                }
               }
             }
           },
@@ -311,7 +402,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -320,7 +413,9 @@
     },
     "/v2/summary/devices/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Devices Raw",
         "description": "Get Devices for user_id",
         "operationId": "get_user_devices_raw_v2_summary_devices__user_id__raw_get",
@@ -353,7 +448,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawDevices" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawDevices"
+                }
               }
             }
           },
@@ -361,7 +458,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -370,7 +469,9 @@
     },
     "/v2/summary/activity/{user_id}": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Activity",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_v2_summary_activity__user_id__get",
@@ -403,8 +504,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -417,8 +523,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -441,14 +552,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Post User Activity",
         "operationId": "post_user_activity_v2_summary_activity__user_id__post",
         "parameters": [
@@ -489,7 +604,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -498,7 +615,9 @@
     },
     "/v2/summary/activity/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Activity Raw",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_raw_v2_summary_activity__user_id__raw_get",
@@ -531,8 +650,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -545,8 +669,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -559,7 +688,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawActivity" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawActivity"
+                }
               }
             }
           },
@@ -567,7 +698,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -576,7 +709,9 @@
     },
     "/v2/summary/workouts/{user_id}": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Workouts",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_v2_summary_workouts__user_id__get",
@@ -609,8 +744,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -623,8 +763,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -647,14 +792,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Post User Workout",
         "operationId": "post_user_workout_v2_summary_workouts__user_id__post",
         "parameters": [
@@ -695,7 +844,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -704,7 +855,9 @@
     },
     "/v2/summary/workouts/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Workouts Raw",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_raw_v2_summary_workouts__user_id__raw_get",
@@ -737,8 +890,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -751,8 +909,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -765,7 +928,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawWorkout" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawWorkout"
+                }
               }
             }
           },
@@ -773,7 +938,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -782,7 +949,9 @@
     },
     "/v2/summary/sleep/{user_id}": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Sleep",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_v2_summary_sleep__user_id__get",
@@ -815,8 +984,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -829,8 +1003,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -843,7 +1022,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientSleepResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientSleepResponse"
+                }
               }
             }
           },
@@ -851,14 +1032,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Post User Sleep",
         "operationId": "post_user_sleep_v2_summary_sleep__user_id__post",
         "parameters": [
@@ -899,7 +1084,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -908,7 +1095,9 @@
     },
     "/v2/summary/sleep/{user_id}/stream": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Sleep Stream",
         "description": "Get Daily sleep stream for user_id",
         "operationId": "get_user_sleep_stream_v2_summary_sleep__user_id__stream_get",
@@ -941,8 +1130,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -955,8 +1149,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -969,7 +1168,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientSleepResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientSleepResponse"
+                }
               }
             }
           },
@@ -977,7 +1178,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -986,7 +1189,9 @@
     },
     "/v2/summary/sleep/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Sleep Raw",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_raw_v2_summary_sleep__user_id__raw_get",
@@ -1019,8 +1224,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1033,8 +1243,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1047,7 +1262,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawSleep" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawSleep"
+                }
               }
             }
           },
@@ -1055,7 +1272,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1064,7 +1283,9 @@
     },
     "/v2/summary/body/{user_id}": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Body",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_v2_summary_body__user_id__get",
@@ -1097,8 +1318,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1111,8 +1337,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1125,7 +1356,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientBodyResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientBodyResponse"
+                }
               }
             }
           },
@@ -1133,14 +1366,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Post User Body",
         "operationId": "post_user_body_v2_summary_body__user_id__post",
         "parameters": [
@@ -1181,7 +1418,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1190,7 +1429,9 @@
     },
     "/v2/summary/body/{user_id}/raw": {
       "get": {
-        "tags": ["summary"],
+        "tags": [
+          "summary"
+        ],
         "summary": "Get User Body Raw",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_raw_v2_summary_body__user_id__raw_get",
@@ -1223,8 +1464,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1237,8 +1483,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1251,7 +1502,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/RawBody" }
+                "schema": {
+                  "$ref": "#/components/schemas/RawBody"
+                }
               }
             }
           },
@@ -1259,7 +1512,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1268,14 +1523,19 @@
     },
     "/v2/timeseries/sleep/{sleep_id}/stream": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get User Sleep Stream",
         "description": "Get Sleep stream for a user_id",
         "operationId": "get_user_sleep_stream_v2_timeseries_sleep__sleep_id__stream_get",
         "parameters": [
           {
             "required": true,
-            "schema": { "title": "Sleep Id", "type": "string" },
+            "schema": {
+              "title": "Sleep Id",
+              "type": "string"
+            },
             "name": "sleep_id",
             "in": "path"
           }
@@ -1295,7 +1555,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1304,7 +1566,9 @@
     },
     "/v2/timeseries/workouts/{workout_id}/stream": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get User Workouts",
         "operationId": "get_user_workouts_v2_timeseries_workouts__workout_id__stream_get",
         "parameters": [
@@ -1324,7 +1588,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientFacingStream" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientFacingStream"
+                }
               }
             }
           },
@@ -1332,7 +1598,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1341,7 +1609,9 @@
     },
     "/v2/timeseries/{user_id}/blood_pressure": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Blood Pressure Data",
         "description": "Get blood pressure data for user.",
         "operationId": "get_blood_pressure_data_v2_timeseries__user_id__blood_pressure_get",
@@ -1374,8 +1644,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1388,8 +1663,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1416,14 +1696,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Post User Blood Pressure",
         "operationId": "post_user_blood_pressure_v2_timeseries__user_id__blood_pressure_post",
         "parameters": [
@@ -1464,7 +1748,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1473,14 +1759,18 @@
     },
     "/v2/timeseries/{user_id}/{resource}": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id___resource__get",
         "parameters": [
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "path"
           },
@@ -1512,8 +1802,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1526,8 +1821,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1554,20 +1854,26 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Post User Vitals",
         "operationId": "post_user_vitals_v2_timeseries__user_id___resource__post",
         "parameters": [
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/VitalsResource" },
+            "schema": {
+              "$ref": "#/components/schemas/VitalsResource"
+            },
             "name": "resource",
             "in": "path"
           },
@@ -1608,7 +1914,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1617,7 +1925,9 @@
     },
     "/v2/timeseries/{user_id}/heartrate": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__heartrate_get",
@@ -1634,7 +1944,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -1656,8 +1968,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1670,8 +1987,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1682,13 +2004,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1697,7 +2025,9 @@
     },
     "/v2/timeseries/{user_id}/blood_oxygen": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__blood_oxygen_get",
@@ -1714,7 +2044,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -1736,8 +2068,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1750,8 +2087,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1762,13 +2104,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1777,7 +2125,9 @@
     },
     "/v2/timeseries/{user_id}/ige": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__ige_get",
@@ -1794,7 +2144,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -1816,8 +2168,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1830,8 +2187,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1842,13 +2204,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1857,7 +2225,9 @@
     },
     "/v2/timeseries/{user_id}/igg": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__igg_get",
@@ -1874,7 +2244,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -1896,8 +2268,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1910,8 +2287,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -1922,13 +2304,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1937,7 +2325,9 @@
     },
     "/v2/timeseries/{user_id}/glucose": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__glucose_get",
@@ -1954,7 +2344,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -1976,8 +2368,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -1990,8 +2387,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2002,13 +2404,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2017,7 +2425,9 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/triglycerides": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_triglycerides_get",
@@ -2034,7 +2444,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -2056,8 +2468,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2070,8 +2487,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2082,13 +2504,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2097,7 +2525,9 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/ldl": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_ldl_get",
@@ -2114,7 +2544,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -2136,8 +2568,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2150,8 +2587,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2162,13 +2604,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2177,7 +2625,9 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/hdl": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_hdl_get",
@@ -2194,7 +2644,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -2216,8 +2668,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2230,8 +2687,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2242,13 +2704,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2257,7 +2725,9 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/total": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_total_get",
@@ -2274,7 +2744,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -2296,8 +2768,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2310,8 +2787,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2322,13 +2804,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2337,7 +2825,9 @@
     },
     "/v2/timeseries/{user_id}/cholesterol": {
       "get": {
-        "tags": ["timeseries"],
+        "tags": [
+          "timeseries"
+        ],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_get",
@@ -2354,7 +2844,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/TimeseriesResource" },
+            "schema": {
+              "$ref": "#/components/schemas/TimeseriesResource"
+            },
             "name": "resource",
             "in": "query"
           },
@@ -2376,8 +2868,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2390,8 +2887,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2402,13 +2904,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2417,7 +2925,9 @@
     },
     "/v2/user/": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Get Teams Users",
         "description": "GET All users for team.",
         "operationId": "get_teams_users_v2_user__get",
@@ -2429,7 +2939,9 @@
                 "schema": {
                   "title": "Response Get Teams Users V2 User  Get",
                   "type": "array",
-                  "items": { "$ref": "#/components/schemas/ClientFacingUser" }
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingUser"
+                  }
                 }
               }
             }
@@ -2437,14 +2949,18 @@
         }
       },
       "post": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Create User",
         "description": "POST Create's a vital user given a client_user_id and returns the user_id",
         "operationId": "create_user_v2_user__post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/UserCreateBody" }
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateBody"
+              }
             }
           },
           "required": true
@@ -2454,7 +2970,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientFacingUserKey" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientFacingUserKey"
+                }
               }
             }
           },
@@ -2462,7 +2980,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2471,7 +2991,9 @@
     },
     "/v2/user/providers/{user_id}": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Get Connected Providers",
         "description": "GET Users connected providers",
         "operationId": "get_connected_providers_v2_user_providers__user_id__get",
@@ -2509,7 +3031,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2518,7 +3042,9 @@
     },
     "/v2/user/{user_id}": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Get User",
         "description": "GET User details given the user_id.",
         "operationId": "get_user_v2_user__user_id__get",
@@ -2539,7 +3065,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/ClientFacingUser" }
+                "schema": {
+                  "$ref": "#/components/schemas/ClientFacingUser"
+                }
               }
             }
           },
@@ -2547,14 +3075,18 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "delete": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Delete User",
         "operationId": "delete_user_v2_user__user_id__delete",
         "parameters": [
@@ -2574,7 +3106,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserSuccessResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/UserSuccessResponse"
+                }
               }
             }
           },
@@ -2582,7 +3116,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2591,7 +3127,9 @@
     },
     "/v2/user/{user_id}/{provider}": {
       "delete": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Deregister Provider",
         "operationId": "deregister_provider_v2_user__user_id___provider__delete",
         "parameters": [
@@ -2607,7 +3145,9 @@
           },
           {
             "required": true,
-            "schema": { "$ref": "#/components/schemas/Providers" },
+            "schema": {
+              "$ref": "#/components/schemas/Providers"
+            },
             "name": "provider",
             "in": "path"
           }
@@ -2617,7 +3157,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/UserSuccessResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/UserSuccessResponse"
+                }
               }
             }
           },
@@ -2625,7 +3167,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2634,7 +3178,9 @@
     },
     "/v2/user/refresh/{user_id}": {
       "post": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Refresh User Id",
         "description": "Trigger a manual refresh for a specific user",
         "operationId": "refresh_user_id_v2_user_refresh__user_id__post",
@@ -2675,7 +3221,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2684,7 +3232,9 @@
     },
     "/v2/providers/": {
       "get": {
-        "tags": ["providers"],
+        "tags": [
+          "providers"
+        ],
         "summary": "Get List Of Providers",
         "description": "Get Provider list",
         "operationId": "get_list_of_providers_v2_providers__get",
@@ -2708,7 +3258,9 @@
     },
     "/v2/testkit/orders": {
       "get": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Get Orders",
         "description": "Get testkit order for team",
         "operationId": "get_orders_v2_testkit_orders_get",
@@ -2719,8 +3271,13 @@
             "schema": {
               "title": "Start Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date from in YYYY-MM-DD"
             },
@@ -2733,8 +3290,13 @@
             "schema": {
               "title": "End Date",
               "anyOf": [
-                { "type": "string" },
-                { "type": "string", "format": "date-time" }
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
               ],
               "description": "Date to in YYYY-MM-DD"
             },
@@ -2793,7 +3355,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrdersResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersResponse"
+                }
               }
             }
           },
@@ -2801,21 +3365,27 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
         }
       },
       "post": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders_post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/OrdersRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/OrdersRequest"
+              }
             }
           },
           "required": true
@@ -2825,7 +3395,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
               }
             }
           },
@@ -2833,7 +3405,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2842,7 +3416,9 @@
     },
     "/v2/testkit/orders/{order_id}": {
       "get": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Get Order",
         "description": "Get individual order",
         "operationId": "get_order_v2_testkit_orders__order_id__get",
@@ -2875,7 +3451,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2884,14 +3462,18 @@
     },
     "/v2/testkit/orders/": {
       "post": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders__post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/OrdersRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/OrdersRequest"
+              }
             }
           },
           "required": true
@@ -2901,7 +3483,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
               }
             }
           },
@@ -2909,7 +3493,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2918,7 +3504,9 @@
     },
     "/v2/testkit/orders/{order_id}/cancel": {
       "post": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Cancel Order",
         "description": "DELETE Delete User Order",
         "operationId": "cancel_order_v2_testkit_orders__order_id__cancel_post",
@@ -2939,7 +3527,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/OrderResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/OrderResponse"
+                }
               }
             }
           },
@@ -2947,7 +3537,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2956,7 +3548,9 @@
     },
     "/v2/testkit/orders/{order_id}/results": {
       "get": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Get Testkit Result",
         "description": "This endpoint returns the lab results in PDF format.",
         "operationId": "get_testkit_result_v2_testkit_orders__order_id__results_get",
@@ -2975,13 +3569,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -2990,7 +3590,9 @@
     },
     "/v2/testkit/orders/{order_id}/test": {
       "post": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Test Testkit Process",
         "description": "Get available test kits.",
         "operationId": "test_testkit_process_v2_testkit_orders__order_id__test_post",
@@ -3009,13 +3611,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3024,7 +3632,9 @@
     },
     "/v2/testkit/orders/{order_id}/results/metadata": {
       "get": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Get Testkit Result Metadata",
         "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
         "operationId": "get_testkit_result_metadata_v2_testkit_orders__order_id__results_metadata_get",
@@ -3045,7 +3655,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/LabResultsMetadata" }
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsMetadata"
+                }
               }
             }
           },
@@ -3053,7 +3665,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3062,7 +3676,9 @@
     },
     "/v2/testkit/orders/{order_id}/results/raw": {
       "get": {
-        "tags": ["testkit_orders"],
+        "tags": [
+          "testkit_orders"
+        ],
         "summary": "Get Testkit Result Raw",
         "description": "Return both metadata and raw json test data",
         "operationId": "get_testkit_result_raw_v2_testkit_orders__order_id__results_raw_get",
@@ -3083,7 +3699,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/LabResultsRaw" }
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsRaw"
+                }
               }
             }
           },
@@ -3091,7 +3709,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3100,7 +3720,9 @@
     },
     "/v3/lab_tests": {
       "get": {
-        "tags": ["lab_tests"],
+        "tags": [
+          "lab_tests"
+        ],
         "summary": "Get Lab Tests For Team",
         "description": "GET all the lab tests the team has access to.",
         "operationId": "get_lab_tests_for_team_v3_lab_tests_get",
@@ -3124,7 +3746,9 @@
     },
     "/v3/order/{order_id}": {
       "get": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Get Order",
         "description": "GET individual order by ID.",
         "operationId": "get_order_v3_order__order_id__get",
@@ -3157,7 +3781,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3166,14 +3792,18 @@
     },
     "/v3/order": {
       "post": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Create Order",
         "description": "POST create new order",
         "operationId": "create_order_v3_order_post",
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/CreateOrderRequest" }
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrderRequest"
+              }
             }
           },
           "required": true
@@ -3183,7 +3813,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/PostOrderResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/PostOrderResponse"
+                }
               }
             }
           },
@@ -3191,7 +3823,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3200,7 +3834,9 @@
     },
     "/v3/order/{order_id}/cancel": {
       "post": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Cancel Order",
         "description": "POST cancel order",
         "operationId": "cancel_order_v3_order__order_id__cancel_post",
@@ -3223,7 +3859,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/PostOrderResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/PostOrderResponse"
+                }
               }
             }
           },
@@ -3231,7 +3869,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3240,7 +3880,9 @@
     },
     "/v3/order/{order_id}/result/pdf": {
       "get": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Get Lab Test Result",
         "description": "This endpoint returns the lab results for the order.",
         "operationId": "get_lab_test_result_v3_order__order_id__result_pdf_get",
@@ -3259,13 +3901,19 @@
         "responses": {
           "200": {
             "description": "Successful Response",
-            "content": { "application/json": { "schema": {} } }
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
           },
           "422": {
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3274,7 +3922,9 @@
     },
     "/v3/order/{order_id}/result/metadata": {
       "get": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Get Lab Test Result Metadata",
         "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
         "operationId": "get_lab_test_result_metadata_v3_order__order_id__result_metadata_get",
@@ -3295,7 +3945,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/LabResultsMetadata" }
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsMetadata"
+                }
               }
             }
           },
@@ -3303,7 +3955,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3312,7 +3966,9 @@
     },
     "/v3/order/{order_id}/result": {
       "get": {
-        "tags": ["order"],
+        "tags": [
+          "order"
+        ],
         "summary": "Get Lab Test Result Raw",
         "description": "Return both metadata and raw json test data",
         "operationId": "get_lab_test_result_raw_v3_order__order_id__result_get",
@@ -3333,7 +3989,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/LabResultsRaw" }
+                "schema": {
+                  "$ref": "#/components/schemas/LabResultsRaw"
+                }
               }
             }
           },
@@ -3341,7 +3999,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3350,7 +4010,9 @@
     },
     "/v3/orders": {
       "get": {
-        "tags": ["orders"],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get Orders",
         "description": "GET many orders with filters.",
         "operationId": "get_orders_v3_orders_get",
@@ -3431,7 +4093,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/GetOrdersResponse" }
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrdersResponse"
+                }
               }
             }
           },
@@ -3439,7 +4103,9 @@
             "description": "Validation Error",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -3451,7 +4117,13 @@
     "schemas": {
       "ActivityV2InDB": {
         "title": "ActivityV2InDB",
-        "required": ["timestamp", "provider_id", "user_id", "source_id", "id"],
+        "required": [
+          "timestamp",
+          "provider_id",
+          "user_id",
+          "source_id",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "timestamp": {
@@ -3464,23 +4136,56 @@
             "type": "string",
             "format": "json-string"
           },
-          "provider_id": { "title": "Provider Id", "type": "string" },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "priority_id": { "title": "Priority Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" },
-          "priority": { "title": "Priority", "type": "integer" }
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          }
         }
       },
       "BiologicalSex": {
         "title": "BiologicalSex",
-        "enum": ["not_set", "female", "male", "other"],
+        "enum": [
+          "not_set",
+          "female",
+          "male",
+          "other"
+        ],
         "description": "An enumeration."
       },
       "BodyV2InDB": {
         "title": "BodyV2InDB",
-        "required": ["timestamp", "provider_id", "user_id", "source_id", "id"],
+        "required": [
+          "timestamp",
+          "provider_id",
+          "user_id",
+          "source_id",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "timestamp": {
@@ -3493,24 +4198,50 @@
             "type": "string",
             "format": "json-string"
           },
-          "provider_id": { "title": "Provider Id", "type": "string" },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "priority_id": { "title": "Priority Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" },
-          "priority": { "title": "Priority", "type": "integer" }
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          }
         }
       },
       "ClientActivityResponse": {
         "title": "Daily Activity",
-        "required": ["activity"],
+        "required": [
+          "activity"
+        ],
         "type": "object",
         "properties": {
           "activity": {
             "title": "Activity",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingActivity" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingActivity"
+            }
           }
         },
         "example": {
@@ -3536,13 +4267,17 @@
       },
       "ClientBodyResponse": {
         "title": "ClientBodyResponse",
-        "required": ["body"],
+        "required": [
+          "body"
+        ],
         "type": "object",
         "properties": {
           "body": {
             "title": "Body",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingBody" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingBody"
+            }
           }
         },
         "example": {
@@ -3565,7 +4300,12 @@
       },
       "ClientFacingActivity": {
         "title": "Daily Activity",
-        "required": ["user_id", "id", "date", "source"],
+        "required": [
+          "user_id",
+          "id",
+          "date",
+          "source"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -3581,7 +4321,11 @@
             "format": "uuid",
             "deprecated": true
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "date": {
             "title": "Date",
             "type": "string",
@@ -3625,7 +4369,11 @@
           },
           "source": {
             "title": "Source",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingSource" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingSource"
+              }
+            ],
             "description": "Source the data has come from."
           }
         },
@@ -3648,19 +4396,39 @@
       },
       "ClientFacingBloodPressureTimeseries": {
         "title": "ClientFacingBloodPressureTimeseries",
-        "required": ["timestamp", "systolic", "diastolic", "unit"],
+        "required": [
+          "timestamp",
+          "systolic",
+          "diastolic",
+          "unit"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "integer" },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
           "timestamp": {
             "title": "Timestamp",
             "type": "string",
             "format": "date-time"
           },
-          "systolic": { "title": "Systolic", "type": "number" },
-          "diastolic": { "title": "Diastolic", "type": "number" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
+          "systolic": {
+            "title": "Systolic",
+            "type": "number"
+          },
+          "diastolic": {
+            "title": "Diastolic",
+            "type": "number"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
         },
         "example": {
           "id": 2,
@@ -3673,7 +4441,12 @@
       },
       "ClientFacingBody": {
         "title": "ClientFacingBody",
-        "required": ["user_id", "id", "date", "source"],
+        "required": [
+          "user_id",
+          "id",
+          "date",
+          "source"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -3689,7 +4462,11 @@
             "format": "uuid",
             "deprecated": true
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "date": {
             "title": "Date",
             "type": "string",
@@ -3706,7 +4483,9 @@
             "type": "number",
             "description": "Body fat percentage.::perc"
           },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" }
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          }
         }
       },
       "ClientFacingLabTest": {
@@ -3722,18 +4501,42 @@
         ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "slug": { "title": "Slug", "type": "string" },
-          "name": { "title": "Name", "type": "string" },
-          "sample_type": { "$ref": "#/components/schemas/LabTestSampleType" },
-          "method": { "$ref": "#/components/schemas/LabTestMethod" },
-          "price": { "title": "Price", "type": "number" },
-          "is_active": { "title": "Is Active", "type": "boolean" },
-          "lab": { "$ref": "#/components/schemas/LabClientFacing" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "sample_type": {
+            "$ref": "#/components/schemas/LabTestSampleType"
+          },
+          "method": {
+            "$ref": "#/components/schemas/LabTestMethod"
+          },
+          "price": {
+            "title": "Price",
+            "type": "number"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "lab": {
+            "$ref": "#/components/schemas/LabClientFacing"
+          },
           "markers": {
             "title": "Markers",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/MarkerClientFacing" }
+            "items": {
+              "$ref": "#/components/schemas/MarkerClientFacing"
+            }
           }
         },
         "example": {
@@ -3763,21 +4566,33 @@
       },
       "ClientFacingOrderEvent": {
         "title": "ClientFacingOrderEvent",
-        "required": ["id", "created_at", "status"],
+        "required": [
+          "id",
+          "created_at",
+          "status"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "integer" },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
           "created_at": {
             "title": "Created At",
             "type": "string",
             "format": "date-time"
           },
-          "status": { "$ref": "#/components/schemas/OrderV2Status" }
+          "status": {
+            "$ref": "#/components/schemas/OrderV2Status"
+          }
         }
       },
       "ClientFacingProfile": {
         "title": "ClientFacingProfile",
-        "required": ["user_id", "id"],
+        "required": [
+          "user_id",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -3793,9 +4608,18 @@
             "format": "uuid",
             "deprecated": true
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "height": { "title": "Height", "type": "integer" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" }
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "height": {
+            "title": "Height",
+            "type": "integer"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          }
         },
         "example": {
           "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
@@ -3908,7 +4732,11 @@
             "format": "uuid",
             "deprecated": true
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "date": {
             "title": "Date",
             "type": "string",
@@ -4004,7 +4832,11 @@
           },
           "source": {
             "title": "Source",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingSource" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingSource"
+              }
+            ],
             "description": "Source the data has come from."
           },
           "sleep_stream": {
@@ -4045,22 +4877,30 @@
           "hrv": {
             "title": "Hrv",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingTimeseries" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingTimeseries"
+            }
           },
           "heartrate": {
             "title": "Heartrate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingTimeseries" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingTimeseries"
+            }
           },
           "hypnogram": {
             "title": "Hypnogram",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingTimeseries" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingTimeseries"
+            }
           },
           "respiratory_rate": {
             "title": "Respiratory Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingTimeseries" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingTimeseries"
+            }
           }
         },
         "example": {
@@ -4216,7 +5056,11 @@
       },
       "ClientFacingSource": {
         "title": "Provider",
-        "required": ["name", "slug", "logo"],
+        "required": [
+          "name",
+          "slug",
+          "logo"
+        ],
         "type": "object",
         "properties": {
           "name": {
@@ -4243,7 +5087,11 @@
       },
       "ClientFacingSourceDetailed": {
         "title": "Provider",
-        "required": ["name", "slug", "description"],
+        "required": [
+          "name",
+          "slug",
+          "description"
+        ],
         "type": "object",
         "properties": {
           "name": {
@@ -4266,10 +5114,15 @@
             "type": "string",
             "description": "URL for source logo"
           },
-          "auth_type": { "title": "Auth Type", "type": "string" },
+          "auth_type": {
+            "title": "Auth Type",
+            "type": "string"
+          },
           "supported_resources": {
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Resource" },
+            "items": {
+              "$ref": "#/components/schemas/Resource"
+            },
             "default": []
           }
         },
@@ -4278,15 +5131,25 @@
           "slug": "oura",
           "logo": "https://logo_url.com",
           "auth_type": "oauth",
-          "supported_resources": ["workouts", "sleep"]
+          "supported_resources": [
+            "workouts",
+            "sleep"
+          ]
         }
       },
       "ClientFacingSport": {
         "title": "ClientFacingSport",
-        "required": ["id", "name", "slug"],
+        "required": [
+          "id",
+          "name",
+          "slug"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "integer" },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
           "name": {
             "title": "Name",
             "type": "string",
@@ -4306,99 +5169,193 @@
           "cadence": {
             "title": "Cadence",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "RPM for cycling, Steps per minute for running",
             "default": []
           },
           "time": {
             "title": "Time",
             "type": "array",
-            "items": { "type": "integer" },
+            "items": {
+              "type": "integer"
+            },
             "description": "Corresponding time stamp in unix time for datapoint",
             "default": []
           },
           "altitude": {
             "title": "Altitude",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Data points for altitude",
             "default": []
           },
           "velocity_smooth": {
             "title": "Velocity Smooth",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Velocity in m/s",
             "default": []
           },
           "heartrate": {
             "title": "Heartrate",
             "type": "array",
-            "items": { "type": "integer" },
+            "items": {
+              "type": "integer"
+            },
             "description": "Heart rate in bpm.",
             "default": []
           },
           "lat": {
             "title": "Lat",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Latitude for data point",
             "default": []
           },
           "lng": {
             "title": "Lng",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Longitude for data point.",
             "default": []
           },
           "distance": {
             "title": "Distance",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Cumulated distance for exercise.",
             "default": []
           },
           "power": {
             "title": "Power",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Power in watts",
             "default": []
           },
           "resistance": {
             "title": "Resistance",
             "type": "array",
-            "items": { "type": "number" },
+            "items": {
+              "type": "number"
+            },
             "description": "Resistance on bike",
             "default": []
           }
         },
         "example": {
-          "cadence": [10, 12, 12, 11, 10],
-          "time": [1626625123, 1626625140, 1626625145, 1626625150, 162662560],
-          "heartrate": [120, 125, 125, 130, 135],
-          "distance": [12, 15, 18, 20, 25],
-          "power": [100, 100, 100, 100, 100],
-          "altitude": [10, 20, 30, 40, 50],
-          "velocity_smooth": [10, 20, 30, 40, 50],
-          "lat": [10, 20, 30, 40, 50],
-          "lng": [10, 20, 30, 40, 50],
-          "resistance": [10, 20, 30, 40, 50]
+          "cadence": [
+            10,
+            12,
+            12,
+            11,
+            10
+          ],
+          "time": [
+            1626625123,
+            1626625140,
+            1626625145,
+            1626625150,
+            162662560
+          ],
+          "heartrate": [
+            120,
+            125,
+            125,
+            130,
+            135
+          ],
+          "distance": [
+            12,
+            15,
+            18,
+            20,
+            25
+          ],
+          "power": [
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          "altitude": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "velocity_smooth": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "lat": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "lng": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ],
+          "resistance": [
+            10,
+            20,
+            30,
+            40,
+            50
+          ]
         }
       },
       "ClientFacingTestKitOrderDetails": {
         "title": "ClientFacingTestKitOrderDetails",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "type": "object",
         "properties": {
-          "type": { "title": "Type", "enum": ["testkit"], "type": "string" },
-          "data": { "$ref": "#/components/schemas/ClientFacingTestkitOrder" }
+          "type": {
+            "title": "Type",
+            "enum": [
+              "testkit"
+            ],
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ClientFacingTestkitOrder"
+          }
         }
       },
       "ClientFacingTestkitOrder": {
         "title": "ClientFacingTestkitOrder",
-        "required": ["id", "created_at", "updated_at"],
+        "required": [
+          "id",
+          "created_at",
+          "updated_at"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -4409,7 +5366,11 @@
           },
           "shipment": {
             "title": "Shipment",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingShipment" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingShipment"
+              }
+            ],
             "description": "Shipment object"
           },
           "created_at": {
@@ -4444,18 +5405,33 @@
       },
       "ClientFacingTimeseries": {
         "title": "ClientFacingTimeseries",
-        "required": ["timestamp", "value"],
+        "required": [
+          "timestamp",
+          "value"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "integer" },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
           "timestamp": {
             "title": "Timestamp",
             "type": "string",
             "format": "date-time"
           },
-          "value": { "title": "Value", "type": "number" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" }
+          "value": {
+            "title": "Value",
+            "type": "number"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
         },
         "example": {
           "glucose": {
@@ -4572,7 +5548,11 @@
           "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
           "connected_sources": [
             {
-              "source": { "name": "Oura", "slug": "oura", "logo": "logo_url" },
+              "source": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "logo_url"
+              },
               "created_on": "2022-08-04T12:42:45.596792+00:00"
             }
           ]
@@ -4580,7 +5560,10 @@
       },
       "ClientFacingUserKey": {
         "title": "ClientFacingUserKey",
-        "required": ["user_id", "client_user_id"],
+        "required": [
+          "user_id",
+          "client_user_id"
+        ],
         "type": "object",
         "properties": {
           "user_id": {
@@ -4609,20 +5592,30 @@
       },
       "ClientFacingWalkInOrderDetails": {
         "title": "ClientFacingWalkInOrderDetails",
-        "required": ["type"],
+        "required": [
+          "type"
+        ],
         "type": "object",
         "properties": {
           "type": {
             "title": "Type",
-            "enum": ["walk_in_test"],
+            "enum": [
+              "walk_in_test"
+            ],
             "type": "string"
           },
-          "data": { "$ref": "#/components/schemas/ClientFacingWalkInTestOrder" }
+          "data": {
+            "$ref": "#/components/schemas/ClientFacingWalkInTestOrder"
+          }
         }
       },
       "ClientFacingWalkInTestOrder": {
         "title": "ClientFacingWalkInTestOrder",
-        "required": ["id", "created_at", "updated_at"],
+        "required": [
+          "id",
+          "created_at",
+          "updated_at"
+        ],
         "type": "object",
         "properties": {
           "id": {
@@ -4674,7 +5667,11 @@
             "format": "uuid",
             "deprecated": true
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "title": {
             "title": "Title",
             "type": "string",
@@ -4719,14 +5716,20 @@
           },
           "sport": {
             "title": "Sport",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingSport" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingSport"
+              }
+            ],
             "description": "Sport's name",
             "default": ""
           },
           "hr_zones": {
             "title": "Hr Zones",
             "type": "array",
-            "items": { "type": "integer" },
+            "items": {
+              "type": "integer"
+            },
             "description": "Time in seconds spent in different heart rate zones <50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it's possible that summing all values is different than the total time of the workout. Not available for all providers.::seconds"
           },
           "moving_time": {
@@ -4791,7 +5794,11 @@
           },
           "source": {
             "title": "Source",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingSource" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingSource"
+              }
+            ],
             "description": "Source the data has come from."
           }
         },
@@ -4803,13 +5810,22 @@
           "time_start": "2022-08-04T11:42:44.863604+00:00",
           "time_end": "2022-08-04T12:42:44.863651+00:00",
           "calories": 300,
-          "sport": { "id": 1, "name": "football" },
+          "sport": {
+            "id": 1,
+            "name": "football"
+          },
           "source": {
             "name": "Strava",
             "slug": "strava",
             "logo": "https://logo_url.com"
           },
-          "hr_zones": [100, 90, 10, 10, 200],
+          "hr_zones": [
+            100,
+            90,
+            10,
+            10,
+            200
+          ],
           "user_id": "e3bf7ae0-af16-4c30-8e5a-0c8d3e609bf2",
           "moving_time": 100,
           "total_elevation_gain": 10,
@@ -4828,13 +5844,17 @@
       },
       "ClientSleepResponse": {
         "title": "Body Composition Data",
-        "required": ["sleep"],
+        "required": [
+          "sleep"
+        ],
         "type": "object",
         "properties": {
           "sleep": {
             "title": "Sleep",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingSleep" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingSleep"
+            }
           }
         },
         "example": {
@@ -4870,13 +5890,17 @@
       },
       "ClientWorkoutResponse": {
         "title": "ClientWorkoutResponse",
-        "required": ["workouts"],
+        "required": [
+          "workouts"
+        ],
         "type": "object",
         "properties": {
           "workouts": {
             "title": "Workouts",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingWorkout" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingWorkout"
+            }
           }
         },
         "example": {
@@ -4888,13 +5912,22 @@
             "time_start": "2022-08-04T11:42:44.864554+00:00",
             "time_end": "2022-08-04T12:42:44.864576+00:00",
             "calories": 300,
-            "sport": { "id": 1, "name": "football" },
+            "sport": {
+              "id": 1,
+              "name": "football"
+            },
             "source": {
               "name": "Strava",
               "slug": "strava",
               "logo": "https://logo_url.com"
             },
-            "hr_zones": [100, 90, 10, 10, 200],
+            "hr_zones": [
+              100,
+              90,
+              10,
+              10,
+              200
+            ],
             "user_id": "701830a9-bd50-48d5-91e5-8c7485d95c12",
             "moving_time": 100,
             "total_elevation_gain": 10,
@@ -4906,19 +5939,28 @@
             "device_watts": 80,
             "max_watts": 200,
             "weighted_average_watts": 250,
-            "map": { "summary_polyline": "agn~Ftb{uOvr@daBunBjdBkHwiD????" }
+            "map": {
+              "summary_polyline": "agn~Ftb{uOvr@daBunBjdBkHwiD????"
+            }
           },
           "title": "Workout Data"
         }
       },
       "ConnectedSourceClientFacing": {
         "title": "ConnectedSourceClientFacing",
-        "required": ["source", "created_on"],
+        "required": [
+          "source",
+          "created_on"
+        ],
         "type": "object",
         "properties": {
           "source": {
             "title": "Source",
-            "allOf": [{ "$ref": "#/components/schemas/ClientFacingSource" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ClientFacingSource"
+              }
+            ],
             "description": "Source the data has come from."
           },
           "created_on": {
@@ -4931,13 +5973,23 @@
       },
       "ConnectionStatus": {
         "title": "ConnectionStatus",
-        "required": ["success"],
+        "required": [
+          "success"
+        ],
         "type": "object",
         "properties": {
-          "success": { "title": "Success", "type": "boolean" },
-          "redirect_url": { "title": "Redirect Url", "type": "string" }
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "redirect_url": {
+            "title": "Redirect Url",
+            "type": "string"
+          }
         },
-        "example": { "sucess": true }
+        "example": {
+          "sucess": true
+        }
       },
       "CreateOrderRequest": {
         "title": "CreateOrderRequest",
@@ -4949,7 +6001,11 @@
         ],
         "type": "object",
         "properties": {
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "patient_details": {
             "$ref": "#/components/schemas/vital_core__schemas__db_schemas__lab_test__patient__PatientDetails"
           },
@@ -4961,18 +6017,28 @@
             "type": "string",
             "format": "uuid"
           },
-          "physician": { "$ref": "#/components/schemas/PhysicianBase" }
+          "physician": {
+            "$ref": "#/components/schemas/PhysicianBase"
+          }
         },
         "description": "Schema for the create Order endpoint."
       },
       "DataStage": {
         "title": "DataStage",
-        "enum": ["daily", "historical"],
+        "enum": [
+          "daily",
+          "historical"
+        ],
         "description": "An enumeration."
       },
       "DeviceV2InDB": {
         "title": "DeviceV2InDB",
-        "required": ["provider_id", "user_id", "source_id", "id"],
+        "required": [
+          "provider_id",
+          "user_id",
+          "source_id",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "data": {
@@ -4980,32 +6046,64 @@
             "type": "string",
             "format": "json-string"
           },
-          "provider_id": { "title": "Provider Id", "type": "string" },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" }
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          }
         }
       },
       "EmailProviderAuthLink": {
         "title": "EmailProviderAuthLink",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "type": "object",
         "properties": {
-          "email": { "title": "Email", "type": "string" },
-          "provider": { "$ref": "#/components/schemas/Providers" },
-          "region": { "$ref": "#/components/schemas/Region" }
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/Providers"
+          },
+          "region": {
+            "$ref": "#/components/schemas/Region"
+          }
         }
       },
       "EmailProviders": {
         "title": "EmailProviders",
-        "enum": ["freestyle_libre"],
+        "enum": [
+          "freestyle_libre"
+        ],
         "type": "string",
         "description": "An enumeration."
       },
       "GetOrdersResponse": {
         "title": "GetOrdersResponse",
-        "required": ["orders", "total", "page", "size"],
+        "required": [
+          "orders",
+          "total",
+          "page",
+          "size"
+        ],
         "type": "object",
         "properties": {
           "orders": {
@@ -5015,9 +6113,18 @@
               "$ref": "#/components/schemas/vital_core__schemas__db_schemas__lab_test__orderv2__ClientFacingOrder"
             }
           },
-          "total": { "title": "Total", "type": "integer" },
-          "page": { "title": "Page", "type": "integer" },
-          "size": { "title": "Size", "type": "integer" }
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          }
         }
       },
       "HTTPValidationError": {
@@ -5027,13 +6134,18 @@
           "detail": {
             "title": "Detail",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ValidationError" }
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
           }
         }
       },
       "IndividualProviderData": {
         "title": "IndividualProviderData",
-        "required": ["username", "password"],
+        "required": [
+          "username",
+          "password"
+        ],
         "type": "object",
         "properties": {
           "username": {
@@ -5050,17 +6162,35 @@
       },
       "LabClientFacing": {
         "title": "LabClientFacing",
-        "required": ["slug", "name", "first_line_address", "city", "zipcode"],
+        "required": [
+          "slug",
+          "name",
+          "first_line_address",
+          "city",
+          "zipcode"
+        ],
         "type": "object",
         "properties": {
-          "slug": { "title": "Slug", "type": "string" },
-          "name": { "title": "Name", "type": "string" },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
           "first_line_address": {
             "title": "First Line Address",
             "type": "string"
           },
-          "city": { "title": "City", "type": "string" },
-          "zipcode": { "title": "Zipcode", "type": "string" }
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "zipcode": {
+            "title": "Zipcode",
+            "type": "string"
+          }
         }
       },
       "LabInDB": {
@@ -5075,15 +6205,30 @@
         ],
         "type": "object",
         "properties": {
-          "slug": { "title": "Slug", "type": "string" },
-          "name": { "title": "Name", "type": "string" },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
           "first_line_address": {
             "title": "First Line Address",
             "type": "string"
           },
-          "city": { "title": "City", "type": "string" },
-          "zipcode": { "title": "Zipcode", "type": "string" },
-          "clia": { "title": "Clia", "type": "string" },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "zipcode": {
+            "title": "Zipcode",
+            "type": "string"
+          },
+          "clia": {
+            "title": "Clia",
+            "type": "string"
+          },
           "created_at": {
             "title": "Created At",
             "type": "string",
@@ -5094,7 +6239,10 @@
             "type": "string",
             "format": "date-time"
           },
-          "id": { "title": "Id", "type": "integer" }
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
         }
       },
       "LabResultsMetadata": {
@@ -5109,16 +6257,46 @@
         ],
         "type": "object",
         "properties": {
-          "age": { "title": "Age", "type": "string" },
-          "dob": { "title": "Dob", "type": "string" },
-          "clia_#": { "title": "Clia #", "type": "string" },
-          "patient": { "title": "Patient", "type": "string" },
-          "provider": { "title": "Provider", "type": "string" },
-          "laboratory": { "title": "Laboratory", "type": "string" },
-          "date_reported": { "title": "Date Reported", "type": "string" },
-          "date_collected": { "title": "Date Collected", "type": "string" },
-          "specimen_number": { "title": "Specimen Number", "type": "string" },
-          "date_received": { "title": "Date Received", "type": "string" }
+          "age": {
+            "title": "Age",
+            "type": "string"
+          },
+          "dob": {
+            "title": "Dob",
+            "type": "string"
+          },
+          "clia_#": {
+            "title": "Clia #",
+            "type": "string"
+          },
+          "patient": {
+            "title": "Patient",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "laboratory": {
+            "title": "Laboratory",
+            "type": "string"
+          },
+          "date_reported": {
+            "title": "Date Reported",
+            "type": "string"
+          },
+          "date_collected": {
+            "title": "Date Collected",
+            "type": "string"
+          },
+          "specimen_number": {
+            "title": "Specimen Number",
+            "type": "string"
+          },
+          "date_received": {
+            "title": "Date Received",
+            "type": "string"
+          }
         },
         "example": {
           "age": 19,
@@ -5135,11 +6313,19 @@
       },
       "LabResultsRaw": {
         "title": "LabResultsRaw",
-        "required": ["metadata", "results"],
+        "required": [
+          "metadata",
+          "results"
+        ],
         "type": "object",
         "properties": {
-          "metadata": { "$ref": "#/components/schemas/LabResultsMetadata" },
-          "results": { "title": "Results", "type": "object" }
+          "metadata": {
+            "$ref": "#/components/schemas/LabResultsMetadata"
+          },
+          "results": {
+            "title": "Results",
+            "type": "object"
+          }
         },
         "example": {
           "metadata": {
@@ -5154,7 +6340,11 @@
             "specimen_number": "123131",
             "date_received": "2022-01-01"
           },
-          "results": { "[marker]": {}, "ige": {}, "fsh": {} }
+          "results": {
+            "[marker]": {},
+            "ige": {},
+            "fsh": {}
+          }
         }
       },
       "LabTestInDB": {
@@ -5173,19 +6363,43 @@
         ],
         "type": "object",
         "properties": {
-          "slug": { "title": "Slug", "type": "string" },
-          "name": { "title": "Name", "type": "string" },
-          "description": { "title": "Description", "type": "string" },
-          "sample_type": { "$ref": "#/components/schemas/LabTestSampleType" },
-          "method": { "$ref": "#/components/schemas/LabTestMethod" },
-          "lab_id": { "title": "Lab Id", "type": "integer" },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "sample_type": {
+            "$ref": "#/components/schemas/LabTestSampleType"
+          },
+          "method": {
+            "$ref": "#/components/schemas/LabTestMethod"
+          },
+          "lab_id": {
+            "title": "Lab Id",
+            "type": "integer"
+          },
           "skus": {
             "title": "Skus",
             "type": "array",
-            "items": { "type": "object" }
+            "items": {
+              "type": "object"
+            }
           },
-          "price": { "title": "Price", "type": "number" },
-          "is_active": { "title": "Is Active", "type": "boolean" },
+          "price": {
+            "title": "Price",
+            "type": "number"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
           "turnaround_time_lower": {
             "title": "Turnaround Time Lower",
             "type": "integer"
@@ -5204,31 +6418,46 @@
             "type": "string",
             "format": "date-time"
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "lab": { "$ref": "#/components/schemas/LabInDB" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "lab": {
+            "$ref": "#/components/schemas/LabInDB"
+          },
           "markers": {
             "title": "Markers",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/MarkerInDB" }
+            "items": {
+              "$ref": "#/components/schemas/MarkerInDB"
+            }
           }
         },
         "description": "Schema for a LabTest in the database."
       },
       "LabTestMethod": {
         "title": "LabTestMethod",
-        "enum": ["testkit", "walk_in_test"],
+        "enum": [
+          "testkit",
+          "walk_in_test"
+        ],
         "type": "string",
         "description": "The method used to perform a lab test."
       },
       "LabTestSampleType": {
         "title": "LabTestSampleType",
-        "enum": ["dried_blood_spot"],
+        "enum": [
+          "dried_blood_spot"
+        ],
         "type": "string",
         "description": "The type of sample used to perform a lab test."
       },
       "LinkTokenExchange": {
         "title": "LinkTokenExchange",
-        "required": ["user_key"],
+        "required": [
+          "user_key"
+        ],
         "type": "object",
         "properties": {
           "user_key": {
@@ -5237,18 +6466,27 @@
             "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
             "format": "uuid"
           },
-          "provider": { "$ref": "#/components/schemas/Providers" },
-          "redirect_url": { "title": "Redirect Url", "type": "string" },
+          "provider": {
+            "$ref": "#/components/schemas/Providers"
+          },
+          "redirect_url": {
+            "title": "Redirect Url",
+            "type": "string"
+          },
           "filter_on_providers": {
             "minItems": 1,
             "type": "array",
-            "items": { "$ref": "#/components/schemas/Providers" }
+            "items": {
+              "$ref": "#/components/schemas/Providers"
+            }
           }
         }
       },
       "LinkTokenExchangeResponse": {
         "title": "LinkTokenExchangeResponse",
-        "required": ["link_token"],
+        "required": [
+          "link_token"
+        ],
         "type": "object",
         "properties": {
           "link_token": {
@@ -5257,7 +6495,9 @@
             "description": "Link token to use to launch link widget"
           }
         },
-        "example": { "link_token": "dGVzdCB0ZXN0IHRlc3Q=" }
+        "example": {
+          "link_token": "dGVzdCB0ZXN0IHRlc3Q="
+        }
       },
       "ManualActivityCreation": {
         "title": "ManualActivityCreation",
@@ -5272,46 +6512,70 @@
         ],
         "type": "object",
         "properties": {
-          "date": { "title": "Date", "type": "string", "format": "date-time" },
+          "date": {
+            "title": "Date",
+            "type": "string",
+            "format": "date-time"
+          },
           "active_energy_burned": {
             "title": "Active Energy Burned",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "basal_energy_burned": {
             "title": "Basal Energy Burned",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "steps": {
             "title": "Steps",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "distance_walking_running": {
             "title": "Distance Walking Running",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "vo2_max": {
             "title": "Vo2 Max",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "floors_climbed": {
             "title": "Floors Climbed",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           }
         }
       },
       "ManualActivityCreationPayload": {
         "title": "ManualActivityCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5325,27 +6589,46 @@
           "data": {
             "title": "Data",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ManualActivityCreation" }
+            "items": {
+              "$ref": "#/components/schemas/ManualActivityCreation"
+            }
           }
         }
       },
       "ManualBloodPressureCreation": {
         "title": "ManualBloodPressureCreation",
-        "required": ["diastolic", "systolic"],
+        "required": [
+          "diastolic",
+          "systolic"
+        ],
         "type": "object",
         "properties": {
-          "diastolic": { "$ref": "#/components/schemas/QuantitySample" },
-          "systolic": { "$ref": "#/components/schemas/QuantitySample" },
-          "pulse": { "$ref": "#/components/schemas/QuantitySample" }
+          "diastolic": {
+            "$ref": "#/components/schemas/QuantitySample"
+          },
+          "systolic": {
+            "$ref": "#/components/schemas/QuantitySample"
+          },
+          "pulse": {
+            "$ref": "#/components/schemas/QuantitySample"
+          }
         }
       },
       "ManualBloodPressureCreationPayload": {
         "title": "ManualBloodPressureCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5367,28 +6650,43 @@
       },
       "ManualBodyCreationIntermediate": {
         "title": "ManualBodyCreationIntermediate",
-        "required": ["body_mass", "body_fat_percentage"],
+        "required": [
+          "body_mass",
+          "body_fat_percentage"
+        ],
         "type": "object",
         "properties": {
           "body_mass": {
             "title": "Body Mass",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "body_fat_percentage": {
             "title": "Body Fat Percentage",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           }
         }
       },
       "ManualBodyCreationPayload": {
         "title": "ManualBodyCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5408,22 +6706,35 @@
         "title": "ManualProfileCreation",
         "type": "object",
         "properties": {
-          "biological_sex": { "$ref": "#/components/schemas/BiologicalSex" },
+          "biological_sex": {
+            "$ref": "#/components/schemas/BiologicalSex"
+          },
           "date_of_birth": {
             "title": "Date Of Birth",
             "type": "string",
             "format": "date-time"
           },
-          "height": { "title": "Height", "type": "integer" }
+          "height": {
+            "title": "Height",
+            "type": "integer"
+          }
         }
       },
       "ManualProfileCreationPayload": {
         "title": "ManualProfileCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5434,7 +6745,9 @@
             "type": "string",
             "format": "date-time"
           },
-          "data": { "$ref": "#/components/schemas/ManualProfileCreation" }
+          "data": {
+            "$ref": "#/components/schemas/ManualProfileCreation"
+          }
         }
       },
       "ManualProviders": {
@@ -5465,7 +6778,10 @@
         ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "string" },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5476,42 +6792,66 @@
             "type": "string",
             "format": "date-time"
           },
-          "source_bundle": { "title": "Source Bundle", "type": "string" },
-          "product_type": { "title": "Product Type", "type": "string" },
+          "source_bundle": {
+            "title": "Source Bundle",
+            "type": "string"
+          },
+          "product_type": {
+            "title": "Product Type",
+            "type": "string"
+          },
           "heart_rate": {
             "title": "Heart Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "resting_heart_rate": {
             "title": "Resting Heart Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "heart_rate_variability": {
             "title": "Heart Rate Variability",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "oxygen_saturation": {
             "title": "Oxygen Saturation",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           },
           "respiratory_rate": {
             "title": "Respiratory Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           }
         }
       },
       "ManualSleepCreationPayload": {
         "title": "ManualSleepCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5525,17 +6865,27 @@
           "data": {
             "title": "Data",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ManualSleepCreation" }
+            "items": {
+              "$ref": "#/components/schemas/ManualSleepCreation"
+            }
           }
         }
       },
       "ManualTimeseriesCreationPayload": {
         "title": "ManualTimeseriesCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5549,7 +6899,9 @@
           "data": {
             "title": "Data",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" }
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            }
           }
         }
       },
@@ -5565,7 +6917,10 @@
         ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "string" },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5576,32 +6931,59 @@
             "type": "string",
             "format": "date-time"
           },
-          "source_bundle": { "title": "Source Bundle", "type": "string" },
-          "product_type": { "title": "Product Type", "type": "string" },
-          "sport": { "title": "Sport", "type": "string" },
-          "calories": { "title": "Calories", "type": "number" },
-          "distance": { "title": "Distance", "type": "number" },
+          "source_bundle": {
+            "title": "Source Bundle",
+            "type": "string"
+          },
+          "product_type": {
+            "title": "Product Type",
+            "type": "string"
+          },
+          "sport": {
+            "title": "Sport",
+            "type": "string"
+          },
+          "calories": {
+            "title": "Calories",
+            "type": "number"
+          },
+          "distance": {
+            "title": "Distance",
+            "type": "number"
+          },
           "heart_rate": {
             "title": "Heart Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" },
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            },
             "default": []
           },
           "respiratory_rate": {
             "title": "Respiratory Rate",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/QuantitySample" },
+            "items": {
+              "$ref": "#/components/schemas/QuantitySample"
+            },
             "default": []
           }
         }
       },
       "ManualWorkoutCreationPayload": {
         "title": "ManualWorkoutCreationPayload",
-        "required": ["stage", "provider", "data"],
+        "required": [
+          "stage",
+          "provider",
+          "data"
+        ],
         "type": "object",
         "properties": {
-          "stage": { "$ref": "#/components/schemas/DataStage" },
-          "provider": { "$ref": "#/components/schemas/ManualProviders" },
+          "stage": {
+            "$ref": "#/components/schemas/DataStage"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ManualProviders"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5615,28 +6997,56 @@
           "data": {
             "title": "Data",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ManualWorkoutCreation" }
+            "items": {
+              "$ref": "#/components/schemas/ManualWorkoutCreation"
+            }
           }
         }
       },
       "MarkerClientFacing": {
         "title": "MarkerClientFacing",
-        "required": ["name", "slug"],
+        "required": [
+          "name",
+          "slug"
+        ],
         "type": "object",
         "properties": {
-          "name": { "title": "Name", "type": "string" },
-          "slug": { "title": "Slug", "type": "string" },
-          "description": { "title": "Description", "type": "string" }
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          }
         }
       },
       "MarkerInDB": {
         "title": "MarkerInDB",
-        "required": ["name", "slug", "description", "id"],
+        "required": [
+          "name",
+          "slug",
+          "description",
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "name": { "title": "Name", "type": "string" },
-          "slug": { "title": "Slug", "type": "string" },
-          "description": { "title": "Description", "type": "string" },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
           "created_at": {
             "title": "Created At",
             "type": "string",
@@ -5647,7 +7057,10 @@
             "type": "string",
             "format": "date-time"
           },
-          "id": { "title": "Id", "type": "integer" }
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
         }
       },
       "OAuthProviders": {
@@ -5667,14 +7080,24 @@
       },
       "OrderResponse": {
         "title": "OrderResponse",
-        "required": ["order", "status", "message"],
+        "required": [
+          "order",
+          "status",
+          "message"
+        ],
         "type": "object",
         "properties": {
           "order": {
             "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder"
           },
-          "status": { "title": "Status", "type": "string" },
-          "message": { "title": "Message", "type": "string" }
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
         },
         "example": {
           "order": {
@@ -5691,7 +7114,10 @@
             "outbound_tracking_url": "<outbound_tracking_url>",
             "outbound_courier": "usps",
             "inbound_courier": "usps",
-            "testkit": { "name": "CGM", "description": "Glucose CGM" }
+            "testkit": {
+              "name": "CGM",
+              "description": "Glucose CGM"
+            }
           },
           "status": "Success",
           "message": "Order created successfully | Order cancelled successfully "
@@ -5778,7 +7204,9 @@
           "patient_details": {
             "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__PatientDetails"
           },
-          "physician": { "$ref": "#/components/schemas/Physician" },
+          "physician": {
+            "$ref": "#/components/schemas/Physician"
+          },
           "inbound_tracking_number": {
             "title": "Inbound Tracking Number",
             "type": "string"
@@ -5787,8 +7215,14 @@
             "title": "Outbound Tracking Number",
             "type": "string"
           },
-          "outbound_courier": { "title": "Outbound Courier", "type": "string" },
-          "inbound_courier": { "title": "Inbound Courier", "type": "string" },
+          "outbound_courier": {
+            "title": "Outbound Courier",
+            "type": "string"
+          },
+          "inbound_courier": {
+            "title": "Inbound Courier",
+            "type": "string"
+          },
           "user_key": {
             "title": "User Key",
             "type": "string",
@@ -5799,7 +7233,12 @@
       },
       "OrdersResponse": {
         "title": "OrdersResponse",
-        "required": ["orders", "total", "page", "size"],
+        "required": [
+          "orders",
+          "total",
+          "page",
+          "size"
+        ],
         "type": "object",
         "properties": {
           "orders": {
@@ -5809,9 +7248,18 @@
               "$ref": "#/components/schemas/vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder"
             }
           },
-          "total": { "title": "Total", "type": "integer" },
-          "page": { "title": "Page", "type": "integer" },
-          "size": { "title": "Size", "type": "integer" }
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          }
         },
         "example": {
           "orders": [
@@ -5823,7 +7271,10 @@
               "status": "ordered",
               "user_id": "0bac7816-bc5e-4985-8147-dbf7bd83d445",
               "testkit_id": "3389e8db-3b9d-41b3-957e-f3532063be5b",
-              "testkit": { "name": "CGM", "description": "Glucose CGM" }
+              "testkit": {
+                "name": "CGM",
+                "description": "Glucose CGM"
+              }
             }
           ],
           "total": 14,
@@ -5848,17 +7299,36 @@
       },
       "Physician": {
         "title": "Physician",
-        "required": ["first_name", "last_name", "npi", "id"],
+        "required": [
+          "first_name",
+          "last_name",
+          "npi",
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "first_name": { "title": "First Name", "type": "string" },
-          "last_name": { "title": "Last Name", "type": "string" },
-          "email": { "title": "Email", "type": "string" },
-          "npi": { "title": "Npi", "type": "string" },
+          "first_name": {
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last Name",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "npi": {
+            "title": "Npi",
+            "type": "string"
+          },
           "licensed_states": {
             "title": "Licensed States",
             "type": "array",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "default": []
           },
           "created_at": {
@@ -5871,22 +7341,44 @@
             "type": "string",
             "format": "date-time"
           },
-          "id": { "title": "Id", "type": "string", "format": "uuid" }
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          }
         }
       },
       "PhysicianBase": {
         "title": "PhysicianBase",
-        "required": ["first_name", "last_name", "npi"],
+        "required": [
+          "first_name",
+          "last_name",
+          "npi"
+        ],
         "type": "object",
         "properties": {
-          "first_name": { "title": "First Name", "type": "string" },
-          "last_name": { "title": "Last Name", "type": "string" },
-          "email": { "title": "Email", "type": "string" },
-          "npi": { "title": "Npi", "type": "string" },
+          "first_name": {
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last Name",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "npi": {
+            "title": "Npi",
+            "type": "string"
+          },
           "licensed_states": {
             "title": "Licensed States",
             "type": "array",
-            "items": { "type": "string" },
+            "items": {
+              "type": "string"
+            },
             "default": []
           },
           "created_at": {
@@ -5903,19 +7395,33 @@
       },
       "PostOrderResponse": {
         "title": "PostOrderResponse",
-        "required": ["order", "status", "message"],
+        "required": [
+          "order",
+          "status",
+          "message"
+        ],
         "type": "object",
         "properties": {
           "order": {
             "$ref": "#/components/schemas/vital_core__schemas__db_schemas__lab_test__orderv2__ClientFacingOrder"
           },
-          "status": { "title": "Status", "type": "string" },
-          "message": { "title": "Message", "type": "string" }
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
         }
       },
       "ProfileInDb": {
         "title": "ProfileInDb",
-        "required": ["user_id", "source_id", "id"],
+        "required": [
+          "user_id",
+          "source_id",
+          "id"
+        ],
         "type": "object",
         "properties": {
           "data": {
@@ -5923,21 +7429,48 @@
             "type": "string",
             "format": "json-string"
           },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "priority_id": { "title": "Priority Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" }
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          }
         }
       },
       "ProviderLinkResponse": {
         "title": "ProviderLinkResponse",
-        "required": ["provider", "connected"],
+        "required": [
+          "provider",
+          "connected"
+        ],
         "type": "object",
         "properties": {
-          "provider": { "$ref": "#/components/schemas/PasswordProviders" },
-          "connected": { "title": "Connected", "type": "boolean" },
-          "provider_id": { "title": "Provider Id", "type": "string" }
+          "provider": {
+            "$ref": "#/components/schemas/PasswordProviders"
+          },
+          "connected": {
+            "title": "Connected",
+            "type": "boolean"
+          },
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          }
         },
         "example": {
           "provider": "zwift",
@@ -5978,11 +7511,22 @@
       },
       "QuantitySample": {
         "title": "QuantitySample",
-        "required": ["value", "start_date", "end_date", "unit"],
+        "required": [
+          "value",
+          "start_date",
+          "end_date",
+          "unit"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "string" },
-          "value": { "title": "Value", "type": "number" },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          },
           "start_date": {
             "title": "Start Date",
             "type": "string",
@@ -5993,29 +7537,50 @@
             "type": "string",
             "format": "date-time"
           },
-          "source_bundle": { "title": "Source Bundle", "type": "string" },
-          "product_type": { "title": "Product Type", "type": "string" },
-          "type": { "title": "Type", "type": "string" },
-          "unit": { "title": "Unit", "type": "string" },
-          "metadata": { "title": "Metadata", "type": "object" }
+          "source_bundle": {
+            "title": "Source Bundle",
+            "type": "string"
+          },
+          "product_type": {
+            "title": "Product Type",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "metadata": {
+            "title": "Metadata",
+            "type": "object"
+          }
         }
       },
       "RawActivity": {
         "title": "Activity Data",
-        "required": ["activity"],
+        "required": [
+          "activity"
+        ],
         "type": "object",
         "properties": {
           "activity": {
             "title": "Activity",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ActivityV2InDB" }
+            "items": {
+              "$ref": "#/components/schemas/ActivityV2InDB"
+            }
           }
         },
         "example": {
           "activity": [
             {
               "timestamp": "2022-08-04T12:42:44.847351+00:00",
-              "data": { "data": "...provider_specific_data" },
+              "data": {
+                "data": "...provider_specific_data"
+              },
               "provider_id": "e2b25f37-846e-49a9-bf5b-5bb24d62b289",
               "user_id": "8e837eec-0717-41df-b108-43f4f206582a",
               "source_id": 1,
@@ -6026,20 +7591,26 @@
       },
       "RawBody": {
         "title": "Body Data",
-        "required": ["body"],
+        "required": [
+          "body"
+        ],
         "type": "object",
         "properties": {
           "body": {
             "title": "Body",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/BodyV2InDB" }
+            "items": {
+              "$ref": "#/components/schemas/BodyV2InDB"
+            }
           }
         },
         "example": {
           "body": [
             {
               "timestamp": "2022-08-04T12:42:44.849767+00:00",
-              "data": { "data": "...provider_specific_data" },
+              "data": {
+                "data": "...provider_specific_data"
+              },
               "provider_id": "ed059fb6-3bb4-4c4b-9aae-0fec51224e06",
               "user_id": "9d2b6976-3226-40cc-8adc-e8c2b898e0de",
               "source_id": 1,
@@ -6050,19 +7621,25 @@
       },
       "RawDevices": {
         "title": "Raw Devices Data",
-        "required": ["devices"],
+        "required": [
+          "devices"
+        ],
         "type": "object",
         "properties": {
           "devices": {
             "title": "Devices",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/DeviceV2InDB" }
+            "items": {
+              "$ref": "#/components/schemas/DeviceV2InDB"
+            }
           }
         },
         "example": {
           "devices": [
             {
-              "data": { "data": "...provider_specific_data" },
+              "data": {
+                "data": "...provider_specific_data"
+              },
               "provider_id": "43afe365-c3ec-4ae5-bd65-8bbbbf169c42",
               "user_id": "e3477f69-acac-492f-a993-9d931d37f52d",
               "source_id": 1
@@ -6072,15 +7649,21 @@
       },
       "RawProfile": {
         "title": "Profile Data",
-        "required": ["profile"],
+        "required": [
+          "profile"
+        ],
         "type": "object",
         "properties": {
-          "profile": { "$ref": "#/components/schemas/ProfileInDb" }
+          "profile": {
+            "$ref": "#/components/schemas/ProfileInDb"
+          }
         },
         "example": {
           "profile": [
             {
-              "data": { "data": "...provider_specific_data" },
+              "data": {
+                "data": "...provider_specific_data"
+              },
               "provider_id": "d0a7670c-dff8-4026-a188-8f249fb92e13",
               "user_id": "c0847403-4b5c-434d-ac32-8f347dcc6c33",
               "source_id": 1
@@ -6090,20 +7673,26 @@
       },
       "RawSleep": {
         "title": "Raw Sleep data",
-        "required": ["sleep"],
+        "required": [
+          "sleep"
+        ],
         "type": "object",
         "properties": {
           "sleep": {
             "title": "Sleep",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/SleepV2InDB" }
+            "items": {
+              "$ref": "#/components/schemas/SleepV2InDB"
+            }
           }
         },
         "example": {
           "sleep": [
             {
               "timestamp": "2022-08-04T12:42:44.853437+00:00",
-              "data": { "data": "...provider_specific_data" },
+              "data": {
+                "data": "...provider_specific_data"
+              },
               "provider_id": "acddfb23-a2fd-417b-82ac-37c060074bef",
               "user_id": "8479b190-fff6-44cf-84f2-0e906457b343",
               "source_id": 1,
@@ -6114,20 +7703,26 @@
       },
       "RawWorkout": {
         "title": "Workouts Data",
-        "required": ["workouts"],
+        "required": [
+          "workouts"
+        ],
         "type": "object",
         "properties": {
           "workouts": {
             "title": "Workouts",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/WorkoutV2InDB" }
+            "items": {
+              "$ref": "#/components/schemas/WorkoutV2InDB"
+            }
           }
         },
         "example": {
           "workouts": [
             {
               "timestamp": "2022-08-04T12:42:44.857707+00:00",
-              "data": { "provider_specific": "..._data" },
+              "data": {
+                "provider_specific": "..._data"
+              },
               "provider_id": "61709202-ab4d-480a-8cc0-254e64d7c33e",
               "user_id": "ba6a785a-b3c3-4bda-ad8c-4571b67f6089",
               "source_id": 1,
@@ -6139,7 +7734,13 @@
       },
       "Region": {
         "title": "Region",
-        "enum": ["us", "eu", "sg", "de", "au"],
+        "enum": [
+          "us",
+          "eu",
+          "sg",
+          "de",
+          "au"
+        ],
         "type": "string",
         "description": "An enumeration."
       },
@@ -6185,26 +7786,72 @@
             "type": "string",
             "format": "json-string"
           },
-          "provider_id": { "title": "Provider Id", "type": "string" },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "priority_id": { "title": "Priority Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" },
-          "priority": { "title": "Priority", "type": "integer" }
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          },
+          "priority": {
+            "title": "Priority",
+            "type": "integer"
+          }
         }
       },
       "Source": {
         "title": "Provider",
-        "required": ["name", "slug", "description", "logo", "id"],
+        "required": [
+          "name",
+          "slug",
+          "description",
+          "logo",
+          "id"
+        ],
         "type": "object",
         "properties": {
-          "name": { "title": "Name", "type": "string" },
-          "slug": { "title": "Slug", "type": "string" },
-          "description": { "title": "Description", "type": "string" },
-          "logo": { "title": "Logo", "type": "string" },
-          "group": { "title": "Group", "type": "string" },
-          "oauth_url": { "title": "Oauth Url", "type": "string" },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "logo": {
+            "title": "Logo",
+            "type": "string"
+          },
+          "group": {
+            "title": "Group",
+            "type": "string"
+          },
+          "oauth_url": {
+            "title": "Oauth Url",
+            "type": "string"
+          },
           "auth_type": {
             "title": "Auth Type",
             "type": "string",
@@ -6215,7 +7862,10 @@
             "type": "boolean",
             "default": true
           },
-          "id": { "title": "Id", "type": "integer" }
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
         },
         "example": {
           "name": "Garmin",
@@ -6229,10 +7879,18 @@
       },
       "TestkitClientFacing": {
         "title": "TestkitClientFacing",
-        "required": ["id", "name", "description"],
+        "required": [
+          "id",
+          "name",
+          "description"
+        ],
         "type": "object",
         "properties": {
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
           "name": {
             "title": "Name",
             "type": "string",
@@ -6246,7 +7904,9 @@
           "markers": {
             "title": "Markers",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/MarkerClientFacing" },
+            "items": {
+              "$ref": "#/components/schemas/MarkerClientFacing"
+            },
             "description": "The lab markers that test kit tests for",
             "default": []
           },
@@ -6286,7 +7946,9 @@
       },
       "UserCreateBody": {
         "title": "UserCreateBody",
-        "required": ["client_user_id"],
+        "required": [
+          "client_user_id"
+        ],
         "type": "object",
         "properties": {
           "client_user_id": {
@@ -6298,12 +7960,18 @@
       },
       "UserRefreshErrorResponse": {
         "title": "UserRefreshErrorResponse",
-        "required": ["success", "user_id", "error"],
+        "required": [
+          "success",
+          "user_id",
+          "error"
+        ],
         "type": "object",
         "properties": {
           "success": {
             "title": "Success",
-            "enum": [false],
+            "enum": [
+              false
+            ],
             "type": "boolean",
             "description": "Whether operation was successful or not"
           },
@@ -6313,11 +7981,16 @@
             "description": "A unique ID representing the end user. Typically this will be a user ID from your application. Personally identifiable information, such as an email address or phone number, should not be used in the client_user_id.",
             "format": "uuid"
           },
-          "error": { "title": "Error", "type": "string" },
+          "error": {
+            "title": "Error",
+            "type": "string"
+          },
           "failed_sources": {
             "title": "Failed Sources",
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           }
         },
         "example": {
@@ -6339,7 +8012,9 @@
         "properties": {
           "success": {
             "title": "Success",
-            "enum": [true],
+            "enum": [
+              true
+            ],
             "type": "boolean",
             "description": "Whether operation was successful or not"
           },
@@ -6352,12 +8027,16 @@
           "refreshed_sources": {
             "title": "Refreshed Sources",
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           },
           "failed_sources": {
             "title": "Failed Sources",
             "type": "array",
-            "items": { "type": "string" }
+            "items": {
+              "type": "string"
+            }
           }
         },
         "example": {
@@ -6370,12 +8049,16 @@
             "Withings/vitals/blood_pressure",
             "Withings/activity"
           ],
-          "failed_sources": ["Oura/sleep"]
+          "failed_sources": [
+            "Oura/sleep"
+          ]
         }
       },
       "UserSuccessResponse": {
         "title": "UserSuccessResponse",
-        "required": ["success"],
+        "required": [
+          "success"
+        ],
         "type": "object",
         "properties": {
           "success": {
@@ -6384,25 +8067,51 @@
             "description": "Whether operation was successful or not"
           }
         },
-        "example": { "success": true }
+        "example": {
+          "success": true
+        }
       },
       "ValidationError": {
         "title": "ValidationError",
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "type": "object",
         "properties": {
           "loc": {
             "title": "Location",
             "type": "array",
-            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] }
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
           },
-          "msg": { "title": "Message", "type": "string" },
-          "type": { "title": "Error Type", "type": "string" }
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
         }
       },
       "VitalsResource": {
         "title": "VitalsResource",
-        "enum": ["blood_pressure", "blood_oxygen", "glucose", "heartrate"],
+        "enum": [
+          "blood_pressure",
+          "blood_oxygen",
+          "glucose",
+          "heartrate"
+        ],
         "description": "An enumeration."
       },
       "WorkoutV2InDB": {
@@ -6429,14 +8138,38 @@
             "type": "string",
             "format": "json-string"
           },
-          "provider_id": { "title": "Provider Id", "type": "string" },
-          "user_id": { "title": "User Id", "type": "string", "format": "uuid" },
-          "source_id": { "title": "Source Id", "type": "integer" },
-          "priority_id": { "title": "Priority Id", "type": "integer" },
-          "id": { "title": "Id", "type": "string", "format": "uuid" },
-          "sport_id": { "title": "Sport Id", "type": "integer" },
-          "source": { "$ref": "#/components/schemas/ClientFacingSource" },
-          "sport": { "$ref": "#/components/schemas/ClientFacingSport" }
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "sport_id": {
+            "title": "Sport Id",
+            "type": "integer"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          },
+          "sport": {
+            "$ref": "#/components/schemas/ClientFacingSport"
+          }
         }
       },
       "vital_core__schemas__db_schemas__lab_test__orderv2__ClientFacingOrder": {
@@ -6500,14 +8233,22 @@
           },
           "lab_test": {
             "title": "Lab Test",
-            "allOf": [{ "$ref": "#/components/schemas/LabTestInDB" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LabTestInDB"
+              }
+            ],
             "description": "The Vital Test associated with the order"
           },
           "details": {
             "title": "Details",
             "anyOf": [
-              { "$ref": "#/components/schemas/ClientFacingWalkInOrderDetails" },
-              { "$ref": "#/components/schemas/ClientFacingTestKitOrderDetails" }
+              {
+                "$ref": "#/components/schemas/ClientFacingWalkInOrderDetails"
+              },
+              {
+                "$ref": "#/components/schemas/ClientFacingTestKitOrderDetails"
+              }
             ]
           },
           "sample_id": {
@@ -6535,15 +8276,22 @@
           "events": {
             "title": "Events",
             "type": "array",
-            "items": { "$ref": "#/components/schemas/ClientFacingOrderEvent" }
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingOrderEvent"
+            }
           },
-          "status": { "$ref": "#/components/schemas/OrderV2TopLevelStatus" }
+          "status": {
+            "$ref": "#/components/schemas/OrderV2TopLevelStatus"
+          }
         },
         "example": {
           "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
           "team_id": "cbb64555-af07-46c1-be09-ef89308e9b60",
           "user_id": "94e2d9f2-d600-4a23-9f08-536df378e2c7",
-          "patient_details": { "dob": "2020-01-01", "gender": "male" },
+          "patient_details": {
+            "dob": "2020-01-01",
+            "gender": "male"
+          },
           "patient_address": {
             "receiver_name": "John Doe",
             "first_line": "123 Main St.",
@@ -6616,24 +8364,61 @@
         ],
         "type": "object",
         "properties": {
-          "receiver_name": { "title": "Receiver Name", "type": "string" },
-          "street": { "title": "Street", "type": "string" },
-          "street_number": { "title": "Street Number", "type": "string" },
-          "city": { "title": "City", "type": "string" },
-          "state": { "title": "State", "type": "string" },
-          "zip": { "title": "Zip", "type": "string" },
-          "country": { "title": "Country", "type": "string" },
-          "phone_number": { "title": "Phone Number", "type": "string" }
+          "receiver_name": {
+            "title": "Receiver Name",
+            "type": "string"
+          },
+          "street": {
+            "title": "Street",
+            "type": "string"
+          },
+          "street_number": {
+            "title": "Street Number",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "title": "Zip",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          }
         }
       },
       "vital_core__schemas__db_schemas__lab_test__patient__PatientDetails": {
         "title": "PatientDetails",
-        "required": ["dob", "gender"],
+        "required": [
+          "dob",
+          "gender"
+        ],
         "type": "object",
         "properties": {
-          "dob": { "title": "Dob", "type": "string", "format": "date-time" },
-          "gender": { "title": "Gender", "type": "string" },
-          "email": { "title": "Email", "type": "string" }
+          "dob": {
+            "title": "Dob",
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          }
         }
       },
       "vital_core__schemas__db_schemas__testkits__order__ClientFacingOrder": {
@@ -6688,7 +8473,11 @@
             "format": "date-time"
           },
           "status": {
-            "allOf": [{ "$ref": "#/components/schemas/OrderStatus" }],
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrderStatus"
+              }
+            ],
             "description": "Order status: ordered, transit_customer, out_for_delivery, with_customer, transit_lab, delivered_to_lab, processing_lab, completed, failure_to_deliver_to_customer, failure_to_deliver_to_lab, cancelled, do_not_process, unknown"
           },
           "testkit_id": {
@@ -6697,7 +8486,9 @@
             "description": "Testkit id",
             "format": "uuid"
           },
-          "testkit": { "$ref": "#/components/schemas/TestkitClientFacing" },
+          "testkit": {
+            "$ref": "#/components/schemas/TestkitClientFacing"
+          },
           "inbound_tracking_number": {
             "title": "Inbound Tracking Number",
             "type": "string",
@@ -6766,7 +8557,10 @@
           "outbound_tracking_url": "<outbound_tracking_url>",
           "outbound_courier": "usps",
           "inbound_courier": "usps",
-          "testkit": { "name": "CGM", "description": "Glucose CGM" }
+          "testkit": {
+            "name": "CGM",
+            "description": "Glucose CGM"
+          }
         }
       },
       "vital_core__schemas__db_schemas__testkits__order__PatientAddress": {
@@ -6782,24 +8576,61 @@
         ],
         "type": "object",
         "properties": {
-          "receiver_name": { "title": "Receiver Name", "type": "string" },
-          "street": { "title": "Street", "type": "string" },
-          "street_number": { "title": "Street Number", "type": "string" },
-          "city": { "title": "City", "type": "string" },
-          "state": { "title": "State", "type": "string" },
-          "zip": { "title": "Zip", "type": "string" },
-          "country": { "title": "Country", "type": "string" },
-          "phone_number": { "title": "Phone Number", "type": "string" }
+          "receiver_name": {
+            "title": "Receiver Name",
+            "type": "string"
+          },
+          "street": {
+            "title": "Street",
+            "type": "string"
+          },
+          "street_number": {
+            "title": "Street Number",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "title": "Zip",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "phone_number": {
+            "title": "Phone Number",
+            "type": "string"
+          }
         }
       },
       "vital_core__schemas__db_schemas__testkits__order__PatientDetails": {
         "title": "PatientDetails",
-        "required": ["dob", "gender"],
+        "required": [
+          "dob",
+          "gender"
+        ],
         "type": "object",
         "properties": {
-          "dob": { "title": "Dob", "type": "string", "format": "date-time" },
-          "gender": { "title": "Gender", "type": "string" },
-          "email": { "title": "Email", "type": "string" }
+          "dob": {
+            "title": "Dob",
+            "type": "string",
+            "format": "date-time"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          }
         }
       }
     }
