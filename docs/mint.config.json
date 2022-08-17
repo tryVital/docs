@@ -1,7 +1,10 @@
 {
   "name": "Vital",
   "favicon": "/favicon.svg",
-  "logo": { "dark": "/logo/dark.svg", "light": "/logo/light.svg" },
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
   "api": {
     "baseUrl": [
       "https://api.tryvital.io",
@@ -104,7 +107,10 @@
     },
     {
       "group": "Lab Testing",
-      "pages": ["lab/home/introduction", "lab/home/testing-modalities"]
+      "pages": [
+        "lab/home/introduction",
+        "lab/home/testing-modalities"
+      ]
     },
     {
       "group": "Workflow",
@@ -117,7 +123,9 @@
     },
     {
       "group": "Results",
-      "pages": ["lab/results/result-formats"]
+      "pages": [
+        "lab/results/result-formats"
+      ]
     },
     {
       "group": "User",
@@ -133,7 +141,9 @@
     },
     {
       "group": "Providers",
-      "pages": ["api-reference/providers"]
+      "pages": [
+        "api-reference/providers"
+      ]
     },
     {
       "group": "Link",
@@ -141,7 +151,8 @@
         "api-reference/link/generate-link-token",
         "api-reference/link/link-oauth-provider",
         "api-reference/link/link-password-provider",
-        "api-reference/link/link-email-provider"
+        "api-reference/link/link-email-provider",
+        "api-reference/link/link-demo-provider"
       ]
     },
     {
@@ -176,7 +187,10 @@
     },
     {
       "group": "Body",
-      "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
+      "pages": [
+        "api-reference/body/get-summary",
+        "api-reference/body/get-raw"
+      ]
     },
     {
       "group": "Vitals",
@@ -200,7 +214,9 @@
     },
     {
       "group": "Lab Tests",
-      "pages": ["api-reference/lab-tests"]
+      "pages": [
+        "api-reference/lab-tests"
+      ]
     },
     {
       "group": "Results",
