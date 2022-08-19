@@ -209,9 +209,10 @@
         "tags": [
           "link"
         ],
-        "summary": "Create Demo Connection",
-        "description": "POST Connect the given Vital user to a demo provider.",
-        "operationId": "create_demo_connection_v2_link_connect_demo_post",
+        "summary": "Connect Demo Provider",
+        "description": "Connect the given Vital user to a demo provider.",
+        "operationId": "connect_demo_provider_v2_link_connect_demo__post",
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -233,12 +234,12 @@
               }
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "400": {
+            "description": "Bad Request Error",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
+                  "$ref": "#/components/schemas/HTTPException"
                 }
               }
             }
