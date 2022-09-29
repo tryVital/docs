@@ -3,14 +3,12 @@
   "info": {
     "title": "Vital API",
     "description": "API for at-home health Wearables and Lab test API for digital health companies.",
-    "version": "0.1.188"
+    "version": "0.1.271"
   },
   "paths": {
     "/v2/link/token": {
       "post": {
-        "tags": [
-          "link"
-        ],
+        "tags": ["link"],
         "summary": "Generate Vital Link Token",
         "description": "Endpoint to generate a user link token, to be used throughout the vital\nlink process. The vital link token is a one time use token, that\nexpires after 10 minutes. If you would like vital-link widget to launch\nwith a specific provider, pass in a provider in the body. If you would\nlike to redirect to a custom url after successful or error connection,\npass in your own custom redirect_url parameter.",
         "operationId": "generate_vital_link_token_v2_link_token_post",
@@ -50,9 +48,7 @@
     },
     "/v2/link/provider/oauth/{oauth_provider}": {
       "get": {
-        "tags": [
-          "link"
-        ],
+        "tags": ["link"],
         "summary": "Get Oauth Provider",
         "description": "This endpoint generates an OAuth link for oauth provider",
         "operationId": "get_oauth_provider_v2_link_provider_oauth__oauth_provider__get",
@@ -92,9 +88,7 @@
     },
     "/v2/link/provider/password/{provider}": {
       "post": {
-        "tags": [
-          "link"
-        ],
+        "tags": ["link"],
         "summary": "Connect Individual Provider",
         "description": "This connects auth providers that are password based.",
         "operationId": "connect_individual_provider_v2_link_provider_password__provider__post",
@@ -149,9 +143,7 @@
     },
     "/v2/link/provider/email/{provider}": {
       "post": {
-        "tags": [
-          "link"
-        ],
+        "tags": ["link"],
         "summary": "Connect Email Auth Provider",
         "description": "This connects auth providers that are email based.",
         "operationId": "connect_email_auth_provider_v2_link_provider_email__provider__post",
@@ -206,9 +198,7 @@
     },
     "/v2/link/connect/demo": {
       "post": {
-        "tags": [
-          "link"
-        ],
+        "tags": ["link"],
         "summary": "Create Demo Connection",
         "description": "POST Connect the given Vital user to a demo provider.",
         "operationId": "create_demo_connection_v2_link_connect_demo_post",
@@ -248,9 +238,7 @@
     },
     "/v2/summary/profile/{user_id}": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Profile",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_v2_summary_profile__user_id__get",
@@ -302,9 +290,7 @@
         }
       },
       "post": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Post User Profile",
         "operationId": "post_user_profile_v2_summary_profile__user_id__post",
         "parameters": [
@@ -356,9 +342,7 @@
     },
     "/v2/summary/profile/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Profile Raw",
         "description": "Get Daily profile for user_id",
         "operationId": "get_user_profile_raw_v2_summary_profile__user_id__raw_get",
@@ -412,9 +396,7 @@
     },
     "/v2/summary/devices/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Devices Raw",
         "description": "Get Devices for user_id",
         "operationId": "get_user_devices_raw_v2_summary_devices__user_id__raw_get",
@@ -468,9 +450,7 @@
     },
     "/v2/summary/activity/{user_id}": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Activity",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_v2_summary_activity__user_id__get",
@@ -560,9 +540,7 @@
         }
       },
       "post": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Post User Activity",
         "operationId": "post_user_activity_v2_summary_activity__user_id__post",
         "parameters": [
@@ -614,9 +592,7 @@
     },
     "/v2/summary/activity/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Activity Raw",
         "description": "Get Daily Activity for user_id",
         "operationId": "get_user_activity_raw_v2_summary_activity__user_id__raw_get",
@@ -708,9 +684,7 @@
     },
     "/v2/summary/workouts/{user_id}": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Workouts",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_v2_summary_workouts__user_id__get",
@@ -800,9 +774,7 @@
         }
       },
       "post": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Post User Workout",
         "operationId": "post_user_workout_v2_summary_workouts__user_id__post",
         "parameters": [
@@ -854,9 +826,7 @@
     },
     "/v2/summary/workouts/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Workouts Raw",
         "description": "Get Daily workout for user_id",
         "operationId": "get_user_workouts_raw_v2_summary_workouts__user_id__raw_get",
@@ -948,9 +918,7 @@
     },
     "/v2/summary/sleep/{user_id}": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Sleep",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_v2_summary_sleep__user_id__get",
@@ -1040,9 +1008,7 @@
         }
       },
       "post": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Post User Sleep",
         "operationId": "post_user_sleep_v2_summary_sleep__user_id__post",
         "parameters": [
@@ -1094,9 +1060,7 @@
     },
     "/v2/summary/sleep/{user_id}/stream": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Sleep Stream",
         "description": "Get Daily sleep stream for user_id",
         "operationId": "get_user_sleep_stream_v2_summary_sleep__user_id__stream_get",
@@ -1188,9 +1152,7 @@
     },
     "/v2/summary/sleep/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Sleep Raw",
         "description": "Get Daily sleep for user_id",
         "operationId": "get_user_sleep_raw_v2_summary_sleep__user_id__raw_get",
@@ -1282,9 +1244,7 @@
     },
     "/v2/summary/body/{user_id}": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Body",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_v2_summary_body__user_id__get",
@@ -1374,9 +1334,7 @@
         }
       },
       "post": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Post User Body",
         "operationId": "post_user_body_v2_summary_body__user_id__post",
         "parameters": [
@@ -1428,9 +1386,7 @@
     },
     "/v2/summary/body/{user_id}/raw": {
       "get": {
-        "tags": [
-          "summary"
-        ],
+        "tags": ["summary"],
         "summary": "Get User Body Raw",
         "description": "Get Daily Body data for user_id",
         "operationId": "get_user_body_raw_v2_summary_body__user_id__raw_get",
@@ -1522,9 +1478,7 @@
     },
     "/v2/timeseries/sleep/{sleep_id}/stream": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get User Sleep Stream",
         "description": "Get Sleep stream for a user_id",
         "operationId": "get_user_sleep_stream_v2_timeseries_sleep__sleep_id__stream_get",
@@ -1565,9 +1519,7 @@
     },
     "/v2/timeseries/workouts/{workout_id}/stream": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get User Workouts",
         "operationId": "get_user_workouts_v2_timeseries_workouts__workout_id__stream_get",
         "parameters": [
@@ -1608,9 +1560,7 @@
     },
     "/v2/timeseries/{user_id}/blood_pressure": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Blood Pressure Data",
         "description": "Get blood pressure data for user.",
         "operationId": "get_blood_pressure_data_v2_timeseries__user_id__blood_pressure_get",
@@ -1704,9 +1654,7 @@
         }
       },
       "post": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Post User Blood Pressure",
         "operationId": "post_user_blood_pressure_v2_timeseries__user_id__blood_pressure_post",
         "parameters": [
@@ -1756,11 +1704,105 @@
         }
       }
     },
+    "/v2/timeseries/{user_id}/steps": {
+      "get": {
+        "tags": ["timeseries"],
+        "summary": "Get Timeseries V2 Resource Data",
+        "description": "Get timeseries data for user",
+        "operationId": "get_timeseries_v2_resource_data_v2_timeseries__user_id__steps_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Timeseries V2 Resource Data V2 Timeseries  User Id  Steps Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClientFacingTimeseries"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v2/timeseries/{user_id}/{resource}": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id___resource__get",
@@ -1862,9 +1904,7 @@
         }
       },
       "post": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Post User Vitals",
         "operationId": "post_user_vitals_v2_timeseries__user_id___resource__post",
         "parameters": [
@@ -1924,9 +1964,7 @@
     },
     "/v2/timeseries/{user_id}/heartrate": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__heartrate_get",
@@ -2024,9 +2062,7 @@
     },
     "/v2/timeseries/{user_id}/blood_oxygen": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__blood_oxygen_get",
@@ -2124,9 +2160,7 @@
     },
     "/v2/timeseries/{user_id}/ige": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__ige_get",
@@ -2224,9 +2258,7 @@
     },
     "/v2/timeseries/{user_id}/igg": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__igg_get",
@@ -2324,9 +2356,7 @@
     },
     "/v2/timeseries/{user_id}/glucose": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__glucose_get",
@@ -2424,9 +2454,7 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/triglycerides": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_triglycerides_get",
@@ -2524,9 +2552,7 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/ldl": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_ldl_get",
@@ -2624,9 +2650,7 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/hdl": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_hdl_get",
@@ -2724,9 +2748,7 @@
     },
     "/v2/timeseries/{user_id}/cholesterol/total": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_total_get",
@@ -2824,9 +2846,7 @@
     },
     "/v2/timeseries/{user_id}/cholesterol": {
       "get": {
-        "tags": [
-          "timeseries"
-        ],
+        "tags": ["timeseries"],
         "summary": "Get Timeseries Resource Data",
         "description": "Get timeseries data for user",
         "operationId": "get_timeseries_resource_data_v2_timeseries__user_id__cholesterol_get",
@@ -2924,9 +2944,7 @@
     },
     "/v2/user/": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Get Teams Users",
         "description": "GET All users for team.",
         "operationId": "get_teams_users_v2_user__get",
@@ -2959,11 +2977,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Teams Users V2 User  Get",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ClientFacingUser"
-                  }
+                  "$ref": "#/components/schemas/PaginatedUsersResponse"
                 }
               }
             }
@@ -2981,9 +2995,7 @@
         }
       },
       "post": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Create User",
         "description": "POST Create a Vital user given a client_user_id and returns the user_id.",
         "operationId": "create_user_v2_user__post",
@@ -3023,9 +3035,7 @@
     },
     "/v2/user/providers/{user_id}": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Get Connected Providers",
         "description": "GET Users connected providers",
         "operationId": "get_connected_providers_v2_user_providers__user_id__get",
@@ -3074,9 +3084,7 @@
     },
     "/v2/user/{user_id}": {
       "get": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Get User",
         "description": "GET User details given the user_id.",
         "operationId": "get_user_v2_user__user_id__get",
@@ -3116,9 +3124,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Delete User",
         "operationId": "delete_user_v2_user__user_id__delete",
         "parameters": [
@@ -3159,9 +3165,7 @@
     },
     "/v2/user/{user_id}/{provider}": {
       "delete": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Deregister Provider",
         "operationId": "deregister_provider_v2_user__user_id___provider__delete",
         "parameters": [
@@ -3210,9 +3214,7 @@
     },
     "/v2/user/refresh/{user_id}": {
       "post": {
-        "tags": [
-          "user"
-        ],
+        "tags": ["user"],
         "summary": "Refresh User Id",
         "description": "Trigger a manual refresh for a specific user",
         "operationId": "refresh_user_id_v2_user_refresh__user_id__post",
@@ -3264,9 +3266,7 @@
     },
     "/v2/providers/": {
       "get": {
-        "tags": [
-          "providers"
-        ],
+        "tags": ["providers"],
         "summary": "Get List Of Providers",
         "description": "Get Provider list",
         "operationId": "get_list_of_providers_v2_providers__get",
@@ -3290,9 +3290,7 @@
     },
     "/v2/testkit/orders": {
       "get": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Get Orders",
         "description": "Get testkit order for team",
         "operationId": "get_orders_v2_testkit_orders_get",
@@ -3406,9 +3404,7 @@
         }
       },
       "post": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders_post",
@@ -3448,9 +3444,7 @@
     },
     "/v2/testkit/orders/{order_id}": {
       "get": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Get Order",
         "description": "Get individual order",
         "operationId": "get_order_v2_testkit_orders__order_id__get",
@@ -3494,9 +3488,7 @@
     },
     "/v2/testkit/orders/": {
       "post": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Create Order",
         "description": "POST Create User Order",
         "operationId": "create_order_v2_testkit_orders__post",
@@ -3536,9 +3528,7 @@
     },
     "/v2/testkit/orders/{order_id}/cancel": {
       "post": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Cancel Order",
         "description": "DELETE Delete User Order",
         "operationId": "cancel_order_v2_testkit_orders__order_id__cancel_post",
@@ -3580,9 +3570,7 @@
     },
     "/v2/testkit/orders/{order_id}/results": {
       "get": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result",
         "description": "This endpoint returns the lab results in PDF format.",
         "operationId": "get_testkit_result_v2_testkit_orders__order_id__results_get",
@@ -3622,9 +3610,7 @@
     },
     "/v2/testkit/orders/{order_id}/test": {
       "post": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Test Testkit Process",
         "description": "Get available test kits.",
         "operationId": "test_testkit_process_v2_testkit_orders__order_id__test_post",
@@ -3664,9 +3650,7 @@
     },
     "/v2/testkit/orders/{order_id}/results/metadata": {
       "get": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result Metadata",
         "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
         "operationId": "get_testkit_result_metadata_v2_testkit_orders__order_id__results_metadata_get",
@@ -3708,9 +3692,7 @@
     },
     "/v2/testkit/orders/{order_id}/results/raw": {
       "get": {
-        "tags": [
-          "testkit_orders"
-        ],
+        "tags": ["testkit_orders"],
         "summary": "Get Testkit Result Raw",
         "description": "Return both metadata and raw json test data",
         "operationId": "get_testkit_result_raw_v2_testkit_orders__order_id__results_raw_get",
@@ -3752,9 +3734,7 @@
     },
     "/v3/lab_tests": {
       "get": {
-        "tags": [
-          "lab_tests"
-        ],
+        "tags": ["lab_tests"],
         "summary": "Get Lab Tests For Team",
         "description": "GET all the lab tests the team has access to.",
         "operationId": "get_lab_tests_for_team_v3_lab_tests_get",
@@ -3778,9 +3758,7 @@
     },
     "/v3/order/{order_id}": {
       "get": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Get Order",
         "description": "GET individual order by ID.",
         "operationId": "get_order_v3_order__order_id__get",
@@ -3824,9 +3802,7 @@
     },
     "/v3/order": {
       "post": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Create Order",
         "description": "POST create new order",
         "operationId": "create_order_v3_order_post",
@@ -3866,9 +3842,7 @@
     },
     "/v3/order/{order_id}/cancel": {
       "post": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Cancel Order",
         "description": "POST cancel order",
         "operationId": "cancel_order_v3_order__order_id__cancel_post",
@@ -3912,9 +3886,7 @@
     },
     "/v3/order/{order_id}/result/pdf": {
       "get": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Get Lab Test Result",
         "description": "This endpoint returns the lab results for the order.",
         "operationId": "get_lab_test_result_v3_order__order_id__result_pdf_get",
@@ -3954,9 +3926,7 @@
     },
     "/v3/order/{order_id}/result/metadata": {
       "get": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Get Lab Test Result Metadata",
         "description": "Return metadata related to order results, such as lab metadata,\nprovider and sample dates.",
         "operationId": "get_lab_test_result_metadata_v3_order__order_id__result_metadata_get",
@@ -3998,9 +3968,7 @@
     },
     "/v3/order/{order_id}/result": {
       "get": {
-        "tags": [
-          "order"
-        ],
+        "tags": ["order"],
         "summary": "Get Lab Test Result Raw",
         "description": "Return both metadata and raw json test data",
         "operationId": "get_lab_test_result_raw_v3_order__order_id__result_get",
@@ -4042,9 +4010,7 @@
     },
     "/v3/orders": {
       "get": {
-        "tags": [
-          "orders"
-        ],
+        "tags": ["orders"],
         "summary": "Get Orders",
         "description": "GET many orders with filters.",
         "operationId": "get_orders_v3_orders_get",
@@ -4154,7 +4120,9 @@
           "provider_id",
           "user_id",
           "source_id",
-          "id"
+          "priority_id",
+          "id",
+          "source"
         ],
         "type": "object",
         "properties": {
@@ -4175,7 +4143,7 @@
           "user_id": {
             "title": "User Id",
             "type": "string",
-            "format": "uuid"
+            "format": "uuid4"
           },
           "source_id": {
             "title": "Source Id",
@@ -4188,36 +4156,21 @@
           "id": {
             "title": "Id",
             "type": "string",
-            "format": "uuid"
+            "format": "uuid4"
           },
           "source": {
             "$ref": "#/components/schemas/ClientFacingSource"
-          },
-          "priority": {
-            "title": "Priority",
-            "type": "integer"
           }
         }
       },
       "BiologicalSex": {
         "title": "BiologicalSex",
-        "enum": [
-          "not_set",
-          "female",
-          "male",
-          "other"
-        ],
+        "enum": ["not_set", "female", "male", "other"],
         "description": "An enumeration."
       },
       "BodyV2InDB": {
         "title": "BodyV2InDB",
-        "required": [
-          "timestamp",
-          "provider_id",
-          "user_id",
-          "source_id",
-          "id"
-        ],
+        "required": ["timestamp", "provider_id", "user_id", "source_id", "id"],
         "type": "object",
         "properties": {
           "timestamp": {
@@ -4263,9 +4216,7 @@
       },
       "ClientActivityResponse": {
         "title": "Daily Activity",
-        "required": [
-          "activity"
-        ],
+        "required": ["activity"],
         "type": "object",
         "properties": {
           "activity": {
@@ -4279,7 +4230,7 @@
         "example": {
           "activity": [
             {
-              "date": "2022-08-19",
+              "date": "2022-09-29",
               "calories_total": 100,
               "calories_active": 2000,
               "steps": 10000,
@@ -4292,16 +4243,14 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "8044506c-0777-4594-9e46-b7a8695fc4cb"
+              "user_id": "65764c29-071e-41ef-a48d-231f1fe32a11"
             }
           ]
         }
       },
       "ClientBodyResponse": {
         "title": "ClientBodyResponse",
-        "required": [
-          "body"
-        ],
+        "required": ["body"],
         "type": "object",
         "properties": {
           "body": {
@@ -4315,8 +4264,8 @@
         "example": {
           "body": [
             {
-              "id": "ead73923-2ba2-4b76-b2ff-ae2ab1bac296",
-              "date": "2022-08-19",
+              "id": "b4712292-1a9b-414b-9ff8-bd418760b984",
+              "date": "2022-09-29",
               "weight": "80kg",
               "fat": "30%",
               "height": 183,
@@ -4325,19 +4274,14 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "121e7a24-0686-4094-a517-5b732e3192fa"
+              "user_id": "e029c7e8-d7cd-48b3-b2c8-20af104a50fb"
             }
           ]
         }
       },
       "ClientFacingActivity": {
         "title": "Daily Activity",
-        "required": [
-          "user_id",
-          "id",
-          "date",
-          "source"
-        ],
+        "required": ["user_id", "id", "date", "source"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -4407,10 +4351,15 @@
               }
             ],
             "description": "Source the data has come from."
+          },
+          "floors_climbed": {
+            "title": "Floors Climbed",
+            "type": "integer",
+            "description": "Number of floors climbed by the user.::count"
           }
         },
         "example": {
-          "date": "2022-08-19",
+          "date": "2022-09-29",
           "calories_total": 100,
           "calories_active": 2000,
           "steps": 10000,
@@ -4418,22 +4367,18 @@
           "low": 6400,
           "medium": 6400,
           "high": 6000,
+          "floors_climbed": 10,
           "source": {
             "name": "Oura",
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "fbb497ce-dcbe-48c0-a6ed-432937c4770e"
+          "user_id": "e4053e4e-3bfc-4d46-9bac-1dda91508653"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
         "title": "ClientFacingBloodPressureTimeseries",
-        "required": [
-          "timestamp",
-          "systolic",
-          "diastolic",
-          "unit"
-        ],
+        "required": ["timestamp", "systolic", "diastolic", "unit"],
         "type": "object",
         "properties": {
           "id": {
@@ -4464,7 +4409,7 @@
         },
         "example": {
           "id": 2,
-          "timestamp": "2022-08-19T16:14:08.631600+00:00",
+          "timestamp": "2022-09-29T07:43:57.611815+00:00",
           "systolic": "125",
           "diastolic": "75",
           "type": "cuff",
@@ -4473,12 +4418,7 @@
       },
       "ClientFacingBody": {
         "title": "ClientFacingBody",
-        "required": [
-          "user_id",
-          "id",
-          "date",
-          "source"
-        ],
+        "required": ["user_id", "id", "date", "source"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -4598,11 +4538,7 @@
       },
       "ClientFacingOrderEvent": {
         "title": "ClientFacingOrderEvent",
-        "required": [
-          "id",
-          "created_at",
-          "status"
-        ],
+        "required": ["id", "created_at", "status"],
         "type": "object",
         "properties": {
           "id": {
@@ -4621,10 +4557,7 @@
       },
       "ClientFacingProfile": {
         "title": "ClientFacingProfile",
-        "required": [
-          "user_id",
-          "id"
-        ],
+        "required": ["user_id", "id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -4654,15 +4587,15 @@
           }
         },
         "example": {
-          "id": "4d58fda0-d8dd-4ed4-9511-033a1875eb47",
-          "date": "2022-08-19",
+          "id": "133f6614-cfeb-4140-a90f-e4159ce29894",
+          "date": "2022-09-29",
           "height": 183,
           "source": {
             "name": "Oura",
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "84680a9c-08f6-48f5-89ef-aba02ba0222a"
+          "user_id": "269f42cc-c0a1-46c8-ab85-1e27b52a4f6b"
         }
       },
       "ClientFacingShipment": {
@@ -4723,7 +4656,7 @@
         },
         "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
         "example": {
-          "id": "f3aa62b5-c4b3-4d06-accc-5e3aa4771fee",
+          "id": "8a7ba0ac-b231-40e6-b971-e75f78ff8788",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "outbound_tracking_url": "<outbound_tracking_url>",
           "inbound_tracking_number": "<inbound_tracking_number>",
@@ -4876,10 +4809,10 @@
           }
         },
         "example": {
-          "id": "b741c155-ba83-4f08-967b-f995681143e3",
-          "date": "2022-08-19",
-          "bedtime_start": "2022-08-19T16:14:08.627036+00:00",
-          "bedtime_stop": "2022-08-19T16:14:08.627040+00:00",
+          "id": "c5f279f6-72e4-43c2-a508-2a33cea776f9",
+          "date": "2022-09-29",
+          "bedtime_start": "2022-09-29T07:43:57.594451+00:00",
+          "bedtime_stop": "2022-09-29T07:43:57.594475+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -4899,7 +4832,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "a4e74fbc-ebc8-404b-b870-60f7a9a8dc37"
+          "user_id": "928186b8-2459-4006-9395-dd8758dd7a65"
         }
       },
       "ClientFacingSleepStream": {
@@ -4939,36 +4872,36 @@
           "hrv": [
             {
               "id": 0,
-              "timestamp": "2022-08-19T16:14:08.626318+00:00",
-              "value": 99,
+              "timestamp": "2022-09-29T07:43:57.591971+00:00",
+              "value": 11,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 1,
-              "timestamp": "2022-08-19T16:14:38.626374+00:00",
-              "value": 36,
+              "timestamp": "2022-09-29T07:44:27.592132+00:00",
+              "value": 44,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 2,
-              "timestamp": "2022-08-19T16:15:08.626392+00:00",
-              "value": 93,
+              "timestamp": "2022-09-29T07:44:57.592187+00:00",
+              "value": 57,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 3,
-              "timestamp": "2022-08-19T16:15:38.626407+00:00",
-              "value": 40,
+              "timestamp": "2022-09-29T07:45:27.592240+00:00",
+              "value": 96,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 4,
-              "timestamp": "2022-08-19T16:16:08.626419+00:00",
-              "value": 82,
+              "timestamp": "2022-09-29T07:45:57.592284+00:00",
+              "value": 51,
               "type": "automatic",
               "unit": "rmssd"
             }
@@ -4976,36 +4909,36 @@
           "heartrate": [
             {
               "id": 0,
-              "timestamp": "2022-08-19T16:14:08.626434+00:00",
-              "value": 67,
+              "timestamp": "2022-09-29T07:43:57.592328+00:00",
+              "value": 173,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-08-19T16:14:38.626446+00:00",
-              "value": 78,
+              "timestamp": "2022-09-29T07:44:27.592369+00:00",
+              "value": 108,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-08-19T16:15:08.626460+00:00",
-              "value": 186,
+              "timestamp": "2022-09-29T07:44:57.592406+00:00",
+              "value": 78,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-08-19T16:15:38.626472+00:00",
-              "value": 10,
+              "timestamp": "2022-09-29T07:45:27.592444+00:00",
+              "value": 140,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-08-19T16:16:08.626483+00:00",
-              "value": 86,
+              "timestamp": "2022-09-29T07:45:57.592482+00:00",
+              "value": 4,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5013,36 +4946,36 @@
           "hypnogram": [
             {
               "id": 0,
-              "timestamp": "2022-08-19T16:14:08.626495+00:00",
-              "value": 3,
-              "type": "vital_hypnogram",
-              "unit": "vital_hypnogram"
-            },
-            {
-              "id": 1,
-              "timestamp": "2022-08-19T16:14:38.626506+00:00",
-              "value": 3,
-              "type": "vital_hypnogram",
-              "unit": "vital_hypnogram"
-            },
-            {
-              "id": 2,
-              "timestamp": "2022-08-19T16:15:08.626517+00:00",
+              "timestamp": "2022-09-29T07:43:57.592522+00:00",
               "value": 4,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
+              "id": 1,
+              "timestamp": "2022-09-29T07:44:27.592561+00:00",
+              "value": 0,
+              "type": "vital_hypnogram",
+              "unit": "vital_hypnogram"
+            },
+            {
+              "id": 2,
+              "timestamp": "2022-09-29T07:44:57.592596+00:00",
+              "value": 3,
+              "type": "vital_hypnogram",
+              "unit": "vital_hypnogram"
+            },
+            {
               "id": 3,
-              "timestamp": "2022-08-19T16:15:38.626529+00:00",
-              "value": 5,
+              "timestamp": "2022-09-29T07:45:27.592633+00:00",
+              "value": 2,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 4,
-              "timestamp": "2022-08-19T16:16:08.626540+00:00",
-              "value": 2,
+              "timestamp": "2022-09-29T07:45:57.592671+00:00",
+              "value": 4,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             }
@@ -5050,36 +4983,36 @@
           "respiratory_rate": [
             {
               "id": 0,
-              "timestamp": "2022-08-19T16:14:08.626554+00:00",
-              "value": 14,
+              "timestamp": "2022-09-29T07:43:57.592709+00:00",
+              "value": 10,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-08-19T16:14:38.626567+00:00",
-              "value": 14,
+              "timestamp": "2022-09-29T07:44:27.592754+00:00",
+              "value": 25,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-08-19T16:15:08.626578+00:00",
-              "value": 19,
+              "timestamp": "2022-09-29T07:44:57.592789+00:00",
+              "value": 16,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-08-19T16:15:38.626589+00:00",
-              "value": 22,
+              "timestamp": "2022-09-29T07:45:27.592826+00:00",
+              "value": 13,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-08-19T16:16:08.626600+00:00",
-              "value": 14,
+              "timestamp": "2022-09-29T07:45:57.592865+00:00",
+              "value": 26,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5088,11 +5021,7 @@
       },
       "ClientFacingSource": {
         "title": "Provider",
-        "required": [
-          "name",
-          "slug",
-          "logo"
-        ],
+        "required": ["name", "slug", "logo"],
         "type": "object",
         "properties": {
           "name": {
@@ -5119,11 +5048,7 @@
       },
       "ClientFacingSourceDetailed": {
         "title": "Provider",
-        "required": [
-          "name",
-          "slug",
-          "description"
-        ],
+        "required": ["name", "slug", "description"],
         "type": "object",
         "properties": {
           "name": {
@@ -5163,19 +5088,12 @@
           "slug": "oura",
           "logo": "https://logo_url.com",
           "auth_type": "oauth",
-          "supported_resources": [
-            "workouts",
-            "sleep"
-          ]
+          "supported_resources": ["workouts", "sleep"]
         }
       },
       "ClientFacingSport": {
         "title": "ClientFacingSport",
-        "required": [
-          "id",
-          "name",
-          "slug"
-        ],
+        "required": ["id", "name", "slug"],
         "type": "object",
         "properties": {
           "id": {
@@ -5380,90 +5298,26 @@
           }
         },
         "example": {
-          "cadence": [
-            10,
-            12,
-            12,
-            11,
-            10
-          ],
-          "time": [
-            1626625123,
-            1626625140,
-            1626625145,
-            1626625150,
-            162662560
-          ],
-          "heartrate": [
-            120,
-            125,
-            125,
-            130,
-            135
-          ],
-          "distance": [
-            12,
-            15,
-            18,
-            20,
-            25
-          ],
-          "power": [
-            100,
-            100,
-            100,
-            100,
-            100
-          ],
-          "altitude": [
-            10,
-            20,
-            30,
-            40,
-            50
-          ],
-          "velocity_smooth": [
-            10,
-            20,
-            30,
-            40,
-            50
-          ],
-          "lat": [
-            10,
-            20,
-            30,
-            40,
-            50
-          ],
-          "lng": [
-            10,
-            20,
-            30,
-            40,
-            50
-          ],
-          "resistance": [
-            10,
-            20,
-            30,
-            40,
-            50
-          ]
+          "cadence": [10, 12, 12, 11, 10],
+          "time": [1626625123, 1626625140, 1626625145, 1626625150, 162662560],
+          "heartrate": [120, 125, 125, 130, 135],
+          "distance": [12, 15, 18, 20, 25],
+          "power": [100, 100, 100, 100, 100],
+          "altitude": [10, 20, 30, 40, 50],
+          "velocity_smooth": [10, 20, 30, 40, 50],
+          "lat": [10, 20, 30, 40, 50],
+          "lng": [10, 20, 30, 40, 50],
+          "resistance": [10, 20, 30, 40, 50]
         }
       },
       "ClientFacingTestKitOrderDetails": {
         "title": "ClientFacingTestKitOrderDetails",
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "type": "object",
         "properties": {
           "type": {
             "title": "Type",
-            "enum": [
-              "testkit"
-            ],
+            "enum": ["testkit"],
             "type": "string"
           },
           "data": {
@@ -5473,11 +5327,7 @@
       },
       "ClientFacingTestkitOrder": {
         "title": "ClientFacingTestkitOrder",
-        "required": [
-          "id",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "created_at", "updated_at"],
         "type": "object",
         "properties": {
           "id": {
@@ -5508,9 +5358,9 @@
         },
         "description": "Schema for a testkit order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "b1b1e9f0-d6bd-4b2a-85e5-52f6fd22e715",
+          "id": "298c01d9-e15e-4fa1-be96-2dae45555b7e",
           "shipment": {
-            "id": "ede0f4e5-edfe-45f2-b826-8b440b10eaae",
+            "id": "ca028220-2a92-4f6a-b4ce-543749c69c40",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "outbound_tracking_url": "<outbound_tracking_url>",
             "inbound_tracking_number": "<inbound_tracking_number>",
@@ -5527,10 +5377,7 @@
       },
       "ClientFacingTimeseries": {
         "title": "ClientFacingTimeseries",
-        "required": [
-          "timestamp",
-          "value"
-        ],
+        "required": ["timestamp", "value"],
         "type": "object",
         "properties": {
           "id": {
@@ -5558,56 +5405,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-08-19T16:14:07.416526+00:00",
+            "timestamp": "2022-09-29T07:43:49.873860+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-08-19T16:14:07.416543+00:00",
+            "timestamp": "2022-09-29T07:43:49.873921+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-08-19T16:14:07.416547+00:00",
+            "timestamp": "2022-09-29T07:43:49.873940+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-08-19T16:14:07.416550+00:00",
+            "timestamp": "2022-09-29T07:43:49.873955+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-08-19T16:14:07.416553+00:00",
+            "timestamp": "2022-09-29T07:43:49.873969+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-08-19T16:14:07.416559+00:00",
+            "timestamp": "2022-09-29T07:43:49.873984+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-08-19T16:14:07.416562+00:00",
+            "timestamp": "2022-09-29T07:43:49.873997+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-08-19T16:14:07.416564+00:00",
+            "timestamp": "2022-09-29T07:43:49.874039+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -5665,9 +5512,9 @@
           }
         },
         "example": {
-          "user_id": "8486c355-8190-40eb-bf3a-11eda25ed3bb",
-          "team_id": "b8df4443-6a91-4d40-a472-dc9ed4c03975",
-          "client_user_id": "10073503-e3f4-4ba6-9d8d-b4253daace78",
+          "user_id": "ebac2b99-9985-4053-92f3-87cf61c33c93",
+          "team_id": "697d4660-5117-4101-bc11-a70f2b58d63e",
+          "client_user_id": "81c1bb6b-dff5-4de6-a1af-be5558dd9f48",
           "connected_sources": [
             {
               "source": {
@@ -5675,17 +5522,14 @@
                 "slug": "oura",
                 "logo": "logo_url"
               },
-              "created_on": "2022-08-19T16:14:08.532475+00:00"
+              "created_on": "2022-09-29T07:43:57.029082+00:00"
             }
           ]
         }
       },
       "ClientFacingUserKey": {
         "title": "ClientFacingUserKey",
-        "required": [
-          "user_id",
-          "client_user_id"
-        ],
+        "required": ["user_id", "client_user_id"],
         "type": "object",
         "properties": {
           "user_id": {
@@ -5708,22 +5552,18 @@
           }
         },
         "example": {
-          "client_user_id": "f51657b8-8ff3-450f-8803-130c8e8d9276",
-          "user_id": "49201d90-02c3-48e4-9dec-a99914978fea"
+          "client_user_id": "cad71806-c173-4ff8-a047-11e0a46907d5",
+          "user_id": "e872a5c1-0add-4a07-a0ef-5558a04a3781"
         }
       },
       "ClientFacingWalkInOrderDetails": {
         "title": "ClientFacingWalkInOrderDetails",
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "type": "object",
         "properties": {
           "type": {
             "title": "Type",
-            "enum": [
-              "walk_in_test"
-            ],
+            "enum": ["walk_in_test"],
             "type": "string"
           },
           "data": {
@@ -5733,11 +5573,7 @@
       },
       "ClientFacingWalkInTestOrder": {
         "title": "ClientFacingWalkInTestOrder",
-        "required": [
-          "id",
-          "created_at",
-          "updated_at"
-        ],
+        "required": ["id", "created_at", "updated_at"],
         "type": "object",
         "properties": {
           "id": {
@@ -5759,7 +5595,7 @@
         },
         "description": "Schema for a walk-in test order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "d43d313b-5535-477c-b6ff-f3856743eaea",
+          "id": "cf1749a7-2a78-4da6-96e9-67b30e639443",
           "created_at": "2020-01-01T00:00:00Z",
           "updated_at": "2020-01-01T00:00:00Z"
         }
@@ -5925,12 +5761,12 @@
           }
         },
         "example": {
-          "id": "8b67b6b3-66e4-4ece-9d53-819d891dc220",
+          "id": "db57c3a8-2812-4101-bc0a-b769e4faf196",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-08-19T15:14:07.445716+00:00",
-          "time_end": "2022-08-19T16:14:07.445757+00:00",
+          "time_start": "2022-09-29T06:43:57.644143+00:00",
+          "time_end": "2022-09-29T07:43:57.644266+00:00",
           "calories": 300,
           "sport": {
             "id": 1,
@@ -5941,14 +5777,8 @@
             "slug": "strava",
             "logo": "https://logo_url.com"
           },
-          "hr_zones": [
-            100,
-            90,
-            10,
-            10,
-            200
-          ],
-          "user_id": "09c8f26e-9607-413c-89f6-440194182432",
+          "hr_zones": [100, 90, 10, 10, 200],
+          "user_id": "cd2204a8-b5de-492a-a946-4b2bcd9e09ac",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -5966,9 +5796,7 @@
       },
       "ClientSleepResponse": {
         "title": "Body Composition Data",
-        "required": [
-          "sleep"
-        ],
+        "required": ["sleep"],
         "type": "object",
         "properties": {
           "sleep": {
@@ -5982,10 +5810,10 @@
         "example": {
           "sleep": [
             {
-              "id": "3b8abb8f-9b27-458a-81e8-7abf65dd4d0e",
-              "date": "2022-08-19",
-              "bedtime_start": "2022-08-19T16:14:08.628981+00:00",
-              "bedtime_stop": "2022-08-19T16:14:08.628985+00:00",
+              "id": "8fb84d0e-9b74-47b5-852c-a837d2becbae",
+              "date": "2022-09-29",
+              "bedtime_start": "2022-09-29T07:43:57.601816+00:00",
+              "bedtime_stop": "2022-09-29T07:43:57.601842+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -6005,16 +5833,14 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "0b167821-8d2a-430e-95ae-880285ecfe84"
+              "user_id": "6b43b799-1c37-48cb-a071-045267f07543"
             }
           ]
         }
       },
       "ClientWorkoutResponse": {
         "title": "ClientWorkoutResponse",
-        "required": [
-          "workouts"
-        ],
+        "required": ["workouts"],
         "type": "object",
         "properties": {
           "workouts": {
@@ -6027,12 +5853,12 @@
         },
         "example": {
           "workouts": {
-            "id": "2d869f51-e356-4590-8f54-090fb88e2e56",
+            "id": "2350b77b-2d03-42dc-b095-eae4f756e8dd",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-08-19T15:14:07.446562+00:00",
-            "time_end": "2022-08-19T16:14:07.446583+00:00",
+            "time_start": "2022-09-29T06:43:57.649224+00:00",
+            "time_end": "2022-09-29T07:43:57.649346+00:00",
             "calories": 300,
             "sport": {
               "id": 1,
@@ -6043,14 +5869,8 @@
               "slug": "strava",
               "logo": "https://logo_url.com"
             },
-            "hr_zones": [
-              100,
-              90,
-              10,
-              10,
-              200
-            ],
-            "user_id": "d00fbf99-3c9a-4475-aa39-c00dd7ad49c0",
+            "hr_zones": [100, 90, 10, 10, 200],
+            "user_id": "8c193353-52af-48d9-8724-49a3e7f6e7d1",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -6070,10 +5890,7 @@
       },
       "ConnectedSourceClientFacing": {
         "title": "ConnectedSourceClientFacing",
-        "required": [
-          "source",
-          "created_on"
-        ],
+        "required": ["source", "created_on"],
         "type": "object",
         "properties": {
           "source": {
@@ -6095,9 +5912,7 @@
       },
       "ConnectionStatus": {
         "title": "ConnectionStatus",
-        "required": [
-          "success"
-        ],
+        "required": ["success"],
         "type": "object",
         "properties": {
           "success": {
@@ -6147,24 +5962,19 @@
       },
       "DataStage": {
         "title": "DataStage",
-        "enum": [
-          "daily",
-          "historical"
-        ],
+        "enum": ["daily", "historical"],
         "type": "string",
         "description": "An enumeration."
       },
       "DemoConnectionCreationPayload": {
         "title": "DemoConnectionCreationPayload",
-        "required": [
-          "provider"
-        ],
+        "required": ["user_id", "provider"],
         "type": "object",
         "properties": {
           "user_id": {
             "title": "User Id",
             "type": "string",
-            "description": "Filter by user ID.",
+            "description": "Vital user ID",
             "format": "uuid4"
           },
           "provider": {
@@ -6179,10 +5989,7 @@
       },
       "DemoConnectionStatus": {
         "title": "DemoConnectionStatus",
-        "required": [
-          "success",
-          "detail"
-        ],
+        "required": ["success", "detail"],
         "type": "object",
         "properties": {
           "success": {
@@ -6201,12 +6008,7 @@
       },
       "DeviceV2InDB": {
         "title": "DeviceV2InDB",
-        "required": [
-          "provider_id",
-          "user_id",
-          "source_id",
-          "id"
-        ],
+        "required": ["provider_id", "user_id", "source_id", "id"],
         "type": "object",
         "properties": {
           "data": {
@@ -6239,9 +6041,7 @@
       },
       "EmailProviderAuthLink": {
         "title": "EmailProviderAuthLink",
-        "required": [
-          "email"
-        ],
+        "required": ["email"],
         "type": "object",
         "properties": {
           "email": {
@@ -6258,20 +6058,13 @@
       },
       "EmailProviders": {
         "title": "EmailProviders",
-        "enum": [
-          "freestyle_libre"
-        ],
+        "enum": ["freestyle_libre"],
         "type": "string",
         "description": "An enumeration."
       },
       "GetOrdersResponse": {
         "title": "GetOrdersResponse",
-        "required": [
-          "orders",
-          "total",
-          "page",
-          "size"
-        ],
+        "required": ["orders", "total", "page", "size"],
         "type": "object",
         "properties": {
           "orders": {
@@ -6310,10 +6103,7 @@
       },
       "IndividualProviderData": {
         "title": "IndividualProviderData",
-        "required": [
-          "username",
-          "password"
-        ],
+        "required": ["username", "password"],
         "type": "object",
         "properties": {
           "username": {
@@ -6330,13 +6120,7 @@
       },
       "LabClientFacing": {
         "title": "LabClientFacing",
-        "required": [
-          "slug",
-          "name",
-          "first_line_address",
-          "city",
-          "zipcode"
-        ],
+        "required": ["slug", "name", "first_line_address", "city", "zipcode"],
         "type": "object",
         "properties": {
           "slug": {
@@ -6481,10 +6265,7 @@
       },
       "LabResultsRaw": {
         "title": "LabResultsRaw",
-        "required": [
-          "metadata",
-          "results"
-        ],
+        "required": ["metadata", "results"],
         "type": "object",
         "properties": {
           "metadata": {
@@ -6606,26 +6387,19 @@
       },
       "LabTestMethod": {
         "title": "LabTestMethod",
-        "enum": [
-          "testkit",
-          "walk_in_test"
-        ],
+        "enum": ["testkit", "walk_in_test"],
         "type": "string",
         "description": "The method used to perform a lab test."
       },
       "LabTestSampleType": {
         "title": "LabTestSampleType",
-        "enum": [
-          "dried_blood_spot"
-        ],
+        "enum": ["dried_blood_spot"],
         "type": "string",
         "description": "The type of sample used to perform a lab test."
       },
       "LinkTokenExchange": {
         "title": "LinkTokenExchange",
-        "required": [
-          "user_key"
-        ],
+        "required": ["user_key"],
         "type": "object",
         "properties": {
           "user_key": {
@@ -6652,9 +6426,7 @@
       },
       "LinkTokenExchangeResponse": {
         "title": "LinkTokenExchangeResponse",
-        "required": [
-          "link_token"
-        ],
+        "required": ["link_token"],
         "type": "object",
         "properties": {
           "link_token": {
@@ -6731,11 +6503,7 @@
       },
       "ManualActivityCreationPayload": {
         "title": "ManualActivityCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -6765,10 +6533,7 @@
       },
       "ManualBloodPressureCreation": {
         "title": "ManualBloodPressureCreation",
-        "required": [
-          "diastolic",
-          "systolic"
-        ],
+        "required": ["diastolic", "systolic"],
         "type": "object",
         "properties": {
           "diastolic": {
@@ -6784,11 +6549,7 @@
       },
       "ManualBloodPressureCreationPayload": {
         "title": "ManualBloodPressureCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -6818,10 +6579,7 @@
       },
       "ManualBodyCreationIntermediate": {
         "title": "ManualBodyCreationIntermediate",
-        "required": [
-          "body_mass",
-          "body_fat_percentage"
-        ],
+        "required": ["body_mass", "body_fat_percentage"],
         "type": "object",
         "properties": {
           "body_mass": {
@@ -6842,11 +6600,7 @@
       },
       "ManualBodyCreationPayload": {
         "title": "ManualBodyCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -6890,11 +6644,7 @@
       },
       "ManualProfileCreationPayload": {
         "title": "ManualProfileCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -7007,11 +6757,7 @@
       },
       "ManualSleepCreationPayload": {
         "title": "ManualSleepCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -7041,11 +6787,7 @@
       },
       "ManualTimeseriesCreationPayload": {
         "title": "ManualTimeseriesCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -7139,11 +6881,7 @@
       },
       "ManualWorkoutCreationPayload": {
         "title": "ManualWorkoutCreationPayload",
-        "required": [
-          "stage",
-          "provider",
-          "data"
-        ],
+        "required": ["stage", "provider", "data"],
         "type": "object",
         "properties": {
           "stage": {
@@ -7173,10 +6911,7 @@
       },
       "MarkerClientFacing": {
         "title": "MarkerClientFacing",
-        "required": [
-          "name",
-          "slug"
-        ],
+        "required": ["name", "slug"],
         "type": "object",
         "properties": {
           "name": {
@@ -7195,12 +6930,7 @@
       },
       "MarkerInDB": {
         "title": "MarkerInDB",
-        "required": [
-          "name",
-          "slug",
-          "description",
-          "id"
-        ],
+        "required": ["name", "slug", "description", "id"],
         "type": "object",
         "properties": {
           "name": {
@@ -7248,11 +6978,7 @@
       },
       "OrderResponse": {
         "title": "OrderResponse",
-        "required": [
-          "order",
-          "status",
-          "message"
-        ],
+        "required": ["order", "status", "message"],
         "type": "object",
         "properties": {
           "order": {
@@ -7269,13 +6995,13 @@
         },
         "example": {
           "order": {
-            "id": "d05e3abd-5ae4-431b-bb56-092e003514f5",
-            "team_id": "f489d8de-d39f-4424-bee8-8f994f58526a",
-            "created_on": "2022-08-19T16:14:08.602712+00:00",
-            "updated_on": "2022-08-19T16:14:08.602718+00:00",
+            "id": "397cab18-3058-44a7-9a88-720357aac001",
+            "team_id": "28c8e4be-adbe-4caa-8d70-bc7f562f4ac8",
+            "created_on": "2022-09-29T07:43:57.370623+00:00",
+            "updated_on": "2022-09-29T07:43:57.370663+00:00",
             "status": "ordered",
-            "user_id": "6e23e3e1-4bf5-424a-aae7-61bad97050cb",
-            "testkit_id": "432caad0-f6fd-4e9f-bc52-473fbc6fb1b3",
+            "user_id": "2e222b4a-9930-47ec-88f9-24bb1623f74b",
+            "testkit_id": "3bc7057d-e6c3-4a24-83be-0debd0c0b005",
             "inbound_tracking_number": "<inbound_tracking_number>",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -7401,12 +7127,7 @@
       },
       "OrdersResponse": {
         "title": "OrdersResponse",
-        "required": [
-          "orders",
-          "total",
-          "page",
-          "size"
-        ],
+        "required": ["orders", "total", "page", "size"],
         "type": "object",
         "properties": {
           "orders": {
@@ -7432,13 +7153,13 @@
         "example": {
           "orders": [
             {
-              "id": "6130d9e5-1801-471e-9bec-96699e0abe51",
-              "team_id": "0d28e194-20b5-4f29-985f-ef7dc00925d5",
-              "created_on": "2022-08-19T16:14:08.603886+00:00",
-              "updated_on": "2022-08-19T16:14:08.603899+00:00",
+              "id": "577f1578-68d9-437f-bd39-a3b9e9a4ce4c",
+              "team_id": "ff7bfe76-ccd1-4f4d-b04c-99bd1a1551bb",
+              "created_on": "2022-09-29T07:43:57.374390+00:00",
+              "updated_on": "2022-09-29T07:43:57.374434+00:00",
               "status": "ordered",
-              "user_id": "914df90b-dae1-464f-b4db-d7389859fa46",
-              "testkit_id": "9092666c-4e96-4ad7-9194-46c697265da0",
+              "user_id": "1a4a58b1-4e93-4c1c-a3df-dbbfe8c661b1",
+              "testkit_id": "1325b16b-ef22-4421-a62c-daa92e85516e",
               "testkit": {
                 "name": "CGM",
                 "description": "Glucose CGM"
@@ -7448,6 +7169,32 @@
           "total": 14,
           "page": 1,
           "size": 50
+        }
+      },
+      "PaginatedUsersResponse": {
+        "title": "PaginatedUsersResponse",
+        "required": ["users", "total", "offset", "limit"],
+        "type": "object",
+        "properties": {
+          "users": {
+            "title": "Users",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientFacingUser"
+            }
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          }
         }
       },
       "PasswordProviders": {
@@ -7460,19 +7207,15 @@
           "eight_sleep",
           "beurer_api",
           "dexcom",
-          "hammerhead"
+          "hammerhead",
+          "my_fitness_pal"
         ],
         "type": "string",
         "description": "An enumeration."
       },
       "Physician": {
         "title": "Physician",
-        "required": [
-          "first_name",
-          "last_name",
-          "npi",
-          "id"
-        ],
+        "required": ["first_name", "last_name", "npi", "id"],
         "type": "object",
         "properties": {
           "first_name": {
@@ -7518,11 +7261,7 @@
       },
       "PhysicianBase": {
         "title": "PhysicianBase",
-        "required": [
-          "first_name",
-          "last_name",
-          "npi"
-        ],
+        "required": ["first_name", "last_name", "npi"],
         "type": "object",
         "properties": {
           "first_name": {
@@ -7563,11 +7302,7 @@
       },
       "PostOrderResponse": {
         "title": "PostOrderResponse",
-        "required": [
-          "order",
-          "status",
-          "message"
-        ],
+        "required": ["order", "status", "message"],
         "type": "object",
         "properties": {
           "order": {
@@ -7585,11 +7320,7 @@
       },
       "ProfileInDb": {
         "title": "ProfileInDb",
-        "required": [
-          "user_id",
-          "source_id",
-          "id"
-        ],
+        "required": ["user_id", "source_id", "id"],
         "type": "object",
         "properties": {
           "data": {
@@ -7622,10 +7353,7 @@
       },
       "ProviderLinkResponse": {
         "title": "ProviderLinkResponse",
-        "required": [
-          "provider",
-          "connected"
-        ],
+        "required": ["provider", "connected"],
         "type": "object",
         "properties": {
           "provider": {
@@ -7672,19 +7400,15 @@
           "accuchek_ble",
           "contour_ble",
           "dexcom",
-          "hammerhead"
+          "hammerhead",
+          "my_fitness_pal"
         ],
         "type": "string",
         "description": "An enumeration."
       },
       "QuantitySample": {
         "title": "QuantitySample",
-        "required": [
-          "value",
-          "start_date",
-          "end_date",
-          "unit"
-        ],
+        "required": ["value", "start_date", "end_date", "unit"],
         "type": "object",
         "properties": {
           "id": {
@@ -7729,9 +7453,7 @@
       },
       "RawActivity": {
         "title": "Activity Data",
-        "required": [
-          "activity"
-        ],
+        "required": ["activity"],
         "type": "object",
         "properties": {
           "activity": {
@@ -7745,12 +7467,12 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-08-19T16:14:07.429256+00:00",
+              "timestamp": "2022-09-29T07:43:50.016056+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "78bb6956-e121-4590-a6aa-2ca5efd1732d",
-              "user_id": "f8dcac6c-9e4c-410a-9dcd-2d38e844823b",
+              "provider_id": "1469c33a-f9b1-4d3e-94e0-4730630d7c86",
+              "user_id": "7a1fda6c-5d37-4702-bef2-9c07970926b3",
               "source_id": 1,
               "priority_id": 1
             }
@@ -7759,9 +7481,7 @@
       },
       "RawBody": {
         "title": "Body Data",
-        "required": [
-          "body"
-        ],
+        "required": ["body"],
         "type": "object",
         "properties": {
           "body": {
@@ -7775,12 +7495,12 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-08-19T16:14:07.431284+00:00",
+              "timestamp": "2022-09-29T07:43:50.026270+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "8616f542-3a3a-4465-bfc4-78ebd288f21f",
-              "user_id": "35e8fd0a-8aaa-4349-9ca3-a69738a29152",
+              "provider_id": "0c2a3b74-72fa-49bf-82ac-b15e2ac6248e",
+              "user_id": "1521661d-0800-4db5-8ef6-3e30151bdbee",
               "source_id": 1,
               "priority_id": 1
             }
@@ -7789,9 +7509,7 @@
       },
       "RawDevices": {
         "title": "Raw Devices Data",
-        "required": [
-          "devices"
-        ],
+        "required": ["devices"],
         "type": "object",
         "properties": {
           "devices": {
@@ -7808,8 +7526,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "f0352508-70c1-4325-8cc6-67201d1e3ab7",
-              "user_id": "735cb241-9049-4565-9757-3d327926863f",
+              "provider_id": "8f3c529e-18b7-4b80-b358-d3d7b56c2f0c",
+              "user_id": "3143e958-0e08-4354-9e02-c0771e11b8bb",
               "source_id": 1
             }
           ]
@@ -7817,9 +7535,7 @@
       },
       "RawProfile": {
         "title": "Profile Data",
-        "required": [
-          "profile"
-        ],
+        "required": ["profile"],
         "type": "object",
         "properties": {
           "profile": {
@@ -7832,8 +7548,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "d8c16265-3cbd-4fce-a25a-34bd0d9ee774",
-              "user_id": "367ba5b4-fc31-4eae-b460-a663993e847a",
+              "provider_id": "29e79d22-9a03-4b5d-a765-9a3116bd2bf8",
+              "user_id": "9a686dc2-1114-43d8-a967-b34dc530a386",
               "source_id": 1
             }
           ]
@@ -7841,9 +7557,7 @@
       },
       "RawSleep": {
         "title": "Raw Sleep data",
-        "required": [
-          "sleep"
-        ],
+        "required": ["sleep"],
         "type": "object",
         "properties": {
           "sleep": {
@@ -7857,12 +7571,12 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-08-19T16:14:07.435244+00:00",
+              "timestamp": "2022-09-29T07:43:50.086270+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "8567f351-8241-4e10-88c9-02bab8370e47",
-              "user_id": "6eceb050-8fb6-4ff4-8faf-c6a2408d1bc1",
+              "provider_id": "da3734a9-444a-45b5-b55b-e71d8c5aafd6",
+              "user_id": "ca555dc9-2723-4a7b-b5b6-196b93c89a19",
               "source_id": 1,
               "priority_id": 1
             }
@@ -7871,9 +7585,7 @@
       },
       "RawWorkout": {
         "title": "Workouts Data",
-        "required": [
-          "workouts"
-        ],
+        "required": ["workouts"],
         "type": "object",
         "properties": {
           "workouts": {
@@ -7887,12 +7599,12 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-08-19T16:14:07.438961+00:00",
+              "timestamp": "2022-09-29T07:43:50.104398+00:00",
               "data": {
                 "provider_specific": "..._data"
               },
-              "provider_id": "de40d79e-12cb-4266-89f9-572c158fdf90",
-              "user_id": "cbcc4193-1ef7-4eb3-a022-bab20ba49020",
+              "provider_id": "e3146dd1-8f63-4009-a406-0c937139d489",
+              "user_id": "6b2b01ad-223d-4d31-a69d-a6a8f52ef5e9",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
@@ -7902,13 +7614,7 @@
       },
       "Region": {
         "title": "Region",
-        "enum": [
-          "us",
-          "eu",
-          "sg",
-          "de",
-          "au"
-        ],
+        "enum": ["us", "eu", "sg", "de", "au"],
         "type": "string",
         "description": "An enumeration."
       },
@@ -7927,7 +7633,8 @@
           "glucose",
           "heartrate",
           "weight",
-          "fat"
+          "fat",
+          "meal"
         ],
         "type": "string",
         "description": "An enumeration."
@@ -7987,13 +7694,7 @@
       },
       "Source": {
         "title": "Provider",
-        "required": [
-          "name",
-          "slug",
-          "description",
-          "logo",
-          "id"
-        ],
+        "required": ["name", "slug", "description", "logo", "id"],
         "type": "object",
         "properties": {
           "name": {
@@ -8051,11 +7752,7 @@
       },
       "TestkitClientFacing": {
         "title": "TestkitClientFacing",
-        "required": [
-          "id",
-          "name",
-          "description"
-        ],
+        "required": ["id", "name", "description"],
         "type": "object",
         "properties": {
           "id": {
@@ -8114,13 +7811,12 @@
           "blood_pressure",
           "blood_oxygen"
         ],
+        "type": "string",
         "description": "An enumeration."
       },
       "UserCreateBody": {
         "title": "UserCreateBody",
-        "required": [
-          "client_user_id"
-        ],
+        "required": ["client_user_id"],
         "type": "object",
         "properties": {
           "client_user_id": {
@@ -8132,18 +7828,12 @@
       },
       "UserRefreshErrorResponse": {
         "title": "UserRefreshErrorResponse",
-        "required": [
-          "success",
-          "user_id",
-          "error"
-        ],
+        "required": ["success", "user_id", "error"],
         "type": "object",
         "properties": {
           "success": {
             "title": "Success",
-            "enum": [
-              false
-            ],
+            "enum": [false],
             "type": "boolean",
             "description": "Whether operation was successful or not"
           },
@@ -8167,7 +7857,7 @@
         },
         "example": {
           "success": false,
-          "user_id": "27983b83-b708-4232-9423-ad269dfdf5d3",
+          "user_id": "13d91199-9cb3-498a-bd38-cdff11d95432",
           "error": "user has no connected sources",
           "failed_sources": []
         }
@@ -8184,9 +7874,7 @@
         "properties": {
           "success": {
             "title": "Success",
-            "enum": [
-              true
-            ],
+            "enum": [true],
             "type": "boolean",
             "description": "Whether operation was successful or not"
           },
@@ -8213,7 +7901,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "ff4b8b73-ac19-4e81-afbc-69548fae21c0",
+          "user_id": "a9ecdc83-dcfa-402c-9c19-d8c7ef79a7d4",
           "refreshed_sources": [
             "Withings/workouts",
             "Withings/sleep",
@@ -8221,16 +7909,12 @@
             "Withings/vitals/blood_pressure",
             "Withings/activity"
           ],
-          "failed_sources": [
-            "Oura/sleep"
-          ]
+          "failed_sources": ["Oura/sleep"]
         }
       },
       "UserSuccessResponse": {
         "title": "UserSuccessResponse",
-        "required": [
-          "success"
-        ],
+        "required": ["success"],
         "type": "object",
         "properties": {
           "success": {
@@ -8245,11 +7929,7 @@
       },
       "ValidationError": {
         "title": "ValidationError",
-        "required": [
-          "loc",
-          "msg",
-          "type"
-        ],
+        "required": ["loc", "msg", "type"],
         "type": "object",
         "properties": {
           "loc": {
@@ -8278,12 +7958,7 @@
       },
       "VitalsResource": {
         "title": "VitalsResource",
-        "enum": [
-          "blood_pressure",
-          "blood_oxygen",
-          "glucose",
-          "heartrate"
-        ],
+        "enum": ["blood_pressure", "blood_oxygen", "glucose", "heartrate"],
         "description": "An enumeration."
       },
       "WorkoutV2InDB": {
@@ -8317,7 +7992,7 @@
           "user_id": {
             "title": "User Id",
             "type": "string",
-            "format": "uuid"
+            "format": "uuid4"
           },
           "source_id": {
             "title": "Source Id",
@@ -8457,9 +8132,9 @@
           }
         },
         "example": {
-          "id": "c1a1c37f-070c-4f65-a3b0-55033cba56f8",
-          "team_id": "0fabb66a-aa07-4acb-b77b-05f405c97505",
-          "user_id": "d346af7d-28ba-405a-944c-8d22cd1fa202",
+          "id": "40c6efd4-b9ff-4053-b0e4-92d15b2a1201",
+          "team_id": "71a92aa8-76aa-4bbf-8332-288b97d2736d",
+          "user_id": "36ab3da4-05cd-4610-a54b-02af41eb7d6e",
           "patient_details": {
             "dob": "2020-01-01",
             "gender": "male"
@@ -8572,10 +8247,7 @@
       },
       "vital_core__schemas__db_schemas__lab_test__patient__PatientDetails": {
         "title": "PatientDetails",
-        "required": [
-          "dob",
-          "gender"
-        ],
+        "required": ["dob", "gender"],
         "type": "object",
         "properties": {
           "dob": {
@@ -8716,13 +8388,13 @@
           }
         },
         "example": {
-          "id": "d1f12c6d-e743-409b-a148-d8ca61f46881",
-          "team_id": "031a31bb-b70e-4388-93c4-d7fb0a8325ff",
-          "created_on": "2022-08-19T16:14:08.602095+00:00",
-          "updated_on": "2022-08-19T16:14:08.602111+00:00",
+          "id": "95e307d7-1b88-462b-870b-5f56c9f78c86",
+          "team_id": "de638146-cdb7-4cb3-8c9b-78a92b6b33c1",
+          "created_on": "2022-09-29T07:43:57.351763+00:00",
+          "updated_on": "2022-09-29T07:43:57.351804+00:00",
           "status": "ordered",
-          "user_id": "2afa94b4-6928-4f9a-a1ad-f31f715f4212",
-          "testkit_id": "e42b30c9-caef-4f0c-8026-d203de41be27",
+          "user_id": "35c5982b-8343-4877-8f9c-49734101d2d3",
+          "testkit_id": "e1349573-141d-4614-8498-87048084a613",
           "inbound_tracking_number": "<inbound_tracking_number>",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -8784,10 +8456,7 @@
       },
       "vital_core__schemas__db_schemas__testkits__order__PatientDetails": {
         "title": "PatientDetails",
-        "required": [
-          "dob",
-          "gender"
-        ],
+        "required": ["dob", "gender"],
         "type": "object",
         "properties": {
           "dob": {
