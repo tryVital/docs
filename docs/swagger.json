@@ -2540,7 +2540,7 @@
     "/v2/user/": {
       "get": {
         "tags": ["user"],
-        "summary": "Get Teams Users",
+        "summary": "Get team users",
         "description": "GET All users for team.",
         "operationId": "get_teams_users_v2_user__get",
         "parameters": [
