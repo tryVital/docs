@@ -27,7 +27,7 @@ To use our SDK, start by setting up `VitalClient`:
 ```swift
 import VitalCore
 
-VitalClient.configure(
+await VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
@@ -52,7 +52,7 @@ let result = try await VitalClient.shared.user.create(
 A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 
 ```swift
-VitalClient.setUserId(result.userId)
+await VitalClient.setUserId(result.userId)
 ```
 
 <Tip>
@@ -146,7 +146,7 @@ The SDK provides two ways to create a connected source. The first method is a ma
 ```swift
 let userId: UUID = ...
 
-VitalClient.shared.link.createConnectedSource(userId, provider: .appleHealthKit)
+try await VitalClient.shared.link.createConnectedSource(userId, provider: .appleHealthKit)
 ```
 
 The second method uses web authentication:
@@ -294,7 +294,7 @@ You then set-up the client:
 ```swift
 import VitalHealthKit
 
-VitalHealthKitClient.configure(
+await VitalHealthKitClient.configure(
     .init(
         autoSyncEnabled: ..., // false by default
         backgroundDeliveryEnabled: ..., // false by default
