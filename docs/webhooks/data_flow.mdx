@@ -6,7 +6,7 @@ title: "Data Flow"
 
 When a user first connects a device to Vital, Vital backend pulls _historical_ data. Historical data is all data that exists on a user's account, prior to them linking their wearable account with Vital. This can take several minutes for all the data to be retrieved and to be readily accessible.
 
-When data is available, the backend triggers a `historical.data.<resource_type>.created` webhook event. The `resource_type` is determined by the `provider` - more information on which resources a provider can support can be found [here](/wearables/providers/Resources).
+When data is available, the backend triggers a `historical.data.<resource_type>.created` webhook event. The `resource_type` is determined by the `provider` - more information on which resources a provider can support can be found [here](/wearables/providers/resources).
 
 We send a webhook event for each resource a provider supports. In certain cases, where a user has large amounts of historical data, we send webhook events for each ordered-chunk (most-recent first). The `is_final` flag is used to indicate that the data collection is complete.
 
