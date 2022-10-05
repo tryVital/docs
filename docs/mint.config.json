@@ -94,7 +94,12 @@
         "wearables/providers/introduction",
         "wearables/providers/resources",
         "wearables/providers/test_data",
-        "wearables/providers/freestyle"
+        {
+          "group": "Guides",
+          "pages": [
+            "wearables/providers/freestyle"
+          ]
+       }
       ]
     },
     {
