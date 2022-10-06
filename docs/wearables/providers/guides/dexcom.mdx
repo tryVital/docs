@@ -1,0 +1,39 @@
+---
+title: "Dexom Guide"
+---
+
+<Info>
+
+Please make sure you have the dexcom mobile application installed and *sharing* enabled. You will need to invite `support@tryvital.io` in the mobile application before you can connect with Vital.
+
+</Info>
+
+## Enabling Dexcom Share
+
+You can follow the guides by [Dexcom](https://www.dexcom.com/faqs/how-do-i-share-my-dexcom-g6-glucose-data-followers) on how to enable sharing for your device. Ensure you use the application for your device and not Dexcom Clarity.
+
+## Vital Widget
+
+To connect your device with the *widget*, follow the link wizard ensuring and enter your username and password.
+
+## Vital Link
+
+You can also connect a Dexcom user to vital using vital client. For additional information please consult the API reference.
+
+<SnippetGroup>
+```python
+link_token = client.Link.create(user_id)
+client.Link.password_provider(link_token, "dexcom", username, password)
+```
+
+```js
+const { link_token } = await client.Link.create(user_id);
+await client.Link.password_provider(link_token, "dexcom", username, password);
+```
+</SnippetGroup>
+
+## Webhooks
+
+On successful connection, you will recieve a `provider.connection.created` wehbook. As is with most parts of Vital, webhooks for `data.daily.glucose.created`, `data.daily.glucose.updated`, are available sent to your team's servers when new data is available during the day.
+
+For this provider however, Vital will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no `historical.glucose.created` sent out. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.

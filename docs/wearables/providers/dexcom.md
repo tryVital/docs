@@ -1,3 +1,0 @@
----
-title: "Dexom Guide"
----
