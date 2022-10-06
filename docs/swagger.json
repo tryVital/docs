@@ -3,7 +3,7 @@
   "info": {
     "title": "Vital API",
     "description": "API for at-home health Wearables and Lab test API for digital health companies.",
-    "version": "0.1.285"
+    "version": "0.1.287"
   },
   "paths": {
     "/v2/link/token": {
@@ -1503,6 +1503,100 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/RawBody"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/summary/meal/{user_id}": {
+      "get": {
+        "tags": [
+          "summary"
+        ],
+        "summary": "Get Meals",
+        "description": "Get user's meals",
+        "operationId": "get_meals_v2_summary_meal__user_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User id returned by vital create user id request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "description": "Provider oura/strava etc.",
+            "required": false,
+            "schema": {
+              "title": "Provider",
+              "type": "string",
+              "description": "Provider oura/strava etc.",
+              "default": ""
+            },
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "description": "Date from in YYYY-MM-DD",
+            "required": true,
+            "schema": {
+              "title": "Start Date",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              ],
+              "description": "Date from in YYYY-MM-DD"
+            },
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "description": "Date to in YYYY-MM-DD",
+            "required": false,
+            "schema": {
+              "title": "End Date",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              ],
+              "description": "Date to in YYYY-MM-DD"
+            },
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientFacingMealResponse"
                 }
               }
             }
@@ -4386,7 +4480,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "1f4d44cf-c89c-4001-976d-0c74d4ef3937"
+              "user_id": "f6fb1958-d073-4822-b086-52988de65f67"
             }
           ]
         }
@@ -4409,7 +4503,7 @@
         "example": {
           "body": [
             {
-              "id": "7425e25c-cb24-4352-adc2-c71ada86e04d",
+              "id": "019e6c47-05a4-4e74-9580-e76454e2054b",
               "date": "2022-10-06",
               "weight": "80kg",
               "fat": "30%",
@@ -4419,7 +4513,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "a2c1dae6-19dc-4eaa-8785-d7c8397798df"
+              "user_id": "c2c3b6f9-b52b-4a87-b1e3-2c0dbad42011"
             }
           ]
         }
@@ -4529,7 +4623,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "47fbb52d-947a-4a15-af13-32e202d3a887"
+          "user_id": "a919355b-2f7a-4fdd-bfd8-26a2f06a5ce3"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
@@ -4570,7 +4664,7 @@
         },
         "example": {
           "id": 2,
-          "timestamp": "2022-10-06T16:01:50.798299+00:00",
+          "timestamp": "2022-10-06T20:32:57.553881+00:00",
           "systolic": "125",
           "diastolic": "75",
           "type": "cuff",
@@ -4702,6 +4796,70 @@
           }
         }
       },
+      "ClientFacingMealResponse": {
+        "title": "ClientFacingMealResponse",
+        "required": [
+          "meals"
+        ],
+        "type": "object",
+        "properties": {
+          "meals": {
+            "title": "Meals",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MealInDBBase_ClientFacingSource_"
+            }
+          }
+        },
+        "example": {
+          "meals": [
+            {
+              "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+              "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5",
+              "priority_id": 42,
+              "source_id": 10,
+              "provider_id": "123456",
+              "timestamp": "2019-08-24T14:15:22Z",
+              "name": "Dinner (Chicken croquet starter)",
+              "energy": {
+                "unit": "kcal",
+                "value": 100
+              },
+              "macros": {
+                "carbs": 42,
+                "protein": 10,
+                "fats": {
+                  "saturated": 98,
+                  "monounsaturated": 1,
+                  "polyunsaturated": 1,
+                  "omega3": 0,
+                  "omega6": 0,
+                  "total": 100
+                },
+                "alcohol": 100,
+                "water": 10,
+                "fibre": 1,
+                "sugar": 32
+              },
+              "micros": {
+                "minerals": {
+                  "sodium": 100
+                },
+                "trace_elements": {
+                  "zinc": 10
+                }
+              },
+              "source": {
+                "name": "My Fitness Pal",
+                "slug": "my_fitness_pal",
+                "logo": "https://logo_url.com"
+              },
+              "created_at": "2019-08-24T14:15:22Z",
+              "updated_at": "2019-08-24T14:15:22Z"
+            }
+          ]
+        }
+      },
       "ClientFacingOrderEvent": {
         "title": "ClientFacingOrderEvent",
         "required": [
@@ -4760,7 +4918,7 @@
           }
         },
         "example": {
-          "id": "8fbea771-7237-4781-ad1e-7f9ca7a67a73",
+          "id": "f6dd10aa-4943-421b-b90a-8534bce75d3e",
           "date": "2022-10-06",
           "height": 183,
           "source": {
@@ -4768,7 +4926,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "6a02b943-6bb7-4013-8ec8-449188cd21c9"
+          "user_id": "701776af-55e9-4035-8d68-20c206484e0a"
         }
       },
       "ClientFacingShipment": {
@@ -4829,7 +4987,7 @@
         },
         "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
         "example": {
-          "id": "40f7cfa4-1ee0-4c02-8423-4a4003ebde07",
+          "id": "841b1aa8-7757-4178-a76a-cf37ee453657",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "outbound_tracking_url": "<outbound_tracking_url>",
           "inbound_tracking_number": "<inbound_tracking_number>",
@@ -4982,10 +5140,10 @@
           }
         },
         "example": {
-          "id": "4574de5f-0768-45f6-b50a-1cd296e38f60",
+          "id": "e3ad5e6e-345c-45ea-98b4-c3d9102a704f",
           "date": "2022-10-06",
-          "bedtime_start": "2022-10-06T16:01:50.782634+00:00",
-          "bedtime_stop": "2022-10-06T16:01:50.782655+00:00",
+          "bedtime_start": "2022-10-06T20:32:57.548502+00:00",
+          "bedtime_stop": "2022-10-06T20:32:57.548507+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -5005,7 +5163,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "8a56c325-3d56-4a94-a1a9-7b3e18dda00b"
+          "user_id": "0160e3bc-5b2e-4683-932a-fa75f194dcdb"
         }
       },
       "ClientFacingSleepStream": {
@@ -5045,36 +5203,36 @@
           "hrv": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T16:01:50.780240+00:00",
-              "value": 55,
+              "timestamp": "2022-10-06T20:32:57.547692+00:00",
+              "value": 67,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T16:02:20.780428+00:00",
-              "value": 86,
+              "timestamp": "2022-10-06T20:33:27.547751+00:00",
+              "value": 26,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T16:02:50.780477+00:00",
-              "value": 14,
+              "timestamp": "2022-10-06T20:33:57.547771+00:00",
+              "value": 49,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T16:03:20.780525+00:00",
-              "value": 25,
+              "timestamp": "2022-10-06T20:34:27.547790+00:00",
+              "value": 58,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T16:03:50.780576+00:00",
-              "value": 18,
+              "timestamp": "2022-10-06T20:34:57.547804+00:00",
+              "value": 32,
               "type": "automatic",
               "unit": "rmssd"
             }
@@ -5082,36 +5240,36 @@
           "heartrate": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T16:01:50.780618+00:00",
-              "value": 48,
+              "timestamp": "2022-10-06T20:32:57.547820+00:00",
+              "value": 90,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T16:02:20.780658+00:00",
-              "value": 63,
+              "timestamp": "2022-10-06T20:33:27.547838+00:00",
+              "value": 84,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T16:02:50.780693+00:00",
-              "value": 143,
+              "timestamp": "2022-10-06T20:33:57.547853+00:00",
+              "value": 22,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T16:03:20.780731+00:00",
-              "value": 134,
+              "timestamp": "2022-10-06T20:34:27.547869+00:00",
+              "value": 26,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T16:03:50.780767+00:00",
-              "value": 139,
+              "timestamp": "2022-10-06T20:34:57.547883+00:00",
+              "value": 65,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5119,36 +5277,36 @@
           "hypnogram": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T16:01:50.780806+00:00",
-              "value": 2,
+              "timestamp": "2022-10-06T20:32:57.547898+00:00",
+              "value": 4,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T16:02:20.780842+00:00",
-              "value": 0,
+              "timestamp": "2022-10-06T20:33:27.547911+00:00",
+              "value": 3,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T16:02:50.780878+00:00",
+              "timestamp": "2022-10-06T20:33:57.547925+00:00",
               "value": 0,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T16:03:20.780915+00:00",
-              "value": 1,
+              "timestamp": "2022-10-06T20:34:27.547941+00:00",
+              "value": 3,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T16:03:50.780951+00:00",
-              "value": 1,
+              "timestamp": "2022-10-06T20:34:57.547958+00:00",
+              "value": 3,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             }
@@ -5156,36 +5314,36 @@
           "respiratory_rate": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T16:01:50.780989+00:00",
-              "value": 23,
+              "timestamp": "2022-10-06T20:32:57.547975+00:00",
+              "value": 19,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T16:02:20.781024+00:00",
-              "value": 30,
+              "timestamp": "2022-10-06T20:33:27.547993+00:00",
+              "value": 14,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T16:02:50.781059+00:00",
-              "value": 22,
+              "timestamp": "2022-10-06T20:33:57.548009+00:00",
+              "value": 16,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T16:03:20.781096+00:00",
-              "value": 22,
+              "timestamp": "2022-10-06T20:34:27.548023+00:00",
+              "value": 25,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T16:03:50.781133+00:00",
-              "value": 27,
+              "timestamp": "2022-10-06T20:34:57.548035+00:00",
+              "value": 22,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5652,9 +5810,9 @@
         },
         "description": "Schema for a testkit order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "415ac113-1fe2-4cc1-bba9-f7cba242e647",
+          "id": "337d35fe-c93c-4495-b4fb-be2d44f6517b",
           "shipment": {
-            "id": "e576fe72-b1ea-4b69-9cad-99115ae11807",
+            "id": "7fb7c7fd-28b8-4fc5-9a32-1f04b3c17d7f",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "outbound_tracking_url": "<outbound_tracking_url>",
             "inbound_tracking_number": "<inbound_tracking_number>",
@@ -5702,56 +5860,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-10-06T16:01:42.274886+00:00",
+            "timestamp": "2022-10-06T20:32:56.519030+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-10-06T16:01:42.274937+00:00",
+            "timestamp": "2022-10-06T20:32:56.519046+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-10-06T16:01:42.274949+00:00",
+            "timestamp": "2022-10-06T20:32:56.519051+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-10-06T16:01:42.274959+00:00",
+            "timestamp": "2022-10-06T20:32:56.519054+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-10-06T16:01:42.274968+00:00",
+            "timestamp": "2022-10-06T20:32:56.519058+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-10-06T16:01:42.274977+00:00",
+            "timestamp": "2022-10-06T20:32:56.519061+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-10-06T16:01:42.274986+00:00",
+            "timestamp": "2022-10-06T20:32:56.519064+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-10-06T16:01:42.274996+00:00",
+            "timestamp": "2022-10-06T20:32:56.519067+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -5809,9 +5967,9 @@
           }
         },
         "example": {
-          "user_id": "24187dff-c34b-48c8-ab77-082a73994614",
-          "team_id": "1532d453-c62e-4e94-baaf-b22b30f5260e",
-          "client_user_id": "45975eff-ddfb-4d1c-9e2e-9ed3e57b44fc",
+          "user_id": "42686119-4ff3-4f86-88f0-a930f4c4ff87",
+          "team_id": "4a050dca-80c8-495d-b8e6-50e41883b622",
+          "client_user_id": "1df44a3a-16a2-48d9-bc13-042b4a750ed6",
           "connected_sources": [
             {
               "source": {
@@ -5819,7 +5977,7 @@
                 "slug": "oura",
                 "logo": "logo_url"
               },
-              "created_on": "2022-10-06T16:01:50.178116+00:00"
+              "created_on": "2022-10-06T20:32:57.408960+00:00"
             }
           ]
         }
@@ -5852,8 +6010,8 @@
           }
         },
         "example": {
-          "client_user_id": "02ff9b60-d180-41db-a602-46fd8858c72a",
-          "user_id": "a3cce567-fb8a-43bd-ae5a-92cc7f82333e"
+          "client_user_id": "4f69b544-4b5f-42bd-8c52-b264a9ad91e8",
+          "user_id": "f049ef42-7d4f-48d0-afe4-3c00534619f8"
         }
       },
       "ClientFacingWalkInOrderDetails": {
@@ -5903,7 +6061,7 @@
         },
         "description": "Schema for a walk-in test order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "040b4147-4f8e-48a4-a06b-170cf0abe352",
+          "id": "4b45762f-d198-42a4-86f3-1ec8c37d93a0",
           "created_at": "2020-01-01T00:00:00Z",
           "updated_at": "2020-01-01T00:00:00Z"
         }
@@ -6069,12 +6227,12 @@
           }
         },
         "example": {
-          "id": "aa793c5e-75bf-4cd0-8f3c-fa4515766737",
+          "id": "74f568ce-23ab-4803-a2b9-a72808874095",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-10-06T15:01:50.831108+00:00",
-          "time_end": "2022-10-06T16:01:50.831225+00:00",
+          "time_start": "2022-10-06T19:32:57.564995+00:00",
+          "time_end": "2022-10-06T20:32:57.565032+00:00",
           "calories": 300,
           "sport": {
             "id": 1,
@@ -6092,7 +6250,7 @@
             10,
             200
           ],
-          "user_id": "f248f925-fb91-4e34-bec2-297bb7cb43b2",
+          "user_id": "b8ed2f79-4de8-4b15-aca8-6f6230dceb97",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -6126,10 +6284,10 @@
         "example": {
           "sleep": [
             {
-              "id": "b547430d-4f3d-47e9-a839-328834fe0c67",
+              "id": "8c5b95a6-948e-455e-bcf9-c806837d04fe",
               "date": "2022-10-06",
-              "bedtime_start": "2022-10-06T16:01:50.789648+00:00",
-              "bedtime_stop": "2022-10-06T16:01:50.789672+00:00",
+              "bedtime_start": "2022-10-06T20:32:57.550830+00:00",
+              "bedtime_stop": "2022-10-06T20:32:57.550835+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -6149,7 +6307,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "51ebdd73-7995-42e0-88ec-bf4398b38d7b"
+              "user_id": "56f8c3a3-fac5-40d2-bd77-43daed658847"
             }
           ]
         }
@@ -6171,12 +6329,12 @@
         },
         "example": {
           "workouts": {
-            "id": "3e5f10e3-ba48-4e4d-80f9-75e769618bb1",
+            "id": "b2fc3a62-a5ed-454f-95f1-81c6a8071c84",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-10-06T15:01:50.858437+00:00",
-            "time_end": "2022-10-06T16:01:50.858610+00:00",
+            "time_start": "2022-10-06T19:32:57.566010+00:00",
+            "time_end": "2022-10-06T20:32:57.566032+00:00",
             "calories": 300,
             "sport": {
               "id": 1,
@@ -6194,7 +6352,7 @@
               10,
               200
             ],
-            "user_id": "9d832d9e-1822-4084-89ba-214281e3f604",
+            "user_id": "0eff0011-23d7-4d57-9d9d-4fbadee6af2a",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -6408,6 +6566,57 @@
         ],
         "type": "string",
         "description": "An enumeration."
+      },
+      "Energy": {
+        "title": "Energy",
+        "required": [
+          "unit",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "unit": {
+            "title": "Unit",
+            "enum": [
+              "kcal"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        }
+      },
+      "Fats": {
+        "title": "Fats",
+        "type": "object",
+        "properties": {
+          "saturated": {
+            "title": "Saturated",
+            "type": "number"
+          },
+          "monounsaturated": {
+            "title": "Monounsaturated",
+            "type": "number"
+          },
+          "polyunsaturated": {
+            "title": "Polyunsaturated",
+            "type": "number"
+          },
+          "omega3": {
+            "title": "Omega3",
+            "type": "number"
+          },
+          "omega6": {
+            "title": "Omega6",
+            "type": "number"
+          },
+          "total": {
+            "title": "Total",
+            "type": "number"
+          }
+        }
       },
       "GetOrdersResponse": {
         "title": "GetOrdersResponse",
@@ -6810,6 +7019,39 @@
         },
         "example": {
           "link_token": "dGVzdCB0ZXN0IHRlc3Q="
+        }
+      },
+      "Macros": {
+        "title": "Macros",
+        "type": "object",
+        "properties": {
+          "carbs": {
+            "title": "Carbs",
+            "type": "number"
+          },
+          "protein": {
+            "title": "Protein",
+            "type": "number"
+          },
+          "fats": {
+            "$ref": "#/components/schemas/Fats"
+          },
+          "alcohol": {
+            "title": "Alcohol",
+            "type": "number"
+          },
+          "water": {
+            "title": "Water",
+            "type": "number"
+          },
+          "fibre": {
+            "title": "Fibre",
+            "type": "number"
+          },
+          "sugar": {
+            "title": "Sugar",
+            "type": "number"
+          }
         }
       },
       "ManualActivityCreation": {
@@ -7398,6 +7640,104 @@
           }
         }
       },
+      "MealInDBBase_ClientFacingSource_": {
+        "title": "MealInDBBase[ClientFacingSource]",
+        "required": [
+          "id",
+          "user_id",
+          "priority_id",
+          "source_id",
+          "provider_id",
+          "timestamp",
+          "name",
+          "source",
+          "created_at",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "priority_id": {
+            "title": "Priority Id",
+            "type": "integer"
+          },
+          "source_id": {
+            "title": "Source Id",
+            "type": "integer"
+          },
+          "provider_id": {
+            "title": "Provider Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "energy": {
+            "$ref": "#/components/schemas/Energy"
+          },
+          "macros": {
+            "$ref": "#/components/schemas/Macros"
+          },
+          "micros": {
+            "$ref": "#/components/schemas/Micros"
+          },
+          "source": {
+            "$ref": "#/components/schemas/ClientFacingSource"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Micros": {
+        "title": "Micros",
+        "type": "object",
+        "properties": {
+          "minerals": {
+            "title": "Minerals",
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "trace_elements": {
+            "title": "Trace Elements",
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          },
+          "vitamins": {
+            "title": "Vitamins",
+            "type": "object",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
+      },
       "OAuthProviders": {
         "title": "OAuthProviders",
         "enum": [
@@ -7436,13 +7776,13 @@
         },
         "example": {
           "order": {
-            "id": "30e9ae49-8ca3-47c3-a049-ca341fddcc3f",
-            "team_id": "f4cf4e5c-5712-4537-ac3d-c3b4a492c713",
-            "created_on": "2022-10-06T16:01:50.527701+00:00",
-            "updated_on": "2022-10-06T16:01:50.527737+00:00",
+            "id": "7b6dd67b-ddd6-41e9-9502-b0e98d5e2f66",
+            "team_id": "b490f7b8-809b-41cc-825e-ed623f5d4882",
+            "created_on": "2022-10-06T20:32:57.535368+00:00",
+            "updated_on": "2022-10-06T20:32:57.535375+00:00",
             "status": "ordered",
-            "user_id": "0ce70f1a-4959-49aa-9df8-9cf7541b53c0",
-            "testkit_id": "e2a5a8a5-3c61-48ba-b06d-7d9b1036a89e",
+            "user_id": "3643d07a-4232-437f-9d50-70bf3903679a",
+            "testkit_id": "87c0a6e3-3007-4bca-8a1d-fb7845bc77a7",
             "inbound_tracking_number": "<inbound_tracking_number>",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -7599,13 +7939,13 @@
         "example": {
           "orders": [
             {
-              "id": "64c180e3-d3c4-4f4d-9c39-b6a208c8332d",
-              "team_id": "3a7da763-cd01-4a8e-89da-d6e2a356cd72",
-              "created_on": "2022-10-06T16:01:50.531008+00:00",
-              "updated_on": "2022-10-06T16:01:50.531041+00:00",
+              "id": "9b30cfd4-8d75-4696-9439-1ea42e3f8221",
+              "team_id": "ab13ee8e-8583-49e3-9dc2-551ba4c7e1b7",
+              "created_on": "2022-10-06T20:32:57.536577+00:00",
+              "updated_on": "2022-10-06T20:32:57.536583+00:00",
               "status": "ordered",
-              "user_id": "c4bfd588-b626-4ddc-95a4-49f15853d3f2",
-              "testkit_id": "81ae9630-c931-48f1-9d65-fe64c26dac98",
+              "user_id": "8c3887ef-d064-4834-8f48-992ea0083e97",
+              "testkit_id": "65bb9c21-4b24-4746-8cd9-a3516c480aa6",
               "testkit": {
                 "name": "CGM",
                 "description": "Glucose CGM"
@@ -7945,12 +8285,12 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-10-06T16:01:42.387651+00:00",
+              "timestamp": "2022-10-06T20:32:56.533700+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "a2fd8aef-7395-4645-a628-1045a694c834",
-              "user_id": "743d66de-f115-4a81-800c-c14ab677d935",
+              "provider_id": "59567e89-db83-4147-9896-c31fcd913db6",
+              "user_id": "399072e2-a562-42de-8ef6-a7c3dba4a89c",
               "source_id": 1,
               "priority_id": 1
             }
@@ -7975,12 +8315,12 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-10-06T16:01:42.394830+00:00",
+              "timestamp": "2022-10-06T20:32:56.536072+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "8c8bb9bc-823c-4a9d-ae0d-2e03763d229b",
-              "user_id": "e69b63a0-0481-4bc1-be56-8a49cb4b5aaf",
+              "provider_id": "70f05e33-6e5d-4699-95ac-81c1cbdd5df6",
+              "user_id": "b1e4425d-6253-47cf-af28-ad86d9a9fa78",
               "source_id": 1,
               "priority_id": 1
             }
@@ -8008,8 +8348,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "92f9fd0a-7cf7-4680-9508-bae209f2974f",
-              "user_id": "668d0c7e-2441-4805-a046-28d2964c9185",
+              "provider_id": "df73d610-1f7f-48d9-b6b3-55eef47c35a3",
+              "user_id": "358689c8-d1ce-419a-baaf-7dbac43baa2c",
               "source_id": 1
             }
           ]
@@ -8032,8 +8372,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "f1fb684e-6ce5-41bc-8fd7-ff6bc13684b1",
-              "user_id": "02ff444c-5b7c-4c4a-a1a7-85a004006fc5",
+              "provider_id": "7e8660ae-aa10-45a3-8159-0e918b467d84",
+              "user_id": "e2b29c89-c52b-4a0b-afa9-cd5dc6eb69aa",
               "source_id": 1
             }
           ]
@@ -8057,12 +8397,12 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-10-06T16:01:42.422910+00:00",
+              "timestamp": "2022-10-06T20:32:56.547179+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "af0ecacc-b8fa-4788-93dd-b8987875d1f2",
-              "user_id": "d2ebed73-efda-4dd7-9099-4e5835f983d9",
+              "provider_id": "120bb7ef-f644-4d18-b644-67487d62b62f",
+              "user_id": "9127c781-2c0f-4c16-9df9-f3553c217075",
               "source_id": 1,
               "priority_id": 1
             }
@@ -8087,12 +8427,12 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-10-06T16:01:42.459302+00:00",
+              "timestamp": "2022-10-06T20:32:56.550669+00:00",
               "data": {
                 "provider_specific": "..._data"
               },
-              "provider_id": "4f3ec3fa-d9f5-4223-8cb7-bbf22d8edfe5",
-              "user_id": "3f81b75b-e56b-40dc-bf9a-ad2dbf2f3bba",
+              "provider_id": "5f76c78d-e178-42a9-84ca-3520b5aea4fb",
+              "user_id": "8192817d-c063-42a7-8fae-0dc9b0bbfc3b",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
@@ -8369,7 +8709,7 @@
         },
         "example": {
           "success": false,
-          "user_id": "db88f066-15e4-47ba-9974-f24fa1a52a11",
+          "user_id": "ce9f7366-9bc1-4ecf-8840-9dbc14caa082",
           "error": "user has no connected sources",
           "failed_sources": []
         }
@@ -8415,7 +8755,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "7523562c-f46f-49c3-ae26-03e11e890eaf",
+          "user_id": "b8480057-486c-451a-abac-5eb8ed285500",
           "refreshed_sources": [
             "Withings/workouts",
             "Withings/sleep",
@@ -8659,9 +8999,9 @@
           }
         },
         "example": {
-          "id": "3b81c02a-f151-4730-b378-c115d723f2ed",
-          "team_id": "91a38fa2-1d29-4df4-90ca-80587ede00fb",
-          "user_id": "95898b1b-9d04-4adc-8929-0ad4b6f78770",
+          "id": "f3e100aa-c31f-4d2c-9110-e5d7f7370b11",
+          "team_id": "b362dad6-16aa-429d-b9d3-fa8772cc04c0",
+          "user_id": "4cf56620-8959-4d26-9b10-305615fafe58",
           "patient_details": {
             "dob": "2020-01-01",
             "gender": "male"
@@ -8918,13 +9258,13 @@
           }
         },
         "example": {
-          "id": "646ba01c-7eb0-475b-8202-9a9ea01cfe7e",
-          "team_id": "37dcc269-5454-42de-8d32-02996075bd39",
-          "created_on": "2022-10-06T16:01:50.524897+00:00",
-          "updated_on": "2022-10-06T16:01:50.524939+00:00",
+          "id": "76ee27b8-e104-4eae-b67c-6f814d2002c4",
+          "team_id": "c74f0948-68e9-41d7-8851-21f00677fdad",
+          "created_on": "2022-10-06T20:32:57.534627+00:00",
+          "updated_on": "2022-10-06T20:32:57.534644+00:00",
           "status": "ordered",
-          "user_id": "09a26a69-d6b2-41c5-8878-c4663c0b4829",
-          "testkit_id": "63ce5e6e-a66a-49e1-8613-6a65f2f327b3",
+          "user_id": "b0f8d6ad-d709-445f-a7c2-0df5e58f7999",
+          "testkit_id": "3bc59d0d-37a2-416c-ac8f-fecef6356764",
           "inbound_tracking_number": "<inbound_tracking_number>",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "inbound_tracking_url": "<inbound_tracking_urlr>",
