@@ -60,11 +60,11 @@ Vital has two practices (depending on environment) this applies to all regions:
 
 <SnippetGroup>
 
-```python Connecting email provider
+```python
 link_token = client.Link.create(user_id)
 ```
 
-```js JavaScript
+```js
 const { link_token } = await client.Link.create(userId);
 ```
 
@@ -76,13 +76,13 @@ const { link_token } = await client.Link.create(userId);
 
 <SnippetGroup>
 
-```python Connecting email provider
+```python
 client.Link.email_provider(
    link_token, provider, email, region
 )
 ```
 
-```js JavaScript
+```js
 await client.Link.connectEmailProvider(
   link_token,
   "freestyle_libre",
