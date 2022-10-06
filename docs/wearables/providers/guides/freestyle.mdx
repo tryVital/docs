@@ -64,7 +64,7 @@ Vital has two practices (depending on environment) this applies to all regions:
 link_token = client.Link.create(user_id)
 ```
 
-```js
+```javascript
 const { link_token } = await client.Link.create(userId);
 ```
 
@@ -78,11 +78,11 @@ const { link_token } = await client.Link.create(userId);
 
 ```python
 client.Link.email_provider(
-   link_token, provider, email, region
+   link_token, "freestyle_libre", email, region
 )
 ```
 
-```js
+```javascript
 await client.Link.connectEmailProvider(
   link_token,
   "freestyle_libre",
