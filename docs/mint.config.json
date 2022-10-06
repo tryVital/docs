@@ -163,6 +163,12 @@
       ]
     },
     {
+      "group": "Meal",
+      "pages": [
+        "api-reference/meal/get-summary"
+      ]
+    },
+    {
       "group": "Workouts",
       "pages": [
         "api-reference/workouts/get-summary",
