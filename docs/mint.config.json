@@ -97,7 +97,8 @@
         {
           "group": "Guides",
           "pages": [
-            "wearables/providers/guides/freestyle"
+            "wearables/providers/guides/freestyle",
+            "wearables/providers/guides/dexcom"
           ]
        }
       ]
