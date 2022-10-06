@@ -157,7 +157,7 @@ let url = try await VitalClient.shared.link.createProviderLink(redirectURL: "vit
 
 The `redirectURL` is the URL that's called after the authentication is done. For an iOS app, you add the following to your Info.plist:
 
-<img src="../../img/iOS/plist_url_identifier.jpg" />
+<img src="/img/iOS/plist_url_identifier.jpg" />
 
 After having the `url`, you can open it with `SFSafariViewController` or `WKWebView`. On completion, your app will be called with an URL with the following shape:
 
@@ -243,7 +243,7 @@ You can check our example app, to see how we do it.
 
 We currently support Libre 1 sensors via NFC readings. Please make sure you add NFC capabilities in your app:
 
-<img src="../../img/iOS/nfc_permission.png" />
+<img src="/img/iOS/nfc_permission.png" />
 
 Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
 
@@ -287,7 +287,7 @@ VitalHealthKit is an abstraction on top of HealthKit that 1) automates the extra
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
-<img src="../../img/iOS/health_kit_permission.png" />
+<img src="/img/iOS/health_kit_permission.png" />
 
 You then set-up the client:
 
@@ -369,7 +369,7 @@ cancellable = VitalHealthKitClient.shared.status.sink { value in
 
 You can enable the SDK to deliver HealthKit data in background. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
 
-<img src="../../img/iOS/health_kit_permission_background_delivery.png" />
+<img src="/img/iOS/health_kit_permission_background_delivery.png" />
 
 Once this is done, you should setup the SDK like so:
 
