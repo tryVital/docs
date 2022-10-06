@@ -22,14 +22,14 @@ You can also connect a Dexcom user to vital using vital client. For additional i
 
 <CodeGroup>
 
-```python
+```python Python
 link_token = client.Link.create(user_id)
 client.Link.password_provider(
     link_token, "dexcom", username, password
 )
 ```
 
-```javascript
+```javascript JavaScript
 const { link_token } = await client.Link.create(user_id);
 await client.Link.password_provider(
     link_token, "dexcom", username, password
