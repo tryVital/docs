@@ -64,13 +64,13 @@ Vital has two practices (depending on environment) this applies to all regions:
 link_token = client.Link.create(user_id)
 ```
 
-```javascript Python
+```javascript Javascript
 const { link_token } = await client.Link.create(userId);
 ```
 
 </CodeGroup>
 
-2. Libre is an [_email_](wearables/vital-link/customization#email) provider.
+2. Libre is an [email](wearables/vital-link/customization#email) provider.
    This means that when connecting a user we have to use
    the connect email provider method, passing in the email of the user's Libre account and region in short form.
 
@@ -82,7 +82,7 @@ client.Link.email_provider(
 )
 ```
 
-```javascript Python
+```javascript Javascript
 await client.Link.connectEmailProvider(
   link_token,
   "freestyle_libre",
