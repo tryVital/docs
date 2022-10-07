@@ -6,13 +6,6 @@ title: "Freestyle Libre"
 
 Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital in the appropriate Vital region for your Freestyle account (See [here](#vital-freestyle-supported-regions) for a breakdown or vital regions and supported Freestyle regions).
 
-Vital has two practices (depending on environment):
-
-| Environment |                  |
-| ----------- | ---------------- |
-| Sandbox     | tryVital-sandbox |
-| Production  | tryVital         |
-
 If you get stuck at any point, help is just a click away! Join our Slack channel or send us a message to support@tryvital.io
 
 </Info>
@@ -48,37 +41,48 @@ Note, Freestyle Libre is available in different regions, ensure you select the c
 | United States (`us`)                           | United States (`us`) \* |
 | Europe (`eu`)                                  | Europe (`eu`) \*        |
 |                                                | Singapore (`sg`)        |
-| _(\*) Default Freestyle region if unspecified_ |
+|                                                | Australia (`au`)        |
+|                                                | Germany (`de`)          |
+| _(\*) Default Freestyle region if unspecified_ |                         |
+
+
+Vital has two practices (depending on environment) this applies to all regions:
+
+| Environment |                  |
+| ----------- | ---------------- |
+| Sandbox     | tryVital-sandbox |
+| Production  | tryVital         |
+
 
 ## Vital Link
 
 1. To connect to Freestyle Libre, you must create a Vital Link token.
 
-<SnippetGroup>
+<CodeGroup>
 
-```python Connecting email provider
+```python Python
 link_token = client.Link.create(user_id)
 ```
 
-```js JavaScript
+```javascript Python
 const { link_token } = await client.Link.create(userId);
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 2. Libre is an [_email_](wearables/vital-link/customization#email) provider.
    This means that when connecting a user we have to use
    the connect email provider method, passing in the email of the user's Libre account and region in short form.
 
-<SnippetGroup>
+<CodeGroup>
 
-```python Connecting email provider
+```python Python
 client.Link.email_provider(
-   link_token, provider, email, region
+   link_token, "freestyle_libre", email, region
 )
 ```
 
-```js JavaScript
+```javascript Python
 await client.Link.connectEmailProvider(
   link_token,
   "freestyle_libre",
@@ -87,6 +91,6 @@ await client.Link.connectEmailProvider(
 );
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 Once this is complete we will start syncing data from their [Libre account](/api-details/data_flow).

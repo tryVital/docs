@@ -97,7 +97,8 @@
         {
           "group": "Guides",
           "pages": [
-            "wearables/providers/guides/freestyle"
+            "wearables/providers/guides/freestyle",
+            "wearables/providers/guides/dexcom"
           ]
        }
       ]
@@ -159,6 +160,12 @@
         "api-reference/sleep/get-summary",
         "api-reference/sleep/get-stream",
         "api-reference/sleep/get-raw"
+      ]
+    },
+    {
+      "group": "Meal",
+      "pages": [
+        "api-reference/meal/get-summary"
       ]
     },
     {

@@ -11,7 +11,7 @@ To authenticate without Vital link, you need to first generate a `link_token` fo
 token = client.Link.create(user_id)
 ```
 
-```js
+```javascript
 const resp = await client.Link.create(client_user_id);
 ```
 
@@ -39,14 +39,17 @@ Current email providers are:
 
 Current email and password providers are:
 
-| Provider    | Description                        |
-| ----------- | ---------------------------------- |
-| `Renpho`      | Fitness Scales                     |
-| `Zwift`       | Virtual cycling and running        |
-| `Peloton`     | Popular Indoor Exercise bike       |
-| `Eight Sleep` | Smart Mattress                     |
-| `Beurer`      | Blood pressure and glucose devices |
-| `Whoop`       | Smart Activity Watches             |
+| Provider         | Description                        |
+| ---------------- | ---------------------------------- |
+| `Renpho`         | Fitness Scales                     |
+| `Zwift`          | Virtual cycling and running        |
+| `Peloton`        | Popular Indoor Exercise bike       |
+| `Eight Sleep`    | Smart Mattress                     |
+| `Beurer`         | Blood pressure and glucose devices |
+| `Whoop`          | Smart Activity Watches             |
+| `Hammerhead`     | Cycling Computer                   |
+| `Dexcom`         | CGM Glucose Monitor                |
+| `My Fitness Pal` | Meal Tracking Application          |
 
 To connect a password provider:
 
@@ -73,8 +76,8 @@ const resp = await client.Link.connectProvider(
 
 Current OAuth providers are:
 
-| Provider | Description                                                   |
-| -------- | ------------------------------------------------------------- |
+| Provider   | Description                                                   |
+| --------   | ------------------------------------------------------------- |
 | `Fitbit`   | Activity Trackers (all devices)                               |
 | `Garmin`   | Fitness watches (all devices)                                 |
 | `Oura`     | Smart Sleep tracking ring                                     |
