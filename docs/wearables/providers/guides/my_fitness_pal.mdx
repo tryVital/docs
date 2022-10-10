@@ -1,0 +1,30 @@
+---
+title: "MyFitnessPal (Beta)"
+---
+
+## Connecting MyFitnessPal to Vital
+
+You can now link MyFitnessPal accounts to Vital! You can do this with Vital Link Widget or programatically like other [password](/api-reference/link/link-email-provider) providers.
+
+## Vital Widget
+
+To connect your device with the *widget*, follow the link wizard ensuring and enter your username and password.
+
+<Frame>
+    <img src="/img/my_fitness_pal_link_search.png" className="w-2/5 block mx-auto" />
+    <img src="/img/my_fitness_pal_link_credentials.png" className="w-2/5 block mx-auto" />
+</Frame>
+
+<br/>
+
+<Info>
+This provider is in beta. Please be aware that linking may be slower than other providers. We are working to improve this in subsequent releases.
+</Info>
+
+## Webhooks
+
+On successful connection, you will receive:
+
+- [Connection create](/webhooks/data_flow#connection-created) wehbook.
+- [Historical Meals](/webhooks/data_flow#historical-data-flow) webhook, implying that the last *2 weeks* of data has been fetched successfully.
+- [Daily webhooks](/webhooks/data_flow#daily-data-flow) `data.daily.meal.created` and `data.daily.meal.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
