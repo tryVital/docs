@@ -98,7 +98,8 @@
           "group": "Guides",
           "pages": [
             "wearables/providers/guides/freestyle",
-            "wearables/providers/guides/dexcom"
+            "wearables/providers/guides/dexcom",
+            "wearables/providers/guides/my_fitness_pal"
           ]
        }
       ]
