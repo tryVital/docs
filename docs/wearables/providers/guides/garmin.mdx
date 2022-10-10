@@ -1,0 +1,30 @@
+---
+title: "Garmin"
+---
+
+## Connecting Garmin to Vital
+
+Vital! You can do this with Vital Link Widget or programatically like any other [OAuth](/api-reference/link/link-oauth-provider) providers.
+
+## Vital Widget
+
+To connect your device with the _widget_, follow the link wizard ensuring and enter your username and password.
+
+<Frame>
+  <img src="/img/garmin_link_search.png" className="w-2/5 block mx-auto" />
+  <img src="/img/garmin_connect.png" className="w-2/5 block mx-auto" />
+</Frame>
+
+<br />
+
+<Warning>
+  This provider doesn't send historical webhooks. This is in constrast with
+  other providers we have. This means you will receive `daily.data.<resource_type>.created`.
+</Warning>
+
+## Webhooks
+
+On successful connection, you will receive:
+
+- [Connection create](/webhooks/data_flow#connection-created) wehbook.
+- [Daily webhooks](/webhooks/data_flow#daily-data-flow) `daily.data.<resource_type>.created` and `daily.data.<resource_type>.updated` are issued, as new or more up-to-date data becomes available.
