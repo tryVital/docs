@@ -2,10 +2,97 @@
 title: "Flutter"
 ---
 
+<Tip>
+  Please check our [sample
+  app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
+  full use of the SDK.
+</Tip>
+
 ## 1. Introduction
 
 Vital's Flutter SDK allows you to interact with Vital's API using Flutter.
 
 ## 2. Setup
 
-coming soon
+You can find vital-flutter's package at https://pub.dev/packages/vital_flutter.
+
+You initialise the client with a `region`, `environment` and an `APIKey`:
+
+```dart
+final client = VitalClient()
+  ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'api_key...');
+```
+
+### 3. Using the SDK
+
+You can find the different services domains inside the client:
+
+```dart
+  client.activityService ...
+  client.bodyService ...
+  client.linkService  ...
+  client.profileService ...
+  client.sleepService ...
+  client.testkitsService ...
+  client.userService ...
+  client.vitalsService ...
+  client.workoutService ...
+
+  client.healthkitServices ...
+```
+
+For linking a provider:
+
+```dart
+client.linkProvider(user, 'strava', 'vitalexample://callback');
+```
+
+<Info>
+  To return back to the app after successful linking, setup an intent filter in
+  AndroidManifest.xml and custom URL scheme in info.plist. Refer to
+  documentation for all supported [data
+  providers](/wearables/providers/introduction).
+</Info>
+
+### 4. Apple HealthKit
+
+#### 1. Setup
+
+Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit).
+
+To use Apple HealthKit client you need to call configure first:
+
+```dart
+await client.healthkitServices.configureClient();
+await client.healthkitServices.configureHealthkit(backgroundDeliveryEnabled: true);
+```
+
+And setting the `userId`:
+
+```dart
+await client.healthkitServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
+```
+
+#### 2. Using the SDK
+
+You need to ask for permissions before getting data:
+
+```dart
+client.healthkitServices.askForResources([
+      HealthkitResource.profile,
+      HealthkitResource.body,
+      ...
+    ]);
+```
+
+And syncing data:
+
+```dart
+client.healthkitServices.syncData();
+```
+
+Finally observe the status stream, so you can react to changes:
+
+```dart
+Stream<SyncStatus> status = client.healthkitServices.status
+```
