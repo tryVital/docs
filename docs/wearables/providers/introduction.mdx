@@ -33,20 +33,20 @@ We currently Support over 300+ devices, a full list can be seen below.
 
 **Beta**: Currently under development. All providers here are available in sandbox and production, any feedback you have is greatly appreciated!
 
-| Provider                                     | Slug              | Description    |
-| -------------------------------------------- | ----------------- | -------------- |
-| [MyFitnessPal](https://www.myfitnesspal.com) | `my_fitness_pal`  | Nutrition data |
+| Provider                                     | Slug             | Description    |
+| -------------------------------------------- | ---------------- | -------------- |
+| [MyFitnessPal](https://www.myfitnesspal.com) | `my_fitness_pal` | Nutrition data |
 
 **Planned**: On our roadmap
 
-| Provider                                        | Slug             | Description               | Stage   |
-| ----------------------------------------------- | ---------------- | ------------------------- | ------- |
-| [Xiaomi](https://www.xiaomi.com)                | `xiaomi`         | All data                  | Enquire |
-| [Cronometer](https://www.cronometer.com)        | `cronometer`     | Nutrition data            | Enquire |
-| [Suunto](https://www.suunto.com)                | `suunto`         | Fitness Watch             | Planned |
-| [iGlucose](https://smartmeterrpm.com/iglucose/) | `iglucose`       | Glucose Strips            | Planned |
-| [Polar](https://www.polar.com)                  | `polar`          | Activity Watch            | Planned |
-| [KetoMojo](https://keto-mojo.com)               | TBD              | Glucose, Ketones and more | Planned |
+| Provider                                        | Slug         | Description               | Stage   |
+| ----------------------------------------------- | ------------ | ------------------------- | ------- |
+| [Xiaomi](https://www.xiaomi.com)                | `xiaomi`     | All data                  | Enquire |
+| [Cronometer](https://www.cronometer.com)        | `cronometer` | Nutrition data            | Enquire |
+| [Suunto](https://www.suunto.com)                | `suunto`     | Fitness Watch             | Planned |
+| [iGlucose](https://smartmeterrpm.com/iglucose/) | `iglucose`   | Glucose Strips            | Planned |
+| [Polar](https://www.polar.com)                  | `polar`      | Activity Watch            | Planned |
+| [KetoMojo](https://keto-mojo.com)               | TBD          | Glucose, Ketones and more | Planned |
 
 ## Full Device Support List
 
@@ -94,38 +94,35 @@ All data can be fetched instantaneously, some are configured via our live refres
 | [Dexcom](https://www.dexcom.com)                                | Polling     |
 | [MyFitnessPal](https://www.myfitnesspal.com)                    | Polling     |
 
+## Historical Days Retrieved
 
-## Historical Days Retrieved'
+When a new provider is connected to a user, Vital retrieves the historical data for this user from the connected provider. The following number of historical days of data are retrieved for each provider:
 
-When a new provider is connected to a user, Vital retrieves the historical data for this user from the connected provider. The following number of historical days of data are retrieved for each provider. 
-
-
-| Provider                                                             | Historic Days         |
-| -------------------------------------------------------------------- | --------------------- |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/)                 | `90`                  |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                      | `90`                  |
-| [Garmin](https://www.garmin.com)                                     | `90`                  |
-| [Google Fit](https://www.google.com/fit/)                            | `90`                  |
-| [Oura](https://ouraring.com)                                         | `180`                 |
-| [Peloton](https://www.onepeloton.com)                                | `180`                 |
-| [Renpho](https://renpho.com)                                         | `180`                 |
-| [Strava](https://www.strava.com)                                     | `14`                  |
-| [Wahoo](https://wahoofitness.com)                                    | `180`                 |
-| [Whoop](https://www.whoop.com)                                       | `180`                 |
-| [Zwift](https://zwift.com)                                           | `270`                 |
-| [Withings](https://www.withings.com)                                 | `90`                  |
-| [iHealth](https://ihealthlabs.com)                                   | `7`                   |
-| [8Sleep](https://www.eightsleep.com)                                 | `90`                  |
-| [Omron](https://www.omron-healthcare.com) (SDK)                      | `90`                  |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)                   | `90`                  |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)                         | `90`                  |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)        | `90`                  |
-| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK) | `90`                  |
-| [Braun Healthcare](https://www.braunhealthcare.com)                  | `90`                  |
-| [Hammerhead](https://www.hammerhead.io)                              | `30`                  |
-| [Dexcom](https://www.dexcom.com)                                     | `1`                   |
-| [MyFitnessPal](https://www.myfitnesspal.com)                         | `90`                  | 
-
+| Provider                                                             | Historic Days |
+| -------------------------------------------------------------------- | ------------- |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/)                 | `90`          |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                      | `90`          |
+| [Garmin](https://www.garmin.com)                                     | `90`          |
+| [Google Fit](https://www.google.com/fit/)                            | `90`          |
+| [Oura](https://ouraring.com)                                         | `180`         |
+| [Peloton](https://www.onepeloton.com)                                | `180`         |
+| [Renpho](https://renpho.com)                                         | `180`         |
+| [Strava](https://www.strava.com)                                     | `14`          |
+| [Wahoo](https://wahoofitness.com)                                    | `180`         |
+| [Whoop](https://www.whoop.com)                                       | `180`         |
+| [Zwift](https://zwift.com)                                           | `270`         |
+| [Withings](https://www.withings.com)                                 | `90`          |
+| [iHealth](https://ihealthlabs.com)                                   | `7`           |
+| [8Sleep](https://www.eightsleep.com)                                 | `90`          |
+| [Omron](https://www.omron-healthcare.com) (SDK)                      | `90`          |
+| [Contour](https://www.diabetes.ascensia.com) (SDK)                   | `90`          |
+| [Accu-Chek](https://www.accu-chek.com) (SDK)                         | `90`          |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)        | `90`          |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK) | `90`          |
+| [Braun Healthcare](https://www.braunhealthcare.com)                  | `90`          |
+| [Hammerhead](https://www.hammerhead.io)                              | `30`          |
+| [Dexcom](https://www.dexcom.com)                                     | `1`           |
+| [MyFitnessPal](https://www.myfitnesspal.com)                         | `90`          |
 
 <Info>
 
