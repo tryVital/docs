@@ -5,7 +5,7 @@ description: "A quick introduction to building with Vital"
 
 ## 1. API keys
 
-Let’s test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
+Let's test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
 You can get API keys by signing up in the [Dashboard](https://app.tryvital.io).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
 the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
@@ -14,9 +14,9 @@ For each region, you'll have access to two environments Sandbox and Production. 
 View the configuration section of the Dashboard to find your Sandbox API Key.
 
 <Note>
-
-If you get stuck at any point in the Quickstart, help is just a click away! Join our Slack channel or send us a message to [support@tryvital.io](mailto:support@tryvital.io)
-
+  If you get stuck at any point in the Quickstart, help is just a click away!
+  Join our Slack channel or send us a message to
+  [support@tryvital.io](mailto:support@tryvital.io)
 </Note>
 
 | Environment  |                                             |                                 |
@@ -273,6 +273,24 @@ Congratulations, you have completed the Vital Quickstart!
 
 There are a few directions you can go in now:
 
-- [Vital Link](/wearables/vital-link/introduction)
-- [Vital SDKs](/wearables/sdks/ios)
-- [Vital Webhooks](/webhooks/Introduction)
+<Card
+  title="Vital Link"
+  icon={regular("link")}
+  href="/wearables/vital-link/introduction"
+>
+  A client-side component your users will interact with in order to link their
+  accounts with Vital. It allows you to access their accounts via the Vital API.
+</Card>
+
+<Card title="Vital SDKs" icon={regular("toolbox")} href="/wearables/sdks/ios">
+  Native toolkits to integrate Vital into iOS, Android, and Flutter
+</Card>
+
+<Card
+  title="Vital Webhooks"
+  icon={regular("circle-nodes")}
+  href="/webhooks/introduction"
+>
+  Webhooks are a way to receive data from Vital. We frequently poll to receive
+  data from the various providers.
+</Card>

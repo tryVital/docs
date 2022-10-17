@@ -58,7 +58,8 @@
         "welcome/quickstart",
         "welcome/environments",
         "welcome/libraries",
-        "welcome/privacy"
+        "welcome/privacy",
+        "changelog"
       ]
     },
     {
@@ -102,7 +103,7 @@
             "wearables/providers/guides/garmin",
             "wearables/providers/guides/my_fitness_pal"
           ]
-       }
+        }
       ]
     },
     {
@@ -166,9 +167,7 @@
     },
     {
       "group": "Meal",
-      "pages": [
-        "api-reference/meal/get-summary"
-      ]
+      "pages": ["api-reference/meal/get-summary"]
     },
     {
       "group": "Workouts",
