@@ -49,6 +49,11 @@
       "name": "API Reference",
       "icon": "rectangle-terminal",
       "url": "api-reference"
+    },
+    {
+      "name": "Changelog",
+      "icon": "list",
+      "url": "changelog"
     }
   ],
   "navigation": [
@@ -78,10 +83,6 @@
         "webhooks/data_flow",
         "webhooks/debugging"
       ]
-    },
-    {
-      "group": "Changes",
-      "pages": ["changelog"]
     },
     {
       "group": "Vital Link",
@@ -240,6 +241,10 @@
         "api-reference/legacy/results/get-results-raw",
         "api-reference/legacy/results/get-results-metadata"
       ]
+    },
+    {
+      "group": "Updates",
+      "pages": ["changelog/logs"]
     }
   ],
   "footerSocials": {
