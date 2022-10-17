@@ -58,8 +58,7 @@
         "welcome/quickstart",
         "welcome/environments",
         "welcome/libraries",
-        "welcome/privacy",
-        "changelog"
+        "welcome/privacy"
       ]
     },
     {
@@ -79,6 +78,10 @@
         "webhooks/data_flow",
         "webhooks/debugging"
       ]
+    },
+    {
+      "group": "Changes",
+      "pages": ["changelog"]
     },
     {
       "group": "Vital Link",
