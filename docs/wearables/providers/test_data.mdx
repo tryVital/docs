@@ -9,7 +9,7 @@ This feature is currently under development for the following providers:
 - Apple Health Kit
 - Fitbit
 - Oura
-- Whoop
+- Freestyle Libre
 
 The others will be coming soon. If there is a particular provider you would like us to add
 please do not hesitate to contact us at support@tryvital.io!
@@ -77,3 +77,20 @@ From here, everything works exactly the same as if you connected a real device. 
 - [Historical webhooks](/webhooks/data_flow#historical-data-flow). We simulate historical data for the demo device and send the corresponding webhook updates, as in the real-world scenario.
 - [Daily webhooks](/webhooks/data_flow#daily-data-flow). We also simulate updates to the device data every couple of hours so you can test receiving the data when a user recorded a workout or other activity.
 - [Refresh user data](/api-reference/user/refresh-user-data). You can also instantaneously refresh a user's data through this endpoint.
+
+## Backfill Data
+
+For demo connections there will be 30 days of historic data backfilled. This is in contrast with data backfill for non demo providers, 
+where the number of days data backfilled varies according to the provider. [Historical backfill] (wearables/providers/introduction#historical_days_retrieved)
+
+## Data Format
+
+When connecting to the live Vital client, there are three data response structures available for data. 
+Raw, Stream and Summary
+
+When connecting to the demo Vital client data is only available in the Summary structure.
+
+Summary restructures provider data fields, to have a consistent response structure across all providers. 
+This is the easiest way to use provider data across an application which connects to multiple providers.
+
+
