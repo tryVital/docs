@@ -34,7 +34,7 @@ Now you can create a demo connection for the Vital user you just created, in thi
 
 ```bash Creating a demo connection
 curl --request POST \
-     --url {{BASE_URL}}/v2/link/connect/demo \
+     --url https://api.sandbox.tryvital.io/v2/link/connect/demo \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --header 'x-vital-api-key: <your_api_key>' \
@@ -80,17 +80,15 @@ From here, everything works exactly the same as if you connected a real device. 
 
 ## Backfill Data
 
-For demo connections there will be 30 days of historic data backfilled. This is in contrast with data backfill for non demo providers, 
+For demo connections there will be 30 days of historic data backfilled. This is in contrast with data backfill for non demo providers,
 where the number of days data backfilled varies according to the provider. You can find out more [here](/wearables/providers/introduction#historical-days-retrieved)
 
 ## Data Format
 
-When connecting to the live Vital client, there are three data response structures available for data. 
+When connecting to the live Vital client, there are three data response structures available for data.
 Raw, Stream and Summary
 
 When connecting to the demo Vital client data is only available in the Summary structure.
 
-Summary restructures provider data fields, to have a consistent response structure across all providers. 
+Summary restructures provider data fields, to have a consistent response structure across all providers.
 This is the easiest way to use provider data across an application which connects to multiple providers.
-
-
