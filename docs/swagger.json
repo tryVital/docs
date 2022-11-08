@@ -3,7 +3,7 @@
   "info": {
     "title": "Vital API",
     "description": "API for at-home health Wearables and Lab test API for digital health companies.",
-    "version": "0.1.287"
+    "version": "0.1.362"
   },
   "paths": {
     "/v2/link/token": {
@@ -31,6 +31,61 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LinkTokenExchangeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/link/token/create": {
+      "post": {
+        "tags": [
+          "link"
+        ],
+        "summary": "Create Token",
+        "description": "Generate a token to invite a user of Vital mobile app to your team",
+        "operationId": "create_token_v2_link_token_create_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "string",
+              "format": "uuid"
+            },
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Expires At",
+              "type": "string",
+              "format": "date-time",
+              "default": "2022-11-08T16:28:12.714343+00:00"
+            },
+            "name": "expires_at",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VitalTokenCreatedResponse"
                 }
               }
             }
@@ -498,7 +553,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -511,13 +566,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -530,7 +585,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -644,7 +699,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -657,13 +712,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -676,7 +731,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -738,7 +793,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -751,13 +806,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -770,7 +825,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -884,7 +939,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -897,13 +952,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -916,7 +971,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -978,7 +1033,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -991,13 +1046,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1010,7 +1065,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1124,7 +1179,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1137,13 +1192,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1156,7 +1211,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1218,7 +1273,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1231,13 +1286,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1250,7 +1305,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1312,7 +1367,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1325,13 +1380,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1344,7 +1399,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1458,7 +1513,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1471,13 +1526,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1490,7 +1545,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1552,7 +1607,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1565,13 +1620,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1584,7 +1639,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1732,7 +1787,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1745,13 +1800,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1764,7 +1819,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1882,7 +1937,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -1895,13 +1950,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -1914,7 +1969,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -1988,7 +2043,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2001,13 +2056,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2020,7 +2075,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2154,7 +2209,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2167,13 +2222,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2186,7 +2241,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2254,7 +2309,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2267,13 +2322,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2286,7 +2341,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2354,7 +2409,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2367,13 +2422,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2386,7 +2441,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2454,7 +2509,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2467,13 +2522,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2486,7 +2541,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2554,7 +2609,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2567,13 +2622,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2586,7 +2641,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2654,7 +2709,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2667,13 +2722,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2686,7 +2741,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2754,7 +2809,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2767,13 +2822,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2786,7 +2841,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2854,7 +2909,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2867,13 +2922,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2886,7 +2941,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -2954,7 +3009,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -2967,13 +3022,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -2986,7 +3041,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -3054,7 +3109,7 @@
             "in": "query"
           },
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -3067,13 +3122,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
@@ -3086,7 +3141,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -3486,7 +3541,7 @@
         "operationId": "get_orders_v2_testkit_orders_get",
         "parameters": [
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": true,
             "schema": {
               "title": "Start Date",
@@ -3499,13 +3554,13 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date from in YYYY-MM-DD"
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": true,
             "schema": {
               "title": "End Date",
@@ -3518,7 +3573,7 @@
                   "format": "date-time"
                 }
               ],
-              "description": "Date to in YYYY-MM-DD"
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59"
             },
             "name": "end_date",
             "in": "query"
@@ -3544,6 +3599,21 @@
               "description": "Filter by patient name."
             },
             "name": "patient_name",
+            "in": "query"
+          },
+          {
+            "description": "Filter by order ids.",
+            "required": false,
+            "schema": {
+              "title": "Order Ids",
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "description": "Filter by order ids."
+            },
+            "name": "order_ids",
             "in": "query"
           },
           {
@@ -4238,24 +4308,24 @@
         "operationId": "get_orders_v3_orders_get",
         "parameters": [
           {
-            "description": "Date from in YYYY-MM-DD",
+            "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
             "required": false,
             "schema": {
               "title": "Start Date",
               "type": "string",
-              "description": "Date from in YYYY-MM-DD",
+              "description": "Date from in YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 00:00:00",
               "format": "date-time"
             },
             "name": "start_date",
             "in": "query"
           },
           {
-            "description": "Date to in YYYY-MM-DD",
+            "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
             "required": false,
             "schema": {
               "title": "End Date",
               "type": "string",
-              "description": "Date to in YYYY-MM-DD",
+              "description": "Date to YYYY-MM-DD or ISO formatted date time. If a date is provided without a time, the time will be set to 23:59:59",
               "format": "date-time"
             },
             "name": "end_date",
@@ -4465,7 +4535,7 @@
         "example": {
           "activity": [
             {
-              "date": "2022-10-06",
+              "date": "2022-11-08",
               "calories_total": 100,
               "calories_active": 2000,
               "steps": 10000,
@@ -4480,7 +4550,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "f6fb1958-d073-4822-b086-52988de65f67"
+              "user_id": "1642d492-69fc-41f7-8ea2-8a5e71f5f3fa"
             }
           ]
         }
@@ -4503,8 +4573,8 @@
         "example": {
           "body": [
             {
-              "id": "019e6c47-05a4-4e74-9580-e76454e2054b",
-              "date": "2022-10-06",
+              "id": "34b034d3-6701-418f-b6e0-20ae27e6a080",
+              "date": "2022-11-08",
               "weight": "80kg",
               "fat": "30%",
               "height": 183,
@@ -4513,7 +4583,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "c2c3b6f9-b52b-4a87-b1e3-2c0dbad42011"
+              "user_id": "8fabac50-b94a-4634-8169-27bfca9a2a81"
             }
           ]
         }
@@ -4605,10 +4675,15 @@
             "title": "Time Zone",
             "type": "string",
             "description": "The time zone full identifier for the data. Example: 'Europe/London'."
+          },
+          "timezone_offset": {
+            "title": "Timezone Offset",
+            "type": "integer",
+            "description": "Timezone offset from UTC as minutes. For example, EEST (Eastern European Summer Time, +3h) is 180. PST (Pacific Standard Time, -8h) is -480"
           }
         },
         "example": {
-          "date": "2022-10-06",
+          "date": "2022-11-08",
           "calories_total": 100,
           "calories_active": 2000,
           "steps": 10000,
@@ -4623,12 +4698,13 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "a919355b-2f7a-4fdd-bfd8-26a2f06a5ce3"
+          "user_id": "b792e909-506a-49ca-a97c-426b9ba7403b"
         }
       },
       "ClientFacingBloodPressureTimeseries": {
         "title": "ClientFacingBloodPressureTimeseries",
         "required": [
+          "id",
           "timestamp",
           "systolic",
           "diastolic",
@@ -4638,7 +4714,8 @@
         "properties": {
           "id": {
             "title": "Id",
-            "type": "integer"
+            "type": "integer",
+            "description": "Measurement id, note, this field has been deprecated and is no longer used"
           },
           "timestamp": {
             "title": "Timestamp",
@@ -4664,7 +4741,7 @@
         },
         "example": {
           "id": 2,
-          "timestamp": "2022-10-06T20:32:57.553881+00:00",
+          "timestamp": "2022-11-08T16:13:11.577945+00:00",
           "systolic": "125",
           "diastolic": "75",
           "type": "cuff",
@@ -4850,7 +4927,7 @@
                 }
               },
               "source": {
-                "name": "My Fitness Pal",
+                "name": "MyFitnessPal",
                 "slug": "my_fitness_pal",
                 "logo": "https://logo_url.com"
               },
@@ -4918,15 +4995,15 @@
           }
         },
         "example": {
-          "id": "f6dd10aa-4943-421b-b90a-8534bce75d3e",
-          "date": "2022-10-06",
+          "id": "e16e1b19-b575-4e74-b1e2-365491c4e957",
+          "date": "2022-11-08",
           "height": 183,
           "source": {
             "name": "Oura",
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "701776af-55e9-4035-8d68-20c206484e0a"
+          "user_id": "42163eda-bbdd-4b19-8b59-2d0e63964eec"
         }
       },
       "ClientFacingShipment": {
@@ -4987,7 +5064,7 @@
         },
         "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
         "example": {
-          "id": "841b1aa8-7757-4178-a76a-cf37ee453657",
+          "id": "d139a5cc-2465-49d0-8824-094ac1c68dc6",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "outbound_tracking_url": "<outbound_tracking_url>",
           "inbound_tracking_number": "<inbound_tracking_number>",
@@ -5140,10 +5217,10 @@
           }
         },
         "example": {
-          "id": "e3ad5e6e-345c-45ea-98b4-c3d9102a704f",
-          "date": "2022-10-06",
-          "bedtime_start": "2022-10-06T20:32:57.548502+00:00",
-          "bedtime_stop": "2022-10-06T20:32:57.548507+00:00",
+          "id": "e5bdde16-2dd4-4de8-bfdb-6a178623619e",
+          "date": "2022-11-08",
+          "bedtime_start": "2022-11-08T16:13:11.590024+00:00",
+          "bedtime_stop": "2022-11-08T16:13:11.590029+00:00",
           "timezone_offset": 2400,
           "duration": 28800,
           "total": 28800,
@@ -5163,7 +5240,7 @@
             "slug": "oura",
             "logo": "https://logo_url.com"
           },
-          "user_id": "0160e3bc-5b2e-4683-932a-fa75f194dcdb"
+          "user_id": "605f4c46-e057-4978-9a43-f60b522ead8f"
         }
       },
       "ClientFacingSleepStream": {
@@ -5203,36 +5280,36 @@
           "hrv": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T20:32:57.547692+00:00",
-              "value": 67,
+              "timestamp": "2022-11-08T16:13:11.589307+00:00",
+              "value": 29,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T20:33:27.547751+00:00",
-              "value": 26,
+              "timestamp": "2022-11-08T16:13:41.589351+00:00",
+              "value": 2,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T20:33:57.547771+00:00",
-              "value": 49,
+              "timestamp": "2022-11-08T16:14:11.589370+00:00",
+              "value": 47,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T20:34:27.547790+00:00",
-              "value": 58,
+              "timestamp": "2022-11-08T16:14:41.589387+00:00",
+              "value": 1,
               "type": "automatic",
               "unit": "rmssd"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T20:34:57.547804+00:00",
-              "value": 32,
+              "timestamp": "2022-11-08T16:15:11.589402+00:00",
+              "value": 5,
               "type": "automatic",
               "unit": "rmssd"
             }
@@ -5240,36 +5317,36 @@
           "heartrate": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T20:32:57.547820+00:00",
-              "value": 90,
+              "timestamp": "2022-11-08T16:13:11.589417+00:00",
+              "value": 71,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T20:33:27.547838+00:00",
-              "value": 84,
+              "timestamp": "2022-11-08T16:13:41.589430+00:00",
+              "value": 7,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T20:33:57.547853+00:00",
-              "value": 22,
+              "timestamp": "2022-11-08T16:14:11.589443+00:00",
+              "value": 150,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T20:34:27.547869+00:00",
-              "value": 26,
+              "timestamp": "2022-11-08T16:14:41.589457+00:00",
+              "value": 175,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T20:34:57.547883+00:00",
-              "value": 65,
+              "timestamp": "2022-11-08T16:15:11.589470+00:00",
+              "value": 38,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5277,36 +5354,36 @@
           "hypnogram": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T20:32:57.547898+00:00",
+              "timestamp": "2022-11-08T16:13:11.589483+00:00",
               "value": 4,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T20:33:27.547911+00:00",
-              "value": 3,
+              "timestamp": "2022-11-08T16:13:41.589496+00:00",
+              "value": 5,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T20:33:57.547925+00:00",
+              "timestamp": "2022-11-08T16:14:11.589509+00:00",
               "value": 0,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T20:34:27.547941+00:00",
+              "timestamp": "2022-11-08T16:14:41.589522+00:00",
               "value": 3,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T20:34:57.547958+00:00",
-              "value": 3,
+              "timestamp": "2022-11-08T16:15:11.589535+00:00",
+              "value": 4,
               "type": "vital_hypnogram",
               "unit": "vital_hypnogram"
             }
@@ -5314,36 +5391,36 @@
           "respiratory_rate": [
             {
               "id": 0,
-              "timestamp": "2022-10-06T20:32:57.547975+00:00",
-              "value": 19,
+              "timestamp": "2022-11-08T16:13:11.589548+00:00",
+              "value": 9,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 1,
-              "timestamp": "2022-10-06T20:33:27.547993+00:00",
-              "value": 14,
+              "timestamp": "2022-11-08T16:13:41.589561+00:00",
+              "value": 13,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 2,
-              "timestamp": "2022-10-06T20:33:57.548009+00:00",
-              "value": 16,
+              "timestamp": "2022-11-08T16:14:11.589573+00:00",
+              "value": 19,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 3,
-              "timestamp": "2022-10-06T20:34:27.548023+00:00",
-              "value": 25,
+              "timestamp": "2022-11-08T16:14:41.589586+00:00",
+              "value": 22,
               "type": "automatic",
               "unit": "bpm"
             },
             {
               "id": 4,
-              "timestamp": "2022-10-06T20:34:57.548035+00:00",
-              "value": 22,
+              "timestamp": "2022-11-08T16:15:11.589599+00:00",
+              "value": 16,
               "type": "automatic",
               "unit": "bpm"
             }
@@ -5810,9 +5887,9 @@
         },
         "description": "Schema for a testkit order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "337d35fe-c93c-4495-b4fb-be2d44f6517b",
+          "id": "26e6de4f-8863-4b62-aee5-694832eee146",
           "shipment": {
-            "id": "7fb7c7fd-28b8-4fc5-9a32-1f04b3c17d7f",
+            "id": "1b018fca-84df-4b55-bbd2-c56ae316dd2e",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "outbound_tracking_url": "<outbound_tracking_url>",
             "inbound_tracking_number": "<inbound_tracking_number>",
@@ -5830,6 +5907,7 @@
       "ClientFacingTimeseries": {
         "title": "ClientFacingTimeseries",
         "required": [
+          "id",
           "timestamp",
           "value"
         ],
@@ -5837,7 +5915,8 @@
         "properties": {
           "id": {
             "title": "Id",
-            "type": "integer"
+            "type": "integer",
+            "description": "Measurement id, note, this field has been deprecated and is no longer used"
           },
           "timestamp": {
             "title": "Timestamp",
@@ -5860,56 +5939,56 @@
         "example": {
           "glucose": {
             "id": 2,
-            "timestamp": "2022-10-06T20:32:56.519030+00:00",
+            "timestamp": "2022-11-08T16:13:10.460576+00:00",
             "value": "0.50",
             "type": "automatic | manual_scan",
             "unit": "mg/dL"
           },
           "cholesterol/ldl": {
             "id": 3,
-            "timestamp": "2022-10-06T20:32:56.519046+00:00",
+            "timestamp": "2022-11-08T16:13:10.460594+00:00",
             "value": "0.60",
             "type": "ldl",
             "unit": "mg/dL"
           },
           "cholesterol/hdl": {
             "id": 92,
-            "timestamp": "2022-10-06T20:32:56.519051+00:00",
+            "timestamp": "2022-11-08T16:13:10.460599+00:00",
             "value": "0.20",
             "type": "hdl",
             "unit": "mg/dL"
           },
           "cholesterol/total": {
             "id": 8,
-            "timestamp": "2022-10-06T20:32:56.519054+00:00",
+            "timestamp": "2022-11-08T16:13:10.460602+00:00",
             "value": "0.70",
             "type": "total",
             "unit": "mg/dL"
           },
           "cholesterol/triglycerides": {
             "id": 100,
-            "timestamp": "2022-10-06T20:32:56.519058+00:00",
+            "timestamp": "2022-11-08T16:13:10.460608+00:00",
             "value": "0.70",
             "type": "triglycerides",
             "unit": "mg/dL"
           },
           "heartrate": {
             "id": 123,
-            "timestamp": "2022-10-06T20:32:56.519061+00:00",
+            "timestamp": "2022-11-08T16:13:10.460611+00:00",
             "value": "70",
             "type": "automatic",
             "unit": "bpm"
           },
           "ige": {
             "id": 232,
-            "timestamp": "2022-10-06T20:32:56.519064+00:00",
+            "timestamp": "2022-11-08T16:13:10.460614+00:00",
             "value": "70",
             "type": "baha_grass",
             "unit": "FSU"
           },
           "igg": {
             "id": 235,
-            "timestamp": "2022-10-06T20:32:56.519067+00:00",
+            "timestamp": "2022-11-08T16:13:10.460617+00:00",
             "value": "12.0",
             "type": "dairy",
             "unit": "FSU"
@@ -5967,9 +6046,9 @@
           }
         },
         "example": {
-          "user_id": "42686119-4ff3-4f86-88f0-a930f4c4ff87",
-          "team_id": "4a050dca-80c8-495d-b8e6-50e41883b622",
-          "client_user_id": "1df44a3a-16a2-48d9-bc13-042b4a750ed6",
+          "user_id": "001f1c5f-3570-49d7-94e0-b1be0ab63b1c",
+          "team_id": "5f1f82ff-f97a-4ba7-878f-687a79929f03",
+          "client_user_id": "d9ba2024-1752-4240-a059-4ce317762e26",
           "connected_sources": [
             {
               "source": {
@@ -5977,7 +6056,7 @@
                 "slug": "oura",
                 "logo": "logo_url"
               },
-              "created_on": "2022-10-06T20:32:57.408960+00:00"
+              "created_on": "2022-11-08T16:13:11.463594+00:00"
             }
           ]
         }
@@ -6010,8 +6089,8 @@
           }
         },
         "example": {
-          "client_user_id": "4f69b544-4b5f-42bd-8c52-b264a9ad91e8",
-          "user_id": "f049ef42-7d4f-48d0-afe4-3c00534619f8"
+          "client_user_id": "8b391d60-7131-42a1-9ce2-f6b0c52f528e",
+          "user_id": "2fafd266-9314-4705-8dc3-ad1450c362a4"
         }
       },
       "ClientFacingWalkInOrderDetails": {
@@ -6061,7 +6140,7 @@
         },
         "description": "Schema for a walk-in test order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
         "example": {
-          "id": "4b45762f-d198-42a4-86f3-1ec8c37d93a0",
+          "id": "b5ce23a5-7140-45e6-b2eb-f68536f5363b",
           "created_at": "2020-01-01T00:00:00Z",
           "updated_at": "2020-01-01T00:00:00Z"
         }
@@ -6227,12 +6306,12 @@
           }
         },
         "example": {
-          "id": "74f568ce-23ab-4803-a2b9-a72808874095",
+          "id": "18d499b8-a8ed-4581-b719-a048e7342800",
           "average_hr": 100,
           "max_hr": 190,
           "distance": 1700,
-          "time_start": "2022-10-06T19:32:57.564995+00:00",
-          "time_end": "2022-10-06T20:32:57.565032+00:00",
+          "time_start": "2022-11-08T15:13:11.602452+00:00",
+          "time_end": "2022-11-08T16:13:11.602480+00:00",
           "calories": 300,
           "sport": {
             "id": 1,
@@ -6250,7 +6329,7 @@
             10,
             200
           ],
-          "user_id": "b8ed2f79-4de8-4b15-aca8-6f6230dceb97",
+          "user_id": "af238a14-a311-4284-a95b-493390d21aca",
           "moving_time": 100,
           "total_elevation_gain": 10,
           "elev_high": 20.2,
@@ -6284,10 +6363,10 @@
         "example": {
           "sleep": [
             {
-              "id": "8c5b95a6-948e-455e-bcf9-c806837d04fe",
-              "date": "2022-10-06",
-              "bedtime_start": "2022-10-06T20:32:57.550830+00:00",
-              "bedtime_stop": "2022-10-06T20:32:57.550835+00:00",
+              "id": "31bfb6ce-eb6a-43b4-b6eb-18996fdeea48",
+              "date": "2022-11-08",
+              "bedtime_start": "2022-11-08T16:13:11.592383+00:00",
+              "bedtime_stop": "2022-11-08T16:13:11.592388+00:00",
               "timezone_offset": 2400,
               "duration": 28800,
               "total": 28800,
@@ -6307,7 +6386,7 @@
                 "slug": "oura",
                 "logo": "https://logo_url.com"
               },
-              "user_id": "56f8c3a3-fac5-40d2-bd77-43daed658847"
+              "user_id": "6c87fe87-ff57-46c6-9191-c46045d14d03"
             }
           ]
         }
@@ -6329,12 +6408,12 @@
         },
         "example": {
           "workouts": {
-            "id": "b2fc3a62-a5ed-454f-95f1-81c6a8071c84",
+            "id": "a059a288-e71a-43ce-96be-c23d76be9f7a",
             "average_hr": 100,
             "max_hr": 190,
             "distance": 1700,
-            "time_start": "2022-10-06T19:32:57.566010+00:00",
-            "time_end": "2022-10-06T20:32:57.566032+00:00",
+            "time_start": "2022-11-08T15:13:11.603587+00:00",
+            "time_end": "2022-11-08T16:13:11.603609+00:00",
             "calories": 300,
             "sport": {
               "id": 1,
@@ -6352,7 +6431,7 @@
               10,
               200
             ],
-            "user_id": "0eff0011-23d7-4d57-9d9d-4fbadee6af2a",
+            "user_id": "5cf3e148-31a6-4b11-8a41-976302e93a4d",
             "moving_time": 100,
             "total_elevation_gain": 10,
             "elev_high": 20.2,
@@ -6881,7 +6960,8 @@
           "is_active",
           "created_at",
           "updated_at",
-          "id"
+          "id",
+          "logistics_provider"
         ],
         "type": "object",
         "properties": {
@@ -6954,6 +7034,9 @@
             "items": {
               "$ref": "#/components/schemas/MarkerInDB"
             }
+          },
+          "logistics_provider": {
+            "$ref": "#/components/schemas/OrderClientName"
           }
         },
         "description": "Schema for a LabTest in the database."
@@ -7324,7 +7407,8 @@
           "contour_ble",
           "freestyle_libre_ble",
           "apple_health_kit",
-          "manual"
+          "manual",
+          "health_connect"
         ],
         "type": "string",
         "description": "An enumeration."
@@ -7753,6 +7837,15 @@
         "type": "string",
         "description": "An enumeration."
       },
+      "OrderClientName": {
+        "title": "OrderClientName",
+        "enum": [
+          "shipbob",
+          "shiphero"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
       "OrderResponse": {
         "title": "OrderResponse",
         "required": [
@@ -7776,13 +7869,13 @@
         },
         "example": {
           "order": {
-            "id": "7b6dd67b-ddd6-41e9-9502-b0e98d5e2f66",
-            "team_id": "b490f7b8-809b-41cc-825e-ed623f5d4882",
-            "created_on": "2022-10-06T20:32:57.535368+00:00",
-            "updated_on": "2022-10-06T20:32:57.535375+00:00",
+            "id": "14df782a-a21c-419a-beed-997766b41f10",
+            "team_id": "7e8908a9-12a3-44cb-9054-e70ee1cfbff6",
+            "created_on": "2022-11-08T16:13:11.225840+00:00",
+            "updated_on": "2022-11-08T16:13:11.225851+00:00",
             "status": "ordered",
-            "user_id": "3643d07a-4232-437f-9d50-70bf3903679a",
-            "testkit_id": "87c0a6e3-3007-4bca-8a1d-fb7845bc77a7",
+            "user_id": "b2c4ebf2-6525-4b15-83ab-a3bd3ce7ff12",
+            "testkit_id": "016032ed-8f61-44cb-8370-70607d8ddc11",
             "inbound_tracking_number": "<inbound_tracking_number>",
             "outbound_tracking_number": "<outbound_tracking_number>",
             "inbound_tracking_url": "<inbound_tracking_urlr>",
@@ -7939,13 +8032,13 @@
         "example": {
           "orders": [
             {
-              "id": "9b30cfd4-8d75-4696-9439-1ea42e3f8221",
-              "team_id": "ab13ee8e-8583-49e3-9dc2-551ba4c7e1b7",
-              "created_on": "2022-10-06T20:32:57.536577+00:00",
-              "updated_on": "2022-10-06T20:32:57.536583+00:00",
+              "id": "79c69db9-fff1-4218-9619-de2f2b5eee6d",
+              "team_id": "7e8f38b3-6f0c-4ed4-9dda-b3148f0ce26c",
+              "created_on": "2022-11-08T16:13:11.228652+00:00",
+              "updated_on": "2022-11-08T16:13:11.228661+00:00",
               "status": "ordered",
-              "user_id": "8c3887ef-d064-4834-8f48-992ea0083e97",
-              "testkit_id": "65bb9c21-4b24-4746-8cd9-a3516c480aa6",
+              "user_id": "3be8c72a-20c1-4bd1-9163-47c9672be396",
+              "testkit_id": "d682e44c-a82b-4823-9bde-317e78a2d496",
               "testkit": {
                 "name": "CGM",
                 "description": "Glucose CGM"
@@ -8212,7 +8305,8 @@
           "contour_ble",
           "dexcom",
           "hammerhead",
-          "my_fitness_pal"
+          "my_fitness_pal",
+          "health_connect"
         ],
         "type": "string",
         "description": "An enumeration."
@@ -8285,12 +8379,12 @@
         "example": {
           "activity": [
             {
-              "timestamp": "2022-10-06T20:32:56.533700+00:00",
+              "timestamp": "2022-11-08T16:13:10.476367+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "59567e89-db83-4147-9896-c31fcd913db6",
-              "user_id": "399072e2-a562-42de-8ef6-a7c3dba4a89c",
+              "provider_id": "5dc324b0-21df-46ba-849f-0d16907a12b3",
+              "user_id": "5d471481-91b7-45a8-a493-eb93e4ba59a6",
               "source_id": 1,
               "priority_id": 1
             }
@@ -8315,12 +8409,12 @@
         "example": {
           "body": [
             {
-              "timestamp": "2022-10-06T20:32:56.536072+00:00",
+              "timestamp": "2022-11-08T16:13:10.478669+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "70f05e33-6e5d-4699-95ac-81c1cbdd5df6",
-              "user_id": "b1e4425d-6253-47cf-af28-ad86d9a9fa78",
+              "provider_id": "fef9a5dc-fa5b-4222-970d-698b0cbbadd1",
+              "user_id": "65feeca7-3144-46cf-b808-88400328c0fd",
               "source_id": 1,
               "priority_id": 1
             }
@@ -8348,8 +8442,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "df73d610-1f7f-48d9-b6b3-55eef47c35a3",
-              "user_id": "358689c8-d1ce-419a-baaf-7dbac43baa2c",
+              "provider_id": "d3381016-63e2-47d0-95ed-663a01e1415c",
+              "user_id": "5386bab0-f434-4534-aa49-0008b3a7c2e5",
               "source_id": 1
             }
           ]
@@ -8372,8 +8466,8 @@
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "7e8660ae-aa10-45a3-8159-0e918b467d84",
-              "user_id": "e2b29c89-c52b-4a0b-afa9-cd5dc6eb69aa",
+              "provider_id": "2a404c05-a5e9-4b9c-877c-aa4bb31f34a6",
+              "user_id": "6a5aa5c1-a3cc-4db2-8371-310e0a120054",
               "source_id": 1
             }
           ]
@@ -8397,12 +8491,12 @@
         "example": {
           "sleep": [
             {
-              "timestamp": "2022-10-06T20:32:56.547179+00:00",
+              "timestamp": "2022-11-08T16:13:10.489183+00:00",
               "data": {
                 "data": "...provider_specific_data"
               },
-              "provider_id": "120bb7ef-f644-4d18-b644-67487d62b62f",
-              "user_id": "9127c781-2c0f-4c16-9df9-f3553c217075",
+              "provider_id": "f0355ace-1611-4744-91bd-a9c152430490",
+              "user_id": "e3dd117d-92ba-4d60-802b-696e866f23cb",
               "source_id": 1,
               "priority_id": 1
             }
@@ -8427,12 +8521,12 @@
         "example": {
           "workouts": [
             {
-              "timestamp": "2022-10-06T20:32:56.550669+00:00",
+              "timestamp": "2022-11-08T16:13:10.492782+00:00",
               "data": {
                 "provider_specific": "..._data"
               },
-              "provider_id": "5f76c78d-e178-42a9-84ca-3520b5aea4fb",
-              "user_id": "8192817d-c063-42a7-8fae-0dc9b0bbfc3b",
+              "provider_id": "eb37f5bd-7020-48b1-8ce4-910c971a1a1f",
+              "user_id": "88841f9f-6bee-42e3-abe3-6fcf7574042b",
               "source_id": 1,
               "priority_id": 1,
               "sport_id": 3
@@ -8709,7 +8803,7 @@
         },
         "example": {
           "success": false,
-          "user_id": "ce9f7366-9bc1-4ecf-8840-9dbc14caa082",
+          "user_id": "5f2d69d4-9a3a-43a3-9d6d-066c047dc932",
           "error": "user has no connected sources",
           "failed_sources": []
         }
@@ -8755,7 +8849,7 @@
         },
         "example": {
           "success": true,
-          "user_id": "b8480057-486c-451a-abac-5eb8ed285500",
+          "user_id": "294dddd0-ffa6-4422-8afe-c3d362e29e88",
           "refreshed_sources": [
             "Withings/workouts",
             "Withings/sleep",
@@ -8814,6 +8908,26 @@
           },
           "type": {
             "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "VitalTokenCreatedResponse": {
+        "title": "VitalTokenCreatedResponse",
+        "required": [
+          "code",
+          "exchange_url"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "title": "Code",
+            "pattern": "^(sk|pk)(eu|us)([\\da-f]{8})",
+            "type": "string"
+          },
+          "exchange_url": {
+            "title": "Exchange Url",
+            "pattern": "^tryvital\\:\\/\\/tryvital\\?code\\=(sk|pk)(eu|us)([\\da-f]{8})$",
             "type": "string"
           }
         }
@@ -8999,9 +9113,9 @@
           }
         },
         "example": {
-          "id": "f3e100aa-c31f-4d2c-9110-e5d7f7370b11",
-          "team_id": "b362dad6-16aa-429d-b9d3-fa8772cc04c0",
-          "user_id": "4cf56620-8959-4d26-9b10-305615fafe58",
+          "id": "9aa991d3-2172-495f-8611-7262f6165fab",
+          "team_id": "a0a2cab2-d61c-4b8b-af59-a273876eff2f",
+          "user_id": "dc481b7e-d39b-466c-a327-7e2689a6e794",
           "patient_details": {
             "dob": "2020-01-01",
             "gender": "male"
@@ -9255,16 +9369,21 @@
             "title": "Sample Id",
             "type": "string",
             "description": "Sample ID"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string",
+            "description": "Notes associated with the order"
           }
         },
         "example": {
-          "id": "76ee27b8-e104-4eae-b67c-6f814d2002c4",
-          "team_id": "c74f0948-68e9-41d7-8851-21f00677fdad",
-          "created_on": "2022-10-06T20:32:57.534627+00:00",
-          "updated_on": "2022-10-06T20:32:57.534644+00:00",
+          "id": "ebb55ad4-03ce-4574-8779-ec32ce2512e5",
+          "team_id": "556359b1-affb-471c-b817-b34707f522af",
+          "created_on": "2022-11-08T16:13:11.224947+00:00",
+          "updated_on": "2022-11-08T16:13:11.224963+00:00",
           "status": "ordered",
-          "user_id": "b0f8d6ad-d709-445f-a7c2-0df5e58f7999",
-          "testkit_id": "3bc59d0d-37a2-416c-ac8f-fecef6356764",
+          "user_id": "10225d4d-6256-404d-abdf-abff17a7e4bf",
+          "testkit_id": "d97cf0eb-d2a1-4e7d-9f64-8a4bf47bd5e9",
           "inbound_tracking_number": "<inbound_tracking_number>",
           "outbound_tracking_number": "<outbound_tracking_number>",
           "inbound_tracking_url": "<inbound_tracking_urlr>",
