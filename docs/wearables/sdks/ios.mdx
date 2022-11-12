@@ -283,7 +283,7 @@ As previously mentioned, you are responsible for sending the samples to the serv
 
 ### 1. Quick Intro
 
-VitalHealthKit is an abstraction on top of HealthKit that 1) automates the extraction of data 2) pushs that data to Vital automatically.
+VitalHealthKit is an abstraction on top of HealthKit that **1)** automates the extraction of data **2)** pushs that data to Vital automatically.
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
@@ -296,21 +296,41 @@ import VitalHealthKit
 
 await VitalHealthKitClient.configure(
     .init(
-        autoSyncEnabled: ..., // false by default
+        mode: ..., // automatic by default
         backgroundDeliveryEnabled: ..., // false by default
         logsEnabled: ..., // false by default
-        daysFetched: ..., // 90 by default
+        numberOfDaysToBackFill: ..., // 90 by default
     )
 )
 ```
 
 That's it!
 
-Just like VitalDevices, you need to configure the `VitalClient` at some point during your flow.
+Just like VitalDevices, you need to configure the `VitalClient` at some point during your flow. Like this:
+
+```swift
+import VitalCore
+
+await VitalClient.configure(
+    apiKey: "xyz",
+    environment: .sandbox(.us)
+)
+
+await VitalClient.setUserId(result.userId)
+```
+
+<Note>
+VitalHealthKit will check if the `userId` has an associted Apple HealthKit connected source. If it doesn't, it will create one automatically. This means that you don't need to do this:
+
+```swift
+let result = try await VitalClient.shared.user.createConnectedSource(for: .omron)
+```
+
+</Note>
 
 <Note>
 
-When configuring `VitalHealthKitClient`, you can enable logs, background delivery, number of days you want to backfill and `auto-sync`. The latter in particular, will immediately try to push data, once the `configuration` method is called.
+When configuring `VitalHealthKitClient`, you can enable logs, background delivery, number of days you want to backfill and mode. The latter in particular, specifies if you want to be responsible for pushing data youself, or allow the SDK to do that on your behalf. By default the SDK is set to automatic.
 
 </Note>
 
@@ -350,10 +370,11 @@ Although `syncData()` and `syncData(for:)` make your life easier, they can somet
 
 ```swift
   public enum Status {
-    case syncing(VitalResource)
     case failedSyncing(VitalResource, Error?)
-    case successSyncing(VitalResource)
+    case successSyncing(VitalResource, ProcessedResourceData)
     case nothingToSync(VitalResource)
+    case syncing(VitalResource)
+    case syncingCompleted
   }
 ```
 
@@ -399,7 +420,7 @@ As per the [documentation](https://developer.apple.com/documentation/healthkit/h
 >
 > For example, on iOS, `stepCount` samples have an hourly maximum frequency.
 
-This means that although we have background delivery's frequency set to `.immediate`, we cannot guarantee immediate syncing.
+This means that although we have background delivery's frequency set to `.hourly`, we cannot guarantee hourly syncing on the dot.
 
 </Warning>
 
@@ -418,10 +439,10 @@ From an implementation perspective, `VitalHealthKitClient` suspends all operatio
 
 The `VitalHealthKitClient` can be configured with the following options:
 
-- `autoSyncEnabled`: Whether or not to automatically sync data. If `true`, data is synced as soon as the `configure` method is called. By default, this is `false`.
+- `mode`: Whether or not to automatically sync data. If in `automatic`, data is synced on your behalf. Otherwise, you are responsible for doing so. By default, this is `automatic`.
 - `backgroundDeliveryEnabled`: Whether or not to enable background delivery. You need to enable this on the project settings besides passing `true`, otherwise the app will crash. If `true` as soon as configure is called, a sync is kicked off by default. This means you don't need both `autoSyncEnabled` and `backgroundDeliveryEnabled` set to `true`. By default, this is `false`.
 - `logsEnabled`: Whether or not to enable logs. Useful when debugging. By default, this is `false`.
-- `daysFetched`: Number of days to fetch data for. The first you configure the SDK, we will get X days of amount of data for the permissions you requested. By default, this is `90`.
+- `numberOfDaysToBackFill`: Number of days to fetch data for. The first you configure the SDK, we will get X days of amount of data for the permissions you requested. By default, this is `90`.
 
 #### `sync` versus background delivery
 
@@ -477,3 +498,19 @@ If your app already asked for one, or more, of these permissions, we will try to
 
 1. For example, if the user gave permission for steps, we will try sync steps as part of an Activity. This means that this data is available via `/summary/activity/` endpoint.
 2. Types part of `Vitals` (e.g. `heartrate`, `bloodGlucose`), are treated as timeseries data, so they are available via the timeseries API: `/timeseries/`.
+
+#### Information flow
+
+For the majority of users, the SDK is configured with background delivery to true. Data is synced on their behalf and they don't need to think about it. Eventually, to display the information back to their users, they make an HTTP request to a server. This means that information flows looks like this:
+
+```
+Apple HealthKit -> SDK -> Vital Server -> Your Server <- User's app
+```
+
+You can bypass the above flow, by using `VitalHealthKit.read`. This is a static method that doesn't require the SDK to be configured. This is a good option for users that are only dealing Apple HealthKit data and they want data immediately. You can still keep background delivery enabled, but read from Apple HealthKit directly.
+
+<Note>
+
+If your user is sharing Apple HealthKit data and some other provider, we do recommend you reading the data from the server. Finally even if it's only Apple HealthKit, we do extra calculations on the server side (e.g. sleep effiency). If you use `VitalHealthKit.read` you will miss these values.
+
+</Note>
