@@ -501,16 +501,16 @@ If your app already asked for one, or more, of these permissions, we will try to
 
 #### Information flow
 
-For the majority of users, the SDK is configured with background delivery to true. Data is synced on their behalf and they don't need to think about it. Eventually, to display the information back to their users, they make an HTTP request to a server. This means that information flows looks like this:
+For the majority of users, the SDK is configured with background delivery to `true`. Data is synced on their behalf and they don't need to think about it. Eventually, to display the information back to their users, they make an HTTP request to a server. This means that information flows looks like this:
 
 ```
 Apple HealthKit -> SDK -> Vital Server -> Your Server <- User's app
 ```
 
-You can bypass the above flow, by using `VitalHealthKit.read`. This is a static method that doesn't require the SDK to be configured. This is a good option for users that are only dealing Apple HealthKit data and they want data immediately. You can still keep background delivery enabled, but read from Apple HealthKit directly.
+You can bypass the above flow, by using `VitalHealthKit.read(resource:startDate:endDate:)`. This is a static method that doesn't require the SDK to be configured. This is a great option if you are only dealing with Apple HealthKit data. You can still keep background delivery enabled, but read from Apple HealthKit directly.
 
 <Note>
 
-If your user is sharing Apple HealthKit data and some other provider, we do recommend you reading the data from the server. Finally even if it's only Apple HealthKit, we do extra calculations on the server side (e.g. sleep effiency). If you use `VitalHealthKit.read` you will miss these values.
+If your user is sharing Apple HealthKit data and some other provider, we highly recommend reading the data from the server. Finally even if it's only Apple HealthKit, we do extra calculations on the server side (e.g. sleep effiency). If you use `VitalHealthKit.read(resource:startDate:endDate:)` you will miss these values.
 
 </Note>
