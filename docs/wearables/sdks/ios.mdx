@@ -4,7 +4,13 @@ title: "iOS"
 
 ## 1. Introduction
 
-The iOS SDK is split into three main components: VitalCore, VitalHealthKit and VitalDevices. VitalCore holds common components to both VitalHealthKit and VitalDevices. Among other things, it has the network layer that allows us to send data from a device to a server. As their name hint, VitalHealthKit and VitalDevices are an abstraction over HealthKit and specific Bluetooth devices. If your app is generating data independently, you can use VitalCore directly to push data.
+The iOS SDK is split into three main components: `VitalCore`, `VitalHealthKit` and `VitalDevices`. `VitalCore` holds common components to both `VitalHealthKit` and `VitalDevices`. Among other things, it has the network layer that allows us to send data from a device to a server. As their name hint, `VitalHealthKit` and `VitalDevices` are an abstraction over HealthKit and specific Bluetooth devices. If your app is generating data independently, you can use `VitalCore` directly to push data.
+
+<Warning>
+  We keep these frameworks split on purpose. If your app is linked to Apple
+  HealthKit and you don't use it, your app might be rejected during the app
+  review process
+</Warning>
 
 ## 2. Installation
 
