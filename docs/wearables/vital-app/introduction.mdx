@@ -2,10 +2,10 @@
 title: "Introduction"
 ---
 
-<Info>
+<Note>
   The app is available on the App Store, and you can download it
   [here](https://apps.apple.com/us/app/vital-connect/6444167196).
-</Info>
+</Note>
 
 The Vital iOS app allows your customers to quickly sync their Apple Health app with you. This is quite handy if you don't have an iOS app, but you still want to analyse the data stored in the Apple Health app.
 
@@ -19,5 +19,5 @@ The Vital iOS app allows your customers to quickly sync their Apple Health app w
 The flow is quite straighforward:
 
 1. Your user, is already part of our system (e.g. they have a `userId`). If they aren't, you can create one by using our [Create User](/api-reference/user/create-user) endpoint.
-2. You generate a code, against this `userId`. You can use our [Create Code](/api-reference/link/create-code) endpoint for this.
-3. You provide this code to your user. They will then go to the Settings and input this code. Once succesfully, their data will be synced with you.
+2. You create a code, against a `userId`. You can use our [Create Code](/api-reference/link/create-code) endpoint for this.
+3. You provide this code to your user. They will then go to the Settings and input this code. Once succesfully, their data will be synced.
