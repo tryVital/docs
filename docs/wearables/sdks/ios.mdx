@@ -507,13 +507,13 @@ If your app already asked for one, or more, of these permissions, we will try to
 
 #### v) Information flow
 
-For most people, the SDK is configured with background delivery to `true`. Data is synced on their behalf and they don't need to think about it. Eventually, to display the information back to a user, they make an HTTP request to a server. This means that information flows looks like this:
+For most users, the SDK is configured with background delivery to `true`. Data is synced on your behalf and you don't need to think about it. Eventually, to display the information back to an end-user, you make an HTTP request to a server. This means that information flows looks like this:
 
 ```
 Apple HealthKit -> SDK -> Vital Server -> Your Server <- User's app
 ```
 
-You can bypass the above flow, by using `VitalHealthKit.read(resource:startDate:endDate:)`. This is a static method that doesn't require the SDK to be configured. This is a great option if you are only dealing with Apple HealthKit data. You can still keep background delivery enabled, but read from Apple HealthKit directly.
+You can bypass the above flow, by using `VitalHealthKit.read(resource:startDate:endDate:)`. This is a static method that doesn't require the SDK to be configured. This is a great option if you are only dealing with Apple HealthKit data. You can still keep background delivery enabled, but read data from Apple HealthKit instead.
 
 <Note>
 
