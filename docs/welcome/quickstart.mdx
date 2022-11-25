@@ -41,9 +41,9 @@ customizing the `.env` file with your own Vital `API_KEY` and finally, building 
 # instead to ensure correct symlink behavior
 git clone https://github.com/tryVital/quickstart.git
 
-# Copy the .env.example file to .env, then fill
-# out VITAL_API_KEY and VITAL_ENV in .env
-cp .env.example .env
+# Create .env, then fill
+# out VITAL_API_KEY, VITAL_REGION (eu, us) and VITAL_ENV in .env
+touch .env
 
 # Note: must use python 3
 # For virtualenv users:
@@ -62,6 +62,9 @@ Open a new shell and start the frontend app. Your app will be running at `http:/
 # Install dependencies
 cd quickstart/frontend
 npm install
+
+# Open .env.local, then fill
+# out NEXT_PUBLIC_VITAL_API_KEY, NEXT_PUBLIC_VITAL_ENV and NEXT_PUBLIC_VITAL_REGION
 
 # Start the frontend app
 npm run dev
