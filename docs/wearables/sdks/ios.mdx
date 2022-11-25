@@ -537,10 +537,10 @@ You can bypass the above flow, by using `VitalHealthKit.read(resource:startDate:
 
 ```
 /// Background, handled automatically by the SDK
-Apple HealthKit -> Vital SDK -> Vital Server -> Your Server
+Apple HealthKit -> Vital SDK <-> Vital Server -> Your Server
 
 /// In the app
-User's app <- Vital SDK  <- Apple HealthKit
+Apple HealthKit -> Vital SDK <-> User's app
 ```
 
 <Note>
