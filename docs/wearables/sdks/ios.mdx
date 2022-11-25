@@ -170,6 +170,16 @@ After having the `url`, you can open it with `SFSafariViewController` or `WKWebV
 1. On success: `vitalExample://?state=success&isMobile=true&provider=<provider>`.
 2. On failure: `vitalExample://?state=error&isMobile=true&provider=<provider>&error=<error description>`.
 
+### 3. Clean Up
+
+When logging out a user, you should call:
+
+```swift
+await VitalClient.shared.cleanUp()
+```
+
+If you are using `VitalHealthKit`, [call this method instead](/wearables/sdks/ios#3-clean-up-1).
+
 ## 5. VitalDevices
 
 ### 1. Bluetooth
@@ -430,7 +440,17 @@ This means that although we have background delivery's frequency set to `.hourly
 
 </Warning>
 
-### 3. Miscellaneous Information
+### 3. Clean Up
+
+When logging out a user, you should call:
+
+```swift
+await VitalHealthKitClient.shared.cleanUp()
+```
+
+Internally this method will also call `VitalClient.shared.cleanUp()`.
+
+### 4. Miscellaneous Information
 
 #### i) SDK configuration flow
 
