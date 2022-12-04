@@ -116,7 +116,8 @@
       "pages": [
         "wearables/sdks/ios",
         "wearables/sdks/android",
-        "wearables/sdks/flutter"
+        "wearables/sdks/flutter",
+        "wearables/sdks/react_native"
       ]
     },
     {
