@@ -1,0 +1,654 @@
+---
+title: "Changelog"
+description: "All notable and documented changes"
+---
+
+**0.1.180**
+
+2022-08-12T20:15:09Z
+
+- [Bug fix] Fixed a bug for Apple HealthKit where distance was not calculated properly.
+
+**0.1.179**
+
+2022-08-12T17:32:18Z
+
+- General API improvements
+
+**0.1.178**
+
+2022-08-12T16:48:53Z
+
+- Fake data - Simulated Oura data
+- Fake data - Simulated Apple HealthKit data
+- [Improvement] - Limit hammerhead historical data to 6 months
+- [Improvement] - Friendlier error messages
+
+**0.1.176**
+
+2022-08-09T12:13:20Z
+
+- [Improvement] - Better error handling.
+
+**0.1.175**
+
+2022-08-09T11:52:50Z
+
+[Improvement] - Better error handling
+
+**0.1.174**
+
+2022-08-09T09:43:59Z
+
+- [New Feature (Beta)] test data generation for Fitbit
+- [BUGFIX] Better error messages for multiple user device connections
+
+**0.1.173**
+
+2022-08-08T10:07:31Z
+
+- Zwift and Fitbit improvements and bug fixes
+
+**0.1.172**
+
+2022-08-05T19:17:12Z
+
+- [IMPROVEMENT] - Improve streams
+
+**0.1.171**
+
+2022-08-05T14:55:11Z
+
+- [IMPROVEMENT] - Add generation of pdf results for ussl
+
+**0.1.170**
+
+2022-08-05T10:42:06Z
+
+- [Improvement] Identify source device for Apple HealthKit data
+- [Improvement] Improved backfill performance
+- [New Feature] store body fat/weight as time series for Garmin, Fitbit and GoogleFit
+
+**0.1.168**
+
+2022-08-04T00:08:38Z
+
+- Improvements to db queries.
+
+**0.1.166**
+
+2022-08-03T14:29:08Z
+
+[Feature] - Add Hammerhead integration
+[Improvement] - Move Oura to new time-series table
+
+**0.1.165**
+
+2022-08-02T17:25:15Z
+
+- [Improvements] - Improvements with fitbit
+
+**0.1.164**
+
+2022-08-01T18:55:31Z
+
+- Bug fixes and improvements
+
+**0.1.163**
+
+2022-08-01T16:50:40Z
+
+- Improved performance for Garmin workouts
+- Workout stream Improvements
+- Testkits order status improvements
+
+**0.1.162**
+
+2022-07-30T16:40:40Z
+
+- [Improvement] Improved googlefit sleep aggregation
+- [Bugfix] Bugfixes for fitbit body fat and weight
+
+**0.1.161**
+
+2022-07-29T10:00:09Z
+
+[Improvement] - Add support for german libre accounts
+[Improvement] - Add better date validation on queries
+
+**0.1.159**
+
+2022-07-28T12:29:17Z
+
+- [Bug Fix] Fixed a rare issue with Fitbit in EU environments.
+- [Bug Fix] Fixed an issue with timestamps being in nanoseconds for Google Fit.
+
+**0.1.158**
+
+2022-07-27T23:41:29Z
+
+[Improvement] - Garmin improvements
+
+**0.1.157**
+
+2022-07-27T15:53:25Z
+
+- Bugfix for freestyle multi-region support
+
+**0.1.156**
+
+2022-07-26T23:30:24Z
+
+- [IMPROVEMENT] - Improve test kit status updates
+
+**0.1.155**
+
+2022-07-26T16:50:33Z
+
+- [Bug fix] We are now able to calculate Garmin HR Zones properly.
+- [Bug fix] Workout's stream webhook was sending sliced information. This is now fixed.
+
+**0.1.154**
+
+2022-07-25T15:05:49Z
+
+[Feature] Teams can add their logo to the vital link widget
+
+**0.1.151**
+
+2022-07-22T20:54:57Z
+
+- [Improvement] - Improve texting for testkits.
+
+**0.1.150**
+
+2022-07-22T20:30:35Z
+
+- [Bug fixes] ...
+
+**0.1.149**
+
+2022-07-22T20:13:57Z
+
+- [Bug Fix] Fixed a bug in the HR endpoint.
+
+**0.1.148**
+
+2022-07-22T16:57:54Z
+
+- [Bug Fix] Add subscription status to the update team schema
+
+**0.1.147**
+
+2022-07-22T14:43:22Z
+
+- [Improvement] You can now directly push heartrate timseries data.
+- [Bug Fix] Fixed the team's endpoint.
+- [Bug Fix] Fixed an issue on how we calculate the heartrate timseries timestamp data.
+
+**0.1.146**
+
+2022-07-21T16:11:36Z
+
+- [Bug fix] Duplicated text messages being sent after a Testkit order has been rejected.
+
+**0.1.145**
+
+2022-07-21T14:03:32Z
+
+- [Bug fix] Several bugs fix on the Garmin and Strava integration.
+
+**0.1.144**
+
+2022-07-20T12:35:16Z
+
+- Under-the-hood bug fixes and improvements.
+
+**0.1.143**
+
+2022-07-20T11:16:51Z
+
+- [Bug fix] Fixed a bug with fetching HR data for Fitbit workouts.
+
+**0.1.142**
+
+2022-07-19T19:04:33Z
+
+- [Improvement] Users are now sorted by creation date in the dashboard.
+- [Bug fix] Fixed a bug where most recent data for WIthings wasn't fetched.
+- [Bug fix] Fixed a bug where Withings data wasn't stored correctly.
+- [Bug fix] Fixed a bug where HR data from Oura wasn't stored correctly.
+- [Bug fix] Fixed multiple bugs related to how Strava HR data is stored.
+- [Improvement] Added lower and upper bound for a result's marker expected values.
+
+**0.1.141**
+
+2022-07-18T17:26:36Z
+
+- Support HR for Fitbit workouts
+- Support HR statistics for Oura workouts
+- Bug-fix for provider-specific optional data
+
+**0.1.140**
+
+2022-07-18T12:48:33Z
+
+- Daily webhooks for vitals now return the full source object instead of source_id.
+- Improvements to the lab testing API.
+- Google Fit - expose the following fields in Workouts: `timezone_offset`, `average_watts`, `max_watts`, `average_speed`, `max_speed`.
+
+**0.1.139**
+
+2022-07-15T17:33:16Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.138**
+
+2022-07-15T15:11:46Z
+
+- Fix Oura provider. There is a bug on their side for which after fetching an access token, the token is not usable for some time. We are handling this now, but hopefully Oura will fix it on their side soon.
+- Fitbit historical fetch of HR data was 7 days - it's now bumped to 14.
+- Bugfix - Daily HR webhook updates were not including user_id and source_id.
+- Preparation for support of AU and DE Freestyle Libre regions.
+
+**0.1.137**
+
+2022-07-14T23:36:56Z
+
+- [Improvement] - Ensure average HRV is calculated from Fitbit correctly.
+- [Improvement] - Speed up requests for summary data.
+
+**0.1.136**
+
+2022-07-14T15:39:52Z
+
+- The GET /v2/testkit endpoint now returns the list of biomarkers associated with each testkit.
+
+**0.1.135**
+
+2022-07-14T14:32:17Z
+
+- Whoop: calculate movement based on workouts that are walking, or running. We calculate steps based on the distance of those activities.
+- Eightsleep: (1) Use the score from EightSleep as sleep score (2) Efficiency is calculated by `(total_sleep / total_time_in_bed) * 100` (3) HRV, RHR and Average HR if inexistent should be None, not 0.
+
+**0.1.134**
+
+2022-07-13T15:25:19Z
+
+- Add support for Fitbit HRV data during sleep (beta).
+
+**0.1.133**
+
+2022-07-13T14:20:59Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.132**
+
+2022-07-13T12:47:52Z
+
+- [Improvement] We will now send a new webhook named `daily.data.workout_stream.created`. This change is for providers that only have their workout stream data ready after the actual workout. Only Garmin is suffering from this problem. Thanks Ethan for reporting.
+
+**0.1.131**
+
+2022-07-13T12:32:51Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.130**
+
+2022-07-12T16:24:26Z
+
+- Bug fixes to Google Fit and Withings sleep resource.
+
+**0.1.129**
+
+2022-07-12T11:36:12Z
+
+- Added HR data when returning Fitbit sleep with stream.
+
+**0.1.128**
+
+2022-07-12T09:29:58Z
+
+- Fixed a bug when returning HR data in Fitbit sleep.
+
+**0.1.127**
+
+2022-07-11T18:57:40Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.126**
+
+2022-07-11T18:26:23Z
+
+- Beta version of Dexcom integration.
+- Under-the-hood bugfixes and improvements.
+
+**0.1.125**
+
+2022-07-11T17:53:01Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.124**
+
+2022-07-11T13:19:32Z
+
+- Add support for sleeping HR data for Fitbit
+- IHealth bug fixes for heat rate data fetching
+
+**0.1.123**
+
+2022-07-11T09:01:08Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.122**
+
+2022-07-08T17:46:56Z
+
+- [VIT-1279] Fitbit heart rate situation by @gabrieleangeletti in https://github.com/tryVital/vital-mono/pull/886
+- [VIT-1282] Add daily and historical /heart subscriptions to pub/sub by @gabrieleangeletti in https://github.com/tryVital/vital-mono/pull/888
+- fix: remove Oura parse heart rate by @Graviis in https://github.com/tryVital/vital-mono/pull/889
+
+**Full Changelog**: https://github.com/tryVital/vital-mono/compare/0.1.121...0.1.122
+
+**0.1.121**
+
+2022-07-08T15:32:49Z
+
+- [Improvement] - Improve V3 testing api
+
+**0.1.120**
+
+2022-07-08T12:42:22Z
+
+- [Improvement] - Allow redirecting using auth-email and auth-password from the widget
+- [Improvement] - Fix Whoop logic around heart rate data to prevent missing heartrate averages and maximum
+- [Improvement] - Expose created on connected sources
+
+**0.1.119**
+
+2022-07-06T14:14:45Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.118**
+
+2022-07-05T16:37:18Z
+
+- Migrate Strava to provider connection
+- Add heart rate as a supported resource for Oura
+- Add hashed email as provided_id for Oura
+- Implement provider connection for Wahoo
+
+**0.1.117**
+
+2022-07-05T13:40:45Z
+
+- Implement workouts and heart rate for Oura v2
+
+**0.1.116**
+
+2022-07-05T09:40:25Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.115**
+
+2022-07-04T20:00:44Z
+
+- Expose Withins sleep score through Vital API
+- Add Support for parsing TCX files from Fitbit
+
+**0.1.114**
+
+2022-07-04T19:23:18Z
+
+Automate sentry release versioning
+
+**0.1.113**
+
+2022-07-04T18:21:18Z
+
+- [Bugfix] Fix external client error handler
+
+**0.1.112**
+
+2022-07-04T14:21:27Z
+
+- Improved HTTPX Error logging
+
+**0.1.111**
+
+2022-07-01T10:26:25Z
+
+- Under-the-hood bugfixes and improvements.
+
+**0.1.110**
+
+2022-06-30T16:30:52Z
+
+- [Improvement] Expose sleep score for Garmin, Oura and Whoop
+
+**0.1.109**
+
+2022-06-30T11:54:14Z
+
+- BUGFIX - update Libre data format
+
+**0.1.108**
+
+2022-06-30T09:56:50Z
+
+- Upgrade to Freestyle LU Version 3.7.58
+
+**0.1.107**
+
+2022-06-29T09:41:31Z
+
+- [Bug fix] Strava, Peloton and Fitbit now have a title on the Workout response.
+- [Bug fix] Withings daily workouts are now working.
+- [Bug fix] For whoop, an "activity" was being treated as gymnastics. It will now be treated as "other".
+- [Bug fix] If the user doesn't give permission to weight and height for Oura, the system should cope with it.
+- [Improvement] Added "order_lost" to Order status.
+
+**0.1.106**
+
+2022-06-24T15:58:57Z
+
+- Add body measurements to Google Fit.
+
+**0.1.105**
+
+2022-06-24T11:24:56Z
+
+- Various fixed under the hood for Strava and Withings integrations.
+
+**0.1.104**
+
+2022-06-24T08:47:03Z
+
+- Various fixed under the hood.
+
+**0.1.103**
+
+2022-06-22T16:01:12Z
+
+- Fixed a bug when reconnecting a google fit user after an error occurs.
+
+**0.1.102**
+
+2022-06-22T15:42:58Z
+
+- Google fit: improved the way we fetch steps and calories data for activities and other reliability improvements
+
+**0.1.101**
+
+2022-06-22T12:33:40Z
+
+Enable multi-region support for freestyle
+
+**0.1.100**
+
+2022-06-22T10:36:21Z
+
+- [Bug fix] Fixing Wahoo workouts
+
+**0.1.99**
+
+2022-06-21T21:43:12Z
+
+Various stability improvements under the hood.
+[Bug fix] Further bug fixes on GoogleFit integration.
+[Bug fix] Prune null workouts for Withings.
+[Bug fix] Tentative fix for Wahoo integration.
+
+**0.1.98**
+
+2022-06-21T09:08:21Z
+
+- Various stability improvements under the hood.
+- [Improvement] Added `reject` status for Orders.
+- [Improvement] Backfill historical data for Withings data bumped from 30 days to 120.
+
+**0.1.97**
+
+2022-06-17T19:04:02Z
+
+- [Improvement] Performance improvements to Fitbit
+
+**0.1.96**
+
+2022-06-17T17:09:40Z
+
+- [Bugfix] Fitbit webhook updates were not working properly for /body and /sleep resources.
+- [Improvement] We now allow the same Google Fit account to connect to multiple Vital users.
+- [Improvement] Improvements Freestyle libre multi-region support.
+- Various stability improvements under the hood.
+
+**0.1.95**
+
+2022-06-16T16:35:28Z
+
+- [Improvement] Calories were added to Google Fit data.
+- [Improvement] Cancel an order added to Orders V3.
+- [Bug fix] Merge Body for Manual and Apple Health is now behaving as expected.
+
+**0.1.94**
+
+2022-06-16T09:26:11Z
+
+- Bugfix: when fetching sleep data with start_date and end_date set to the same day, the returned data was not including sleep streams.
+
+**0.1.93**
+
+2022-06-15T17:39:24Z
+
+**0.1.92**
+
+2022-06-15T13:32:56Z
+
+- Fixed a couple of issues around the Fitbit integration.
+
+**0.1.91**
+
+2022-06-15T00:41:33Z
+
+- Vital US now defaults to FreeStyle Libre us
+
+**0.1.90**
+
+2022-06-14T23:06:09Z
+
+**0.1.89**
+
+2022-06-14T22:31:09Z
+
+**0.1.88**
+
+2022-06-14T18:57:43Z
+
+- Fixed a bug with Fitbit when reconnecting a user.
+
+**0.1.87**
+
+2022-06-14T13:00:48Z
+
+- Under the hood improvements across multiple systems.
+
+**0.1.86**
+
+2022-06-09T18:00:17Z
+
+- Add the blood_pressure.read scope to Google Fit.
+
+**0.1.85**
+
+2022-06-09T14:48:58Z
+
+- [Bugfix] Make PubSub push endpoints more robust to changing message attributes
+
+**0.1.84**
+
+2022-06-09T13:10:45Z
+
+- [Improvement] - list of providers (GET `/providers/`) now returns the provider's description.
+
+**0.1.83**
+
+2022-06-09T09:48:31Z
+
+- Bugfix - We are now returning the proper HR Zones for Garmin. These values come in seconds, previously it was in minutes. This is not a breaking change, since no users were relying on these values (we weren't returning any, previously). Notice that not all providers are capable of producing the HR Zones.
+
+**0.1.82**
+
+2022-06-02T22:32:47Z
+
+- [Improvement] - Improve logic around api key handling.
+
+**0.1.81**
+
+2022-06-01T08:53:39Z
+
+- Bugfix - gender is now case insensitive
+- Bugfix - preventive fix on how data without an explicit id is identified across our system. This makes updating existing data work, rather than creating a new record
+
+**0.1.79**
+
+2022-05-27T16:27:12Z
+
+- Use correct Webhook topic name based on region
+
+**0.1.66**
+
+2022-05-25T14:17:05Z
+
+- Bugfix - when storing Oura activity, body and sleep data, we were storing multiple activities for the same day. Now we store only one entry per day, the most recent one.
+
+**0.1.65**
+
+2022-05-24T16:50:28Z
+
+- Bugfix - when reading Oura body data, the date of all returned readings was set to today rather than the actual date.
+
+**0.1.64**
+
+2022-05-24T08:31:03Z
+
+- Fix the email validation Libre issue, to accommodate the increase in users.
+
+**0.1.60**
+
+2022-05-20T06:07:31Z
+
+- Fix profile parsing error for zwift
+
+**0.1.50**
+
+2022-05-12T06:07:31Z
+
+- New docs released on docusaurus
