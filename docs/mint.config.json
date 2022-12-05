@@ -94,6 +94,12 @@
       ]
     },
     {
+      "group": "Vital iOS App",
+      "pages": [
+        "wearables/vital-app/introduction"
+      ]
+    },
+    {
       "group": "Providers",
       "pages": [
         "wearables/providers/introduction",
@@ -115,7 +121,8 @@
       "pages": [
         "wearables/sdks/ios",
         "wearables/sdks/android",
-        "wearables/sdks/flutter"
+        "wearables/sdks/flutter",
+        "wearables/sdks/react_native"
       ]
     },
     {
@@ -155,6 +162,7 @@
       "group": "Link",
       "pages": [
         "api-reference/link/generate-link-token",
+        "api-reference/link/create-code",
         "api-reference/link/link-oauth-provider",
         "api-reference/link/link-password-provider",
         "api-reference/link/link-email-provider",

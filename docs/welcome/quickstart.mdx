@@ -5,13 +5,22 @@ description: "A quick introduction to building with Vital"
 
 ## 1. API keys
 
+
 Let's test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
 You can get API keys by signing up in the [Dashboard](https://app.tryvital.io).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
 the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
 
-For each region, you'll have access to two environments Sandbox and Production. We'll start in the Sandbox environment.
-View the configuration section of the Dashboard to find your Sandbox API Key.
+To create a team and get your API keys, you first need to sign up for a Vital account in the [Dashboard](https://app.tryvital.io).
+
+Once registered, you can create a team by hovering over your username at the bottom of the Dashboard sidebar.
+A team is associated with a region (either `EU` or `US`), the region dictates where data is stored. 
+You can learn more at [regions](/api-details/regions).
+
+To create your API keys, go to the configuration section of the Dashboard. 
+For each region, you'll have access to two environments Sandbox and Production. 
+We'll start in the Sandbox environment, so create a new Sandbox API key. 
+
 
 <Note>
   If you get stuck at any point in the Quickstart, help is just a click away!
@@ -35,11 +44,10 @@ customizing the `.env` file with your own Vital `API_KEY` and finally, building 
 # git clone -c core.symlinks=true https://github.com/tryVital/quickstart
 # instead to ensure correct symlink behavior
 git clone https://github.com/tryVital/quickstart.git
-cd backend/python
 
-# Copy the .env.example file to .env, then fill
-# out VITAL_API_KEY and VITAL_ENV in .env
-cp .env.example .env
+# Create .env, then fill
+# out VITAL_API_KEY, VITAL_REGION (eu, us) and VITAL_ENV in .env
+touch .env
 
 # Note: must use python 3
 # For virtualenv users:
@@ -48,6 +56,7 @@ cp .env.example .env
 poetry install
 
 # Start the backend app
+cd backend/python
 source ./start.sh
 ```
 
@@ -58,8 +67,11 @@ Open a new shell and start the frontend app. Your app will be running at `http:/
 cd quickstart/frontend
 npm install
 
+# Open .env.local, then fill
+# out NEXT_PUBLIC_VITAL_API_KEY, NEXT_PUBLIC_VITAL_ENV and NEXT_PUBLIC_VITAL_REGION
+
 # Start the frontend app
-npm dev
+npm run dev
 
 # Go to http://localhost:3000
 ```
@@ -273,6 +285,7 @@ Congratulations, you have completed the Vital Quickstart!
 
 There are a few directions you can go in now:
 
+
 <Card
   title="Vital Link"
   icon={regular("link")}
@@ -294,3 +307,7 @@ There are a few directions you can go in now:
   Webhooks are a way to receive data from Vital. We frequently poll to receive
   data from the various providers.
 </Card>
+
+- [Vital Link](/wearables/vital-link/introduction)
+- [Vital SDKs](/wearables/sdks/ios)
+- [Vital Webhooks](/webhooks/Introduction)

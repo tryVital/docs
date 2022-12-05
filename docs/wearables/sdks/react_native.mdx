@@ -1,0 +1,65 @@
+---
+title: "React Native"
+---
+
+## 1. Introduction
+
+You can install the Core and HealthKit SDK by using npm:
+
+```js
+npm install vital-core-react-native
+npm install vital-health-react-native
+```
+
+You start by setting up the Core SDK:
+
+```js
+import { VitalCore } from "vital-core-react-native";
+
+VitalCore.configure(
+  VITAL_ENVIRONMENT,
+  VITAL_API_KEY,
+  VITAL_REGION,
+  logsEnabled
+);
+```
+
+Be sure to do the configuration, before setting up the `userId`:
+
+```js
+import { VitalCore } from "vital-core-react-native";
+
+VitalCore.setUserId(userId);
+```
+
+The Core SDK is now ready to use. You can now set up the HealthKit SDK.
+
+You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
+
+<img src="/img/iOS/health_kit_permission.png" />
+
+Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist` file. Finally setting up the HealthKit SDK is just:
+
+```js
+import { VitalHealth } from "vital-health-react-native";
+
+VitalHealth.configure(automaticConfiguration, numberOfDaysToPull, logsEnabled);
+```
+
+If you set `automaticConfiguration` to true, the SDK will do everything on your behalf.
+
+Before syncing data, you need to ask for permissions to the user. You do it by calling:
+
+```js
+import { VitalHealth, VitalResource } from "vital-health-react-native";
+
+VitalHealth.askForResources([VitalResource.Steps]);
+```
+
+Finally, if you are logging out the user, please make sure you call:
+
+```js
+import { VitalHealth } from "vital-health-react-native";
+
+VitalHealth.cleanUp();
+```

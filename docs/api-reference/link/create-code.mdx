@@ -1,0 +1,33 @@
+---
+title: "Create Code"
+openapi: "POST /v2/link/code/create"
+---
+
+Used for Vital iOS Apps to share Apple HealthKit with you. Please refer [here](/wearables/vital-app/introduction) for more information.
+
+<RequestExample>
+
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/code/create \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+     "user_id": "1875c190-0cd6-46c1-8670-5b56a7794b78"
+}
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "code": "skus17922ffe",
+  "exchange_url": "tryvital://tryvital?code=skus17922ffe"
+}
+```
+
+</ResponseExample>
