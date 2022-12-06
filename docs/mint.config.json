@@ -49,6 +49,11 @@
       "name": "API Reference",
       "icon": "rectangle-terminal",
       "url": "api-reference"
+    },
+    {
+      "name": "Changelog",
+      "icon": "list",
+      "url": "changelog"
     }
   ],
   "navigation": [
@@ -108,7 +113,7 @@
             "wearables/providers/guides/garmin",
             "wearables/providers/guides/my_fitness_pal"
           ]
-       }
+        }
       ]
     },
     {
@@ -174,9 +179,7 @@
     },
     {
       "group": "Meal",
-      "pages": [
-        "api-reference/meal/get-summary"
-      ]
+      "pages": ["api-reference/meal/get-summary"]
     },
     {
       "group": "Workouts",
@@ -246,6 +249,10 @@
         "api-reference/legacy/results/get-results-raw",
         "api-reference/legacy/results/get-results-metadata"
       ]
+    },
+    {
+      "group": "Updates",
+      "pages": ["changelog/logs"]
     }
   ],
   "footerSocials": {
