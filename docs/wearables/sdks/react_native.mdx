@@ -4,24 +4,40 @@ title: "React Native"
 
 ## 1. Introduction
 
-You can install the Core and HealthKit SDK by using npm:
+Our React Native library mirrors the functionality of our iOS and Android SDKs. It is a wrapper around the native SDKs, and it exposes the same methods and events.
+It is split into three parts: Core, HealthKit and BLE Devices. They can be used interchangeably, but you need to install them separately.
+An example app can be found (here)[https://github.com/tryVital/vital-react-native/tree/main/example].
+
+You can install the Core and HealthKit SDK by using npm (BLE Devices coming soon):
+
+## 1. Install your dependencies
 
 ```js
 npm install vital-core-react-native
 npm install vital-health-react-native
 ```
 
-You start by setting up the Core SDK:
+## 2. Link your dependencies
+
+```
+cd ios && pod install
+```
+
+## 3. Configure your dependencies
+
+You start by setting up the Core SDK. You need to configure it with your API key and the environment you want to use. You can find your API key in the Vital Dashboard. You can also enable logs by setting `logsEnabled` to true.
+You will need to chain the configuration according to the below order.
 
 ```js
 import { VitalCore } from "vital-core-react-native";
 
-VitalCore.configure(
-  VITAL_ENVIRONMENT,
-  VITAL_API_KEY,
-  VITAL_REGION,
-  logsEnabled
-);
+VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
+  .then(() => {
+    // Core SDK is ready to use
+  })
+  .catch((error) => {
+    // Something went wrong
+  });
 ```
 
 Be sure to do the configuration, before setting up the `userId`:
@@ -29,7 +45,14 @@ Be sure to do the configuration, before setting up the `userId`:
 ```js
 import { VitalCore } from "vital-core-react-native";
 
-VitalCore.setUserId(userId);
+VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
+  .then(() => {
+    // Core SDK is ready to use
+    VitalCore.setUserId(userId);
+  })
+  .catch((error) => {
+    // Something went wrong
+  });
 ```
 
 The Core SDK is now ready to use. You can now set up the HealthKit SDK.
@@ -43,7 +66,15 @@ Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist
 ```js
 import { VitalHealth } from "vital-health-react-native";
 
-VitalHealth.configure(automaticConfiguration, numberOfDaysToPull, logsEnabled);
+VitalHealth.configure(automaticConfiguration, numberOfDaysToPull, logsEnabled)
+  .then(() => {
+    // HealthKit SDK is ready to use
+    VitalCore.setUserId(userId);
+  })
+  .catch((error) => {
+    // Something went wrong
+  });
+
 ```
 
 If you set `automaticConfiguration` to true, the SDK will do everything on your behalf.
@@ -53,7 +84,23 @@ Before syncing data, you need to ask for permissions to the user. You do it by c
 ```js
 import { VitalHealth, VitalResource } from "vital-health-react-native";
 
-VitalHealth.askForResources([VitalResource.Steps]);
+VitalHealth.configure(
+  automaticConfiguration,
+  numberOfDaysToPull,
+  logsEnabled
+).then(() => {
+  // HealthKit SDK is ready to use
+  VitalCore.setUserId(userId)
+    .then(() => {
+      VitalHealth.askForResources([
+        VitalResource.Steps,
+        VitalResource.Activity,
+      ]);
+    })
+    .catch((error) => {
+      // Something went wrong
+    });
+});
 ```
 
 Finally, if you are logging out the user, please make sure you call:
@@ -62,4 +109,76 @@ Finally, if you are logging out the user, please make sure you call:
 import { VitalHealth } from "vital-health-react-native";
 
 VitalHealth.cleanUp();
+```
+
+
+A full example of the app.tsx file can be seen below:
+
+```js
+import React, { useEffect } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+import {
+  Colors,
+  Header
+} from 'react-native/Libraries/NewAppScreen';
+import { VitalCore } from "vital-core-react-native";
+import { VitalHealth, VitalResource } from "vital-health-react-native";
+
+
+const VITAL_API_KEY = "<API_KEY>"
+const VITAL_ENVIRONMENT = "<sandbox | production>"
+const VITAL_REGION = "<us | eu>"
+
+const App = () => {
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  const isDarkMode = useColorScheme() === 'dark';
+    useEffect(()=>{
+      VitalCore.configure(
+        VITAL_API_KEY,
+        VITAL_ENVIRONMENT,
+        VITAL_REGION,
+        true
+      ).then(()=>{
+        VitalHealth.configure(true, 90, false).then(()=>{
+          VitalCore.setUserId("2c5879eb-7d99-468b-bb43-3fe0d71e93ba").then(()=> {
+            VitalHealth.askForResources([VitalResource.Steps, VitalResource.Activity]);
+          })
+        })
+      })
+
+    },[])
+
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+         <Text>Hello World!</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
 ```
