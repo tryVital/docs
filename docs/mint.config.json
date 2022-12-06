@@ -34,10 +34,15 @@
     "url": "https://app.tryvital.io/api/auth/signup",
     "name": "Get Started"
   },
+  "topAnchor": {
+    "name": "Home",
+    "icon": "house",
+    "url": "home"
+  },
   "anchors": [
     {
       "name": "Wearables",
-      "icon": "link",
+      "icon": "watch-fitness",
       "url": "wearables"
     },
     {
@@ -58,12 +63,13 @@
   ],
   "navigation": [
     {
-      "group": "Welcome",
+      "group": "Home",
       "pages": [
-        "welcome/quickstart",
-        "welcome/environments",
-        "welcome/libraries",
-        "welcome/privacy"
+        "home/welcome",
+        "home/quickstart",
+        "home/environments",
+        "home/libraries",
+        "home/privacy"
       ]
     },
     {
@@ -80,7 +86,6 @@
       "group": "Webhooks",
       "pages": [
         "webhooks/introduction",
-        "webhooks/data_flow",
         "webhooks/debugging"
       ]
     },
