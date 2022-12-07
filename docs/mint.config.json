@@ -32,7 +32,7 @@
   ],
   "topbarCtaButton": {
     "url": "https://app.tryvital.io/api/auth/signup",
-    "name": "Get Started"
+    "name": "Get API Keys"
   },
   "topAnchor": {
     "name": "Home",
