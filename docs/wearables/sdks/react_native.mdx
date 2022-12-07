@@ -10,20 +10,20 @@ An example app can be found (here)[https://github.com/tryVital/vital-react-nativ
 
 You can install the Core and Health SDK by using npm (BLE Devices coming soon):
 
-## 1. Install your dependencies
+## 2. Install your dependencies
 
 ```js
 npm install vital-core-react-native
 npm install vital-health-react-native
 ```
 
-## 2. Link your dependencies
+## 3. Link your dependencies
 
 ```
 cd ios && pod install
 ```
 
-## 3. Configure your dependencies
+## 4. Configure your dependencies
 
 You start by setting up the Core SDK. You need to configure it with your API key and the environment you want to use. You can find your API key in the Vital Dashboard. You can also enable logs by setting `logsEnabled` to true.
 You will need to chain the configuration according to the below order.
@@ -150,3 +150,98 @@ const App = () => {
 
 export default App;
 ```
+
+## 5. Troubleshooting
+
+For older React Native projects, you might see the following warnings when compiling:
+
+```bash
+ld: warning: Could not find or use auto-linked library 'swiftCoreFoundation'
+ld: warning: Could not find or use auto-linked library 'swiftCompatibility50'
+ld: warning: Could not find or use auto-linked library 'swiftObjectiveC'
+ld: warning: Could not find or use auto-linked library 'swiftFoundation'
+ld: warning: Could not find or use auto-linked library 'swiftsimd'
+ld: warning: Could not find or use auto-linked library 'swiftDarwin'
+ld: warning: Could not find or use auto-linked library 'swiftUIKit'
+ld: warning: Could not find or use auto-linked library 'swiftCore'
+ld: warning: Could not find or use auto-linked library 'swiftQuartzCore'
+ld: warning: Could not find or use auto-linked library 'swiftCoreGraphics'
+ld: warning: Could not find or use auto-linked library 'swiftPhotos'
+ld: warning: Could not find or use auto-linked library 'swiftSwiftOnoneSupport'
+ld: warning: Could not find or use auto-linked library 'swiftCoreImage'
+ld: warning: Could not find or use auto-linked library 'swiftCompatibilityDynamicReplacements'
+ld: warning: Could not find or use auto-linked library 'swiftMetal'
+ld: warning: Could not find or use auto-linked library 'swiftDispatch'
+ld: warning: Could not find or use auto-linked library 'swiftAVFoundation'
+ld: warning: Could not find or use auto-linked library 'swiftCoreMedia'
+ld: warning: Could not find or use auto-linked library 'swiftCoreAudio'
+ld: warning: Could not find or use auto-linked library 'swiftCoreMIDI'
+ld: warning: Could not find or use auto-linked library 'swiftCoreLocation'
+```
+
+These are followed by Swift related errors. You might need to do one, or more, of the following steps:
+
+1. [[Reference](https://githublab.com/repository/issues/RevenueCat/react-native-purchases/341)] Go to your Podfile and add the following:
+
+```ruby
+ post_install do |installer|
+    react_native_post_install(installer)
+    fix_library_search_paths(installer)
+  end
+end
+
+def fix_library_search_paths(installer)
+  def fix_config(config)
+    lib_search_paths = config.build_settings["LIBRARY_SEARCH_PATHS"]
+    if lib_search_paths
+      if lib_search_paths.include?("$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)") || lib_search_paths.include?("\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"")
+        # $(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME) causes problem with Xcode 12.5 + arm64 (Apple M1)
+        # since the libraries there are only built for x86_64 and i386.
+        lib_search_paths.delete("$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)")
+        lib_search_paths.delete("\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"")
+        if !(lib_search_paths.include?("$(SDKROOT)/usr/lib/swift") || lib_search_paths.include?("\"$(SDKROOT)/usr/lib/swift\""))
+          # however, $(SDKROOT)/usr/lib/swift is required, at least if user is not running CocoaPods 1.11
+          lib_search_paths.insert(0, "$(SDKROOT)/usr/lib/swift")
+        end
+      end
+    end
+  end
+
+  projects = installer.aggregate_targets
+    .map{ |t| t.user_project }
+    .uniq{ |p| p.path }
+    .push(installer.pods_project)
+
+  projects.each do |project|
+    project.build_configurations.each do |config|
+      fix_config(config)
+    end
+    project.native_targets.each do |target|
+      target.build_configurations.each do |config|
+        fix_config(config)
+      end
+    end
+    project.save()
+  end
+end
+```
+
+2.[[Reference](https://githublab.com/repository/issues/RevenueCat/react-native-purchases/341)] In your project settings, modifiy `Library Search Paths`. Remove:
+
+```
+"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)"
+```
+
+And add:
+
+```
+"$(SDKROOT)/usr/lib/swift"
+```
+
+3.[[Reference](https://github.com/facebookarchive/react-native-fbsdk/issues/755)] Add a single Swift file to the root of your project named `File.swift` with the following content:
+
+```swift
+import Foundation
+```
+
+When adding this file, Xcode will ask you if you would like a bridging header. Select `Create Bridging Header`.
