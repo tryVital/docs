@@ -220,11 +220,11 @@
       ]
     },
     {
-      "group": "Orders",
+      "group": "Lab Testing",
       "pages": [
-        "api-reference/orders/create-order",
-        "api-reference/orders/get-order",
-        "api-reference/orders/cancel-order"
+        "api-reference/lab-testing/create-order",
+        "api-reference/lab-testing/get-order",
+        "api-reference/lab-testing/cancel-order"
       ]
     },
     {
@@ -237,17 +237,6 @@
         "api-reference/results/get-results",
         "api-reference/results/get-results-pdf",
         "api-reference/results/get-results-metadata"
-      ]
-    },
-    {
-      "group": "Legacy",
-      "pages": [
-        "api-reference/legacy/testkits/get-testkits",
-        "api-reference/legacy/orders/create-order",
-        "api-reference/legacy/orders/cancel-order",
-        "api-reference/legacy/results/get-results",
-        "api-reference/legacy/results/get-results-raw",
-        "api-reference/legacy/results/get-results-metadata"
       ]
     },
     {
