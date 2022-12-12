@@ -132,7 +132,10 @@
     },
     {
       "group": "Lab Testing",
-      "pages": ["lab/home/introduction", "lab/home/testing-modalities"]
+      "pages": [
+        "lab/home/introduction",
+        "lab/home/testing-modalities"
+      ]
     },
     {
       "group": "Workflow",
@@ -145,7 +148,9 @@
     },
     {
       "group": "Results",
-      "pages": ["lab/results/result-formats"]
+      "pages": [
+        "lab/results/result-formats"
+      ]
     },
     {
       "group": "User",
@@ -161,7 +166,9 @@
     },
     {
       "group": "Providers",
-      "pages": ["api-reference/providers"]
+      "pages": [
+        "api-reference/providers"
+      ]
     },
     {
       "group": "Link",
@@ -184,7 +191,9 @@
     },
     {
       "group": "Meal",
-      "pages": ["api-reference/meal/get-summary"]
+      "pages": [
+        "api-reference/meal/get-summary"
+      ]
     },
     {
       "group": "Workouts",
@@ -210,7 +219,10 @@
     },
     {
       "group": "Body",
-      "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
+      "pages": [
+        "api-reference/body/get-summary",
+        "api-reference/body/get-raw"
+      ]
     },
     {
       "group": "Vitals",
@@ -218,8 +230,8 @@
         "api-reference/vitals/blood-oxygen",
         "api-reference/vitals/blood-pressure",
         "api-reference/vitals/cholesterol",
-        "api-reference/vitals/glucose",
         "api-reference/vitals/heartrate",
+        "api-reference/vitals/glucose",
         "api-reference/vitals/ige",
         "api-reference/vitals/igg"
       ]
@@ -234,7 +246,9 @@
     },
     {
       "group": "Lab Tests",
-      "pages": ["api-reference/lab-tests"]
+      "pages": [
+        "api-reference/lab-tests"
+      ]
     },
     {
       "group": "Results",
@@ -246,7 +260,9 @@
     },
     {
       "group": "Updates",
-      "pages": ["changelog/logs"]
+      "pages": [
+        "changelog/logs"
+      ]
     }
   ],
   "footerSocials": {
