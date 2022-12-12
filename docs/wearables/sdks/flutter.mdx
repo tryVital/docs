@@ -3,60 +3,53 @@ title: "Flutter"
 ---
 
 <Tip>
-  Please check our [sample
-  app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
-  full use of the SDK.
+    Please check our [sample
+    app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
+    full use of the SDK.
 </Tip>
 
 ## 1. Introduction
 
-Vital's Flutter SDK allows you to interact with Vital's API using Flutter.
+The Vital SDK is split into three main components: `vital_core`, `vital_health` and `vital_devices`.
 
-## 2. Setup
+- [vital_core][1] holds common
+components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
+send data from a device to a server.
+- [vital_health][2] is an abstraction over HealthKit an Health Connect(coming soon)
+- [vital_devices][3] is an abstraction over a set of Bluetooth devices.
 
-You can find vital-flutter's package at https://pub.dev/packages/vital_flutter.
+## 2. Vital Core
 
-You initialise the client with a `region`, `environment` and an `APIKey`:
+Initialise client with region, environment and api key
 
 ```dart
 final client = VitalClient()
-  ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'api_key...');
+  ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'sk_eu_...');
 ```
 
-### 3. Using the SDK
-
-You can find the different services domains inside the client:
+Query users:
 
 ```dart
-  client.activityService ...
-  client.bodyService ...
-  client.linkService  ...
-  client.profileService ...
-  client.sleepService ...
-  client.testkitsService ...
-  client.userService ...
-  client.vitalsService ...
-  client.workoutService ...
 
-  client.healthkitServices ...
+final Response<List<User>> usersResponse = client.userService.getAll();
 ```
 
-For linking a provider:
+Link data provider:
 
 ```dart
-client.linkProvider(user, 'strava', 'vitalexample://callback');
+client.linkProvider(user, 'strava','vitalexample: //callback');
 ```
 
-<Info>
-  To return back to the app after successful linking, setup an intent filter in
-  AndroidManifest.xml and custom URL scheme in info.plist. Refer to
-  documentation for all supported [data
-  providers](/wearables/providers/introduction).
-</Info>
+<Tip>
+    Note: To return back to the app after successful linking, setup an intent filter in `AndroidManifest.xml` and custom
+    URL scheme in `info.plist`.
+    Note 2: Refer to [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for all supported data
+    providers.
+</Tip>
 
-### 4. Apple HealthKit
+## 3. Vital Health
 
-#### 1. Setup
+#### 1. Setup ios
 
 Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit).
 
@@ -96,3 +89,78 @@ Finally observe the status stream, so you can react to changes:
 ```dart
 Stream<SyncStatus> status = client.healthkitServices.status
 ```
+
+#### 4. Setup android
+
+Coming soon.
+
+## 4. Vital Devices
+
+### 1. Getting Started
+
+#### 1. iOS
+
+Add the following to your `Info.plist` file:
+
+```xml
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>Our app uses bluetooth to find, connect and transfer data between different devices</string>
+```
+
+You will have to request the bluetooth permission in your app before using the SDK.
+
+#### 2. Android
+
+Add the following to your `AndroidManifest.xml`:
+
+```xml
+
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+        <!-- Request legacy Bluetooth permissions on older devices. -->
+<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
+```
+
+You will have to request the appropriate permissions at in your app before you can call the Vital Devices SDK.
+
+### 2. Usage
+
+First you have to scan for one of the supported devices. You can find the list of supported devices by
+calling `DeviceManager().devices`.
+
+```dart
+ vitalDevices.scanForDevices(deviceModel).listen((device) {
+    // now you have the device you were looking for
+  });
+```
+
+Depending on the type of device you are connecting to, you will have to call different methods to connect to it.
+
+#### 1. Blood pressure monitor
+
+```dart
+  vitalDevices.readBloodPressureData(scannedDevice).listen((bloodPressureSamples) {
+    // you will receive a list of blood pressure samples
+  });
+```
+
+#### 2. Glucose meter
+
+```dart
+  vitalDevices.readGlucoseMeterData(scannedDevice).listen((glucoseSamples) {
+    // you will receive a list of glucose samples
+  });
+```
+
+After you have received samples depending on the type of device you might need to star scanning again to receive the
+next set of samples.
+
+
+[1]  https://pub.dev/packages/vital_core
+
+[2]  https://pub.dev/packages/vital_health
+
+[3]  https://pub.dev/packages/vital_devices

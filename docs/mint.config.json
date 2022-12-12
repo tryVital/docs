@@ -32,12 +32,17 @@
   ],
   "topbarCtaButton": {
     "url": "https://app.tryvital.io/api/auth/signup",
-    "name": "Get Started"
+    "name": "Get API Keys"
+  },
+  "topAnchor": {
+    "name": "Home",
+    "icon": "house",
+    "url": "home"
   },
   "anchors": [
     {
       "name": "Wearables",
-      "icon": "link",
+      "icon": "watch-fitness",
       "url": "wearables"
     },
     {
@@ -49,16 +54,22 @@
       "name": "API Reference",
       "icon": "rectangle-terminal",
       "url": "api-reference"
+    },
+    {
+      "name": "Changelog",
+      "icon": "list",
+      "url": "changelog"
     }
   ],
   "navigation": [
     {
-      "group": "Welcome",
+      "group": "Home",
       "pages": [
-        "welcome/quickstart",
-        "welcome/environments",
-        "welcome/libraries",
-        "welcome/privacy"
+        "home/welcome",
+        "home/quickstart",
+        "home/environments",
+        "home/libraries",
+        "home/privacy"
       ]
     },
     {
@@ -75,7 +86,6 @@
       "group": "Webhooks",
       "pages": [
         "webhooks/introduction",
-        "webhooks/data_flow",
         "webhooks/debugging"
       ]
     },
@@ -108,7 +118,7 @@
             "wearables/providers/guides/garmin",
             "wearables/providers/guides/my_fitness_pal"
           ]
-       }
+        }
       ]
     },
     {
@@ -116,7 +126,8 @@
       "pages": [
         "wearables/sdks/ios",
         "wearables/sdks/android",
-        "wearables/sdks/flutter"
+        "wearables/sdks/flutter",
+        "wearables/sdks/react_native"
       ]
     },
     {
@@ -173,9 +184,7 @@
     },
     {
       "group": "Meal",
-      "pages": [
-        "api-reference/meal/get-summary"
-      ]
+      "pages": ["api-reference/meal/get-summary"]
     },
     {
       "group": "Workouts",
@@ -216,11 +225,11 @@
       ]
     },
     {
-      "group": "Orders",
+      "group": "Lab Testing",
       "pages": [
-        "api-reference/orders/create-order",
-        "api-reference/orders/get-order",
-        "api-reference/orders/cancel-order"
+        "api-reference/lab-testing/create-order",
+        "api-reference/lab-testing/get-order",
+        "api-reference/lab-testing/cancel-order"
       ]
     },
     {
@@ -236,15 +245,8 @@
       ]
     },
     {
-      "group": "Legacy",
-      "pages": [
-        "api-reference/legacy/testkits/get-testkits",
-        "api-reference/legacy/orders/create-order",
-        "api-reference/legacy/orders/cancel-order",
-        "api-reference/legacy/results/get-results",
-        "api-reference/legacy/results/get-results-raw",
-        "api-reference/legacy/results/get-results-metadata"
-      ]
+      "group": "Updates",
+      "pages": ["changelog/logs"]
     }
   ],
   "footerSocials": {

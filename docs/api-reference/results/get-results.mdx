@@ -10,7 +10,7 @@ from vital import Client
 
 client = Client(api_key, "sandbox")
 
-data = client.Order.Result.get("<order_id">)
+data = client.LabTests.get_results("<order_id">)
 
 ```
 

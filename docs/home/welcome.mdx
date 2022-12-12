@@ -1,0 +1,85 @@
+---
+title: "Welcome to our Docs"
+sidebarTitle: "Welcome"
+mode: wide
+description: "Here you'll find guides, resources, and references to build using Vital's APIs and SDKs."
+---
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" color="#FDD023" href="/home/quickstart">
+    The Quickstart walk-through gives you an overview of how to integreate with
+    Vital. By the end of this guide, you'll have a working app with both backend
+    and frontend.
+  </Card>
+  <Card
+    title="Providers"
+    icon="gears"
+    color="#0285c7"
+    href="/wearables/providers/introduction"
+  >
+    Here you can find all the available providers, alongside our roadmap. You
+    can see how each provider behave (pull vs webhook) and the default max
+    amount of days we pull from each. For custom integrations, please contact
+    us.
+  </Card>
+  <Card
+    title="Environments"
+    icon="seedling"
+    color="#16a34a"
+    href="/home/environments"
+  >
+    This gives you a quick glance about our environments and regions. It also
+    tells you the difference between production and sandbox
+  </Card>
+  <Card
+    title="Labs and Test Kits"
+    icon="flask"
+    color="#BF40BF"
+    href="/lab/home/introduction"
+  >
+    Vital’s lab test API allows digital health companies to carry out at-home
+    lab testing. Companies can use the API to order a variety of tests, using
+    various sampling methods.
+  </Card>
+</CardGroup>
+
+## Popular Topics
+
+<CardGroup cols={1}>
+  <Card title="Apple HealthKit" icon="apple" href="/wearables/sdks/ios">
+    Apple HealthKit is one of the biggest providers of fitness and health data.
+    Here you can learn how to integrate it with via our SDKs. We currently
+    support iOS, Flutter and React Native.
+  </Card>
+  <Card
+    title="Vital Link"
+    icon="link"
+    href="/wearables/vital-link/introduction"
+  >
+    Vital Link is what allows your users to connect their wearable devices to
+    Vital. It's a simple widget that you can add to your app. Learn how to
+    integrate it here.
+  </Card>
+  <Card
+    title="Fields per Resource per Provider"
+    icon="files"
+    href="/wearables/providers/resources"
+  >
+    A provider like Garmin can have multiple resources (e.g. Workouts, Sleep).
+    Each resource, might not have all the fields. Learn which fields are
+    available for each resource here.
+  </Card>
+  <Card title="Webhooks" icon="radar" href="/webhooks/introduction">
+    Webhooks are the preferred way for Vital to send information to you when
+    something happens. Here you can find the different flows for historical data
+    and daily.
+  </Card>
+  <Card
+    title="Demo accounts"
+    icon="parachute-box"
+    href="/wearables/providers/test_data"
+  >
+    Our demo accounts allow you to generate fake data for particular providers.
+    This makes the testing process much easier! Learn how to use them here.
+  </Card>
+</CardGroup>
