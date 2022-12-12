@@ -12,9 +12,18 @@ You can install the Core and Health SDK by using npm (BLE Devices coming soon):
 
 ## 2. Install your dependencies
 
-```js
+```commandline
 npm install vital-core-react-native
 npm install vital-health-react-native
+npm install vital-devices-react-native
+```
+or
+```commandline
+yarn add vital-core-react-native
+yarn add vital-health-react-native
+yarn add vital-devices-react-native
+
+yarn install
 ```
 
 ## 3. Link your dependencies
@@ -55,11 +64,13 @@ VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
   });
 ```
 
-The Core SDK is now ready to use. You can now set up the HealthKit SDK.
+The Core SDK is now ready to use. You can now set up the HealthKit SDK and Devices SDK.
+
+## 5. Health kit
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
-<img src="/img/iOS/health_kit_permission.png" />
+<img src="/img/iOS/health_kit_permission.png"/>
 
 Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist` file. Finally setting up the HealthKit SDK is just:
 
@@ -151,7 +162,60 @@ const App = () => {
 export default App;
 ```
 
-## 5. Troubleshooting
+## 6. Devices
+
+To start getting events from the VitalDevicesManager you need to create an event emitter.
+You can see the possible event types in the `VitalDevicesEvents` object.
+
+```js
+const eventEmitter = new NativeEventEmitter(VitalDevicesNativeModule);
+```
+
+Now you can create the devices manager
+```js
+const vitalDevicesManager = new VitalDevicesManager();
+```
+
+Star scanning by providing one of the supported device.
+<Warning>
+    You need to acquire the required permission for bluetooth before you can call this function.
+</Warning>
+```js
+let omronM7 = VitalDevicesManager.supportedDevices[1];
+vitalDevicesManager.scanForDevice(omronM7)
+```
+
+To receive the scanned events you need to listen to them using the above created listener.
+```js
+eventEmitter.addListener(VitalDevicesEvents.scanEvent, event => {
+  console.log(VitalDevicesEvents.scanEvent, event);
+})
+```
+
+After you have scanned a device you can start reading from it.
+```js
+vitalDevicesManager.readBloodPressure(event.id)
+```
+or
+```js
+vitalDevicesManager.readGlucoseMeter(event.id)
+```
+
+The read results will arrive in the event lister too.
+```js
+eventEmitter.addListener(VitalDevicesEvents.bloodPressureReadEvent, event => {})
+```
+or
+```js
+eventEmitter.addListener(VitalDevicesEvents.glucoseMeterReadEvent, event => {})
+```
+
+<Note>
+    After you are done reading from the device you need to call the scan method on the VitalDevicesManager to
+    continuously receive reads.
+</Note>
+
+## 7. Troubleshooting
 
 For older React Native projects, you might see the following warnings when compiling:
 
