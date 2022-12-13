@@ -1,0 +1,35 @@
+---
+title: "Respiratory Rate"
+openapi: "GET /v2/timeseries/{user_id}/respiratory_rate"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/respiratory_rate?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+Not implemented yet.
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "id": null,
+    "timestamp": "2022-04-20T13:02:01.123771+00:00",
+    "value": "45",
+    "type": "automatic",
+    "unit": "bpm"
+  }
+]
+```
+
+</ResponseExample>

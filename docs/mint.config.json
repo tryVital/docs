@@ -230,10 +230,14 @@
         "api-reference/vitals/blood-oxygen",
         "api-reference/vitals/blood-pressure",
         "api-reference/vitals/cholesterol",
-        "api-reference/vitals/heartrate",
         "api-reference/vitals/glucose",
+        "api-reference/vitals/heartrate",
+        "api-reference/vitals/hrv",
+        "api-reference/vitals/hypnogram",
+        "api-reference/vitals/igg",
         "api-reference/vitals/ige",
-        "api-reference/vitals/igg"
+        "api-reference/vitals/respiratory-rate",
+        "api-reference/vitals/steps"
       ]
     },
     {
