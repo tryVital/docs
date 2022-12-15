@@ -102,6 +102,22 @@ VitalHealth.configure(
 });
 ```
 
+If you want to enable background delivery, you need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOptions` should look like this:
+
+```swift
+#import "AppDelegate.h"
+#import "VitalHealthKitConfiguration.h"
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  [VitalHealthKitConfiguration configureWithBackgroundDeliveryEnabled:true numberOfDaysToBackFill:90 enableLogs: true];
+
+   // your code
+}
+```
+
+If you do this, you don't need to call `VitalHealth.configure` from your React Native code.
+
 Finally, if you are logging out the user, please make sure you call:
 
 ```js
