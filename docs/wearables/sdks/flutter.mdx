@@ -3,9 +3,9 @@ title: "Flutter"
 ---
 
 <Tip>
-    Please check our [sample
-    app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
-    full use of the SDK.
+  Please check our [sample
+  app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
+  full use of the SDK.
 </Tip>
 
 ## 1. Introduction
@@ -13,8 +13,8 @@ title: "Flutter"
 The Vital SDK is split into three main components: `vital_core`, `vital_health` and `vital_devices`.
 
 - [vital_core][1] holds common
-components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
-send data from a device to a server.
+  components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
+  send data from a device to a server.
 - [vital_health][2] is an abstraction over HealthKit an Health Connect(coming soon)
 - [vital_devices][3] is an abstraction over a set of Bluetooth devices.
 
@@ -41,17 +41,18 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 ```
 
 <Tip>
-    Note: To return back to the app after successful linking, setup an intent filter in `AndroidManifest.xml` and custom
-    URL scheme in `info.plist`.
-    Note 2: Refer to [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for all supported data
-    providers.
+  Note: To return back to the app after successful linking, setup an intent
+  filter in `AndroidManifest.xml` and custom URL scheme in `info.plist`. Note 2:
+  Refer to
+  [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for
+  all supported data providers.
 </Tip>
 
 ## 3. Vital Health
 
 #### 1. Setup ios
 
-Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit).
+Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit). You need to edit your Capababilities and the `Info.plist` file.
 
 To use Apple HealthKit client you need to call configure first:
 
@@ -68,20 +69,27 @@ await client.healthkitServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
 
 #### 2. Using the SDK
 
-You need to ask for permissions before getting data:
+You need to ask for permissions before getting data. For example the following allows you to read and write water:
 
 ```dart
-client.healthkitServices.askForResources([
-      HealthkitResource.profile,
-      HealthkitResource.body,
-      ...
-    ]);
+final List<HealthkitResource> readResources = [HealthkitResource.water];
+final List<HealthkitResourceWrite> writeResources = [
+    HealthkitResourceWrite.water
+  ];
+
+client.healthkitServices.ask(readResources, writeResources);
 ```
 
 And syncing data:
 
 ```dart
 client.healthkitServices.syncData();
+```
+
+You can also write data:
+
+```dart
+client.healthkitServices.writeHealthKitData(HealthkitResourceWrite.water, startDate, endDate, 1000)
 ```
 
 Finally observe the status stream, so you can react to changes:
@@ -158,9 +166,8 @@ Depending on the type of device you are connecting to, you will have to call dif
 After you have received samples depending on the type of device you might need to star scanning again to receive the
 next set of samples.
 
+[1] https://pub.dev/packages/vital_core
 
-[1]  https://pub.dev/packages/vital_core
+[2] https://pub.dev/packages/vital_health
 
-[2]  https://pub.dev/packages/vital_health
-
-[3]  https://pub.dev/packages/vital_devices
+[3] https://pub.dev/packages/vital_devices
