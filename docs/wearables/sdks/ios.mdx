@@ -299,11 +299,18 @@ As previously mentioned, you are responsible for sending the samples to the serv
 
 ### 1. Quick Intro
 
-`VitalHealthKit` is an abstraction on top of HealthKit that **1)** automates the extraction of data **2)** pushs that data to Vital automatically.
+`VitalHealthKit` is an abstraction on top of HealthKit that: 1) automates the extraction of data 2) automatically pushs that data to Vital.
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
 <img src="/img/iOS/health_kit_permission.png" />
+
+Also add the following key in your `Info.plist`:
+
+```xml
+<key>NSHealthShareUsageDescription</key>
+<string>your description</string>
+```
 
 You then set-up the client:
 
@@ -360,10 +367,10 @@ After this initial setup, you need to ask permission to acccess the user's data:
 
 ```swift
 let resources = [.profile, .body]
-let outcome = await VitalHealthKitClient.shared.ask(for: resources)
+let outcome = await VitalHealthKitClient.shared.ask(readPermissions: resources, writePermissions: [])
 ```
 
-After calling `ask(for:)`, check the `outcome` to see if the user granted permission. On success, you can start syncing data:
+After calling `ask(readPermissions:writePermissions:)`, check the `outcome` to see if the user granted permission. On success, you can start syncing data:
 
 ```swift
 import VitalHealthKit
@@ -402,7 +409,32 @@ cancellable = VitalHealthKitClient.shared.status.sink { value in
 }
 ```
 
-### 2. Background Delivery
+### 2. Writing Data
+
+You can also write data for a limited set of resources. Just like for reading, you need to first update your `Info.plist` file:
+
+```xml
+<key>NSHealthUpdateUsageDescription</key>
+<string>your description</string>
+```
+
+You then ask for permission for writing:
+
+```swift
+let readResources: [VitalResource] = [.water]
+let writeResources: [WritableVitalResource] = [.water]
+let outcome = await VitalHealthKitClient.shared.ask(readPermissions: readResources, writePermissions: writeResources)
+```
+
+Finally you are able to write data:
+
+```swift
+VitalHealthKitClient.shared.write(input: .water(milliliters: 1000), startDate: startDate, endDate: endDate)
+```
+
+Each type will hint you about its units. For example, water is in milliliters.
+
+### 3. Background Delivery
 
 You can enable the SDK to deliver HealthKit data in background. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
 
@@ -440,7 +472,7 @@ This means that although we have background delivery's frequency set to `.hourly
 
 </Warning>
 
-### 3. Clean Up
+### 4. Clean Up
 
 When logging out a user, you should call:
 
@@ -450,7 +482,7 @@ await VitalHealthKitClient.shared.cleanUp()
 
 Internally this method will also call `VitalClient.shared.cleanUp()`.
 
-### 4. Miscellaneous Information
+### 5. Miscellaneous Information
 
 #### i) SDK configuration flow
 
