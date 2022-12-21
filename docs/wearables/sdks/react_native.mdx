@@ -164,7 +164,7 @@ export default App;
 
 ## 6. Devices
 
-To start getting events from the VitalDevicesManager you need to create an event emitter.
+To start getting events from the `VitalDevicesManager` you need to create an event emitter.
 You can see the possible event types in the `VitalDevicesEvents` object.
 
 ```js
@@ -177,13 +177,14 @@ const vitalDevicesManager = new VitalDevicesManager();
 ```
 
 Star scanning by providing one of the supported device.
-<Warning>
-    You need to acquire the required permission for bluetooth before you can call this function.
-</Warning>
 ```js
 let omronM7 = VitalDevicesManager.supportedDevices[1];
 vitalDevicesManager.scanForDevice(omronM7)
 ```
+
+<Warning>
+    You need to acquire the required permission for bluetooth before you can call `scanForDevice`.
+</Warning>
 
 To receive the scanned events you need to listen to them using the above created listener.
 ```js
