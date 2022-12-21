@@ -3,9 +3,9 @@ title: "Flutter"
 ---
 
 <Tip>
-    Please check our [sample
-    app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
-    full use of the SDK.
+  Please check our [sample
+  app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
+  full use of the SDK.
 </Tip>
 
 ## 1. Introduction
@@ -13,8 +13,8 @@ title: "Flutter"
 The Vital SDK is split into three main components: `vital_core`, `vital_health` and `vital_devices`.
 
 - [vital_core][1] holds common
-components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
-send data from a device to a server.
+  components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
+  send data from a device to a server.
 - [vital_health][2] is an abstraction over HealthKit an Health Connect(coming soon)
 - [vital_devices][3] is an abstraction over a set of Bluetooth devices.
 
@@ -40,11 +40,11 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 ```
 
 <Tip>
-    Note: To return back to the app after successful linking, setup an intent
-    filter in `AndroidManifest.xml` and custom URL scheme in `info.plist`. Note 2:
-    Refer to
-    [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for
-    all supported data providers.
+  Note: To return back to the app after successful linking, setup an intent
+  filter in `AndroidManifest.xml` and custom URL scheme in `info.plist`. Note 2:
+  Refer to
+  [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for
+  all supported data providers.
 </Tip>
 
 ## 3. Vital Health
@@ -63,10 +63,11 @@ final HealthkitServices healthkitServices = HealthkitServices(
 )
 ```
 
-Then initialise it:
+You can then configure it:
 
 ```dart
 await healthkitServices.configureClient();
+
 await healthkitServices.configureHealthkit(backgroundDeliveryEnabled: true);
 ```
 
@@ -182,7 +183,7 @@ Our original package **vital_flutter** is now separated into 3 packages: **vital
 - **vital_health** contains the Apple Health sync
 - **vital_devices** contains the sdk for bluetooth devices
 
-**vital_health**  and **vital_devices** are dependent **vital_core.**
+**vital_health** and **vital_devices** are dependent **vital_core.**
 
 To migrate you will need to add the new plugins you need in your **pubspec.yaml** file:
 
@@ -211,7 +212,7 @@ import 'package:vital_health/vital_health.dart';
 
 Your IDE should offer the correct import after you have updated your **pubspec.yaml**
 
-## Important  changes:
+## Important changes:
 
 - `DeviceManager` was moved out of the `VitalClient` to the **vital_devices** package
 - `HealthkitServices` is now in the **vital_health** package
