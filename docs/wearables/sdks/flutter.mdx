@@ -3,9 +3,9 @@ title: "Flutter"
 ---
 
 <Tip>
-    Please check our [sample
-    app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
-    full use of the SDK.
+  Please check our [sample
+  app](https://github.com/tryVital/vital-flutter/tree/main/example), that makes
+  full use of the SDK.
 </Tip>
 
 ## 1. Introduction
@@ -13,8 +13,8 @@ title: "Flutter"
 The Vital SDK is split into three main components: `vital_core`, `vital_health` and `vital_devices`.
 
 - [vital_core][1] holds common
-components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
-send data from a device to a server.
+  components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
+  send data from a device to a server.
 - [vital_health][2] is an abstraction over HealthKit an Health Connect(coming soon)
 - [vital_devices][3] is an abstraction over a set of Bluetooth devices.
 
@@ -30,7 +30,6 @@ final client = VitalClient()
 Query users:
 
 ```dart
-
 final Response<List<User>> usersResponse = client.userService.getAll();
 ```
 
@@ -41,26 +40,38 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 ```
 
 <Tip>
-    Note: To return back to the app after successful linking, setup an intent filter in `AndroidManifest.xml` and custom
-    URL scheme in `info.plist`.
-    Note 2: Refer to [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for all supported data
-    providers.
+  Note: To return back to the app after successful linking, setup an intent
+  filter in `AndroidManifest.xml` and custom URL scheme in `info.plist`. Note 2:
+  Refer to
+  [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for
+  all supported data providers.
 </Tip>
 
 ## 3. Vital Health
 
 #### 1. Setup ios
 
-Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit).
+Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit). You need to edit your Capababilities and the `Info.plist` file.
 
-To use Apple HealthKit client you need to call configure first:
+First create your client:
 
 ```dart
-await client.healthkitServices.configureClient();
-await client.healthkitServices.configureHealthkit(backgroundDeliveryEnabled: true);
+final HealthkitServices healthkitServices = HealthkitServices(
+  apiKey: apiKey,
+  region: region,
+  environment: Environment.sandbox,
+)
 ```
 
-And setting the `userId`:
+You can then configure it:
+
+```dart
+await healthkitServices.configureClient();
+
+await healthkitServices.configureHealthkit(backgroundDeliveryEnabled: true);
+```
+
+And set the `userId`:
 
 ```dart
 await client.healthkitServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
@@ -68,14 +79,15 @@ await client.healthkitServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
 
 #### 2. Using the SDK
 
-You need to ask for permissions before getting data:
+You need to ask for permissions before getting data. For example the following allows you to read and write water:
 
 ```dart
-client.healthkitServices.askForResources([
-      HealthkitResource.profile,
-      HealthkitResource.body,
-      ...
-    ]);
+final List<HealthkitResource> readResources = [HealthkitResource.water];
+final List<HealthkitResourceWrite> writeResources = [
+    HealthkitResourceWrite.water,
+  ];
+
+client.healthkitServices.ask(readResources, writeResources);
 ```
 
 And syncing data:
@@ -84,10 +96,16 @@ And syncing data:
 client.healthkitServices.syncData();
 ```
 
-Finally observe the status stream, so you can react to changes:
+You can also write data:
 
 ```dart
-Stream<SyncStatus> status = client.healthkitServices.status
+client.healthkitServices.writeHealthKitData(HealthkitResourceWrite.water, startDate, endDate, 1000);
+```
+
+Finally, observe the status stream, so you can react to changes:
+
+```dart
+Stream<SyncStatus> status = client.healthkitServices.status;
 ```
 
 #### 4. Setup android
@@ -114,7 +132,6 @@ You will have to request the bluetooth permission in your app before using the S
 Add the following to your `AndroidManifest.xml`:
 
 ```xml
-
 <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
 <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
 
@@ -158,9 +175,51 @@ Depending on the type of device you are connecting to, you will have to call dif
 After you have received samples depending on the type of device you might need to star scanning again to receive the
 next set of samples.
 
+# Migrate from 0.3.* and 0.4.* to 0.5.*
 
-[1]  https://pub.dev/packages/vital_core
+Our original package **vital_flutter** is now separated into 3 packages: **vital_core**, **vital_health** and **vital_devices**.
 
-[2]  https://pub.dev/packages/vital_health
+- **vital_core** contains the Vital Client
+- **vital_health** contains the Apple Health sync
+- **vital_devices** contains the sdk for bluetooth devices
 
-[3]  https://pub.dev/packages/vital_devices
+**vital_health** and **vital_devices** are dependent **vital_core.**
+
+To migrate you will need to add the new plugins you need in your **pubspec.yaml** file:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  vital_core: ^0.5.0-alpha.2
+  vital_health: ^0.5.0-alpha.4
+  vital_devices: ^0.5.0-alpha.2
+```
+
+All the imports have to be updated too. As an example:
+`import 'package:vital_flutter/services/data/user.dart';`
+
+needs to be changes
+`import 'package:vital_core/services/data/user.dart';`
+
+You can get all the classes by using:
+
+```dart
+import 'package:vital_core/vital_core.dart';
+import 'package:vital_devices/vital_devices.dart';
+import 'package:vital_health/vital_health.dart';
+```
+
+Your IDE should offer the correct import after you have updated your **pubspec.yaml**
+
+## Important changes:
+
+- `DeviceManager` was moved out of the `VitalClient` to the **vital_devices** package
+- `HealthkitServices` is now in the **vital_health** package
+- `VitalClient` is now in **vital_core** package
+
+[1] https://pub.dev/packages/vital_core
+
+[2] https://pub.dev/packages/vital_health
+
+[3] https://pub.dev/packages/vital_devices
