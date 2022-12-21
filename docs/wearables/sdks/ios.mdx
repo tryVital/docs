@@ -285,7 +285,7 @@ let sensor: Libre1Sensor = reading.sensor
 let samples: [QuantitySample] = reading.samples
 ```
 
-As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalNetworkClient.shared.timeSeries.post`.
+As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalClient.shared.timeSeries.post`.
 
 <Warning>
   Readings taken with the SDK are not guaranteed to match the official Freestyle
