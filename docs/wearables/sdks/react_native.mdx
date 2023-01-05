@@ -102,7 +102,11 @@ VitalHealth.configure(
 });
 ```
 
-If you want to enable background delivery, you need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOptions` should look like this:
+You can enable the SDK to deliver HealthKit data in background. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
+
+<img src="/img/iOS/health_kit_permission_background_delivery.png" />
+
+You also need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOptions` should look like this:
 
 ```swift
 #import "AppDelegate.h"
