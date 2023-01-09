@@ -36,8 +36,7 @@
   },
   "topAnchor": {
     "name": "Home",
-    "icon": "house",
-    "url": "home"
+    "icon": "house"
   },
   "anchors": [
     {
