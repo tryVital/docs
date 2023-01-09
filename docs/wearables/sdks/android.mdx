@@ -87,14 +87,73 @@ the [docs](https://docs.tryvital.io/api-reference/user/create-user).
 
 ### 2.  VitalHealthConnect
 
-Coming soon.
+Health Connect is the new unified health data platform from Google. You can read more about it here - https://developer.android.com/guide/health-and-fitness/health-connect
+Vital Health Connect is an abstraction over Health Connect that allows you to easily and automatically get data from Health Connect and upload it to Vital.
+
+To interact with Vital Health Connect you need an instance of `VitalHealthConnectManager`:
+```kotlin
+val vitalHealthConnectManager = VitalHealthConnectManager.create(context, apiKey, region, environment);
+```
+
+You should first check if Health Connect is available on the device:
+```kotlin
+vitalHealthConnectManager.isAvailable(context)
+```
+
+After you have a user id you need to set it on the manager:
+```kotlin
+vitalHealthConnectManager.setUserId(userId)
+```
+
+If this user is not yet linked to Health Connect provider you need to link it:
+```kotlin
+vitalHealthConnectManager.linkUserHealthConnectProvider("callbackUrl")
+```
+
+Now you can start syncing data:
+```kotlin
+vitalHealthConnectManager.configureHealthConnectClient(
+    logsEnabled = false,
+    syncOnAppStart = true, //this requires further setup
+    numberOfDaysToBackFill = 30,
+)
+```
+
+The call to `configureHealthConnectClient` will start syncing data immediately from Health Connect.
+You only need to call configure once. If you want to change the configuration you can call it again.
+
+<Warning>
+    We can only sync health data which we have permission granted by the user.
+    You need to request these permissions. You can see all the used permission in the
+    `VitalHealthConnectManager.vitalRequiredPermissions`
+    property.
+    You can check what permissions are granted by the user by calling
+    `VitalHealthConnectManager.getGrantedPermissions(context)`.
+</Warning>
+
+If you know that you have new data in Health Connect you can force a sync:
+```kotlin
+vitalHealthConnectManager.syncData()
+```
+
+You can configure the sync to happen on app start. To do this you need to add the following to your manifest:
+```xml
+    <provider
+        android:name="androidx.startup.InitializationProvider"
+        android:authorities="${applicationId}.androidx-startup"
+        android:exported="false"
+        tools:node="merge">
+        <meta-data  android:name="io.tryvital.vitalhealthconnect.VitalHealthInitializer"
+            android:value="androidx.startup" />
+    </provider>
+```
 
 ### 3. VitalDevices
 
 To interact with Vital Devices sdk you need to get an instance of the `VitalDeviceManager`:
 
 ```kotlin
-val deviceManager = VitalDeviceManager.create(this)
+val deviceManager = VitalDeviceManager.create(context)
 ```
 
 Next you have to scan for one of the supported devices. You can find the list of supported devices
