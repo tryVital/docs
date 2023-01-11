@@ -10,27 +10,38 @@ from vital import Client
 client = Client(api_key, "sandbox")
 
 data = client.LabTests.create_order(
-    user_id=*,
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
     lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
     patient_details={
+        "first_name": "John",
+        "last_name": "Doe",
         "dob": "2020-01-01",
-        "gender": "female"
+        "gender": "male",
+        "phone_number": "+1123456789",
+        "email": "string"
     },
     patient_address={
-            "receiver_name": "john Doe",
-            "street": "606 Capp st.",
-            "street_number": "Apt 14",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "94107",
-            "country": "US",
-            "phone_number": "+181808433"
-            },
-    }
-    physician={
-        "name": "Dr. John Doe",
-        "phone_number": "+181808433"
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US"
     },
+    consents=[
+      {"consentType": "terms-of-use"},
+      {"consentType": "telehealth-informed-consent"},
+      {"consentType": "notice-of-privacy-practices"},
+    ],
+    intakes=[
+      {
+         "linkId": "red-flag-attestation",
+         "answer": [
+            {"valueBoolean": True}
+         ]
+      }
+    ]
 )
 
 ```
@@ -41,636 +52,76 @@ data = client.LabTests.create_order(
 
 ```json Response
 [
-  {
-    "order": {
-      "title": "ClientFacingOrder",
-      "required": [
-        "user_id",
-        "id",
-        "team_id",
-        "patient_details",
-        "patient_address",
-        "lab_test",
-        "details",
-        "created_at",
-        "updated_at",
-        "events"
-      ],
-      "type": "object",
-      "properties": {
-        "user_id": {
-          "title": "User Id",
-          "type": "string",
-          "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
-          "format": "uuid"
-        },
-        "user_key": {
-          "title": "User Key",
-          "type": "string",
-          "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
-          "format": "uuid",
-          "deprecated": true
-        },
-        "id": {
-          "title": "Id",
-          "type": "string",
-          "description": "The Vital Order ID",
-          "format": "uuid"
-        },
-        "team_id": {
-          "title": "Team Id",
-          "type": "string",
-          "description": "Your team id.",
-          "format": "uuid"
-        },
-        "patient_details": {
-          "title": "Patient Details",
-          "allOf": [
-            {
-              "title": "PatientDetails",
-              "required": ["dob", "gender"],
-              "type": "object",
-              "properties": {
-                "dob": {
-                  "title": "Dob",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "gender": {
-                  "title": "Gender",
-                  "type": "string"
-                },
-                "email": {
-                  "title": "Email",
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "description": "Patient Details"
-        },
-        "patient_address": {
-          "title": "Patient Address",
-          "allOf": [
-            {
-              "title": "PatientAddress",
-              "required": [
-                "receiver_name",
-                "street",
-                "city",
-                "state",
-                "zip",
-                "country",
-                "phone_number"
-              ],
-              "type": "object",
-              "properties": {
-                "receiver_name": {
-                  "title": "Receiver Name",
-                  "type": "string"
-                },
-                "street": {
-                  "title": "Street",
-                  "type": "string"
-                },
-                "street_number": {
-                  "title": "Street Number",
-                  "type": "string"
-                },
-                "city": {
-                  "title": "City",
-                  "type": "string"
-                },
-                "state": {
-                  "title": "State",
-                  "type": "string"
-                },
-                "zip": {
-                  "title": "Zip",
-                  "type": "string"
-                },
-                "country": {
-                  "title": "Country",
-                  "type": "string"
-                },
-                "phone_number": {
-                  "title": "Phone Number",
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "description": "Patient Address"
-        },
-        "lab_test": {
-          "title": "Lab Test",
-          "allOf": [
-            {
-              "title": "LabTestInDB",
-              "required": [
-                "slug",
-                "name",
-                "sample_type",
-                "method",
-                "lab_id",
-                "price",
-                "is_active",
-                "created_at",
-                "updated_at",
-                "id"
-              ],
-              "type": "object",
-              "properties": {
-                "slug": {
-                  "title": "Slug",
-                  "type": "string"
-                },
-                "name": {
-                  "title": "Name",
-                  "type": "string"
-                },
-                "description": {
-                  "title": "Description",
-                  "type": "string"
-                },
-                "sample_type": {
-                  "title": "LabTestSampleType",
-                  "enum": ["dried_blood_spot"],
-                  "type": "string",
-                  "description": "The type of sample used to perform a lab test."
-                },
-                "method": {
-                  "title": "LabTestMethod",
-                  "enum": ["testkit", "walk_in_test"],
-                  "type": "string",
-                  "description": "The method used to perform a lab test."
-                },
-                "lab_id": {
-                  "title": "Lab Id",
-                  "type": "integer"
-                },
-                "skus": {
-                  "title": "Skus",
-                  "type": "array",
-                  "items": {
-                    "type": "object"
-                  }
-                },
-                "price": {
-                  "title": "Price",
-                  "type": "number"
-                },
-                "is_active": {
-                  "title": "Is Active",
-                  "type": "boolean"
-                },
-                "turnaround_time_lower": {
-                  "title": "Turnaround Time Lower",
-                  "type": "integer"
-                },
-                "turnaround_time_upper": {
-                  "title": "Turnaround Time Upper",
-                  "type": "integer"
-                },
-                "created_at": {
-                  "title": "Created At",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "title": "Updated At",
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "id": {
-                  "title": "Id",
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "lab": {
-                  "title": "LabInDB",
-                  "required": [
-                    "slug",
-                    "name",
-                    "first_line_address",
-                    "city",
-                    "zipcode",
-                    "id"
-                  ],
-                  "type": "object",
-                  "properties": {
-                    "slug": {
-                      "title": "Slug",
-                      "type": "string"
-                    },
-                    "name": {
-                      "title": "Name",
-                      "type": "string"
-                    },
-                    "first_line_address": {
-                      "title": "First Line Address",
-                      "type": "string"
-                    },
-                    "city": {
-                      "title": "City",
-                      "type": "string"
-                    },
-                    "zipcode": {
-                      "title": "Zipcode",
-                      "type": "string"
-                    },
-                    "clia": {
-                      "title": "Clia",
-                      "type": "string"
-                    },
-                    "created_at": {
-                      "title": "Created At",
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "title": "Updated At",
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "id": {
-                      "title": "Id",
-                      "type": "integer"
-                    }
-                  }
-                },
-                "markers": {
-                  "title": "Markers",
-                  "type": "array",
-                  "items": {
-                    "title": "MarkerInDB",
-                    "required": ["name", "slug", "description", "id"],
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "title": "Name",
-                        "type": "string"
-                      },
-                      "slug": {
-                        "title": "Slug",
-                        "type": "string"
-                      },
-                      "description": {
-                        "title": "Description",
-                        "type": "string"
-                      },
-                      "created_at": {
-                        "title": "Created At",
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "updated_at": {
-                        "title": "Updated At",
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "id": {
-                        "title": "Id",
-                        "type": "integer"
-                      }
-                    }
-                  }
-                }
-              },
-              "description": "Schema for a LabTest in the database."
-            }
-          ],
-          "description": "The Vital Test associated with the order"
-        },
-        "details": {
-          "title": "Details",
-          "anyOf": [
-            {
-              "title": "ClientFacingWalkInOrderDetails",
-              "required": ["type"],
-              "type": "object",
-              "properties": {
-                "type": {
-                  "title": "Type",
-                  "enum": ["walk_in_test"],
-                  "type": "string"
-                },
-                "data": {
-                  "title": "ClientFacingWalkInTestOrder",
-                  "required": ["id", "created_at", "updated_at"],
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "title": "Id",
-                      "type": "string",
-                      "description": "The Vital walk-in test Order ID",
-                      "format": "uuid"
-                    },
-                    "created_at": {
-                      "title": "Created At",
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "title": "Updated At",
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  },
-                  "description": "Schema for a walk-in test order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
-                  "example": {
-                    "id": "0651ee15-31a1-461b-9c10-86aa960da6c9",
-                    "created_at": "2020-01-01T00:00:00Z",
-                    "updated_at": "2020-01-01T00:00:00Z"
-                  }
-                }
-              }
-            },
-            {
-              "title": "ClientFacingTestKitOrderDetails",
-              "required": ["type"],
-              "type": "object",
-              "properties": {
-                "type": {
-                  "title": "Type",
-                  "enum": ["testkit"],
-                  "type": "string"
-                },
-                "data": {
-                  "title": "ClientFacingTestkitOrder",
-                  "required": ["id", "created_at", "updated_at"],
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "title": "Id",
-                      "type": "string",
-                      "description": "The Vital TestKit Order ID",
-                      "format": "uuid"
-                    },
-                    "shipment": {
-                      "title": "Shipment",
-                      "allOf": [
-                        {
-                          "title": "ClientFacingShipment",
-                          "required": [
-                            "id",
-                            "outbound_tracking_number",
-                            "outbound_tracking_url",
-                            "inbound_tracking_number",
-                            "inbound_tracking_url",
-                            "outbound_courier",
-                            "inbound_courier",
-                            "notes"
-                          ],
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "title": "Id",
-                              "type": "string",
-                              "description": "The Vital Shipment ID",
-                              "format": "uuid"
-                            },
-                            "outbound_tracking_number": {
-                              "title": "Outbound Tracking Number",
-                              "type": "string",
-                              "description": "Tracking number for delivery to customer"
-                            },
-                            "outbound_tracking_url": {
-                              "title": "Outbound Tracking Url",
-                              "type": "string",
-                              "description": "Tracking url for delivery to customer"
-                            },
-                            "inbound_tracking_number": {
-                              "title": "Inbound Tracking Number",
-                              "type": "string",
-                              "description": "Tracking number for delivery to lab"
-                            },
-                            "inbound_tracking_url": {
-                              "title": "Inbound Tracking Url",
-                              "type": "string",
-                              "description": "Tracking url for delivery to lab"
-                            },
-                            "outbound_courier": {
-                              "title": "Outbound Courier",
-                              "type": "string",
-                              "description": "Courier used for delivery to customer"
-                            },
-                            "inbound_courier": {
-                              "title": "Inbound Courier",
-                              "type": "string",
-                              "description": "Courier used for delivery to lab"
-                            },
-                            "notes": {
-                              "title": "Notes",
-                              "type": "string",
-                              "description": "Notes associated to the Vital shipment"
-                            }
-                          },
-                          "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
-                          "example": {
-                            "id": "dcab86c6-a315-493d-97aa-2fd0fa649130",
-                            "outbound_tracking_number": "<outbound_tracking_number>",
-                            "outbound_tracking_url": "<outbound_tracking_url>",
-                            "inbound_tracking_number": "<inbound_tracking_number>",
-                            "inbound_tracking_url": "<inbound_tracking_url>",
-                            "outbound_courier": "usps",
-                            "inbound_courier": "usps",
-                            "notes": "<notes>"
-                          }
-                        }
-                      ],
-                      "description": "Shipment object"
-                    },
-                    "created_at": {
-                      "title": "Created At",
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "updated_at": {
-                      "title": "Updated At",
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  },
-                  "description": "Schema for a testkit order in the client facing API.\n\nTo be used as part of a ClientFacingOrder.",
-                  "example": {
-                    "id": "43697a79-298f-43db-9703-e4cf16006c66",
-                    "shipment": {
-                      "id": "51caeb91-cc5c-4f82-a4c2-6f23b68e54c5",
-                      "outbound_tracking_number": "<outbound_tracking_number>",
-                      "outbound_tracking_url": "<outbound_tracking_url>",
-                      "inbound_tracking_number": "<inbound_tracking_number>",
-                      "inbound_tracking_url": "<inbound_tracking_url>",
-                      "outbound_courier": "usps",
-                      "inbound_courier": "usps",
-                      "notes": "<notes>",
-                      "created_at": "2020-01-01T00:00:00.000Z",
-                      "updated_at": "2020-01-01T00:00:00.000Z"
-                    },
-                    "created_at": "2020-01-01T00:00:00Z",
-                    "updated_at": "2020-01-01T00:00:00Z"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "sample_id": {
-          "title": "Sample Id",
-          "type": "string",
-          "description": "Sample ID"
-        },
-        "notes": {
-          "title": "Notes",
-          "type": "string",
-          "description": "Notes associated with the order"
-        },
-        "created_at": {
-          "title": "Created At",
-          "type": "string",
-          "description": "When your order was created",
-          "format": "date-time"
-        },
-        "updated_at": {
-          "title": "Updated At",
-          "type": "string",
-          "description": "When your order was last updated",
-          "format": "date-time"
-        },
-        "events": {
-          "title": "Events",
-          "type": "array",
-          "items": {
-            "title": "ClientFacingOrderEvent",
-            "required": ["id", "created_at", "status"],
-            "type": "object",
-            "properties": {
-              "id": {
-                "title": "Id",
-                "type": "integer"
-              },
-              "created_at": {
-                "title": "Created At",
-                "type": "string",
-                "format": "date-time"
-              },
-              "status": {
-                "title": "OrderV2Status",
-                "enum": [
-                  "received.walk_in_test.requisition_created",
-                  "completed.walk_in_test.order_completed",
-                  "failed.walk_in_test.sample_error",
-                  "received.testkit.ordered",
-                  "received.testkit.requisition_created",
-                  "collecting_sample.testkit.transit_customer",
-                  "collecting_sample.testkit.out_for_delivery",
-                  "collecting_sample.testkit.with_customer",
-                  "collecting_sample.testkit.transit_lab",
-                  "sample_with_lab.testkit.delivered_to_lab",
-                  "completed.testkit.completed",
-                  "failed.testkit.failure_to_deliver_to_customer",
-                  "failed.testkit.failure_to_deliver_to_lab",
-                  "failed.testkit.sample_error",
-                  "failed.testkit.lost",
-                  "cancelled.testkit.cancelled",
-                  "cancelled.testkit.do_not_process"
-                ],
-                "type": "string",
-                "description": "An enumeration."
-              }
-            }
-          }
-        },
-        "status": {
-          "title": "OrderV2TopLevelStatus",
-          "enum": [
-            "received",
-            "collecting_sample",
-            "sample_with_lab",
-            "completed",
-            "cancelled",
-            "failed"
-          ],
-          "type": "string",
-          "description": "An enumeration."
-        }
+   {
+   "order": {
+      "id": "ea7eae96-2c25-404f-b043-bfc08584610d",
+      "team_id": "c26a9cc7-cdff-4f23-a5f6-74d40088c16a",
+      "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+      "patient_details": {
+         "dob": "2020-01-01",
+         "gender": "male"
       },
-      "example": {
-        "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
-        "team_id": "cbb64555-af07-46c1-be09-ef89308e9b60",
-        "user_id": "94e2d9f2-d600-4a23-9f08-536df378e2c7",
-        "patient_details": {
-          "dob": "2020-01-01",
-          "gender": "male"
-        },
-        "patient_address": {
-          "receiver_name": "John Doe",
-          "first_line": "123 Main St.",
-          "second_line": "Apt. 208",
-          "city": "San Francisco",
-          "state": "CA",
-          "zip": "91189",
-          "country": "United States",
-          "phone_number": "+1123456789"
-        },
-        "details": {
-          "type": "testkit",
-          "data": {
-            "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
-            "shipment": {
-              "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
-              "outbound_tracking_number": "<outbound_tracking_number>",
-              "outbound_tracking_url": "<outbound_tracking_url>",
-              "inbound_tracking_number": "<inbound_tracking_number>",
-              "inbound_tracking_url": "<inbound_tracking_url>",
-              "outbound_courier": "usps",
-              "inbound_courier": "usps",
-              "notes": "<notes>",
-              "created_at": "2020-01-01T00:00:00.000Z",
-              "updated_at": "2020-01-01T00:00:00.000Z"
-            },
-            "created_at": "2020-01-01T00:00:00Z",
-            "updated_at": "2020-01-01T00:00:00Z"
-          }
-        },
-        "lab_test": {
-          "name": "Lipids Panel",
-          "description": "Cholesterol test",
-          "method": "testkit"
-        },
-        "sample_id": "123456789",
-        "notes": "This is a note",
-        "created_at": "2020-01-01T00:00:00Z",
-        "updated_at": "2020-01-01T00:00:00Z",
-        "status": "collecting_sample",
-        "events": [
-          {
-            "id": 1,
-            "created_at": "2022-01-01T00:00:00Z",
-            "status": "received.testkit.ordered"
-          },
-          {
-            "id": 2,
-            "created_at": "2022-01-02T00:00:00Z",
-            "status": "received.testkit.requisition_created"
-          },
-          {
-            "id": 3,
-            "created_at": "2022-01-03T00:00:00Z",
-            "status": "collecting_sample.testkit.transit_customer"
-          }
-        ]
-      }
-    },
-    "status": {
-      "title": "Status",
-      "type": "string"
-    },
-    "message": {
-      "title": "Message",
-      "type": "string"
-    }
-  }
+      "patient_address": {
+         "receiver_name": "John Doe",
+         "first_line": "123 Main St.",
+         "second_line": "Apt. 208",
+         "city": "San Francisco",
+         "state": "CA",
+         "zip": "91189",
+         "country": "United States",
+         "phone_number": "+1123456789"
+      },
+      "details": {
+         "type": "testkit",
+         "data": {
+         "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+         "shipment": {
+            "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+            "outbound_tracking_number": "<outbound_tracking_number>",
+            "outbound_tracking_url": "<outbound_tracking_url>",
+            "inbound_tracking_number": "<inbound_tracking_number>",
+            "inbound_tracking_url": "<inbound_tracking_url>",
+            "outbound_courier": "usps",
+            "inbound_courier": "usps",
+            "notes": "<notes>",
+            "created_at": "2020-01-01T00:00:00.000Z",
+            "updated_at": "2020-01-01T00:00:00.000Z"
+         },
+         "created_at": "2020-01-01T00:00:00Z",
+         "updated_at": "2020-01-01T00:00:00Z"
+         }
+      },
+      "lab_test": {
+         "name": "Lipids Panel",
+         "description": "Cholesterol test",
+         "method": "testkit"
+      },
+      "sample_id": "123456789",
+      "notes": "This is a note",
+      "created_at": "2020-01-01T00:00:00Z",
+      "updated_at": "2020-01-01T00:00:00Z",
+      "status": "collecting_sample",
+      "events": [
+         {
+         "id": 1,
+         "created_at": "2022-01-01T00:00:00Z",
+         "status": "received.testkit.ordered"
+         },
+         {
+         "id": 2,
+         "created_at": "2022-01-02T00:00:00Z",
+         "status": "received.testkit.requisition_created"
+         },
+         {
+         "id": 3,
+         "created_at": "2022-01-03T00:00:00Z",
+         "status": "collecting_sample.testkit.transit_customer"
+         }
+      ]
+   },
+   "status": "string",
+   "message": "string"
+   }
 ]
 ```
 
