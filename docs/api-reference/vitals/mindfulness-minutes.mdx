@@ -1,0 +1,35 @@
+---
+title: "Mindfulness Minutes"
+openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/mindfulness_minutes?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+Not implemented yet.
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "id": null,
+    "timestamp": "2023-01-19T13:50:31+00:00",
+    "value": 60.0,
+    "type": "automatic",
+    "unit": "min"
+  }
+]
+```
+
+</ResponseExample>
