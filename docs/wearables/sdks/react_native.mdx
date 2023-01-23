@@ -17,7 +17,9 @@ npm install vital-core-react-native
 npm install vital-health-react-native
 npm install vital-devices-react-native
 ```
+
 or
+
 ```commandline
 yarn add vital-core-react-native
 yarn add vital-health-react-native
@@ -70,13 +72,14 @@ The Core SDK is now ready to use. You can now set up the HealthKit SDK and Devic
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
 
-<img src="/img/iOS/health_kit_permission.png"/>
+<img src="/img/iOS/health_kit_permission.png" />
 
 Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist` file. Finally setting up the HealthKit SDK is just:
 
 ```js
 import { VitalHealth } from "vital-health-react-native";
 
+// Configure HealthKit SDK
 VitalHealth.configure(automaticConfiguration, numberOfDaysToPull, logsEnabled)
   .then(() => {
     // HealthKit SDK is ready to use
@@ -94,6 +97,7 @@ Before syncing data, you need to ask for permissions to the user. You do it by c
 ```js
 import { VitalHealth, VitalResource } from "vital-health-react-native";
 
+// Configure HealthKit SDK
 VitalHealth.configure(
   automaticConfiguration,
   numberOfDaysToPull,
@@ -192,48 +196,64 @@ const eventEmitter = new NativeEventEmitter(VitalDevicesNativeModule);
 ```
 
 Now you can create the devices manager
+
 ```js
 const vitalDevicesManager = new VitalDevicesManager();
 ```
 
 Star scanning by providing one of the supported device.
+
 ```js
 let omronM7 = VitalDevicesManager.supportedDevices[1];
-vitalDevicesManager.scanForDevice(omronM7)
+vitalDevicesManager.scanForDevice(omronM7);
 ```
 
 <Warning>
-    You need to acquire the required permission for bluetooth before you can call `scanForDevice`.
+  You need to acquire the required permission for bluetooth before you can call
+  `scanForDevice`.
 </Warning>
 
 To receive the scanned events you need to listen to them using the above created listener.
+
 ```js
-eventEmitter.addListener(VitalDevicesEvents.scanEvent, event => {
+eventEmitter.addListener(VitalDevicesEvents.scanEvent, (event) => {
   console.log(VitalDevicesEvents.scanEvent, event);
-})
+});
 ```
 
 After you have scanned a device you can start reading from it.
+
 ```js
-vitalDevicesManager.readBloodPressure(event.id)
+vitalDevicesManager.readBloodPressure(event.id);
 ```
+
 or
+
 ```js
-vitalDevicesManager.readGlucoseMeter(event.id)
+vitalDevicesManager.readGlucoseMeter(event.id);
 ```
 
 The read results will arrive in the event lister too.
+
 ```js
-eventEmitter.addListener(VitalDevicesEvents.bloodPressureReadEvent, event => {})
+eventEmitter.addListener(
+  VitalDevicesEvents.bloodPressureReadEvent,
+  (event) => {}
+);
 ```
+
 or
+
 ```js
-eventEmitter.addListener(VitalDevicesEvents.glucoseMeterReadEvent, event => {})
+eventEmitter.addListener(
+  VitalDevicesEvents.glucoseMeterReadEvent,
+  (event) => {}
+);
 ```
 
 <Note>
-    After you are done reading from the device you need to call the scan method on the VitalDevicesManager to
-    continuously receive reads.
+  After you are done reading from the device you need to call the scan method on
+  the VitalDevicesManager to continuously receive reads.
 </Note>
 
 ## 7. Troubleshooting
