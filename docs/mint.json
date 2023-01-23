@@ -236,6 +236,7 @@
         "api-reference/vitals/hypnogram",
         "api-reference/vitals/igg",
         "api-reference/vitals/ige",
+        "api-reference/vitals/mindfulness-minutes",
         "api-reference/vitals/respiratory-rate",
         "api-reference/vitals/steps",
         "api-reference/vitals/water"
