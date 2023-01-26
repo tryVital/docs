@@ -56,12 +56,12 @@ You need to update your manifest with the list of requested health permissions.
 <activity>
     ...
     <meta-data
-    android:name="health_permissions"
-    android:resource="@array/health_permissions" />
+        android:name="health_permissions"
+        android:resource="@array/health_permissions" />
 </activity>
 ```
 
-And your list of permissions you need in `res/values/health_permissions.xml`:
+List your required permissions here `res/values/health_permissions.xml`:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -74,7 +74,7 @@ And your list of permissions you need in `res/values/health_permissions.xml`:
 </resources>
 ```
 
-It is recommended to add the following activity to your manifest to show the rationale for the health permissions:
+It is recommended to add the following intent filter to one of your activities to show the rationale for the health permissions:
 ```xml
 <activity>
     ...
