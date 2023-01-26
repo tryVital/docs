@@ -50,6 +50,40 @@ You have no additional steps to take to use VitalHealthClient.
 The sdk compiles on min version `26` but to get data out of the underlying Health Connect SDK you
 need to be on `28` or higher.
 
+You need to update your manifest with the list of requested health permissions.
+
+```xml
+<activity>
+    ...
+    <meta-data
+    android:name="health_permissions"
+    android:resource="@array/health_permissions" />
+</activity>
+```
+
+And your list of permissions you need in `res/values/health_permissions.xml`:
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="health_permissions">
+        <item>androidx.health.permission.ActivitySession.READ</item>
+        <item>androidx.health.permission.Distance.READ</item>
+        ...
+        <item>androidx.health.permission.BloodPressure.READ</item>
+    </array>
+</resources>
+```
+
+It is recommended to add the following activity to your manifest to show the rationale for the health permissions:
+```xml
+<activity>
+    ...
+    <intent-filter>
+        <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+    </intent-filter>
+</activity>
+```
+
 ### VitalDevices installation
 
 Vital Devices uses bluetooth, and it requires different permissions based on you apps min version.
@@ -147,6 +181,25 @@ You can configure the sync to happen on app start. To do this you need to add th
             android:value="androidx.startup" />
     </provider>
 ```
+
+#### Vital Resources types
+
+The mapping between Health Connect resources and Vital resources is as follows:
+
+| Vital Resource       | Health Connect Resource                                                                                                     |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| `profile`            | `HeightRecord`,`WeightRecord`                                                                                               |
+| `body`               | `BodyFatRecord`                                                                                                             |
+| `workout`            | `ExerciseSessionRecord`                                                                                                     |
+| `activity`           | `ActiveCaloriesBurnedRecord`,`BasalMetabolicRateRecord`,`StepsRecord`,`DistanceRecord`,`FloorsClimbedRecord`,`Vo2MaxRecord` |
+| `sleep`              | `SleepSessionRecord`                                                                                                        |
+| `glucose`            | `BloodGlucoseRecord`                                                                                                        |
+| `bloodPressure`      | `BloodPressureRecord`                                                                                                       |
+| `heartRate`          | `HeartRateVariabilitySdnnRecord`                                                                                            |
+| `steps`              | `StepsRecord`                                                                                                               |
+| `activeEnergyBurned` | `ActiveCaloriesBurnedRecord`                                                                                                |
+| `basalEnergyBurned`  | `BasalMetabolicRateRecord`                                                                                                  |
+| `water`              | `HydrationRecord`                                                                                                           |
 
 ### 3. VitalDevices
 

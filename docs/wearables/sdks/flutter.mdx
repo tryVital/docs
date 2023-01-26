@@ -12,11 +12,11 @@ title: "Flutter"
 
 The Vital SDK is split into three main components: `vital_core`, `vital_health` and `vital_devices`.
 
-- [vital_core][1] holds common
+- [vital_core](https://pub.dev/packages/vital_core) holds common
   components to both `vital_health` and `vital_devices`. Among other things, it has the network layer that allows us to
   send data from a device to a server.
-- [vital_health][2] is an abstraction over HealthKit an Health Connect(coming soon)
-- [vital_devices][3] is an abstraction over a set of Bluetooth devices.
+- [vital_health](https://pub.dev/packages/vital_health) is an abstraction over HealthKit and Health Connect.
+- [vital_devices](https://pub.dev/packages/vital_devices) is an abstraction over a set of Bluetooth devices.
 
 ## 2. Vital Core
 
@@ -49,14 +49,22 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 
 ## 3. Vital Health
 
+### 1. Getting Started
+
 #### 1. Setup ios
 
-Please read the [iOS SDK instructions on Apple HealthKit](/wearables/sdks/ios#VitalHealthKit). You need to edit your Capababilities and the `Info.plist` file.
+Please read the [iOS SDK instructions on Apple HealthKit](wearables/sdks/ios#6-vitalhealthkit). You need to edit your Capababilities and the `Info.plist` file.
+
+#### 2. Setup android
+
+Please read the [Android SDK instructions on Health Connect](/wearables/sdks/android#vitalhealthconnect-installation). You need to edit your `AndroidManifest.xml` and add an xml with your requested health permssions.
+
+#### 3. Setup flutter
 
 First create your client:
 
 ```dart
-final HealthkitServices healthkitServices = HealthkitServices(
+final HealthServices healthServices = HealthServices(
   apiKey: apiKey,
   region: region,
   environment: Environment.sandbox,
@@ -66,51 +74,61 @@ final HealthkitServices healthkitServices = HealthkitServices(
 You can then configure it:
 
 ```dart
-await healthkitServices.configureClient();
+await healthServices.configureClient();
 
-await healthkitServices.configureHealthkit(backgroundDeliveryEnabled: true);
+await healthServices.configureHealth(
+      config: const HealthConfig(
+        iosConfig: IosHealthConfig(
+          backgroundDeliveryEnabled: true,
+        ),
+      ),
+    );
 ```
 
 And set the `userId`:
 
 ```dart
-await client.healthkitServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
+await client.healthServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
 ```
 
-#### 2. Using the SDK
+### 2. Using the SDK
 
 You need to ask for permissions before getting data. For example the following allows you to read and write water:
 
 ```dart
-final List<HealthkitResource> readResources = [HealthkitResource.water];
-final List<HealthkitResourceWrite> writeResources = [
-    HealthkitResourceWrite.water,
+final List<HealthResource> readResources = [HealthResource.water];
+final List<HealthResourceWrite> writeResources = [
+    HealthResourceWrite.water,
   ];
 
-client.healthkitServices.ask(readResources, writeResources);
+client.healthServices.ask(readResources, writeResources);
 ```
 
 And syncing data:
 
 ```dart
-client.healthkitServices.syncData();
+client.healthServices.syncData();
 ```
+
+<Tip>
+    Syncing starts automatically without calling this method after the health client initialised and the user id is set.
+</Tip>
 
 You can also write data:
 
 ```dart
-client.healthkitServices.writeHealthKitData(HealthkitResourceWrite.water, startDate, endDate, 1000);
+client.healthServices.writeHealthData(HealthResourceWrite.water, startDate, endDate, 1000);
 ```
+
+<Tip>
+  Not all resources are writable in both iOS and Android. Please refer to the `health_resource.dart` file.
+</Tip>
 
 Finally, observe the status stream, so you can react to changes:
 
 ```dart
-Stream<SyncStatus> status = client.healthkitServices.status;
+Stream<SyncStatus> status = client.healthServices.status;
 ```
-
-#### 4. Setup android
-
-Coming soon.
 
 ## 4. Vital Devices
 
@@ -212,14 +230,8 @@ import 'package:vital_health/vital_health.dart';
 
 Your IDE should offer the correct import after you have updated your **pubspec.yaml**
 
-### Important changes:
+### Important changes
 
 - `DeviceManager` was moved out of the `VitalClient` to the **vital_devices** package
 - `HealthkitServices` is now in the **vital_health** package
 - `VitalClient` is now in **vital_core** package
-
-[1] https://pub.dev/packages/vital_core
-
-[2] https://pub.dev/packages/vital_health
-
-[3] https://pub.dev/packages/vital_devices
