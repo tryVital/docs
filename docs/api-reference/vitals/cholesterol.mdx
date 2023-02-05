@@ -8,7 +8,7 @@ openapi: "GET /v2/timeseries/{user_id}/cholesterol/total"
 ```bash Bash
 curl --request GET \
      --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date="2022-05-01"&end_date="2022-06-01" \
-     --header 'Accept: application/json'
+     --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 

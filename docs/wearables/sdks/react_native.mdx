@@ -13,25 +13,26 @@ You can install the Core and Health SDK by using npm (BLE Devices coming soon):
 ## 2. Install your dependencies
 
 ```commandline
-npm install vital-core-react-native
-npm install vital-health-react-native
-npm install vital-devices-react-native
+npm install @tryvital/vital-core-react-native
+npm install @tryvital/vital-health-react-native
+npm install @tryvital/vital-devices-react-native
 ```
 
 or
 
 ```commandline
-yarn add vital-core-react-native
-yarn add vital-health-react-native
-yarn add vital-devices-react-native
+yarn add @tryvital/vital-core-react-native
+yarn add @tryvital/vital-health-react-native
+yarn add @tryvital/vital-devices-react-native
 
 yarn install
 ```
 
 ## 3. Link your dependencies
 
-```
-cd ios && pod install
+```commandline
+cd ios
+pod install
 ```
 
 ## 4. Configure your dependencies
@@ -40,7 +41,7 @@ You start by setting up the Core SDK. You need to configure it with your API key
 You will need to chain the configuration according to the below order.
 
 ```js
-import { VitalCore } from "vital-core-react-native";
+import { VitalCore } from "@tryvital/vital-core-react-native";
 
 VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
   .then(() => {
@@ -54,7 +55,7 @@ VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
 Be sure to do the configuration, before setting up the `userId`:
 
 ```js
-import { VitalCore } from "vital-core-react-native";
+import { VitalCore } from "@tryvital/vital-core-react-native";
 
 VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
   .then(() => {
@@ -68,34 +69,46 @@ VitalCore.configure(VITAL_API_KEY, VITAL_ENVIRONMENT, VITAL_REGION, logsEnabled)
 
 The Core SDK is now ready to use. You can now set up the HealthKit SDK and Devices SDK.
 
-## 5. Health kit
+## 5. Vital Health
 
-You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should looks like this:
+### 1. iOS
 
-<img src="/img/iOS/health_kit_permission.png" />
+You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should look like this:
+
+<img src="/img/iOS/health_kit_permission.png"/>
 
 Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist` file. Finally setting up the HealthKit SDK is just:
 
+<Tip>
+    If you set `automaticConfiguration` to true, the SDK will do everything on your behalf.
+</Tip>
+
+### 2. Android
+
+You start by enabling Health Connect capabilities in your app. Please follow the [Android SDK instructions on Health Connect](/wearables/sdks/android#vitalhealthconnect-installation).
+
+You need to edit your `AndroidManifest.xml` and add an xml with your requested health permssions.
+
+### 2. Using the SDK
+
 ```js
-import { VitalHealth } from "vital-health-react-native";
+import { VitalHealth } from "@tryvital/vital-health-react-native";
 
 // Configure HealthKit SDK
-VitalHealth.configure(automaticConfiguration, numberOfDaysToPull, logsEnabled)
+VitalHealth.configure(new HealthConfig())
   .then(() => {
     // HealthKit SDK is ready to use
-    VitalCore.setUserId(userId);
+    VitalHealth.setUserId(userId);
   })
   .catch((error) => {
     // Something went wrong
   });
 ```
 
-If you set `automaticConfiguration` to true, the SDK will do everything on your behalf.
-
 Before syncing data, you need to ask for permissions to the user. You do it by calling:
 
 ```js
-import { VitalHealth, VitalResource } from "vital-health-react-native";
+import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
 
 // Configure HealthKit SDK
 VitalHealth.configure(
@@ -117,9 +130,9 @@ VitalHealth.configure(
 });
 ```
 
-You can enable the SDK to deliver HealthKit data in background. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
+You can enable the SDK to deliver Health data in background in iOS. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
 
-<img src="/img/iOS/health_kit_permission_background_delivery.png" />
+<img src="/img/iOS/health_kit_permission_background_delivery.png"/>
 
 You also need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOptions` should look like this:
 
@@ -140,7 +153,7 @@ If you do this, you don't need to call `VitalHealth.configure` from your React N
 Finally, if you are logging out the user, please make sure you call:
 
 ```js
-import { VitalHealth } from "vital-health-react-native";
+import { VitalHealth } from "@tryvital/vital-health-react-native";
 
 VitalHealth.cleanUp();
 ```
@@ -150,8 +163,8 @@ A full example of the app.js file can be seen below:
 ```js
 import React, { useEffect } from "react";
 import { SafeAreaView, Text } from "react-native";
-import { VitalCore } from "vital-core-react-native";
-import { VitalHealth, VitalResource } from "vital-health-react-native";
+import { VitalCore } from "@tryvital/vital-core-react-native";
+import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
 
 const VITAL_API_KEY = "<API_KEY>";
 const VITAL_ENVIRONMENT = "<sandbox | production>";
@@ -159,14 +172,14 @@ const VITAL_REGION = "<us | eu>";
 
 const App = () => {
   useEffect(() => {
-    VitalCore.configure(
+    VitalHealth.configure(
       VITAL_API_KEY,
       VITAL_ENVIRONMENT,
       VITAL_REGION,
       true
     ).then(() => {
       VitalHealth.configure(true, 90, false).then(() => {
-        VitalCore.setUserId("2c5879eb-7d99-468b-bb43-3fe0d71e93ba").then(() => {
+        VitalHealth.setUserId("2c5879eb-7d99-468b-bb43-3fe0d71e93ba").then(() => {
           VitalHealth.askForResources([
             VitalResource.Steps,
             VitalResource.Activity,
@@ -209,8 +222,8 @@ vitalDevicesManager.scanForDevice(omronM7);
 ```
 
 <Warning>
-  You need to acquire the required permission for bluetooth before you can call
-  `scanForDevice`.
+    You need to acquire the required permission for bluetooth before you can call
+    `scanForDevice`.
 </Warning>
 
 To receive the scanned events you need to listen to them using the above created listener.
@@ -252,8 +265,8 @@ eventEmitter.addListener(
 ```
 
 <Note>
-  After you are done reading from the device you need to call the scan method on
-  the VitalDevicesManager to continuously receive reads.
+    After you are done reading from the device you need to call the scan method on
+    the VitalDevicesManager to continuously receive reads.
 </Note>
 
 ## 7. Troubleshooting
