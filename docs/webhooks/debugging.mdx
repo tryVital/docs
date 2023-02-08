@@ -9,18 +9,18 @@ You can debug webhook events in one of two ways: the Dashboard or using the Svix
 The Vital [Dashboard](https://app.tryvital.io)
 has a Webhooks section that allows you to test and observe webhook events.
 
-<img src={"/img/webhook_logs.png"} width={"100%"} />
+<img src="/img/webhook_logs.png" width="100%" />
 
 ### [Svix API](https://api.svix.com/docs)
 
 Vital uses [Svix](https://www.svix.com) to send webhook events to your server. Svix offers the ability for you
-to debug webhook events programmatically. In particular, the Svix [`List Messages`](https://api.svix.com/docs#operation/list_messages_api_v1_app__app_id__msg__get)
-endpoint allows you to retrieve all the Webhook events for your app. From there, you can use the [`Get Message`](https://api.svix.com/docs#operation/get_message_api_v1_app__app_id__msg__msg_id___get)
+to debug webhook events programmatically. In particular, the Svix [List Messages](https://api.svix.com/docs#operation/list_messages_api_v1_app__app_id__msg__get)
+endpoint allows you to retrieve all the Webhook events for your app. From there, you can use the [Get Message](https://api.svix.com/docs#operation/get_message_api_v1_app__app_id__msg__msg_id___get)
 endpoint to debug the contents of a webhook event.
 
 From each of the above you can get more details about the webhook event:
 
-```json
+```json Webhook Event
 {
   "type": "message.attempt.failing",
   "data": {
