@@ -1,0 +1,28 @@
+---
+openapi: "PATCH /v2/user/{user_id}"
+---
+
+<RequestExample>
+
+```shell Shell
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "fallback_time_zone": "Europe/London"
+}
+'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+``` Response
+204 No Content
+```
+
+</ResponseExample>

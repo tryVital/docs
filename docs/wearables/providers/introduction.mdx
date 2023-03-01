@@ -131,3 +131,70 @@ When a new provider is connected to a user, Vital retrieves the historical data 
 To provide you with the best possible experience, for some providers we implement a mix of Webhook and Polling for different resources. Check out the [resources page](https://docs.tryvital.io/wearables/providers/Resources) for more info.
 
 </Info>
+
+## Time Zone Awareness
+
+Vital considers a provider to be **time zone aware** when one of the following applies:
+
+* the provider has already normalized data in floating time (e.g., certain Fitbit datasets);
+* individual data points from the provider have time zone attributions, in addition to timestamps being on a fixed time basis (generally UTC); or
+* the provider tracks the time zone of the user, and can be exposed to Vital.
+
+For time zone **unaware** providers, Vital has to always assume UTC clock, unless a [Fallback Time Zone](#fallback-time-zone) is specified for the user.
+
+The following list describes the state of time zone awareness of all supported provider integrations.
+
+| Provider                                                                     | Slug                   | Time Zone Awareness |
+|------------------------------------------------------------------------------|------------------------| ------------------- |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/)                         | `freestyle_libre`      | At Source           |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                              | `fitbit`               | At Source           |
+| [Garmin](https://www.garmin.com)                                             | `garmin`               | At Source           |
+| [Google Fit](https://www.google.com/fit/)                                    | `google_fit`           | Unaware             |
+| [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/) | `samsung_health`       | At Source           |
+| [Oura](https://ouraring.com)                                                 | `oura`                 | At Source           |
+| [Peloton](https://www.onepeloton.com)                                        | `peloton`              | At Source           |
+| [Renpho](https://renpho.com)                                                 | `renpho`               | At Source           |
+| [Strava](https://www.strava.com)                                             | `strava`               | At Source           |
+| [Wahoo](https://wahoofitness.com)                                            | `wahoo`                | At Source           |
+| [Whoop](https://www.whoop.com)                                               | `whoop`                | At Source           |
+| [Zwift](https://zwift.com)                                                   | `zwift`                | At Source           |
+| [Withings](https://www.withings.com)                                         | `withings`             | At Source           |
+| [iHealth](https://ihealthlabs.com)                                           | `ihealth`              | At Source           |
+| [8Sleep](https://www.eightsleep.com)                                         | `eight_sleep`          | At Source           |
+| [Omron](https://www.omron-healthcare.com) (SDK)                              | `omron_ble`            | Device TZ at Sync   |
+| [Contour](https://www.diabetes.ascensia.com) (SDK)                           | `contour_ble`          | Device TZ at Sync   |
+| [Accu-Chek](https://www.accu-chek.com) (SDK)                                 | `accuchek_ble`         | Device TZ at Sync   |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)                | `apple_health_kit`     | Device TZ at Sync   |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK)         | `freestyle_libre_ble`  | Device TZ at Sync   |
+| [Braun Healthcare](https://www.braunhealthcare.com)                          | `braun`                | At Source           |
+| [Hammerhead](https://www.hammerhead.io)                                      | `hammerhead`           | At Source           |
+| [Dexcom](https://www.dexcom.com)                                             | `dexcom`               | At Source           |
+
+
+### Fallback Time Zone
+
+Some providers neither expose nor even capture time zone information at source. So Vital can only request data and interpret them strictly in UTC.
+
+If you prefer the data to be contextualize to the geographical location of a user, a Fallback Time Zone (denoted by an [IANA tz database identifier](https://data.iana.org/time-zones/tz-link.html))
+can be specified on a per-user basis. Once specified, Vital would use the time zone to pull data and interpret timestamps from any time zone unware providers from that point onwards. 
+
+You can specify the Fallback Time Zone when:
+
+* [Creating a new user](/api-reference/user/create-user); or
+* [Patching an existing user](/api-reference/user/patch-user)
+
+You will also get information about the source (by slug) and the last updated time of the Fallback Time Zone [when getting an existing user](/api-reference/user/get-user). Fallback Time Zone manually supplied via the REST API would always have a source slug of `manual`.
+
+```json Example
+{
+  "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
+  "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
+  "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
+  /** snipped **/
+  "fallback_time_zone": {
+    "id": "Europe/London",
+    "source_slug": "manual",
+    "updated_at": "2022-09-11T13:45:56+00:00"
+  }
+}
+```

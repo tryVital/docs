@@ -156,6 +156,7 @@
       "pages": [
         "api-reference/user/create-user",
         "api-reference/user/get-user",
+        "api-reference/user/patch-user",
         "api-reference/user/delete-user",
         "api-reference/user/get-users",
         "api-reference/user/get-users-connected-providers",
