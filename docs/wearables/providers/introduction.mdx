@@ -134,42 +134,59 @@ To provide you with the best possible experience, for some providers we implemen
 
 ## Time Zone Awareness
 
-Vital considers a provider to be **time zone aware** when one of the following applies:
+Vital works with varying levels of time zone awareness across all supported providers. The following section describes the levels and how Vital works with the data in that regard.
 
-* the provider has already normalized data in floating time (e.g., certain Fitbit datasets);
-* individual data points from the provider have time zone attributions, in addition to timestamps being on a fixed time basis (generally UTC); or
-* the provider tracks the time zone of the user, and can be exposed to Vital.
+### Levels of Awareness
 
-For time zone **unaware** providers, Vital has to always assume UTC clock, unless a [Fallback Time Zone](#fallback-time-zone) is specified for the user.
+##### Cloud-based providers
 
-The following list describes the state of time zone awareness of all supported provider integrations.
+| Level                  | Remarks                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------ |
+| Per Data Sample        | <p>Each data sample is individually tagged with the time zone in which it was captured.</p> |
+| Per User               | <p>The provider can report the time zone on a per-user basis, despite individual data samples being time zone unaware.</p><p>Vital interprets any pulled data with respect to the latest user time zone as reported by the provider.</p> |
+| Fallback TZ or UTC     | <p>The provider is completely time zone unaware.</p><p>Vital uses UTC as the time zone basis to pull and tag data, unless a [Fallback Time Zone](#fallback-time-zone) is specified for the user.</p> |
+| UTC only               | <p>Vital uses UTC as the time zone basis to pull and tag data.</p> |
 
-| Provider                                                                     | Slug                   | Time Zone Awareness |
-|------------------------------------------------------------------------------|------------------------| ------------------- |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/)                         | `freestyle_libre`      | At Source           |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                              | `fitbit`               | At Source           |
-| [Garmin](https://www.garmin.com)                                             | `garmin`               | At Source           |
-| [Google Fit](https://www.google.com/fit/)                                    | `google_fit`           | Unaware             |
-| [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/) | `samsung_health`       | At Source           |
-| [Oura](https://ouraring.com)                                                 | `oura`                 | At Source           |
-| [Peloton](https://www.onepeloton.com)                                        | `peloton`              | At Source           |
-| [Renpho](https://renpho.com)                                                 | `renpho`               | At Source           |
-| [Strava](https://www.strava.com)                                             | `strava`               | At Source           |
-| [Wahoo](https://wahoofitness.com)                                            | `wahoo`                | At Source           |
-| [Whoop](https://www.whoop.com)                                               | `whoop`                | At Source           |
-| [Zwift](https://zwift.com)                                                   | `zwift`                | At Source           |
-| [Withings](https://www.withings.com)                                         | `withings`             | At Source           |
-| [iHealth](https://ihealthlabs.com)                                           | `ihealth`              | At Source           |
-| [8Sleep](https://www.eightsleep.com)                                         | `eight_sleep`          | At Source           |
-| [Omron](https://www.omron-healthcare.com) (SDK)                              | `omron_ble`            | Device TZ at Sync   |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)                           | `contour_ble`          | Device TZ at Sync   |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)                                 | `accuchek_ble`         | Device TZ at Sync   |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)                | `apple_health_kit`     | Device TZ at Sync   |
-| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK)         | `freestyle_libre_ble`  | Device TZ at Sync   |
-| [Braun Healthcare](https://www.braunhealthcare.com)                          | `braun`                | At Source           |
-| [Hammerhead](https://www.hammerhead.io)                                      | `hammerhead`           | At Source           |
-| [Dexcom](https://www.dexcom.com)                                             | `dexcom`               | At Source           |
+##### SDK providers
 
+| Level                  | Remarks                                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| Device TZ at Sync      | <p>Vital SDK tags all outstanding data with the current device time zone at synchronization time.</p> |
+
+
+### State of integrations
+
+The following list describes the level of time zone awareness of all supported provider integrations.
+
+
+| Cloud-based provider                                                                                 | Daily Summaries        | Vital Timeseries       |
+|------------------------------------------------------------------------------------------------------| ---------------------- | ---------------------- |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/)                          `freestyle_libre`      | N/A                    | UTC only               |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                               `fitbit`               | Per User               | UTC only               |
+| [Garmin](https://www.garmin.com)                                              `garmin`               | Per Data Sample        | UTC only               |
+| [Google Fit](https://www.google.com/fit/)                                     `google_fit`           | Fallback TZ or UTC     | UTC only               |
+| [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/)  `samsung_health`       |                        |                        |
+| [Oura](https://ouraring.com)                                                  `oura`                 | UTC only               | UTC only               |
+| [Peloton](https://www.onepeloton.com)                                         `peloton`              | Per Data Sample        | UTC only               |
+| [Renpho](https://renpho.com)                                                  `renpho`               | Per Data Sample        | UTC only               |
+| [Strava](https://www.strava.com)                                              `strava`               | Per Data Sample        | UTC only               |
+| [Wahoo](https://wahoofitness.com)                                             `wahoo`                | UTC only               | UTC only               |
+| [Whoop](https://www.whoop.com)                                                `whoop`                | Per Data Sample        | UTC only               |
+| [Zwift](https://zwift.com)                                                    `zwift`                | UTC only               | UTC only               |
+| [Withings](https://www.withings.com)                                          `withings`             | Per Data Sample        | UTC only               |
+| [iHealth](https://ihealthlabs.com)                                            `ihealth`              | Per Data Sample        | UTC only               |
+| [8Sleep](https://www.eightsleep.com)                                          `eight_sleep`          | Per Data Sample        | UTC only               |
+| [Braun Healthcare](https://www.braunhealthcare.com)                           `braun`                |                        |                        |
+| [Hammerhead](https://www.hammerhead.io)                                       `hammerhead`           | UTC only               | UTC only               |
+| [Dexcom](https://www.dexcom.com)                                              `dexcom`               | N/A                    | UTC only               |
+
+| SDK provider                                                                                         | Daily Summaries        | Vital Timeseries       |
+|------------------------------------------------------------------------------------------------------| ---------------------- | ---------------------- |
+| [Omron](https://www.omron-healthcare.com)                                     `omron_ble`            | N/A                    | UTC only               |
+| [Contour](https://www.diabetes.ascensia.com)                                  `contour_ble`          | N/A                    | UTC only               |
+| [Accu-Chek](https://www.accu-chek.com)                                        `accuchek_ble`         | N/A                    | UTC only               |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                       `apple_health_kit`     | Device TZ at Sync      | UTC only               |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/)                `freestyle_libre_ble`  | N/A                    | UTC only               |
 
 ### Fallback Time Zone
 
