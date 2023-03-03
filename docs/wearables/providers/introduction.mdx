@@ -140,12 +140,12 @@ Vital works with varying levels of time zone awareness across all supported prov
 
 ##### Cloud-based providers
 
-| Level                  | Remarks                                                                              |
-| ---------------------- | ------------------------------------------------------------------------------------ |
-| Per Data Sample        | <p>Each data sample is individually tagged with the time zone in which it was captured.</p> |
-| Per User               | <p>The provider can report the time zone on a per-user basis, despite individual data samples being time zone unaware.</p><p>Vital interprets any pulled data with respect to the latest user time zone as reported by the provider.</p> |
-| Fallback TZ or UTC     | <p>The provider is completely time zone unaware.</p><p>Vital uses UTC as the time zone basis to pull and tag data, unless a [Fallback Time Zone](#fallback-time-zone) is specified for the user.</p> |
-| UTC only               | <p>Vital uses UTC as the time zone basis to pull and tag data.</p> |
+| Level                    | Remarks                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| At Source                | <p>Each data sample or daily summary is individually tagged with the time zone in which it was captured.</p> |
+| Provider User TZ         | <p>The provider reports the time zone on a per-user basis, despite individual data samples being time zone unaware.</p><p>Vital pulls and interprets data with respect to the latest user time zone as reported by the provider.</p> |
+| Vital Fallback TZ or UTC | <p>The provider is completely time zone unaware.</p><p>Vital uses UTC as the time zone basis to pull and tag data, unless a Vital [Fallback Time Zone](#fallback-time-zone) is specified for the Vital user.</p> |
+| UTC only                 | <p>Vital uses UTC as the time zone basis to pull and tag data.</p> |
 
 ##### SDK providers
 
@@ -162,20 +162,20 @@ The following list describes the level of time zone awareness of all supported p
 | Cloud-based provider                                                                                 | Daily Summaries        | Vital Timeseries       |
 |------------------------------------------------------------------------------------------------------| ---------------------- | ---------------------- |
 | [Freestyle](https://www.freestylelibre.co.uk/libre/)                          `freestyle_libre`      | N/A                    | UTC only               |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                               `fitbit`               | Per User               | UTC only               |
-| [Garmin](https://www.garmin.com)                                              `garmin`               | Per Data Sample        | UTC only               |
-| [Google Fit](https://www.google.com/fit/)                                     `google_fit`           | Fallback TZ or UTC     | UTC only               |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                               `fitbit`               | Provider User TZ       | UTC only               |
+| [Garmin](https://www.garmin.com)                                              `garmin`               | At Source              | UTC only               |
+| [Google Fit](https://www.google.com/fit/)                                     `google_fit`           | Vital Fallback TZ or UTC | UTC only               |
 | [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/)  `samsung_health`       |                        |                        |
 | [Oura](https://ouraring.com)                                                  `oura`                 | UTC only               | UTC only               |
-| [Peloton](https://www.onepeloton.com)                                         `peloton`              | Per Data Sample        | UTC only               |
-| [Renpho](https://renpho.com)                                                  `renpho`               | Per Data Sample        | UTC only               |
-| [Strava](https://www.strava.com)                                              `strava`               | Per Data Sample        | UTC only               |
+| [Peloton](https://www.onepeloton.com)                                         `peloton`              | At Source              | UTC only               |
+| [Renpho](https://renpho.com)                                                  `renpho`               | At Source              | UTC only               |
+| [Strava](https://www.strava.com)                                              `strava`               | At Source              | UTC only               |
 | [Wahoo](https://wahoofitness.com)                                             `wahoo`                | UTC only               | UTC only               |
-| [Whoop](https://www.whoop.com)                                                `whoop`                | Per Data Sample        | UTC only               |
+| [Whoop](https://www.whoop.com)                                                `whoop`                | At Source              | UTC only               |
 | [Zwift](https://zwift.com)                                                    `zwift`                | UTC only               | UTC only               |
-| [Withings](https://www.withings.com)                                          `withings`             | Per Data Sample        | UTC only               |
-| [iHealth](https://ihealthlabs.com)                                            `ihealth`              | Per Data Sample        | UTC only               |
-| [8Sleep](https://www.eightsleep.com)                                          `eight_sleep`          | Per Data Sample        | UTC only               |
+| [Withings](https://www.withings.com)                                          `withings`             | At Source              | UTC only               |
+| [iHealth](https://ihealthlabs.com)                                            `ihealth`              | At Source              | UTC only               |
+| [8Sleep](https://www.eightsleep.com)                                          `eight_sleep`          | At Source              | UTC only               |
 | [Braun Healthcare](https://www.braunhealthcare.com)                           `braun`                |                        |                        |
 | [Hammerhead](https://www.hammerhead.io)                                       `hammerhead`           | UTC only               | UTC only               |
 | [Dexcom](https://www.dexcom.com)                                              `dexcom`               | N/A                    | UTC only               |
