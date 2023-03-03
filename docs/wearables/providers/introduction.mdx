@@ -162,7 +162,7 @@ The following list describes the level of time zone awareness of all supported p
 | Cloud-based provider                                                                                 | Daily Summaries        | Vital Timeseries       |
 |------------------------------------------------------------------------------------------------------| ---------------------- | ---------------------- |
 | [Freestyle](https://www.freestylelibre.co.uk/libre/)                          `freestyle_libre`      | N/A                    | UTC only               |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                               `fitbit`               | Provider User TZ       | UTC only               |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                               `fitbit`               | Provider User TZ <sup>[1]</sup> | UTC only               |
 | [Garmin](https://www.garmin.com)                                              `garmin`               | At Source              | UTC only               |
 | [Google Fit](https://www.google.com/fit/)                                     `google_fit`           | Vital Fallback TZ or UTC | UTC only               |
 | [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/)  `samsung_health`       |                        |                        |
@@ -179,6 +179,8 @@ The following list describes the level of time zone awareness of all supported p
 | [Braun Healthcare](https://www.braunhealthcare.com)                           `braun`                |                        |                        |
 | [Hammerhead](https://www.hammerhead.io)                                       `hammerhead`           | UTC only               | UTC only               |
 | [Dexcom](https://www.dexcom.com)                                              `dexcom`               | N/A                    | UTC only               |
+
+<sup>[1]</sup> Requires the `profile` Fitbit OAuth scope.
 
 | SDK provider                                                                                         | Daily Summaries        | Vital Timeseries       |
 |------------------------------------------------------------------------------------------------------| ---------------------- | ---------------------- |
