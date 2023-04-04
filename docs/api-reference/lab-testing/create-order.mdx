@@ -29,6 +29,16 @@ data = client.LabTests.create_order(
       "zip": "91189",
       "country": "US"
     },
+    health_insurance={
+      "front_image": {
+         "content": "base64-encoded insurance front image binary content",
+         "content_type": "image/png | image/jpg | image/jpeg",
+      },
+      "back_image": {
+         "content": "base64-encoded insurance back image binary content",
+         "content_type": "image/png",
+      },
+    },
     consents=[
       {"consentType": "terms-of-use"},
       {"consentType": "telehealth-informed-consent"},
@@ -71,6 +81,7 @@ data = client.LabTests.create_order(
          "country": "United States",
          "phone_number": "+1123456789"
       },
+      "health_insurance_id": "33ec11aa-d8bf-4f46-950d-c9171be3c22f",
       "details": {
          "type": "testkit",
          "data": {
