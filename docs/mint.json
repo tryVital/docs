@@ -248,7 +248,8 @@
       "pages": [
         "api-reference/lab-testing/create-order",
         "api-reference/lab-testing/get-order",
-        "api-reference/lab-testing/cancel-order"
+        "api-reference/lab-testing/cancel-order",
+        "api-reference/lab-testing/area-info"
       ]
     },
     {

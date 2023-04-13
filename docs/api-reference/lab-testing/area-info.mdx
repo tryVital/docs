@@ -1,0 +1,46 @@
+---
+openapi: "GET /v3/order/area/info"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url https://api.tryvital.io/v3/order/area/info?zip_code=85004 \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
+```js Javascript
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const data = await client.OrdersAPI.getAreaInfo("85004");
+```
+
+```python Python
+from vital import Client
+
+client = Client(api_key, environment="sandbox", region="us")
+data = client.LabTests.get_area_info("85004")
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+    "zip_code": "85004",
+    "phlebotomy": {
+        "is_served": true
+    }
+}
+```
+
+</ResponseExample>
