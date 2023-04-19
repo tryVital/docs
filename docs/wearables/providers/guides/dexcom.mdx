@@ -39,6 +39,6 @@ await client.Link.password_provider(
 
 ## Webhooks
 
-On successful connection, you will recieve a [Connection create](/webhooks/data_flow#connection-created) wehbook. [Daily webhooks](/webhooks/data_flow#daily-data-flow) `data.daily.glucose.created` and `data.daily.glucose.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
+On successful connection, you will receive a [Connection create](/webhooks/data_flow#connection-created) wehbook. [Daily webhooks](/webhooks/data_flow#daily-data-flow) `data.daily.glucose.created` and `data.daily.glucose.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
 
 For this provider however, Vital will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no [Historical webhooks](/webhooks/data_flow#historical-data-flow) issued. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.
