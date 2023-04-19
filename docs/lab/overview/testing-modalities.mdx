@@ -36,11 +36,26 @@ Additional components can be included in the test kit box, to fully customize th
   <img src="/img/wyndly.png" className="w-1/2 h-1/2" />
 </div>
 
+## At-home phlebotomy
+
+At-home phlebotomy requires mobile phlebotomists visiting a patient at their home and carrying out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
+
+The flow for at-home phlebotomy orders is as follows:
+
+- You [place an order](/lab/overview/quickstart) and we acknowledge your request.
+- We start processing the order in the background. For at-home phlebotomy, this means generating the requisition form for the lab test.
+- Once the requisition form is ready, we send you a webhook update and we send the patient an email to let them know they can now book an appointment.
+- By following the link in the email, the patient goes through our appointment booking dashboard, where they can select a location and time from the available slots.
+- Once the appointment takes place and the sample is drawn, it will be taken to the lab.
+- Once the lab analyzes the results, the order is complete and you can [fetch the results](/lab/results/result-formats).
+
 ## In-lab phlebotomy
 
 In-lab draws involve the patient going to a lab location, either Quest or Labcorp, to carry out the test.
 To carry out this test you need a requisition form. Vital's API can generate this for you, if the patient meets certain conditions. Results are then retrieved via Vital's API.
 
-## At-home phlebotomy
+The flow of an in-lab phlebotomy test is very similar to the at-home phlebotomy one. The only difference is that the patient does not book an appointment beforehand, but directly goes to the lab instead.
 
-At-home phlebotomy requires mobile phlebotomists visiting a patient at their home and carrying out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
+<Info>
+A patient might book an appointment with Labcorp or Quest for in-lab phlebotomy tests, instead of directly going to the lab. We don't support tracking such appointments through our API yet. But we might add this capability in the future!
+</Info>
