@@ -1,0 +1,11 @@
+---
+title: "Fitbit"
+---
+
+## Webhooks
+
+There is one caveat with Fitbit's webhooks. Namely, Fitbit computes the basal metabolic rate (BMR) server-side. This is a fairly static value because it depends on data such as height, weight, gender, age, etc. The fact this is computed value server-side is important to keep in mind, because it means you will always receive `daily.data.activity.updated` webhooks even if you are not wearing the device.
+
+This can be confusing at times, as someone who is not aware of this might wonder why are they getting only this one webhook and not the others.
+
+If you are only getting `daily.data.activity.updated`, the most likely case is that the user is either not wearing the device, or they did not sync their device with the Fitbit app. If you are sure this is not the case, contact us through our support channels.
