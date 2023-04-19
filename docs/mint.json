@@ -113,6 +113,7 @@
           "group": "Guides",
           "pages": [
             "wearables/providers/guides/dexcom",
+            "wearables/providers/guides/fitbit",
             "wearables/providers/guides/freestyle",
             "wearables/providers/guides/garmin",
             "wearables/providers/guides/my_fitness_pal"
