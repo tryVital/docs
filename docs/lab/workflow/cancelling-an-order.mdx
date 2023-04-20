@@ -2,13 +2,22 @@
 title: 'Cancelling an Order'
 ---
 
-Cancelling an order depends how far along in the process the order is in. If an order is not in a state such as:
+Cancelling an order depends how far along in the process the order is in. If an order is early enough in its lifecycle, i.e.:
 
 1. Requisition form is not generated.
 2. Order wasn't send.
 3. The phlebotomist is not on their way.
 
-It's possible to make the following request:
+It's possible to cancel it by making a request to the [cancel endpoint](/lab/workflow/cancelling-an-order#cancel-endpoint).
+
+<Warning>
+When it comes to cancelling an order, to avoid the financial costs associated with late cancelling, we advise the following:
+
+* For test-kits, we recommend cancelling the order before it's shipped. Kits are typically shipped within 24 hours after they are ordered.
+* For at-home phlebotomy, appointments can be cancelled without consequence with a notice of at least 24 hours. Cancelling an order with less than 24h notice may incur a financial cost.
+</Warning>
+
+### Cancel endpoint
 
 <SnippetGroup>
 
@@ -30,7 +39,7 @@ data = client.Testkits.cancel(user_id=*)
 
 </SnippetGroup>
 
-You will receive a response that will specify whether the order was able to be cancelled or not.
+You will receive a response specifying whether the order was successfully cancelled or not.
 
 ```json Test order updated
 {

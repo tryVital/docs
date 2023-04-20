@@ -1,0 +1,19 @@
+---
+title: "Order Requirements"
+---
+
+### Consents
+
+When you order a test through our API, you'll need to collect consents from the patient and forward it to us. The following consents are required:
+
+* `hipaa-authorization`.
+* `terms-of-use`.
+* `telehealth-informed-consent`.
+
+### Physician
+
+As mentioned [in the introduction](/lab/overview/introduction#features), you don't need to have your own Physician to place orders with Vital. When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `physician` argument. If provided, the order will make use of your own physician. If not provided, your order will go through with a physican from our own network. For more information, do not hesitate to head over [our testing page](https://tryvital.io/testing) and book an introductory call with us.
+
+### Health insurance (coming soon)
+
+We will support providing your patients' health insurance for billing. When you order a test, simply pass the front and back images of the patient's health insurance card, and we will use that for billing. For more information, you can checkout the API reference of the [create order endpoint](/api-reference/lab-testing/create-order).

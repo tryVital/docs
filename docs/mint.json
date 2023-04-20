@@ -83,10 +83,7 @@
     },
     {
       "group": "Webhooks",
-      "pages": [
-        "webhooks/introduction",
-        "webhooks/debugging"
-      ]
+      "pages": ["webhooks/introduction", "webhooks/debugging"]
     },
     {
       "group": "Vital Link",
@@ -99,9 +96,7 @@
     },
     {
       "group": "Vital iOS App",
-      "pages": [
-        "wearables/vital-app/introduction"
-      ]
+      "pages": ["wearables/vital-app/introduction"]
     },
     {
       "group": "Providers",
@@ -131,26 +126,25 @@
       ]
     },
     {
-      "group": "Lab Testing",
+      "group": "Overview",
       "pages": [
-        "lab/home/introduction",
-        "lab/home/testing-modalities"
+        "lab/overview/introduction",
+        "lab/overview/testing-modalities",
+        "lab/overview/quickstart"
       ]
     },
     {
       "group": "Workflow",
       "pages": [
         "lab/workflow/lab-test-lifecycle",
-        "lab/workflow/ordering-tests",
+        "lab/workflow/order-requirements",
         "lab/workflow/tracking-progress",
         "lab/workflow/cancelling-an-order"
       ]
     },
     {
       "group": "Results",
-      "pages": [
-        "lab/results/result-formats"
-      ]
+      "pages": ["lab/results/result-formats", "lab/results/follow-up"]
     },
     {
       "group": "User",
@@ -167,9 +161,7 @@
     },
     {
       "group": "Providers",
-      "pages": [
-        "api-reference/providers"
-      ]
+      "pages": ["api-reference/providers"]
     },
     {
       "group": "Link",
@@ -192,9 +184,7 @@
     },
     {
       "group": "Meal",
-      "pages": [
-        "api-reference/meal/get-summary"
-      ]
+      "pages": ["api-reference/meal/get-summary"]
     },
     {
       "group": "Workouts",
@@ -220,10 +210,7 @@
     },
     {
       "group": "Body",
-      "pages": [
-        "api-reference/body/get-summary",
-        "api-reference/body/get-raw"
-      ]
+      "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
     },
     {
       "group": "Vitals",
@@ -255,9 +242,7 @@
     },
     {
       "group": "Lab Tests",
-      "pages": [
-        "api-reference/lab-tests"
-      ]
+      "pages": ["api-reference/lab-tests"]
     },
     {
       "group": "Results",
@@ -269,9 +254,7 @@
     },
     {
       "group": "Updates",
-      "pages": [
-        "changelog/logs"
-      ]
+      "pages": ["changelog/logs"]
     }
   ],
   "footerSocials": {

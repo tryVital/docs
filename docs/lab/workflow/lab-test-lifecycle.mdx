@@ -4,20 +4,28 @@ title: "Lab Test Lifecycle"
 
 ## Introduction
 
-We encapsulate our lab test modalities in the `order` object. An order has a status which represents the high-level status of the order. Each test has different sub-statuses which are modality specific.
+We encapsulate our lab test modalities in the `order` object. This is the main object you will interact with, as it contains all the information related to that lab test. An order has a high-level status which represents where the order is throughout its lifecycle, e.g. received/delivered/completed/cancelled etc.
+
+The high-level status is the same across test modalities. On top of that, each modality has its own sub-statuses, to represents lifecycle stages specific to that modality. For example, test-kits involve shipping of the box, so we have a whole set of statuses to track the shipment.
 
 ## Statuses
 
-### High level statuses
+Statuses are namespaced with the following format:
 
-The high level statuses of an order, are represented by `order.status`:
+```[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]```
 
-- `received`
-- `collecting_sample`
-- `sample_with_lab`
-- `completed`
-- `cancelled`
-- `failed`
+As an example, the status `collecting_sample.at_home_phlebotomy.appointment_scheduled` means the patient has scheduled an at-home phlebotomy appointment.
+
+### High-level statuses
+
+The high-level statuses of an order, are represented by `order.status`:
+
+- `received`: we received the order, stored it into our system, and started processing it.
+- `collecting_sample`: these track collecting the sample from the patient. In the case of test-kits, these track the shipment of the kit. For at-home phlebotomy, these track the patient scheduling an appointment. Walk-in tests don't have this status because the patient can turn up at the lab anytime.
+- `sample_with_lab`: the lab received the sample and is currently analyzing it.
+- `completed`: the order is complete and the results are ready.
+- `cancelled`: the order has been cancelled, by you or the patient.
+- `failed`: we failed to process the order.
 
 Modality specific sub-statuses are encapsulated in the `order.events` list. These include a list of all the events for that test:
 
@@ -45,38 +53,39 @@ Modality specific sub-statuses are encapsulated in the `order.events` list. Thes
 }
 ```
 
-### Test kit statuses
+Below is a full list of all the available statuses by test modality. The names should be self-descriptive. Please do not hesitate to contact us if you need any additional clarification!
 
-The following testkit statuses are used:
+### Test-kit statuses
 
-- `testkit.transit_customer`
-- `testkit.out_for_delivery`
-- `testkit.with_customer`
-- `testkit.transit_lab`
-- `testkit.delivered_to_lab`
-- `testkit.completed`
-- `testkit.failure_to_deliver_to_customer`
-- `testkit.sample_error`
-- `testkit.lost`
-- `testkit.cancelled`
-- `testkit.do_not_process`
+- `received.testkit.ordered`
+- `received.testkit.requisition_created`
+- `collecting_sample.testkit.transit_customer`
+- `collecting_sample.testkit.out_for_delivery`
+- `collecting_sample.testkit.with_customer`
+- `collecting_sample.testkit.transit_lab`
+- `sample_with_lab.testkit.delivered_to_lab`
+- `completed.testkit.completed`
+- `failed.testkit.failure_to_deliver_to_customer`
+- `failed.testkit.failure_to_deliver_to_lab`
+- `failed.testkit.sample_error`
+- `failed.testkit.lost`
+- `cancelled.testkit.cancelled`
+- `cancelled.testkit.do_not_process`
 
-### Walk in visit statuses
+### Walk-in visit statuses
 
-The following walk in statuses are used:
+- `received.walk_in_test.ordered`
+- `received.walk_in_test.requisition_created`
+- `completed.walk_in_test.completed`
+- `failed.walk_in_test.sample_error`
+- `cancelled.walk_in_test.cancelled`
 
-- `walk_in.requisition_created`
-- `walk_in.order_completed`
-- `walk_in.sample_error`
+### At-home phlebotomy statuses
 
-### At home phlebotomy statuses
-
-The following walk in statuses are used:
-
-- `at_home_phlebotomy.ordered`
-- `at_home_phlebotomy.requisition_created`
-- `at_home_phlebotomy.appointment_scheduled`
-- `at_home_phlebotomy.draw_completed`
-- `at_home_phlebotomy.completed`
-- `at_home_phlebotomy.cancelled`
-
+- `received.at_home_phlebotomy.ordered`
+- `received.at_home_phlebotomy.requisition_created`
+- `collecting_sample.at_home_phlebotomy.appointment_scheduled`
+- `collecting_sample.at_home_phlebotomy.draw_completed`
+- `collecting_sample.at_home_phlebotomy.appointment_cancelled`
+- `completed.at_home_phlebotomy.completed`
+- `cancelled.at_home_phlebotomy.cancelled`

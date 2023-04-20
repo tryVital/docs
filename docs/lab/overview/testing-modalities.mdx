@@ -1,0 +1,58 @@
+---
+title: "Testing Modalities"
+---
+
+By integrating with our API, you will have access to the following testing modalities:
+
+- At-home test kit.
+- At-home phlebotomy visit.
+- Walk-in test visit.
+
+## At-home test kits
+
+This involves sending a kit to a patient's home. They will then be able to collect their sample specimen and send it back to our lab networks via mail.
+
+At home testing kits are comprised of a number of components such as:
+
+ <div className="flex flex-row">
+  <div>
+
+- Mailer Box
+- Blade Lancets
+- Plasters
+- Gauze
+- ADX Card
+- Blood collection card
+- Saliva Tubes
+- Collection Supplies
+- Instruction Booklet
+
+Additional components can be included in the test kit box. To fully customize the kit, just contact us support@tryvital.io.
+
+  </div>
+  <img src="/img/wyndly.png" className="w-1/2 h-1/2" />
+</div>
+
+## At-home phlebotomy
+
+At-home phlebotomy requires a phlebotomist to visit a patient's home and carrying out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
+
+The flow for at-home phlebotomy orders is as follows:
+
+- [Place an order](/lab/overview/quickstart) via the API.
+- The order is processed in the background. For at-home phlebotomy, this means generating the requisition form for the lab test.
+- Once the requisition form is ready, a webhook update and an email to the patient are sent. The email will them know that they can now book an appointment.
+- The patient goes through Vital's appointment booking dashboard, where they can select a location and time from the available slots.
+- Once the appointment takes place and the sample is drawn, it will be taken to the lab.
+- Once the lab analyzes the results, the order is complete and the results can be [fetched](/lab/results/result-formats).
+
+## Walk-in tests
+
+In-lab draws involve the patient going to a lab location, either Quest or Labcorp, to carry out the test.
+To carry out this test you need a requisition form. Vital's API can generate this for you, if the patient meets certain conditions. Results are then retrieved via Vital's API.
+
+The flow of an walk-in test is very similar to the at-home phlebotomy one. The only difference is that the patient does not book an appointment beforehand, but goes directly to the lab instead.
+
+<Info>
+A patient might book an appointment with Labcorp or Quest for walk-in phlebotomy tests, instead of directly going to the lab. We don't support tracking such appointments through our API yet. But we might add this capability in the future!
+</Info>

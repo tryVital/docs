@@ -1,0 +1,285 @@
+---
+title: "Quickstart"
+---
+
+We have carefully designed Vital’s API to ensure a seamless and hassle-free experience for developers. You can get up and running with just a few lines of code. In this guide, we will walk you through the essential steps to order your first lab test.
+
+### What you need
+
+* If you haven't done so yet, you can get API keys by signing up for a Vital account in the [Dashboard](https://app.tryvital.io). Detailed instructions are available [here](/home/quickstart#1-api-keys).
+* One of our [client libraries](/home/libraries). The lab testing API is available for the [python](https://pypi.org/project/vital/) and [node](https://www.npmjs.com/package/@tryvital/vital-node) SDKs. If none of those fit your use-case, you can always directly call the API. Email support@tryvital.io for specific library support.
+
+In the following, replace `{{BASE_URL}}` with your team's [environment URL](/home/environments).
+
+### (1) Creating a user
+
+In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the userId on our side, which you'll be able to use for future requests.
+
+You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
+
+<SnippetGroup>
+
+```bash Creating a Vital user (bash)
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/ \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <YOUR_API_KEY>' \
+     --data '{"client_user_id":"<YOUR_CLIENT_USER_ID>"}'
+```
+
+```js Node
+const user = await client.User.create(client_user_id);
+```
+
+```python Python
+user = client.User.create(client_user_id)
+```
+
+</SnippetGroup>
+
+### (2) Listing Available Tests
+
+To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [setup a call](/lab/overview/introduction#production-launch) and get you ready for launch!
+
+<SnippetGroup>
+
+```bash Listing available tests (bash)
+curl --request GET \
+     --url {{BASE_URL}}/v3/lab_tests/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <YOUR_API_KEY>' \
+     --header 'Content-Type: application/json'
+```
+
+```js Node
+const tests = await client.LabTests.getTests();
+```
+
+```python Python
+tests = await client.LabTests.get_tests();
+```
+
+</SnippetGroup>
+
+This will return a list of all the available tests to you. They include a description, turnaround time and price:
+
+```json Response
+{
+  "lab_tests": [
+    {
+      "id": "e2eaa385-a311-4f17-b33f-2165e3d24dd9"
+      "name": "Lipids Panel",
+      "description": "Cholesterol tests",
+      "sample_type": "dried blood spot",
+      "method": "testkit",
+      "price": 10.0,
+      "is_active": True,
+      "lab": {
+          "slug": "USSL",
+          "name": "US Specialty Lab",
+          "first_line_address": "123 Main St",
+          "city": "New York",
+          "zipcode": "10001",
+      },
+      "markers": [
+          {
+              "name": "Thyroid Stimulating Hormone",
+              "slug": "tsh",
+              "description": "",
+              "min_value": 100,
+              "max_value": 200,
+              "unit": "fg/L"
+          }
+      ],
+    }
+  ]
+}
+```
+
+You can then use the test `id` when creating an order.
+
+### (3) Placing an order
+
+Ordering a test for your user is as simple as making an API call:
+
+<SnippetGroup>
+
+```bash Ordering a test (bash)
+curl --request POST \
+     --url {{BASE_URL}}/v3/order/ \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "patient_details": {
+    "dob": "2022-07-06T22:20:26.796Z",
+    "gender": "male | female",
+    "email": "test@test.com"
+  },
+  "patient_address": {
+    "receiver_name": "John Doe",
+    "street": "Hazel Road",
+    "street_number": "102",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91789",
+    "country": "U.S.",
+    "phone_number": "+14158180852"
+  },
+  "lab_test_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "physician": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@doe.com",
+    "npi": "123456789",
+    "licensed_states": ["CA", "NY"],
+    "created_at": "2022-07-06T22:20:26.796Z",
+    "updated_at": "2022-07-06T22:20:26.796Z"
+  }
+}
+'
+```
+
+```js Node
+const order = await client.Orders.create_order(
+     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // UserId.
+     {
+          dob: "2020-01-01",                  // Patient details.
+          gender: "male"
+     },
+     {
+          "receiver_name": "John Doe",        // Patient address.
+          "first_line": "123 Main St.",
+          "second_line": "Apt. 208",
+          "city": "San Francisco",
+          "state": "CA",
+          "zip": "91189",
+          "country": "United States",
+          "phone_number": "+1123456789",
+     },
+     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // Lab test ID.
+     {
+          "first_name": "John",               // Physician (Optional)
+          "last_name": "Doe",
+          "email": "john@doe.com",
+          "npi": "123456789",
+          "licensed_states": ["CA", "NY"],
+          "created_at": "2022-07-06T22:20:26.796Z",
+          "updated_at": "2022-07-06T22:20:26.796Z"
+     },
+     {
+          "front_image": {                    // Health Insurance (Optional)
+               "content": "base64-encoded-image-content",
+               "content_type": "image/png",
+          },
+          "back_image": {
+               "content": "base64-encoded-image-content",
+               "content_type": "image/png",
+          },
+     },
+);
+```
+
+```python Python
+order = await client.LabTests.create_order(
+     user_id="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     patient_details={
+          dob: "2020-01-01",
+          gender: "male"
+     },
+     patient_address={
+          "receiver_name": "John Doe",
+          "first_line": "123 Main St.",
+          "second_line": "Apt. 208",
+          "city": "San Francisco",
+          "state": "CA",
+          "zip": "91189",
+          "country": "United States",
+          "phone_number": "+1123456789",
+     },
+     lab_test_id="3fa85f64-5717-4562-b3fc-2c963f66afa6",
+     # Physician is optional
+     physician={
+          "first_name": "John",
+          "last_name": "Doe",
+          "email": "john@doe.com",
+          "npi": "123456789",
+          "licensed_states": ["CA", "NY"],
+          "created_at": "2022-07-06T22:20:26.796Z",
+          "updated_at": "2022-07-06T22:20:26.796Z"
+     },
+     # Health Insurance is optional
+     health_insurance={
+          "front_image": {                    // Health Insurance (Optional)
+               "content": "base64-encoded-image-content",
+               "content_type": "image/png",
+          },
+          "back_image": {
+               "content": "base64-encoded-image-content",
+               "content_type": "image/png",
+          },
+     },
+)
+```
+
+</SnippetGroup>
+
+```json Response
+{
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "patient_details": {"dob": "2020-01-01", "gender": "male"},
+        "patient_address": {
+            "receiver_name": "John Doe",
+            "first_line": "123 Main St.",
+            "second_line": "Apt. 208",
+            "city": "San Francisco",
+            "state": "CA",
+            "zip": "91189",
+            "country": "United States",
+            "phone_number": "+1123456789",
+        },
+        "details": {
+            "type": "testkit",
+            "data": {
+                "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+                "shipment": {
+                    "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+                    "outbound_tracking_number": "<outbound_tracking_number>",
+                    "outbound_tracking_url": "<outbound_tracking_url>",
+                    "inbound_tracking_number": "<inbound_tracking_number>",
+                    "inbound_tracking_url": "<inbound_tracking_url>",
+                    "outbound_courier": "usps",
+                    "inbound_courier": "usps",
+                    "notes": "<notes>",
+                    "created_at": "2020-01-01T00:00:00.000Z",
+                    "updated_at": "2020-01-01T00:00:00.000Z",
+                },
+                "created_at": "2020-01-01T00:00:00Z",
+                "updated_at": "2020-01-01T00:00:00Z",
+            },
+        },
+        "diagnostic_lab_test": {
+            "name": "Lipids Panel",
+            "description": "Cholesterol test",
+            "method": "testkit",
+        },
+        "sample_id": "123456789",
+        "notes": "This is a note",
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2020-01-01T00:00:00Z",
+        "status": "collecting_sample",
+        "events": [
+            {
+                "id": 1,
+                "created_at": "2022-01-01T00:00:00Z",
+                "status": "received.testkit.ordered",
+            }
+    ],
+}
+```
+
+As demonstrated in this Quickstart Guide, integrating with our API is straightforward, allowing you to access a wide range of lab tests with minimal effort. Placing an order for a lab test is as simple as making a request to the appropriate endpoint. With our user-friendly design and clear documentation, you can harness the power of our clinical test API to enhance your application and deliver a seamless experience to your users.
