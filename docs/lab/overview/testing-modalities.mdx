@@ -2,9 +2,7 @@
 title: "Testing Modalities"
 ---
 
-By integrating with our API, you will have access to all testing modalities.
-
-Three types are currently supported:
+By integrating with our API, you will have access to the following testing modalities:
 
 - At-home test kit.
 - At-home phlebotomy visit.
@@ -12,8 +10,7 @@ Three types are currently supported:
 
 ## At-home test kits
 
-This involves sending a kit to a patients home that allows the patient to collect their
-sample specimen and send back to our lab networks in the mail.
+This involves sending a kit to a patient's home. They will then be able to collect their sample specimen and send it back to our lab networks via mail.
 
 At home testing kits are comprised of a number of components such as:
 
@@ -30,7 +27,7 @@ At home testing kits are comprised of a number of components such as:
 - Collection Supplies
 - Instruction Booklet
 
-Additional components can be included in the test kit box, to fully customize the kit, just contact us support@tryvital.io.
+Additional components can be included in the test kit box. To fully customize the kit, just contact us support@tryvital.io.
 
   </div>
   <img src="/img/wyndly.png" className="w-1/2 h-1/2" />
@@ -38,16 +35,16 @@ Additional components can be included in the test kit box, to fully customize th
 
 ## At-home phlebotomy
 
-At-home phlebotomy requires mobile phlebotomists visiting a patient at their home and carrying out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
+At-home phlebotomy requires a phlebotomist to visit a patient's home and carrying out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
 
 The flow for at-home phlebotomy orders is as follows:
 
-- You [place an order](/lab/overview/quickstart) and we acknowledge your request.
-- We start processing the order in the background. For at-home phlebotomy, this means generating the requisition form for the lab test.
-- Once the requisition form is ready, we send you a webhook update and we send the patient an email to let them know they can now book an appointment.
-- By following the link in the email, the patient goes through our appointment booking dashboard, where they can select a location and time from the available slots.
+- [Place an order](/lab/overview/quickstart) via the API.
+- The order is processed in the background. For at-home phlebotomy, this means generating the requisition form for the lab test.
+- Once the requisition form is ready, a webhook update and an email to the patient are sent. The email will them know that they can now book an appointment.
+- The patient goes through Vital's appointment booking dashboard, where they can select a location and time from the available slots.
 - Once the appointment takes place and the sample is drawn, it will be taken to the lab.
-- Once the lab analyzes the results, the order is complete and you can [fetch the results](/lab/results/result-formats).
+- Once the lab analyzes the results, the order is complete and the results can be [fetched](/lab/results/result-formats).
 
 ## Walk-in tests
 
