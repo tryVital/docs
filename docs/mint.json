@@ -137,7 +137,7 @@
       "group": "Workflow",
       "pages": [
         "lab/workflow/lab-test-lifecycle",
-        "lab/workflow/ordering-tests",
+        "lab/workflow/order-requirements",
         "lab/workflow/tracking-progress",
         "lab/workflow/cancelling-an-order"
       ]
