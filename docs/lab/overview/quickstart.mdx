@@ -13,7 +13,7 @@ In the following, replace `{{BASE_URL}}` with your team's [environment URL](/hom
 
 ### (1) Creating a user
 
-In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the user ID on our side, which you'll be able to use for future requests.
+In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the userId on our side, which you'll be able to use for future requests.
 
 You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
 
@@ -40,7 +40,7 @@ user = client.User.create(client_user_id)
 
 ### (2) Listing Available Tests
 
-To retrieve the set of lab tests you have access to, simply use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests, to simplify the initial integration. Once you're ready to head to production, we can [setup a call](/lab/overview/introduction#production-launch) to organize everything and get you ready for launch!
+To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [setup a call](/lab/overview/introduction#production-launch) and get you ready for launch!
 
 <SnippetGroup>
 
@@ -145,7 +145,7 @@ curl --request POST \
 
 ```js Node
 const order = await client.Orders.create_order(
-     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // User ID.
+     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // UserId.
      {
           dob: "2020-01-01",                  // Patient details.
           gender: "male"
