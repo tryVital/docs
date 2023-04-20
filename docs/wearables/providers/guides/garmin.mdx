@@ -31,3 +31,7 @@ On successful connection, you will receive:
 
 - [Connection create](/webhooks/data_flow#connection-created) wehbook.
 - [Daily webhooks](/webhooks/data_flow#daily-data-flow) `daily.data.<resource_type>.created` and `daily.data.<resource_type>.updated` are issued, as new or more up-to-date data becomes available.
+
+## Deregistering
+
+In order to receive a new historical backfill, for an existing connected source, you need to [deregister](/api-reference/user/deregister-a-provider) first. This is unique to Garmin. For other providers you can reconnect a user to an existing account and a new backfill is triggered.
