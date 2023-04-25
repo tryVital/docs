@@ -1,4 +1,4 @@
-# Vital mintlify Docs
+# Vital Docs
 
 ## Quickstart
 
