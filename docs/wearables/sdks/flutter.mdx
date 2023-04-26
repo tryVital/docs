@@ -42,9 +42,8 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 <Tip>
   Note: To return back to the app after successful linking, setup an intent
   filter in `AndroidManifest.xml` and custom URL scheme in `info.plist`. Note 2:
-  Refer to
-  [documentation](https://docs.tryvital.io/wearables/providers/Introduction) for
-  all supported data providers.
+  Refer to [documentation](/wearables/providers/Introduction) for all supported
+  data providers.
 </Tip>
 
 ## 3. Vital Health
@@ -111,7 +110,8 @@ client.healthServices.syncData();
 ```
 
 <Tip>
-    Syncing starts automatically without calling this method after the health client initialised and the user id is set.
+  Syncing starts automatically without calling this method after the health
+  client initialised and the user id is set.
 </Tip>
 
 You can also write data:
@@ -121,7 +121,8 @@ client.healthServices.writeHealthData(HealthResourceWrite.water, startDate, endD
 ```
 
 <Tip>
-  Not all resources are writable in both iOS and Android. Please refer to the `health_resource.dart` file.
+  Not all resources are writable in both iOS and Android. Please refer to the
+  `health_resource.dart` file.
 </Tip>
 
 Finally, observe the status stream, so you can react to changes:
@@ -193,7 +194,7 @@ Depending on the type of device you are connecting to, you will have to call dif
 After you have received samples depending on the type of device you might need to star scanning again to receive the
 next set of samples.
 
-# 5. Migrate from 0.3.* and 0.4.* to 0.5.*
+# 5. Migrate from 0.3._ and 0.4._ to 0.5.\*
 
 Our original package **vital_flutter** is now separated into 3 packages: **vital_core**, **vital_health** and **vital_devices**.
 
