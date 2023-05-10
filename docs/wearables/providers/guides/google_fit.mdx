@@ -2,6 +2,12 @@
 title: "Google Fit"
 ---
 
-### Delays in Syncing Data
+## Delays in Syncing Data
+
+### Intro
 
 Google Fit via Cloud can have significant delay in data availability, more specifically between Google’s GFit apps & Google’s cloud data store - neither of which Vital has any control over. This is unlike using the Google Fit Android SDK directly, which can serve the latest local data immediately from the GFit data store, regardless of whether said local data have been uploaded to the Cloud already. Vital isn't certain how/when Google Fit decides to upload new local data to cloud, and also whether or not there is additional delay caused by Google’s internal data ingestion pipelines in the cloud. But one thing for sure is that it cannot be forced, and it seems to be managed by Android’s standard WorkManager framework. This means connectivity, battery usage, Doze mode and App Standby will all dynamically affect the actual upload frequency. At worst case, this can mean uploads only happen when one is sleeping (the typical favourable time for the OS to run background work — the phone is on charger, has been idle extensively, and probably on WiFi).
+
+### Why not use Google Fit Android SDK directly?
+
+One way to avoid data delay is to use the Google Fit native SDK directly. However, Google Fit Android API has been deprecated by Google since May 2022 and support is set to end by end of 2024. For this reason we advise on using its successor: [HealthConnect](https://developer.android.com/guide/health-and-fitness/health-connect). This new SDK has its own set of quirks. The most notable one is that Google decided to ban any data access when apps are in background. So it is unlikely to have the same smooth background monitoring experience like Apple HealthKit out of the box.
