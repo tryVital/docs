@@ -111,6 +111,7 @@
             "wearables/providers/guides/fitbit",
             "wearables/providers/guides/freestyle",
             "wearables/providers/guides/garmin",
+            "wearables/providers/guides/google_fit",
             "wearables/providers/guides/my_fitness_pal"
           ]
         }
