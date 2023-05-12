@@ -6,7 +6,7 @@ openapi: "GET /v3/order/area/info"
 
 ```bash cURL
 curl --request GET \
-     --url https://api.tryvital.io/v3/order/area/info?zip_code=85004 \
+     --url '{{BASE_URL}}/v3/order/area/info?zip_code=85004' \
      --header 'accept: application/json' \
      --header 'x-vital-api-key: {YOUR_KEY}'
 ```

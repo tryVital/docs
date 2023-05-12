@@ -1,0 +1,106 @@
+---
+openapi: "POST /v3/order/{order_id}/phlebotomy/appointment/availability"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/phlebotomy/appointment/availability' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '
+{
+    "first_line": "West Lincoln Street",
+    "second_line": "",
+    "city": "Phoenix",
+    "state": "AZ",
+    "zip_code": "85004",
+    "unit": "14",
+}
+'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.AtHomePhlebotomy.appointment_availability(
+    order_id="413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    first_line="West Lincoln Street",
+    second_line="",
+    city="Phoenix",
+    state="AZ",
+    zip_code="85004",
+    unit="14",
+)
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const data = await client.AtHomePhlebotomy.appointmentAvailability(
+    "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    {
+        "first_line": "West Lincoln Street",
+        "second_line": "",
+        "city": "Phoenix",
+        "state": "AZ",
+        "zip_code": "85004",
+        "unit": "14",
+    }
+);
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "timezone":"America/Phoenix",
+    "slots": [
+        {
+            "date":"2023-05-09",
+            "slots": [
+                {
+                    "booking_key": "foo123",
+                    "start": "2023-05-09T17:00:00+00:00",
+                    "end": "2023-05-09T19:00:00+00:00",
+                    "expires_at": "2023-05-09T12:39:57.827000+00:00",
+                    "price": 3500,
+                    "is_priority": true,
+                    "num_appointments_available": 5
+                },
+                ...
+            ],
+        },
+        {
+            "date":"2023-05-10",
+            "slots": [
+                {
+                    "booking_key": "bar456",
+                    "start": "2023-05-10T12:00:00+00:00",
+                    "end": "2023-05-10T14:00:00+00:00",
+                    "expires_at": "2023-05-09T12:39:57.852000+00:00",
+                    "price": 7900,
+                    "is_priority": true,
+                    "num_appointments_available": 5
+                },
+                ...
+            ],
+        },
+    ]
+}
+```
+</ResponseExample>
