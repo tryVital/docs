@@ -248,6 +248,7 @@
         "api-reference/lab-testing-at-home-phlebotomy/appointment-booking",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-rescheduling",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-cancelling",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-cancellation-reasons",
         "api-reference/lab-testing-at-home-phlebotomy/get-appointment"
       ]
     },
