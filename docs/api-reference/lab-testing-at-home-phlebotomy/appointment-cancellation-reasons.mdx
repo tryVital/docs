@@ -1,0 +1,98 @@
+---
+openapi: "GET /v3/order/{order_id}/phlebotomy/appointment/cancellation-reasons"
+---
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/phlebotomy/appointment/cancellation-reasons' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.AtHomePhlebotomy.cancellation_reasons()
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const data = await client.AtHomePhlebotomy.cancellationReasons();
+```
+
+</RequestExample>
+
+<ResponseExample>
+[
+   {
+      "id": "5c0257ef-6fea-4a22-b20a-3ddab573d5c9",
+      "name": "Did not fast for appointment",
+      "is_refundable": true
+   },
+   {
+      "id": "448c519c-64b4-4497-ae73-622fa93371b3",
+      "name": "Do not trust company",
+      "is_refundable": true
+   },
+   {
+      "id": "d378e152-12d1-433e-9dd1-e0410f9331dc",
+      "name": "Getlabs cannot deliver to my preferred lab",
+      "is_refundable": true
+   },
+   {
+      "id": "5330c863-ac80-4316-901b-d305d0df74d5",
+      "name": "No longer interested",
+      "is_refundable": true
+   },
+   {
+      "id": "2b9f23fd-163e-4483-bb10-90c74a67e0dc",
+      "name": "Other",
+      "is_refundable": true
+   },
+   {
+      "id": "98f861dd-fe61-4817-a9d6-1b99b19cd0fb",
+      "name": "Provider asked me to cancel",
+      "is_refundable": true
+   },
+   {
+      "id": "7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9",
+      "name": "Scheduled for wrong patient",
+      "is_refundable": true
+   },
+   {
+      "id": "796da8c8-e654-4347-8ded-1026410c1976",
+      "name": "Scheduled time no longer works",
+      "is_refundable": true
+   },
+   {
+      "id": "ba02af35-a34f-4a7a-abe5-5f766e8f6cd1",
+      "name": "Unable to get lab order from provider",
+      "is_refundable": true
+   },
+   {
+      "id": "0c9425db-f11e-49c5-b976-3c0d1d4a4ea8",
+      "name": "Wanted to book in-person appointment",
+      "is_refundable": true
+   },
+   {
+      "id": "2599a0ea-0b4a-42fe-8df6-d8f7c68182e7",
+      "name": "Went to lab for appointment",
+      "is_refundable": true
+   }
+]
+</ResponseExample>

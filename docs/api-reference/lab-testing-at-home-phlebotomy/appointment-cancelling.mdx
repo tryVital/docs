@@ -1,0 +1,77 @@
+---
+openapi: "PATCH /v3/order/{order_id}/phlebotomy/appointment/cancel"
+---
+
+<RequestExample>
+```bash cURL
+curl --request PATCH \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/phlebotomy/appointment/cancel' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '
+{
+    "cancellation_reason_id": "7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9"
+}
+'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.AtHomePhlebotomy.cancel_appointment(
+    order_id="413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    cancellation_reason_id="7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9",
+)
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const data = await client.AtHomePhlebotomy.cancelAppointment(
+    "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    "7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9",
+);
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "id": "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    "user_id": "202b2c2f-fb4c-44dc-a4f8-621186fde227",
+    "address": {
+        "first_line": "West Lincoln Street",
+        "second_line": "",
+        "city": "Phoenix",
+        "state": "AZ",
+        "zip_code": "85004",
+        "unit": "14"
+    },
+    "location": {
+        "lng": -112.0772235,
+        "lat": 33.4421912
+    },
+    "start_at": "2023-05-17T20:00:00+00:00",
+    "end_at": "2023-05-17T22:00:00+00:00",
+    "iana_timezone": "America/Phoenix",
+    "type": "phlebotomy",
+    "provider": "getlabs",
+    "status": "cancelled",
+    "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
+    "can_reschedule": true
+}
+```
+</ResponseExample>

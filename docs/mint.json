@@ -242,6 +242,17 @@
       ]
     },
     {
+      "group": "Lab Testing - At-home Phlebotomy",
+      "pages": [
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-availability",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-booking",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-rescheduling",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-cancelling",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-cancellation-reasons",
+        "api-reference/lab-testing-at-home-phlebotomy/get-appointment"
+      ]
+    },
+    {
       "group": "Lab Tests",
       "pages": ["api-reference/lab-tests"]
     },
