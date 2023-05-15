@@ -32,12 +32,16 @@ client = Client(
 
 data = client.AtHomePhlebotomy.appointment_availability(
     order_id="413d7205-f8a9-42ed-aa4a-edb99e481ca0",
-    first_line="West Lincoln Street",
-    second_line="",
-    city="Phoenix",
-    state="AZ",
-    zip_code="85004",
-    unit="14",
+    # Optional: use only if address differs from the
+    # one given when placing the order.
+    address={
+        "first_line": "West Lincoln Street",
+        "second_line": "",
+        "city": "Phoenix",
+        "state": "AZ",
+        "zip_code": "85004",
+        "unit": "14",
+    },
 )
 ```
 
@@ -52,6 +56,8 @@ const client = new VitalClient({
 
 const data = await client.AtHomePhlebotomy.appointmentAvailability(
     "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    // Optional: use only if address differs from the
+    // one given when placing the order.
     {
         "first_line": "West Lincoln Street",
         "second_line": "",
