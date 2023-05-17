@@ -1,0 +1,143 @@
+---
+title: "Event Structure"
+---
+
+All our webhook events have the following standard structure:
+
+* A top-level `event_type` field, specifying the payload type contained in the `data` field.
+* A top-level `data` field containing the event-specific payload.
+
+Schemas and examples are available through the Event Catalog tab in the Webhooks section of our Web portal.
+
+```json Webhook Event
+{
+  "event_type": "daily.data.glucose.created",
+  "data": {
+    # ... event specific data
+  }
+}
+```
+
+## Wearable data events
+
+Wearable data events have the following extended standard structure:
+
+* An event type field for differentiating the payload contained in the data field. (JSON path: `$.event_type`)
+* A data field, which comprises of:
+   * The UUID of the Vital user for which this event is intended — note that this is not the `client_user_id` of the Vital user. (JSON path: `$.data.user_id`)
+   * The metadata about the data source of this event (JSON path: `$.data.source`)
+      * `name`: The human-readable name of the source
+      * `slug`: The stable identifier Vital assigned to the source — see [Supported providers](/wearables/providers/introduction) for the complete list.
+      * `logo`: The URL to an icon representing the source.
+   * Any number of event-specific fields.
+
+
+```json Wearable data events
+{
+  "event_type": "daily.data.glucose.created",
+  "data": {
+    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
+    "source": {
+      "name": "Fitbit",
+      "slug": "fitbit",
+      "logo": "https://path/to/example",
+    },
+    # ... event specific fields
+  }
+}
+```
+
+### Summary types
+
+Each time a [summary object](/wearables/providers/resources) is created or updated, Vital emits a data event for the occurrence.
+The object is made available directly at the top-level `data` field (JSON path: `$.data`), alongside the standard fields listed above.
+
+```json An example Activity event
+{
+  "event_type": "daily.data.activity.created",
+  "data": {
+    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
+    "source": {
+      "name": "Fitbit",
+      "slug": "fitbit",
+      "logo": "https://path/to/example",
+    },
+
+    "calendar_date": "2023-05-17",
+    "calories_active": ...,
+    "calories_total": ...,
+    "steps": ...,
+    "distance": ...,
+    # ... other activity summary fields
+  }
+}
+```
+
+### Timeseries types (except for Workout Streams)
+
+Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
+The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
+
+```json An example Steps event
+{
+  "event_type": "daily.data.steps.created",
+  "data": {
+    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
+    "source": {
+      "name": "Fitbit",
+      "slug": "fitbit",
+      "logo": "https://path/to/example",
+    },
+
+    "data": [
+      {
+        "timestamp": "2023-05-16T10:00:00+00:00",
+        "timezone_offset": 3600,
+        "value": 237,
+        "type": "automatic",
+        "unit": "count"
+      },
+      {
+        "timestamp": "2023-05-16T11:00:00+00:00",
+        "timezone_offset": 3600,
+        "value": 451,
+        "type": "automatic",
+        "unit": "count"
+      },
+      # ... other step samples in the batch
+    ]
+  }
+}
+```
+
+### Workout Streams
+
+While Workout Streams are classified as a timeseries type, it contains a huge amount of timeseries data
+which cannot be delivered by our webhook message transport.
+
+So events for Webhook Streams are shallow, with only some minimal metadata about the workout. Successful
+reception of the event indicates that the data are available to be read via our REST API,
+e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
+
+```json Workout Stream Created
+{
+  "event_type": "daily.data.workout_stream.created",
+  "data": {
+    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
+    "source": {
+      "name": "Fitbit",
+      "slug": "fitbit",
+      "logo": "https://path/to/example",
+    },
+
+    "message": "A developer-facing message",
+    "workout_id": "d70009af-c84c-4f83-a400-334142f58a61",
+    "provider_id": "8497e00c",
+    "sport": {
+      "id": 1,
+      "name": "Sport",
+      "slug": "sport"
+    }
+  }
+}
+```
