@@ -83,7 +83,11 @@
     },
     {
       "group": "Webhooks",
-      "pages": ["webhooks/introduction", "webhooks/debugging"]
+      "pages": [
+        "webhooks/introduction", 
+        "webhooks/event-structure", 
+        "webhooks/debugging"
+      ]
     },
     {
       "group": "Vital Link",
