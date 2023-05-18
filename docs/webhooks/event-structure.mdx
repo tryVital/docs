@@ -7,16 +7,31 @@ All our webhook events have the following standard structure:
 * A top-level `event_type` field, specifying the payload type contained in the `data` field.
 * A top-level `data` field containing the event-specific payload.
 
-Schemas and examples are available through the Event Catalog tab in the Webhooks section of our Web portal.
+Schemas and examples are available through the Event Catalog tab in the Webhooks section of our Web app.
 
-```json Webhook Event
+<CodeGroup>
+```json Basic event structure
 {
-  "event_type": "daily.data.glucose.created",
   "data": {
     # ... event specific data
-  }
+  },
+  "event_type": "daily.data.glucose.created"
 }
 ```
+```json Example: Provider connection created
+{
+  "data": {
+    "source": {
+      "logo": "https://storage.googleapis.com/vital-assets/freestyle.png",
+      "name": "Freestyle Libre BLE",
+      "slug": "freestyle_libre_ble"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "provider.connection.created"
+}
+```
+</CodeGroup>
 
 ## Wearable data events
 
@@ -32,18 +47,20 @@ Wearable data events have the following extended standard structure:
    * Any number of event-specific fields.
 
 
-```json Wearable data events
+```json Wearable data event structure
 {
-  "event_type": "daily.data.glucose.created",
   "data": {
-    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
-    "source": {
-      "name": "Fitbit",
-      "slug": "fitbit",
-      "logo": "https://path/to/example",
-    },
     # ... event specific fields
-  }
+
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://path/to/example",
+      "name": "Fitbit",
+      "slug": "fitbit"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "daily.data.glucose.created"
 }
 ```
 
@@ -52,63 +69,133 @@ Wearable data events have the following extended standard structure:
 Each time a [summary object](/wearables/providers/resources) is created or updated, Vital emits a data event for the occurrence.
 The object is made available directly at the top-level `data` field (JSON path: `$.data`), alongside the standard fields listed above.
 
-```json An example Activity event
+<CodeGroup>
+```json Summary data event structure
 {
-  "event_type": "daily.data.activity.created",
   "data": {
-    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
-    "source": {
-      "name": "Fitbit",
-      "slug": "fitbit",
-      "logo": "https://path/to/example",
-    },
+    # ... All summary object fields
 
-    "calendar_date": "2023-05-17",
-    "calories_active": ...,
-    "calories_total": ...,
-    "steps": ...,
-    "distance": ...,
-    # ... other activity summary fields
-  }
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://path/to/example",
+      "name": "Fitbit",
+      "slug": "fitbit"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "daily.data.activity.created"
 }
 ```
+
+```json Example: Activity updated
+{
+  "data": {
+    "calendar_date": "2023-05-17",
+    "calories_active": 134,
+    "calories_total": 1006,
+    "daily_movement": 1162,
+    "date": "2023-05-17T00:00:00+00:00",
+    "distance": 1162,
+    "floors_climbed": 2,
+    "high": null,
+    "id": "715dd6a5-0c67-471c-b5fe-9681a980a2c2",
+    "low": null,
+    "medium": null,
+    "steps": 1496,
+    "timezone_offset": 3600,
+
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
+      "name": "Apple HealthKit",
+      "slug": "apple_health_kit"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "daily.data.activity.updated"
+}
+```
+</CodeGroup>
 
 ### Timeseries types (except for Workout Streams)
 
 Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
 The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
 
-```json An example Steps event
+<CodeGroup>
+```json Timeseries data event structure
 {
-  "event_type": "daily.data.steps.created",
   "data": {
-    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
-    "source": {
-      "name": "Fitbit",
-      "slug": "fitbit",
-      "logo": "https://path/to/example",
-    },
-
     "data": [
       {
         "timestamp": "2023-05-16T10:00:00+00:00",
         "timezone_offset": 3600,
-        "value": 237,
         "type": "automatic",
-        "unit": "count"
+        "unit": "count",
+        "value": 237
       },
       {
         "timestamp": "2023-05-16T11:00:00+00:00",
         "timezone_offset": 3600,
-        "value": 451,
         "type": "automatic",
-        "unit": "count"
+        "unit": "count",
+        "value": 451
       },
-      # ... other step samples in the batch
-    ]
-  }
+      # ... other timeseries samples in the batch
+    ],
+
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://path/to/example",
+      "name": "Fitbit",
+      "slug": "fitbit"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "daily.data.steps.created"
 }
 ```
+
+```json Example: Calories Active created
+{
+  "data": {
+    "data": [
+      {
+        "timestamp": "2023-05-17T07:00:00+00:00",
+        "timezone_offset": 3600,
+        "type": "",
+        "unit": "kcal",
+        "value": 39.518054167148996
+      },
+      {
+        "timestamp": "2023-05-17T08:00:00+00:00",
+        "timezone_offset": 3600,
+        "type": "",
+        "unit": "kcal",
+        "value": 31.270257990822234
+      },
+      {
+        "timestamp": "2023-05-17T09:00:00+00:00",
+        "timezone_offset": 3600,
+        "type": "",
+        "unit": "kcal",
+        "value": 5.733999999999999
+      }
+    ],
+    "source_id": 16,
+
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
+      "name": "Apple HealthKit",
+      "slug": "apple_health_kit"
+    },
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+  },
+  "event_type": "daily.data.calories_active.created"
+}
+```
+</CodeGroup>
 
 ### Workout Streams
 
@@ -119,25 +206,24 @@ So events for Webhook Streams are shallow, with only some minimal metadata about
 reception of the event indicates that the data are available to be read via our REST API,
 e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
 
-```json Workout Stream Created
+```json Workout Stream created
 {
-  "event_type": "daily.data.workout_stream.created",
   "data": {
-    "user_id": "5148a047-c8fc-438c-8edc-3e0f68a58df1",
+    "message": "Due to payload size limits, to access the workout stream, please use the /workouts/edc80dd0-8cc8-4ec8-8b80-931fd9a3309a/stream endpoint.",
+    "provider_id": "51278201336",
     "source": {
+      "logo": "https://storage.googleapis.com/vital-assets/fitbit.png",
       "name": "Fitbit",
-      "slug": "fitbit",
-      "logo": "https://path/to/example",
+      "slug": "fitbit"
     },
-
-    "message": "A developer-facing message",
-    "workout_id": "d70009af-c84c-4f83-a400-334142f58a61",
-    "provider_id": "8497e00c",
     "sport": {
-      "id": 1,
-      "name": "Sport",
-      "slug": "sport"
-    }
-  }
+      "id": 57,
+      "name": "Other",
+      "slug": "other"
+    },
+    "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03",
+    "workout_id": "fdc70dd0-8cc8-4ec8-8b80-121fd9a3302a"
+  },
+  "event_type": "daily.data.workout_stream.created"
 }
 ```
