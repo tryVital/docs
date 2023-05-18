@@ -69,6 +69,8 @@ Wearable data events have the following extended standard structure:
 Each time a [summary object](/wearables/providers/resources) is created or updated, Vital emits a data event for the occurrence.
 The object is made available directly at the top-level `data` field (JSON path: `$.data`), alongside the standard fields listed above.
 
+<Warning>Summary types are uniquely identified by its `id`. If multiple events are received at the same `id`, the last event replaces all its previous versions.</Warning>
+
 <CodeGroup>
 ```json Summary data event structure
 {
@@ -122,6 +124,14 @@ The object is made available directly at the top-level `data` field (JSON path: 
 Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
 The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
 
+<Warning>Each sample can be uniquely identified by a 3-tuple of its type, its source (ID or slug) and its timestamp. If multiple samples are received at
+the same tuple, the last sample replaces all its previous versions.</Warning>
+
+<Info>While most types of timeseries data are immutable, there are some exceptions from specific timeseries types from certain sources, where the data
+are aggregated using some form of time-based bucketing. Therefore, this creates a scenario where the value of a specific time bucket may or may not
+be updated multiple times, based on the dynamic synchronization timings between the device, the source and Vital data pipelines. This is why 
+the aforementioned deduplication semantic is specified.</Info>
+
 <CodeGroup>
 ```json Timeseries data event structure
 {
@@ -143,12 +153,13 @@ The samples are made available under an inner `data` field under the top-level `
       },
       # ... other timeseries samples in the batch
     ],
+    "source_id": 16,
 
     # Common wearable data event fields
     "source": {
-      "logo": "https://path/to/example",
-      "name": "Fitbit",
-      "slug": "fitbit"
+      "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
+      "name": "Apple HealthKit",
+      "slug": "apple_health_kit"
     },
     "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
   },
