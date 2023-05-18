@@ -29,9 +29,11 @@ When you receive the historical backfill event, you should make an API call for 
 
 ## Daily Data Flow
 
-After a user has connected and historical data is backfilled, any new data is sent in the payload of the `daily.data.<resource_type>.created` webhook. Each payload has an `id` associated with it, and we recommend storing this value. This is to support cases where data may be updated. If an instance of previously sent data is changed by the user, we issue a `daily.data.<resource_type>.updated` event. For example, the title of a workout can be edited, or the amount of calories a user has burnt can change throughout the day.
+After a user has connected and historical data is backfilled, any new data is sent in the payload of the `daily.data.<resource_type>.*` webhook.
 
 Examples of each payload are provided in the [webhooks dashboard](https://app.tryvital.io). You can send test events which contain the different payloads you may receive throughout the integrations lifecyle.
+
+<Warning>The event structure and deduplication semantic of [summary types](/wearables/providers/resources) and [timeseries types](/wearables/providers/resources) have a few key differences. Please refer to [Event Structure](/webhooks/event-structure) for a more in-depth discussion.</Warning>
 
 ```json Webhook Event
 {

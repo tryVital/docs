@@ -37,8 +37,8 @@ Schemas and examples are available through [the Event Catalog tab in the Webhook
 
 Wearable data events have the following extended standard structure:
 
-* An event type field for differentiating the payload contained in the data field. (JSON path: `$.event_type`)
-* A data field, which comprises of:
+* An `event_type` field for differentiating the payload contained in the data field.
+* A `data` field, which comprises of:
    * The UUID of the Vital user for which this event is intended — note that this is not the `client_user_id` of the Vital user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
       * `name`: The human-readable name of the source
@@ -124,13 +124,12 @@ The object is made available directly at the top-level `data` field (JSON path: 
 Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
 The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
 
-<Warning>Each sample can be uniquely identified by a 3-tuple of its type, its source (ID or slug) and its timestamp. If multiple samples are received at
+<Warning>Each sample can be uniquely identified by a triple key (3-tuple) comprising of its resource type name, its source (ID or slug) and its timestamp. If multiple samples are received at
 the same tuple, the last sample replaces all its previous versions.</Warning>
 
-<Info>While most types of timeseries data are immutable, there are some exceptions from specific timeseries types from certain sources, where the data
-are aggregated using some form of time-based bucketing. Therefore, this creates a scenario where the value of a specific time bucket may or may not
-be updated multiple times, based on the dynamic synchronization timings between the device, the source and Vital data pipelines. This is why 
-the aforementioned deduplication semantic is specified.</Info>
+<Info>While most timeseries data are immutable, there have been exceptions of some sources aggregating some data types using time bucketing,
+and some may even send updates ASAP on time buckets that have incomplete data. For example, activity timeseries data from Apple HealthKit
+(integration in production) and Garmin (integration planned) do exhibit such behaviour.<br /><br />These exceptions are the rationale behind the recommended deduplication semantic as stated above.</Info>
 
 <CodeGroup>
 ```json Timeseries data event structure
@@ -222,18 +221,20 @@ e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2
   "data": {
     "message": "Due to payload size limits, to access the workout stream, please use the /workouts/edc80dd0-8cc8-4ec8-8b80-931fd9a3309a/stream endpoint.",
     "provider_id": "51278201336",
-    "source": {
-      "logo": "https://storage.googleapis.com/vital-assets/fitbit.png",
-      "name": "Fitbit",
-      "slug": "fitbit"
-    },
     "sport": {
       "id": 57,
       "name": "Other",
       "slug": "other"
     },
-    "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03",
     "workout_id": "fdc70dd0-8cc8-4ec8-8b80-121fd9a3302a"
+
+    # Common wearable data event fields
+    "source": {
+      "logo": "https://storage.googleapis.com/vital-assets/fitbit.png",
+      "name": "Fitbit",
+      "slug": "fitbit"
+    },
+    "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03",
   },
   "event_type": "daily.data.workout_stream.created"
 }
