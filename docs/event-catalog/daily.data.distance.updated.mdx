@@ -1,0 +1,80 @@
+---
+title: "daily.data.distance.updated"
+description: "Existing distance samples have been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="WebhookModelTimeseries" required="true">
+<Expandable title="WebhookModelTimeseries">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
+
+<ResponseField name="id" type="integer" required="false">
+Measurement id. Note, this field has been deprecated and is no longer used
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="timezone_offset" type="integer" required="false">
+Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+The value of the measurement.
+</ResponseField>
+<ResponseField name="type" type="string" required="false">
+The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+</ResponseField>
+<ResponseField name="unit" type="string" required="true">
+The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+</ResponseField>
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.distance.updated",
+  "data": {
+    "data": [
+      {
+        "timestamp": "2023-05-20T15:09:46.329698+00:00",
+        "value": 5.6,
+        "type": "automatic",
+        "unit": "m"
+      }
+    ],
+    "source_id": 1,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "164a0eae-6c76-405a-9d74-9ae06a2e6474",
+    "user_key": "a7e9b74c-4f8d-47ee-9e36-8a899c613ef8"
+  }
+}
+```
+</ResponseExample> 

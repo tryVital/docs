@@ -1,0 +1,45 @@
+---
+title: "historical.data.respiratory_rate.created"
+description: "Historical pull of respiratory_rate data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.respiratory_rate.created",
+  "data": {
+    "user_id": "22677c2c-2b27-41b4-b2f5-fec17b6bc0c4",
+    "user_key": "6759577e-1314-4896-8a01-145205cdb215",
+    "start_date": "2023-02-19T15:09:47.643619+00:00",
+    "end_date": "2023-05-20T15:09:47.643654+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

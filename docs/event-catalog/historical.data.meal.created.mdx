@@ -1,0 +1,45 @@
+---
+title: "historical.data.meal.created"
+description: "Historical pull of meal data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.meal.created",
+  "data": {
+    "user_id": "b6037e98-b1c0-41a5-99af-f8d66575093a",
+    "user_key": "da41402e-dc2d-41cc-a803-f5e58e1d1f3b",
+    "start_date": "2023-02-19T15:09:47.649896+00:00",
+    "end_date": "2023-05-20T15:09:47.649916+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

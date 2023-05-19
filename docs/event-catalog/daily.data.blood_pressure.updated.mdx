@@ -1,0 +1,48 @@
+---
+title: "daily.data.blood_pressure.updated"
+description: "Existing blood pressure samples have been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ClientFacingBloodPressureTimeseries" required="true">
+<Expandable title="ClientFacingBloodPressureTimeseries">
+<ResponseField name="id" type="integer" required="false">
+Measurement id, note, this field has been deprecated and is no longer used
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="timezone_offset" type="integer" required="false">
+Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+</ResponseField>
+<ResponseField name="systolic" type="number" required="true">
+
+</ResponseField>
+<ResponseField name="diastolic" type="number" required="true">
+
+</ResponseField>
+<ResponseField name="type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="unit" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.blood_pressure.updated",
+  "data": {
+    "id": 2,
+    "timestamp": "2023-05-20T15:09:46.964000+00:00",
+    "systolic": "125",
+    "diastolic": "75",
+    "type": "cuff",
+    "unit": "mmHg"
+  }
+}
+```
+</ResponseExample> 

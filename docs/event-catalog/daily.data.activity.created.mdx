@@ -1,0 +1,100 @@
+---
+title: "daily.data.activity.created"
+description: "Activity summary has been created for a new calendar day"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ClientFacingActivity" required="true">
+<Expandable title="ClientFacingActivity">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string" required="false">
+User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="date" type="string" required="true">
+Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+</ResponseField>
+<ResponseField name="calendar_date" type="string" required="true">
+Date of the summary in the YYYY-mm-dd format.
+</ResponseField>
+<ResponseField name="calories_total" type="number" required="false">
+Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
+</ResponseField>
+<ResponseField name="calories_active" type="number" required="false">
+Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
+</ResponseField>
+<ResponseField name="steps" type="integer" required="false">
+Total number of steps registered during the day::steps
+</ResponseField>
+<ResponseField name="daily_movement" type="number" required="false">
+Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
+</ResponseField>
+<ResponseField name="distance" type="number" required="false">
+Cumulated distance for exercise
+</ResponseField>
+<ResponseField name="low" type="number" required="false">
+Number of minutes during the day with low intensity activity (e.g. household work)::minutes
+</ResponseField>
+<ResponseField name="medium" type="number" required="false">
+Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
+</ResponseField>
+<ResponseField name="high" type="number" required="false">
+Number of minutes during the day with high intensity activity (e.g. running)::minutes
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="floors_climbed" type="integer" required="false">
+Number of floors climbed by the user::count
+</ResponseField>
+<ResponseField name="time_zone" type="string" required="false">
+[DEPRECATED] The time zone full identifier for the data. Example: 'Europe/London'.
+</ResponseField>
+<ResponseField name="timezone_offset" type="integer" required="false">
+Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.activity.created",
+  "data": {
+    "date": "2023-05-20T15:09:47.016391+00:00",
+    "calendar_date": "2023-05-20",
+    "calories_total": 100,
+    "calories_active": 2000,
+    "steps": 10000,
+    "daily_movement": 200,
+    "low": 6400,
+    "medium": 6400,
+    "high": 6000,
+    "floors_climbed": 10,
+    "timezone_offset": 3600,
+    "time_zone": "Europe/London",
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "4b4d04cc-fdd2-4512-a1f6-71ee6faebec6"
+  }
+}
+```
+</ResponseExample> 

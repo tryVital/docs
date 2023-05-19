@@ -1,0 +1,54 @@
+---
+title: "daily.data.profile.created"
+description: "User profile data has been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ClientFacingProfile" required="true">
+<Expandable title="ClientFacingProfile">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string" required="false">
+User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="height" type="integer" required="false">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.profile.created",
+  "data": {
+    "id": "550ceb57-34d4-43b7-aaba-c299dd52a3c9",
+    "height": 183,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "2d30c0fc-455e-4f71-a632-f957aad06904"
+  }
+}
+```
+</ResponseExample> 

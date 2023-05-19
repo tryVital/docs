@@ -1,0 +1,67 @@
+---
+title: "daily.data.body.updated"
+description: "Existing body data has been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ClientFacingBody" required="true">
+<Expandable title="ClientFacingBody">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string" required="false">
+User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="date" type="string" required="true">
+Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+</ResponseField>
+<ResponseField name="calendar_date" type="string" required="true">
+Date of the summary in the YYYY-mm-dd format.
+</ResponseField>
+<ResponseField name="weight" type="number" required="false">
+Weight in kg::kg
+</ResponseField>
+<ResponseField name="fat" type="number" required="false">
+Body fat percentage::perc
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.body.updated",
+  "data": {
+    "id": "278d6082-ada0-4b04-b9cc-33b8db7b4c2f",
+    "date": "2023-05-20T15:09:47.555966+00:00",
+    "calendar_date": "2023-09-",
+    "weight": 80,
+    "fat": 30,
+    "height": 183,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "c5968996-3ce7-4ed1-ac40-a98ec1846145"
+  }
+}
+```
+</ResponseExample> 

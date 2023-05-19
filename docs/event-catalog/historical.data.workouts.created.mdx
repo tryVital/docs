@@ -1,0 +1,45 @@
+---
+title: "historical.data.workouts.created"
+description: "Historical pull of workouts data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.workouts.created",
+  "data": {
+    "user_id": "16423eaf-1a94-4b0d-b8d6-3816470fcfe4",
+    "user_key": "1a596a42-2738-4ea4-bbf0-a94258a134fc",
+    "start_date": "2023-02-19T15:09:47.659394+00:00",
+    "end_date": "2023-05-20T15:09:47.659414+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

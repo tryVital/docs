@@ -1,0 +1,45 @@
+---
+title: "historical.data.distance.created"
+description: "Historical pull of distance data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.distance.created",
+  "data": {
+    "user_id": "4deedad3-2433-408f-af7d-b0426f807cbb",
+    "user_key": "a2cc5190-c8a1-40a4-82a5-ed1ee6a8bd67",
+    "start_date": "2023-02-19T15:09:47.660329+00:00",
+    "end_date": "2023-05-20T15:09:47.660349+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

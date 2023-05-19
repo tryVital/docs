@@ -1,0 +1,81 @@
+---
+title: "daily.data.fat.updated"
+description: "Existing fat samples have been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="WebhookModelTimeseries" required="true">
+<Expandable title="WebhookModelTimeseries">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
+
+<ResponseField name="id" type="integer" required="false">
+Measurement id. Note, this field has been deprecated and is no longer used
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="timezone_offset" type="integer" required="false">
+Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+The value of the measurement.
+</ResponseField>
+<ResponseField name="type" type="string" required="false">
+The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+</ResponseField>
+<ResponseField name="unit" type="string" required="true">
+The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+</ResponseField>
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.fat.updated",
+  "data": {
+    "data": [
+      {
+        "id": null,
+        "timestamp": "2023-05-20T15:09:46.329676+00:00",
+        "value": 36,
+        "type": "scale",
+        "unit": "percent"
+      }
+    ],
+    "source_id": 1,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "54d41359-262e-4a76-a18d-64098674734e",
+    "user_key": "84ed6d29-0e1d-4145-b2bb-82eb0cd14199"
+  }
+}
+```
+</ResponseExample> 

@@ -1,0 +1,45 @@
+---
+title: "historical.data.caffeine.created"
+description: "Historical pull of caffeine data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.caffeine.created",
+  "data": {
+    "user_id": "9860d04c-ea84-4724-861c-1cceaa862527",
+    "user_key": "f8d1a1ce-56e2-4ce9-848b-a0c4b2d47d83",
+    "start_date": "2023-02-19T15:09:47.647949+00:00",
+    "end_date": "2023-05-20T15:09:47.647969+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

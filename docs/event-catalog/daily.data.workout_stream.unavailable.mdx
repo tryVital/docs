@@ -1,0 +1,69 @@
+---
+title: "daily.data.workout_stream.unavailable"
+description: "We failed to find a workout stream associated with this data"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="WorkoutStreamUnavailable" required="true">
+<Expandable title="WorkoutStreamUnavailable">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="workout_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="message" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="sport" type="ClientFacingSport" required="true">
+<Expandable title="ClientFacingSport">
+<ResponseField name="id" type="integer" required="true">
+
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+Sport's name
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated sport
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.workout_stream.unavailable",
+  "data": {
+    "user_id": "d08d2d04-bbf5-440b-aeee-772914791462",
+    "workout_id": "ffad8381-411f-49ca-9b90-640eb137c1dd",
+    "message": "The stream for this workout is not available.",
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "sport": {
+      "id": 1,
+      "name": "Running",
+      "slug": "running"
+    }
+  }
+}
+```
+</ResponseExample> 

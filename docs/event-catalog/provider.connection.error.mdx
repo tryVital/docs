@@ -1,0 +1,41 @@
+---
+title: "provider.connection.error"
+description: "Provider Connection failed to be established, or has failed due to user credential changes."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ProviderConnectionError" required="true">
+<Expandable title="ProviderConnectionError">
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="message" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="error_details" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "provider.connection.error",
+  "data": {
+    "provider": "oura",
+    "user_key": "49b330e0-2790-425f-be54-396a921e9abc",
+    "user_id": "efd4ee20-40cd-49d4-8152-3c51fc9193f0",
+    "message": "We are having issues fetching information for user.                             We won't try to fetch again from this specific provider. Please reconnect device.",
+    "error_details": "Failed to pull provider data"
+  }
+}
+```
+</ResponseExample> 

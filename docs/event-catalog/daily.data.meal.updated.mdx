@@ -1,0 +1,190 @@
+---
+title: "daily.data.meal.updated"
+description: "An existing meal has been updated"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="MealInDBBase_ClientFacingSource_" required="true">
+<Expandable title="MealInDBBase_ClientFacingSource_">
+<ResponseField name="id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="priority_id" type="integer" required="true">
+
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+
+</ResponseField>
+<ResponseField name="provider_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="energy" type="Energy" required="false">
+<Expandable title="Energy">
+<ResponseField name="unit" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="macros" type="Macros" required="false">
+<Expandable title="Macros">
+<ResponseField name="carbs" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="protein" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="fats" type="Fats" required="false">
+<Expandable title="Fats">
+<ResponseField name="saturated" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="monounsaturated" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="polyunsaturated" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="omega3" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="omega6" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="total" type="number" required="false">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="alcohol" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="water" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="fibre" type="number" required="false">
+
+</ResponseField>
+<ResponseField name="sugar" type="number" required="false">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="micros" type="Micros" required="false">
+<Expandable title="Micros">
+<ResponseField name="minerals" type="object" required="false">
+
+</ResponseField>
+<ResponseField name="trace_elements" type="object" required="false">
+
+</ResponseField>
+<ResponseField name="vitamins" type="object" required="false">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="data" type="object" required="false">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "daily.data.meal.updated",
+  "data": {
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5",
+    "priority_id": 42,
+    "source_id": 10,
+    "provider_id": "123456",
+    "timestamp": "2019-08-24T14:15:22Z",
+    "name": "Dinner",
+    "data": {
+      "Chiken coquet starter": {
+        "energy": {
+          "unit": "kcal",
+          "value": 400.0
+        },
+        "macros": {
+          "carbs": 75.0,
+          "protein": 10.0,
+          "fats": {
+            "saturated": 98,
+            "monounsaturated": 1,
+            "polyunsaturated": 1,
+            "omega3": 0,
+            "omega6": 0,
+            "total": 100
+          },
+          "sugar": 25.0
+        },
+        "micros": {
+          "minerals": {
+            "sodium": 500.0
+          }
+        }
+      },
+      "Coffee, black, 1 tbsp(s)": {
+        "energy": {
+          "unit": "kcal",
+          "value": 0.0
+        },
+        "macros": {
+          "carbs": 0.0,
+          "protein": 0.0,
+          "fats": {
+            "total": 0.0
+          },
+          "sugar": 0.0
+        },
+        "micros": {
+          "minerals": {
+            "sodium": 0.0
+          }
+        }
+      }
+    },
+    "source": {
+      "name": "MyFitnessPal",
+      "slug": "my_fitness_pal",
+      "logo": "https://logo_url.com"
+    },
+    "created_at": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z"
+  }
+}
+```
+</ResponseExample> 

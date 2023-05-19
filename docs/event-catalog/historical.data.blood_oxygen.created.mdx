@@ -1,0 +1,45 @@
+---
+title: "historical.data.blood_oxygen.created"
+description: "Historical pull of blood_oxygen data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.blood_oxygen.created",
+  "data": {
+    "user_id": "bbb0c4ed-cb81-427a-8e02-d1c8b3cedcc6",
+    "user_key": "ffbadb2d-db20-45d7-a106-a87692342fb8",
+    "start_date": "2023-02-19T15:09:47.651745+00:00",
+    "end_date": "2023-05-20T15:09:47.651765+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 

@@ -1,0 +1,47 @@
+---
+title: "provider.connection.created"
+description: "Provider Connection has been established"
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="ProviderConnectionCreated" required="true">
+<Expandable title="ProviderConnectionCreated">
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "provider.connection.created",
+  "data": {
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "0c69748e-6b02-4ed6-83e1-9ef031a40000",
+    "user_key": "5edf82ab-22a2-4b50-a5f9-3d9f93524a8d"
+  }
+}
+```
+</ResponseExample> 

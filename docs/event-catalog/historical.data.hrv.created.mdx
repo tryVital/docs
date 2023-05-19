@@ -1,0 +1,45 @@
+---
+title: "historical.data.hrv.created"
+description: "Historical pull of hrv data has completed and you can now pull data for this resource."
+api: "GET /"
+---
+<ResponseField name="event_type" type="string" required="false">
+
+</ResponseField>
+<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
+<Expandable title="HistoricalWebhookPayload">
+<ResponseField name="user_id" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "event_type": "historical.data.hrv.created",
+  "data": {
+    "user_id": "2808f218-0814-42b3-9810-1441ae9773da",
+    "user_key": "075382a1-962d-4f34-a2b0-c82fc6fcbbe2",
+    "start_date": "2023-02-19T15:09:47.656552+00:00",
+    "end_date": "2023-05-20T15:09:47.656572+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</ResponseExample> 
