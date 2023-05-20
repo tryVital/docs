@@ -3,52 +3,63 @@ title: "daily.data.igg.updated"
 description: "Existing igg samples have been updated"
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<Warning>
+Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
+its source (ID or slug) and its timestamp. e.g., `(igg, fitbit, 2023-01-23T12:34:56Z)`.
+
+If multiple samples are received at the same triple key, the last sample received replaces all its
+previous versions.
+</Warning>
+<ResponseField name="event_type" type="string | null" required="False" default="daily.data.igg.updated">
 
 </ResponseField>
-<ResponseField name="data" type="WebhookModelTimeseries" required="true">
-<Expandable title="WebhookModelTimeseries">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
+<ResponseField name="data" type="WebhookModelTimeseries">
 
-<ResponseField name="id" type="integer" required="false">
+<Expandable title="WebhookModelTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="True">
+
+<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="id" type="integer | null" required="False">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
+<ResponseField name="timestamp" type="string" required="True">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer" required="false">
+<ResponseField name="timezone_offset" type="integer | null" required="False">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="true">
+<ResponseField name="value" type="number" required="True">
 The value of the measurement.
 </ResponseField>
-<ResponseField name="type" type="string" required="false">
+<ResponseField name="type" type="string | null" required="False">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="true">
+<ResponseField name="unit" type="string" required="True">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
+</Expandable>
 </ResponseField>
-<ResponseField name="source_id" type="integer" required="true">
+<ResponseField name="source_id" type="integer" required="True">
 
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource">
-<ResponseField name="name" type="string" required="true">
+<ResponseField name="source" type="ClientFacingSource">
+
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="True">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
+<ResponseField name="slug" type="string" required="True">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
+<ResponseField name="logo" type="string" required="True">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="user_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="user_key" type="string" required="true">
+<ResponseField name="user_key" type="string" required="True">
 
 </ResponseField>
 </Expandable>
@@ -61,7 +72,7 @@ URL for source logo
     "data": [
       {
         "id": null,
-        "timestamp": "2023-05-20T15:09:46.329670+00:00",
+        "timestamp": "2023-05-20T19:40:35.347291+00:00",
         "value": 12.0,
         "type": "dairy",
         "unit": "FSU"
@@ -73,9 +84,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "bc848922-6a74-416e-a53f-b47dd8e2a425",
-    "user_key": "de39db56-4fe6-4b7b-96d8-0be0677f2cf7"
+    "user_id": "a6486952-1c1e-4f12-87a3-eef60c7da44b",
+    "user_key": "328fc85b-edac-4c0e-a047-3246cf60d763"
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

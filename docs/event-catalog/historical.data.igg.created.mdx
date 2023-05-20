@@ -3,27 +3,28 @@ title: "historical.data.igg.created"
 description: "Historical pull of igg data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<ResponseField name="event_type" type="string | null" required="False" default="historical.data.igg.created">
 
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
-<Expandable title="HistoricalWebhookPayload">
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="data" type="HistoricalWebhookPayload">
+
+<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="user_key" type="string" required="true">
+<ResponseField name="user_key" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="start_date" type="string" required="true">
+<ResponseField name="start_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="end_date" type="string" required="true">
+<ResponseField name="end_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="true">
+<ResponseField name="is_final" type="boolean" required="True">
 
 </ResponseField>
-<ResponseField name="provider" type="string" required="true">
+<ResponseField name="provider" type="string" required="True">
 
 </ResponseField>
 </Expandable>
@@ -33,13 +34,13 @@ api: "GET /"
 {
   "event_type": "historical.data.igg.created",
   "data": {
-    "user_id": "99708d02-a714-42d5-ab0a-df2fcf30c892",
-    "user_key": "64a8cc53-4b7d-4d46-bf01-b25c5e33bb6f",
-    "start_date": "2023-02-19T15:09:47.652770+00:00",
-    "end_date": "2023-05-20T15:09:47.652790+00:00",
+    "user_id": "b09c3255-1bdd-48b1-b550-ab2a05c680eb",
+    "user_key": "348c843f-a5ea-42dd-aa8f-ffb6e6230a78",
+    "start_date": "2023-02-19T19:40:36.821718+00:00",
+    "end_date": "2023-05-20T19:40:36.821736+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

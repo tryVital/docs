@@ -3,27 +3,28 @@ title: "historical.data.meal.created"
 description: "Historical pull of meal data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<ResponseField name="event_type" type="string | null" required="False" default="historical.data.meal.created">
 
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
-<Expandable title="HistoricalWebhookPayload">
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="data" type="HistoricalWebhookPayload">
+
+<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="user_key" type="string" required="true">
+<ResponseField name="user_key" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="start_date" type="string" required="true">
+<ResponseField name="start_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="end_date" type="string" required="true">
+<ResponseField name="end_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="true">
+<ResponseField name="is_final" type="boolean" required="True">
 
 </ResponseField>
-<ResponseField name="provider" type="string" required="true">
+<ResponseField name="provider" type="string" required="True">
 
 </ResponseField>
 </Expandable>
@@ -33,13 +34,13 @@ api: "GET /"
 {
   "event_type": "historical.data.meal.created",
   "data": {
-    "user_id": "b6037e98-b1c0-41a5-99af-f8d66575093a",
-    "user_key": "da41402e-dc2d-41cc-a803-f5e58e1d1f3b",
-    "start_date": "2023-02-19T15:09:47.649896+00:00",
-    "end_date": "2023-05-20T15:09:47.649916+00:00",
+    "user_id": "a7b75f5d-9d81-4a42-ae9b-13d6a912e2f0",
+    "user_key": "b2fe959b-510e-461c-a88d-d2b6675cab71",
+    "start_date": "2023-02-19T19:40:36.820791+00:00",
+    "end_date": "2023-05-20T19:40:36.820811+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

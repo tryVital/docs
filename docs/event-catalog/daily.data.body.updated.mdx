@@ -3,41 +3,51 @@ title: "daily.data.body.updated"
 description: "Existing body data has been updated"
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<Warning>
+Each summary object is uniquely identified by its `id`.
 
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+<ResponseField name="event_type" type="const string" required="True">
+`daily.data.body.updated`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingBody" required="true">
-<Expandable title="ClientFacingBody">
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="data" type="ClientFacingBody">
+
+<Expandable title="ClientFacingBody" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="True">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string" required="false">
+<ResponseField name="user_key" type="string | null" required="False">
+[⚠️ Deprecated]
 User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="id" type="string" required="true">
+<ResponseField name="id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="date" type="string" required="true">
+<ResponseField name="date" type="string" required="True">
+[⚠️ Deprecated]
 Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
 </ResponseField>
-<ResponseField name="calendar_date" type="string" required="true">
+<ResponseField name="calendar_date" type="string" required="True">
 Date of the summary in the YYYY-mm-dd format.
 </ResponseField>
-<ResponseField name="weight" type="number" required="false">
+<ResponseField name="weight" type="number | null" required="False">
 Weight in kg::kg
 </ResponseField>
-<ResponseField name="fat" type="number" required="false">
+<ResponseField name="fat" type="number | null" required="False">
 Body fat percentage::perc
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource">
-<ResponseField name="name" type="string" required="true">
+<ResponseField name="source" type="ClientFacingSource">
+
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="True">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
+<ResponseField name="slug" type="string" required="True">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
+<ResponseField name="logo" type="string" required="True">
 URL for source logo
 </ResponseField>
 </Expandable>
@@ -49,9 +59,9 @@ URL for source logo
 {
   "event_type": "daily.data.body.updated",
   "data": {
-    "id": "278d6082-ada0-4b04-b9cc-33b8db7b4c2f",
-    "date": "2023-05-20T15:09:47.555966+00:00",
-    "calendar_date": "2023-09-",
+    "id": "ef2366f2-0a93-4afd-94ca-6189c363af8b",
+    "date": "2023-05-20T19:40:36.702140+00:00",
+    "calendar_date": "2023-40-",
     "weight": 80,
     "fat": 30,
     "height": 183,
@@ -60,8 +70,8 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "c5968996-3ce7-4ed1-ac40-a98ec1846145"
+    "user_id": "589bf3d1-dc79-45a3-bd80-c31826444ac2"
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

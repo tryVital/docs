@@ -3,27 +3,28 @@ title: "historical.data.activity.created"
 description: "Historical pull of activity data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<ResponseField name="event_type" type="string | null" required="False" default="historical.data.activity.created">
 
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload" required="true">
-<Expandable title="HistoricalWebhookPayload">
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="data" type="HistoricalWebhookPayload">
+
+<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="user_key" type="string" required="true">
+<ResponseField name="user_key" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="start_date" type="string" required="true">
+<ResponseField name="start_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="end_date" type="string" required="true">
+<ResponseField name="end_date" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="true">
+<ResponseField name="is_final" type="boolean" required="True">
 
 </ResponseField>
-<ResponseField name="provider" type="string" required="true">
+<ResponseField name="provider" type="string" required="True">
 
 </ResponseField>
 </Expandable>
@@ -33,13 +34,13 @@ api: "GET /"
 {
   "event_type": "historical.data.activity.created",
   "data": {
-    "user_id": "8f3ac49f-a0d1-40e8-bf26-c88de832adca",
-    "user_key": "ac10e656-9290-4117-aa13-3f209722b46f",
-    "start_date": "2023-02-19T15:09:47.664090+00:00",
-    "end_date": "2023-05-20T15:09:47.664109+00:00",
+    "user_id": "9a1382e1-40cd-4726-91a0-fd2bda5f6375",
+    "user_key": "b23df379-bab1-4b3f-93b7-3107faf481a6",
+    "start_date": "2023-02-19T19:40:36.828620+00:00",
+    "end_date": "2023-05-20T19:40:36.828639+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

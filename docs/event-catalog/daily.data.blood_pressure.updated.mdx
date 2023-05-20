@@ -3,30 +3,31 @@ title: "daily.data.blood_pressure.updated"
 description: "Existing blood pressure samples have been updated"
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
-
+<ResponseField name="event_type" type="const string" required="True">
+`daily.data.blood_pressure.updated`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingBloodPressureTimeseries" required="true">
-<Expandable title="ClientFacingBloodPressureTimeseries">
-<ResponseField name="id" type="integer" required="false">
+<ResponseField name="data" type="ClientFacingBloodPressureTimeseries">
+
+<Expandable title="ClientFacingBloodPressureTimeseries" defaultOpen="true">
+<ResponseField name="id" type="integer | null" required="False">
 Measurement id, note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
+<ResponseField name="timestamp" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer" required="false">
+<ResponseField name="timezone_offset" type="integer | null" required="False">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="systolic" type="number" required="true">
+<ResponseField name="systolic" type="number" required="True">
 
 </ResponseField>
-<ResponseField name="diastolic" type="number" required="true">
+<ResponseField name="diastolic" type="number" required="True">
 
 </ResponseField>
-<ResponseField name="type" type="string" required="false">
+<ResponseField name="type" type="string | null" required="False">
 
 </ResponseField>
-<ResponseField name="unit" type="string" required="true">
+<ResponseField name="unit" type="string" required="True">
 
 </ResponseField>
 </Expandable>
@@ -37,7 +38,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
   "event_type": "daily.data.blood_pressure.updated",
   "data": {
     "id": 2,
-    "timestamp": "2023-05-20T15:09:46.964000+00:00",
+    "timestamp": "2023-05-20T19:40:36.065105+00:00",
     "systolic": "125",
     "diastolic": "75",
     "type": "cuff",
@@ -45,4 +46,4 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>

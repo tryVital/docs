@@ -1,50 +1,60 @@
 ---
 title: "daily.data.workout_stream.created"
-description: "A workout stream has been created, and can be accessed via the /v2/timeseries/workouts/{workout_id}/stream endpoint."
+description: "A workout stream has been created, and can be accessed via the /v2/timeseries/workouts/&lcub;workout_id&rcub;/stream endpoint."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string" required="false">
+<Warning>
+Each summary object is uniquely identified by its `id`.
 
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+<ResponseField name="event_type" type="const string" required="True">
+`daily.data.workout_stream.created`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingShallowWorkoutStream" required="true">
-<Expandable title="ClientFacingShallowWorkoutStream">
-<ResponseField name="user_id" type="string" required="true">
+<ResponseField name="data" type="ClientFacingShallowWorkoutStream">
+
+<Expandable title="ClientFacingShallowWorkoutStream" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="True">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string" required="false">
+<ResponseField name="user_key" type="string | null" required="False">
+[⚠️ Deprecated]
 User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="workout_id" type="string" required="true">
+<ResponseField name="workout_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="provider_id" type="string" required="true">
+<ResponseField name="provider_id" type="string" required="True">
 
 </ResponseField>
-<ResponseField name="message" type="string" required="false">
+<ResponseField name="message" type="string | null" required="False" default="Due to payload size limits, to access the workout stream,          please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.">
 
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource">
-<ResponseField name="name" type="string" required="true">
+<ResponseField name="source" type="ClientFacingSource">
+Source the data has come from.
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="True">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
+<ResponseField name="slug" type="string" required="True">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
+<ResponseField name="logo" type="string" required="True">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="sport" type="ClientFacingSport" required="false">
-<Expandable title="ClientFacingSport">
-<ResponseField name="id" type="integer" required="true">
+<ResponseField name="sport" type="ClientFacingSport | null">
+Sport&#x27;s name
+<Expandable title="ClientFacingSport" defaultOpen="true">
+<ResponseField name="id" type="integer" required="True">
 
 </ResponseField>
-<ResponseField name="name" type="string" required="true">
-Sport's name
+<ResponseField name="name" type="string" required="True">
+Sport&#x27;s name
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
+<ResponseField name="slug" type="string" required="True">
 Slug for designated sport
 </ResponseField>
 </Expandable>
@@ -56,7 +66,7 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.created",
   "data": {
-    "workout_id": "2be31c1e-c80d-47d9-af5b-020e17f4a3b4",
+    "workout_id": "0a8c4ead-d776-4462-ae47-cc2adfbc6408",
     "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {
@@ -72,4 +82,4 @@ Slug for designated sport
   }
 }
 ```
-</ResponseExample> 
+</ResponseExample>
