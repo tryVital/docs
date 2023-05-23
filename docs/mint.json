@@ -84,8 +84,8 @@
     {
       "group": "Webhooks",
       "pages": [
-        "webhooks/introduction", 
-        "webhooks/event-structure", 
+        "webhooks/introduction",
+        "webhooks/event-structure",
         "webhooks/debugging"
       ]
     },
@@ -240,6 +240,7 @@
       "group": "Lab Testing",
       "pages": [
         "api-reference/lab-testing/create-order",
+        "api-reference/lab-testing/get-orders",
         "api-reference/lab-testing/get-order",
         "api-reference/lab-testing/cancel-order",
         "api-reference/lab-testing/area-info"

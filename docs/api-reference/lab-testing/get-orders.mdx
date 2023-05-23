@@ -1,0 +1,119 @@
+---
+openapi: "GET /v3/orders"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/orders' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+'
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+orders = client.LabTests.get_orders(page=1, size=50)
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const orders = await client.Orders.getOrders(1, 50);
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "orders": [
+    {
+      "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+      "team_id": "cbb64555-af07-46c1-be09-ef89308e9b60",
+      "user_id": "94e2d9f2-d600-4a23-9f08-536df378e2c7",
+      "patient_details": {
+        "dob": "2020-01-01",
+        "gender": "male"
+      },
+      "patient_address": {
+        "receiver_name": "John Doe",
+        "first_line": "123 Main St.",
+        "second_line": "Apt. 208",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "91189",
+        "country": "United States",
+        "phone_number": "+1123456789"
+      },
+      "details": {
+        "type": "testkit",
+        "data": {
+          "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+          "shipment": {
+            "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+            "outbound_tracking_number": "<outbound_tracking_number>",
+            "outbound_tracking_url": "<outbound_tracking_url>",
+            "inbound_tracking_number": "<inbound_tracking_number>",
+            "inbound_tracking_url": "<inbound_tracking_url>",
+            "outbound_courier": "usps",
+            "inbound_courier": "usps",
+            "notes": "<notes>",
+            "created_at": "2020-01-01T00:00:00.000Z",
+            "updated_at": "2020-01-01T00:00:00.000Z"
+          },
+          "created_at": "2020-01-01T00:00:00Z",
+          "updated_at": "2020-01-01T00:00:00Z"
+        }
+      },
+      "lab_test": {
+        "name": "Lipids Panel",
+        "description": "Cholesterol test",
+        "method": "testkit"
+      },
+      "sample_id": "123456789",
+      "notes": "This is a note",
+      "created_at": "2020-01-01T00:00:00Z",
+      "updated_at": "2020-01-01T00:00:00Z",
+      "status": "collecting_sample",
+      "events": [
+        {
+          "id": 1,
+          "created_at": "2022-01-01T00:00:00Z",
+          "status": "received.testkit.ordered"
+        },
+        {
+          "id": 2,
+          "created_at": "2022-01-02T00:00:00Z",
+          "status": "received.testkit.requisition_created"
+        },
+        {
+          "id": 3,
+          "created_at": "2022-01-03T00:00:00Z",
+          "status": "collecting_sample.testkit.transit_customer"
+        }
+      ]
+    }
+  ],
+  "total": 1,
+  "page": 1,
+  "size": 50
+}
+```
+
+</ResponseExample>
