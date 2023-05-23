@@ -9,188 +9,179 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.sleep.created`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.sleep.created`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingSleep">
-
+<ResponseField name="data" type="ClientFacingSleep" required="true">
 <Expandable title="ClientFacingSleep" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
+<ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null" required="False">
-[⚠️ Deprecated]
-User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="id" type="string" required="True">
-
+<ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="date" type="string" required="True">
-[⚠️ Deprecated]
-Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+<ResponseField name="date" type="string" required="true">
+[⚠️ Deprecated] Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
 </ResponseField>
-<ResponseField name="calendar_date" type="string" required="True">
+<ResponseField name="calendar_date" type="string" required="true">
 Date of the sleep summary in the YYYY-mm-dd format. This generally matches the sleep end date.
 </ResponseField>
-<ResponseField name="bedtime_start" type="string" required="True">
+<ResponseField name="bedtime_start" type="string" required="true">
 UTC Time when the sleep period started
 </ResponseField>
-<ResponseField name="bedtime_stop" type="string" required="True">
+<ResponseField name="bedtime_stop" type="string" required="true">
 UTC Time when the sleep period ended
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
 </ResponseField>
-<ResponseField name="duration" type="integer" required="True">
+<ResponseField name="duration" type="integer" required="true">
 Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds
 </ResponseField>
-<ResponseField name="total" type="integer" required="True">
+<ResponseField name="total" type="integer" required="true">
 Total amount of sleep registered during the sleep period (sleep.total = sleep.rem + sleep.light + sleep.deep)::seconds
 </ResponseField>
-<ResponseField name="awake" type="integer" required="True">
+<ResponseField name="awake" type="integer" required="true">
 Total amount of awake time registered during the sleep period::seconds
 </ResponseField>
-<ResponseField name="light" type="integer" required="True">
+<ResponseField name="light" type="integer" required="true">
 Total amount of light sleep registered during the sleep period::seconds
 </ResponseField>
-<ResponseField name="rem" type="integer" required="True">
+<ResponseField name="rem" type="integer" required="true">
 Total amount of REM sleep registered during the sleep period, minutes::seconds
 </ResponseField>
-<ResponseField name="deep" type="integer" required="True">
+<ResponseField name="deep" type="integer" required="true">
 Total amount of deep (N3) sleep registered during the sleep period::seconds
 </ResponseField>
-<ResponseField name="score" type="integer | null" required="False">
+<ResponseField name="score" type="integer | null">
 A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar
 </ResponseField>
-<ResponseField name="hr_lowest" type="integer | null" required="False">
+<ResponseField name="hr_lowest" type="integer | null">
 The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute
 </ResponseField>
-<ResponseField name="hr_average" type="integer | null" required="False">
+<ResponseField name="hr_average" type="integer | null">
 The average heart rate registered during the sleep period::beats per minute
 </ResponseField>
-<ResponseField name="efficiency" type="number | null" required="False">
+<ResponseField name="efficiency" type="number | null">
 Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
 </ResponseField>
-<ResponseField name="latency" type="integer | null" required="False">
+<ResponseField name="latency" type="integer | null">
 Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds
 </ResponseField>
-<ResponseField name="temperature_delta" type="number | null" required="False">
+<ResponseField name="temperature_delta" type="number | null">
 Skin temperature deviation from the long-term temperature average::celcius
 </ResponseField>
-<ResponseField name="skin_temperature" type="number | null" required="False">
+<ResponseField name="skin_temperature" type="number | null">
 The skin temperature::celcius
 </ResponseField>
-<ResponseField name="average_hrv" type="number | null" required="False">
+<ResponseField name="average_hrv" type="number | null">
 The average heart rate variability registered during the sleep period::rmssd
 </ResponseField>
-<ResponseField name="respiratory_rate" type="number | null" required="False">
+<ResponseField name="respiratory_rate" type="number | null">
 Average respiratory rate::breaths per minute
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
+<ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="sleep_stream" type="ClientFacingSleepStream | null">
-
 <Expandable title="ClientFacingSleepStream" defaultOpen="true">
-<ResponseField name="hrv" type="ClientFacingHRVTimeseries[] | null" required="False">
-
+<ResponseField name="hrv" type="ClientFacingHRVTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHRVTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+<ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
+<ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
+<ResponseField name="value" type="number" required="true">
 HRV calculated using rmssd during sleep
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
+<ResponseField name="type" type="string | null">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
+<ResponseField name="unit" type="string" required="true">
 Measured in rmssd.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="heartrate" type="ClientFacingHeartRateTimeseries[] | null" required="False">
-
+<ResponseField name="heartrate" type="ClientFacingHeartRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHeartRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+<ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
+<ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
+<ResponseField name="value" type="number" required="true">
 Heart rate in bpm
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
+<ResponseField name="type" type="string | null">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
+<ResponseField name="unit" type="string" required="true">
 Measured in bpm.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="hypnogram" type="ClientFacingHypnogramTimeseries[] | null" required="False">
-
+<ResponseField name="hypnogram" type="ClientFacingHypnogramTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHypnogramTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+<ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
+<ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
+<ResponseField name="value" type="number" required="true">
 Hypnogram for sleep stages &lcub;&quot;deep&quot;: 1, &quot;light&quot;: 2, &quot;rem&quot;: 3, &quot;awake&quot;: 4, &quot;manual&quot;: 5, &quot;missing_data&quot;: -1&rcub;
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
+<ResponseField name="type" type="string | null">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
+<ResponseField name="unit" type="string" required="true">
 enum: 1: deep, 2: light, 3: rem, 4: awake, -1: missing_data.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="respiratory_rate" type="ClientFacingRespiratoryRateTimeseries[] | null" required="False">
-
+<ResponseField name="respiratory_rate" type="ClientFacingRespiratoryRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingRespiratoryRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+<ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
+<ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
+<ResponseField name="value" type="number" required="true">
 Average respiratory rate::breaths per minute
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
+<ResponseField name="type" type="string | null">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
+<ResponseField name="unit" type="string" required="true">
 Measured in bpm.
 </ResponseField>
 </Expandable>
@@ -204,11 +195,11 @@ Measured in bpm.
 {
   "event_type": "daily.data.sleep.created",
   "data": {
-    "id": "f7c90761-397a-4d05-b063-60c1da18fdaf",
-    "date": "2023-05-20T19:40:36.706608+00:00",
-    "calendar_date": "2023-05-20",
-    "bedtime_start": "2023-05-20T19:40:36.706623+00:00",
-    "bedtime_stop": "2023-05-20T19:40:36.706626+00:00",
+    "id": "aafe2934-3645-440f-a218-7e4a93f1e56f",
+    "date": "2023-05-23T11:28:21.371588+00:00",
+    "calendar_date": "2023-05-23",
+    "bedtime_start": "2023-05-23T11:28:21.371604+00:00",
+    "bedtime_stop": "2023-05-23T11:28:21.371607+00:00",
     "timezone_offset": 2400,
     "duration": 28800,
     "total": 28800,
@@ -229,7 +220,7 @@ Measured in bpm.
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "4132552f-0693-4c81-b7f3-48125038d51b"
+    "user_id": "b276f243-bbb5-4f61-879a-f39ba6b476a2"
   }
 }
 ```

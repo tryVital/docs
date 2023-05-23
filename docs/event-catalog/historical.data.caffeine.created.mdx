@@ -3,29 +3,22 @@ title: "historical.data.caffeine.created"
 description: "Historical pull of caffeine data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string | null" required="False" default="historical.data.caffeine.created">
-
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.caffeine.created`
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload">
-
-<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
-<ResponseField name="start_date" type="string" required="True">
-
+<ResponseField name="start_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="end_date" type="string" required="True">
-
+<ResponseField name="end_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="True">
-
+<ResponseField name="is_final" type="boolean" required="true">
 </ResponseField>
-<ResponseField name="provider" type="string" required="True">
-
+<ResponseField name="provider" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -34,10 +27,10 @@ api: "GET /"
 {
   "event_type": "historical.data.caffeine.created",
   "data": {
-    "user_id": "e03f6259-bed2-49a4-ba82-d9054700fb12",
-    "user_key": "95179e71-c4cc-427c-9b0f-abb5619704d9",
-    "start_date": "2023-02-19T19:40:36.806993+00:00",
-    "end_date": "2023-05-20T19:40:36.807014+00:00",
+    "user_id": "3c8850d4-717f-40d9-a48a-131441eb0cf1",
+    "user_key": "ffa45493-c404-4804-80bc-5eb3d238510d",
+    "start_date": "2023-02-22T11:28:21.469425+00:00",
+    "end_date": "2023-05-23T11:28:21.469444+00:00",
     "is_final": true,
     "provider": "oura"
   }

@@ -3,26 +3,20 @@ title: "provider.connection.error"
 description: "Provider Connection failed to be established, or has failed due to user credential changes."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="const string" required="True">
-`provider.connection.error`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `provider.connection.error`
 </ResponseField>
-<ResponseField name="data" type="ProviderConnectionError">
-
+<ResponseField name="data" type="ProviderConnectionError" required="true">
 <Expandable title="ProviderConnectionError" defaultOpen="true">
-<ResponseField name="provider" type="string" required="True">
-
+<ResponseField name="provider" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
-<ResponseField name="message" type="string" required="True">
-
+<ResponseField name="message" type="string" required="true">
 </ResponseField>
-<ResponseField name="error_details" type="string" required="True">
-
+<ResponseField name="error_details" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -32,8 +26,8 @@ api: "GET /"
   "event_type": "provider.connection.error",
   "data": {
     "provider": "oura",
-    "user_key": "1c17c829-9359-49a2-b0e9-b88b10179a4c",
-    "user_id": "16cf1b1e-8803-4509-af92-f3ec51ec1759",
+    "user_key": "9e736715-5fe1-47a0-8dd0-55bc57966b98",
+    "user_id": "5e7b31cc-2545-4190-836b-1d10101bd764",
     "message": "We are having issues fetching information for user.                             We won't try to fetch again from this specific provider. Please reconnect device.",
     "error_details": "Failed to pull provider data"
   }

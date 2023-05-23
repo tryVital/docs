@@ -9,45 +9,38 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.workout_stream.unavailable`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.workout_stream.unavailable`
 </ResponseField>
-<ResponseField name="data" type="WorkoutStreamUnavailable">
-
+<ResponseField name="data" type="WorkoutStreamUnavailable" required="true">
 <Expandable title="WorkoutStreamUnavailable" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="workout_id" type="string" required="True">
-
+<ResponseField name="workout_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="message" type="string" required="True">
-
+<ResponseField name="message" type="string" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
-
+<ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="sport" type="ClientFacingSport">
-
+<ResponseField name="sport" type="ClientFacingSport" required="true">
 <Expandable title="ClientFacingSport" defaultOpen="true">
-<ResponseField name="id" type="integer" required="True">
-
+<ResponseField name="id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Sport&#x27;s name
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated sport
 </ResponseField>
 </Expandable>
@@ -59,8 +52,8 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.unavailable",
   "data": {
-    "user_id": "2423f9cd-62ae-4711-83d4-860d60044c13",
-    "workout_id": "f9af675f-bb5d-479a-8443-5c7a581d2bd3",
+    "user_id": "eb88e036-5fd8-4af2-8508-bb34cce94a74",
+    "workout_id": "2139ee85-61b9-4659-9529-4195cf6bc600",
     "message": "The stream for this workout is not available.",
     "source": {
       "name": "Oura",

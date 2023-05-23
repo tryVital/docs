@@ -3,32 +3,56 @@ title: "daily.data.blood_pressure.updated"
 description: "Existing blood pressure samples have been updated"
 api: "GET /"
 ---
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.blood_pressure.updated`
-</ResponseField>
-<ResponseField name="data" type="ClientFacingBloodPressureTimeseries">
+<Warning>
+Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
+its source (ID or slug) and its timestamp. e.g., `(blood_pressure, fitbit, 2023-01-23T12:34:56Z)`.
 
-<Expandable title="ClientFacingBloodPressureTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+If multiple samples are received at the same triple key, the last sample received replaces all its
+previous versions.
+</Warning>
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.blood_pressure.updated`
+</ResponseField>
+<ResponseField name="data" type="TimeseriesData" required="true">
+<Expandable title="TimeseriesData" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingBloodPressureTimeseries[]" required="true">
+<Expandable title="Item Schema: ClientFacingBloodPressureTimeseries" defaultOpen="true">
+<ResponseField name="id" type="integer | null">
 Measurement id, note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
-
+<ResponseField name="timestamp" type="string" required="true">
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="systolic" type="number" required="True">
-
+<ResponseField name="systolic" type="number" required="true">
 </ResponseField>
-<ResponseField name="diastolic" type="number" required="True">
-
+<ResponseField name="diastolic" type="number" required="true">
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
-
+<ResponseField name="type" type="string | null">
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
-
+<ResponseField name="unit" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -37,12 +61,24 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 {
   "event_type": "daily.data.blood_pressure.updated",
   "data": {
-    "id": 2,
-    "timestamp": "2023-05-20T19:40:36.065105+00:00",
-    "systolic": "125",
-    "diastolic": "75",
-    "type": "cuff",
-    "unit": "mmHg"
+    "data": [
+      {
+        "id": 2,
+        "timestamp": "2023-05-23T11:28:20.717345+00:00",
+        "systolic": "125",
+        "diastolic": "75",
+        "type": "cuff",
+        "unit": "mmHg"
+      }
+    ],
+    "source_id": 1,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "50b09c2c-f6f5-4b16-9a3f-2283be8f1654",
+    "user_key": "b42c3971-5b1c-4cda-aa96-b00d0b16a2a7"
   }
 }
 ```

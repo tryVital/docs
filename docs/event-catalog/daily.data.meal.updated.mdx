@@ -9,126 +9,93 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.meal.updated`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.meal.updated`
 </ResponseField>
-<ResponseField name="data" type="MealInDBBase_ClientFacingSource_">
-
+<ResponseField name="data" type="MealInDBBase_ClientFacingSource_" required="true">
 <Expandable title="MealInDBBase_ClientFacingSource_" defaultOpen="true">
-<ResponseField name="id" type="string" required="True">
-
+<ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="priority_id" type="integer" required="True">
-
+<ResponseField name="priority_id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="source_id" type="integer" required="True">
-
+<ResponseField name="source_id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="provider_id" type="string" required="True">
-
+<ResponseField name="provider_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
-
+<ResponseField name="timestamp" type="string" required="true">
 </ResponseField>
-<ResponseField name="name" type="string" required="True">
-
+<ResponseField name="name" type="string" required="true">
 </ResponseField>
 <ResponseField name="energy" type="Energy | null">
-
 <Expandable title="Energy" defaultOpen="true">
-<ResponseField name="unit" type="string" required="True">
-
+<ResponseField name="unit" type="string" required="true">
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
-
+<ResponseField name="value" type="number" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="macros" type="Macros | null">
-
 <Expandable title="Macros" defaultOpen="true">
-<ResponseField name="carbs" type="number | null" required="False">
-
+<ResponseField name="carbs" type="number | null">
 </ResponseField>
-<ResponseField name="protein" type="number | null" required="False">
-
+<ResponseField name="protein" type="number | null">
 </ResponseField>
 <ResponseField name="fats" type="Fats | null">
-
 <Expandable title="Fats" defaultOpen="true">
-<ResponseField name="saturated" type="number | null" required="False">
-
+<ResponseField name="saturated" type="number | null">
 </ResponseField>
-<ResponseField name="monounsaturated" type="number | null" required="False">
-
+<ResponseField name="monounsaturated" type="number | null">
 </ResponseField>
-<ResponseField name="polyunsaturated" type="number | null" required="False">
-
+<ResponseField name="polyunsaturated" type="number | null">
 </ResponseField>
-<ResponseField name="omega3" type="number | null" required="False">
-
+<ResponseField name="omega3" type="number | null">
 </ResponseField>
-<ResponseField name="omega6" type="number | null" required="False">
-
+<ResponseField name="omega6" type="number | null">
 </ResponseField>
-<ResponseField name="total" type="number | null" required="False">
-
+<ResponseField name="total" type="number | null">
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="alcohol" type="number | null" required="False">
-
+<ResponseField name="alcohol" type="number | null">
 </ResponseField>
-<ResponseField name="water" type="number | null" required="False">
-
+<ResponseField name="water" type="number | null">
 </ResponseField>
-<ResponseField name="fibre" type="number | null" required="False">
-
+<ResponseField name="fibre" type="number | null">
 </ResponseField>
-<ResponseField name="sugar" type="number | null" required="False">
-
+<ResponseField name="sugar" type="number | null">
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="micros" type="Micros | null">
-
 <Expandable title="Micros" defaultOpen="true">
-<ResponseField name="minerals" type="object | null" required="False">
-
+<ResponseField name="minerals" type="object | null">
 </ResponseField>
-<ResponseField name="trace_elements" type="object | null" required="False">
-
+<ResponseField name="trace_elements" type="object | null">
 </ResponseField>
-<ResponseField name="vitamins" type="object | null" required="False">
-
+<ResponseField name="vitamins" type="object | null">
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="data" type="object | null" required="False">
-
+<ResponseField name="data" type="object | null">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
-
+<ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="created_at" type="string" required="True">
-
+<ResponseField name="created_at" type="string" required="true">
 </ResponseField>
-<ResponseField name="updated_at" type="string" required="True">
-
+<ResponseField name="updated_at" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>

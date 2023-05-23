@@ -3,29 +3,22 @@ title: "historical.data.floors_climbed.created"
 description: "Historical pull of floors_climbed data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string | null" required="False" default="historical.data.floors_climbed.created">
-
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.floors_climbed.created`
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload">
-
-<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
-<ResponseField name="start_date" type="string" required="True">
-
+<ResponseField name="start_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="end_date" type="string" required="True">
-
+<ResponseField name="end_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="True">
-
+<ResponseField name="is_final" type="boolean" required="true">
 </ResponseField>
-<ResponseField name="provider" type="string" required="True">
-
+<ResponseField name="provider" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -34,10 +27,10 @@ api: "GET /"
 {
   "event_type": "historical.data.floors_climbed.created",
   "data": {
-    "user_id": "fa47013f-25f0-4e02-b30b-2c74e1e4e28a",
-    "user_key": "421aa1cd-7c82-44cf-a5c6-bfe142fe9a3b",
-    "start_date": "2023-02-19T19:40:36.810878+00:00",
-    "end_date": "2023-05-20T19:40:36.810896+00:00",
+    "user_id": "1d39fbbc-0250-4b27-adf7-6482abff3735",
+    "user_key": "fcfcd0bd-c570-4976-b922-49cfee021e99",
+    "start_date": "2023-02-22T11:28:21.459395+00:00",
+    "end_date": "2023-05-23T11:28:21.459415+00:00",
     "is_final": true,
     "provider": "oura"
   }

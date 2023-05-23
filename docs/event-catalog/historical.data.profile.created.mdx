@@ -3,29 +3,22 @@ title: "historical.data.profile.created"
 description: "Historical pull of profile data has completed and you can now pull data for this resource."
 api: "GET /"
 ---
-<ResponseField name="event_type" type="string | null" required="False" default="historical.data.profile.created">
-
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.profile.created`
 </ResponseField>
-<ResponseField name="data" type="HistoricalWebhookPayload">
-
-<Expandable title="HistoricalWebhookPayload" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
-<ResponseField name="start_date" type="string" required="True">
-
+<ResponseField name="start_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="end_date" type="string" required="True">
-
+<ResponseField name="end_date" type="string" required="true">
 </ResponseField>
-<ResponseField name="is_final" type="boolean" required="True">
-
+<ResponseField name="is_final" type="boolean" required="true">
 </ResponseField>
-<ResponseField name="provider" type="string" required="True">
-
+<ResponseField name="provider" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -34,10 +27,10 @@ api: "GET /"
 {
   "event_type": "historical.data.profile.created",
   "data": {
-    "user_id": "66664c74-dc3d-4c1c-8083-9287d50f4841",
-    "user_key": "1efaece7-94d4-40c3-b635-d9ab6c76df54",
-    "start_date": "2023-02-19T19:40:36.825538+00:00",
-    "end_date": "2023-05-20T19:40:36.825557+00:00",
+    "user_id": "5de4b0bd-b371-4273-ad9c-7864049f1e00",
+    "user_key": "63242372-561f-4003-b94b-4e41d2727126",
+    "start_date": "2023-02-22T11:28:21.464754+00:00",
+    "end_date": "2023-05-23T11:28:21.464773+00:00",
     "is_final": true,
     "provider": "oura"
   }

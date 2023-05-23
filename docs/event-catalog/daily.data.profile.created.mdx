@@ -9,35 +9,30 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.profile.created`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.profile.created`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingProfile">
-
+<ResponseField name="data" type="ClientFacingProfile" required="true">
 <Expandable title="ClientFacingProfile" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
+<ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null" required="False">
-[⚠️ Deprecated]
-User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="id" type="string" required="True">
-
+<ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="height" type="integer | null" required="False">
-
+<ResponseField name="height" type="integer | null">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
-
+<ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
@@ -49,14 +44,14 @@ URL for source logo
 {
   "event_type": "daily.data.profile.created",
   "data": {
-    "id": "7bf51191-88a5-4dfd-b194-8458fb4bc5e7",
+    "id": "d3f4998b-bd9f-41ea-9903-eaf0decda2cb",
     "height": 183,
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "80b806b9-6fde-44e0-a689-b4e307dbfa07"
+    "user_id": "97ae93c0-1b69-422f-8e63-c97cb2491b0f"
   }
 }
 ```

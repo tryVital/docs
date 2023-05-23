@@ -3,28 +3,24 @@ title: "provider.connection.created"
 description: "Provider Connection has been established"
 api: "GET /"
 ---
-<ResponseField name="event_type" type="const string" required="True">
-`provider.connection.created`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `provider.connection.created`
 </ResponseField>
-<ResponseField name="data" type="ProviderConnectionCreated">
-
+<ResponseField name="data" type="ProviderConnectionCreated" required="true">
 <Expandable title="ProviderConnectionCreated" defaultOpen="true">
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
-
+<ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
@@ -41,8 +37,8 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "794694f2-fa99-4cc1-b866-ae5b9630e739",
-    "user_key": "91904cc6-b591-4b5e-b18c-6625d1e01078"
+    "user_id": "6c27d0f5-0a49-4b88-9b94-d0138a4c73e5",
+    "user_key": "63410ee0-9289-4621-aa76-674260894cef"
   }
 }
 ```

@@ -9,75 +9,70 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
-<ResponseField name="event_type" type="const string" required="True">
-`daily.data.activity.created`
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.activity.created`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingActivity">
-
+<ResponseField name="data" type="ClientFacingActivity" required="true">
 <Expandable title="ClientFacingActivity" defaultOpen="true">
-<ResponseField name="user_id" type="string" required="True">
+<ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null" required="False">
-[⚠️ Deprecated]
-User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="id" type="string" required="True">
-
+<ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="date" type="string" required="True">
-[⚠️ Deprecated]
-Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+<ResponseField name="date" type="string" required="true">
+[⚠️ Deprecated] Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
 </ResponseField>
-<ResponseField name="calendar_date" type="string" required="True">
+<ResponseField name="calendar_date" type="string" required="true">
 Date of the summary in the YYYY-mm-dd format.
 </ResponseField>
-<ResponseField name="calories_total" type="number | null" required="False">
+<ResponseField name="calories_total" type="number | null">
 Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
 </ResponseField>
-<ResponseField name="calories_active" type="number | null" required="False">
+<ResponseField name="calories_active" type="number | null">
 Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
 </ResponseField>
-<ResponseField name="steps" type="integer | null" required="False">
+<ResponseField name="steps" type="integer | null">
 Total number of steps registered during the day::steps
 </ResponseField>
-<ResponseField name="daily_movement" type="number | null" required="False">
-[⚠️ Deprecated]
-Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
+<ResponseField name="daily_movement" type="number | null">
+[⚠️ Deprecated] Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
 </ResponseField>
-<ResponseField name="distance" type="number | null" required="False">
+<ResponseField name="distance" type="number | null">
 Cumulated distance for exercise
 </ResponseField>
-<ResponseField name="low" type="number | null" required="False">
+<ResponseField name="low" type="number | null">
 Number of minutes during the day with low intensity activity (e.g. household work)::minutes
 </ResponseField>
-<ResponseField name="medium" type="number | null" required="False">
+<ResponseField name="medium" type="number | null">
 Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
 </ResponseField>
-<ResponseField name="high" type="number | null" required="False">
+<ResponseField name="high" type="number | null">
 Number of minutes during the day with high intensity activity (e.g. running)::minutes
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
+<ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="floors_climbed" type="integer | null" required="False">
+<ResponseField name="floors_climbed" type="integer | null">
 Number of floors climbed by the user::count
 </ResponseField>
-<ResponseField name="time_zone" type="string | null" required="False">
+<ResponseField name="time_zone" type="string | null">
 [DEPRECATED] The time zone full identifier for the data. Example: &#x27;Europe/London&#x27;.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
 </ResponseField>
 </Expandable>
@@ -87,8 +82,8 @@ Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer 
 {
   "event_type": "daily.data.activity.created",
   "data": {
-    "date": "2023-05-20T19:40:36.120953+00:00",
-    "calendar_date": "2023-05-20",
+    "date": "2023-05-23T11:28:20.771610+00:00",
+    "calendar_date": "2023-05-23",
     "calories_total": 100,
     "calories_active": 2000,
     "steps": 10000,
@@ -104,7 +99,7 @@ Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer 
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "143c0eb1-8d1b-443c-82ad-da46299ea41a"
+    "user_id": "d410093b-9d41-4b60-b4f9-dbfd1a787549"
   }
 }
 ```

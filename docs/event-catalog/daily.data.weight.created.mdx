@@ -10,57 +10,51 @@ its source (ID or slug) and its timestamp. e.g., `(weight, fitbit, 2023-01-23T12
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
-<ResponseField name="event_type" type="string | null" required="False" default="daily.data.weight.created">
-
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.weight.created`
 </ResponseField>
-<ResponseField name="data" type="WebhookModelTimeseries">
-
-<Expandable title="WebhookModelTimeseries" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="True">
-
+<ResponseField name="data" type="TimeseriesData" required="true">
+<Expandable title="TimeseriesData" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
 <Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null" required="False">
+<ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="True">
+<ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null" required="False">
+<ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
-<ResponseField name="value" type="number" required="True">
+<ResponseField name="value" type="number" required="true">
 The value of the measurement.
 </ResponseField>
-<ResponseField name="type" type="string | null" required="False">
+<ResponseField name="type" type="string | null">
 The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
 </ResponseField>
-<ResponseField name="unit" type="string" required="True">
+<ResponseField name="unit" type="string" required="true">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="source_id" type="integer" required="True">
-
+<ResponseField name="source_id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource">
-
+<ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="name" type="string" required="True">
+<ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
-<ResponseField name="slug" type="string" required="True">
+<ResponseField name="slug" type="string" required="true">
 Slug for designated source
 </ResponseField>
-<ResponseField name="logo" type="string" required="True">
+<ResponseField name="logo" type="string" required="true">
 URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="user_id" type="string" required="True">
-
+<ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="user_key" type="string" required="True">
-
+<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -72,7 +66,7 @@ URL for source logo
     "data": [
       {
         "id": null,
-        "timestamp": "2023-05-20T19:40:35.347294+00:00",
+        "timestamp": "2023-05-23T11:28:19.885510+00:00",
         "value": 60,
         "type": "scale",
         "unit": "kg"
@@ -84,8 +78,8 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "0546bc22-9c64-4217-8def-3a4a9d93ea98",
-    "user_key": "853caac3-710d-4079-8699-4c5e09322da3"
+    "user_id": "0f76995f-ca3e-47d2-81e5-7f25de1aa3cf",
+    "user_key": "8c597d43-20bd-4e01-b8cb-f7210cfa3672"
   }
 }
 ```
