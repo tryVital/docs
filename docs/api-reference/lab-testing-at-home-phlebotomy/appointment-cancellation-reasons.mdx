@@ -1,5 +1,5 @@
 ---
-openapi: "GET /v3/order/{order_id}/phlebotomy/appointment/cancellation-reasons"
+openapi: "GET /v3/order/phlebotomy/appointment/cancellation-reasons"
 ---
 
 <RequestExample>
@@ -38,6 +38,7 @@ const data = await client.AtHomePhlebotomy.cancellationReasons();
 </RequestExample>
 
 <ResponseExample>
+```json
 [
    {
       "id": "5c0257ef-6fea-4a22-b20a-3ddab573d5c9",
@@ -95,4 +96,5 @@ const data = await client.AtHomePhlebotomy.cancellationReasons();
       "is_refundable": true
    }
 ]
+```
 </ResponseExample>
