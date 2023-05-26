@@ -353,11 +353,17 @@
         "event-catalog/daily.data.heartrate.updated",
         "event-catalog/daily.data.hrv.created",
         "event-catalog/daily.data.hrv.updated",
+        "event-catalog/daily.data.hypnogram.created",
+        "event-catalog/daily.data.hypnogram.updated",
+        "event-catalog/daily.data.respiratory_rate.created",
+        "event-catalog/daily.data.respiratory_rate.updated",
         "event-catalog/historical.data.blood_pressure.created",
         "event-catalog/historical.data.blood_oxygen.created",
         "event-catalog/historical.data.glucose.created",
         "event-catalog/historical.data.heartrate.created",
-        "event-catalog/historical.data.hrv.created"
+        "event-catalog/historical.data.hrv.created",
+        "event-catalog/historical.data.hypnogram.created",
+        "event-catalog/historical.data.respiratory_rate.created"
       ]
     },
     {
@@ -393,15 +399,9 @@
     {
       "group": "Wellness Timeseries",
       "pages": [
-        "event-catalog/daily.data.hypnogram.created",
-        "event-catalog/daily.data.hypnogram.updated",
         "event-catalog/daily.data.mindfulness_minutes.created",
         "event-catalog/daily.data.mindfulness_minutes.updated",
-        "event-catalog/daily.data.respiratory_rate.created",
-        "event-catalog/daily.data.respiratory_rate.updated",
-        "event-catalog/historical.data.hypnogram.created",
-        "event-catalog/historical.data.mindfulness_minutes.created",
-        "event-catalog/historical.data.respiratory_rate.created"
+        "event-catalog/historical.data.mindfulness_minutes.created"
       ]
     },
     {
