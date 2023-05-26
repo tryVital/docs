@@ -1,8 +1,8 @@
 ---
 title: "historical.data.sleep.created"
 description: "Historical pull of sleep data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.sleep.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.sleep.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.sleep.created",
   "data": {
-    "user_id": "7758d6f5-58b9-47b1-acaf-3e00abb0a0b3",
-    "user_key": "3abb485f-21b8-4b51-87ed-25e4775498a5",
-    "start_date": "2023-02-22T11:28:21.460152+00:00",
-    "end_date": "2023-05-23T11:28:21.460173+00:00",
+    "user_id": "5f0b4525-c5b2-4cc5-b6b1-50473f685bf8",
+    "user_key": "3c0f5a26-7d57-4bf5-beab-1ddc203d18e7",
+    "start_date": "2023-02-25T20:56:49.490123+00:00",
+    "end_date": "2023-05-26T20:56:49.490141+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

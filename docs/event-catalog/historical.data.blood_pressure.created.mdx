@@ -1,8 +1,8 @@
 ---
 title: "historical.data.blood_pressure.created"
 description: "Historical pull of blood_pressure data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.blood_pressure.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.blood_pressure.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.blood_pressure.created",
   "data": {
-    "user_id": "cc871f2f-8f26-407f-a0a8-96df407b759c",
-    "user_key": "20b59124-ce76-4d8c-89c1-04ca70d28e02",
-    "start_date": "2023-02-22T11:28:21.470921+00:00",
-    "end_date": "2023-05-23T11:28:21.470940+00:00",
+    "user_id": "8b778f8c-b049-4bff-a290-103fb53a41a1",
+    "user_key": "56633036-56a1-4c71-a3e7-5bafb1c44f0a",
+    "start_date": "2023-02-25T20:56:49.478553+00:00",
+    "end_date": "2023-05-26T20:56:49.478601+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

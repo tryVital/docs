@@ -1,8 +1,8 @@
 ---
 title: "historical.data.water.created"
 description: "Historical pull of water data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.water.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.water.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.water.created",
   "data": {
-    "user_id": "8d79135d-1140-4561-bf39-db85c719ea1c",
-    "user_key": "f56421fb-4c91-46ca-b134-2ee6c4c20d06",
-    "start_date": "2023-02-22T11:28:21.465501+00:00",
-    "end_date": "2023-05-23T11:28:21.465520+00:00",
+    "user_id": "bc04bcca-7b94-48ff-807c-a286aa05d940",
+    "user_key": "fc41493c-82bf-4886-88ee-ec3b735d14aa",
+    "start_date": "2023-02-25T20:56:49.483118+00:00",
+    "end_date": "2023-05-26T20:56:49.483137+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

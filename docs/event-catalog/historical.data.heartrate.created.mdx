@@ -1,8 +1,8 @@
 ---
 title: "historical.data.heartrate.created"
 description: "Historical pull of heartrate data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.heartrate.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.heartrate.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.heartrate.created",
   "data": {
-    "user_id": "bc1f627c-d0af-44e7-8513-55afc6b886a4",
-    "user_key": "56f1a5bc-e81f-4b8e-a151-e9cee1cf7459",
-    "start_date": "2023-02-22T11:28:21.464008+00:00",
-    "end_date": "2023-05-23T11:28:21.464027+00:00",
+    "user_id": "56a88196-95c8-427b-9b64-b5a333401766",
+    "user_key": "ff2e7868-e628-43a3-9c9a-bb1e1cdce91f",
+    "start_date": "2023-02-25T20:56:49.493917+00:00",
+    "end_date": "2023-05-26T20:56:49.493934+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

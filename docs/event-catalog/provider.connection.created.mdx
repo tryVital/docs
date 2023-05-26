@@ -1,8 +1,8 @@
 ---
 title: "provider.connection.created"
 description: "Provider Connection has been established"
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `provider.connection.created`
 </ResponseField>
@@ -27,7 +27,8 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "provider.connection.created",
@@ -37,9 +38,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "6c27d0f5-0a49-4b88-9b94-d0138a4c73e5",
-    "user_key": "63410ee0-9289-4621-aa76-674260894cef"
+    "user_id": "8bf9e887-1dbd-4f10-8bb2-d2d2640a76cb",
+    "user_key": "dfdc6203-2e7f-4097-afc3-c87495aaeb99"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

@@ -1,7 +1,6 @@
 ---
 title: "daily.data.body.updated"
 description: "Existing body data has been updated"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.body.updated`
 </ResponseField>
@@ -49,14 +49,15 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.body.updated",
   "data": {
-    "id": "79c58b47-55b0-4e55-b53b-3b2b11c208fb",
-    "date": "2023-05-23T11:28:21.367459+00:00",
-    "calendar_date": "2023-28-",
+    "id": "ceecea35-978c-48f0-89e6-a385ed31683c",
+    "date": "2023-05-26T20:56:49.391250+00:00",
+    "calendar_date": "2023-56-",
     "weight": 80,
     "fat": 30,
     "height": 183,
@@ -65,8 +66,8 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "446b021b-d8d5-4f1c-b960-7c1e6001753d"
+    "user_id": "f694642d-6faf-4d3d-9ce2-9895a1fea133"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

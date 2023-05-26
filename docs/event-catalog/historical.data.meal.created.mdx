@@ -1,8 +1,8 @@
 ---
 title: "historical.data.meal.created"
 description: "Historical pull of meal data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.meal.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.meal.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.meal.created",
   "data": {
-    "user_id": "81020291-0214-4d4f-b15f-05fccc99469a",
-    "user_key": "a54dd926-4ac6-475c-8e9c-1f3dbc89ff6a",
-    "start_date": "2023-02-22T11:28:21.453038+00:00",
-    "end_date": "2023-05-23T11:28:21.453064+00:00",
+    "user_id": "e648705e-593d-481c-9561-186cb06989d1",
+    "user_key": "0bd53867-0efa-4f38-9335-036ac0ac3e30",
+    "start_date": "2023-02-25T20:56:49.490859+00:00",
+    "end_date": "2023-05-26T20:56:49.490876+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

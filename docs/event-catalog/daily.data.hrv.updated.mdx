@@ -1,7 +1,6 @@
 ---
 title: "daily.data.hrv.updated"
 description: "Existing hrv samples have been updated"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(hrv, fitbit, 2023-01-23T12:34
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.hrv.updated`
 </ResponseField>
@@ -58,15 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.hrv.updated",
   "data": {
     "data": [
       {
-        "id": null,
-        "timestamp": "2023-05-23T11:28:19.885499+00:00",
+        "timestamp": "2023-05-26T20:56:47.037473+00:00",
+        "timezone_offset": null,
         "value": 48,
         "type": "automatic",
         "unit": "rmssd"
@@ -78,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "7d469f85-c0af-4a6f-a916-1e3d0dceaf8d",
-    "user_key": "0ec9d9f4-0e49-434b-8462-32466655d2bf"
+    "user_id": "e3b79307-5793-4721-8025-c83f93daee9b",
+    "user_key": "c00deb27-798c-47e3-b54a-67a8babe0684"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

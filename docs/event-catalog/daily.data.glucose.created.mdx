@@ -1,7 +1,6 @@
 ---
 title: "daily.data.glucose.created"
 description: "New glucose samples have been created"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(glucose, fitbit, 2023-01-23T1
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.glucose.created`
 </ResponseField>
@@ -58,15 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.glucose.created",
   "data": {
     "data": [
       {
-        "id": null,
-        "timestamp": "2023-05-23T11:28:19.885462+00:00",
+        "timestamp": "2023-05-26T20:56:47.037439+00:00",
+        "timezone_offset": null,
         "value": 0.5,
         "type": "automatic | manual_scan",
         "unit": "mmol/L"
@@ -78,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "df027353-b665-46e3-b0fa-7c33b925aefb",
-    "user_key": "10296caf-4f28-42bb-aec0-4140fd3d85ec"
+    "user_id": "debe0519-061c-42f0-b764-22807a197b92",
+    "user_key": "8eb884cd-4159-43c8-a809-7ba780aacb71"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

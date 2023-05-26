@@ -1,8 +1,8 @@
 ---
 title: "labtest.order.updated"
 description: "A lab test order has been updated"
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `labtest.order.updated`
 </ResponseField>
@@ -79,8 +79,10 @@ The Vital Test associated with the order
 </ResponseField>
 <ResponseField name="is_active" type="boolean" required="true">
 </ResponseField>
-<ResponseField name="lab" type="LabClientFacing | null">
-<Expandable title="LabClientFacing" defaultOpen="true">
+<ResponseField name="lab" type="ClientFacingLab | null">
+<Expandable title="ClientFacingLab" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
 <ResponseField name="slug" type="string" required="true">
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
@@ -93,13 +95,27 @@ The Vital Test associated with the order
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="markers" type="MarkerClientFacing[] | null">
-<Expandable title="Item Schema: MarkerClientFacing" defaultOpen="true">
+<ResponseField name="markers" type="ClientFacingMarker[] | null">
+<Expandable title="Item Schema: ClientFacingMarker" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
 </ResponseField>
 <ResponseField name="description" type="string | null">
+</ResponseField>
+<ResponseField name="lab_id" type="integer | null">
+</ResponseField>
+<ResponseField name="provider_id" type="string | null">
+</ResponseField>
+<ResponseField name="type" type="MarkerType | null">
+<Expandable title="MarkerType" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="unit" type="string | null">
+</ResponseField>
+<ResponseField name="price" type="string | null">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -229,14 +245,15 @@ Requistion form url.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "labtest.order.updated",
   "data": {
-    "id": "dd90c3bc-c577-4cb7-8795-84cdefcdc5ff",
-    "team_id": "a4c33e91-b44f-4265-9403-ca29c31d99d1",
-    "user_id": "0417bb41-717a-4b7a-90fc-266e97857a91",
+    "id": "95695249-3a3d-4d03-8f9e-ae80f017590b",
+    "team_id": "82aa93d1-4a00-41f1-a677-f15eb9d49813",
+    "user_id": "51edb7f1-f77d-462a-b322-e8f4a93d7b28",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -277,7 +294,7 @@ Requistion form url.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "11e2bbd4-a8a4-4ce7-8845-d0c94792e6f8",
+    "health_insurace_id": "d0a95372-446a-4ac7-ab0a-fef8808874e6",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
@@ -303,4 +320,4 @@ Requistion form url.
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

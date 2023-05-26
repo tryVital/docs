@@ -1,7 +1,6 @@
 ---
 title: "daily.data.blood_pressure.updated"
 description: "Existing blood pressure samples have been updated"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(blood_pressure, fitbit, 2023-
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.blood_pressure.updated`
 </ResponseField>
@@ -56,15 +56,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.blood_pressure.updated",
   "data": {
     "data": [
       {
-        "id": 2,
-        "timestamp": "2023-05-23T11:28:20.717345+00:00",
+        "timestamp": "2023-05-26T20:56:48.259873+00:00",
+        "timezone_offset": null,
         "systolic": "125",
         "diastolic": "75",
         "type": "cuff",
@@ -77,9 +78,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "50b09c2c-f6f5-4b16-9a3f-2283be8f1654",
-    "user_key": "b42c3971-5b1c-4cda-aa96-b00d0b16a2a7"
+    "user_id": "6c4bfdab-c299-4f02-82e6-862f374fb729",
+    "user_key": "c770f3b1-8864-4bd7-aa96-517719bc669d"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

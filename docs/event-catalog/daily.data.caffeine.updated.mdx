@@ -1,7 +1,6 @@
 ---
 title: "daily.data.caffeine.updated"
 description: "Existing caffeine samples have been updated"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(caffeine, fitbit, 2023-01-23T
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.caffeine.updated`
 </ResponseField>
@@ -58,14 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.caffeine.updated",
   "data": {
     "data": [
       {
-        "timestamp": "2023-05-23T11:28:19.885521+00:00",
+        "timestamp": "2023-05-26T20:56:47.037498+00:00",
+        "timezone_offset": null,
         "value": 42,
         "type": "automatic",
         "unit": "g"
@@ -77,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "46075747-25db-4095-b2ae-c89c4059fb01",
-    "user_key": "acd25497-d031-406d-86a9-d487c510418e"
+    "user_id": "a8ae72aa-357e-45c7-8acc-7fed45c76e9f",
+    "user_key": "ca0302f8-44e6-4622-9319-36ef23ea069e"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

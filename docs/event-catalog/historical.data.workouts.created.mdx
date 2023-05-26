@@ -1,8 +1,8 @@
 ---
 title: "historical.data.workouts.created"
 description: "Historical pull of workouts data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.workouts.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.workouts.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.workouts.created",
   "data": {
-    "user_id": "8e7b960f-bc98-4cad-ac55-2b85068d3937",
-    "user_key": "99435714-9108-4ac1-ba48-77d2f909acb5",
-    "start_date": "2023-02-22T11:28:21.455419+00:00",
-    "end_date": "2023-05-23T11:28:21.455439+00:00",
+    "user_id": "efe67774-457b-45cc-9b30-b88c708803bc",
+    "user_key": "2e601fe9-6758-4972-bdd8-c4c9ef893cc8",
+    "start_date": "2023-02-25T20:56:49.496172+00:00",
+    "end_date": "2023-05-26T20:56:49.496190+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

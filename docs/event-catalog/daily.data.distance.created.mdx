@@ -1,7 +1,6 @@
 ---
 title: "daily.data.distance.created"
 description: "New distance samples have been created"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(distance, fitbit, 2023-01-23T
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.distance.created`
 </ResponseField>
@@ -58,14 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.distance.created",
   "data": {
     "data": [
       {
-        "timestamp": "2023-05-23T11:28:19.885534+00:00",
+        "timestamp": "2023-05-26T20:56:47.037513+00:00",
+        "timezone_offset": null,
         "value": 5.6,
         "type": "automatic",
         "unit": "m"
@@ -77,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "572d5ded-e934-43ee-a966-8a7a68da9b67",
-    "user_key": "50b2cb5f-d440-4595-b42c-18a76e99301c"
+    "user_id": "9662dd9b-61f7-4780-8308-435d6b33b74a",
+    "user_key": "9b8e4743-d1bf-48af-9b49-81d3e182f8a8"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

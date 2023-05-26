@@ -1,7 +1,6 @@
 ---
 title: "daily.data.activity.updated"
 description: "The activity summary of a calendar day has been updated"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.activity.updated`
 </ResponseField>
@@ -77,13 +77,14 @@ Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer 
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.activity.updated",
   "data": {
-    "date": "2023-05-23T11:28:20.771610+00:00",
-    "calendar_date": "2023-05-23",
+    "date": "2023-05-26T20:56:48.319668+00:00",
+    "calendar_date": "2023-05-26",
     "calories_total": 100,
     "calories_active": 2000,
     "steps": 10000,
@@ -99,8 +100,8 @@ Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer 
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "d410093b-9d41-4b60-b4f9-dbfd1a787549"
+    "user_id": "8f81ca7a-6255-49c2-a6cb-6232e4308d9a"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

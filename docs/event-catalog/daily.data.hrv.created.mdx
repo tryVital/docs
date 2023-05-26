@@ -1,7 +1,6 @@
 ---
 title: "daily.data.hrv.created"
 description: "New hrv samples have been created"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(hrv, fitbit, 2023-01-23T12:34
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.hrv.created`
 </ResponseField>
@@ -58,15 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.hrv.created",
   "data": {
     "data": [
       {
-        "id": null,
-        "timestamp": "2023-05-23T11:28:19.885499+00:00",
+        "timestamp": "2023-05-26T20:56:47.037473+00:00",
+        "timezone_offset": null,
         "value": 48,
         "type": "automatic",
         "unit": "rmssd"
@@ -78,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "f42345c0-64c9-412b-8dd8-2e2749ed8e69",
-    "user_key": "a486f467-8d4d-4f21-ade6-301bd908eac4"
+    "user_id": "4d6dab8d-c16e-45a1-8c4d-7da15f705f0c",
+    "user_key": "46c4e311-596e-429c-864f-c9e871ba0f52"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

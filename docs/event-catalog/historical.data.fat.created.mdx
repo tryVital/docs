@@ -1,8 +1,8 @@
 ---
 title: "historical.data.fat.created"
 description: "Historical pull of fat data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.fat.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.fat.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.fat.created",
   "data": {
-    "user_id": "42b69596-5d57-4645-be5c-24df7edf1db2",
-    "user_key": "6bac812f-5a46-4fc2-a568-1f5b7646517f",
-    "start_date": "2023-02-22T11:28:21.468594+00:00",
-    "end_date": "2023-05-23T11:28:21.468613+00:00",
+    "user_id": "99741bde-ba5c-47e7-993d-cb26a908a376",
+    "user_key": "c7c1b2c8-a040-42c7-8e25-575801f20788",
+    "start_date": "2023-02-25T20:56:49.480048+00:00",
+    "end_date": "2023-05-26T20:56:49.480071+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

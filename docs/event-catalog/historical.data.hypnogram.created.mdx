@@ -1,8 +1,8 @@
 ---
 title: "historical.data.hypnogram.created"
 description: "Historical pull of hypnogram data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.hypnogram.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.hypnogram.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.hypnogram.created",
   "data": {
-    "user_id": "d2a08ac5-ff43-4b87-8c13-f5f90dfa7fc5",
-    "user_key": "dcd7b2b6-c400-4e03-98b9-c9a11ec26aa5",
-    "start_date": "2023-02-22T11:28:21.460910+00:00",
-    "end_date": "2023-05-23T11:28:21.460929+00:00",
+    "user_id": "814bc7ee-5deb-490e-83c8-07c0024003a4",
+    "user_key": "d8206d14-63f9-45c6-b52b-9efe2899e1e6",
+    "start_date": "2023-02-25T20:56:49.485458+00:00",
+    "end_date": "2023-05-26T20:56:49.485479+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

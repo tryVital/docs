@@ -1,7 +1,6 @@
 ---
 title: "daily.data.profile.created"
 description: "User profile data has been updated"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.profile.created`
 </ResponseField>
@@ -39,20 +39,21 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.profile.created",
   "data": {
-    "id": "d3f4998b-bd9f-41ea-9903-eaf0decda2cb",
+    "id": "976c7753-12b5-468f-aaf7-9f38ed678e2d",
     "height": 183,
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "97ae93c0-1b69-422f-8e63-c97cb2491b0f"
+    "user_id": "6abdccc7-83d7-45a6-a37c-4bfd4bb1b559"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

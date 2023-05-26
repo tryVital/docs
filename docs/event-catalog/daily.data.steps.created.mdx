@@ -1,7 +1,6 @@
 ---
 title: "daily.data.steps.created"
 description: "New steps samples have been created"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(steps, fitbit, 2023-01-23T12:
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.steps.created`
 </ResponseField>
@@ -58,14 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.steps.created",
   "data": {
     "data": [
       {
-        "timestamp": "2023-05-23T11:28:19.885526+00:00",
+        "timestamp": "2023-05-26T20:56:47.037504+00:00",
+        "timezone_offset": null,
         "value": 123,
         "type": "automatic",
         "unit": "count"
@@ -77,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "81643e90-3c56-4ab9-b9b7-87ada00e07a0",
-    "user_key": "d7ebf0a6-8e72-4e25-9da9-96dd540bfd63"
+    "user_id": "e10cb137-d96f-4e50-ad32-d003f753a3ae",
+    "user_key": "097d678f-6c90-40ed-8d36-8b89d0fba818"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

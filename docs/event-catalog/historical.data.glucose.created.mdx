@@ -1,8 +1,8 @@
 ---
 title: "historical.data.glucose.created"
 description: "Historical pull of glucose data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.glucose.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.glucose.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.glucose.created",
   "data": {
-    "user_id": "0afb2193-562d-4d6c-b20b-6a4eec487307",
-    "user_key": "3d703be3-431b-41b3-850c-b842a590fca6",
-    "start_date": "2023-02-22T11:28:21.458551+00:00",
-    "end_date": "2023-05-23T11:28:21.458571+00:00",
+    "user_id": "441f0de8-a558-4c84-8dd1-03ff4393d7e7",
+    "user_key": "8d6f92c3-432a-4f6e-b858-eb09e5d0cafd",
+    "start_date": "2023-02-25T20:56:49.489308+00:00",
+    "end_date": "2023-05-26T20:56:49.489325+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

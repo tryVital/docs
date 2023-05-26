@@ -1,7 +1,6 @@
 ---
 title: "daily.data.meal.created"
 description: "A new meal has been created"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.meal.created`
 </ResponseField>
@@ -99,7 +99,8 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.meal.created",
@@ -166,4 +167,4 @@ URL for source logo
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

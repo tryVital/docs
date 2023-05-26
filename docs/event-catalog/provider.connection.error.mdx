@@ -1,8 +1,8 @@
 ---
 title: "provider.connection.error"
 description: "Provider Connection failed to be established, or has failed due to user credential changes."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `provider.connection.error`
 </ResponseField>
@@ -20,17 +20,18 @@ Constant: `provider.connection.error`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "provider.connection.error",
   "data": {
     "provider": "oura",
-    "user_key": "9e736715-5fe1-47a0-8dd0-55bc57966b98",
-    "user_id": "5e7b31cc-2545-4190-836b-1d10101bd764",
+    "user_key": "c2f515cd-c8e0-49b3-9c10-6b2e9070b97e",
+    "user_id": "f8697891-df03-4af9-8688-d5eb47615aa2",
     "message": "We are having issues fetching information for user.                             We won't try to fetch again from this specific provider. Please reconnect device.",
     "error_details": "Failed to pull provider data"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

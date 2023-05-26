@@ -1,7 +1,6 @@
 ---
 title: "daily.data.mindfulness_minutes.created"
 description: "New mindfulness_minutes samples have been created"
-api: "GET /"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -10,6 +9,7 @@ its source (ID or slug) and its timestamp. e.g., `(mindfulness_minutes, fitbit, 
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.mindfulness_minutes.created`
 </ResponseField>
@@ -58,14 +58,16 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.mindfulness_minutes.created",
   "data": {
     "data": [
       {
-        "timestamp": "2023-05-23T11:28:19.885523+00:00",
+        "timestamp": "2023-05-26T20:56:47.037501+00:00",
+        "timezone_offset": null,
         "value": 42,
         "type": "automatic",
         "unit": "min"
@@ -77,9 +79,9 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "ee3e0157-85e6-45d5-8a67-f3d265e4fd35",
-    "user_key": "10d8eade-7155-4a4d-a557-527f7be37e2e"
+    "user_id": "dab98eea-7a68-40b8-9c9b-e96238c59473",
+    "user_key": "413cfcbc-9135-4d6f-aad1-71d7a050fc42"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

@@ -1,7 +1,6 @@
 ---
 title: "daily.data.workout_stream.created"
 description: "A workout stream has been created, and can be accessed via the /v2/timeseries/workouts/&lcub;workout_id&rcub;/stream endpoint."
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workout_stream.created`
 </ResponseField>
@@ -55,12 +55,13 @@ Slug for designated sport
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.workout_stream.created",
   "data": {
-    "workout_id": "0e3d227c-0308-434b-b117-b8a873544d7c",
+    "workout_id": "c89ed19d-894d-4047-a308-5de37971e086",
     "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {
@@ -76,4 +77,4 @@ Slug for designated sport
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

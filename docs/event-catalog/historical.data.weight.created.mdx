@@ -1,8 +1,8 @@
 ---
 title: "historical.data.weight.created"
 description: "Historical pull of weight data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.weight.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.weight.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.weight.created",
   "data": {
-    "user_id": "6c04977e-1e27-4134-892f-d186a0b4a4c6",
-    "user_key": "5a68710b-b98c-472c-983b-1732baba6d4a",
-    "start_date": "2023-02-22T11:28:21.457036+00:00",
-    "end_date": "2023-05-23T11:28:21.457056+00:00",
+    "user_id": "52054dbd-5e6b-41a2-a65c-8aaf6d764f76",
+    "user_key": "9e78eed3-6b28-485b-b0a2-f93862737ae8",
+    "start_date": "2023-02-25T20:56:49.493163+00:00",
+    "end_date": "2023-05-26T20:56:49.493181+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

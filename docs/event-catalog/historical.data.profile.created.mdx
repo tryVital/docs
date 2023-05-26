@@ -1,8 +1,8 @@
 ---
 title: "historical.data.profile.created"
 description: "Historical pull of profile data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.profile.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.profile.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.profile.created",
   "data": {
-    "user_id": "5de4b0bd-b371-4273-ad9c-7864049f1e00",
-    "user_key": "63242372-561f-4003-b94b-4e41d2727126",
-    "start_date": "2023-02-22T11:28:21.464754+00:00",
-    "end_date": "2023-05-23T11:28:21.464773+00:00",
+    "user_id": "59d78a40-9f16-4ea0-8fd6-6dac78f51213",
+    "user_key": "4dd39d37-213f-4d94-9ffb-e60ba47e3065",
+    "start_date": "2023-02-25T20:56:49.487042+00:00",
+    "end_date": "2023-05-26T20:56:49.487060+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

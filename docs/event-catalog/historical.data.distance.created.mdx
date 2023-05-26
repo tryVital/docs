@@ -1,8 +1,8 @@
 ---
 title: "historical.data.distance.created"
 description: "Historical pull of distance data has completed and you can now pull data for this resource."
-api: "GET /"
 ---
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.distance.created`
 </ResponseField>
@@ -22,18 +22,19 @@ Constant: `historical.data.distance.created`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "historical.data.distance.created",
   "data": {
-    "user_id": "a75b8280-6dfc-4031-a081-9066fdc08222",
-    "user_key": "aa38ffc2-41aa-4d29-962c-ba10b3fe947d",
-    "start_date": "2023-02-22T11:28:21.450508+00:00",
-    "end_date": "2023-05-23T11:28:21.450544+00:00",
+    "user_id": "cef8bb99-caf3-4fc5-b999-64f7096f0db7",
+    "user_key": "73fe1049-2aab-4d35-a39e-d47e103a89d0",
+    "start_date": "2023-02-25T20:56:49.491587+00:00",
+    "end_date": "2023-05-26T20:56:49.491604+00:00",
     "is_final": true,
     "provider": "oura"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

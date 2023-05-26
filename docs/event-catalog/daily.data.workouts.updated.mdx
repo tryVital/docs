@@ -1,7 +1,6 @@
 ---
 title: "daily.data.workouts.updated"
 description: "An existing workout session has been updated"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workouts.updated`
 </ResponseField>
@@ -117,18 +117,19 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.workouts.updated",
   "data": {
-    "id": "36ff9b6f-0990-49ba-b17c-942f49a41757",
+    "id": "0103fd05-fbe0-43b1-8dc5-f313eafcfa4a",
     "average_hr": 100,
     "max_hr": 190,
     "distance": 1700,
-    "calendar_date": "2023-28-",
-    "time_start": "2023-05-23T10:28:21.381467+00:00",
-    "time_end": "2023-05-23T11:28:21.381490+00:00",
+    "calendar_date": "2023-56-",
+    "time_start": "2023-05-26T19:56:49.406195+00:00",
+    "time_end": "2023-05-26T20:56:49.406225+00:00",
     "calories": 300,
     "sport": {
       "id": 1,
@@ -146,7 +147,7 @@ URL for source logo
       10,
       200
     ],
-    "user_id": "4203316e-62b7-4cd4-b4ac-b65861a03021",
+    "user_id": "37c6e292-0b9a-488e-adf7-230f7e089422",
     "moving_time": 100,
     "total_elevation_gain": 10,
     "elev_high": 20.2,
@@ -163,4 +164,4 @@ URL for source logo
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

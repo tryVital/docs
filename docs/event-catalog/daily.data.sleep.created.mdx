@@ -1,7 +1,6 @@
 ---
 title: "daily.data.sleep.created"
 description: "A new sleep session has been created"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.sleep.created`
 </ResponseField>
@@ -190,16 +190,17 @@ Measured in bpm.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.sleep.created",
   "data": {
-    "id": "aafe2934-3645-440f-a218-7e4a93f1e56f",
-    "date": "2023-05-23T11:28:21.371588+00:00",
-    "calendar_date": "2023-05-23",
-    "bedtime_start": "2023-05-23T11:28:21.371604+00:00",
-    "bedtime_stop": "2023-05-23T11:28:21.371607+00:00",
+    "id": "ba3b6572-2348-478d-91a0-9c7e07a7a38c",
+    "date": "2023-05-26T20:56:49.395792+00:00",
+    "calendar_date": "2023-05-26",
+    "bedtime_start": "2023-05-26T20:56:49.395808+00:00",
+    "bedtime_stop": "2023-05-26T20:56:49.395812+00:00",
     "timezone_offset": 2400,
     "duration": 28800,
     "total": 28800,
@@ -220,8 +221,8 @@ Measured in bpm.
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "b276f243-bbb5-4f61-879a-f39ba6b476a2"
+    "user_id": "b389d7e3-1968-408e-a678-bd18b63e7f7c"
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>

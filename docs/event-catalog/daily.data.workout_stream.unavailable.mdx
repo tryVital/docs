@@ -1,7 +1,6 @@
 ---
 title: "daily.data.workout_stream.unavailable"
 description: "We failed to find a workout stream associated with this data"
-api: "GET /"
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -9,6 +8,7 @@ Each summary object is uniquely identified by its `id`.
 If multiple events are received at the same `id`, the last event received replaces all its previous
 versions.
 </Warning>
+# Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workout_stream.unavailable`
 </ResponseField>
@@ -47,13 +47,14 @@ Slug for designated sport
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseExample>
+# Examples
+<CodeGroup>
 ```json Example
 {
   "event_type": "daily.data.workout_stream.unavailable",
   "data": {
-    "user_id": "eb88e036-5fd8-4af2-8508-bb34cce94a74",
-    "workout_id": "2139ee85-61b9-4659-9529-4195cf6bc600",
+    "user_id": "841301aa-ae61-4517-a579-088ef91e68c8",
+    "workout_id": "73c7f5f5-4fb4-4355-bf18-bdd55f598c0e",
     "message": "The stream for this workout is not available.",
     "source": {
       "name": "Oura",
@@ -68,4 +69,4 @@ Slug for designated sport
   }
 }
 ```
-</ResponseExample>
+</CodeGroup>
