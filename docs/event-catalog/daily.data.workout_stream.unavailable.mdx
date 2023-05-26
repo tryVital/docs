@@ -1,0 +1,72 @@
+---
+title: "daily.data.workout_stream.unavailable"
+description: "We failed to find a workout stream associated with this data"
+---
+<Warning>
+Each summary object is uniquely identified by its `id`.
+
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.workout_stream.unavailable`
+</ResponseField>
+<ResponseField name="data" type="WorkoutStreamUnavailable" required="true">
+<Expandable title="WorkoutStreamUnavailable" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="workout_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="message" type="string" required="true">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="sport" type="ClientFacingSport" required="true">
+<Expandable title="ClientFacingSport" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+Sport&#x27;s name
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated sport
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "daily.data.workout_stream.unavailable",
+  "data": {
+    "user_id": "841301aa-ae61-4517-a579-088ef91e68c8",
+    "workout_id": "73c7f5f5-4fb4-4355-bf18-bdd55f598c0e",
+    "message": "The stream for this workout is not available.",
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "sport": {
+      "id": 1,
+      "name": "Running",
+      "slug": "running"
+    }
+  }
+}
+```
+</CodeGroup>

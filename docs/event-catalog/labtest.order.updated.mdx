@@ -1,0 +1,323 @@
+---
+title: "labtest.order.updated"
+description: "A lab test order has been updated"
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `labtest.order.updated`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingOrder" required="true">
+<Expandable title="ClientFacingOrder" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+The Vital Order ID
+</ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+Your team id.
+</ResponseField>
+<ResponseField name="patient_details" type="ClientFacingPatientDetailsCompatible" required="true">
+Patient Details
+<Expandable title="ClientFacingPatientDetailsCompatible" defaultOpen="true">
+<ResponseField name="first_name" type="string | null">
+</ResponseField>
+<ResponseField name="last_name" type="string | null">
+</ResponseField>
+<ResponseField name="dob" type="string" required="true">
+</ResponseField>
+<ResponseField name="gender" type="string" required="true">
+</ResponseField>
+<ResponseField name="phone_number" type="string | null">
+</ResponseField>
+<ResponseField name="email" type="string | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="patient_address" type="PatientAddressCompatible" required="true">
+Patient Address
+<Expandable title="PatientAddressCompatible" defaultOpen="true">
+<ResponseField name="receiver_name" type="string | null">
+</ResponseField>
+<ResponseField name="street" type="string" required="true">
+</ResponseField>
+<ResponseField name="street_number" type="string | null">
+</ResponseField>
+<ResponseField name="city" type="string" required="true">
+</ResponseField>
+<ResponseField name="state" type="string" required="true">
+</ResponseField>
+<ResponseField name="zip" type="string" required="true">
+</ResponseField>
+<ResponseField name="country" type="string" required="true">
+</ResponseField>
+<ResponseField name="phone_number" type="string | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="lab_test" type="ClientFacingLabTest" required="true">
+The Vital Test associated with the order
+<Expandable title="ClientFacingLabTest" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+</ResponseField>
+<ResponseField name="sample_type" type="LabTestSampleType" required="true">
+<Expandable title="LabTestSampleType" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="method" type="LabTestMethod" required="true">
+<Expandable title="LabTestMethod" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="price" type="number" required="true">
+</ResponseField>
+<ResponseField name="is_active" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="lab" type="ClientFacingLab | null">
+<Expandable title="ClientFacingLab" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+</ResponseField>
+<ResponseField name="first_line_address" type="string" required="true">
+</ResponseField>
+<ResponseField name="city" type="string" required="true">
+</ResponseField>
+<ResponseField name="zipcode" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="markers" type="ClientFacingMarker[] | null">
+<Expandable title="Item Schema: ClientFacingMarker" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+</ResponseField>
+<ResponseField name="description" type="string | null">
+</ResponseField>
+<ResponseField name="lab_id" type="integer | null">
+</ResponseField>
+<ResponseField name="provider_id" type="string | null">
+</ResponseField>
+<ResponseField name="type" type="MarkerType | null">
+<Expandable title="MarkerType" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="unit" type="string | null">
+</ResponseField>
+<ResponseField name="price" type="string | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="details" type="anyOf" required="true">
+<Expandable title="ClientFacingWalkInOrderDetails">
+<ResponseField name="type" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="ClientFacingWalkInTestOrder | null">
+<Expandable title="ClientFacingWalkInTestOrder" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+The Vital walk-in test Order ID
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+<Expandable title="ClientFacingTestKitOrderDetails">
+<ResponseField name="type" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="ClientFacingTestkitOrder | null">
+<Expandable title="ClientFacingTestkitOrder" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+The Vital TestKit Order ID
+</ResponseField>
+<ResponseField name="shipment" type="ClientFacingShipment | null">
+Shipment object
+<Expandable title="ClientFacingShipment" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+The Vital Shipment ID
+</ResponseField>
+<ResponseField name="outbound_tracking_number" type="string | null">
+Tracking number for delivery to customer
+</ResponseField>
+<ResponseField name="outbound_tracking_url" type="string | null">
+Tracking url for delivery to customer
+</ResponseField>
+<ResponseField name="inbound_tracking_number" type="string | null">
+Tracking number for delivery to lab
+</ResponseField>
+<ResponseField name="inbound_tracking_url" type="string | null">
+Tracking url for delivery to lab
+</ResponseField>
+<ResponseField name="outbound_courier" type="string | null">
+Courier used for delivery to customer
+</ResponseField>
+<ResponseField name="inbound_courier" type="string | null">
+Courier used for delivery to lab
+</ResponseField>
+<ResponseField name="notes" type="string | null">
+Notes associated to the Vital shipment
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+<Expandable title="ClientFacingAtHomePhlebotomyOrderDetails">
+<ResponseField name="type" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="ClientFacingAtHomePhlebotomyOrder | null">
+<Expandable title="ClientFacingAtHomePhlebotomyOrder" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+The Vital at-home phlebotomy Order ID
+</ResponseField>
+<ResponseField name="appointment_id" type="string | null">
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="sample_id" type="string | null">
+Sample ID
+</ResponseField>
+<ResponseField name="notes" type="string | null">
+Notes associated with the order
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+When your order was created
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+When your order was last updated
+</ResponseField>
+<ResponseField name="events" type="ClientFacingOrderEvent[]" required="true">
+<Expandable title="Item Schema: ClientFacingOrderEvent" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+</ResponseField>
+<ResponseField name="status" type="OrderV2Status" required="true">
+<Expandable title="OrderV2Status" defaultOpen="true">
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="status" type="OrderV2TopLevelStatus | null">
+<Expandable title="OrderV2TopLevelStatus" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="physician" type="PhysicianClientFacing | null">
+<Expandable title="PhysicianClientFacing" defaultOpen="true">
+<ResponseField name="first_name" type="string" required="true">
+</ResponseField>
+<ResponseField name="last_name" type="string" required="true">
+</ResponseField>
+<ResponseField name="npi" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="health_insurance_id" type="string | null">
+Vital ID of the health insurance.
+</ResponseField>
+<ResponseField name="requisition_form_url" type="string | null">
+Requistion form url.
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "labtest.order.updated",
+  "data": {
+    "id": "95695249-3a3d-4d03-8f9e-ae80f017590b",
+    "team_id": "82aa93d1-4a00-41f1-a677-f15eb9d49813",
+    "user_id": "51edb7f1-f77d-462a-b322-e8f4a93d7b28",
+    "patient_details": {
+      "dob": "2020-01-01",
+      "gender": "male"
+    },
+    "patient_address": {
+      "receiver_name": "John Doe",
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "United States",
+      "phone_number": "+11234567890"
+    },
+    "details": {
+      "type": "testkit",
+      "data": {
+        "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+        "shipment": {
+          "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+          "outbound_tracking_number": "<outbound_tracking_number>",
+          "outbound_tracking_url": "<outbound_tracking_url>",
+          "inbound_tracking_number": "<inbound_tracking_number>",
+          "inbound_tracking_url": "<inbound_tracking_url>",
+          "outbound_courier": "usps",
+          "inbound_courier": "usps",
+          "notes": "<notes>",
+          "created_at": "2020-01-01T00:00:00.000Z",
+          "updated_at": "2020-01-01T00:00:00.000Z"
+        },
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2020-01-01T00:00:00Z"
+      }
+    },
+    "lab_test": {
+      "name": "Lipids Panel",
+      "description": "Cholesterol test",
+      "method": "testkit"
+    },
+    "sample_id": "123456789",
+    "health_insurace_id": "d0a95372-446a-4ac7-ab0a-fef8808874e6",
+    "requisition_form_url": "https://www.example.com",
+    "notes": "This is a note",
+    "created_at": "2020-01-01T00:00:00Z",
+    "updated_at": "2020-01-01T00:00:00Z",
+    "status": "collecting_sample",
+    "events": [
+      {
+        "id": 1,
+        "created_at": "2022-01-01T00:00:00Z",
+        "status": "received.testkit.ordered"
+      },
+      {
+        "id": 2,
+        "created_at": "2022-01-02T00:00:00Z",
+        "status": "received.testkit.requisition_created"
+      },
+      {
+        "id": 3,
+        "created_at": "2022-01-03T00:00:00Z",
+        "status": "collecting_sample.testkit.transit_customer"
+      }
+    ]
+  }
+}
+```
+</CodeGroup>

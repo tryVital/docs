@@ -1,0 +1,87 @@
+---
+title: "daily.data.floors_climbed.updated"
+description: "Existing floors_climbed samples have been updated"
+---
+<Warning>
+Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
+its source (ID or slug) and its timestamp. e.g., `(floors_climbed, fitbit, 2023-01-23T12:34:56Z)`.
+
+If multiple samples are received at the same triple key, the last sample received replaces all its
+previous versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.floors_climbed.updated`
+</ResponseField>
+<ResponseField name="data" type="TimeseriesData" required="true">
+<Expandable title="TimeseriesData" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
+<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="id" type="integer | null">
+Measurement id. Note, this field has been deprecated and is no longer used
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="timezone_offset" type="integer | null">
+Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+The value of the measurement.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+</ResponseField>
+<ResponseField name="unit" type="string" required="true">
+The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "daily.data.floors_climbed.updated",
+  "data": {
+    "data": [
+      {
+        "timestamp": "2023-05-26T20:56:47.037516+00:00",
+        "timezone_offset": null,
+        "value": 2,
+        "type": "automatic",
+        "unit": "count"
+      }
+    ],
+    "source_id": 1,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "68eea447-8ab7-42c6-b978-e9e6c40c88c7",
+    "user_key": "8adaa673-1dbf-4871-a4f1-0b80a5107fce"
+  }
+}
+```
+</CodeGroup>

@@ -1,0 +1,40 @@
+---
+title: "historical.data.weight.created"
+description: "Historical pull of weight data has completed and you can now pull data for this resource."
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.weight.created`
+</ResponseField>
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "historical.data.weight.created",
+  "data": {
+    "user_id": "52054dbd-5e6b-41a2-a65c-8aaf6d764f76",
+    "user_key": "9e78eed3-6b28-485b-b0a2-f93862737ae8",
+    "start_date": "2023-02-25T20:56:49.493163+00:00",
+    "end_date": "2023-05-26T20:56:49.493181+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</CodeGroup>

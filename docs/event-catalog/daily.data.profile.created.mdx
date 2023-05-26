@@ -1,0 +1,59 @@
+---
+title: "daily.data.profile.created"
+description: "User profile data has been updated"
+---
+<Warning>
+Each summary object is uniquely identified by its `id`.
+
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.profile.created`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingProfile" required="true">
+<Expandable title="ClientFacingProfile" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
+<ResponseField name="height" type="integer | null">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "daily.data.profile.created",
+  "data": {
+    "id": "976c7753-12b5-468f-aaf7-9f38ed678e2d",
+    "height": 183,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "6abdccc7-83d7-45a6-a37c-4bfd4bb1b559"
+  }
+}
+```
+</CodeGroup>

@@ -1,0 +1,40 @@
+---
+title: "historical.data.activity.created"
+description: "Historical pull of activity data has completed and you can now pull data for this resource."
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.activity.created`
+</ResponseField>
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "historical.data.activity.created",
+  "data": {
+    "user_id": "5f942739-2883-4b51-82ca-1c0f1f93226e",
+    "user_key": "c3574e3a-123e-4541-b4b4-91d83af51aeb",
+    "start_date": "2023-02-25T20:56:49.481564+00:00",
+    "end_date": "2023-05-26T20:56:49.481583+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</CodeGroup>

@@ -1,0 +1,40 @@
+---
+title: "historical.data.blood_oxygen.created"
+description: "Historical pull of blood_oxygen data has completed and you can now pull data for this resource."
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `historical.data.blood_oxygen.created`
+</ResponseField>
+<ResponseField name="data" type="HistoricalDataCreated" required="true">
+<Expandable title="HistoricalDataCreated" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_key" type="string" required="true">
+</ResponseField>
+<ResponseField name="start_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="end_date" type="string" required="true">
+</ResponseField>
+<ResponseField name="is_final" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="provider" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "historical.data.blood_oxygen.created",
+  "data": {
+    "user_id": "702bb0c7-5043-4029-9813-ec2fbcfd8c8a",
+    "user_key": "83593c43-8b12-460a-9856-0f32a8c392b0",
+    "start_date": "2023-02-25T20:56:49.492333+00:00",
+    "end_date": "2023-05-26T20:56:49.492350+00:00",
+    "is_final": true,
+    "provider": "oura"
+  }
+}
+```
+</CodeGroup>

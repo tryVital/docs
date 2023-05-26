@@ -1,0 +1,80 @@
+---
+title: "daily.data.workout_stream.created"
+description: "A workout stream has been created, and can be accessed via the /v2/timeseries/workouts/&lcub;workout_id&rcub;/stream endpoint."
+---
+<Warning>
+Each summary object is uniquely identified by its `id`.
+
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.workout_stream.created`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingShallowWorkoutStream" required="true">
+<Expandable title="ClientFacingShallowWorkoutStream" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="workout_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="provider_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="message" type="string | null">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+Source the data has come from.
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="sport" type="ClientFacingSport | null">
+Sport&#x27;s name
+<Expandable title="ClientFacingSport" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+Sport&#x27;s name
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated sport
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "daily.data.workout_stream.created",
+  "data": {
+    "workout_id": "c89ed19d-894d-4047-a308-5de37971e086",
+    "provider_id": "123dashd9",
+    "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "sport": {
+      "id": 1,
+      "name": "Running",
+      "slug": "running"
+    }
+  }
+}
+```
+</CodeGroup>

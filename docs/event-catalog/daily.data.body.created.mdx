@@ -1,0 +1,73 @@
+---
+title: "daily.data.body.created"
+description: "New body data has been created"
+---
+<Warning>
+Each summary object is uniquely identified by its `id`.
+
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.body.created`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingBody" required="true">
+<Expandable title="ClientFacingBody" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="user_key" type="string | null">
+[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
+<ResponseField name="date" type="string" required="true">
+[⚠️ Deprecated] Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+</ResponseField>
+<ResponseField name="calendar_date" type="string" required="true">
+Date of the summary in the YYYY-mm-dd format.
+</ResponseField>
+<ResponseField name="weight" type="number | null">
+Weight in kg::kg
+</ResponseField>
+<ResponseField name="fat" type="number | null">
+Body fat percentage::perc
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "daily.data.body.created",
+  "data": {
+    "id": "ceecea35-978c-48f0-89e6-a385ed31683c",
+    "date": "2023-05-26T20:56:49.391250+00:00",
+    "calendar_date": "2023-56-",
+    "weight": 80,
+    "fat": 30,
+    "height": 183,
+    "source": {
+      "name": "Oura",
+      "slug": "oura",
+      "logo": "https://logo_url.com"
+    },
+    "user_id": "f694642d-6faf-4d3d-9ce2-9895a1fea133"
+  }
+}
+```
+</CodeGroup>

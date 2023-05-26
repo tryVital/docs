@@ -55,6 +55,11 @@
       "url": "api-reference"
     },
     {
+      "name": "Event Catalog",
+      "icon": "rectangle-terminal",
+      "url": "event-catalog"
+    },
+    {
       "name": "Changelog",
       "icon": "list",
       "url": "changelog"
@@ -267,6 +272,137 @@
         "api-reference/results/get-results",
         "api-reference/results/get-results-pdf",
         "api-reference/results/get-results-metadata"
+      ]
+    },
+    {
+      "group": "Lab Tests",
+      "pages": [
+        "event-catalog/labtest.order.created",
+        "event-catalog/labtest.order.updated"
+      ]
+    },
+    {
+      "group": "Provider",
+      "pages": [
+        "event-catalog/provider.connection.created",
+        "event-catalog/provider.connection.error",
+        "event-catalog/daily.data.device.created",
+        "event-catalog/daily.data.device.updated"
+      ]
+    },
+    {
+      "group": "Summaries",
+      "pages": [
+        "event-catalog/daily.data.activity.created",
+        "event-catalog/daily.data.activity.updated",
+        "event-catalog/daily.data.body.created",
+        "event-catalog/daily.data.body.updated",
+        "event-catalog/daily.data.profile.created",
+        "event-catalog/daily.data.profile.updated",
+        "event-catalog/daily.data.sleep.created",
+        "event-catalog/daily.data.sleep.updated",
+        "event-catalog/daily.data.workouts.created",
+        "event-catalog/daily.data.workouts.updated",
+        "event-catalog/daily.data.workout_stream.created",
+        "event-catalog/daily.data.workout_stream.updated",
+        "event-catalog/historical.data.activity.created",
+        "event-catalog/historical.data.body.created",
+        "event-catalog/historical.data.profile.created",
+        "event-catalog/historical.data.sleep.created",
+        "event-catalog/historical.data.workouts.created"
+      ]
+    },
+    {
+      "group": "Activity Timeseries",
+      "pages": [
+        "event-catalog/daily.data.calories_active.created",
+        "event-catalog/daily.data.calories_active.updated",
+        "event-catalog/daily.data.calories_basal.created",
+        "event-catalog/daily.data.calories_basal.updated",
+        "event-catalog/daily.data.distance.created",
+        "event-catalog/daily.data.distance.updated",
+        "event-catalog/daily.data.floors_climbed.created",
+        "event-catalog/daily.data.floors_climbed.updated",
+        "event-catalog/daily.data.steps.created",
+        "event-catalog/daily.data.steps.updated",
+        "event-catalog/daily.data.vo2_max.created",
+        "event-catalog/daily.data.vo2_max.updated",
+        "event-catalog/historical.data.calories_active.created",
+        "event-catalog/historical.data.calories_basal.created",
+        "event-catalog/historical.data.distance.created",
+        "event-catalog/historical.data.floors_climbed.created",
+        "event-catalog/historical.data.steps.created",
+        "event-catalog/historical.data.vo2_max.created"
+      ]
+    },
+    {
+      "group": "Vitals Timeseries",
+      "pages": [
+        "event-catalog/daily.data.blood_pressure.created",
+        "event-catalog/daily.data.blood_pressure.updated",
+        "event-catalog/daily.data.blood_oxygen.created",
+        "event-catalog/daily.data.blood_oxygen.updated",
+        "event-catalog/daily.data.cholesterol.created",
+        "event-catalog/daily.data.cholesterol.updated",
+        "event-catalog/daily.data.glucose.created",
+        "event-catalog/daily.data.glucose.updated",
+        "event-catalog/daily.data.ige.created",
+        "event-catalog/daily.data.ige.updated",
+        "event-catalog/daily.data.igg.created",
+        "event-catalog/daily.data.igg.updated",
+        "event-catalog/daily.data.heartrate.created",
+        "event-catalog/daily.data.heartrate.updated",
+        "event-catalog/daily.data.hrv.created",
+        "event-catalog/daily.data.hrv.updated",
+        "event-catalog/daily.data.hypnogram.created",
+        "event-catalog/daily.data.hypnogram.updated",
+        "event-catalog/daily.data.respiratory_rate.created",
+        "event-catalog/daily.data.respiratory_rate.updated",
+        "event-catalog/historical.data.blood_pressure.created",
+        "event-catalog/historical.data.blood_oxygen.created",
+        "event-catalog/historical.data.glucose.created",
+        "event-catalog/historical.data.heartrate.created",
+        "event-catalog/historical.data.hrv.created",
+        "event-catalog/historical.data.hypnogram.created",
+        "event-catalog/historical.data.respiratory_rate.created"
+      ]
+    },
+    {
+      "group": "Body Timeseries",
+      "pages": [
+        "event-catalog/daily.data.fat.created",
+        "event-catalog/daily.data.fat.updated",
+        "event-catalog/daily.data.weight.created",
+        "event-catalog/daily.data.weight.updated",
+        "event-catalog/historical.data.fat.created",
+        "event-catalog/historical.data.weight.created"
+      ]
+    },
+    {
+      "group": "Nutrition Summaries",
+      "pages": [
+        "event-catalog/daily.data.meal.created",
+        "event-catalog/daily.data.meal.updated",
+        "event-catalog/historical.data.meal.created"
+      ]
+    },
+    {
+      "group": "Nutrition Timeseries",
+      "pages": [
+        "event-catalog/daily.data.caffeine.created",
+        "event-catalog/daily.data.caffeine.updated",
+        "event-catalog/daily.data.water.created",
+        "event-catalog/daily.data.water.updated",
+        "event-catalog/historical.data.caffeine.created",
+        "event-catalog/historical.data.water.created"
+      ]
+    },
+    {
+      "group": "Wellness Timeseries",
+      "pages": [
+        "event-catalog/daily.data.mindfulness_minutes.created",
+        "event-catalog/daily.data.mindfulness_minutes.updated",
+        "event-catalog/historical.data.mindfulness_minutes.created"
       ]
     },
     {
