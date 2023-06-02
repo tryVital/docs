@@ -83,7 +83,8 @@
         "api-details/data_flow",
         "api-details/rate_limiting",
         "api-details/errors",
-        "api-details/regions"
+        "api-details/regions",
+        "api-details/custom-encryption-keys"
       ]
     },
     {
