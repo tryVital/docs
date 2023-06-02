@@ -95,12 +95,14 @@
       ]
     },
     {
-      "group": "Vital Link",
+      "group": "Connecting Providers",
       "pages": [
-        "wearables/vital-link/introduction",
-        "wearables/vital-link/link_flow",
-        "wearables/vital-link/launching_link",
-        "wearables/vital-link/customization"
+        "wearables/connecting-providers/introduction",
+        "wearables/connecting-providers/link_flow",
+        "wearables/connecting-providers/launching_link",
+        "wearables/connecting-providers/custom_widget",
+        "wearables/connecting-providers/custom_credentials"
+
       ]
     },
     {
