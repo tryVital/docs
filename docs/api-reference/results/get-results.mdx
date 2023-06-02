@@ -5,13 +5,35 @@ openapi: "GET /v3/order/{order_id}/result"
 
 <RequestExample>
 
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/<order_id>/result' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
 ```python Python
 from vital import Client
 
-client = Client(api_key, "sandbox")
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
 
 data = client.LabTests.get_results("<order_id">)
+```
 
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const data = await client.LabTests.Results.getResults("<order_id>");
 ```
 
 </RequestExample>
@@ -26,17 +48,38 @@ data = client.LabTests.get_results("<order_id">)
     "clia_number": "12331231",
     "patient": "Bob Smith",
     "provider": "Dr. Jack Smith",
-    "laboratory": "Quest Diagnostics",
+    "laboratory": "LabCorp",
     "date_reported": "2020-01-01",
     "date_collected": "2022-02-02",
     "specimen_number": "123131",
     "date_received": "2022-01-01"
   },
-  "results": {
-    "[marker]": {},
-    "ige": {},
-    "fsh": {}
-  }
+  "results": [
+    {
+      "name": "Hemoglobin",
+      "slug": "hemoglobin",
+      "unit": "g/dL",
+      "notes": null,
+      "value": 18.9,
+      "timestamp": null,
+      "max_range_value": 17.7,
+      "min_range_value": 13.0,
+      "is_above_max_range": true,
+      "is_below_min_range": false
+    },
+    {
+      "name": "Sodium",
+      "slug": "unknown",
+      "unit": "mmol/L",
+      "notes": null,
+      "value": 136,
+      "timestamp": null,
+      "max_range_value": 144,
+      "min_range_value": 134,
+      "is_above_max_range": false,
+      "is_below_min_range": false
+    }
+  ]
 }
 ```
 
