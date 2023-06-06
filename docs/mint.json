@@ -120,7 +120,13 @@
         {
           "group": "Guides",
           "pages": [
-            "wearables/providers/guides/dexcom",
+            {
+              "group": "Dexcom",
+              "pages": [
+                  "wearables/providers/guides/dexcom_v3",
+                  "wearables/providers/guides/dexcom"
+              ]
+            },
             "wearables/providers/guides/fitbit",
             "wearables/providers/guides/freestyle",
             "wearables/providers/guides/garmin",
