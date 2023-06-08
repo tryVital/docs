@@ -252,7 +252,7 @@
       ]
     },
     {
-      "group": "Lab Testing",
+      "group": "Lab Testing - Orders",
       "pages": [
         "api-reference/lab-testing/create-order",
         "api-reference/lab-testing/get-orders",
@@ -273,11 +273,14 @@
       ]
     },
     {
-      "group": "Lab Tests",
-      "pages": ["api-reference/lab-tests"]
+      "group": "Lab Testing - Tests",
+      "pages": [
+        "api-reference/lab-testing/tests",
+        "api-reference/lab-testing/biomarkers"
+      ]
     },
     {
-      "group": "Results",
+      "group": "Lab Testing - Results",
       "pages": [
         "api-reference/results/get-results",
         "api-reference/results/get-results-pdf",
