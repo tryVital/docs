@@ -2,3 +2,39 @@
 title: "Get Available Biomarkers"
 openapi: "GET /v3/lab_tests/markers"
 ---
+
+<ResponseExample>
+
+```json Response
+{
+  "markers": [
+    {
+      "id": 1,
+      "name": "17-OH Progesterone LCMS",
+      "slug": "17-oh-progesterone-lcms",
+      "description": "17-OH Progesterone LCMS",
+      "lab_id": 3,
+      "provider_id": "070085",
+      "type": null,
+      "unit": null,
+      "price": "N/A"
+    },
+    {
+      "id": 2,
+      "name": "ABO Grouping",
+      "slug": "abo-grouping",
+      "description": "ABO Grouping",
+      "lab_id": 3,
+      "provider_id": "006056",
+      "type": null,
+      "unit": null,
+      "price": "N/A"
+    }
+  ],
+  "total": 2,
+  "page": 1,
+  "size": 2
+}
+```
+
+</ResponseExample>
