@@ -12,6 +12,7 @@ client = Client(api_key, "sandbox")
 data = client.LabTests.create_order(
     user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
     lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    priority=False,
     patient_details={
         "first_name": "John",
         "last_name": "Doe",
@@ -81,6 +82,7 @@ data = client.LabTests.create_order(
          "country": "United States",
          "phone_number": "+1123456789"
       },
+      "priority": false,
       "health_insurance_id": "33ec11aa-d8bf-4f46-950d-c9171be3c22f",
       "details": {
          "type": "testkit",
