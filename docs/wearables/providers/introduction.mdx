@@ -4,32 +4,40 @@ title: "Supported providers"
 
 We currently Support over 300+ devices, a full list can be seen below.
 
+### Cloud Based Providers
+
 | Provider                                                                     | Slug                  | Description                                                   |
 |------------------------------------------------------------------------------|-----------------------|---------------------------------------------------------------|
+| [Beurer](https://www.beurer.com/web/gb/)                                     | `beurer_api`          | Beurer Blood Pressure monitors                                |
+| [Dexcom](https://www.dexcom.com)                                             | `dexcom_v3`           | Dexcom CGM Glucose monitors                                   |
+| [Dexcom (G6 And Older)](https://www.dexcom.com)                              | `dexcom`              | Dexcom CGM Glucose monitors                                   |
+| [8Sleep](https://www.eightsleep.com)                                         | `eight_sleep`         | Smart Mattress                                                |
 | [Freestyle](https://www.freestylelibre.co.uk/libre/)                         | `freestyle_libre`     | Abbott CGM Glucose monitor                                    |
 | [Fitbit](https://www.fitbit.com/global/uk/home)                              | `fitbit`              | Activity Trackers (all devices)                               |
 | [Garmin](https://www.garmin.com)                                             | `garmin`              | Fitness watches (all devices)                                 |
 | [Google Fit](https://www.google.com/fit/)                                    | `google_fit`          | Activity Trackers (all devices)                               |
-| [Samsung Health](https://www.samsung.com/global/galaxy/apps/samsung-health/) | `samsung_health`      | Activity Trackers (all devices)                               |
+| [Hammerhead](https://www.hammerhead.io)                                      | `hammerhead`          | Cycling computers                                             |
+| [iHealth](https://ihealthlabs.com)                                           | `ihealth`             | Blood pressure, Fitness scales, Glucometers & Fitness watches |
 | [Oura](https://ouraring.com)                                                 | `oura`                | Smart Sleep tracking ring                                     |
 | [Peloton](https://www.onepeloton.com)                                        | `peloton`             | Popular Indoor Exercise bike                                  |
 | [Renpho](https://renpho.com)                                                 | `renpho`              | Fitness Scales                                                |
 | [Strava](https://www.strava.com)                                             | `strava`              | Running & Cycling Social Network                              |
 | [Wahoo](https://wahoofitness.com)                                            | `wahoo`               | Cycling Equipment                                             |
 | [Whoop](https://www.whoop.com)                                               | `whoop`               | Your Personal Digital Fitness and Health Coach                |
-| [Zwift](https://zwift.com)                                                   | `zwift`               | Virtual cycling and running                                   |
 | [Withings](https://www.withings.com)                                         | `withings`            | Fitness scales, watches and health monitors                   |
-| [iHealth](https://ihealthlabs.com)                                           | `ihealth`             | Blood pressure, Fitness scales, Glucometers & Fitness watches |
-| [8Sleep](https://www.eightsleep.com)                                         | `eight_sleep`         | Smart Mattress                                                |
-| [Omron](https://www.omron-healthcare.com) (SDK)                              | `omron_ble`           | Blood Pressure monitors and scales                            |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)                           | `contour_ble`         | Glucometers                                                   |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)                                 | `accuchek_ble`        | Glucose Strips/MySugr App                                     |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)                | `apple_health_kit`    | Health and fitness data on iPhone and Apple Watch             |
-| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK)         | `freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK                   |
-| [Braun Healthcare](https://www.braunhealthcare.com)                          | `braun`               | Blood Pressure Monitors                                       |
-| [Hammerhead](https://www.hammerhead.io)                                      | `hammerhead`          | Cycling computers                                             |
-| [Dexcom](https://www.dexcom.com)                                             | `dexcom_v3`           | Dexcom CGM Glucose monitors                                   |
-| [Dexcom (G6 And Older)](https://www.dexcom.com)                              | `dexcom`              | Dexcom CGM Glucose monitors                                   |
+| [Zwift](https://zwift.com)                                                   | `zwift`               | Virtual cycling and running                                   |
+
+### SDK Based Providers
+
+| Provider                                                                     | Slug                  | Description                                                   |
+|------------------------------------------------------------------------------|-----------------------|---------------------------------------------------------------|
+| [Accu-Chek](https://www.accu-chek.com) (Bluetooth)                           | `accuchek_ble`        | Glucose Strips/MySugr App                                     |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                      | `apple_health_kit`    | Health and fitness data on iPhone and Apple Watch             |
+| [Beurer](https://www.beurer.com/web/gb/) (Bluetooth)                         | `beurer_ble`          | Beurer Blood Pressure monitors                                |
+| [Contour](https://www.diabetes.ascensia.com) (Bluetooth)                     | `contour_ble`         | Glucometers                                                   |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (NFC)         | `freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK                   |
+| [Omron](https://www.omron-healthcare.com)  (Bluetooth)                       | `omron_ble`           | Blood Pressure monitors and scales                            |
+
 
 ## Providers under active development
 
@@ -38,6 +46,7 @@ We currently Support over 300+ devices, a full list can be seen below.
 | Provider                                     | Slug             | Description    |
 |----------------------------------------------|------------------|----------------|
 | [MyFitnessPal](https://www.myfitnesspal.com) | `my_fitness_pal` | Nutrition data |
+| [Android Health Connect](https://developer.android.com/health-connect)       | `health_connect`      | Health and fitness data on Android devices                    |
 
 **Planned**: On our roadmap
 
