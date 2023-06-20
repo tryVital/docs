@@ -34,6 +34,6 @@ After the user enters the code successfully they will have the option to:
 1. Stop sharing data.
 2. Add other providers (e.g. Garmin, Oura).
 
-If the user stops sharing data, the app will clean the user's credentials stored locally. It will also reset the SDK. However it won't delete the connection between that user and Apple HealthKit on our servers. This means that even if the user stops sharing data, the already collected data won't be deleted. This is true for both Apple HealthKit but for also for any other provider the user might have connected to (e.g. Garmin, Oura).
+If the user stops sharing data, the app will clean the user's credentials stored locally. It will also reset the SDK. However it won't delete the connection between that user and Apple HealthKit on our servers. This means that even if the user stops sharing data, the already collected data won't be deleted. This is true for both Apple HealthKit but also for any other provider the user might be connected to (e.g. Garmin, Oura).
 
 If you want to disconnect your user from a provider, you need to call the [deregister provider endpoint](/api-reference/user/deregister-a-provider).
