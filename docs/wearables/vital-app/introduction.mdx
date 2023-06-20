@@ -22,6 +22,11 @@ The flow is quite straighforward:
 2. You create a code, against a `userId`. You can use our [Create Code](/api-reference/link/create-code) endpoint for this.
 3. You provide this code to your user. They will then go to the Settings and input this code. Once succesfully, their data will be synced.
 
+<Warning>
+  A Vital code can only be used once. If your user is facing issues, please ask
+  them if they tried the code multiple times.
+</Warning>
+
 ## Stop sharing data
 
 After the user enters the code successfully they will have the option to:
@@ -32,8 +37,3 @@ After the user enters the code successfully they will have the option to:
 If the user stops sharing data, the app will clean the user's credentials stored locally. It will also reset the SDK. However it won't delete the connection between that user and Apple HealthKit on our servers. This means that even if the user stops sharing data, the already collected data won't be deleted. This is true for both Apple HealthKit but for also for any other provider the user might have connected to (e.g. Garmin, Oura).
 
 If you want to disconnect your user from a provider, you need to call the [deregister provider endpoint](/api-reference/user/deregister-a-provider).
-
-<Warning>
-  A Vital code can only be used once. If your user is facing issues, please ask
-  them if they tried the code multiple times.
-</Warning>
