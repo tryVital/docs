@@ -21,3 +21,8 @@ The flow is quite straighforward:
 1. Your user, is already part of our system (e.g. they have a `userId`). If they aren't, you can create one by using our [Create User](/api-reference/user/create-user) endpoint.
 2. You create a code, against a `userId`. You can use our [Create Code](/api-reference/link/create-code) endpoint for this.
 3. You provide this code to your user. They will then go to the Settings and input this code. Once succesfully, their data will be synced.
+
+<Warning>
+  A Vital code can only be used once. If your user is facing issues, please ask
+  them if they tried the code multiple times.
+</Warning>
