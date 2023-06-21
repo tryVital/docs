@@ -482,6 +482,26 @@ await VitalHealthKitClient.shared.cleanUp()
 
 Internally this method will also call `VitalClient.shared.cleanUp()`.
 
+Calling `cleanUp` does this two things:
+
+1. Makes sure no more data will be synced between the device and our servers.
+2. Prepare the SDK to be configured again (either with new API keys and / or another `userId`).
+
+Do notice that the data already synced is not deleted, nor is the user. To delete the data you need call the deregister provider method:
+
+```swift
+await VitalClient.shared.user.deregisterProvider(provider: .appleHealthKit)
+```
+
+The above method will disconnect the user from Apple HealthKit at the server level.
+
+If you want to both reset the SDK (e.g. logging out a user) and remove the connection to Apple HealthKit, you can do so by calling these methods in order:
+
+```swift
+await VitalHealthKitClient.shared.cleanUp()
+await VitalClient.shared.user.deregisterProvider(provider: .appleHealthKit)
+```
+
 ### 5. Miscellaneous Information
 
 #### i) SDK configuration flow

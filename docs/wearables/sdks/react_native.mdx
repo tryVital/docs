@@ -2,6 +2,11 @@
 title: "React Native"
 ---
 
+<Note>
+  We strongly recommend reading the documentation for both native iOS and
+  Android. The React Native SDK is a thin layer sitting on top of these SDKs.
+</Note>
+
 ## 1. Introduction
 
 Our React Native library mirrors the functionality of our iOS and Android SDKs. It is a wrapper around the native SDKs, and it exposes the same methods and events.
@@ -75,12 +80,13 @@ The Core SDK is now ready to use. You can now set up the HealthKit SDK and Devic
 
 You start by enabling HealthKit capabilities in your app. Please follow this [guide](https://developer.apple.com/documentation/healthkit/setting_up_healthkit). It should look like this:
 
-<img src="/img/iOS/health_kit_permission.png"/>
+<img src="/img/iOS/health_kit_permission.png" />
 
 Don't forget to add the `NSHealthShareUsageDescription` keys to your `Info.plist` file. Finally setting up the HealthKit SDK is just:
 
 <Tip>
-    If you set `automaticConfiguration` to true, the SDK will do everything on your behalf.
+  If you set `automaticConfiguration` to true, the SDK will do everything on
+  your behalf.
 </Tip>
 
 ### 2. Android
@@ -108,7 +114,10 @@ VitalHealth.configure(new HealthConfig())
 Before syncing data, you need to ask for permissions to the user. You do it by calling:
 
 ```js
-import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+import {
+  VitalHealth,
+  VitalResource,
+} from "@tryvital/vital-health-react-native";
 
 // Configure HealthKit SDK
 VitalHealth.configure(
@@ -132,7 +141,7 @@ VitalHealth.configure(
 
 You can enable the SDK to deliver Health data in background in iOS. This provides a more seamless experience, since the user doesn't need to open your app to sync data. Start by enabling "Background Delivery" in the app capabilities:
 
-<img src="/img/iOS/health_kit_permission_background_delivery.png"/>
+<img src="/img/iOS/health_kit_permission_background_delivery.png" />
 
 You also need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOptions` should look like this:
 
@@ -164,7 +173,10 @@ A full example of the app.js file can be seen below:
 import React, { useEffect } from "react";
 import { SafeAreaView, Text } from "react-native";
 import { VitalCore } from "@tryvital/vital-core-react-native";
-import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+import {
+  VitalHealth,
+  VitalResource,
+} from "@tryvital/vital-health-react-native";
 
 const VITAL_API_KEY = "<API_KEY>";
 const VITAL_ENVIRONMENT = "<sandbox | production>";
@@ -179,12 +191,14 @@ const App = () => {
       true
     ).then(() => {
       VitalHealth.configure(true, 90, false).then(() => {
-        VitalHealth.setUserId("2c5879eb-7d99-468b-bb43-3fe0d71e93ba").then(() => {
-          VitalHealth.askForResources([
-            VitalResource.Steps,
-            VitalResource.Activity,
-          ]);
-        });
+        VitalHealth.setUserId("2c5879eb-7d99-468b-bb43-3fe0d71e93ba").then(
+          () => {
+            VitalHealth.askForResources([
+              VitalResource.Steps,
+              VitalResource.Activity,
+            ]);
+          }
+        );
       });
     });
   }, []);
@@ -222,8 +236,8 @@ vitalDevicesManager.scanForDevice(omronM7);
 ```
 
 <Warning>
-    You need to acquire the required permission for bluetooth before you can call
-    `scanForDevice`.
+  You need to acquire the required permission for bluetooth before you can call
+  `scanForDevice`.
 </Warning>
 
 To receive the scanned events you need to listen to them using the above created listener.
@@ -265,8 +279,8 @@ eventEmitter.addListener(
 ```
 
 <Note>
-    After you are done reading from the device you need to call the scan method on
-    the VitalDevicesManager to continuously receive reads.
+  After you are done reading from the device you need to call the scan method on
+  the VitalDevicesManager to continuously receive reads.
 </Note>
 
 ## 7. Troubleshooting
