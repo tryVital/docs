@@ -4,7 +4,23 @@ title: "MyFitnessPal (Beta)"
 
 ## Connecting MyFitnessPal to Vital
 
-You can now link MyFitnessPal accounts to Vital! You can do this with Vital Link Widget or programatically like other [password](/api-reference/link/link-email-provider) providers.
+You can now link MyFitnessPal accounts to Vital! You can do this with Vital Link Widget or programatically like other [password](/api-reference/link/link-password-provider) providers.
+
+## Before Connecting
+
+You can share your MyFitnessPal diary with Vital by locking your diary with key.
+- Go to [your diary settings](https://www.myfitnesspal.com/account/diary-settings) and click **locked with key**.
+
+<Frame>
+    <img
+        src="/img/mfp-lock-diary.jpg"
+        className="w-100 block mx-auto"
+    />
+</Frame>
+
+- Pick a key of your choice and save your changes.
+
+You can now use the key and your MyFitnessPal username when linking with vital via the widget or programatically.
 
 ## Vital Widget
 
@@ -16,7 +32,7 @@ To connect your device with the _widget_, follow the link wizard ensuring and en
     className="w-2/5 block mx-auto"
   />
   <img
-    src="/img/my_fitness_pal_link_credentials.png"
+    src="/img/mfp-link-widget.jpg"
     className="w-2/5 block mx-auto"
   />
 </Frame>
@@ -24,8 +40,8 @@ To connect your device with the _widget_, follow the link wizard ensuring and en
 <br />
 
 <Info>
-  This provider is in beta. Please be aware that linking may be slower than
-  other providers. We are working to improve this in subsequent releases.
+Please note when linking programatically that the **password** required in the payload 
+is the **locked key** you set in your [diary settings](https://www.myfitnesspal.com/account/diary-settings).
 </Info>
 
 ## Webhooks
