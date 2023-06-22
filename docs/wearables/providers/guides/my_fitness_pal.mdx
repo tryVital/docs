@@ -8,12 +8,12 @@ You can now link MyFitnessPal accounts to Vital! You can do this with Vital Link
 
 ## Before Connecting
 
-You can share your MyFitnessPal diary with Vital by locking your diary with key.
+You can share your MyFitnessPal diary with Vital by locking your diary with a key.
 - Go to [your diary settings](https://www.myfitnesspal.com/account/diary-settings) and click **locked with key**.<br/>
   On mobile, head to *MyFitnessPal > More > Settings > Diary Settings > Diary Sharing*.
 <Tabs>
 	<Tab title="web">
-		<Frame>
+		<Frame type="glass">
 		    <img
 			src="/img/mfp-lock-diary.jpg"
 			className="w-100 block mx-auto"
@@ -22,10 +22,18 @@ You can share your MyFitnessPal diary with Vital by locking your diary with key.
 	</Tab>
 	<Tab title="mobile">
 		<Tabs>
-			<Tab title="more"><img src="/img/mfp-more.jpeg" className="w-1/3 block mx-auto" /></Tab>
-			<Tab title="settings"><img src="/img/mfp-settings.jpeg" className="w-1/3 block mx-auto" /></Tab>
-			<Tab title="diary settings"><img src="/img/mfp-diary-settings.jpeg" className="w-1/3 block mx-auto" /></Tab>
-			<Tab title="diary sharing"><img src="/img/mfp-diary-sharing.jpeg" className="w-1/3 block mx-auto" /></Tab>
+			<Tab title="more">
+				<Frame type="glass"><img src="/img/mfp-more.jpeg" className="w-1/3 block mx-auto" /></Frame>
+			</Tab>
+			<Tab title="settings">
+				<Frame type="glass"><img src="/img/mfp-settings.jpeg" className="w-1/3 block mx-auto" /></Frame>
+			</Tab>
+			<Tab title="diary settings">
+				<Frame type="glass"><img src="/img/mfp-diary-settings.jpeg" className="w-1/3 block mx-auto" /></Frame>
+			</Tab>
+			<Tab title="diary sharing">
+				<Frame type="glass"><img src="/img/mfp-diary-sharing.jpeg" className="w-1/3 block mx-auto" /></Frame>
+			</Tab>
 		</Tabs>
 	</Tab>
 </Tabs>
@@ -33,11 +41,11 @@ You can share your MyFitnessPal diary with Vital by locking your diary with key.
 
 - Pick a key of your choice and save your changes.
 
-You can now use the key and your MyFitnessPal username when linking with vital via the widget or programatically.
+You can now use the key and your MyFitnessPal username when linking with Vital via the widget or programatically.
 
 ## Vital Widget
 
-To connect your device with the _widget_, follow the link wizard ensuring and enter your username and password.
+To connect your device with the _widget_, follow the link wizard ensuring and enter your username and key.
 
 <Frame>
   <img
@@ -52,10 +60,40 @@ To connect your device with the _widget_, follow the link wizard ensuring and en
 
 <br />
 
-<Info>
 Please note when linking programatically that the **password** required in the payload 
 is the **locked key** you set in your [diary settings](https://www.myfitnesspal.com/account/diary-settings).
-</Info>
+
+<CodeGroup>
+```bash Bash
+curl --request POST \
+     --url {{BASE_URL}}/v2/link/provider/password/my_fitness_pal \
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-link-token: <VITAL-LINK-TOKEN>' \
+     --data '
+{
+     "username": "Your MyFitnessPal Username",
+     "password": "Your Diary Key"
+}
+'
+```
+
+```python Python
+user = client.Link.password_provider(
+    link_token, provider, your_username, your_diary_key
+)
+```
+
+```typescript Javascript/Typescript
+const user = await client.Link.connectProvider(
+  linkToken,
+  provider,
+  yourUsername,
+  yourDiaryKey
+);
+```
+
+</CodeGroup>
 
 ## Webhooks
 
