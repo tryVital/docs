@@ -21,20 +21,20 @@ You can share your MyFitnessPal diary with Vital by locking your diary with a ke
 		</Frame>
 	</Tab>
 	<Tab title="mobile">
-		<Tabs>
-			<Tab title="more">
-				<Frame type="glass"><img src="/img/mfp-more.jpeg" className="w-1/2 block mx-auto" /></Frame>
-			</Tab>
-			<Tab title="settings">
-				<Frame type="glass"><img src="/img/mfp-settings.jpeg" className="w-1/2 block mx-auto" /></Frame>
-			</Tab>
-			<Tab title="diary settings">
-				<Frame type="glass"><img src="/img/mfp-diary-settings.jpeg" className="w-1/2 block mx-auto" /></Frame>
-			</Tab>
-			<Tab title="diary sharing">
-				<Frame type="glass"><img src="/img/mfp-diary-sharing.jpeg" className="w-1/2 block mx-auto" /></Frame>
-			</Tab>
-		</Tabs>
+		<CardGroup>
+			<Card>
+				<img src="/img/mfp-more.jpeg" className="h-100 block mx-auto" />
+			</Card>
+			<Card>
+				<img src="/img/mfp-settings.jpeg" className="h-100 block mx-auto" />
+			</Card>
+			<Card>
+				<img src="/img/mfp-diary-settings.jpeg" className="h-100 block mx-auto" />
+			</Card>
+			<Card>
+				<img src="/img/mfp-diary-sharing.jpeg" className="h-100 block mx-auto" />
+			</Card>
+		</CardGroup>
 	</Tab>
 </Tabs>
 
@@ -48,12 +48,12 @@ You can now use the key and your MyFitnessPal username when linking with Vital v
 To connect your device with the _widget_, follow the link wizard ensuring and enter your username and key.
 
 <CardGroup>
-<Frame type="glass">
-  <img src="/img/mfp-link-search.png" className="w-full block mx-auto" />
-</Frame>
-<Frame type="glass">
-  <img src="/img/mfp-link-widget.png" className="w-full block mx-auto" />
-</Frame>
+	<Frame type="glass">
+		<img src="/img/mfp-link-search.png" className="w-full block mx-auto" />
+	</Frame>
+	<Frame type="glass">
+		<img src="/img/mfp-link-widget.png" className="w-full block mx-auto" />
+	</Frame>
 </CardGroup>
 
 Please note when linking programatically that the **password** required in the payload 
