@@ -3,6 +3,19 @@ title: "Get Available Tests"
 openapi: "GET /v3/lab_tests"
 ---
 
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.get_tests()
+
+```
+
+</RequestExample>
+
 <ResponseExample>
 
 ```json Response
