@@ -1,0 +1,55 @@
+---
+title: "Create a Test"
+openapi: "POST /v3/lab_tests"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.create_test(
+  name="Lipids Panel",
+  description="Cholesterol test",
+  lab_id=5,
+  method="testkit",
+  sample_type="dried_blood_spot",
+  "markers"=[160],
+)
+
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "lab_test": {
+    "name": "Lipids Panel",
+    "description": "Cholesterol test",
+    "sample_type": "dried blood spot",
+    "method": "testkit",
+    "price": 10.0,
+    "is_active": false,
+    "lab": {
+      "slug": "USSL",
+      "name": "US Specialty Lab",
+      "first_line_address": "123 Main St",
+      "city": "New York",
+      "zipcode": "10001"
+    },
+    "markers": [
+      {
+        "name": "Thyroid Stimulating Hormone",
+        "slug": "tsh",
+        "description": ""
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>
