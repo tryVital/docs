@@ -1,0 +1,114 @@
+---
+title: "Creating a test (Beta)"
+---
+
+Currently in beta, we provide a way to programatically request the creation of a custom lab test.
+The test will be created in inactive state, pending review from Vital.
+
+
+### Example
+
+To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs), in order to obtain the available labs.
+
+```json Get all available labs
+[
+  {
+    "id": 1,
+    "slug": "labcorp",
+    "name": "LabCorp",
+    "first_line_address": "123 Main St",
+    "city": "San Francisco",
+    "zipcode": "91789"
+  }
+]
+
+```
+
+Once you've selected a lab, in this case `labcorp`, you can fetch available lab biomarkers, with another call to our [biomarkers endpoint](/api-reference/lab-testing/biomarkers). 
+
+```json Get all biomarkers
+{
+  "markers": [
+    {
+      "id": 1,
+      "name": "17-OH Progesterone LCMS",
+      "slug": "17-oh-progesterone-lcms",
+      "description": "17-OH Progesterone LCMS",
+      "lab_id": 1,
+      "provider_id": "070085",
+      "type": null,
+      "unit": null,
+      "price": "N/A"
+    },
+    {
+      "id": 2,
+      "name": "ABO Grouping",
+      "slug": "abo-grouping",
+      "description": "ABO Grouping",
+      "lab_id": 1,
+      "provider_id": "006056",
+      "type": null,
+      "unit": null,
+      "price": "N/A"
+    }
+  ],
+  "total": 2,
+  "page": 1,
+  "size": 2
+}
+```
+
+With this information, you have all you need to request a custom test using our [create test endpoint](/api-reference/lab-testing/post-test).
+For the sake of this example, let's say you wanted a test from `Labcorp` with the above shown biomarkers.
+
+```python Create a new test
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.create_test(
+  name="Example test",
+  description="Example test",
+  lab_id=1,
+  method="at_home_phlebomoty",
+  sample_type="serum",
+  markers=[1, 2],
+)
+```
+
+Your test request is now created in inactive state, which you can verify using our [tests endpoint](/api-reference/lab-testing/tests), which provides you with the following data.
+
+```json
+[
+  {
+    "lab_test": {
+      "name": "Example test",
+      "description": "Example test",
+      "sample_type": "serum",
+      "method": "at_home_phlebomoty",
+      "price": 10,
+      "is_active": false,
+      "lab": {
+          "slug": "labcorp",
+          "name": "LabCorp",
+          "first_line_address": "123 Main St",
+          "city": "San Francisco",
+          "zipcode": "91789"
+      },
+      "markers": [
+        {
+          "name": "17-OH Progesterone LCMS",
+          "slug": "17-oh-progesterone-lcms",
+          "description": "17-OH Progesterone LCMS",
+        },
+        {
+          "name": "ABO Grouping",
+          "slug": "abo-grouping",
+          "description": "ABO Grouping",
+        }
+      ]
+    }
+  }
+]
+
+```

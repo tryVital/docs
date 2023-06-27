@@ -159,7 +159,8 @@
         "lab/workflow/lab-test-lifecycle",
         "lab/workflow/order-requirements",
         "lab/workflow/tracking-progress",
-        "lab/workflow/cancelling-an-order"
+        "lab/workflow/cancelling-an-order",
+        "lab/workflow/create-test"
       ]
     },
     {
