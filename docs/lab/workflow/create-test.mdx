@@ -1,14 +1,24 @@
 ---
-title: "Creating a test (Beta)"
+title: "Creating a Lab Test (Beta)"
 ---
 
-Currently in beta, we provide a way to programatically request the creation of a custom lab test.
-The test will be created in inactive state, pending review from Vital.
+Vital provides a way to create your own lab tests. These are made up of:
 
+1. One or more markers' ids.
+2. The lab id.
+3. The collection method (`testkit`, `walk_in_test`, `at_home_phlebotomy`).
+4. The sample type (`dried_blood_spot`, `serum`).
+
+Once a Lab test is created and approved, you can use it when making a order.
+
+<Warning>
+  When you create a Lab Test, it is not immediately available. We need to
+  validate and approve it on our side, before you can use it when making orders.
+</Warning>
 
 ### Example
 
-To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs), in order to obtain the available labs.
+To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs), to get all available labs.
 
 ```json Get all available labs
 [
@@ -21,10 +31,9 @@ To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs)
     "zipcode": "91789"
   }
 ]
-
 ```
 
-Once you've selected a lab, in this case `labcorp`, you can fetch available lab biomarkers, with another call to our [biomarkers endpoint](/api-reference/lab-testing/biomarkers). 
+Once you've picked a lab, you can fetch all available biomarkers. This is done via our [biomarkers endpoint](/api-reference/lab-testing/biomarkers).
 
 ```json Get all biomarkers
 {
@@ -58,8 +67,9 @@ Once you've selected a lab, in this case `labcorp`, you can fetch available lab 
 }
 ```
 
-With this information, you have all you need to request a custom test using our [create test endpoint](/api-reference/lab-testing/post-test).
-For the sake of this example, let's say you wanted a test from `Labcorp` with the above shown biomarkers.
+With this information, you can create a lab test using [this endpoint](/api-reference/lab-testing/post-test).
+
+As an example, let's say you wanted a test from `Labcorp`:
 
 ```python Create a new test
 from vital import Client
@@ -76,7 +86,7 @@ data = client.LabTests.create_test(
 )
 ```
 
-Your test request is now created in inactive state, which you can verify using our [tests endpoint](/api-reference/lab-testing/tests), which provides you with the following data.
+Once your lab test creation is successful you will receive the following response:
 
 ```json
 [
@@ -89,26 +99,27 @@ Your test request is now created in inactive state, which you can verify using o
       "price": 10,
       "is_active": false,
       "lab": {
-          "slug": "labcorp",
-          "name": "LabCorp",
-          "first_line_address": "123 Main St",
-          "city": "San Francisco",
-          "zipcode": "91789"
+        "slug": "labcorp",
+        "name": "LabCorp",
+        "first_line_address": "123 Main St",
+        "city": "San Francisco",
+        "zipcode": "91789"
       },
       "markers": [
         {
           "name": "17-OH Progesterone LCMS",
           "slug": "17-oh-progesterone-lcms",
-          "description": "17-OH Progesterone LCMS",
+          "description": "17-OH Progesterone LCMS"
         },
         {
           "name": "ABO Grouping",
           "slug": "abo-grouping",
-          "description": "ABO Grouping",
+          "description": "ABO Grouping"
         }
       ]
     }
   }
 ]
-
 ```
+
+Do notice that `is_active` is set to `false`. You can verify its status by calling the [lab tests endpoint](/api-reference/lab-testing/tests).
