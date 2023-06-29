@@ -18,7 +18,7 @@ Once a Lab Test is created and approved, you can use it when making a order.
 
 ### Example
 
-To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs), to get all available labs.
+To begin, make a request to our [`GET /v3/lab_tests/labs`](/api-reference/lab-testing/labs), to get all available labs.
 
 ```json Get all available labs
 [
@@ -33,9 +33,9 @@ To begin, make a request to our [labs endpoint](/api-reference/lab-testing/labs)
 ]
 ```
 
-Once you've picked a lab, you can fetch all available biomarkers. This is done via our [biomarkers endpoint](/api-reference/lab-testing/biomarkers).
+Once you've picked a lab, you can fetch all available markers. This is done via our [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers).
 
-```json Get all biomarkers
+```json Get all markers
 {
   "markers": [
     {
@@ -67,7 +67,7 @@ Once you've picked a lab, you can fetch all available biomarkers. This is done v
 }
 ```
 
-With this information, you can create a lab test using [this endpoint](/api-reference/lab-testing/post-test).
+With this information, you can create a lab test using [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test).
 
 As an example, let's say you wanted a test from `Labcorp`:
 
