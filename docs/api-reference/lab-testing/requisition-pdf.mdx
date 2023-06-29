@@ -1,0 +1,17 @@
+---
+title: "Get Requisition Form PDF"
+openapi: "GET /v3/order/{order_id}/requisition/pdf"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/<order_id>/requisition/pdf' \
+     --header 'accept: application/pdf' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+     --output file.pdf
+```
+
+</RequestExample>
+
