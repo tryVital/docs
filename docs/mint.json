@@ -258,7 +258,8 @@
         "api-reference/lab-testing/get-orders",
         "api-reference/lab-testing/get-order",
         "api-reference/lab-testing/cancel-order",
-        "api-reference/lab-testing/area-info"
+        "api-reference/lab-testing/area-info",
+        "api-reference/lab-testing/requisition-pdf"
       ]
     },
     {
