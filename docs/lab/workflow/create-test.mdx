@@ -7,7 +7,9 @@ Vital provides a way to create your own lab tests. These are made up of:
 1. One or more marker IDs.
 2. The lab ID.
 3. The collection method: `testkit`, `walk_in_test`, or `at_home_phlebotomy`.
-4. The sample type: `dried_blood_spot` or `serum`.
+4. The sample type: `dried_blood_spot`, `saliva`, `urine` or `serum`.
+
+The latter are directly related to the labs. Meaning you can only pick types the chosen lab supports.
 
 Once a Lab Test is created and approved, you can use it when making a order.
 
@@ -29,6 +31,8 @@ To begin, make a request to our [`GET /v3/lab_tests/labs`](/api-reference/lab-te
     "first_line_address": "123 Main St",
     "city": "San Francisco",
     "zipcode": "91789"
+    "collection_methods": ["testkit"],
+    "sample_types": ["saliva"]
   }
 ]
 ```
