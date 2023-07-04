@@ -1,17 +1,17 @@
 ---
-title: "daily.data.fat.updated"
-description: "Existing fat samples have been updated"
+title: "daily.data.stress_level.created"
+description: "New stress_level samples have been created"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(fat, fitbit, 2023-01-23T12:34:56Z)`.
+its source (ID or slug) and its timestamp. e.g., `(stress_level, fitbit, 2023-01-23T12:34:56Z)`.
 
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `daily.data.fat.updated`
+Constant: `daily.data.stress_level.created`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
@@ -62,14 +62,14 @@ URL for source logo
 <CodeGroup>
 ```json Example
 {
-  "event_type": "daily.data.fat.updated",
+  "event_type": "daily.data.stress_level.created",
   "data": {
     "data": [
       {
-        "timestamp": "2023-07-04T17:54:38.755055+00:00",
+        "timestamp": "2023-07-04T17:54:38.755079+00:00",
         "timezone_offset": null,
-        "value": 36,
-        "type": "scale",
+        "value": 35,
+        "type": "automatic",
         "unit": "percent"
       }
     ],
@@ -79,8 +79,8 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "4b20c682-66bb-4464-bd6c-892d441e1d8a",
-    "user_key": "f1e3686f-80dc-42c8-9619-f80d79a0a5a8"
+    "user_id": "36eb5487-18fb-4e34-9198-0b250563e75b",
+    "user_key": "df0306d7-3962-4aa6-b2f5-f6f372dbfb35"
   }
 }
 ```
