@@ -417,7 +417,10 @@
       "pages": [
         "event-catalog/daily.data.mindfulness_minutes.created",
         "event-catalog/daily.data.mindfulness_minutes.updated",
-        "event-catalog/historical.data.mindfulness_minutes.created"
+        "event-catalog/daily.data.stress_level.created",
+        "event-catalog/daily.data.stress_level.updated",
+        "event-catalog/historical.data.mindfulness_minutes.created",
+        "event-catalog/historical.data.stress_level.created"
       ]
     },
     {
