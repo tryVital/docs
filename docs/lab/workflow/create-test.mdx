@@ -31,8 +31,8 @@ To begin, make a request to our [`GET /v3/lab_tests/labs`](/api-reference/lab-te
     "first_line_address": "123 Main St",
     "city": "San Francisco",
     "zipcode": "91789",
-    "collection_methods": ["testkit"],
-    "sample_types": ["saliva"]
+    "collection_methods": ["testkit", "at_home_phlebomoty"],
+    "sample_types": ["saliva", "serum"]
   }
 ]
 ```
@@ -84,8 +84,8 @@ data = client.LabTests.create_test(
   name="Example test",
   description="Example test",
   lab_id=1,
-  method="testkit",
-  sample_type="saliva",
+  method="at_home_phlebomoty",
+  sample_type="serum",
   markers=[1, 2],
 )
 ```
