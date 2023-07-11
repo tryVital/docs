@@ -39,6 +39,12 @@ data = client.LabTests.create_order(
          "content": "base64-encoded insurance back image binary content",
          "content_type": "image/png",
       },
+      "patient_signature_image": {
+         "content": "base64-encoded patient signature image binary content",
+         "content_type": "image/png",
+      },
+      "subjective": "Description of what is the patient symptoms and attempted treatments",
+      "assessment_plan": "Description of what is the physician assessment and treament or testing plan",
     },
     consents=[
       {"consentType": "terms-of-use"},
