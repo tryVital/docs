@@ -17,6 +17,7 @@ data = client.LabTests.create_test(
   method="testkit",
   sample_type="dried_blood_spot",
   markers=[160],
+  fasting=False
 )
 
 ```
@@ -34,6 +35,7 @@ data = client.LabTests.create_test(
     "method": "testkit",
     "price": 10.0,
     "is_active": false,
+    "fasting": false,
     "lab": {
       "slug": "USSL",
       "name": "US Specialty Lab",
