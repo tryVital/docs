@@ -9,3 +9,14 @@ There is one caveat with Fitbit's webhooks. Namely, Fitbit computes the basal me
 This can be confusing at times, as someone who is not aware of this might wonder why are they getting only this one webhook and not the others.
 
 If you are only getting `daily.data.activity.updated`, the most likely case is that the user is neither wearing the device, or they did not sync their device with the Fitbit app. If you are sure this is not the case, contact us through our support channels.
+
+## Respiratory Rate timeseries
+
+Fitbit does not provide detailed breakdown beyond average breaths-per-minute summary on a per sleep stage basis, i.e.,
+REM average, Deep average, Light average and the whole session average.
+
+Given this constraint, Vital constructs a respiratory rate timeseries for Fitbit as follows:
+
+* Vital creates a respiratory rate data point for each hypnogram segment reported.
+* The data point value will be one of the four average values mentioned, based on the stage represented by the segment.
+* The data point will be timestamped to the **midnpoint** of the segment.
