@@ -58,11 +58,6 @@
       "name": "Event Catalog",
       "icon": "rectangle-terminal",
       "url": "event-catalog"
-    },
-    {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "changelog"
     }
   ],
   "navigation": [
@@ -424,10 +419,6 @@
         "event-catalog/historical.data.mindfulness_minutes.created",
         "event-catalog/historical.data.stress_level.created"
       ]
-    },
-    {
-      "group": "Updates",
-      "pages": ["changelog/logs"]
     }
   ],
   "footerSocials": {
