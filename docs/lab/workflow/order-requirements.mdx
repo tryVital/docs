@@ -14,6 +14,95 @@ When you order a test through our API, you'll need to collect consents from the 
 
 As mentioned [in the introduction](/lab/overview/introduction#features), you don't need to have your own Physician to place orders with Vital. When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `physician` argument. If provided, the order will make use of your own physician. If not provided, your order will go through with a physican from our own network. For more information, do not hesitate to head over [our testing page](https://tryvital.io/labs) and book an introductory call with us.
 
-### Health insurance (coming soon)
+### Health insurance (Beta)
 
-We will support providing your patients' health insurance for billing. When you order a test, simply pass the front and back images of the patient's health insurance card, and we will use that for billing. For more information, you can checkout the API reference of the [create order endpoint](/api-reference/lab-testing/create-order).
+When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `health_insurance` argument to signal that this order should use Health Insurance as the billing method. Sometimes a private `physician` may also be needed depending on the lab partner.
+Currently, we support Health Insurance orders for two of our partner labs, described in the following subsections:
+
+#### Spiriplex
+
+For placing insurance orders with Spiriplex, you will need some pre-requisites:
+
+- A physician capable of signing a requisition form. We currently don't support insurance orders using our own private physician network.
+- An image of the front and back of the Patient insurance card
+- An image of the Patient signature
+- Information about the patient reported symptoms and Physician assesment and treatment plan
+
+You can provide this information in our API, using the `physician` and `health_insurance` arguments for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint.
+
+```json Health Insurance
+{
+"health_insurance":{
+      "front_image": {
+         "content": "base64-encoded insurance front image binary content",
+         "content_type": "image/png | image/jpg | image/jpeg"
+      },
+      "back_image": {
+         "content": "base64-encoded insurance back image binary content",
+         "content_type": "image/png"
+      },
+      "patient_signature_image": {
+         "content": "base64-encoded patient signature image binary content",
+         "content_type": "image/png"
+      },
+      "subjective": "Description of what is the patient symptoms and attempted treatments",
+      "assessment_plan": "Description of what is the physician assessment and treament or testing plan"
+    }
+}
+```
+
+```json Physician
+{
+"physician": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@doe.com",
+    "npi": "123456789",
+    "licensed_states": ["CA", "NY"],
+    "signature_image": {
+         "content": "base64-encoded physician signature image binary content",
+         "content_type": "image/png"
+      }
+  }
+}
+```
+
+After you place an order with the correct information, a requisition form will be generated and sent to Spiriplex with the necessary information so that you customer Health Insurance is correctly billed by Spiriplex.
+
+#### Labcorp
+
+To place an Order with Health Insurance as the billing method in Labcorp, you can use the `health_insurance` argument for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, providing the following required information:
+
+- Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor route]()
+- Insurance ID - A unique alphanumerical number representing the patient contract with the Health Insurance company. Usually found in the patient's insurance card.
+- Responsible Relationship - The relationship for the Insurance owner and the patient. The values are (Self, Spouse, Other Relationship). If the relationship is different from "Self", the Responsible Details field must be provided.
+- Responsible Details - An object with specific information about the responsible, containing the Responsbile Phone Number, Name and Address.
+- Diagnosis Codes - A list of Diagnosis Codes names, you can search for adequate diagnosis using the [Search Diagnosis Code route]()
+
+The `health_insurance` object should look like this:
+
+```json Health Insurance
+{
+ "health_insurance": {
+    "payor_code": "12345",
+    "diagnosis_codes": ["123", "321"],
+    "insurance_id": "12345",
+    "responsible_relationship": "Spouse",
+    "responsible_details": {
+                "first_name": "first",
+                "last_name": "last",
+                "phone_number": "+11234567890",
+                "phone_type": "Mobile",
+                "address": {
+                    "first_line": "address 123",
+                    "country": "US",
+                    "zip": "12345",
+                    "city": "Cheyenne",
+                    "state": "Wyoming"
+                }
+            }
+  }
+}
+```
+
+After you place the order, the information will be fowarded to Labcorp and a Requisition form will be generated, succesfully placing an order with Health Insurance billing.
