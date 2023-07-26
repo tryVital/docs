@@ -73,11 +73,11 @@ After you place an order with the correct information, a requisition form will b
 
 To place an Order with Health Insurance as the billing method in Labcorp, you can use the `health_insurance` argument for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, providing the following required information:
 
-- Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor route]()
+- Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor route](/api-reference/lab-testing-insurance/search-payor)
 - Insurance ID - A unique alphanumerical number representing the patient contract with the Health Insurance company. Usually found in the patient's insurance card.
 - Responsible Relationship - The relationship for the Insurance owner and the patient. The values are (Self, Spouse, Other Relationship). If the relationship is different from "Self", the Responsible Details field must be provided.
 - Responsible Details - An object with specific information about the responsible, containing the Responsbile Phone Number, Name and Address.
-- Diagnosis Codes - A list of Diagnosis Codes names, you can search for adequate diagnosis using the [Search Diagnosis Code route]()
+- Diagnosis Codes - A list of Diagnosis Codes names, you can search for adequate diagnosis using the [Search Diagnosis Code route](/api-reference/lab-testing-insurance/search-diagnosis)
 
 The `health_insurance` object should look like this:
 

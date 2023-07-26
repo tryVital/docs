@@ -1,0 +1,38 @@
+---
+openapi: "POST /v3/insurance/search/payor"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+     --url '{{BASE_URL}}/v3/insurance/search/payor' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '
+{
+    "insurance_name": "BLUE SHIELD PROMISE",
+    "insurance_state": "CA",
+}
+'
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+[
+    {
+        "code": "FCREF",
+        "name": "BLUE SHIELD PROMISE",
+        "orgAddress": {
+                "first_line": "601 POTRERO GRANDE DR",
+                "city": "MONTEREY PARK",
+                "state": "CA",
+                "zip": "91755",
+                "country": "USA"
+        }
+    }
+]
+```
+</ResponseExample>
