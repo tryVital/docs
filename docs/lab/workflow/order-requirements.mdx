@@ -4,16 +4,117 @@ title: "Order Requirements"
 
 ### Consents
 
-When you order a test through our API, you'll need to collect consents from the patient and forward it to us. The following consents are required:
-
+When you order a lab test through our API, you may have to collect consents from the patient and forward it to us. The following consents may include:
 * `hipaa-authorization`.
 * `terms-of-use`.
 * `telehealth-informed-consent`.
 
 ### Physician
 
-As mentioned [in the introduction](/lab/overview/introduction#features), you don't need to have your own Physician to place orders with Vital. When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `physician` argument. If provided, the order will make use of your own physician. If not provided, your order will go through with a physican from our own network. For more information, do not hesitate to head over [our testing page](https://tryvital.io/labs) and book an introductory call with us.
+As mentioned [in the introduction](/lab/overview/introduction#features), you don't need to have your own Physician to place orders with Vital. When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `physician` argument.
+If provided, the order will use your physician. If not, your order will go through with Vital's physician network. For more information, please check [our lab testing page](https://tryvital.io/labs) and [book an introductory call with us](https://cal.com/team/vital/discovery-call).
 
-### Health insurance (coming soon)
+### Health insurance (Beta)
 
-We will support providing your patients' health insurance for billing. When you order a test, simply pass the front and back images of the patient's health insurance card, and we will use that for billing. For more information, you can checkout the API reference of the [create order endpoint](/api-reference/lab-testing/create-order).
+When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `health_insurance` argument to signal that this order should use Health Insurance as the billing method. 
+Depending on the lab parter, a private `physician` may be needed for the order. 
+Currently, we support Health Insurance orders for two of our partner labs, described in the following subsections:
+
+#### Spiriplex
+
+For placing insurance orders with Spiriplex, you need the following:
+
+- A physician capable of signing a requisition form. We currently don't support insurance orders using our own private physician network.
+- A clear, legible image of the front and back of the Patient insurance card.
+- A clear, legible image of the Patient signature.
+- Information about the patient reported symptoms, and physician assessment and treatment plan.
+
+You can provide this information with our API, using the `physician` and `health_insurance` arguments for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint.
+
+```json Health Insurance
+{
+"health_insurance":{
+      "front_image": {
+         "content": "base64-encoded insurance front image binary content",
+         "content_type": "image/png | image/jpg | image/jpeg"
+      },
+      "back_image": {
+         "content": "base64-encoded insurance back image binary content",
+         "content_type": "image/png"
+      },
+      "patient_signature_image": {
+         "content": "base64-encoded patient signature image binary content",
+         "content_type": "image/png"
+      },
+      "subjective": "Description of what is the patient symptoms and attempted treatments",
+      "assessment_plan": "Description of what is the physician assessment and treament or testing plan"
+    }
+}
+```
+
+```json Physician
+{
+"physician": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@doe.com",
+    "npi": "123456789",
+    "licensed_states": ["CA", "NY"],
+    "signature_image": {
+         "content": "base64-encoded physician signature image binary content",
+         "content_type": "image/png"
+      }
+  }
+}
+```
+
+After you place an order with all the required information, a requisition form is generated and sent to Spiriplex
+with all the necessary information. Your customer’s Health Insurance can then be billed by Spiriplex.
+
+#### Labcorp
+
+To place an Order with Health Insurance as the billing method in Labcorp, you can use the `health_insurance` argument 
+for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, by providing:
+
+- A clear, legible image of the front and back of the Patient insurance card.
+- Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor endpoint](/api-reference/lab-testing-insurance/search-payor).
+- Insurance ID - A unique alphanumerical number representing the patient contract with the Health Insurance company. Usually found in the patient's insurance card.
+- Responsible Relationship - The relationship between the Insurance owner and the patient. The values are (`Self`, `Spouse`, `Other Relationship`). If the relationship is different from `Self`, the Responsible Details field must be provided.
+- Responsible Details - An object with specific information about the responsible, containing the Responsible Party’s Phone Number, Name and Address.
+- Diagnosis Codes - A list of Diagnosis Codes names, you can search for adequate diagnosis using the [Search Diagnosis Code endpoint](/api-reference/lab-testing-insurance/search-diagnosis).
+
+The `health_insurance` object should look like this:
+
+```json Health Insurance
+{
+ "health_insurance": {
+    "front_image": {
+         "content": "base64-encoded insurance front image binary content",
+         "content_type": "image/png | image/jpg | image/jpeg"
+      },
+      "back_image": {
+         "content": "base64-encoded insurance back image binary content",
+         "content_type": "image/png"
+    },
+    "payor_code": "SGEXS",
+    "diagnosis_codes": ["D55.0"],
+    "insurance_id": "12345",
+    "responsible_relationship": "Spouse",
+    "responsible_details": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "phone_number": "+11234567890",
+                "phone_type": "Mobile",
+                "address": {
+                    "first_line": "3577 Berkshire Circle",
+                    "country": "USA",
+                    "zip": "37917",
+                    "city": "Knoxville",
+                    "state": "Tennessee"
+                }
+            }
+  }
+}
+```
+
+A successful order is created after the information is sent to Labcorp and a requisition form is generated.
