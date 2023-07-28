@@ -16,8 +16,8 @@ If provided, the order will use your physician. If not, your order will go throu
 
 ### Health insurance (Beta)
 
-When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `health_insurance` argument to signal that this order should use Health Insurance as the billing method. 
-You can make a health insurance order by using the `health_insurance` argument for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, providing:
+When you [order a test](/lab/overview/quickstart#3-placing-an-order), you have the option to select Health Insurance as a billing method.
+You can place a health insurance order by creating an order using the `health_insurance` argument in the [Create Order endpoint](/api-reference/lab-testing/create-order), providing:
 
 - A clear, legible image of the front and back of the Patient insurance card.
 - Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor endpoint](/api-reference/lab-testing-insurance/search-payor).
