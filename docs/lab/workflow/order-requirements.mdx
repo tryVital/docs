@@ -19,12 +19,12 @@ If provided, the order will use your physician. If not, your order will go throu
 When you [order a test](/lab/overview/quickstart#3-placing-an-order), you have the option to select Health Insurance as a billing method.
 You can place a health insurance order by creating an order using the `health_insurance` argument in the [Create Order endpoint](/api-reference/lab-testing/create-order), providing:
 
-- A clear, legible image of the front and back of the Patient insurance card.
 - Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor endpoint](/api-reference/lab-testing-insurance/search-payor).
 - Insurance ID - A unique alphanumerical number representing the patient contract with the Health Insurance company. Usually found in the patient's insurance card.
 - Responsible Relationship - The relationship between the Insurance owner and the patient. The values are (`Self`, `Spouse`, `Other Relationship`). If the relationship is different from `Self`, the Responsible Details field must be provided.
 - Responsible Details - An object with specific information about the responsible, containing the Responsible Party’s Phone Number, Name and Address.
 - Diagnosis Codes - A list of Diagnosis Codes names, you can search for adequate diagnosis using the [Search Diagnosis Code endpoint](/api-reference/lab-testing-insurance/search-diagnosis).
+- **Optional** A clear, legible image of the front and back of the Patient insurance card.
 
 The `health_insurance` object should look like this:
 
