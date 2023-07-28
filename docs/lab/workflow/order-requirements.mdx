@@ -17,64 +17,7 @@ If provided, the order will use your physician. If not, your order will go throu
 ### Health insurance (Beta)
 
 When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `health_insurance` argument to signal that this order should use Health Insurance as the billing method. 
-Depending on the lab parter, a private `physician` may be needed for the order. 
-Currently, we support Health Insurance orders for two of our partner labs, described in the following subsections:
-
-#### Spiriplex
-
-For placing insurance orders with Spiriplex, you need the following:
-
-- A physician capable of signing a requisition form. We currently don't support insurance orders using our own private physician network.
-- A clear, legible image of the front and back of the Patient insurance card.
-- A clear, legible image of the Patient signature.
-- Information about the patient reported symptoms, and physician assessment and treatment plan.
-
-You can provide this information with our API, using the `physician` and `health_insurance` arguments for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint.
-
-```json Health Insurance
-{
-"health_insurance":{
-      "front_image": {
-         "content": "base64-encoded insurance front image binary content",
-         "content_type": "image/png | image/jpg | image/jpeg"
-      },
-      "back_image": {
-         "content": "base64-encoded insurance back image binary content",
-         "content_type": "image/png"
-      },
-      "patient_signature_image": {
-         "content": "base64-encoded patient signature image binary content",
-         "content_type": "image/png"
-      },
-      "subjective": "Description of what is the patient symptoms and attempted treatments",
-      "assessment_plan": "Description of what is the physician assessment and treament or testing plan"
-    }
-}
-```
-
-```json Physician
-{
-"physician": {
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john@doe.com",
-    "npi": "123456789",
-    "licensed_states": ["CA", "NY"],
-    "signature_image": {
-         "content": "base64-encoded physician signature image binary content",
-         "content_type": "image/png"
-      }
-  }
-}
-```
-
-After you place an order with all the required information, a requisition form is generated and sent to Spiriplex
-with all the necessary information. Your customer’s Health Insurance can then be billed by Spiriplex.
-
-#### Labcorp
-
-To place an Order with Health Insurance as the billing method in Labcorp, you can use the `health_insurance` argument 
-for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, by providing:
+You can make a health insurance order by using the `health_insurance` argument for the [POST v3/order/](/api-reference/lab-testing/create-order) REST endpoint, providing:
 
 - A clear, legible image of the front and back of the Patient insurance card.
 - Payor Code - A unique code representing a specific Health Insurance company. You can query a specific Payor Code using the [Search Payor endpoint](/api-reference/lab-testing-insurance/search-payor).
@@ -117,4 +60,4 @@ The `health_insurance` object should look like this:
 }
 ```
 
-A successful order is created after the information is sent to Labcorp and a requisition form is generated.
+A successful order is created with health insurance billing, and sent to our partner labs to generate a requisition form.
