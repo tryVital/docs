@@ -7,8 +7,7 @@
   },
   "analytics": {
     "posthog": {
-      "apiKey": "phc_pjvYzFeBB6z4l6JByNiic3SoHt74M9Lqw1SVrR95OCd",
-      "apiHost": "https://tryvital.io/ingest"
+      "apiKey": "phc_pjvYzFeBB6z4l6JByNiic3SoHt74M9Lqw1SVrR95OCd"
     }
   },
   "api": {
