@@ -5,6 +5,12 @@
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
+  "analytics": {
+    "posthog": {
+      "apiKey": "phc_pjvYzFeBB6z4l6JByNiic3SoHt74M9Lqw1SVrR95OCd",
+      "apiHost": "https://tryvital.io/ingest"
+    }
+  },
   "api": {
     "baseUrl": [
       "https://api.tryvital.io",
@@ -98,7 +104,6 @@
         "wearables/connecting-providers/launching_link",
         "wearables/connecting-providers/custom_widget",
         "wearables/connecting-providers/custom_credentials"
-
       ]
     },
     {
@@ -118,8 +123,8 @@
             {
               "group": "Dexcom",
               "pages": [
-                  "wearables/providers/guides/dexcom_v3",
-                  "wearables/providers/guides/dexcom"
+                "wearables/providers/guides/dexcom_v3",
+                "wearables/providers/guides/dexcom"
               ]
             },
             "wearables/providers/guides/fitbit",
