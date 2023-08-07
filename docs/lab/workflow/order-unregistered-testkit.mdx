@@ -1,5 +1,5 @@
 ---
-title: "Ordering an unregistered testkit"
+title: "Ordering an Unregistered Testkit"
 ---
 
 Vital provides a way to order testkits for other patients (registrable testkits). 
@@ -22,29 +22,27 @@ After step 2, the order flow resumes as normal, the patient sends the `testkit` 
 
 ### Example
 
-To make an order, make a request to our [`POST /v3/order/testkit/unregistered/`](/api-reference/lab-testing/create-unregistered-order), to fulfil step 1.
+To make an order, make a request to our [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), to fulfil step 1.
 
-```bash Create an unregistered order
-curl --request POST \
-     --url https://api.tryvital.io/v3/order/testkit/unregistered/ \
-     --header 'Accept: application/json'
-     --header 'x-vital-api-key: <API_KEY>' \
-     --data '
-{
-    "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    "lab_test_id": "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-    "shipping_details": {
-      "receiver_name": "john Doe",
-      "street": "123 Main St.",
-      "street_number": "Apt. 208",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "91189",
-      "country": "US",
-      "phone_number": "+1123456789"
-    }
-}
-'
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.create_unregistered_testkit_order(
+  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+  lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+  shipping_details={
+    "receiver_name": "john Doe",
+    "street": "123 Main St.",
+    "street_number": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "US",
+    "phone_number": "+11234567890"
+  }
+)
 ```
 
 
@@ -60,43 +58,35 @@ For this example, we will assume the use of your own physician.
 
 To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register/`](/api-reference/lab-testing/register-order), to fulfil step 2.
 
-```bash Register the testkit
-curl --request POST \
-     --url https://api.tryvital.io/v3/order/testkit/register/ \
-     --header 'Accept: application/json'
-     --header 'x-vital-api-key: <API_KEY>' \
-     --data '
-{
-    "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    "sample_id": "123456789",
-    "patient_details": {
-        "first_name": "John",
-        "last_name": "Doe",
-        "dob": "2020-01-01",
-        "gender": "male",
-        "phone_number": "+1123456789",
-        "email": "string"
-    },
-    "patient_address": {
-      "receiver_name": "john Doe",
-      "street": "123 Main St.",
-      "street_number": "Apt. 208",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "91189",
-      "country": "US"
-    },
-    "physician": {
-        "physician": {
-          "first_name": "Doctor",
-          "last_name": "Doc",
-          "email": "doctor@email.com",
-          "npi": "123123123",
-          "licensed_states": ["NY"]
-        },
-    }
-}
-'
+```python Python
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.register_testkit_order(
+  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+  sample_id="123123123",
+  patient_details={
+      "first_name": "John",
+      "last_name": "Doe",
+      "dob": "2020-01-01",
+      "gender": "male",
+      "phone_number": "+1123456789",
+      "email": "email@email.com"
+  },
+  patient_address={
+    "receiver_name": "john Doe",
+    "street": "123 Main St.",
+    "street_number": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "US"
+  },
+  physician={
+    "first_name": "Doctor",
+    "last_name": "Doc",
+    "npi": "123123123"
+  }
+)
 ```
 
 Your `testkit` order is now registered, and the order flow should resume as normal. For more information regarding the lifecycle of a test, refer to the [lab test lifecyle](/lab/workflow/lab-test-lifecycle) page.

@@ -5,24 +5,23 @@ openapi: "POST /v3/order/testkit/register"
 
 <RequestExample>
 
-```bash Shell
-curl --request POST \
-     --url https://api.tryvital.io/v3/order/testkit/register/ \
-     --header 'Accept: application/json'
-     --header 'x-vital-api-key: <API_KEY>' \
-     --data '
-{
-    "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    "sample_id": "123456789",
-    "patient_details": {
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.register_testkit_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    sample_id="123123123"
+    patient_details={
         "first_name": "John",
         "last_name": "Doe",
         "dob": "2020-01-01",
         "gender": "male",
         "phone_number": "+1123456789",
-        "email": "string"
+        "email": "email@email.com"
     },
-    "patient_address": {
+    patient_address={
       "receiver_name": "john Doe",
       "street": "123 Main St.",
       "street_number": "Apt. 208",
@@ -31,14 +30,54 @@ curl --request POST \
       "zip": "91189",
       "country": "US"
     },
-    "physician": {
-        "physician": {
-          "first_name": "Doctor",
-          "last_name": "Doc",
-          "email": "doctor@email.com",
-          "npi": "123123123",
-          "licensed_states": ["NY"]
-        },
+    consents=[
+      {"consentType": "terms-of-use"},
+      {"consentType": "telehealth-informed-consent"},
+      {"consentType": "notice-of-privacy-practices"},
+    ],
+    physician={
+      "first_name": "Doctor",
+      "last_name": "Doc",
+      "npi": "123123123",
+    }
+)
+```
+
+```bash Shell
+curl --request POST \
+     --url https://api.tryvital.io/v3/order/testkit/register \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+    "user_id":"63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    "sample_id":"123123123"
+    "patient_details":{
+        "first_name": "John",
+        "last_name": "Doe",
+        "dob": "2020-01-01",
+        "gender": "male",
+        "phone_number": "+1123456789",
+        "email": "email@email.com"
+    },
+    "patient_address":{
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US"
+    },
+    "consents":[
+      {"consentType": "terms-of-use"},
+      {"consentType": "telehealth-informed-consent"},
+      {"consentType": "notice-of-privacy-practices"},
+    ],
+    "physician":{
+      "first_name": "Doctor",
+      "last_name": "Doc",
+      "npi": "123123123",
     }
 }
 '

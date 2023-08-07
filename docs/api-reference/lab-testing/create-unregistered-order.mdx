@@ -1,13 +1,34 @@
 ---
 title: "Create Unregistered Testkit Order"
-openapi: "POST /v3/order/testkit/unregistered"
+openapi: "POST /v3/order/testkit"
 ---
 
 <RequestExample>
 
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.create_unregistered_testkit_order(
+  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+  lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+  shipping_details={
+    "receiver_name": "john Doe",
+    "street": "123 Main St.",
+    "street_number": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "US",
+    "phone_number": "+11234567890"
+  }
+)
+```
+
 ```bash Shell
 curl --request POST \
-     --url https://api.tryvital.io/v3/order/testkit/unregistered/ \
+     --url https://api.tryvital.io/v3/order/testkit/ \
      --header 'Accept: application/json'
      --header 'x-vital-api-key: <API_KEY>' \
      --data '
@@ -27,6 +48,7 @@ curl --request POST \
 }
 '
 ```
+
 
 </RequestExample>
 
