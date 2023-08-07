@@ -159,7 +159,8 @@
         "lab/workflow/order-requirements",
         "lab/workflow/tracking-progress",
         "lab/workflow/cancelling-an-order",
-        "lab/workflow/create-test"
+        "lab/workflow/create-test",
+        "lab/workflow/order-unregistered-testkit"
       ]
     },
     {
@@ -259,7 +260,9 @@
         "api-reference/lab-testing/get-order",
         "api-reference/lab-testing/cancel-order",
         "api-reference/lab-testing/area-info",
-        "api-reference/lab-testing/requisition-pdf"
+        "api-reference/lab-testing/requisition-pdf",
+        "api-reference/lab-testing/create-unregistered-order",
+        "api-reference/lab-testing/register-order"
       ]
     },
     {

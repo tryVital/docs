@@ -1,0 +1,102 @@
+---
+title: "Ordering an unregistered testkit"
+---
+
+Vital provides a way to order testkits for other patients (registrable testkits). 
+
+Under the [normal order flow](/api-reference/lab-testing/create-order), you place an order for a specific patient. This order is then always associated with that patient and cannot be passed on to someone else.
+
+In order to allow for `testkits` to be purchased and passed on to another patient, Vital provides the `registrable testkit` flow.
+
+<Warning>
+  Note that this only applies to `testkits`, not `walk-in phlebotomy` or `at-home phlebotomy`.
+</Warning>
+
+This involves two steps from the customer's perspective:
+  1. Ordering the kit.
+  2. Registering a patient.
+
+After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
+
+After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
+
+### Example
+
+To make an order, make a request to our [`POST /v3/order/testkit/unregistered/`](/api-reference/lab-testing/create-unregistered-order), to fulfil step 1.
+
+```bash Create an unregistered order
+curl --request POST \
+     --url https://api.tryvital.io/v3/order/testkit/unregistered/ \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+    "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    "lab_test_id": "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    "shipping_details": {
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US",
+      "phone_number": "+1123456789"
+    }
+}
+'
+```
+
+
+The `testkit` is now ordered, and will be sent to the specified address. Once delivered, it can be kept until it's expiration. 
+
+Once the `testkit` is with it's intended patient, it should be registered (step 2).
+
+In order to register, Vital requires a `sample_id`, which is found within the `testkit` itself. This is an unique identifier. 
+Vital also requires the patient details and address.
+Besides this, if using Vital's physician network, then supplying the consents field is required. If providing your own physician, then the physician information is required.
+
+For this example, we will assume the use of your own physician.
+
+To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register/`](/api-reference/lab-testing/register-order), to fulfil step 2.
+
+```bash Register the testkit
+curl --request POST \
+     --url https://api.tryvital.io/v3/order/testkit/register/ \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+    "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    "sample_id": "123456789",
+    "patient_details": {
+        "first_name": "John",
+        "last_name": "Doe",
+        "dob": "2020-01-01",
+        "gender": "male",
+        "phone_number": "+1123456789",
+        "email": "string"
+    },
+    "patient_address": {
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US"
+    },
+    "physician": {
+        "physician": {
+          "first_name": "Doctor",
+          "last_name": "Doc",
+          "email": "doctor@email.com",
+          "npi": "123123123",
+          "licensed_states": ["NY"]
+        },
+    }
+}
+'
+```
+
+Your `testkit` order is now registered, and the order flow should resume as normal. For more information regarding the lifecycle of a test, refer to the [lab test lifecyle](/lab/workflow/lab-test-lifecycle) page.
