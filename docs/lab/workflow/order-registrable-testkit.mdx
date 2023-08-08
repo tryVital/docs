@@ -1,0 +1,90 @@
+---
+title: "Ordering an Registrable Testkit"
+---
+
+Under the [standard Testkit ordering flow](/api-reference/lab-testing/create-order), you place a Testkit order for a specific patient. This resulting Testkit is bound to that patient, and the Testkit cannot be passed on to someone else.
+
+With Registrable Testkits, Vital offers a different option — Testkits not bound to any specific patient can be ordered to a specific household address. The patient registration process is deferred until an actual patient intends to use the Testkit.
+
+<Warning>
+  Note that this only applies to Testkits, not Walk-in Phlebotomy or At-home Phlebotomy.
+</Warning>
+
+This involves two steps:
+  1. Ordering the kit.
+  2. Registering a patient.
+
+After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
+
+After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `received.testkit.testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
+
+### Example
+
+To make an order, make a request to our [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), to fulfil step 1.
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.create_unregistered_testkit_order(
+  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+  lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+  shipping_details={
+    "receiver_name": "john Doe",
+    "street": "123 Main St.",
+    "street_number": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "US",
+    "phone_number": "+11234567890"
+  }
+)
+```
+
+
+The `testkit` is now ordered, and will be sent to the specified address. Once delivered, it can be kept until it's expiration. 
+
+Once the `testkit` is with it's intended patient, it should be registered (step 2).
+
+In order to register, Vital requires a `sample_id`, which is found within the `testkit` itself. This is an unique identifier. 
+Vital also requires the patient details and address.
+Besides this, if using Vital's physician network, then supplying the consents field is required. If providing your own physician, then the physician information is required.
+
+For this example, we will assume the use of your own physician.
+
+To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register/`](/api-reference/lab-testing/register-order), to fulfil step 2.
+
+```python Python
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.register_testkit_order(
+  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+  sample_id="123123123",
+  patient_details={
+    "first_name": "John",
+    "last_name": "Doe",
+    "dob": "2020-01-01",
+    "gender": "male",
+    "phone_number": "+1123456789",
+    "email": "email@email.com"
+  },
+  patient_address={
+    "receiver_name": "john Doe",
+    "street": "123 Main St.",
+    "street_number": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "US"
+  },
+  physician={
+    "first_name": "Doctor",
+    "last_name": "Doc",
+    "npi": "123123123"
+  }
+)
+```
+
+Your `testkit` order is now registered, and the order flow should resume as normal. For more information regarding the lifecycle of a test, refer to the [lab test lifecyle](/lab/workflow/lab-test-lifecycle) page.

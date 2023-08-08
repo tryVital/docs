@@ -19,7 +19,7 @@ data = client.LabTests.create_order(
         "dob": "2020-01-01",
         "gender": "male",
         "phone_number": "+1123456789",
-        "email": "string"
+        "email": "email@email.com"
     },
     patient_address={
       "receiver_name": "john Doe",
@@ -50,14 +50,6 @@ data = client.LabTests.create_order(
       {"consentType": "terms-of-use"},
       {"consentType": "telehealth-informed-consent"},
       {"consentType": "notice-of-privacy-practices"},
-    ],
-    intakes=[
-      {
-         "linkId": "red-flag-attestation",
-         "answer": [
-            {"valueBoolean": True}
-         ]
-      }
     ]
 )
 

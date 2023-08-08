@@ -1,0 +1,183 @@
+---
+title: "Register Testkit Order"
+openapi: "POST /v3/order/testkit/register"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(api_key, "sandbox")
+
+data = client.LabTests.register_testkit_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    sample_id="123123123",
+    patient_details={
+       "first_name": "John",
+       "last_name": "Doe",
+       "dob": "2020-01-01",
+       "gender": "male",
+       "phone_number": "+1123456789",
+       "email": "email@email.com"
+    },
+    patient_address={
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US"
+    },
+    consents=[
+      {"consentType": "terms-of-use"},
+      {"consentType": "telehealth-informed-consent"},
+      {"consentType": "notice-of-privacy-practices"},
+    ],
+    physician={
+      "first_name": "Doctor",
+      "last_name": "Doc",
+      "npi": "123123123",
+    }
+)
+```
+
+```bash Shell
+curl --request POST \
+     --url https://api.tryvital.io/v3/order/testkit/register \
+     --header 'Accept: application/json'
+     --header 'x-vital-api-key: <API_KEY>' \
+     --data '
+{
+    "user_id":"63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    "sample_id":"123123123",
+    "patient_details":{
+        "first_name": "John",
+        "last_name": "Doe",
+        "dob": "2020-01-01",
+        "gender": "male",
+        "phone_number": "+1123456789",
+        "email": "email@email.com"
+    },
+    "patient_address":{
+      "receiver_name": "john Doe",
+      "street": "123 Main St.",
+      "street_number": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "US"
+    },
+    "consents":[
+      {"consentType": "terms-of-use"},
+      {"consentType": "telehealth-informed-consent"},
+      {"consentType": "notice-of-privacy-practices"},
+    ],
+    "physician":{
+      "first_name": "Doctor",
+      "last_name": "Doc",
+      "npi": "123123123",
+    }
+}
+'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "order": {
+    "id": "96edc6ef-3b2c-412b-b9e5-96f361f93aec",
+    "team_id": "b080b20c-e162-4cf1-9c7d-8faee72ee08e",
+    "user_id": "9f1e094e-1641-466b-b668-d4d3300e569f",
+    "patient_details": {
+      "first_name": "John",
+      "last_name": "Doe",
+      "phone_number": "+11234567890",
+      "email": "doe@email.com"
+      "dob": "2020-01-01",
+      "gender": "male"
+    },
+    "patient_address": {
+      "receiver_name": "John Doe",
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "United States",
+      "phone_number": "+11234567890"
+    },
+    "shipping_details": {
+      "receiver_name": "John Doe",
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": "91189",
+      "country": "United States",
+      "phone_number": "+11234567890"
+    },
+    "details": {
+      "type": "testkit",
+      "data": {
+        "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+        "shipment": {
+          "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+          "outbound_tracking_number": "<outbound_tracking_number>",
+          "outbound_tracking_url": "<outbound_tracking_url>",
+          "inbound_tracking_number": "<inbound_tracking_number>",
+          "inbound_tracking_url": "<inbound_tracking_url>",
+          "outbound_courier": "usps",
+          "inbound_courier": "usps",
+          "notes": "<notes>",
+          "created_at": "2020-01-01T00:00:00.000Z",
+          "updated_at": "2020-01-01T00:00:00.000Z"
+        },
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2020-01-01T00:00:00Z"
+      }
+    },
+    "lab_test": {
+      "name": "Lipids Panel",
+      "description": "Cholesterol test",
+      "method": "testkit"
+    },
+    "sample_id": "123456789",
+    "health_insurace_id": "7695cc28-f9e5-400d-95d2-ec7d9ec580df",
+    "notes": "This is a note",
+    "created_at": "2020-01-01T00:00:00Z",
+    "updated_at": "2020-01-01T00:00:00Z",
+    "status": "received",
+    "events": [
+      {
+        "id": 1,
+        "created_at": "2022-01-01T00:00:00Z",
+        "status": "received.testkit.ordered"
+      },
+      {
+        "id": 2,
+        "created_at": "2022-01-02T00:00:00Z",
+        "status": "received.testkit.awaiting_registration"
+      },
+      {
+        "id": 3,
+        "created_at": "2022-01-02T00:00:00Z",
+        "status": "received.testkit.requisition_created"
+      },
+      {
+        "id": 4,
+        "created_at": "2022-01-03T00:00:00Z",
+        "status": "received.testkit.testkit_registered"
+      }
+    ]
+  },
+  "status": "string",
+  "message": "string"
+}
+```
+
+</ResponseExample>
