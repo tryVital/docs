@@ -1,24 +1,22 @@
 ---
-title: "Ordering an Unregistered Testkit"
+title: "Ordering an Registrable Testkit"
 ---
 
-Vital provides a way to order testkits for other patients (registrable testkits). 
+Under the [standard Testkit ordering flow](/api-reference/lab-testing/create-order), you place a Testkit order for a specific patient. This resulting Testkit is bound to that patient, and the Testkit cannot be passed on to someone else.
 
-Under the [normal order flow](/api-reference/lab-testing/create-order), you place an order for a specific patient. This order is then always associated with that patient and cannot be passed on to someone else.
-
-In order to allow for `testkits` to be purchased and passed on to another patient, Vital provides the `registrable testkit` flow.
+With Registrable Testkits, Vital offers a different option — Testkits not bound to any specific patient can be ordered to a specific household address. The patient registration process is deferred until an actual patient intends to use the Testkit.
 
 <Warning>
-  Note that this only applies to `testkits`, not `walk-in phlebotomy` or `at-home phlebotomy`.
+  Note that this only applies to Testkits, not Walk-in Phlebotomy or At-home phlebotomy.
 </Warning>
 
-This involves two steps from the customer's perspective:
+This involves two steps:
   1. Ordering the kit.
   2. Registering a patient.
 
-After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
+After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
 
-After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
+After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `received.testkit.testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
 
 ### Example
 
