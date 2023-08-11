@@ -1,5 +1,5 @@
 ---
-title: "Ordering an Registrable Testkit"
+title: "Ordering a Registrable Testkit"
 ---
 
 Under the [standard Testkit ordering flow](/api-reference/lab-testing/create-order), you place a Testkit order for a specific patient. This resulting Testkit is bound to that patient, and the Testkit cannot be passed on to someone else.
@@ -11,7 +11,7 @@ With Registrable Testkits, Vital offers a different option — Testkits not boun
 </Warning>
 
 This involves two steps:
-  1. Ordering the kit.
+  1. Ordering the Testkit.
   2. Registering a patient.
 
 After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
