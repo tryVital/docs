@@ -140,19 +140,33 @@ Stream<SyncStatus> status = client.healthServices.status;
 
 Setting up background syncing in Flutter follows the [same approach as native iOS](/wearables/sdks/ios/). You need to configure `VitalHealthKit` in the AppDelegate, otherwise background syncing won't work.
 
-You can do so by calling:
+You can do so by `VitalHealthKitClient.configure` in `application:didFinishLaunchingWithOptions`:
 
 ```swift
+import UIKit
+import Flutter
 import VitalHealthKit
 
-VitalHealthKitClient.configure(
-    .init(
-        mode: ..., // automatic by default
-        backgroundDeliveryEnabled: ..., // false by default
-        logsEnabled: ..., // false by default
-        numberOfDaysToBackFill: ..., // 90 by default
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+
+      VitalHealthKitClient.configure(
+      .init(
+          mode: ..., // automatic by default
+          backgroundDeliveryEnabled: ..., // false by default
+          logsEnabled: ..., // false by default
+         numberOfDaysToBackFill: ..., // 90 by default
+      )
     )
-)
+
+    GeneratedPluginRegistrant.register(with: self)
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+}
 ```
 
 You can also check our [Flutter example](https://github.com/tryVital/vital-flutter/blob/main/example/ios/Runner/AppDelegate.swift#L11C1-L12C1). In our example, we use the `VitalHealthKitClient.automaticConfiguration()` variant. This version assumes that `VitalHealthKitClient.configure` was called at some point in the past (e.g. when the user was logged in). For example,`automaticConfiguration` is helpful when you are doing A/B testing and you only want to enroll certain users with Apple HealthKit.
