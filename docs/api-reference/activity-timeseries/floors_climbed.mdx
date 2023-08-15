@@ -1,0 +1,35 @@
+---
+title: "Floors Climbed"
+openapi: "GET /v2/timeseries/{user_id}/floors_climbed"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/floors_climbed?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+Not implemented yet.
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+[
+  {
+    "timestamp": "2022-04-20T13:02:01.123771+00:00",
+    "timezone_offset": 3600,
+    "value": 123,
+    "type": "automatic",
+    "unit": "count"
+  }
+]
+```
+
+</ResponseExample>

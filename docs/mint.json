@@ -234,6 +234,16 @@
       "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
     },
     {
+      "group": "Activity Timeseries",
+      "pages": [
+        "api-reference/activity-timeseries/calories_active",
+        "api-reference/activity-timeseries/calories_basal",
+        "api-reference/activity-timeseries/distance",
+        "api-reference/activity-timeseries/floors_climbed",
+        "api-reference/activity-timeseries/steps"
+      ]
+    },
+    {
       "group": "Vitals",
       "pages": [
         "api-reference/vitals/blood-oxygen",
@@ -248,7 +258,6 @@
         "api-reference/vitals/ige",
         "api-reference/vitals/mindfulness-minutes",
         "api-reference/vitals/respiratory-rate",
-        "api-reference/vitals/steps",
         "api-reference/vitals/water"
       ]
     },
