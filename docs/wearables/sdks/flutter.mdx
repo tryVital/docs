@@ -140,7 +140,7 @@ Stream<SyncStatus> status = client.healthServices.status;
 
 Setting up background syncing in Flutter follows the [same approach as native iOS](/wearables/sdks/ios/). You need to configure `VitalHealthKit` in the AppDelegate, otherwise background syncing won't work.
 
-You can do so by `VitalHealthKitClient.configure` in `application:didFinishLaunchingWithOptions`:
+You can do so by calling `VitalHealthKitClient.configure` inside `application:didFinishLaunchingWithOptions`:
 
 ```swift
 import UIKit
