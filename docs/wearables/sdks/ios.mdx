@@ -33,7 +33,7 @@ To use our SDK, start by setting up `VitalClient`:
 ```swift
 import VitalCore
 
-await VitalClient.configure(
+VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
@@ -58,7 +58,7 @@ let result = try await VitalClient.shared.user.create(
 A `userId` is an `UUID4`. Once you have a `userId`, you need to set it:
 
 ```swift
-await VitalClient.setUserId(result.userId)
+VitalClient.setUserId(result.userId)
 ```
 
 <Tip>
@@ -324,7 +324,7 @@ You then set-up the client:
 ```swift
 import VitalHealthKit
 
-await VitalHealthKitClient.configure(
+VitalHealthKitClient.configure(
     .init(
         mode: ..., // automatic by default
         backgroundDeliveryEnabled: ..., // false by default
@@ -341,12 +341,12 @@ Just like `VitalDevices`, you need to configure the `VitalClient` at some point 
 ```swift
 import VitalCore
 
-await VitalClient.configure(
+VitalClient.configure(
     apiKey: "xyz",
     environment: .sandbox(.us)
 )
 
-await VitalClient.setUserId(result.userId)
+VitalClient.setUserId(result.userId)
 ```
 
 <Note>
