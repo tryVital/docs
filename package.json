@@ -13,6 +13,6 @@
     "start": "trap popd EXIT; pushd docs && mintlify dev"
   },
   "devDependencies": {
-    "mintlify": "^3.0.57"
+    "mintlify": "^3.0.88"
   }
 }
