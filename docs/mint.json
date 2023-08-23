@@ -102,7 +102,7 @@
         "wearables/connecting-providers/link_flow",
         "wearables/connecting-providers/launching_link",
         "wearables/connecting-providers/custom_widget",
-        "wearables/connecting-providers/custom_credentials"
+        "wearables/connecting-providers/bring_your_own_oauth"
       ]
     },
     {
