@@ -1,0 +1,48 @@
+---
+title: "Bring Your Own OAuth"
+---
+
+Vital supports bringing your own OAuth application credentials, so that your user would see the OAuth consent flow
+in your own brand when they connect to cloud-based OAuth providers.
+
+This provides a more cohesive experience for your users as it gives a truly whitelabelled experience for your application/mobile application.
+
+Typically when you don't use custom credentials your oauth screen will look like this and used our shared credentials:
+
+![Default Credentials](/img/default_credentials.png)
+
+With custom credentials you can use your own team name and setup your own logo for the provider.
+
+## How to setup custom OAuth application credentials
+
+To setup custom OAuth application credentials, you need to do the following:
+
+1. Create a developer account with the cloud-based OAuth providers.
+2. Generate a OAuth application credentials from your developer account. You can do this by going to the providers developer accounts page and creating a new application.
+3. Email Support@tryvital.io or message us on Slack with the following information:
+   - The provider you want to customize
+   - The client ID and client secret for the provider
+   - The redirect URI for the provider
+   - The name of your team
+   - The logo for your team
+4. We will then setup the custom credentials for you and let you know when it's ready to go.
+
+<Note>
+Some Oauth providers are unavailable unless you can <b>Bring Your Own OAuth (BYOO)</b> — you will have to apply directly
+to the provider for an OAuth application, and provide Vital your assigned credentials once the application is accepted.
+</Note>
+
+## OAuth providers
+
+| Provider                                             | Slug              | OAuth availability           |
+| ---------------------------------------------------- | ----------------- | ---------------------------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Vital branded OAuth, or BYOO |
+| [Garmin](https://www.garmin.com)                     | `garmin`          | Vital branded OAuth, or BYOO |
+| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | Vital branded OAuth, or BYOO |
+| [Oura](https://ouraring.com)                         | `oura`            | Vital branded OAuth, or BYOO |
+| [Strava](https://www.strava.com)                     | `strava`          | Vital branded OAuth, or BYOO |
+| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | Vital branded OAuth, or BYOO |
+| [Withings](https://www.withings.com)                 | `withings`        | Vital branded OAuth, or BYOO |
+| [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       | BYOO only [(Guide)](/wearables/providers/guides/dexcom_v3) |
+| [Huawei](https://www.huawei.com)                     | `huawei`          | BYOO only                    |
+| [iHealth](https://www.ihealth.com)                   | `ihealth`         | BYOO only                    |
