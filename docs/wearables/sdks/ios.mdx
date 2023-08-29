@@ -511,14 +511,9 @@ await VitalClient.shared.user.deregisterProvider(provider: .appleHealthKit)
 
 ### 5. Miscellaneous Information
 
-#### i) Apple HealthKit SDK configuration flow
+#### i) Apple HealthKit SDK Setup Sequence
 
-Vital's iOS SDK allows you to configure it in any order you wish. There are however two things to keep in mind:
-
-1. You need to call `VitalClient.configure`, `VitalClient.setUserId` and `VitalHealthKitClient.configure` in order for data to be pushed to Vital.
-2. You need to call `VitalHealthKitClient.configure` at `application(_:didFinishLaunchingWithOptions:)`, in order for background delivery to work properly.
-
-From an implementation perspective, `VitalHealthKitClient` suspends all operations until both `VitalClient.configure` and `VitalClient.setUserId` are called. This means that it's safe to configure `VitalHealthKitClient` before the `VitalClient`.
+Please refer to [this guide](/wearables/guides/apple_health_kit) that is applicable for all platforms (iOS, Flutter and React Native).
 
 #### ii) VitalHealthKit configuration
 
