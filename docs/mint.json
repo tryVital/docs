@@ -121,6 +121,7 @@
     {
       "group": "Guides",
       "pages": [
+        "wearables/guides/apple_health_kit",
         {
           "group": "Dexcom",
           "pages": [
@@ -128,7 +129,6 @@
             "wearables/guides/dexcom"
           ]
         },
-        "wearables/guides/apple_health_kit",
         "wearables/guides/fitbit",
         "wearables/guides/freestyle",
         "wearables/guides/garmin",
