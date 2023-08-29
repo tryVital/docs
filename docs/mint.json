@@ -115,7 +115,7 @@
         "wearables/providers/introduction",
         "wearables/providers/resources",
         "wearables/providers/time_zone",
-        "wearables/providers/test_data",
+        "wearables/providers/test_data"
       ]
     },
     {
