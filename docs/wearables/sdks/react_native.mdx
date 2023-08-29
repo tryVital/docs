@@ -151,7 +151,7 @@ You also need to do it inside your `AppDelegate`. Your `didFinishLaunchingWithOp
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  [VitalHealthKitConfiguration configureWithBackgroundDeliveryEnabled:true numberOfDaysToBackFill:90 enableLogs: true];
+  [VitalHealthKitConfiguration automaticConfiguration];
 
    // your code
 }

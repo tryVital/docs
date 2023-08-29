@@ -126,6 +126,7 @@
                 "wearables/providers/guides/dexcom"
               ]
             },
+            "wearables/providers/guides/apple_health_kit",
             "wearables/providers/guides/fitbit",
             "wearables/providers/guides/freestyle",
             "wearables/providers/guides/garmin",
