@@ -27,7 +27,7 @@ Start by enabling "Background Delivery" in the app capabilities:
 The number one issue we have identified when integrating with Apple HealthKit, is the SDK setup sequence. Independently of the platform you are using, there are two things that need to happen in order for data to be synced:
 
 1. You must configure the Vital SDK at least once with `VitalClient.configure`, `VitalClient.setUserId` and `VitalHealthKitClient.configure` in order to get the SDK start pushing data to Vital.
-   * You can configure the Vital SDK only when the user has signed in.
+   * You can configure the Vital SDK only once when a user signs into your app for the first time after app installation, or after signing out.
    * You need not call this sequence every time the app launches, as long as you follow step (2) to implement `automaticConfiguration()`.
 
 2. You must call `VitalHealthKitClient.automaticConfiguration()` during `application(_:didFinishLaunchingWithOptions:)` of your UIKit `UIApplicationDelegate`.
