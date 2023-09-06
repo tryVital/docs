@@ -27,14 +27,14 @@ Start by enabling "Background Delivery" in the app capabilities:
 The number one issue we have identified when integrating with Apple HealthKit, is the SDK setup sequence. Independently of the platform you are using, there are two things that need to happen in order for data to be synced:
 
 1. You must configure the Vital SDK at least once with `VitalClient.configure`, `VitalClient.setUserId` and `VitalHealthKitClient.configure` in order to get the SDK start pushing data to Vital.
-   * You can configure the Vital SDK only when the user has signed in.
-   * You need not call this sequence every time the app launches, as long as you follow step (2) to implement `automaticConfiguration`.
+   * You can configure the Vital SDK only once when a user signs into your app for the first time after app installation, or after signing out.
+   * You need not call this sequence every time the app launches, as long as you follow step (2) to implement `automaticConfiguration()`.
 
 2. You must call `VitalHealthKitClient.automaticConfiguration()` during `application(_:didFinishLaunchingWithOptions:)` of your UIKit `UIApplicationDelegate`.
-   * This method restores from the last supplied configuration and Vital user ID from storage.
+   * This automatically rehydrates the Vital SDK with the last supplied configuration and Vital user ID from persistent storage. If none is found, it is a no-op.
    * The prescribed call location is critical for Background Delivery to work reliably.
 
-The main challenge of step number 2, is that for it to work, the first two calls mentioned on step number 1 must happen. For most applications this is not possible. For example, imagine that you only enable Apple HealthKit if a user has logged in. For many apps, at `didFinishLaunchingWithOptions` they don't know yet if the user is logged in or not. Or, for example, you are doing A/B testing and only a percentage of your userbase would have access to Apple HealthKit. For these reasons, we advise on ensuring `VitalHealthKitClient.automaticConfiguration()` is indeed called during app launch. This method makes sure that if the SDK has been setup at least once, it will automatically set everything for you.
+The main challenge of step (2), is that for it to reliably work and be ready for deliveries from Apple HealthKit, the setup sequence in step (1) must happen. For most applications this is not possible. For example, imagine that you only enable Apple HealthKit if a user has logged in. For many apps, at `didFinishLaunchingWithOptions` they don't know yet if the user is logged in or not. Or, for example, you are doing A/B testing and only a percentage of your userbase would have access to Apple HealthKit. For these reasons, `VitalHealthKitClient.automaticConfiguration()` is specifically designed to handle both (1) automatically recovering SDK state when the SDK has been configured once; and (2) SDK never configured or having been reset, e.g., when the user has signed out or has not ever signed in.
 
 <Warning>
 
