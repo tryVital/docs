@@ -1,0 +1,54 @@
+---
+title: "labtest.result.critical"
+description: "A lab test result has critical values"
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `labtest.result.critical`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingCriticalResult" required="true">
+<Expandable title="ClientFacingCriticalResult" defaultOpen="true">
+<ResponseField name="user_id" type="string" required="true">
+User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
+</ResponseField>
+<ResponseField name="order_id" type="string" required="true">
+The Vital Order ID
+</ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+Your team id.
+</ResponseField>
+<ResponseField name="sample_id" type="string" required="true">
+Sample ID
+</ResponseField>
+<ResponseField name="status" type="string" required="true">
+The current results status, can be either (final, partial).
+</ResponseField>
+<ResponseField name="interpretation" type="string" required="true">
+The results interpretation, can be either (normal, abnormal, critical).
+</ResponseField>
+<ResponseField name="created_at" type="string" required="true">
+When the result was first fetched from a laboratory.
+</ResponseField>
+<ResponseField name="updated_at" type="string" required="true">
+When the result was last fetched from a laboratory.
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "labtest.result.critical"
+  "data": {
+    "created_at": "2023-09-04T19:02:33.042533+00:00",
+    "updated_at": "2023-09-04T19:02:47.106778+00:00",
+    "order_id": "93ae03a7-626f-4cf4-802b-1fb6b3c339c7",
+    "sample_id": "W4123LKB3VTL",
+    "status": "final",
+    "interpretation": "critical",
+    "team_id": "482gh249-cd9d-4049-bb42-db5682cdf1d2",
+    "user_id": "db5d34d5-bf7b-4e25-b119-9asd53694f45"
+  },
+}
+```
+</CodeGroup>
