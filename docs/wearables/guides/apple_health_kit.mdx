@@ -9,17 +9,50 @@ Apple HealthKit is an SDK only provider. This means that you access your user's 
   docs apply to all platforms.
 </Tip>
 
-### SDK Setup Sequence
+## Background Delivery
+
+
+The iOS SDK can support observing new HealthKit data even when your app is not actively being used by your app user.
+This provides a more seamless experience, since the app user need not periodically open your app to sync data.
+
+### 1. Setup app entitlements 
+
+Start by enabling "Background Delivery" in the app capabilities:
+
+<img src="/img/iOS/health_kit_permission_background_delivery.png" />
+
+
+### 2. Integrate with iOS system callbacks
 
 The number one issue we have identified when integrating with Apple HealthKit, is the SDK setup sequence. Independently of the platform you are using, there are two things that need to happen in order for data to be synced:
 
-1. You need to call `VitalClient.configure`, `VitalClient.setUserId` and `VitalHealthKitClient.configure` in order for data to be pushed to Vital.
-2. You need to call `VitalHealthKitClient.configure` at `application(_:didFinishLaunchingWithOptions:)`, in order for background delivery to work properly.
+1. You must configure the Vital SDK at least once with `VitalClient.configure`, `VitalClient.setUserId` and `VitalHealthKitClient.configure` in order to get the SDK start pushing data to Vital.
+   * You can configure the Vital SDK only when the user has signed in.
+   * You need not call this sequence every time the app launches, as long as you follow step (2) to implement `automaticConfiguration`.
 
-The main challenge of step number 2, is that for it to work, the first two calls mentioned on step number 1 must happen. For most applications this is not possible. For example, imagine that you only enable Apple HealthKit if a user has logged in. For many apps, at `didFinishLaunchingWithOptions` they don't know yet if the user is logged in or not. Or, for example, you are doing A/B testing and only a percentage of your userbase would have access to Apple HealthKit. For these reasons, we advise on calling `VitalHealthKitClient.automaticConfiguration()`. This method makes sure that if the SDK has been setup at least once, it will automatically set everything for you.
+2. You must call `VitalHealthKitClient.automaticConfiguration()` during `application(_:didFinishLaunchingWithOptions:)` of your UIKit `UIApplicationDelegate`.
+   * This method restores from the last supplied configuration and Vital user ID from storage.
+   * The prescribed call location is critical for Background Delivery to work reliably.
+
+The main challenge of step number 2, is that for it to work, the first two calls mentioned on step number 1 must happen. For most applications this is not possible. For example, imagine that you only enable Apple HealthKit if a user has logged in. For many apps, at `didFinishLaunchingWithOptions` they don't know yet if the user is logged in or not. Or, for example, you are doing A/B testing and only a percentage of your userbase would have access to Apple HealthKit. For these reasons, we advise on ensuring `VitalHealthKitClient.automaticConfiguration()` is indeed called during app launch. This method makes sure that if the SDK has been setup at least once, it will automatically set everything for you.
+
+<Warning>
+
+As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery):
+
+> As soon as your app launches, HealthKit calls the update handler for any observer queries that match the newly saved data. If you plan on supporting background delivery, set up all your observer queries in your app delegate’s application(_:didFinishLaunchingWithOptions:) method. By setting up the queries in `application(_:didFinishLaunchingWithOptions:)`, you ensure that you’ve instantiated your queries, and they’re ready to use before HealthKit delivers the updates.
+
+In other words, make sure `VitalHealthKitClient.automaticConfiguration()` is called inside your UIKit App Delegate's `application(_:didFinishLaunchingWithOptions:)` method. 
+
+For React Native and Flutter SDK consumers, this means you must configure this directly in native code (Swift / Objective-C). Typically, an App Delegate would have
+been already created as part of your generated React Native or Flutter Xcode project.
+
+</Warning>
+
 
 Your `AppDelegate` should then look like this:
 
+Swift / Flutter iOS:
 ```swift
 import VitalHealthKit
 
@@ -34,8 +67,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 }
 ```
 
-The same situation applies for both Flutter and React Native. For the latter:
-
+Objective-C / React Native iOS:
 ```swift
 #import "AppDelegate.h"
 #import "VitalHealthKitConfiguration.h"
@@ -56,3 +88,19 @@ From our experience with how the SDK is used, what tends to exist is a flow that
 3. `VitalHealthKitClient.configure`
 
 These three calls alongside `VitalHealthKitClient.automaticConfiguration` at `didFinishLaunchingWithOptions` tends to be enough to remove most issues we have seen when integrating with Apple HealthKit. We use this approach on all our examples and our [Vital App](/wearables/vital-app/introduction).
+
+### 3. Epilogue
+
+You are all set! Once background delivery is enabled, there is no need for your app to call `syncData()` manually. Depending on the `HKSampleType` syncing, updates will come after a period of time.
+
+<Note>
+
+As per the [documentation](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery):
+
+> HealthKit wakes your app whenever a process saves or deletes samples of the specified type. The system wakes your app at most once per time period defined by the specified frequency. Some sample types have a maximum frequency of `HKUpdateFrequency.hourly`. The system enforces this frequency transparently.
+>
+> For example, on iOS, `stepCount` samples have an hourly maximum frequency.
+
+This means that although we have background delivery's frequency set to `.hourly`, we cannot guarantee hourly syncing on the dot.
+
+</Note>
