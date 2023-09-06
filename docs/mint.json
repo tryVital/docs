@@ -307,7 +307,8 @@
       "group": "Lab Tests",
       "pages": [
         "event-catalog/labtest.order.created",
-        "event-catalog/labtest.order.updated"
+        "event-catalog/labtest.order.updated",
+        "event-catalog/labtest.result.critical"
       ]
     },
     {
