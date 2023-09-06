@@ -53,6 +53,8 @@ const data = await client.LabTests.Results.getResults("<order_id>");
     "date_collected": "2022-02-02",
     "specimen_number": "123131",
     "date_received": "2022-01-01"
+    "status": "final",
+    "interpretation": "abnormal"
   },
   "results": [
     {
@@ -65,7 +67,8 @@ const data = await client.LabTests.Results.getResults("<order_id>");
       "max_range_value": 17.7,
       "min_range_value": 13.0,
       "is_above_max_range": true,
-      "is_below_min_range": false
+      "is_below_min_range": false,
+      "interpretation": "abnormal"
     },
     {
       "name": "Sodium",
@@ -77,7 +80,8 @@ const data = await client.LabTests.Results.getResults("<order_id>");
       "max_range_value": 144,
       "min_range_value": 134,
       "is_above_max_range": false,
-      "is_below_min_range": false
+      "is_below_min_range": false,
+      "interpretation": "normal"
     }
   ]
 }
