@@ -138,8 +138,9 @@
       ]
     },
     {
-      "group": "SDKs",
+      "group": "Mobile SDKs",
       "pages": [
+        "wearables/sdks/authentication",
         "wearables/sdks/ios",
         "wearables/sdks/android",
         "wearables/sdks/flutter",
