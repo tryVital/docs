@@ -2,8 +2,8 @@
 
 ## Quickstart
 
-Ensure you have nodejs 18 installed and run `npm install` to get started.
-To view the docs locally run `npm start`.
+Ensure you have nodejs 18 installed and run `yarn install` to get started.
+To view the docs locally run `yarn start`.
 
 ## Resources
 
