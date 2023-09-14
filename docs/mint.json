@@ -322,9 +322,7 @@
       "group": "Provider",
       "pages": [
         "event-catalog/provider.connection.created",
-        "event-catalog/provider.connection.error",
-        "event-catalog/daily.data.device.created",
-        "event-catalog/daily.data.device.updated"
+        "event-catalog/provider.connection.error"
       ]
     },
     {
@@ -335,7 +333,6 @@
         "event-catalog/daily.data.body.created",
         "event-catalog/daily.data.body.updated",
         "event-catalog/daily.data.profile.created",
-        "event-catalog/daily.data.profile.updated",
         "event-catalog/daily.data.sleep.created",
         "event-catalog/daily.data.sleep.updated",
         "event-catalog/daily.data.workouts.created",
