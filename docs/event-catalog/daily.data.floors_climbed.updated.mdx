@@ -30,7 +30,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 The value of the measurement.
 </ResponseField>
 <ResponseField name="type" type="string | null">
-The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
@@ -41,20 +41,27 @@ The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/c
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="user_id" type="string" required="true">
-</ResponseField>
-<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -66,10 +73,10 @@ URL for source logo
   "data": {
     "data": [
       {
-        "timestamp": "2023-07-04T17:54:38.755074+00:00",
+        "timestamp": "2023-09-14T13:12:20.169499+00:00",
         "timezone_offset": null,
         "value": 2,
-        "type": "automatic",
+        "type": null,
         "unit": "count"
       }
     ],
@@ -79,8 +86,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "7d534f25-a8a9-42a5-abe0-fd295ddaa0d2",
-    "user_key": "a36f4883-4579-4d9b-90b3-18741d80d47f"
+    "user_id": "a82b6bfb-d27b-4dc5-afd1-8ecd94cf78f9"
   }
 }
 ```

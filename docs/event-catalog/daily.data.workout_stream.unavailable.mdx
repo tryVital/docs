@@ -20,8 +20,22 @@ Constant: `daily.data.workout_stream.unavailable`
 </ResponseField>
 <ResponseField name="message" type="string" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="source" type="ClientFacingProvider" required="true">
+[⚠️ Deprecated] 
+<Expandable title="ClientFacingProvider" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="provider" type="ClientFacingProvider" required="true">
+<Expandable title="ClientFacingProvider" defaultOpen="true">
 <ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
@@ -53,10 +67,10 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.unavailable",
   "data": {
-    "user_id": "84ef5fe8-5eaf-4b15-a2ac-eb83a6e5c3db",
-    "workout_id": "53b50c37-cc3f-4a73-bbde-c7537a8ef541",
+    "user_id": "d5b19f6f-6afb-4ccf-958f-c51c9dd11378",
+    "workout_id": "e28f6248-5fa5-4e08-b2ce-9019636b1868",
     "message": "The stream for this workout is not available.",
-    "source": {
+    "provider": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"

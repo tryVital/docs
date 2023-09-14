@@ -1,6 +1,6 @@
 ---
-title: "daily.data.body.created"
-description: "New body data has been created"
+title: "daily.data.workout_stream.updated"
+description: "An existing workout stream has been updated, and can be accessed via the /v2/timeseries/workouts/&lcub;workout_id&rcub;/stream endpoint."
 ---
 <Warning>
 Each summary object is uniquely identified by its `id`.
@@ -10,28 +10,21 @@ versions.
 </Warning>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `daily.data.body.created`
+Constant: `daily.data.workout_stream.updated`
 </ResponseField>
-<ResponseField name="data" type="ClientFacingBody" required="true">
-<Expandable title="ClientFacingBody" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingShallowWorkoutStream" required="true">
+<Expandable title="ClientFacingShallowWorkoutStream" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="id" type="string" required="true">
+<ResponseField name="workout_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="date" type="string" required="true">
-[⚠️ Deprecated] Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+<ResponseField name="provider_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="calendar_date" type="string" required="true">
-Date of the summary in the YYYY-mm-dd format.
-</ResponseField>
-<ResponseField name="weight" type="number | null">
-Weight in kg::kg
-</ResponseField>
-<ResponseField name="fat" type="number | null">
-Body fat percentage::perc
+<ResponseField name="message" type="string | null">
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
+Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
 <ResponseField name="provider" type="string" required="true">
 Provider slug. e.g., `oura`, `fitbit`, `garmin`.
@@ -53,26 +46,40 @@ The identifier of the app which recorded this summary. This is only applicable t
 </ResponseField>
 </Expandable>
 </ResponseField>
+<ResponseField name="sport" type="ClientFacingSport | null">
+Sport&#x27;s name
+<Expandable title="ClientFacingSport" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="name" type="string" required="true">
+Sport&#x27;s name
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated sport
+</ResponseField>
+</Expandable>
+</ResponseField>
 </Expandable>
 </ResponseField>
 # Examples
 <CodeGroup>
 ```json Example
 {
-  "event_type": "daily.data.body.created",
+  "event_type": "daily.data.workout_stream.updated",
   "data": {
-    "id": "581aee72-efea-4264-a88d-5928854270bf",
-    "date": "2023-09-14T13:12:20.311520+00:00",
-    "calendar_date": "2023-12-",
-    "weight": 80,
-    "fat": 30,
-    "height": 183,
+    "workout_id": "758812c7-cf15-4e5e-9816-6d2a59f01422",
+    "provider_id": "123dashd9",
+    "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "381a4d53-d656-44af-9e1e-a170cbca74f0"
+    "sport": {
+      "id": 1,
+      "name": "Running",
+      "slug": "running"
+    }
   }
 }
 ```

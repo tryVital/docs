@@ -1,17 +1,17 @@
 ---
-title: "daily.data.mindfulness_minutes.updated"
-description: "Existing mindfulness_minutes samples have been updated"
+title: "daily.data.cholesterol.updated"
+description: "Existing cholesterol samples have been updated"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(mindfulness_minutes, fitbit, 2023-01-23T12:34:56Z)`.
+its source (ID or slug) and its timestamp. e.g., `(cholesterol, fitbit, 2023-01-23T12:34:56Z)`.
 
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `daily.data.mindfulness_minutes.updated`
+Constant: `daily.data.cholesterol.updated`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
@@ -69,15 +69,15 @@ The identifier of the app which recorded this summary. This is only applicable t
 <CodeGroup>
 ```json Example
 {
-  "event_type": "daily.data.mindfulness_minutes.updated",
+  "event_type": "daily.data.cholesterol.updated",
   "data": {
     "data": [
       {
-        "timestamp": "2023-09-14T13:12:20.169488+00:00",
+        "timestamp": "2023-09-14T13:12:20.169451+00:00",
         "timezone_offset": null,
-        "value": 42,
-        "type": null,
-        "unit": "min"
+        "value": 0.6,
+        "type": "cholesterol/ldl",
+        "unit": "mmol/L"
       }
     ],
     "source_id": 1,
@@ -86,7 +86,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "8059264a-b6fc-444b-a10f-07965eb98a00"
+    "user_id": "1b438bdb-c7d0-46f0-a99b-f302f9a94e42"
   }
 }
 ```

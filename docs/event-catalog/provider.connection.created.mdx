@@ -8,12 +8,24 @@ Constant: `provider.connection.created`
 </ResponseField>
 <ResponseField name="data" type="ProviderConnectionCreated" required="true">
 <Expandable title="ProviderConnectionCreated" defaultOpen="true">
-<ResponseField name="user_key" type="string" required="true">
-</ResponseField>
 <ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="source" type="ClientFacingProvider" required="true">
+[⚠️ Deprecated] 
+<Expandable title="ClientFacingProvider" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="provider" type="ClientFacingProvider" required="true">
+<Expandable title="ClientFacingProvider" defaultOpen="true">
 <ResponseField name="name" type="string" required="true">
 Name of source of information
 </ResponseField>
@@ -33,13 +45,12 @@ URL for source logo
 {
   "event_type": "provider.connection.created",
   "data": {
-    "source": {
+    "provider": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "e999df14-0c31-496b-88bd-af40f00ff89d",
-    "user_key": "255d1045-e1d0-4226-9fda-a91b74f82eb3"
+    "user_id": "5a15817c-4629-48d9-b61b-25c7e9b32164"
   }
 }
 ```

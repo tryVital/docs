@@ -39,20 +39,27 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="user_id" type="string" required="true">
-</ResponseField>
-<ResponseField name="user_key" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -64,11 +71,11 @@ URL for source logo
   "data": {
     "data": [
       {
-        "timestamp": "2023-07-04T17:54:39.370951+00:00",
+        "timestamp": "2023-09-14T13:12:20.176412+00:00",
         "timezone_offset": null,
         "systolic": "125",
         "diastolic": "75",
-        "type": "cuff",
+        "type": null,
         "unit": "mmHg"
       }
     ],
@@ -78,8 +85,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "5c499014-8c22-497e-82d1-46960099a6ad",
-    "user_key": "49cff8b8-a97a-45f4-aa39-e78e38fc2e78"
+    "user_id": "211167d3-27d1-4bc4-9d45-81900a496932"
   }
 }
 ```
