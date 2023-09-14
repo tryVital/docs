@@ -17,9 +17,6 @@ Constant: `daily.data.workout_stream.created`
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null">
-[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
-</ResponseField>
 <ResponseField name="workout_id" type="string" required="true">
 </ResponseField>
 <ResponseField name="provider_id" type="string" required="true">
@@ -29,14 +26,23 @@ User id returned by vital create user request. This id should be stored in your 
 <ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -61,7 +67,7 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.created",
   "data": {
-    "workout_id": "80396329-51de-456e-9187-be0c06ad2e35",
+    "workout_id": "758812c7-cf15-4e5e-9816-6d2a59f01422",
     "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {

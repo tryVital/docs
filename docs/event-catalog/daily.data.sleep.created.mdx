@@ -17,9 +17,6 @@ Constant: `daily.data.sleep.created`
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null">
-[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
-</ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
 <ResponseField name="date" type="string" required="true">
@@ -85,14 +82,23 @@ Average respiratory rate::breaths per minute
 <ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -113,7 +119,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 HRV calculated using rmssd during sleep
 </ResponseField>
 <ResponseField name="type" type="string | null">
-The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 Measured in rmssd.
@@ -135,7 +141,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 Heart rate in bpm
 </ResponseField>
 <ResponseField name="type" type="string | null">
-The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 Measured in bpm.
@@ -157,7 +163,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 Hypnogram for sleep stages &lcub;&quot;deep&quot;: 1, &quot;light&quot;: 2, &quot;rem&quot;: 3, &quot;awake&quot;: 4, &quot;manual&quot;: 5, &quot;missing_data&quot;: -1&rcub;
 </ResponseField>
 <ResponseField name="type" type="string | null">
-The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 enum: 1: deep, 2: light, 3: rem, 4: awake, -1: missing_data.
@@ -179,7 +185,7 @@ Time zone UTC offset of the measurement. Positive offset indicates east of UTC; 
 Average respiratory rate::breaths per minute
 </ResponseField>
 <ResponseField name="type" type="string | null">
-The reading type of the measurement, e.g. cuff, scale, manual_scan, etc.
+The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 Measured in bpm.
@@ -196,11 +202,11 @@ Measured in bpm.
 {
   "event_type": "daily.data.sleep.created",
   "data": {
-    "id": "fa065417-e3d5-43ae-ad6f-eefd58ab2a90",
-    "date": "2023-07-04T17:54:39.744129+00:00",
-    "calendar_date": "2023-07-04",
-    "bedtime_start": "2023-07-04T17:54:39.744141+00:00",
-    "bedtime_stop": "2023-07-04T17:54:39.744144+00:00",
+    "id": "7acf24ff-b80c-4733-a7c0-fe8134e14277",
+    "date": "2023-09-14T13:12:20.314714+00:00",
+    "calendar_date": "2023-09-14",
+    "bedtime_start": "2023-09-14T13:12:20.314726+00:00",
+    "bedtime_stop": "2023-09-14T13:12:20.314729+00:00",
     "timezone_offset": 2400,
     "duration": 28800,
     "total": 28800,
@@ -217,11 +223,11 @@ Measured in bpm.
     "average_hrv": 78,
     "respiratory_rate": 14,
     "source": {
-      "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
+      "provider": "oura",
+      "type": "unknown",
+      "app_id": null
     },
-    "user_id": "8a6bb9b8-cda7-41f7-9cd4-6354a96df3e3"
+    "user_id": "1979007d-5cf4-4598-8183-7799100dc068"
   }
 }
 ```

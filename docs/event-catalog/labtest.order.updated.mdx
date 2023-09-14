@@ -11,16 +11,13 @@ Constant: `labtest.order.updated`
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null">
-[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
-</ResponseField>
 <ResponseField name="id" type="string" required="true">
 The Vital Order ID
 </ResponseField>
 <ResponseField name="team_id" type="string" required="true">
 Your team id.
 </ResponseField>
-<ResponseField name="patient_details" type="ClientFacingPatientDetailsCompatible" required="true">
+<ResponseField name="patient_details" type="ClientFacingPatientDetailsCompatible | null">
 Patient Details
 <Expandable title="ClientFacingPatientDetailsCompatible" defaultOpen="true">
 <ResponseField name="first_name" type="string | null">
@@ -37,7 +34,7 @@ Patient Details
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="patient_address" type="PatientAddressCompatible" required="true">
+<ResponseField name="patient_address" type="PatientAddressCompatible | null">
 Patient Address
 <Expandable title="PatientAddressCompatible" defaultOpen="true">
 <ResponseField name="receiver_name" type="string | null">
@@ -130,6 +127,9 @@ Defines whether a lab test requires fasting. Only available for Labcorp.
 </ResponseField>
 </Expandable>
 </ResponseField>
+<ResponseField name="is_delegated" type="boolean | null">
+Denotes whether a lab test requires using non-Vital physician networks. If it does then it&#x27;s delegated - no otherwise.
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="details" type="anyOf" required="true">
@@ -220,7 +220,7 @@ Notes associated with the order
 When your order was created
 </ResponseField>
 <ResponseField name="updated_at" type="string" required="true">
-When your order was last updated
+When your order was last updated.
 </ResponseField>
 <ResponseField name="events" type="ClientFacingOrderEvent[]" required="true">
 <Expandable title="Item Schema: ClientFacingOrderEvent" defaultOpen="true">
@@ -252,10 +252,31 @@ When your order was last updated
 Vital ID of the health insurance.
 </ResponseField>
 <ResponseField name="requisition_form_url" type="string | null">
-Requistion form url.
+DEPRECATED. Requistion form url.
 </ResponseField>
 <ResponseField name="priority" type="boolean | null">
 Defines whether order is priority or not. Only available for Labcorp. For Labcorp, this corresponds to a STAT order.
+</ResponseField>
+<ResponseField name="shipping_details" type="ShippingAddress | null">
+Shipping Details. For unregistered testkit orders.
+<Expandable title="ShippingAddress" defaultOpen="true">
+<ResponseField name="receiver_name" type="string" required="true">
+</ResponseField>
+<ResponseField name="first_line" type="string" required="true">
+</ResponseField>
+<ResponseField name="second_line" type="string | null">
+</ResponseField>
+<ResponseField name="city" type="string" required="true">
+</ResponseField>
+<ResponseField name="state" type="string" required="true">
+</ResponseField>
+<ResponseField name="zip" type="string" required="true">
+</ResponseField>
+<ResponseField name="country" type="string" required="true">
+</ResponseField>
+<ResponseField name="phone_number" type="string" required="true">
+</ResponseField>
+</Expandable>
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -265,9 +286,9 @@ Defines whether order is priority or not. Only available for Labcorp. For Labcor
 {
   "event_type": "labtest.order.updated",
   "data": {
-    "id": "2b756027-586a-4591-8530-7c454554172f",
-    "team_id": "29de79ad-b301-4eaf-b726-9096b91fa6ae",
-    "user_id": "acc7cfc1-10f0-45cd-be86-2c19e49b895a",
+    "id": "185de202-ad41-4769-8cc6-1b01a0611c4e",
+    "team_id": "7403d307-9470-4297-a0f8-61bbacb8fa75",
+    "user_id": "4b38bc70-3539-4fe4-a2a4-bccaee091d9b",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -308,7 +329,7 @@ Defines whether order is priority or not. Only available for Labcorp. For Labcor
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "2176d272-bd03-434c-9423-aaccb5425f0e",
+    "health_insurace_id": "afe4dcb4-4153-4bcc-ac10-05215ed380d2",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",

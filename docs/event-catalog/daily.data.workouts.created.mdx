@@ -17,9 +17,6 @@ Constant: `daily.data.workouts.created`
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null">
-[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
-</ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
 <ResponseField name="title" type="string | null">
@@ -104,14 +101,23 @@ Provider ID given for that specific workout
 <ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -123,22 +129,22 @@ URL for source logo
 {
   "event_type": "daily.data.workouts.created",
   "data": {
-    "id": "6a226b53-784d-4334-ad03-b0478bf19e25",
+    "id": "b89fc599-e82a-465f-b756-b72757395a16",
     "average_hr": 100,
     "max_hr": 190,
     "distance": 1700,
-    "calendar_date": "2023-54-",
-    "time_start": "2023-07-04T16:54:39.751604+00:00",
-    "time_end": "2023-07-04T17:54:39.751627+00:00",
+    "calendar_date": "2023-12-",
+    "time_start": "2023-09-14T12:12:20.321880+00:00",
+    "time_end": "2023-09-14T13:12:20.321898+00:00",
     "calories": 300,
     "sport": {
       "id": 1,
       "name": "football"
     },
     "source": {
-      "name": "Strava",
-      "slug": "strava",
-      "logo": "https://logo_url.com"
+      "provider": "strava",
+      "type": "unknown",
+      "app_id": null
     },
     "hr_zones": [
       100,
@@ -147,7 +153,7 @@ URL for source logo
       10,
       200
     ],
-    "user_id": "067059f4-0234-4e8e-b2e9-9fbe33462e65",
+    "user_id": "d101b732-01e4-44de-bfbb-71217447d775",
     "moving_time": 100,
     "total_elevation_gain": 10,
     "elev_high": 20.2,

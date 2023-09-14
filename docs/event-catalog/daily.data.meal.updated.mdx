@@ -39,42 +39,58 @@ Constant: `daily.data.meal.updated`
 <ResponseField name="macros" type="Macros | null">
 <Expandable title="Macros" defaultOpen="true">
 <ResponseField name="carbs" type="number | null">
+Amount of carbohydrates in grams (g)
 </ResponseField>
 <ResponseField name="protein" type="number | null">
+Amount of protein in grams (g)
 </ResponseField>
 <ResponseField name="fats" type="Fats | null">
+Details of fat content
 <Expandable title="Fats" defaultOpen="true">
 <ResponseField name="saturated" type="number | null">
+Amount of saturated fats in grams (g)
 </ResponseField>
 <ResponseField name="monounsaturated" type="number | null">
+Amount of monounsaturated fats in grams (g)
 </ResponseField>
 <ResponseField name="polyunsaturated" type="number | null">
+Amount of polyunsaturated fats in grams (g)
 </ResponseField>
 <ResponseField name="omega3" type="number | null">
+Amount of Omega-3 fatty acids in grams (g)
 </ResponseField>
 <ResponseField name="omega6" type="number | null">
+Amount of Omega-6 fatty acids in grams (g)
 </ResponseField>
 <ResponseField name="total" type="number | null">
+Total amount of fats in grams (g)
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="alcohol" type="number | null">
+Amount of alcohol in grams (g)
 </ResponseField>
 <ResponseField name="water" type="number | null">
+Amount of water in grams (g)
 </ResponseField>
 <ResponseField name="fibre" type="number | null">
+Amount of dietary fiber in grams (g)
 </ResponseField>
 <ResponseField name="sugar" type="number | null">
+Amount of sugar in grams (g)
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="micros" type="Micros | null">
 <Expandable title="Micros" defaultOpen="true">
 <ResponseField name="minerals" type="object | null">
+Amount of each mineral in grams (g)
 </ResponseField>
 <ResponseField name="trace_elements" type="object | null">
+Amount of each trace element in grams (g)
 </ResponseField>
 <ResponseField name="vitamins" type="object | null">
+Amount of each vitamin in grams (g)
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -82,14 +98,23 @@ Constant: `daily.data.meal.updated`
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>

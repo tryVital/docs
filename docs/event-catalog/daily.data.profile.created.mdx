@@ -17,23 +17,29 @@ Constant: `daily.data.profile.created`
 <ResponseField name="user_id" type="string" required="true">
 User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.
 </ResponseField>
-<ResponseField name="user_key" type="string | null">
-[⚠️ Deprecated] User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.
-</ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
 <ResponseField name="height" type="integer | null">
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -45,14 +51,14 @@ URL for source logo
 {
   "event_type": "daily.data.profile.created",
   "data": {
-    "id": "3ee6b35a-8955-4ae6-af58-8324e954b61b",
+    "id": "df1cda04-7294-4d2b-b1ea-2a5c3191e3d9",
     "height": 183,
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "cac445bd-ea84-4a81-a8f1-8429035da047"
+    "user_id": "05152ac3-433c-44e1-8a94-12141f7cb416"
   }
 }
 ```
