@@ -109,9 +109,6 @@ The identifier of the app which recorded this summary. This is only applicable t
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
-</ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
@@ -124,15 +121,15 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 <ResponseField name="unit" type="string" required="true">
 Measured in rmssd.
 </ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="heartrate" type="ClientFacingHeartRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHeartRateTimeseries" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
@@ -146,15 +143,15 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 <ResponseField name="unit" type="string" required="true">
 Measured in bpm.
 </ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="hypnogram" type="ClientFacingHypnogramTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHypnogramTimeseries" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
@@ -168,15 +165,21 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 <ResponseField name="unit" type="string" required="true">
 enum: 1: deep, 2: light, 3: rem, 4: awake, -1: missing_data.
 </ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+Depracated. The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="start" type="string" required="true">
+The start timestamp of the measurement.
+</ResponseField>
+<ResponseField name="end" type="string" required="true">
+The end timestamp of the measurement.
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="respiratory_rate" type="ClientFacingRespiratoryRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingRespiratoryRateTimeseries" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
@@ -190,6 +193,9 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 <ResponseField name="unit" type="string" required="true">
 Measured in bpm.
 </ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
+</ResponseField>
 </Expandable>
 </ResponseField>
 </Expandable>
@@ -202,11 +208,11 @@ Measured in bpm.
 {
   "event_type": "daily.data.sleep.updated",
   "data": {
-    "id": "7acf24ff-b80c-4733-a7c0-fe8134e14277",
-    "date": "2023-09-14T13:12:20.314714+00:00",
-    "calendar_date": "2023-09-14",
-    "bedtime_start": "2023-09-14T13:12:20.314726+00:00",
-    "bedtime_stop": "2023-09-14T13:12:20.314729+00:00",
+    "id": "0bc378fc-b37e-4c35-8402-4bc702b684ae",
+    "date": "2023-09-15T14:41:58.684307+00:00",
+    "calendar_date": "2023-09-15",
+    "bedtime_start": "2023-09-15T14:41:58.684322+00:00",
+    "bedtime_stop": "2023-09-15T14:41:58.684326+00:00",
     "timezone_offset": 2400,
     "duration": 28800,
     "total": 28800,
@@ -227,7 +233,7 @@ Measured in bpm.
       "type": "unknown",
       "app_id": null
     },
-    "user_id": "1979007d-5cf4-4598-8183-7799100dc068"
+    "user_id": "718e8650-538e-4940-868e-100ab2227f1f"
   }
 }
 ```

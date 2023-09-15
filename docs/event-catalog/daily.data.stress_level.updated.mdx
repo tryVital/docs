@@ -20,9 +20,6 @@ Constant: `daily.data.stress_level.updated`
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
-</ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
 Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
@@ -34,6 +31,9 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+The timestamp of the measurement.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -73,7 +73,7 @@ The identifier of the app which recorded this summary. This is only applicable t
   "data": {
     "data": [
       {
-        "timestamp": "2023-09-14T13:12:20.169506+00:00",
+        "timestamp": "2023-09-15T14:41:58.478332+00:00",
         "timezone_offset": null,
         "value": 35,
         "type": null,
@@ -86,7 +86,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "e99c9cc6-74b0-418e-87ff-545052a60a56"
+    "user_id": "f4943da7-51b3-48ca-a056-27eb3fa01ed7"
   }
 }
 ```
