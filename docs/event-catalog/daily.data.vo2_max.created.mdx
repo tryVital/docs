@@ -1,6 +1,6 @@
 ---
 title: "daily.data.vo2_max.created"
-description: "New vo2_max samples have been created"
+description: "New vo2_max interval samples have been created"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -15,8 +15,8 @@ Constant: `daily.data.vo2_max.created`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
-<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
+<Expandable title="Item Schema: ClientFacingIntervalSample" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
@@ -33,7 +33,13 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
+Depracated. The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="start" type="string" required="true">
+The start timestamp of the measurement.
+</ResponseField>
+<ResponseField name="end" type="string" required="true">
+The end timestamp of the measurement.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -73,9 +79,9 @@ The identifier of the app which recorded this summary. This is only applicable t
   "data": {
     "data": [
       {
-        "timestamp": "2023-09-15T14:41:58.478322+00:00",
-        "start": "2023-09-15T14:41:58.478325+00:00",
-        "end": "2023-09-15T14:46:58.478328+00:00",
+        "timestamp": "2023-09-19T13:06:04.278679+00:00",
+        "start": "2023-09-19T13:06:04.278681+00:00",
+        "end": "2023-09-19T13:11:04.278683+00:00",
         "timezone_offset": null,
         "value": 48,
         "type": null,
@@ -88,7 +94,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "40393708-5cbd-4c0f-a6fa-d394b5e336c7"
+    "user_id": "e6dd6f0b-a759-4068-a22a-e05bce807c96"
   }
 }
 ```
