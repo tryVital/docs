@@ -1,6 +1,6 @@
 ---
 title: "daily.data.calories_basal.updated"
-description: "Existing calories_basal samples have been updated"
+description: "Existing calories_basal interval samples have been updated"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
@@ -15,8 +15,8 @@ Constant: `daily.data.calories_basal.updated`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
-<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
+<Expandable title="Item Schema: ClientFacingIntervalSample" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Measurement id. Note, this field has been deprecated and is no longer used
 </ResponseField>
@@ -33,7 +33,13 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
+Depracated. The timestamp of the measurement.
+</ResponseField>
+<ResponseField name="start" type="string" required="true">
+The start timestamp of the measurement.
+</ResponseField>
+<ResponseField name="end" type="string" required="true">
+The end timestamp of the measurement.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -73,7 +79,7 @@ The identifier of the app which recorded this summary. This is only applicable t
   "data": {
     "data": [
       {
-        "timestamp": "2023-09-15T14:41:58.478304+00:00",
+        "timestamp": "2023-09-19T13:06:04.278665+00:00",
         "timezone_offset": null,
         "value": 22.8,
         "type": null,
@@ -86,7 +92,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "0da1ed4d-19aa-441d-a056-fe28bf4ae1a7"
+    "user_id": "86a159f1-b086-4a0a-9fd3-b603ca2a2a6a"
   }
 }
 ```
