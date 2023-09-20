@@ -133,7 +133,8 @@
         "wearables/guides/freestyle",
         "wearables/guides/garmin",
         "wearables/guides/google_fit",
-        "wearables/guides/my_fitness_pal"
+        "wearables/guides/my_fitness_pal",
+        "wearables/guides/polar"
       ]
     },
     {
