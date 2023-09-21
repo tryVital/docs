@@ -6,20 +6,53 @@ title: "Resources"
 
 At Vital, a resource represents a set of fields. Each resource is an abstraction for the different categories of data available for each provider. We currently support two kinds of resources: summary and timeseries. Summary resources are made up of many fields. While timeseries represent the values of a single field over time.
 
-| Resource         | Type       |
-| ---------------- | ---------- |
-| `Activity`       | summary    |
-| `Body`           | summary    |
-| `Workouts`       | summary    |
-| `Sleep`          | summary    |
-| `Meal`           | summary    |
-| `Profile`        | summary    |
-| `Glucose`        | timeseries |
-| `Heartrate`      | timeseries |
-| `Bloodpressure`  | timeseries |
-| `Blood Oxygen`   | timeseries |
-| `Workout Stream` | timeseries |
-| `Sleep Stream`   | timeseries |
+### Summary types
+
+| Granularity | Resources       |
+| ----------- | --------------- |
+| Daily       | `activity` |
+| Session     | `sleep`, `workouts`, `body`, `meal`, `workout_stream`, `sleep_stream` |
+| Single      | `profile` |
+
+### Timeseries types
+
+| Category          | Resources |
+| ----------------- | --------- |
+| Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps` |
+| Cardiorespiratory | `respiratory_rate`, `vo2_max` |
+| Sleep             | `hypnogram` |
+| Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv` |
+| Nutrition         | `water`, `caffeine` |
+| Wellness          | `mindfulness_minutes`, `stress_level` |
+| Body              | `fat`, `weight`
+| Lab Testing       | `cholesterol`, `igg`, `ige` |
+
+## Summary types by providers
+
+<iframe
+  src="https://airtable.com/embed/shrYd0PGVhx5lTemu?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="800"
+>
+  {" "}
+</iframe>
+
+## Timeseries types by providers
+
+<iframe
+  src="https://airtable.com/embed/shrtq9mZDz6BRXuz2?backgroundColor=gray&layout=card"
+  frameborder="0"
+  allowfullscreen="true"
+  width="100%"
+  height="800"
+>
+  {" "}
+</iframe>
+
+
+## Fetching via the API
 
 <Tip>
 
@@ -83,36 +116,36 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
 ```json
 [
   {
-    "id": 79009531,
     "timestamp": "2022-04-29T08:35:57+00:00",
+    "timezone_offset": 3600,
     "value": 174.0,
     "type": null,
     "unit": "bpm"
   },
   {
-    "id": 79005064,
     "timestamp": "2022-04-30T11:22:38+00:00",
+    "timezone_offset": 3600,
     "value": 79.0,
     "type": null,
     "unit": "bpm"
   },
   {
-    "id": 79005065,
     "timestamp": "2022-04-30T11:22:39+00:00",
+    "timezone_offset": 3600,
     "value": 80.0,
     "type": null,
     "unit": "bpm"
   },
   {
-    "id": 79005066,
     "timestamp": "2022-04-30T11:22:40+00:00",
+    "timezone_offset": 3600,
     "value": 78.0,
     "type": null,
     "unit": "bpm"
   },
   {
-    "id": 79005067,
     "timestamp": "2022-04-30T11:22:41+00:00",
+    "timezone_offset": 3600,
     "value": 78.0,
     "type": null,
     "unit": "bpm"
@@ -122,17 +155,6 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
 
 Different providers (e.g. Garmin), have different resources available. As an example, Garmin doesn't have `Glucose` as a resource.
 
-The list bellow shows what resources are available for each provider:
-
-<iframe
-  src="https://airtable.com/embed/shrYd0PGVhx5lTemu?backgroundColor=gray&layout=card"
-  frameborder="0"
-  allowfullscreen="true"
-  width="100%"
-  height="533"
->
-  {" "}
-</iframe>
 
 ## Fields by Provider
 
@@ -217,15 +239,3 @@ Soon. Work in progress.
 ### Profile
 
 Soon. Work in progress.
-
-### Timeseries
-
-<iframe
-  src="https://airtable.com/embed/shrtq9mZDz6BRXuz2?backgroundColor=gray&layout=card"
-  frameborder="0"
-  allowfullscreen="true"
-  width="100%"
-  height="533"
->
-  {" "}
-</iframe>
