@@ -14,18 +14,29 @@ At Vital, a resource represents a set of fields. Each resource is an abstraction
 | Session     | `sleep`, `workouts`, `body`, `meal`, `workout_stream`, `sleep_stream` |
 | Single      | `profile` |
 
-### Timeseries types
+### Discrete Timeseries types
+
+Each value is associated with a single point in time.
+
+| Category          | Resources |
+| ----------------- | --------- |
+| Cardiorespiratory | `respiratory_rate` |
+| Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv` |
+| Wellness          | `stress_level` |
+| Body              | `fat`, `weight`
+| Lab Testing       | `cholesterol`, `igg`, `ige` |
+
+### Interval Timeseries types
+
+Each value is associated with a half-open time interval (`[start, end[`).
 
 | Category          | Resources |
 | ----------------- | --------- |
 | Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps` |
-| Cardiorespiratory | `respiratory_rate`, `vo2_max` |
+| Cardiorespiratory | `vo2_max` |
 | Sleep             | `hypnogram` |
-| Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv` |
 | Nutrition         | `water`, `caffeine` |
-| Wellness          | `mindfulness_minutes`, `stress_level` |
-| Body              | `fat`, `weight`
-| Lab Testing       | `cholesterol`, `igg`, `ige` |
+| Wellness          | `mindfulness_minutes` |
 
 ## Summary types by providers
 
