@@ -26,8 +26,9 @@ The Vital Mobile SDK user session lifecycle is expected to match your own user s
 
 2. When your user has requested to sign out from your app, it should instruct the Vital Mobile SDK to reset its state.
 
-Vital Mobile SDK maintains its signed-in user session in persistence storage.
-You generally only need to request the Vital Sign-In Token once through your backend service once, and then sign-in with the Vital Mobile SDK once.
+Your mobile apps typically only need to request the Vital Sign-In Token once through your backend service, and use the obtained
+Vital Sign-In Token sign-in with the Vital Mobile SDK. Once signed-in, Vital Mobile SDK maintains its user session in persistence storage.
+
 
 <Info>Avoid requesting a Vital Sign-In Token through your backend every time the app relaunches.</Info>
 
@@ -39,7 +40,8 @@ You generally only need to request the Vital Sign-In Token once through your bac
     Your app makes a `getVitalSignInToken` API call to your backend service using your own API authentication method.
   </Step>
   <Step title="Your backend -> Vital API">
-    Your backend service receives and validates the request, and forwards the request to the Vital API using a server-side secret Vital API Key.
+    Your backend service receives and validates the request, and forwards the request to the Vital [Create Sign-In Token API](/api-reference/user/create-sign-in-token) using your server-side Vital API Key secret.
+
     ```bash
     curl --request POST
       --url '{{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token'

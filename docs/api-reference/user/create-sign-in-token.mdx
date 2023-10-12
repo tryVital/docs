@@ -1,0 +1,52 @@
+---
+title: Create Sign-In Token
+openapi: "POST /v2/user/{user_id}/sign_in_token"
+description: Create a [Vital Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) for your mobile apps to sign in with [Vital Mobile SDKs](/wearables/sdks/authentication).
+---
+
+<RequestExample>
+
+```shell Shell
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Content-Type: application/json' \
+```
+
+```javascript Node
+const { VitalClient } = require("Vital");
+
+const client = new VitalClient({
+  api_key: <API_KEY>,
+  environment: "sandbox",
+  region: "us"
+});
+
+const response = await client.User.createSignInToken("{{USER_ID}}");
+```
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+response = client.User.create_sign_in_token("{{USER_ID}}")
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "user_id": "e209947b-323e-4108-8e18-1518b80da0bd",
+  "sign_in_token": "ZXlKaGJHY2lPaUpTVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lJeE1qTTBOVFkzT0Rrd0lpd2lhV0YwSWpveE5URTJNak01TURJeWZRLmFqVXZaWlZrVVFJc3FMbl9uRWotcHkxbjZIV2VrN0tDdXlGbFlNRWU1RDM3WEhJN1lkdWpjczRNQUdLTlZJN3ZDWV9veVFIdEwzMmx4S0RpblRpVC13Z1dMeHdKdFNYQ3hmdTZhT1RGbnBDNEpPR1RGR2hqeldqT1NCNGRqVzJmS3Roa1MweFJfME5FT1dNRjNSanFNc25laVpES1JvYlpoa0gzVkxuTmdVaEFNMU1zeTZsYVB2eHdVZi1xZXFIMExaT2hSSjIxX1RzdElJN3hES3BpbGt3aUJDb0hGb1FUbE5FQ0hxQ2lDOEI2OWZDVmxVbzZSaS0tYTVXaFY2cF90NFNLRXRQMmJWUlhqeUlBOGU2dEcwcXNMOWtpNlVhVDRBZWpLN1V2QTRkSVJ3dTJkUlZGUEpHRGVnY2JCME9TVlNQYlRTSklfLXlnaS1aNkNqMDNmZw=="
+}
+```
+
+</ResponseExample>

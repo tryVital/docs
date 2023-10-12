@@ -180,6 +180,7 @@
         "api-reference/user/get-users",
         "api-reference/user/get-users-connected-providers",
         "api-reference/user/refresh-user-data",
+        "api-reference/user/create-sign-in-token",
         "api-reference/user/deregister-a-provider"
       ]
     },
