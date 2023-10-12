@@ -140,3 +140,105 @@ Please refer to the specific SDK guide:
 * [Flutter SDK](/wearables/sdks/flutter#2-vital-core)
 * [React Native SDK](/wearables/sdks/react_native#4-configure-your-dependencies)
 
+
+## Migrate from Vital API Keys to Vital Sign-In Tokens
+
+<Warning>
+Always use [Vital Sign-In Token](#vital-sign-in-tokens) for your production environment.
+</Warning>
+
+An existing app installation signed-in with Vital API Key + User ID can be seamlessly migrated to
+use Vital Sign-In Tokens.
+
+It is as simple as performing a one-off migration logic during app launch:
+
+<Steps>
+  <Step title="Condition to migrate">
+    Check whether the Vital SDK status includes `useApiKey` (i.e., the user is signed in using Vital API Key).
+  </Step>
+  <Step title="Obtain a Vital Sign-In Token">
+    Similar to the new user sign-in flow, your app needs to obtain a Vital Sign-In Token through your backend service.
+  </Step>
+  <Step title="Sign-in with the token">
+    Your app can simply sign-in with the Vital Sign-In Token.
+    
+    Note that it is **unnecessary to reset** the SDK beforehand — the SDK `signIn` method would automatically migrate, as
+    long as the supplied Sign-In Token is compatible with the existing API Key sign-in (i.e., having the same Vital user ID,
+    same Vital environment, and same Vital region).
+  </Step>
+</Steps>
+
+
+<CodeGroup>
+  ```swift Native iOS
+  import VitalCore
+
+  if VitalClient.status.contains(.useApiKey) {
+    do {
+      let response = await callBackend(...)
+      try await VitalClient.signIn(withToken: response.signInToken)
+    }
+
+      print("Signed in with Vital successfully")
+    } catch let error {
+      print("Error signing in with Vital", error)
+    }
+  }
+  ```
+
+  ```kotlin Native Android
+  import io.tryvital.client.VitalClient
+  import android.content.Context
+  import android.util.Log
+
+  val applicationContext: Context
+
+  VitalClient.getOrCreate(applicationContext)
+
+  if (VitalClient.Status.useApiKey in VitalClient.status) {
+    try {
+        val response = callBackend(...)
+        VitalClient.signIn(applicationContext, response.signInToken)
+
+        Log.i("vital_sdk", "Signed in with Vital successfully")
+    } catch (e: Throwable) {
+        Log.e("vital_sdk", "Error signing in with Vital", e)
+    }
+  }
+  ```
+
+  ```typescript React Native
+  import { VitalCore } from "@tryvital/vital-core-react-native";
+
+  const status = await VitalCore.status();
+
+  if (status.includes("useApiKey")) {
+    do {
+        const response = await callBackend(...);
+        await VitalCore.signIn(response.signInToken);
+
+        console.log("Signed in with Vital successfully");
+    } catch let error {
+        console.error("Error signing in with Vital", error);
+    }
+  }
+  ```
+
+  ```dart Flutter
+  import 'package:vital_core/vital_core.dart' as vital_core;
+
+  Set<vital_core.ClientStatus> status = await vital_core.clientStatus();
+
+  if (status.contains(vital_core.ClientStatus.useApiKey)) {
+    try {
+        MyAPIResponse response = await callBackend(...);
+        await vital_core.signIn(response.signInToken)
+
+        Fimble.i("Signed in with Vital successfully")
+    } catch (error) {
+        Fimble.e("Error signing in with Vital", error)
+    }
+  }
+  ```
+</CodeGroup>
+		
