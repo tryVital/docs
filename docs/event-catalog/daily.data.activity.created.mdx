@@ -62,13 +62,13 @@ The type of the data source (app or device) by which the summary or the timeseri
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -106,8 +106,8 @@ Resting heart rate::bpm
 {
   "event_type": "daily.data.activity.created",
   "data": {
-    "date": "2023-09-19T13:06:03.759379+00:00",
-    "calendar_date": "2023-09-19",
+    "date": "2023-10-12T14:18:57+00:00",
+    "calendar_date": "2023-10-12",
     "calories_total": 100,
     "calories_active": 2000,
     "steps": 10000,
@@ -129,7 +129,7 @@ Resting heart rate::bpm
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "5452e30e-14e7-47dd-a413-2f3561407a2b"
+    "user_id": "6e626fa9-3a7a-4e67-a1ad-ccf110fefa2e"
   }
 }
 ```

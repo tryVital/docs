@@ -36,13 +36,13 @@ The type of the data source (app or device) by which the summary or the timeseri
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -67,7 +67,7 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.updated",
   "data": {
-    "workout_id": "0083638c-35f8-4edc-8eee-af0e87305e8f",
+    "workout_id": "0b37d7a4-1526-4c0d-8c1b-9254dd0b5fba",
     "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {

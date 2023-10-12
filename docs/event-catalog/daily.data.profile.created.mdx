@@ -33,13 +33,13 @@ The type of the data source (app or device) by which the summary or the timeseri
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -51,14 +51,14 @@ The identifier of the app which recorded this summary. This is only applicable t
 {
   "event_type": "daily.data.profile.created",
   "data": {
-    "id": "7f9857cb-cfc2-42e4-8750-5a10d2b3af72",
+    "id": "70fe2e1f-54a2-4627-9a42-b4d8840870b4",
     "height": 183,
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "998f3d68-7c1b-403d-9d9a-b4abb618c178"
+    "user_id": "462a31ab-74b4-42a8-ae1f-5796230dc8ca"
   }
 }
 ```
