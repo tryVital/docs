@@ -21,7 +21,7 @@ Constant: `daily.data.workout_stream.unavailable`
 <ResponseField name="message" type="string" required="true">
 </ResponseField>
 <ResponseField name="source" type="ClientFacingProvider" required="true">
-[⚠️ Deprecated] 
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 <Expandable title="ClientFacingProvider" defaultOpen="true">
 <ResponseField name="name" type="string" required="true">
 Name of source of information
@@ -67,8 +67,8 @@ Slug for designated sport
 {
   "event_type": "daily.data.workout_stream.unavailable",
   "data": {
-    "user_id": "ce423f4f-6999-4957-91dd-0eaad6a6bc43",
-    "workout_id": "b8300b3d-7b5f-436a-9d55-a6784c542925",
+    "user_id": "753f1f71-610d-4994-803a-a942e47a77a4",
+    "workout_id": "d41afd6a-dab1-4e23-b25f-8525d2918611",
     "message": "The stream for this workout is not available.",
     "provider": {
       "name": "Oura",

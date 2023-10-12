@@ -43,13 +43,13 @@ The type of the data source (app or device) by which the summary or the timeseri
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -61,9 +61,9 @@ The identifier of the app which recorded this summary. This is only applicable t
 {
   "event_type": "daily.data.body.created",
   "data": {
-    "id": "be5f83ca-10f2-499c-a878-c3eb1427b9f5",
-    "date": "2023-09-19T13:06:04.433976+00:00",
-    "calendar_date": "2023-06-",
+    "id": "adf80a1d-b01c-4c2b-b452-d351e4f5e951",
+    "date": "2023-10-12T14:18:57+00:00",
+    "calendar_date": "2023-18-",
     "weight": 80,
     "fat": 30,
     "height": 183,
@@ -72,7 +72,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "6a0c3bb4-36af-4c60-a4f1-a6a35ebd4b20"
+    "user_id": "31a3b126-efa7-499d-97ca-7292b6331529"
   }
 }
 ```

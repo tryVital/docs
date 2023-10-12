@@ -17,14 +17,11 @@ Constant: `daily.data.hypnogram.created`
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
 <Expandable title="Item Schema: ClientFacingIntervalSample" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
-Measurement id. Note, this field has been deprecated and is no longer used
+<ResponseField name="id" type="null | null">
+Deprecated
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
-Time zone UTC offset of the measurement. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-</ResponseField>
-<ResponseField name="value" type="number" required="true">
-The value of the measurement.
+Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
 </ResponseField>
 <ResponseField name="type" type="string | null">
 The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
@@ -33,37 +30,45 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
-Depracated. The timestamp of the measurement.
+Depracated. The start time (inclusive) of the interval.
 </ResponseField>
 <ResponseField name="start" type="string" required="true">
-The start timestamp of the measurement.
+The start time (inclusive) of the interval.
 </ResponseField>
 <ResponseField name="end" type="string" required="true">
-The end timestamp of the measurement.
+The end time (exclusive) of the interval.
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+The recorded value for the interval.
 </ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="source_id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingSource" required="true">
-<Expandable title="ClientFacingSource" defaultOpen="true">
-<ResponseField name="provider" type="string" required="true">
-Provider slug. e.g., `oura`, `fitbit`, `garmin`.
-</ResponseField>
-<ResponseField name="type" type="string | null">
-The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
-</ResponseField>
-<ResponseField name="app_id" type="string | null">
-The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
-</ResponseField>
+<ResponseField name="source" type="ClientFacingProvider" required="true">
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+<Expandable title="ClientFacingProvider" defaultOpen="true">
 <ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+Name of source of information
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+Slug for designated source
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated.
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="provider" type="ClientFacingProvider" required="true">
+<Expandable title="ClientFacingProvider" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -79,9 +84,9 @@ The identifier of the app which recorded this summary. This is only applicable t
   "data": {
     "data": [
       {
-        "timestamp": "2023-09-19T13:06:04.278620+00:00",
-        "start": "2023-09-19T13:06:04.278622+00:00",
-        "end": "2023-09-19T13:11:04.278624+00:00",
+        "timestamp": "2023-10-12T14:18:57.723740+00:00",
+        "start": "2023-10-12T14:18:57.723742+00:00",
+        "end": "2023-10-12T14:23:57.723744+00:00",
         "timezone_offset": null,
         "value": 1,
         "type": null,
@@ -89,12 +94,12 @@ The identifier of the app which recorded this summary. This is only applicable t
       }
     ],
     "source_id": 1,
-    "source": {
+    "provider": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "c98af00c-124e-4ba1-99dd-f1da9cacfc4a"
+    "user_id": "85e4db12-e2ac-4650-a218-fd812b6c2bd0"
   }
 }
 ```
