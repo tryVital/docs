@@ -2,46 +2,34 @@
 title: "Authentication"
 ---
 
-Authentication is currently done through `api_key` authentication. You can retrieve these keys from the
-[dashboard](https://app.tryvital.io). You can then provide the `api_key` in the `x-vital-api-key` header of your
-request. For instance:
+## Server to Server
+
+Server to server traffic uses API Key authentication.
+
+Vital API Keys can be created through the [Vital Team Dashboard](https://app.tryvital.io). Requests from your backend services should present the API Key
+in the `X-Vital-API-Key` header. For example:
 
 ```bash
 curl --request GET
   --url '{{BASE_URL}}/v2/providers'
-  --header 'x-vital-api-key: <YOUR-API-KEY>'
+  --header 'X-Vital-API-Key: <YOUR-API-KEY>'
 ```
 
-## Legacy
+### API Key format
 
-Authentication was previously handled using [Bearer tokens](https://oauth.net/2/bearer-tokens/).
-To generate a token use your
-`client_id` and `client_secret` and make a call to the respective auth endpoint.
+| Prefix      | Environment | Region |
+| ----------- | ----------- | ------ |
+| `sk_us_...` | Sandbox     | US     |
+| `sk_eu_...` | Sandbox     | Europe |
+| `pk_us_...` | Production  | US     |
+| `pk_eu_...` | Production  | Europe |
 
-|              |                                              |
-| ------------ | -------------------------------------------- |
-| `sandbox`    | https://auth.sandbox.tryvital.io/oauth/token |
-| `production` | https://auth.tryvital.io/oauth/token         |
+## Vital Mobile SDKs
 
-```bash
-curl --request POST
-  --url 'https://auth.sandbox.tryvital.io/oauth/token'
-  --header 'content-type: application/x-www-form-urlencoded'
-  --data grant_type=client_credentials
-  --data client_id=**
-  --data client_secret=**
-  --data audience=https://api.sandbox.tryvital.io
-```
+[Vital Mobile SDKs](http://localhost:3000/wearables/sdks/) supports two authentication methods:
 
-```json Response
-{
-  "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6....5taYq45_BU7Wts37cRCjHazA",
-  "scope": "client-grant",
-  "expires_in": 86400,
-  "token_type": "Bearer"
-}
-```
+1. [Vital Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) — Recommended for production usage
 
-We have both [NodeJs and Python](../home/libraries) Clients which handle authentication
-and refresh tokens. In the case you want to request these yourself you can make the request
-as outlined below.
+2. [Vital API Keys](/wearables/sdks/authentication#vital-api-keys) — Recommended only for evaluation in Sandbox
+
+Refer to the [Mobile SDK Authentication](/wearables/sdks/authentication) documentation for more information.

@@ -1,0 +1,243 @@
+---
+title: "Mobile SDK Authentication"
+sidebarTitle: "Authentication"
+---
+
+## Vital Sign-In Token
+
+Each Vital Sign-In Token is a short-live token which authorizes a Vital Mobile SDK instance to sign in as a specific user.
+
+<CardGroup cols={2}>
+  <Card title="Persistence" icon="hand-wave">
+    The user session is persistent on the device once signed in, until you reset the SDK, your app is uninstalled, or you have deleted the user through the Vital API.
+  </Card>
+  <Card title="Access Scope" icon="lock">
+    Only user-level resources of the signed-in user can be accessed.
+  </Card>
+</CardGroup>
+
+<Warning>With Vital Sign-In Tokens, your Vital API Keys can be kept strictly as server-side secrets.</Warning>
+
+### General Expectations
+
+The Vital Mobile SDK user session lifecycle is expected to match your own user session lifecycle:
+
+1. When your app has successfully authenticated the user with your backend service, it should begin the process to sign-in with the Vital Mobile SDK.
+
+2. When your user has requested to sign out from your app, it should instruct the Vital Mobile SDK to reset its state.
+
+Your mobile apps typically only need to request the Vital Sign-In Token once through your backend service, and use the obtained
+Vital Sign-In Token sign-in with the Vital Mobile SDK. Once signed-in, Vital Mobile SDK maintains its user session in persistence storage.
+
+
+<Info>Avoid requesting a Vital Sign-In Token through your backend every time the app relaunches.</Info>
+
+### API flow example
+
+<Steps>
+  <Step title="Your app -> Your backend">
+    After your app has authenticated with your backend service, your client app detects that Vital Mobile SDK is in signed-out state.
+    Your app makes a `getVitalSignInToken` API call to your backend service using your own API authentication method.
+  </Step>
+  <Step title="Your backend -> Vital API">
+    Your backend service receives and validates the request, and forwards the request to the Vital [Create Sign-In Token API](/api-reference/user/create-sign-in-token) using your server-side Vital API Key secret.
+
+    ```bash
+    curl --request POST
+      --url '{{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token'
+      --header 'X-Vital-API-Key: <YOUR-API-KEY>'
+    ```
+  </Step>
+  <Step title="Vital API -> Your backend">
+    Vital API creates a new Vital Sign-In Token, and returns it to your backend service. Your backend service includes the Vital Sign-In Token as part of the `getVitalSignInToken` API response.
+  </Step>
+  <Step title="Your backend -> Your app">
+    Your app receives the API response and the Vital Sign-In Token. It then signs in with the Vital Mobile SDK using said token.
+
+    <CodeGroup>
+      ```swift Native iOS
+      import VitalCore
+
+      let response: MyAPIResponse
+
+      do {
+        try await VitalClient.signIn(withToken: response.signInToken)
+
+        print("Signed in with Vital successfully")
+      } catch let error {
+        print("Error signing in with Vital", error)
+      }
+      ```
+
+      ```kotlin Native Android
+      import io.tryvital.client.VitalClient
+      import android.content.Context
+      import android.util.Log
+
+      val response: MyAPIResponse
+      val applicationContext: Context
+
+      try {
+        VitalClient.signIn(applicationContext, response.signInToken)
+
+        Log.i("vital_sdk", "Signed in with Vital successfully")
+      } catch (e: Throwable) {
+        Log.e("vital_sdk", "Error signing in with Vital", e)
+      }
+      ```
+
+      ```typescript React Native
+      import { VitalCore } from "@tryvital/vital-core-react-native";
+
+      const response: MyAPIResponse
+
+      do {
+        await VitalCore.signIn(response.signInToken)
+
+        console.log("Signed in with Vital successfully")
+      } catch let error {
+        console.error("Error signing in with Vital", error)
+      }
+      ```
+
+      ```dart Flutter
+      import 'package:vital_core/vital_core.dart' as vital_core;
+
+      MyAPIResponse response;
+
+      try {
+        await vital_core.signIn(response.signInToken)
+
+        Fimble.i("Signed in with Vital successfully")
+      } catch (error) {
+        Fimble.e("Error signing in with Vital", error)
+      }
+      ```
+    </CodeGroup>
+
+  </Step>
+  <Step title="Voila!">
+    The Vital Mobile SDK is good to go!
+  </Step>
+</Steps>
+
+
+## Vital API Keys
+
+<Warning>
+API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
+API Key support is intended only for customer early evaluation in Sandbox.
+
+Use [Vital Sign-In Token](#vital-sign-in-tokens) whenever possible.
+</Warning>
+
+Vital Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
+Please refer to the specific SDK guide:
+
+* [iOS SDK](/wearables/sdks/ios#3-initial-setup)
+* [Android SDK](/wearables/sdks/android#1-vitalclient)
+* [Flutter SDK](/wearables/sdks/flutter#2-vital-core)
+* [React Native SDK](/wearables/sdks/react_native#4-configure-your-dependencies)
+
+
+## Migrate from Vital API Keys to Vital Sign-In Tokens
+
+<Warning>
+Always use [Vital Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
+</Warning>
+
+An existing app installation signed-in with Vital API Key + User ID can be seamlessly migrated to
+use Vital Sign-In Tokens.
+
+It is as simple as performing a one-off migration logic during app launch:
+
+<Steps>
+  <Step title="Condition to migrate">
+    Check whether the Vital SDK status includes `useApiKey` (i.e., the user is signed in using Vital API Key).
+  </Step>
+  <Step title="Obtain a Vital Sign-In Token">
+    Similar to the new user sign-in flow, your app needs to obtain a Vital Sign-In Token through your backend service.
+  </Step>
+  <Step title="Sign-in with the token">
+    Your app can simply sign-in with the Vital Sign-In Token.
+    
+    Note that it is **unnecessary to reset** the SDK beforehand — the SDK `signIn` method would automatically migrate, as
+    long as the supplied Sign-In Token is compatible with the existing API Key sign-in (i.e., having the same Vital user ID,
+    same Vital environment, and same Vital region).
+  </Step>
+</Steps>
+
+
+<CodeGroup>
+  ```swift Native iOS
+  import VitalCore
+
+  if VitalClient.status.contains(.useApiKey) {
+    do {
+      let response = await callBackend(...)
+      try await VitalClient.signIn(withToken: response.signInToken)
+    }
+
+      print("Signed in with Vital successfully")
+    } catch let error {
+      print("Error signing in with Vital", error)
+    }
+  }
+  ```
+
+  ```kotlin Native Android
+  import io.tryvital.client.VitalClient
+  import android.content.Context
+  import android.util.Log
+
+  val applicationContext: Context
+
+  VitalClient.getOrCreate(applicationContext)
+
+  if (VitalClient.Status.useApiKey in VitalClient.status) {
+    try {
+        val response = callBackend(...)
+        VitalClient.signIn(applicationContext, response.signInToken)
+
+        Log.i("vital_sdk", "Signed in with Vital successfully")
+    } catch (e: Throwable) {
+        Log.e("vital_sdk", "Error signing in with Vital", e)
+    }
+  }
+  ```
+
+  ```typescript React Native
+  import { VitalCore } from "@tryvital/vital-core-react-native";
+
+  const status = await VitalCore.status();
+
+  if (status.includes("useApiKey")) {
+    do {
+        const response = await callBackend(...);
+        await VitalCore.signIn(response.signInToken);
+
+        console.log("Signed in with Vital successfully");
+    } catch let error {
+        console.error("Error signing in with Vital", error);
+    }
+  }
+  ```
+
+  ```dart Flutter
+  import 'package:vital_core/vital_core.dart' as vital_core;
+
+  Set<vital_core.ClientStatus> status = await vital_core.clientStatus();
+
+  if (status.contains(vital_core.ClientStatus.useApiKey)) {
+    try {
+        MyAPIResponse response = await callBackend(...);
+        await vital_core.signIn(response.signInToken)
+
+        Fimble.i("Signed in with Vital successfully")
+    } catch (error) {
+        Fimble.e("Error signing in with Vital", error)
+    }
+  }
+  ```
+</CodeGroup>
+		
