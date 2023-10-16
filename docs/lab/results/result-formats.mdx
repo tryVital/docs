@@ -32,6 +32,21 @@ These results are returned in a structured format, which you can find [here](/ap
 
 <Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`</Warning>
 
+### Result Status
+
+The `status` field can be one of the following:
+
+1. `ResultStatus.PARTIAL` - The results are partial.
+    Labs can return results before all biomarkers are available.
+    Vital makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
+
+    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.update` event.
+
+    This is done due to the possibility of [critical values](/lab/workflow/lab-test-lifecycle#critical-results) in the results.
+
+2. `ResultStatus.FINAL` - The results are complete.
+    This means that all biomarkers are available, and the results are final. You will receive a `labtest.update` webhook notification for this event.
+
 ### BiomarkerResult
 
 A `BiomarkerResult` has the following definition:
