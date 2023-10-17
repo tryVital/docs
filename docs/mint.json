@@ -88,11 +88,12 @@
       ]
     },
     {
-      "group": "Webhooks",
+      "group": "Data Events / Webhooks",
       "pages": [
         "webhooks/introduction",
         "webhooks/event-structure",
-        "webhooks/debugging"
+        "webhooks/debugging",
+        "webhooks/direct-to-queue"
       ]
     },
     {
