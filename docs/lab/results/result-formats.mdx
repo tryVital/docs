@@ -27,55 +27,81 @@ An example result:
 ## JSON Results
 
 We also return the parsed results in JSON format, so you can use them to generate your own forms.
-For example for a lipids panel:
 
-```bash Get order json results
-curl --request GET \
-     --url {{BASE_URL}}/v3/order/result \
-     --header 'Accept: application/json' \
-     --header 'Content-Type: application/json' \
-     --header 'x-vital-api-key: <your_api_key>' \
+These results are returned in a structured format, which you can find [here](/api-reference/results/get-results).
+
+<Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`</Warning>
+
+### Result Status
+
+The `status` field can be one of the following:
+
+1. `ResultStatus.PARTIAL` - The results are partial.
+    Labs can return results before all biomarkers are available.
+    Vital makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
+
+    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.update` event.
+
+    This is done due to the possibility of [critical values](/lab/workflow/lab-test-lifecycle#critical-results) in the results.
+
+2. `ResultStatus.FINAL` - The results are complete.
+    This means that all biomarkers are available, and the results are final. You will receive a `labtest.update` webhook notification for this event.
+
+### BiomarkerResult
+
+A `BiomarkerResult` has the following definition:
+
+```python
+name: str
+slug: str
+value: float  # deprecated
+result: str
+type: ResultType
+unit: str | None
+timestamp: datetime | None
+notes: str | None
+min_range_value: float | None
+max_range_value: float | None
+is_above_max_range: bool | None
+is_below_min_range: bool | None
+interpretation: str = Interpretation.NORMAL
 ```
 
-```json Response - Order result
-{
-  "metadata": {
-    "age": 19,
-    "dob": "18/08/1993",
-    "clia_number": "12331231",
-    "patient": "Bob Smith",
-    "provider": "Dr. Jack Smith",
-    "laboratory": "Quest Diagnostics",
-    "date_reported": "2020-01-01",
-    "date_collected": "2022-02-02",
-    "specimen_number": "123131",
-    "date_received": "2022-01-01"
-  },
-  "results": [
-    {
-      "marker": "total_cholesterol",
-      "value": 100,
-      "unit": "mg/dl",
-      "min_value": "50",
-      "max_value": "100"
-    },
-    {
-      "marker": "ldl_cholesterol",
-      "value": 120,
-      "unit": "mg/dl",
-      "min_value": "50",
-      "max_value": "150"
-    },
-    {
-      "marker": "hdl_cholesterol",
-      "value": 100,
-      "unit": "mg/dl",
-      "min_value": "80",
-      "max_value": "120"
-    }
-  ]
-}
-```
+#### ResultType
+
+Results can fall into one of the following categories:
+
+1. `ResultType.NUMERIC` - A numeric result, e.g. `1.2`
+
+    In this case, the `result` field will be a string representation of the number, and the `value` field will be a float representation of the number.
+
+2. `ResultType.RANGE` - A range result, e.g. `<1.2`
+
+    In this case, the `result` field will be a string representation of the range value, and the `value` field will be `-1`.
+
+    Note that you will also find the `<1.2` value in the `notes` field.
+
+    A range result will always be a value following the pattern `[<>]=?\d+(\.\d+)?`.
+
+
+3. `ResultType.COMMENT` - A text result, e.g. `Positive`
+
+    In this case, the `result` field will be a string representation of the text, and the `value` field will be `-1`.
+
+    Note that you will also find the `Positive` value in the `notes` field.
+
+<Warning>The `value` field in deprecated and will eventually be removed.</Warning>
+
+#### Interpretation
+
+Interpretation is a string value that can be one of the following:
+
+1. `Interpretation.NORMAL` - The result is within normal parameters.
+2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
+3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
+    In this case, refer to the [critical values](/lab/workflow/lab-test-lifecycle#critical-results) section.
+
+
 
 ## HL7 Results
 
