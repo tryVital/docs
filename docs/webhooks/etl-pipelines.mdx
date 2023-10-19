@@ -1,10 +1,14 @@
 ---
-title: "Direct to Queue"
+title: "ETL Pipelines"
 ---
 
-As your userbase increases, you may be considering message queues as a solution to ingest the ever-growing volume of
-Vital data events. For [Enterprise customers](https://tryvital.io/pricing), Vital offers Direct-to-Queue options to
-send compressed data events directly to your message queue.
+<Info>
+ETL pipeline integration is available to [Enterprise customers](https://tryvital.io/pricing).
+</Info>
+
+[Events](/webhooks/introduction) can be published directly to a supported message queue source of
+your ETL pipelines. This means you need not provision Internet reachable, unauthenticated HTTPS endpoints
+in order to ingest Vital events as webhooks.
 
 <CardGroup cols={2}>
   <Card title="Scalable" icon="arrow-up-right-dots">
@@ -13,36 +17,36 @@ send compressed data events directly to your message queue.
   <Card title="Secure" icon="shield">
     Events are published through authenticated channels over TLS.
   </Card>
-  <Card title="Compression" icon="gift">
+  <Card title="Compressed" icon="gift">
     Data events larger than 1 KiB are compressed before publication.
   </Card>
-  <Card title="Ordering" icon="traffic-cone">
+  <Card title="Ordered" icon="traffic-cone">
     Publication order can be preserved for select destination types.
   </Card>
 </CardGroup>
 
 ## Destinations
 
-The following Direct-to-Queue destinations are supported:
+The following destinations are supported:
 
 | Name | Authentication | Publication Order |
 | ---- | ---- | ----- |
 | RabbitMQ | Password | Depends on your RabbitMQ broker configuration. |
 | Google Cloud Pub/Sub | IAM | [Pub/Sub Message Ordering](https://cloud.google.com/pubsub/docs/ordering) is supported. |
 
-For evaluation and zero downtime transition, Vital supports double writing to both your production Svix endpoints,
-and your new Direct-to-Queue destination.
+For evaluation and zero downtime transition, Vital supports double writing both to your Svix webhook endpoints,
+and to the message queue source of your ETL pipelines.
 
 ## Event Schema
 
-Vital Direct to Queue publishes all events in the exact same JSON schema as our default Svix webhook offering.
+Vital ETL Pipelines integration publishes all events in the exact same JSON schema as our default Svix webhook offering.
 Check out our [Event Catalog](/event-catalog).
 
 ## Google Cloud Pub/Sub
 
 ### Message Structure
 
-Each message would be published by Vital Direct-to-Queue with the following attributes:
+Each message would be published by Vital message queue with the following attributes:
 
 | Type | Key | Value |
 | --- | --- | --- |
@@ -55,16 +59,16 @@ Each message would be published by Vital Direct-to-Queue with the following attr
 <Info>Payload smaller than 1KiB would not be compressed.</Info>
 
 <Info>
-At this time, Vital Direct-to-Queue publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Vital message queue publishes exclusively JSON blobs (`blob_type == json`).
 
 Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `blob_type` and `blob_codec`.
 </Info>
 
 ### Pub/Sub message ordering
 
-If you wish to receive message for each Vital user in their publication order, Vital Direct-to-Queue supports Pub/Sub Message Ordering, and uses the Vital User ID as the message ordering key. 
+If you wish to receive message for each Vital user in their publication order, Vital message queue supports Pub/Sub Message Ordering, and uses the Vital User ID as the message ordering key. 
 
-Vital Direct-to-Queue publishes all messages through the `us-central1` and `europe-west1` PubSub regional endpoints.
+Vital message queue publishes all messages through the `us-central1` and `europe-west1` PubSub regional endpoints.
 
 <Warning>
 Pub/Sub Exactly Once Delivery is **discouraged** to be used together with Message Ordering. Our own trial suggested that the combination would struggle to move high volume of messages.
@@ -102,7 +106,7 @@ When you have completed the setup, please provide Vital the following informatio
 
 ### Message Structure
 
-Each message would be published by Vital Direct-to-Queue with the following attributes:
+Each message would be published by Vital message queue with the following attributes:
 
 | Key | Value |
 | --- | --- |
@@ -114,16 +118,16 @@ Each message would be published by Vital Direct-to-Queue with the following attr
 <Info>Payload smaller than 1KiB would not be compressed.</Info>
 
 <Info>
-At this time, Vital Direct-to-Queue publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Vital message queue publishes exclusively JSON blobs (`blob_type == json`).
 
 Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `Content-Type` and `Content-Encoding`.
 </Info>
 
 ### Exchange requirements
 
-Vital Direct-to-Queue only supports password authentication at this time.
+Vital message queue only supports password authentication at this time.
 
-Vital Direct-to-Queue publishes messages with the following settings:
+Vital message queue publishes messages with the following settings:
 
 - Publisher Confirm mode is required
 - Messages are published with the Mandatory flag but without the Immediate flag.
