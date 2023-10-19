@@ -88,11 +88,12 @@
       ]
     },
     {
-      "group": "Webhooks",
+      "group": "Webhooks & Events",
       "pages": [
         "webhooks/introduction",
         "webhooks/event-structure",
-        "webhooks/debugging"
+        "webhooks/debugging",
+        "webhooks/etl-pipelines"
       ]
     },
     {
