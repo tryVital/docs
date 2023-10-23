@@ -1,0 +1,136 @@
+---
+title: "Webhooks"
+---
+
+There are some webhook events that are of interest when placing an At-Home Phlebotomy order. Those are
+described in detail in the following sections.
+
+## Order webhook events
+
+Based on the status present in [`Order and Appointment Lifecycle - Order Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle#order-lifecycle),
+Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
+[`labtest.order.updated`](/event-catalog/labtest.order.updated).
+
+The `labtest.order.created` event is triggered when an order is created in the system,
+having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
+
+<Note>The `partial_results` status does not trigger a Webhook currently.</Note>
+
+The webhook payload body will have the following information if the Order is in the `appointment_scheduled` status:
+
+```json Phlebotomy Order Updated
+{
+  "id": "84d96c03-6b1c-4226-ad8f-ef44a6bc08af",
+  "team_id": "6353bcab-3526-4838-8c92-063fa760fb6b",
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "patient_details": { "dob": "2020-01-01", "gender": "male" },
+  "patient_address": {
+    "receiver_name": "John Doe",
+    "first_line": "123 Main St.",
+    "second_line": "Apt. 208",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "91189",
+    "country": "United States",
+    "phone_number": "+1123456789"
+  },
+  "details": {
+    "type": "at_home_phlebotomy",
+    "data": {
+      "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
+      "appointment_id": "d55210cc-3d9f-4115-8262-5013f700c7be",
+      "created_at": "2020-01-01T00:00:00Z",
+      "updated_at": "2020-01-01T00:00:00Z"
+    }
+  },
+  "sample_id": "123456789",
+  "notes": "This is a note",
+  "created_at": "2020-01-01T00:00:00Z",
+  "updated_at": "2020-01-01T00:00:00Z",
+  "status": "collecting_sample",
+  "events": [
+    {
+      "id": 1,
+      "created_at": "2022-01-01T00:00:00Z",
+      "status": "received.at_home_phlebotomy.ordered"
+    },
+    {
+      "id": 2,
+      "created_at": "2022-01-02T00:00:00Z",
+      "status": "received.at_home_phlebotomy.requisition_created"
+    },
+    {
+      "id": 3,
+      "created_at": "2022-01-03T00:00:00Z",
+      "status": "collecting_sample.at_home_phlebotomy.appointment_scheduled"
+    }
+  ]
+}
+```
+
+## Appointment webhook events
+
+Based on the status present in [`Order and Appointment Lifecycle - Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle#appointment-lifecycle),
+Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
+
+<Info>
+    The `labtest.appointment.updated` event will be triggered for all possible appointment statuses, and is the **recommended** way of integrating to fetch all
+    **At-Home Phlebotomy** status updates, together with the [Order Webhooks](#order-webhook-events).
+</Info>
+
+The webhook payload body may have the following information if the Appointment is in the `scheduled` status, after a **reschedule** has happened:
+
+```json Phlebotomy Appointment Updated
+{
+  "event_type": "labtest.appointment.update",
+  "data": {
+    "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
+    "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",
+    "order_id": "1ed9c8d7-e1b4-4d61-8123-0f99de5ae99a",
+    "address": {
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip_code": "91189",
+      "country": "United States"
+    },
+    "location": {
+      "lng": -122.4194155,
+      "lat": 37.7749295
+    },
+    "start_at": "2022-01-01T00:00:00",
+    "end_at": "2022-01-01T00:00:00",
+    "iana_timezone": "America/New_York",
+    "type": "phlebotomy",
+    "provider": "getlabs",
+    "status": "pending",
+    "event_status": "scheduled",
+    "provider_id": "123",
+    "can_reschedule": true,
+    "event_data": {
+      "origin": "patient",
+      "is_reschedule": true
+    },
+    "events": [
+      {
+        "created_at": "2022-01-01T00:00:00Z",
+        "data": null,
+        "status": "scheduled"
+      },
+      {
+        "created_at": "2022-01-01T00:00:00Z",
+        "data": {
+          "origin": "patient",
+          "is_reschedule": true
+        },
+        "status": "scheduled"
+      },
+    ]
+  }
+}
+```
+
+<br/>
+
+<Info>The `event_data` field contains pertinent information regarding the current appointment status, and may be specific for each `provider`.</Info>

@@ -6,13 +6,11 @@ Throughout the lifecyle of a test we update you on the status of the order via o
 When you first place an order, we send a `labtest.order.created` event. This means that we successfully received you order and started processing it. For subsequent events, we will send a `labtest.order.updated` update. Each webhook you receive have the
 base order object with the updated parameters.
 
-These two events are the only webhooks you'll have to integrate with to receive all our updates!
-
 ### Example
 
 After ordering an at-home test kit, once the order is complete, picked by our warehouse
 and is sent to the customer the order status will change to `collecting_sample.testkit.transit_customer`. And you will receive
-the following webhook:
+the following webhook:x
 
 ```json Test order updated
 {
