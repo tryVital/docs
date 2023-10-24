@@ -59,8 +59,7 @@ These values are returned in an `interpretation` field for results, both in each
 
 Besides the `interpretation` field, there is also the `status` field, which can assume the values of `final` or `partial`, as the critical results are notified as soon as they're available, not all tests are guaranteed to have been processed by the lab.
 
-For critical results, the Lab that published the results must call a physician to contact the patient to inform them about the critical results and give the correct orientation. The physician called will be the Vital assigned physician who acts as the ordering physician when placing the Lab Test order. After the call has been made and Vital has received the results from the Lab, a `labtest.result.critical` event will be fired to customers, with the webhook payload containing the following information:
-
+For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Vital assigned physician. They act as the ordering physician when placing the order. After the call is made, and Vital has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
 ```json Critical Results Webhook Payload
 {
   "data": {
@@ -81,8 +80,8 @@ After you receive the webhook, you can use the [`GET /order/{order_id}/result`](
 
 You can test the webhook event by using the [Vital Dashboard](https://app.tryvital.io) Webhooks section,
 where you can register an endpoint and subscribe to the `labtest.result.critical` event.
-The following images shows what the screen should look like after you have an endpoint registered
-and has selected the `Testing` section inside the endpoint configurations.
+The following images show what the screen should look like after you have an endpoint registered
+and have selected the `Testing` section inside the endpoint configurations.
 
 <img src="/img/critical-event-testing.png" width="100%" />
 

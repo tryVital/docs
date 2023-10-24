@@ -2,33 +2,29 @@
 title: "Communications"
 ---
 
-Communications with the patient are carried in two different ways for At-Home Phlebotomy orders, being them
-email and SMS messages. There are three distinct communications options:
+Communication for patients is done via email or SMS, for At-Home Phlebotomy orders.
+Our customers have the following options when setting this up:
 
 - `Default` - Email and SMS communications are enabled.
 - `SMS Only` - Only SMS communication is enabled.
 - `Disable` - All communications from Vital are disabled.
 
-Each of these has a different set of content and status changes that trigger them, described in the following sections.
+Each option has a different set of content and status changes, depending on what triggered them.
 
-<Info>You can enable or disable SMS and Email communications individually through the **Vital Dashboard**, under the Team Settings section.</Info>
+<Info>You can enable or disable SMS and Email communications individually through the [**Vital Dashboard**](http://app.tryvital.io/), under the Team Settings section.</Info>
 
 ## Default Communications
 
-If both SMS and Email communications are enabled, there will both be emails sent from Vital related to the appointment statuses,
-as well as SMS messages.
-
-
 ### SMS Messages
 
-A table of the **Order Status** and **default SMS messages** is provided bellow:
+A table of the **Order Status** and **default SMS** is provided bellow:
 
 | Order Status | Default Message |
 | --- | --- |
 | `requisition_created` | _"Hey **patient_first_name**, it's time to book your at-home phlebotomy draw. Please book a slot using the link provided in the e-mail you just received."_ |
 | `draw_completed` | _"Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing."_ |
 | `completed` | _"The lab has finished processing your blood sample, your results should be ready soon :)"_ |
-| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has be cancelled. If this is by accident please contact support."_ |
+| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support."_ |
 
 <Info>SMS Texts are customizable, and can be enabled or disabled individually.</Info>
 
@@ -41,13 +37,11 @@ For emails, the following table describes what information each email contains f
 | `appointment_scheduled` | An email confirming the appointment date and time will be sent to the patient, with the possibility of rescheduling or cancelling the appointment. |
 | `appointment_cancelled` | An email confirming the cancellation of the appointment is sent, providing the possibility of scheduling a new appointment. |
 
-<Info>Emails are capable of basic branding customization, and can be defined to be sent from your own domain.</Info>
+<Info>Emails can be customised and sent from your own domain.</Info>
 
 ## SMS Only Communications
 
-If only SMS communications are enabled, there will be no emails sent to the customer.
-
-The following table describe what are the **Order Status** and **default SMS messages** sent in this case:
+The following table describe what are the **Order Status** and **default SMS** sent in this case:
 
 | Order Status | Default Message |
 | --- | --- |
@@ -56,7 +50,7 @@ The following table describe what are the **Order Status** and **default SMS mes
 | `appointment_cancelled` | _"Hey, your at-home-phlebotomy appointment at **date** for the **team_name** has been cancelled. You can rebook using the following link **booking_link**."_ |
 | `draw_completed` | _"Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing."_ |
 | `completed` | _"The lab has finished processing your blood sample, your results should be ready soon :)"_ |
-| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has be cancelled. If this is by accident please contact support."_ |
+| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support."_ |
 
 
 ## Disable Communications

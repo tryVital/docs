@@ -2,7 +2,7 @@
 title: "Webhooks"
 ---
 
-There are some webhook events that are of interest when placing an At-Home Phlebotomy order. Those are
+The following webhook events are of interest, when placing an At-Home Phlebotomy order. Those are
 described in detail in the following sections.
 
 ## Order webhook events
@@ -74,11 +74,11 @@ Based on the status present in [`Order and Appointment Lifecycle - Appointment L
 Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
 
 <Info>
-    The `labtest.appointment.updated` event will be triggered for all possible appointment statuses, and is the **recommended** way of integrating to fetch all
+    The `labtest.appointment.updated` event is triggered for all possible appointment statuses, and is the **recommended** way of integrating to fetch all
     **At-Home Phlebotomy** status updates, together with the [Order Webhooks](#order-webhook-events).
 </Info>
 
-The webhook payload body may have the following information if the Appointment is in the `scheduled` status, after a **reschedule** has happened:
+The webhook payload body may have the following information if the appointment is in the `scheduled` status, after a **reschedule** has happened:
 
 ```json Phlebotomy Appointment Updated
 {
@@ -133,4 +133,4 @@ The webhook payload body may have the following information if the Appointment i
 
 <br/>
 
-<Info>The `event_data` field contains pertinent information regarding the current appointment status, and may be specific for each `provider`.</Info>
+<Info>The `event_data` field contains relevant information regarding the current appointment status, and may be specific for each `provider`.</Info>
