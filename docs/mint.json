@@ -169,7 +169,16 @@
     },
     {
       "group": "Results",
-      "pages": ["lab/results/result-formats", "lab/results/follow-up"]
+      "pages": ["lab/results/result-formats", "lab/results/critical-results", "lab/results/follow-up"]
+    },
+    {
+      "group": "At-Home Phlebotomy",
+      "pages": [
+        "lab/at-home-phlebotomy/overview",
+        "lab/at-home-phlebotomy/order-appointment-lifecycle",
+        "lab/at-home-phlebotomy/webhooks",
+        "lab/at-home-phlebotomy/communications"
+      ]
     },
     {
       "group": "User",
@@ -312,7 +321,8 @@
       "pages": [
         "event-catalog/labtest.order.created",
         "event-catalog/labtest.order.updated",
-        "event-catalog/labtest.result.critical"
+        "event-catalog/labtest.result.critical",
+        "event-catalog/labtest.appointment.updated"
       ]
     },
     {

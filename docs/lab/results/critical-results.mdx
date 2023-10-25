@@ -1,0 +1,88 @@
+---
+title: "Critical Results"
+---
+
+When our Lab partners return results to Vital, they may return specific interpretations for each Marker:
+
+- `normal`, the marker value is inside the lab reference range.
+- `abnormal`, the marker value is outside the lab reference range.
+- `critical`, the marker value falls in the critical range for that marker, which can be life-threatening.
+
+These values are returned in an `interpretation` field for results, both in each individual marker and the overall results object:
+
+```json Resuls Object
+{
+  "metadata": {
+    "age": 19,
+    "dob": "18/08/1993",
+    "clia_number": "12331231",
+    "patient": "Bob Smith",
+    "provider": "Dr. Jack Smith",
+    "laboratory": "LabCorp",
+    "date_reported": "2020-01-01",
+    "date_collected": "2022-02-02",
+    "specimen_number": "123131",
+    "date_received": "2022-01-01",
+    "status": "final",
+    "interpretation": "critical"
+  },
+  "results": [
+    {
+      "name": "Hemoglobin",
+      "slug": "hemoglobin",
+      "unit": "g/dL",
+      "notes": null,
+      "value": 100.2,
+      "timestamp": null,
+      "max_range_value": 17.7,
+      "min_range_value": 13.0,
+      "is_above_max_range": true,
+      "is_below_min_range": false,
+      "interpretation": "critical"
+    },
+    {
+      "name": "Sodium",
+      "slug": "unknown",
+      "unit": "mmol/L",
+      "notes": null,
+      "value": 136,
+      "timestamp": null,
+      "max_range_value": 144,
+      "min_range_value": 134,
+      "is_above_max_range": false,
+      "is_below_min_range": false,
+      "interpretation": "normal"
+    }
+  ]
+}
+```
+
+Besides the `interpretation` field, there is also the `status` field, which can assume the values of `final` or `partial`, as the critical results are notified as soon as they're available, not all tests are guaranteed to have been processed by the lab.
+
+For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Vital assigned physician. They act as the ordering physician when placing the order. After the call is made, and Vital has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
+```json Critical Results Webhook Payload
+{
+  "data": {
+    "created_at": "2023-09-04T19:02:33.042533+00:00",
+    "updated_at": "2023-09-04T19:02:47.106778+00:00",
+    "order_id": "93ae03a7-626f-4cf4-802b-1fb6b3c339c7",
+    "sample_id": "W4123LKB3VTL",
+    "status": "final",
+    "interpretation": "critical",
+    "team_id": "482gh249-cd9d-4049-bb42-db5682cdf1d2",
+    "user_id": "db5d34d5-bf7b-4e25-b119-9asd53694f45"
+  },
+  "event_type": "labtest.result.critical"
+}
+```
+
+After you receive the webhook, you can use the [`GET /order/{order_id}/result`](/api-reference/results/get-results) endpoint to fetch the raw results.
+
+You can test the webhook event by using the [Vital Dashboard](https://app.tryvital.io) Webhooks section,
+where you can register an endpoint and subscribe to the `labtest.result.critical` event.
+The following images show what the screen should look like after you have an endpoint registered
+and have selected the `Testing` section inside the endpoint configurations.
+
+<img src="/img/critical-event-testing.png" width="100%" />
+
+You can then click the `Send Example` button and should receive a HTTP call in the registered url.

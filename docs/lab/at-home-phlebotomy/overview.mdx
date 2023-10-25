@@ -1,0 +1,33 @@
+---
+title: "Overview"
+---
+
+At-home phlebotomy tests are one of our offered modalities. This modality is focused on patients that don't
+want to go to a Laboratory, but instead want a phlebotomist to come to their home or office to carry out the
+phlebotomy draw. The phlebotomist is responsible for bringing the required equipement and tubes and then delivering those
+to our partner Laboratories.
+
+## Ordering Flow overview
+
+To achieve this, a high-level overview of the process is defined as:
+
+- An order is placed in Vital's system through our Dashboard or API.
+- The order is added to a background queue and additional checks are made before a test requisition is created
+with the chosen Laboratory.
+- After the requistion is created, some form of communication is carried out with the patient so he can book an appointment with our
+phlebotomy partners.
+- At the day of the appointment, our partner phlebotomist will contact the patient directly to assert that everything
+is correct for carrying out the appointment.
+- The phlebotomist goes to the appointment, draws the patient blood and then delivers it to the Laboratory.
+- The Laboratory process the patient blood sample and generate the required results.
+- Vital exposes the results via API as soon as they are available, both on PDF and structured data via API.
+
+
+## Constraints
+
+- Phlebotomy appointments are not supported for patients under 18 years of age.
+- The same patient can't have more than one active appointment with a specific **Phlebotomy provider**.
+- The addresses provided when fetching the appointment availability slots must be reachable by the phlebotomist, containing street number and unit (if exists).
+
+
+To find out more details, see [`Order and Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle), [`Communications`](/lab/at-home-phlebotomy/communications) and [`Webhooks`](/lab/at-home-phlebotomy/webhooks).

@@ -1,0 +1,59 @@
+---
+title: "Communications"
+---
+
+Communication for patients is done via email or SMS, for At-Home Phlebotomy orders.
+Customers have the following options when setting this up:
+
+- `Default` - Email and SMS communications are enabled.
+- `SMS Only` - Only SMS communication is enabled.
+- `Disable` - All communications from Vital are disabled.
+
+Each option has a different set of content and status changes, depending on what triggered them.
+
+<Info>You can enable or disable SMS and Email communications individually through the [**Vital Dashboard**](http://app.tryvital.io/), under the Team Settings section.</Info>
+
+## Default Communications
+
+### SMS Messages
+
+A table of the **Order Status** and **default SMS** is provided bellow:
+
+| Order Status | Default Message |
+| --- | --- |
+| `requisition_created` | _"Hey **patient_first_name**, it's time to book your at-home phlebotomy draw. Please book a slot using the link provided in the e-mail you just received."_ |
+| `draw_completed` | _"Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing."_ |
+| `completed` | _"The lab has finished processing your blood sample, your results should be ready soon :)"_ |
+| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support."_ |
+
+<Info>SMS Texts are customizable, and can be enabled or disabled individually.</Info>
+
+### Emails
+
+For emails, the following table describes what information each email contains for each Order Statuses:
+| Order Status | Email Content Description |
+| --- | --- |
+| `requisition_created` | An email with the booking link for **Vital Booking Widget** will be sent to the patient. |
+| `appointment_scheduled` | An email confirming the appointment date and time will be sent to the patient, with the possibility of rescheduling or cancelling the appointment. |
+| `appointment_cancelled` | An email confirming the cancellation of the appointment is sent, providing the possibility of scheduling a new appointment. |
+
+<Info>Emails can be customised and sent from your own domain.</Info>
+
+## SMS Only Communications
+
+The following table describe what are the **Order Status** and **default SMS** sent in this case:
+
+| Order Status | Default Message |
+| --- | --- |
+| `requisition_created` | _"Hey **patient_first_name**, it's time to book your at-home phlebotomy draw. You can book a slot using the following link **booking_link**."_ |
+| `appointment_scheduled` | _"Your appointment with the phlebotomist has been booked at **date**! You can reschedule or cancel using the following link **booking_link**."_ |
+| `appointment_cancelled` | _"Hey, your at-home-phlebotomy appointment at **date** for the **team_name** has been cancelled. You can rebook using the following link **booking_link**."_ |
+| `draw_completed` | _"Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing."_ |
+| `completed` | _"The lab has finished processing your blood sample, your results should be ready soon :)"_ |
+| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support."_ |
+
+
+## Disable Communications
+
+In this case, no communications will be sent from Vital. You have the ability to produce completely customized communications
+using the [`Webhook events`](/lab/at-home-phlebotomy/webhooks) described previously.
