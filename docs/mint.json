@@ -181,6 +181,15 @@
       ]
     },
     {
+      "group": "Walk-in",
+      "pages": [
+        "lab/walk-in/overview",
+        "lab/walk-in/order-lifecycle",
+        "lab/walk-in/webhooks",
+        "lab/walk-in/communications"
+      ]
+    },
+    {
       "group": "At-Home Testkits",
       "pages": [
         "lab/testkits/overview",
