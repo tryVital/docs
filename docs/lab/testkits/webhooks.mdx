@@ -1,0 +1,89 @@
+---
+title: "Webhooks"
+---
+
+The following webhook events are of interest, when placing an At-Home Testkit order. Those are
+described in detail in the following sections.
+
+## Order webhook events
+
+Based on the status present in [`Order Lifecycle`](/lab/testkit/order-lifecycle),
+Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
+[`labtest.order.updated`](/event-catalog/labtest.order.updated).
+
+The `labtest.order.created` event is triggered when an order is created in the system,
+having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
+
+The webhook payload body will have the following information if the Order is in the `requisition_created` status:
+
+```json Testkit Order Updated
+{
+   "data":{
+      "created_at":"2023-09-01T18:02:41.210495+00:00",
+      "details":{
+         "data":{
+            "created_at":"2023-09-01T18:02:41.247443+00:00",
+            "id":"3c046d74-347e-4e28-9e0d-c5b720a8e219",
+            "shipment":{
+               "id":"ae0323d4-2c18-4aea-a0e7-d73b377315b1",
+               "inbound_courier":null,
+               "inbound_tracking_number":null,
+               "inbound_tracking_url":null,
+               "notes":null,
+               "outbound_courier":null,
+               "outbound_tracking_number":null,
+               "outbound_tracking_url":null
+            },
+            "updated_at":"2023-09-01T18:02:42.186312+00:00"
+         },
+         "type":"testkit"
+      },
+      "events":[
+         {
+            "created_at":"2023-09-01T18:02:41.271401+00:00",
+            "id":4056,
+            "status":"received.testkit.ordered"
+         },
+         {
+            "created_at":"2023-09-01T18:05:12.618156+00:00",
+            "id":4057,
+            "status":"received.testkit.requisition_created"
+         }
+      ],
+      "health_insurance_id":null,
+      "id":"e1c380c1-7df4-487f-869e-f1be0193ca25",
+      "lab_test":{
+         "fasting":false,
+         "id":"0cb9f34f-c3df-4a13-8ca1-19429a82611b",
+         "is_active":true,
+         "is_delegated":false,
+         "lab":null,
+         "markers":null,
+         "method":"testkit",
+         "name":"Female General Wellness",
+         "price":45,
+         "sample_type":"dried_blood_spot",
+         "slug":"general_wellness_female_002"
+      },
+      "notes":null,
+      "patient_address":{
+        ...
+      },
+      "patient_details":{
+        ...
+      },
+      "physician":{
+         ...
+      },
+      "priority":false,
+      "requisition_form_url":null,
+      "sample_id": "some_id,
+      "shipping_details":null,
+      "status":"received",
+      "team_id":"f07f59d2-2903-4bcd-a2ac-3e87fa47c4bc",
+      "updated_at":"2023-09-01T18:02:41.210495+00:00",
+      "user_id":"f6cdf185-6815-4b2b-9482-798b75168689"
+   },
+   "event_type":"labtest.order.updated"
+}
+```

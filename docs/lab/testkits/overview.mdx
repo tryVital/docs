@@ -1,0 +1,29 @@
+---
+title: "Overview"
+---
+
+At-home Testkits are one of our offered modalities.
+This modality involves sending a kit to a patient’s home, where the patient will collect their own sample and send the kit to our Lab network through mail.
+
+Within this modality, we provide two types of testkits, those which are pre-registered to a user, and those which need to to be (registered by the patient upon receiving the kit)[lab/workflow/order-registrable-testkit].
+
+## Ordering Flow overview
+
+To achieve this, a high-level overview of the process is defined as:
+
+- An order is placed in Vital's system through our Dashboard or API.
+- The order is added to a background queue and additional checks are made before the kit is shipped to the provided address.
+- Once the order shipment is created, a requisition is generated.
+- After the requisition is created, some form of communication is carried out with the patient.
+- If the kit is not registered, then the user must register the kit before results can be provided.
+- The patient receives the kit, collects their sample, and sends the kit back through mail.
+- The Laboratory processes the patient's blood sample and generates the required results.
+- Vital exposes the results via API as soon as they are available, both on PDF and structured data via API.
+
+
+## Constraints
+
+- If the teskit is un-registered, then the user must register it in order for the results to be processed.
+
+
+To find out more details, see [`Order and Appointment Lifecycle`](/lab/testkits/order-lifecycle), [`Communications`](/lab/testkits/communications) and [`Webhooks`](/lab/testkits/webhooks).

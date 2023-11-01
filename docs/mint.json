@@ -181,6 +181,15 @@
       ]
     },
     {
+      "group": "At-Home Testkits",
+      "pages": [
+        "lab/testkits/overview",
+        "lab/testkits/order-lifecycle",
+        "lab/testkits/webhooks",
+        "lab/testkits/communications"
+      ]
+    },
+    {
       "group": "User",
       "pages": [
         "api-reference/user/create-user",
