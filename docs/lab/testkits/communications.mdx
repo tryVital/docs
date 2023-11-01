@@ -1,0 +1,39 @@
+---
+title: "Communications"
+---
+
+Communication for patients is done via SMS, for At-home Teskit orders.
+Customers have the following options when setting this up:
+
+- `Default` - SMS communications are enabled.
+- `Disable` - All communications from Vital are disabled.
+
+Each option has a different set of content and status changes, depending on what triggered them.
+
+<Info>You can enable or disable SMS individually through the [**Vital Dashboard**](http://app.tryvital.io/), under the Team Settings section.</Info>
+
+## Default Communications
+
+### SMS Messages
+
+A table of the **Order Status** and **default SMS** is provided bellow:
+
+| Order Status | Default Message |
+| --- | --- |
+| `ordered` | Hey **receiver_name**, your order for the **team_name** health kit has been placed! We'll update you with where it is in the process via messages :) |
+| `transit_customer` | Your order for the **team_name** test kit is in transit, and should be arriving by **eta**. |
+| `out_for_delivery` | Your order for the **team_name** test kit is out for delivery, and should be arriving by today |
+| `delivered_to_lab` | Your test kit has arrived to our labs we're processing your sample now! |
+| `completed` | The lab has finished processing your test kit, your results should be ready soon :) |
+| `cancelled` | Hey, your order for the **team_name** test kit has been cancelled, If this is by accident please contact support. |
+
+<Info>SMS Texts are customizable, and can be enabled or disabled individually.</Info>
+
+### Emails
+
+We do not send emails for At-home Testkits.
+
+## Disable Communications
+
+In this case, no communications will be sent from Vital. You have the ability to produce completely customized communications
+using the [`Webhook events`](/lab/testkits/webhooks) described previously.
