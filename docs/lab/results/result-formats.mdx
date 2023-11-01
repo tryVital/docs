@@ -65,6 +65,8 @@ max_range_value: float | None
 is_above_max_range: bool | None
 is_below_min_range: bool | None
 interpretation: str = Interpretation.NORMAL
+loinc_code: str | None
+loinc_slug: str | None
 ```
 
 #### ResultType
@@ -100,6 +102,120 @@ Interpretation is a string value that can be one of the following:
 2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
 3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
     In this case, refer to the [critical values](/lab/workflow/lab-test-lifecycle#critical-results) section.
+
+#### LOINC
+
+As it is possible to test the same biomarkers across different labs, there must be a way to match results across labs. For this, we follow the LOINC standard.
+
+In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc_code`. These fields refer to the LOINC standard, and are to be used for Customers to be able to match results across labs.
+
+You can expect that the `slug` field is what the lab returns to us, and the `loinc_slug` is the standardised version that will match across labs, if the marker in questions is the same.
+
+An example:
+
+| Lab | Slug | LOINC code | LOINC Slug |
+| --- | --- | --- | --- |
+| Labcorp | hdl-cholesterol | 2085-9 | cholesterol-in-hdl-mass-vol |
+| USSL | hdl | 2085-9 | cholesterol-in-hdl-mass-vol |
+
+As you can see, the same biomarker `HDL Cholesterol` can have different slugs in different Labs, but be represented by the same LOINC.
+
+
+#### Expected Results
+
+When ordering a `lab_test`, you can see which `markers` each test orders. These can either be `panels` composed of multiple `biomarkers` or just individual `biomarkers`.
+
+This means that a `lab_test` with only one associated `marker`, such as `Lipid Panel`, can return multiple `result markers`. We call these expected results.
+Each `marker` can thus be composed of multiple `expected results` which match to a `loinc`.
+
+As an example, here's the expected results for the `Lipid Panel` marker:
+
+```json
+"expected_results":[
+   {
+      "id":1108,
+      "name":"VLDL Cholesterol Cal",
+      "slug":"vldl-cholesterol-cal",
+      "lab_id":6,
+      "provider_id":"011919",
+      "loinc":{
+         "id":5062,
+         "name":"Cholesterol in VLDL Calc [Mass/Vol]",
+         "slug":"cholesterol-in-vldl-calc-mass-vol",
+         "code":"13458-5",
+         "unit":"mg/dL"
+      }
+   },
+   {
+      "id":1109,
+      "name":"Cholesterol, Total",
+      "slug":"cholesterol-total",
+      "lab_id":6,
+      "provider_id":"001065",
+      "loinc":{
+         "id":11940,
+         "name":"Cholesterol [Mass/Vol]",
+         "slug":"cholesterol-mass-vol",
+         "code":"2093-3",
+         "unit":"mg/dL"
+      }
+   },
+   {
+      "id":1110,
+      "name":"HDL Cholesterol",
+      "slug":"hdl-cholesterol",
+      "lab_id":6,
+      "provider_id":"011817",
+      "loinc":{
+         "id":11858,
+         "name":"Cholesterol in HDL [Mass/Vol]",
+         "slug":"cholesterol-in-hdl-mass-vol",
+         "code":"2085-9",
+         "unit":"mg/dL"
+      }
+   },
+   {
+      "id":1112,
+      "name":"Triglycerides",
+      "slug":"triglycerides",
+      "lab_id":6,
+      "provider_id":"001172",
+      "loinc":{
+         "id":16384,
+         "name":"Triglyceride [Mass/Vol]",
+         "slug":"triglyceride-mass-vol",
+         "code":"2571-8",
+         "unit":"mg/dL"
+      }
+   },
+   {
+      "id":1113,
+      "name":"LDL Chol Calc (NIH)",
+      "slug":"ldl-chol-calc-nih",
+      "lab_id":6,
+      "provider_id":"012059",
+      "loinc":{
+         "id":5060,
+         "name":"Cholesterol in LDL Calc [Mass/Vol]",
+         "slug":"cholesterol-in-ldl-calc-mass-vol",
+         "code":"13457-7",
+         "unit":"mg/dL"
+      }
+   }
+]
+```
+
+You can use this information to verify if the final results are composed of all expected results.
+
+In order to obtain this data, you can use the following endpoints:
+
+1. [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers)
+    
+    This allows you to search markers based on lab or name.
+
+2. [GET /v3/lab_tests/\{id\}/markers](/api-reference/lab-testing/lab-test-markers)
+
+    This allows you to see all markers associated with a lab test and it's expected results.
 
 
 
