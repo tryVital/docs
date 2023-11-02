@@ -1,0 +1,50 @@
+---
+title: "Get Markers for Lab Test"
+openapi: "GET /v3/lab_tests/{id}/markers"
+---
+
+<ResponseExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/lab_tests/{id}/markers' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
+```json Response
+{
+    "expected_results": [
+        {
+            "id": 1,
+            "name": "Hemoglobin A1c",
+            "slug": "hemoglobin-a1c",
+            "description": "Hemoglobin A1c is a form of hemoglobin that is measured "
+            "identify your average blood sugar levels over the past 3 months.",
+            "lab_id": 1,
+            "provider_id": "1234",
+            "type": "biomarker",
+            "unit": "%",
+            "price": "10.00",
+            "expected_results": [
+                {
+                    "id": 1,
+                    "name": "Hemoglobin A1c",
+                    "slug": "hemoglobin-a1c",
+                    "lab_id": 1,
+                    "provider_id": "1234",
+                    "loinc": {
+                        "id": 1,
+                        "name": "HbA1c (Bld) [Mass fraction]",
+                        "slug": "hba1c-bld-mass-fraction",
+                        "code": "4548-4",
+                        "unit": "%",
+                    },
+                }
+            ],
+        }
+    ]
+}
+```
+
+</ResponseExample>

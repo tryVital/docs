@@ -323,7 +323,8 @@
         "api-reference/lab-testing/tests",
         "api-reference/lab-testing/biomarkers",
         "api-reference/lab-testing/labs",
-        "api-reference/lab-testing/post-test"
+        "api-reference/lab-testing/post-test",
+        "api-reference/lab-testing/lab-test-markers"
       ]
     },
     {
