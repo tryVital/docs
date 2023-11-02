@@ -341,7 +341,7 @@
         "event-catalog/labtest.order.created",
         "event-catalog/labtest.order.updated",
         "event-catalog/labtest.result.critical",
-        "event-catalog/labtest.appointment.updated"
+        "event-catalog/labtest.appointment.update"
       ]
     },
     {
