@@ -65,7 +65,7 @@ max_range_value: float | None
 is_above_max_range: bool | None
 is_below_min_range: bool | None
 interpretation: str = Interpretation.NORMAL
-loinc_code: str | None
+loinc: str | None
 loinc_slug: str | None
 ```
 
@@ -107,13 +107,13 @@ Interpretation is a string value that can be one of the following:
 
 As it is possible to test the same biomarkers across different labs, there must be a way to match results across labs. For this, we follow the LOINC standard.
 
-In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc_code`. These fields refer to the LOINC standard, and are to be used for Customers to be able to match results across labs.
+In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard, and are to be used for Customers to be able to match results across labs.
 
 You can expect that the `slug` field is what the lab returns to us, and the `loinc_slug` is the standardised version that will match across labs, if the marker in questions is the same.
 
 An example:
 
-| Lab | Slug | LOINC code | LOINC Slug |
+| Lab | Slug | LOINC | LOINC Slug |
 | --- | --- | --- | --- |
 | Labcorp | hdl-cholesterol | 2085-9 | cholesterol-in-hdl-mass-vol |
 | USSL | hdl | 2085-9 | cholesterol-in-hdl-mass-vol |
