@@ -1,10 +1,10 @@
 ---
-title: "labtest.appointment.updated"
+title: "labtest.appointment.update"
 description: "An apppointment has been updated or created"
 ---
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `labtest.appointment.updated`
+Constant: `labtest.appointment.update`
 </ResponseField>
 <ResponseField name="data" type="ClientFacingAppointment" required="true">
 <Expandable title="ClientFacingAppointment" defaultOpen="true">
@@ -27,6 +27,7 @@ Constant: `labtest.appointment.updated`
 <ResponseField name="zip_code" type="string" required="true">
 </ResponseField>
 <ResponseField name="unit" type="string | null">
+[⚠️ Deprecated] Deprecated. Use `second_line` instead to provide the unit number. Subject to removal after 20 Nov 2023.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -88,9 +89,9 @@ Time is in UTC
 {
   "event_type": "labtest.appointment.update",
   "data": {
-    "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
-    "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",
-    "order_id": "1ed9c8d7-e1b4-4d61-8123-0f99de5ae99a",
+    "id": "4a1bce5f-12eb-4232-b5d2-ca651172af1e",
+    "user_id": "1db46890-a7ce-4bf9-9006-cb7bbb9e6b9e",
+    "order_id": "9801c6d6-bfaf-49cd-a5fa-aee361c03da3",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",

@@ -73,6 +73,9 @@ Skin temperature deviation from the long-term temperature average::celcius
 <ResponseField name="skin_temperature" type="number | null">
 The skin temperature::celcius
 </ResponseField>
+<ResponseField name="hr_dip" type="number | null">
+Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
+</ResponseField>
 <ResponseField name="average_hrv" type="number | null">
 The average heart rate variability registered during the sleep period::rmssd
 </ResponseField>
@@ -106,7 +109,7 @@ The identifier of the app which recorded this summary. This is only applicable t
 <Expandable title="ClientFacingSleepStream" defaultOpen="true">
 <ResponseField name="hrv" type="ClientFacingHRVTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHRVTimeseries" defaultOpen="true">
-<ResponseField name="id" type="null | null">
+<ResponseField name="id" type="integer | null">
 Deprecated
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
@@ -128,7 +131,7 @@ HRV calculated using rmssd during sleep
 </ResponseField>
 <ResponseField name="heartrate" type="ClientFacingHeartRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHeartRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="null | null">
+<ResponseField name="id" type="integer | null">
 Deprecated
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
@@ -150,7 +153,7 @@ Heart rate in bpm
 </ResponseField>
 <ResponseField name="hypnogram" type="ClientFacingHypnogramTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingHypnogramTimeseries" defaultOpen="true">
-<ResponseField name="id" type="null | null">
+<ResponseField name="id" type="integer | null">
 Deprecated
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
@@ -178,7 +181,7 @@ Hypnogram for sleep stages &lcub;&quot;deep&quot;: 1, &quot;light&quot;: 2, &quo
 </ResponseField>
 <ResponseField name="respiratory_rate" type="ClientFacingRespiratoryRateTimeseries[] | null">
 <Expandable title="Item Schema: ClientFacingRespiratoryRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="null | null">
+<ResponseField name="id" type="integer | null">
 Deprecated
 </ResponseField>
 <ResponseField name="timezone_offset" type="integer | null">
@@ -208,11 +211,11 @@ Average respiratory rate::breaths per minute
 {
   "event_type": "daily.data.sleep.updated",
   "data": {
-    "id": "2a194fd0-91d2-4d53-9252-a791f8b17081",
-    "date": "2023-10-12T14:18:57+00:00",
-    "calendar_date": "2023-10-12",
-    "bedtime_start": "2023-10-12T14:18:57+00:00",
-    "bedtime_stop": "2023-10-12T14:18:57+00:00",
+    "id": "d2a3540a-e076-4e3c-8539-fdebe5f14f0d",
+    "date": "2023-11-02T10:50:48+00:00",
+    "calendar_date": "2023-11-02",
+    "bedtime_start": "2023-11-02T10:50:48+00:00",
+    "bedtime_stop": "2023-11-02T10:50:48+00:00",
     "timezone_offset": 2400,
     "duration": 28800,
     "total": 28800,
@@ -233,7 +236,7 @@ Average respiratory rate::breaths per minute
       "type": "unknown",
       "app_id": null
     },
-    "user_id": "a265fe54-5525-4da4-abee-750f4c47f4b6"
+    "user_id": "c73dce7f-c24e-4001-a292-b1c859149c6c"
   }
 }
 ```
