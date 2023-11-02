@@ -1,0 +1,46 @@
+---
+title: "Electrocardiogram"
+openapi: "GET /v2/timeseries/{user_id}/electrocardiogram_voltage"
+---
+
+<RequestExample>
+
+```bash Bash
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/electrocardiogram_voltage?start_date="2022-05-01"&end_date="2022-06-01" \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.vitals.electrocardiogram_voltage(
+    user_id=*,
+    start_date="2022-05-01",
+    end_date="2022-06-01"
+)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+[
+  {
+    "timestamp": "2023-11-02T14:20:20.719173+00:00",
+    "value": -373,
+    "type": "lead_1",
+    "unit": "mV"
+  }
+]
+```
+
+</ResponseExample>
