@@ -290,7 +290,8 @@
         "api-reference/vitals/ige",
         "api-reference/vitals/mindfulness-minutes",
         "api-reference/vitals/respiratory-rate",
-        "api-reference/vitals/water"
+        "api-reference/vitals/water",
+        "api-reference/vitals/electrocardiogram_voltage"
       ]
     },
     {

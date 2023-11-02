@@ -1,22 +1,22 @@
 ---
-title: "daily.data.calories_basal.updated"
-description: "Existing calories_basal interval samples have been updated"
+title: "daily.data.electrocardiogram_voltage.created"
+description: "New electrocardiogram_voltage discrete samples have been created"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(calories_basal, fitbit, 2023-01-23T12:34:56Z)`.
+its source (ID or slug) and its timestamp. e.g., `(electrocardiogram_voltage, fitbit, 2023-01-23T12:34:56Z)`.
 
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `daily.data.calories_basal.updated`
+Constant: `daily.data.electrocardiogram_voltage.created`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
-<Expandable title="Item Schema: ClientFacingIntervalSample" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
+<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
 <ResponseField name="id" type="integer | null">
 Deprecated
 </ResponseField>
@@ -30,16 +30,10 @@ The reading type of the measurement. This is applicable only to Cholesterol, IGG
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
-Depracated. The start time (inclusive) of the interval.
-</ResponseField>
-<ResponseField name="start" type="string" required="true">
-The start time (inclusive) of the interval.
-</ResponseField>
-<ResponseField name="end" type="string" required="true">
-The end time (exclusive) of the interval.
+The timestamp of the measurement.
 </ResponseField>
 <ResponseField name="value" type="number" required="true">
-The recorded value for the interval.
+The value of the measurement.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -80,15 +74,15 @@ URL for source logo
 <CodeGroup>
 ```json Example
 {
-  "event_type": "daily.data.calories_basal.updated",
+  "event_type": "daily.data.electrocardiogram_voltage.created",
   "data": {
     "data": [
       {
-        "timestamp": "2023-11-02T15:19:59.959968+00:00",
+        "timestamp": "2023-11-02T15:19:59.959880+00:00",
         "timezone_offset": null,
-        "value": 22.8,
-        "type": null,
-        "unit": "kcal"
+        "value": -373,
+        "type": "lead_1",
+        "unit": "mV"
       }
     ],
     "source_id": 1,
@@ -97,7 +91,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "6496b677-228b-4e03-a174-ac3617290227"
+    "user_id": "fba08022-3e33-43df-be61-fb1a3694d0a5"
   }
 }
 ```

@@ -1,10 +1,10 @@
 ---
-title: "historical.data.heartrate.created"
-description: "Historical pull of heartrate data has completed and you can now pull data for this resource."
+title: "historical.data.electrocardiogram_voltage.created"
+description: "Historical pull of electrocardiogram_voltage data has completed and you can now pull data for this resource."
 ---
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `historical.data.heartrate.created`
+Constant: `historical.data.electrocardiogram_voltage.created`
 </ResponseField>
 <ResponseField name="data" type="HistoricalDataCreated" required="true">
 <Expandable title="HistoricalDataCreated" defaultOpen="true">
@@ -24,11 +24,11 @@ Constant: `historical.data.heartrate.created`
 <CodeGroup>
 ```json Example
 {
-  "event_type": "historical.data.heartrate.created",
+  "event_type": "historical.data.electrocardiogram_voltage.created",
   "data": {
-    "user_id": "abca5714-3058-41eb-a8e0-cd1b5beee6b7",
-    "start_date": "2023-08-04T15:20:20.277074+00:00",
-    "end_date": "2023-11-02T15:20:20.277217+00:00",
+    "user_id": "cdc600ba-3b90-4503-b7a1-52b9c2f8b32a",
+    "start_date": "2023-08-04T15:20:19.137698+00:00",
+    "end_date": "2023-11-02T15:20:19.137825+00:00",
     "is_final": true,
     "provider": "oura"
   }
