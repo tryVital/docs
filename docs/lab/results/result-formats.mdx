@@ -105,11 +105,10 @@ Interpretation is a string value that can be one of the following:
 
 #### LOINC
 
-As it is possible to test the same biomarkers across different labs, there must be a way to match results across labs. For this, we follow the LOINC standard.
+As it is possible to test the same biomarkers across different laboratories, there must be a way to match results across them. For this, we follow the LOINC standard.
 
-In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard, and are to be used for Customers to be able to match results across labs.
-
-You can expect that the `slug` field is what the lab returns to us, and the `loinc_slug` is the standardised version that will match across labs, if the marker in questions is the same.
+In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard. Customers should use this standard, so it's possible to match results across different laboratories.
+You can expect that the `slug` field is what the laboratory returns to us - and the `loinc_slug` is the standardised version.
 
 An example:
 
@@ -118,7 +117,7 @@ An example:
 | Labcorp | hdl-cholesterol | 2085-9 | cholesterol-in-hdl-mass-vol |
 | USSL | hdl | 2085-9 | cholesterol-in-hdl-mass-vol |
 
-As you can see, the same biomarker `HDL Cholesterol` can have different slugs in different Labs, but be represented by the same LOINC.
+As you can see, the same biomarker `HDL Cholesterol` can have different slugs across different laboratories. However it's represented by the same LOINC value.
 
 
 #### Expected Results
@@ -211,7 +210,7 @@ In order to obtain this data, you can use the following endpoints:
 
 1. [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers)
     
-    This allows you to search markers based on lab or name.
+    This allows you to search markers based on laboratory or name.
 
 2. [GET /v3/lab_tests/\{id\}/markers](/api-reference/lab-testing/lab-test-markers)
 
