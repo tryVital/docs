@@ -20,6 +20,77 @@ const user = await client.User.deregisterProvider(user_id, provider);
 user = client.User.deregister_provider(user_id, provider)
 ```
 
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.user.deregisterProvider(
+    '<user_id>',
+    '<provider>'
+);
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.user.deregister_provider(
+    user_id="<user_id>",
+    provider="<provider>"
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.user().deregisterProvider(
+  "<user_id>",
+  "<provider>"
+);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.User.DeregisterProvider(
+  context.TODO(), 
+  "<user_id>",
+  "<provider_id>",
+)
+
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+
 </RequestExample>
 
 <ResponseExample>

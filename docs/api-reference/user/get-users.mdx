@@ -11,12 +11,59 @@ curl --request GET \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
-```js JavaScript
-const user = await client.User.getAll();
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.user.getAll();
 ```
 
 ```python Python
-user = client.User.get_all(user_id)
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.user.get_all()
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.user().getAll();
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.User.GetAll(context.TODO(), nil)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
