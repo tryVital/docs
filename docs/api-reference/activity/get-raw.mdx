@@ -13,19 +13,83 @@ curl --request GET \
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
 )
 
-data = client.Activity.get_raw(
+data = client.activity.get_raw(
     user_id="*",
     start_date="2022-05-01",
     end_date="2022-06-01"
 )
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { ActivityGetRawRequest } from '@tryvital/vital-node/api/resources/activity';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: ActivityGetRawRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.activity.getRaw(
+    '<my_user_id>',
+    request
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.activity.requests.ActivityGetRawRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+ActivityGetRawRequest request = ActivityGetRawRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.activity().getRaw("<my_user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.ActivityGetRawRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Activity.GetRaw(context.TODO(), "*", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

@@ -14,28 +14,63 @@ curl --request POST \
      --header 'Content-Type: application/json' \
 ```
 
-```javascript Node
-const { VitalClient } = require("Vital");
+```python Python
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const response = await client.User.createSignInToken("{{USER_ID}}");
+const data = await client.user.get_user_sign_in_token(
+    '<user_id>'
+);
 ```
 
-```python Python
-from vital import Client
+```javascript Node
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
 )
 
-response = client.User.create_sign_in_token("{{USER_ID}}")
+data = client.user.getUserSignInToken(
+    user_id="<user_id>"
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.user().getUserSignInToken("<user_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.User.GetUserSignInToken(context.TODO(), "<user_id>")
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

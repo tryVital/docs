@@ -14,27 +14,58 @@ curl --request GET \
 ```
 
 ```javascript Node
-const { VitalClient } = require("Vital");
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const user = await client.User.create(client_user_id);
+const data = await client.providers.getAll();
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
 )
 
-user = client.User.create(client_user_id)
+data = client.providers.get_all()
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.providers().getAll();
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.Providers.GetAll(context.TODO())
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
