@@ -15,6 +15,77 @@ curl --request POST \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LinkCodeCreateRequest } from '@tryvital/vital-node/api';
+
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: LinkCodeCreateRequest = {
+    userId: '<my_user_id>',
+}
+
+const data = await client.link.codeCreate(request);
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.link.code_create(user_id='<my_user_id>')
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+LinkCodeCreateRequest request = LinkCodeCreateRequest
+        .builder()
+        .userId("<my_user_id>")
+        .build();
+
+var data = vital.link().codeCreate(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+request := &vital.LinkCodeCreateRequest{
+  UserId: "<my_user_id>",
+}
+
+response, err := client.Link.CodeCreate(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+
+```
+
 </RequestExample>
 
 <ResponseExample>

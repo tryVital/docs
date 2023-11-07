@@ -19,17 +19,73 @@ curl --request POST \
 '
 ```
 
-```js JavaScript
-const user = await client.Link.connectEmailProvider(
-  linkToken,
-  provider,
-  email,
-  region
-);
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { EmailProviderAuthLink } from '@tryvital/vital-node/api';
+
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: EmailProviderAuthLink = {
+    email: "<email>",
+}
+const data = await client.link.connectEmailAuthProvider("<provider>", request);
 ```
 
 ```python Python
-user = client.Link.email_provider(link_token, provider, email, region)
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.link.connect_email_auth_provider(provider="<provider>", email="<email>")
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.EmailProviderAuthLink;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+EmailProviderAuthLink request = EmailProviderAuthLink
+        .builder()
+        .email("<email>")
+        .build();
+
+var data = vital.link().connectEmailAuthProvider("<provider", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+request := &vital.EmailProviderAuthLink{
+  Email: "<email>",
+}
+
+response, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "<provider>", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
