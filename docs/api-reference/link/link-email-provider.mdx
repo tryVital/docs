@@ -39,9 +39,9 @@ const data = await client.link.connectEmailAuthProvider("<provider>", request);
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 
-vital_client = Vital(
+client = Vital(
   api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.Sandbox
+  environment=VitalEnvironment.SANDBOX
 )
 
 data = client.link.connect_email_auth_provider(provider="<provider>", email="<email>")

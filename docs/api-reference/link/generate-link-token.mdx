@@ -38,9 +38,9 @@ const data = await client.link.token(request)
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 
-vital_client = Vital(
+client = Vital(
   api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.Sandbox
+  environment=VitalEnvironment.SANDBOX
 )
 
 data = client.link.token(user_id="<user_id>")

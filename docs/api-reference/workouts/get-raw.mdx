@@ -13,12 +13,79 @@ curl --request GET \
 ```
 
 ```python Python
-data = client.Workouts.get_raw(
-     user_id=*,
-     provider="oura"
-     start_date={{START_DATE}},
-     end_date={{END_DATE}}
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
+
+data = client.workouts.get_raw("<user_id>", start_date="2021-01-01", end_date="2021-01-02")
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { WorkoutsGetRawRequest } from '@tryvital/vital-node/api/resources/workouts';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: WorkoutsGetRawRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.workouts.getRaw(
+    '<my_user_id>',
+    request
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.workouts.requests.WorkoutsGetRawRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+WorkoutsGetRawRequest request = WorkoutsGetRawRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.workouts().getRaw("<my_user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.WorkoutsGetRawRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Workouts.GetRaw(context.TODO(), "*", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
