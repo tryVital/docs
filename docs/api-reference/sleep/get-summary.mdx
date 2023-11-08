@@ -12,20 +12,81 @@ curl --request GET \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
-```js JavaScript
-data = await client.Sleep.get(
-    user_id=*,
-    start_date={{START_DATE}},
-    end_date={{END_DATE}}
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.sleep.get(
+  user_id="<user_id>", 
+  start_date="2021-01-01", 
+  end_date="2021-01-02"
 )
 ```
 
-```python Python
-data = client.Sleep.get(
-    user_id=*,
-    start_date={{START_DATE}},
-    end_date={{END_DATE}}
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { SleepGetRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: SleepGetRequest = {
+    startDate: '2021-01-01',
+    endDate: '2021-01-02',
+}
+
+const data = await client.sleep.get('user_id', request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.sleep.requests.SleepGetRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+SleepGetRequest request = SleepGetRequest
+        .builder()
+        .startDate("2021-01-01")
+        .endDate("2021-01-02")
+        .build();
+
+var data = vital.sleep().get("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
 )
+
+EndDate := "2021-01-02"
+request := &vital.SleepGetRequest{
+  StartDate: "2021-01-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Sleep.Get(
+  context.TODO(), 
+  "<user_id>", 
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

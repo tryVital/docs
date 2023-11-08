@@ -12,12 +12,82 @@ curl --request GET \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
-```js JavaScript
-data = await client.Sleep.getRaw(user_id=*)
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.sleep.get_raw(
+    user_id="*",
+    start_date="2021-01-01",
+    end_date="2021-01-02"
+)
 ```
 
-```python Python
-data = client.Sleep.get_raw(user_id=*)
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { SleepGetRawRequest } from '@tryvital/vital-node/api/resources/sleep';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: SleepGetRawRequest = {
+    startDate: '2021-01-01',
+    endDate: '2021-01-02',
+}
+
+const data = await client.sleep.getRaw("<user_id>", request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.sleep.requests.SleepGetRawRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+SleepGetRawRequest request = SleepGetRawRequest
+        .builder()
+        .startDate("2021-01-01")
+        .endDate("2021-01-02")
+        .build();
+
+var data = vital.sleep().getRaw("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.SleepGetRawRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Sleep.GetRaw(context.TODO(), "<user_id>", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

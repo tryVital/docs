@@ -12,11 +12,81 @@ curl --request GET \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
-```js JavaScript (Coming soon)
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
+vital_client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.Sandbox
+)
+
+data = client.meal.get(
+  user_id="<user_id>", 
+  start_date="2021-01-01", 
+  end_date="2021-01-02"
+)
 ```
 
-```python Python (Coming soon)
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { MealGetRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: MealGetRequest = {
+    startDate: '2021-01-01',
+    endDate: '2021-01-02',
+};
+
+const data = await client.meal.get('user_id', request);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.meal.requests.MealGetRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+MealGetRequest request = MealGetRequest
+        .builder()
+        .startDate("2021-01-01")
+        .endDate("2021-01-02")
+        .build();
+
+var data = vital.meal().get("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+EndDate := "2021-01-02"
+request := &vital.MealGetRequest{
+  StartDate: "2021-01-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Meal.Get(
+  context.TODO(), 
+  "<user_id>", 
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
