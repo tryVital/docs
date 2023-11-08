@@ -38,6 +38,7 @@ We currently Support over 300+ devices, a full list can be seen below.
 | [Withings](https://www.withings.com)                 | `withings`        | Fitness scales, watches and health monitors                   | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
 | [Zwift](https://zwift.com)                           | `zwift`           | Virtual cycling and running                                   | Password authentication                                                              |
 | [Polar](https://www.polar.com/accesslink-api/)       | `polar`           | Finnish sports tech pioneer                                   | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
+| [Cronometer](https://www.cronometer.com)             | `cronometer`      | Nutrition data                                                | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
 
 ### SDK Based Providers
 
@@ -57,7 +58,6 @@ We currently Support over 300+ devices, a full list can be seen below.
 | Provider                                                               | Slug             | Description                                |
 | ---------------------------------------------------------------------- | ---------------- | ------------------------------------------ |
 | [Android Health Connect](https://developer.android.com/health-connect) | `health_connect` | Health and fitness data on Android devices |
-| [Cronometer](https://www.cronometer.com)                               | `cronometer`     | Nutrition data                             |
 | [Kardia](https://kardia.com/)                                          | `kardia`         | Electrocardiogram readings                 |
 
 **Planned**: On our roadmap
@@ -115,6 +115,7 @@ Cloud Based Providers can be divided in two main categories:
 | [Hammerhead](https://www.hammerhead.io)                         | Polling     |
 | [Dexcom](https://www.dexcom.com)                                | Polling     |
 | [MyFitnessPal](https://www.myfitnesspal.com)                    | Polling     |
+| [Cronometer](https://www.cronometer.com)                        | Push        |
 
 ### SDK Based Providers
 
@@ -190,6 +191,7 @@ When a new provider is connected to a user, Vital retrieves the historical data 
 | [Dexcom (G6 And Older)](https://www.dexcom.com)                              | `1`           |
 | [MyFitnessPal](https://www.myfitnesspal.com)                                 | `14`          |
 | [Polar](https://www.polar.com/accesslink-api/#polar-accesslink-api)          | `28`*         |
+| [Cronometer](https://www.cronometer.com)                                     | `28`          |
 
 \* Polar only supports historical backfill for Sleep and Sleep Stream resources.
 
