@@ -1,32 +1,95 @@
 ---
 title: "Cholesterol"
-openapi: "GET /v2/timeseries/{user_id}/cholesterol/total"
+openapi: "GET /v2/timeseries/{user_id}/cholesterol"
 ---
 
 <RequestExample>
 
 ```bash Bash
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/hdl?start_date="2022-05-01"&end_date="2022-06-01" \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol?start_date="2022-05-01"&end_date="2022-06-01" \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-data = client.Vitals.cholesterol(
-    type="total",
-    user_id=*,
-    start_date="2022-05-01",
-    end_date="2022-06-01"
+data = client.vitals.cholesterol(
+  user_id="<user_id>", 
+  start_date="2021-10-01", 
+  end_date="2021-10-02"
 )
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { VitalsCholesterolRequest } from '@tryvital/vital-node/api/resources/vitals';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: VitalsCholesterolRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.vitals.choleseterol(
+    '<my_user_id>',
+    request
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.vitals.requests.VitalsCholesterolRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+VitalsCholesterolRequest request = VitalsCholesterolRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.vitals().cholesterol("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.VitalsCholesterolRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Vitals.Choleseterol(context.TODO(), "*", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
@@ -36,11 +99,28 @@ data = client.Vitals.cholesterol(
 ```json Response
 [
   {
-    "id": 100,
-    "timestamp": "2022-04-20T13:02:01.123763+00:00",
-    "value": "0.70",
-    "type": "triglycerides",
-    "unit": "mg/dL"
+    "timestamp": "2023-11-09T05:23:01.048461+00:00",
+    "value": 0.6,
+    "type": "cholesterol/ldl",
+    "unit": "mmol/L"
+  },
+  {
+    "timestamp": "2023-11-09T05:23:01.048540+00:00",
+    "value": 0.2,
+    "type": "cholesterol/hdl",
+    "unit": "mmol/L"
+  },
+  {
+    "timestamp": "2023-11-09T05:23:01.048638+00:00",
+    "value": 0.7,
+    "type": "cholesterol/total",
+    "unit": "mmol/L"
+  },
+  {
+    "timestamp": "2023-11-09T05:23:01.048732+00:00",
+    "value": 0.7,
+    "type": "cholesterol/triglycerides",
+    "unit": "mmol/L"
   }
 ]
 ```
