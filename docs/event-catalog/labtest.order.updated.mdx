@@ -238,8 +238,8 @@ When your order was last updated.
 <Expandable title="OrderTopLevelStatus" defaultOpen="true">
 </Expandable>
 </ResponseField>
-<ResponseField name="physician" type="PhysicianClientFacing | null">
-<Expandable title="PhysicianClientFacing" defaultOpen="true">
+<ResponseField name="physician" type="ClientFacingPhysician | null">
+<Expandable title="ClientFacingPhysician" defaultOpen="true">
 <ResponseField name="first_name" type="string" required="true">
 </ResponseField>
 <ResponseField name="last_name" type="string" required="true">
@@ -286,9 +286,9 @@ Shipping Details. For unregistered testkit orders.
 {
   "event_type": "labtest.order.updated",
   "data": {
-    "id": "f45551f3-15a0-4453-9ee0-4278c1248882",
-    "team_id": "4b44bdf5-0d1f-4f3b-9370-11621729ad0f",
-    "user_id": "eefc4996-1396-4079-b10e-d989349bd478",
+    "id": "13180260-4661-4aab-a820-486eaf54b681",
+    "team_id": "668aaac6-7027-4184-b8f5-523d3f88a391",
+    "user_id": "1d0c0c3a-70bc-434d-b4e8-481de7718782",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -329,7 +329,7 @@ Shipping Details. For unregistered testkit orders.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "8c28a68f-058c-4049-a44d-2ac7413c14e2",
+    "health_insurace_id": "210b5238-174e-429c-9f7a-9d4be2dd6bcb",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
