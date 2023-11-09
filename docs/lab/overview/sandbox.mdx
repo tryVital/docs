@@ -6,11 +6,13 @@ In order for Customers to be able to simulate the ordering process in the sandbo
 
 ## Creating Lab Tests
 
-Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 3 modalities. However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Vital generates results based on the associated markers. More on this on the [results section](/lab/overview/sandbox#results).
+Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 3 modalities. 
+
+However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Vital generates results based on the associated markers. More on this on the [results section](/lab/overview/sandbox#results).
 
 ## Lifecycle
 
-When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard, or through the [API](#TODO).
+When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard, or through the [API](/api-reference/lab-testing/simulate-order).
 
 Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails and SMS's.
 

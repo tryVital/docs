@@ -1,0 +1,15 @@
+---
+title: "Simulate Order"
+openapi: "POST /v3/order/{order_id}/test"
+description: "Simulate order lifecycle - Sandbox Only"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+     --url '{{BASE_URL}}/v3/order/<order_id>/test' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
+</RequestExample>
