@@ -153,7 +153,8 @@
       "pages": [
         "lab/overview/introduction",
         "lab/overview/testing-modalities",
-        "lab/overview/quickstart"
+        "lab/overview/quickstart",
+        "lab/overview/sandbox"
       ]
     },
     {
@@ -304,7 +305,8 @@
         "api-reference/lab-testing/area-info",
         "api-reference/lab-testing/requisition-pdf",
         "api-reference/lab-testing/create-unregistered-order",
-        "api-reference/lab-testing/register-order"
+        "api-reference/lab-testing/register-order",
+        "api-reference/lab-testing/simulate-order"
       ]
     },
     {

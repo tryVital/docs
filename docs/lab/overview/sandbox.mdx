@@ -1,0 +1,34 @@
+---
+title: "Testing in Sandbox"
+---
+
+In order for Customers to be able to simulate the ordering process in the sandbox environment, Vital provides both simulated results and a way to transition an order through it's [lifecycle](/lab/workflow/lab-test-lifecycle).
+
+## Creating Lab Tests
+
+Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 3 modalities. 
+
+However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Vital generates results based on the associated markers. More on this on the [results section](/lab/overview/sandbox#results).
+
+## Lifecycle
+
+When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard, or through the [API](/api-reference/lab-testing/simulate-order).
+
+Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails and SMS's.
+
+<Warning>
+When testing the At-Home Phlebotomy, there is only one specific address which is allowed, this address is `West Lincoln Street, Phoenix, AZ 85004, USA`.
+</Warning>
+
+
+## Results
+
+In order to allow Customers to test, Vital generate's fake results for each lab test, based on the [expected markers](/lab/results/result-formats#expected-results). 
+
+The generated results will cycle through all possible [result types](/lab/results/result-formats#resulttype).
+
+<Warning>
+Note that generated values might not match the expected unit.
+</Warning>
+
+As for the PDF results, there are not generated, and Vital returns an example PDF that does not reflect the ordered test.
