@@ -11,23 +11,73 @@ curl --request GET \
      --header 'x-vital-api-key: {YOUR_KEY}'
 ```
 
-```js Javascript
-const { VitalClient } = require("Vital");
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
-});
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
 
-const data = await client.OrdersAPI.getAreaInfo("85004");
+data = client.lab_tests.get_area_info(zip_code="85004")
 ```
 
-```python Python
-from vital import Client
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LabTestsGetAreaInfoRequest } from '@tryvital/vital-node/api/resources/labTests';
 
-client = Client(api_key, environment="sandbox", region="us")
-data = client.LabTests.get_area_info("85004")
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: LabTestsGetAreaInfoRequest = {
+    zipCode: "85004"
+}
+
+const data = await client.labTests.getAreaInfo(request);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+LabTestsGetAreaInfoRequest request = LabTestsGetAreaInfoRequest.builder()
+        .zipCode("85004")
+        .build();
+
+var data = vital.labTests().getAreaInfo(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.LabTestsGetAreaInfoRequest{
+  ZipCode: "85004",
+}
+
+response, err := client.LabTests.GetAreaInfo(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

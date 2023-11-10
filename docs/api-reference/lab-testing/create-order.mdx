@@ -5,54 +5,163 @@ openapi: "POST /v3/order"
 <RequestExample>
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.gender import Gender
+from vital.types.patient_address_compatible import PatientAddressCompatible
+from vital.types.patient_details import PatientDetails
+from datetime import datetime
 
-client = Client(api_key, "sandbox")
-
-data = client.LabTests.create_order(
-    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-    priority=False,
-    patient_details={
-        "first_name": "John",
-        "last_name": "Doe",
-        "dob": "2020-01-01",
-        "gender": "male",
-        "phone_number": "+1123456789",
-        "email": "email@email.com"
-    },
-    patient_address={
-      "receiver_name": "john Doe",
-      "street": "123 Main St.",
-      "street_number": "Apt. 208",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "91189",
-      "country": "US"
-    },
-    health_insurance={
-      "front_image": {
-         "content": "base64-encoded insurance front image binary content",
-         "content_type": "image/png | image/jpg | image/jpeg",
-      },
-      "back_image": {
-         "content": "base64-encoded insurance back image binary content",
-         "content_type": "image/png",
-      },
-      "patient_signature_image": {
-         "content": "base64-encoded patient signature image binary content",
-         "content_type": "image/png",
-      },
-      "subjective": "Description of what is the patient symptoms and attempted treatments",
-      "assessment_plan": "Description of what is the physician assessment and treament or testing plan",
-    },
-    consents=[
-      {"consentType": "terms-of-use"},
-      {"consentType": "telehealth-informed-consent"},
-      {"consentType": "notice-of-privacy-practices"},
-    ]
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
+data = client.lab_tests.create_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    patient_details=PatientDetails(
+        first_name="John",
+        last_name="Doe",
+        dob=datetime.fromisoformat("2020-01-01"),
+        gender=Gender.MALE,
+        phone_number="+1123456789",
+        email="email@email.com"
+    ),
+    patient_address=PatientAddressCompatible(
+      receiver_name="john Doe",
+      street="123 Main St.",
+      street_number="Apt. 208",
+      city="San Francisco",
+      state="CA",
+      zip="91189",
+      country="US",
+      phone_number="+1123456789"
+    ),
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { CreateOrderRequestCompatible} from '@tryvital/vital-node/api/resources/labTests';
+import { Gender } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: CreateOrderRequestCompatible = {
+    userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    labTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    patientDetails: {
+        firstName: "John",
+        lastName: "Doe",
+        dob: new Date("2020-01-01"),
+        gender: Gender.Male,
+        phoneNumber: "+1123456789",
+        email: "email@email.com"
+    },
+    patientAddress: {
+      receiverName: "john Doe",
+      street: "123 Main St.",
+      streetNumber: "Apt. 208",
+      city: "San Francisco",
+      state: "CA",
+      zip: "91189",
+      country: "US",
+      phoneNumber: "+1123456789"
+    },
+}
+
+const data = await client.labTests.createOrder(request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+
+Vital vital = Vital.builder()
+      .apiKey("YOUR_API_KEY")
+      .environment(Environment.SANDBOX)
+      .build();
+
+PatientDetails details = PatientDetails.builder()
+      .firstName("John")
+      .lastName("Doe")
+      .dob(OffsetDateTime.parse("2020-01-01"))
+      .gender(Gender.MALE)
+      .phoneNumber("+1123456789")
+      .email("email@email.com")
+      .build();
+
+PatientAddressCompatible address = PatientAddressCompatible
+      .builder()
+      .street("123 Main St.")
+      .city("San Francisco")
+      .state("CA")
+      .zip("91189")
+      .country("US")
+      .phoneNumber("+1123456789")
+      .build();
+
+CreateOrderRequestCompatible request = CreateOrderRequestCompatible
+      .builder()
+      .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
+      .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
+      .patientDetails(details)
+      .patientAddress(address)
+      .build();
+
+var data = vital.labTests().createOrder(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+details := &vital.PatientDetails{
+   FirstName:   "John",
+   LastName:    "Doe",
+   Dob:         time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
+   Gender:      vital.GenderMale,
+   PhoneNumber: "+1123456789",
+   Email:       "email@email.com",
+}
+
+address := &vital.PatientAddressCompatible{
+   ReceiverName: vital.String("john Doe"),
+   Street:       "123 Main St.",
+   StreetNumber: vital.String("Apt. 208"),
+   City:         "San Francisco",
+   State:        "CA",
+   Zip:          "91189",
+   Country:      "US",
+   PhoneNumber:  vital.String("+1123456789"),
+}
+
+request := &vital.CreateOrderRequestCompatible{
+   UserId:         "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+   LabTestId:      "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+   PatientDetails: details,
+   PatientAddress: address,
+}
+
+response, err := client.LabTests.CreateOrder(context.TODO(), request)
+if err != nil {
+   return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
