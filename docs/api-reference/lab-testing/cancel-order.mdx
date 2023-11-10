@@ -13,6 +13,70 @@ data = client.LabTests.cancel_order("<order_id>")
 
 ```
 
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.cancel_order(order_id="<order_id>")
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.labTests.cancelOrder("<order_id>")
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+LabTestsGetAreaInfoRequest request = LabTestsGetAreaInfoRequest.builder()
+        .zipCode("85004")
+        .build();
+
+var data = vital.labTests().getAreaInfo(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.LabTestsGetAreaInfoRequest{
+  ZipCode: "85004",
+}
+
+response, err := client.LabTests.GetAreaInfo(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
 </RequestExample>
 
 <ResponseExample>
