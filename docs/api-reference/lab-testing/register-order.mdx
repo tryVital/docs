@@ -6,41 +6,157 @@ openapi: "POST /v3/order/testkit/register"
 <RequestExample>
 
 ```python Python
-from vital import Client
+from datetime import datetime
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.gender import Gender
+from vital.types.patient_address_compatible import PatientAddressCompatible
+from vital.types.patient_details import PatientDetails
 
-client = Client(api_key, "sandbox")
 
-data = client.LabTests.register_testkit_order(
-    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    sample_id="123123123",
-    patient_details={
-       "first_name": "John",
-       "last_name": "Doe",
-       "dob": "2020-01-01",
-       "gender": "male",
-       "phone_number": "+1123456789",
-       "email": "email@email.com"
-    },
-    patient_address={
-      "receiver_name": "john Doe",
-      "street": "123 Main St.",
-      "street_number": "Apt. 208",
-      "city": "San Francisco",
-      "state": "CA",
-      "zip": "91189",
-      "country": "US"
-    },
-    consents=[
-      {"consentType": "terms-of-use"},
-      {"consentType": "telehealth-informed-consent"},
-      {"consentType": "notice-of-privacy-practices"},
-    ],
-    physician={
-      "first_name": "Doctor",
-      "last_name": "Doc",
-      "npi": "123123123",
-    }
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
+
+patient_details = PatientDetails(
+    first_name="John",
+    last_name="Doe",
+    dob=datetime.fromisoformat("1990-01-01"),
+    gender=Gender.MALE,
+    email="email@email.com",
+    phone_number="123-456-7890",
+)
+
+patient_address = PatientAddressCompatible(
+    receiver_name="John Doe",
+    street="Main St",
+    street_number="123",
+    city="San Francisco",
+    state="CA",
+    zip="94111",
+    country="US",
+    phone_number=""
+)
+
+
+data = client.testkit.register(user_id="<user_id>", sample_id="<sample_id>", patient_details=patient_details, patient_address=patient_address)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { Gender } from '@tryvital/vital-node/api';
+import { RegisterTestkitRequest} from '@tryvital/vital-node/api/resources/testkit';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: RegisterTestkitRequest = {
+    userId: "<user_id>",
+    sampleId: "<sample_id>",
+    patientDetails: {
+        firstName: "<first_name>",
+        lastName: "<last_name>",
+        dob: new Date("1990-01-01"),
+        gender: Gender.Female,
+        phoneNumber: "<phone_number>",
+        email: "<email>",
+    },
+    patientAddress: {
+        receiverName: "<receiver_name>",
+        street: "<street>",
+        city: "<city>",
+        state: "<state>",
+        zip: "<zip>",
+        country: "<country>",
+        phoneNumber: "<phone_number>",
+    },
+};
+
+const data = await client.testkit.register(request);
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.testkit.requests.RegisterTestkitRequest;
+import com.vital.api.types.Gender;
+import com.vital.api.types.PatientAddressCompatible;
+import com.vital.api.types.PatientDetails;
+import java.time.OffsetDateTime;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+PatientDetails patientDetails = PatientDetails
+        .builder()
+        .firstName("<first_name>")
+        .lastName("<last_name>")
+        .dob(OffsetDateTime.parse("1990-01-01"))
+        .gender(Gender.MALE)
+        .phoneNumber("<phone_number>")
+        .email("<email>")
+        .build();
+
+PatientAddressCompatible patientAddress = PatientAddressCompatible
+        .builder()
+        .street("<street>")
+        .city("<city>")
+        .state("<state>")
+        .zip("<zip>")
+        .country("<country>")
+        .build();
+
+RegisterTestkitRequest request = RegisterTestkitRequest
+        .builder()
+        .userId("<user_id>")
+        .sampleId("<sample_id>")
+        .patientDetails(patientDetails)
+        .patientAddress(patientAddress)
+        .build();
+
+var data = vital.testkit().register(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+request := &vital.RegisterTestkitRequest{
+  UserId:   "<user_id>",
+  SampleId: "<sample_id>",
+  PatientDetails: &vital.PatientDetails{
+    FirstName:   "<first_name>",
+    LastName:    "<last_name>",
+    Email:       "<email>",
+    PhoneNumber: "<phone>",
+    Dob:         time.Date(1990, 1, 1, 0, 0, 0, 0, time.UTC),
+    Gender:      vital.GenderMale,
+  },
+  PatientAddress: &vital.PatientAddressCompatible{
+    ReceiverName: vital.String("<receiver_name>"),
+    Street:       "<street>",
+    City:         "<city>",
+    State:        "<state>",
+    Zip:          "<zip_code>",
+    Country:      "<country>",
+  },
+}
+
+response, err := client.Testkit.Register(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 ```bash cURL

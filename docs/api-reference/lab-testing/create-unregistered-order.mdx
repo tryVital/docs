@@ -26,6 +26,64 @@ data = client.LabTests.create_unregistered_testkit_order(
 )
 ```
 
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { CreateRegistrableTestkitOrderRequest} from '@tryvital/vital-node/api/resources/testkit';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: CreateRegistrableTestkitOrderRequest = {
+    userId: "<user_id>",
+    labTestId: "<lab_test_id>",
+    shippingDetails: {
+        receiverName: "<receiver_name>",
+        firstLine: "<address_1>",
+        city: "<city>",
+        state: "<state>",
+        zip: "<zip>",
+        country: "<country>",
+        phoneNumber: "<phone_number>",
+    },
+};
+
+const data = await client.testkit.createOrder(request);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labTests().getOrder("<order_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabTests.GetOrders(context.TODO(), "<order_id>")
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
 ```bash cURL
 curl --request POST \
      --url https://api.tryvital.io/v3/order/testkit/ \
