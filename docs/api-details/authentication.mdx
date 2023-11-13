@@ -9,7 +9,7 @@ Server to server traffic uses API Key authentication.
 Vital API Keys can be created through the [Vital Team Dashboard](https://app.tryvital.io). Requests from your backend services should present the API Key
 in the `X-Vital-API-Key` header. For example:
 
-```bash
+```bash cURL
 curl --request GET
   --url '{{BASE_URL}}/v2/providers'
   --header 'X-Vital-API-Key: <YOUR-API-KEY>'

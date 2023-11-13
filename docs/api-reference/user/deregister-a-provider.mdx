@@ -5,21 +5,12 @@ openapi: "DELETE /v2/user/{user_id}/{provider}"
 
 <RequestExample>
 
-```bash Shell
+```bash cURL
 curl --request DELETE \
      --url {{BASE_URL}}/v2/user/{user_id}/{provider} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
-
-```js JavaScript
-const user = await client.User.deregisterProvider(user_id, provider);
-```
-
-```python Python
-user = client.User.deregister_provider(user_id, provider)
-```
-
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
