@@ -16,33 +16,73 @@ curl --request POST \
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-data = client.AtHomePhlebotomy.book_appointment(
-    order_id="413d7205-f8a9-42ed-aa4a-edb99e481ca0",
-    booking_key="foo-bar-baz",
-)
+data = client.lab_tests.book_phlebotomy_appointment(order_id="<order_id>", booking_key="<booking_key>")
 ```
 
 ```javascript Node
-const { VitalClient } = require("Vital");
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { AppointmentBookingRequest } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.AtHomePhlebotomy.bookAppointment(
-    "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
-    "foo-bar-baz",
-);
+const request: AppointmentBookingRequest = {
+    bookingKey: "<booking_key>",
+}
+const data = await client.labTests.bookPhlebotomyAppointment("<order_id>", request);
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.AppointmentBookingRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+AppointmentBookingRequest request = AppointmentBookingRequest
+        .builder()
+        .bookingKey("<booking_key>")
+        .build();
+
+var data = vital.labTests().bookPhlebotomyAppointment("<order_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.AppointmentBookingRequest{
+    BookingKey: "<booking_key>",
+}
+
+response, err := client.LabTests.BookPhlebotomyAppointment(context.TODO(), "<order_id>", request)
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
