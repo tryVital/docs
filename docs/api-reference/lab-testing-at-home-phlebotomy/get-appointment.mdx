@@ -11,27 +11,59 @@ curl --request GET \
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-data = client.AtHomePhlebotomy.get_appointment(order_id="413d7205-f8a9-42ed-aa4a-edb99e481ca0")
+data = client.lab_tests.get_phlebotomy_appointment(order_id="<order_id>")
 ```
 
 ```javascript Node
-const { VitalClient } = require("Vital");
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.AtHomePhlebotomy.getAppointment("413d7205-f8a9-42ed-aa4a-edb99e481ca0");
+const data = await client.labTests.getPhlebotomyAppointment("<order_id>");
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labTests().getPhlebotomyAppointment("<order_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabTests.GetPhlebotomyAppointment(context.TODO(), "<order_id>")
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
