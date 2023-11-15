@@ -28,13 +28,22 @@ either via the **widget** or the **API**.
 
 ## Vital Widget
 
-To connect your user to Vital via the Widget you can follow the guide [here](/wearables/vital-link/launching_link).
+To connect your user to Vital via the Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
 
 <img src="/img/libre_connect.png" className="w-2/5 block mx-auto" />
 
-Note, Freestyle Libre is available in different regions, ensure you select the correct region in the list of options above. Here are the regions that are available for Freestyle in each Vital region:
+## Adding users to a practices
 
-<a name="vital-freestyle-supported-regions"></a>
+When integrating with Vital, you have two options: use Vital's practice, or yours. We call the latter a custom practise.
+
+### Custom Cractice
+
+<Warning>
+  If you want to use a custom practice, you need an Enterprise Account. Please
+  contact support@tryvital.io.
+</Warning>
+
+Freestyle Libre is available in different regions, ensure you invite the correct email as an admin of your practice:
 
 ### Vital US Region
 
@@ -56,17 +65,18 @@ Note, Freestyle Libre is available in different regions, ensure you select the c
 | Canada (`ca`)                                  | support+sandbox+ca@tryvital.io | support+ca@tryvital.io      |
 | _(\*) Default Freestyle region if unspecified_ |
 
+### Vital Practices
+
+<Info>
+  You can use a Vital practices to test the integration with Freestyle Libre.
+</Info>
+
 Vital has two practices (depending on environment) this applies to all regions:
 
-| Environment |                  |
+| Environment | Practice Name    |
 | ----------- | ---------------- |
 | Sandbox     | tryVital-sandbox |
 | Production  | tryVital         |
-
-<Warning>
-  If you want to use a custom practice, you need an Enterprise Account. Please
-  contact support@tryvital.io.
-</Warning>
 
 ## Vital Link
 
