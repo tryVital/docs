@@ -11,6 +11,78 @@ curl --request GET \
      --header 'x-vital-api-key: {YOUR_KEY}'
 ```
 
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.insurance.search_diagnosis(diagnosis_query="<query>")
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { InsuranceSearchDiagnosisRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: InsuranceSearchDiagnosisRequest = {
+    diagnosisQuery: "<query>"
+}
+
+const data = await client.insurance.searchDiagnosis(request)
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.insurance.requests.InsuranceSearchDiagnosisRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+InsuranceSearchDiagnosisRequest request = InsuranceSearchDiagnosisRequest
+        .builder()
+        .diagnosisQuery("<query>")
+        .build();
+
+var data = vital.insurance().searchDiagnosis(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.InsuranceSearchDiagnosisRequest{
+    DiagnosisQuery: "<query>",
+}
+
+response, err := client.Insurance.SearchDiagnosis(context.TODO(), request)
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
 </RequestExample>
 
 <ResponseExample>
