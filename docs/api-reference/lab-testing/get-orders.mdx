@@ -13,27 +13,116 @@ curl --request GET \
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.shipping_address import ShippingAddress
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-orders = client.LabTests.get_orders(page=1, size=50)
+shipping_details = ShippingAddress(
+    receiver_name="John Doe",
+    first_line="123 Main St",
+    second_line="",
+    city="San Francisco",
+    state="CA",
+    zip="94103",
+    country="US",
+    phone_number="4155551234"
+)
+
+
+data = client.testkit.create_order(user_id="<user_id>", lab_test_id="<lab_test_id>", shipping_details=shipping_details)
 ```
 
 ```javascript Node
-const { VitalClient } = require("Vital");
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { CreateRegistrableTestkitOrderRequest} from '@tryvital/vital-node/api/resources/testkit';
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const orders = await client.Orders.getOrders(1, 50);
+const request: CreateRegistrableTestkitOrderRequest = {
+    userId: "<user_id>",
+    labTestId: "<lab_test_id>",
+    shippingDetails: {
+        receiverName: "<receiver_name>",
+        firstLine: "<address_1>",
+        city: "<city>",
+        state: "<state>",
+        zip: "<zip>",
+        country: "<country>",
+        phoneNumber: "<phone_number>",
+    },
+};
+
+const data = await client.testkit.createOrder(request);
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.testkit.requests.CreateRegistrableTestkitOrderRequest;
+import com.vital.api.types.ShippingAddress;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+ShippingAddress address = ShippingAddress
+        .builder()
+        .receiverName("John Doe")
+        .firstLine("<first_line>")
+        .city("<city>")
+        .state("<state>")
+        .zip("<zip>")
+        .country("<country>")
+        .phoneNumber("<phone_number>")
+        .build();
+
+CreateRegistrableTestkitOrderRequest request = CreateRegistrableTestkitOrderRequest
+        .builder()
+        .userId("<user_id>")
+        .labTestId("<lab_test_id")
+        .shippingDetails(address)
+        .build();
+
+var data = vital.testkit().createOrder(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+request := &vital.CreateRegistrableTestkitOrderRequest{
+  UserId:    "<user_id>",
+  LabTestId: "<lab_test_id>",
+  ShippingDetails: &vital.ShippingAddress{
+    ReceiverName: "<receiver_name>",
+    FirstLine:    "<first_line>",
+    City:         "<city>",
+    State:        "<state>",
+    Zip:          "<zip>",
+    Country:      "<country>",
+  },
+}
+
+response, err := client.Testkit.CreateOrder(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

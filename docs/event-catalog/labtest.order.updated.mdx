@@ -75,6 +75,11 @@ The Vital Test associated with the order
 <ResponseField name="price" type="number" required="true">
 </ResponseField>
 <ResponseField name="is_active" type="boolean" required="true">
+Deprecated. Use status instead.
+</ResponseField>
+<ResponseField name="status" type="LabTestStatus" required="true">
+<Expandable title="LabTestStatus" defaultOpen="true">
+</Expandable>
 </ResponseField>
 <ResponseField name="fasting" type="boolean | null">
 Defines whether a lab test requires fasting. Only available for Labcorp.
@@ -286,9 +291,9 @@ Shipping Details. For unregistered testkit orders.
 {
   "event_type": "labtest.order.updated",
   "data": {
-    "id": "0aec0eb4-ab2f-4f05-9f75-ffc6777b457f",
-    "team_id": "cfa9a4b7-7fde-4689-b515-be7d9083c5be",
-    "user_id": "55a2a1d1-a338-405f-976b-d4f62c655810",
+    "id": "c6f6ca39-259d-4560-b600-4d15b242c05a",
+    "team_id": "e47ea329-0d93-49cc-b1d9-8c00ac62e6c7",
+    "user_id": "47873cd8-3327-4bb7-a3c1-b7d0d43f7f74",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -329,7 +334,7 @@ Shipping Details. For unregistered testkit orders.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "6b2eed03-32f6-490d-bb3b-401fa85195c6",
+    "health_insurace_id": "428bbb4e-026f-401b-8797-1940ea40baf4",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",

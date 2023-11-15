@@ -7,22 +7,13 @@ openapi: "POST /v3/order/{order_id}/cancel"
 ```python Python
 from vital import Client
 
-client = Client(api_key, "sandbox")
-
-data = client.LabTests.cancel_order("<order_id>")
-
-```
-
-```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
 )
 
-data = client.lab_tests.cancel_order(order_id="<order_id>")
+data = client.LabTests.cancel_order(order_id='<order_id>');
 ```
 
 ```javascript Node
@@ -33,24 +24,20 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.cancelOrder("<order_id>")
+const data = await client.labTests.cancelOrder("<order_id>");
 ```
+
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-LabTestsGetAreaInfoRequest request = LabTestsGetAreaInfoRequest.builder()
-        .zipCode("85004")
-        .build();
-
-var data = vital.labTests().getAreaInfo(request);
+var data = vital.labTests().cancelOrder("<order_id>");
 ```
 
 ```go Go
@@ -66,16 +53,13 @@ client := vitalclient.NewClient(
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-request := &vital.LabTestsGetAreaInfoRequest{
-  ZipCode: "85004",
-}
-
-response, err := client.LabTests.GetAreaInfo(context.TODO(), request)
+response, err := client.LabTests.CancelOrder(context.TODO(), "<order_id>")
 if err != nil {
   return err
 }
 fmt.Printf("Received data %s\n", response)
 ```
+
 
 </RequestExample>
 
