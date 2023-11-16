@@ -30,6 +30,7 @@ const client = new VitalClient({
 
 const request: LinkTokenExchange = {
     userId: "<user_id>",
+    provider: "oura",
 }
 const data = await client.link.token(request)
 ```
@@ -37,19 +38,21 @@ const data = await client.link.token(request)
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
+from vital.types.providers import Providers
 
 client = Vital(
   api_key="YOUR_API_KEY",
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.link.token(user_id="<user_id>")
+data = client.link.token(user_id="<user_id>", provider=Providers.OURA)
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.Providers;
 
 Vital vital = Vital.builder()
      .apiKey("YOUR_API_KEY")
@@ -59,6 +62,7 @@ Vital vital = Vital.builder()
 LinkTokenExchange request = LinkTokenExchange
      .builder()
      .userId("<user_id>")
+     .provider(Providers.OURA)
      .build();
 
 var data = vital.link().token(request);
@@ -76,8 +80,11 @@ client := vitalclient.NewClient(
   vitalclient.WithApiKey("<YOUR_API_KEY>"),
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
+
+provider := vital.ProvidersOura
 request := &vital.LinkTokenExchange{
-     UserId: "<user_id>",
+     UserId:   "<user_id>",
+     Provider: &provider,
 }
 
 response, err := client.Link.Token(context.TODO(), request)
@@ -85,7 +92,6 @@ if err != nil {
   return err
 }
 fmt.Printf("Received data %s\n", response)
-
 ```
 
 </RequestExample>

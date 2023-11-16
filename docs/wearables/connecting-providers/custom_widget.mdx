@@ -7,12 +7,74 @@ To authenticate without Vital link, you need to first generate a `link_token` fo
 
 <SnippetGroup>
 
-```python Generating a Vital-Link
-token = client.Link.create(user_id)
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LinkTokenExchange } from '@tryvital/vital-node/api';
+
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: LinkTokenExchange = {
+    userId: "<user_id>",
+}
+const data = await client.link.token(request)
 ```
 
-```javascript
-const resp = await client.Link.create(client_user_id);
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.link.token(user_id="<user_id>")
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkTokenExchange;
+
+Vital vital = Vital.builder()
+     .apiKey("YOUR_API_KEY")
+     .environment(Environment.SANDBOX)
+     .build();
+
+LinkTokenExchange request = LinkTokenExchange
+     .builder()
+     .userId("<user_id>")
+     .build();
+
+var data = vital.link().token(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+request := &vital.LinkTokenExchange{
+     UserId: "<user_id>",
+}
+
+response, err := client.Link.Token(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+
 ```
 
 ```bash
@@ -55,19 +117,81 @@ To connect a password provider:
 
 <SnippetGroup>
 
-```python Connecting a password provider:
-token = client.Link.create(user_id)
-resp = client.Link.password_provider(link_token, "oura", username, password)
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { IndividualProviderData, PasswordProviders } from '@tryvital/vital-node/api';
+
+const request: IndividualProviderData = {
+    username: '<username>',
+    password: '<password>',
+}
+const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
 ```
 
-```js JavaScript
-const token = await client.Link.create(client_user_id, "oura");
-const resp = await client.Link.connectProvider(
-  token,
-  "oura",
-  username,
-  password
-);
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.password_providers import PasswordProviders
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.link.connect_password_provider(
+  PasswordProviders.<provider>, 
+  username="<username>", 
+  password="<password>"
+)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.IndividualProviderData;
+import com.vital.api.types.PasswordProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+IndividualProviderData request = IndividualProviderData
+        .builder()
+        .username("<username>")
+        .password("<password>")
+        .build();
+
+var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.IndividualProviderData{
+  Username: "<username>",
+  Password: "<password>",
+}
+
+response, err := client.Link.ConnectPasswordProvider(
+  context.TODO(), 
+  vital.PasswordProviders<provider>, 
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>

@@ -29,11 +29,73 @@ curl --request POST \
 ```
 
 ```js Node
-const user = await client.User.create(client_user_id);
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { UserCreateBody } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: UserCreateBody = {
+    clientUserId: "<client_user_id>"
+}
+
+const data = await client.user.create(request)
 ```
 
 ```python Python
-user = client.User.create(client_user_id)
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.user.create(client_user_id="<client_user_id>")
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.user.requests.UserCreateBody;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+UserCreateBody request = UserCreateBody
+     .builder()
+     .clientUserId("<client_user_id>")
+     .build();
+
+var data = vital.user().create(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.UserCreateBody{
+     ClientUserId: "<client_user_id>",
+}
+
+response, err := client.User.Create(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>
@@ -52,12 +114,60 @@ curl --request GET \
      --header 'Content-Type: application/json'
 ```
 
-```js Node
-const tests = await client.LabTests.getTests();
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.get();
 ```
 
-```python Python
-tests = await client.LabTests.get_tests();
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.labTests.get();
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labTests().get();
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabTests.Get(context.TODO())
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>
@@ -143,86 +253,164 @@ curl --request POST \
 '
 ```
 
-```js Node
-const order = await client.Orders.create_order(
-     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // UserId.
-     {
-          dob: "2020-01-01",                  // Patient details.
-          gender: "male"
-     },
-     {
-          "receiver_name": "John Doe",        // Patient address.
-          "first_line": "123 Main St.",
-          "second_line": "Apt. 208",
-          "city": "San Francisco",
-          "state": "CA",
-          "zip": "91189",
-          "country": "United States",
-          "phone_number": "+1123456789",
-     },
-     "3fa85f64-5717-4562-b3fc-2c963f66afa6",  // Lab test ID.
-     {
-          "first_name": "John",               // Physician (Optional)
-          "last_name": "Doe",
-          "email": "john@doe.com",
-          "npi": "123456789",
-          "licensed_states": ["CA", "NY"],
-          "created_at": "2022-07-06T22:20:26.796Z",
-          "updated_at": "2022-07-06T22:20:26.796Z"
-     },
-     {
-          "front_image": {                    // Health Insurance (Optional)
-               "content": "base64-encoded-image-content",
-               "content_type": "image/png",
-          },
-          "back_image": {
-               "content": "base64-encoded-image-content",
-               "content_type": "image/png",
-          },
-     },
-);
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.gender import Gender
+from vital.types.patient_address_compatible import PatientAddressCompatible
+from vital.types.patient_details import PatientDetails
+from datetime import datetime
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.create_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    patient_details=PatientDetails(
+        first_name="John",
+        last_name="Doe",
+        dob=datetime.fromisoformat("2020-01-01"),
+        gender=Gender.MALE,
+        phone_number="+1123456789",
+        email="email@email.com"
+    ),
+    patient_address=PatientAddressCompatible(
+      receiver_name="john Doe",
+      street="123 Main St.",
+      street_number="Apt. 208",
+      city="San Francisco",
+      state="CA",
+      zip="91189",
+      country="US",
+      phone_number="+1123456789"
+    ),
+)
 ```
 
-```python Python
-order = await client.LabTests.create_order(
-     user_id="3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     patient_details={
-          dob: "2020-01-01",
-          gender: "male"
-     },
-     patient_address={
-          "receiver_name": "John Doe",
-          "first_line": "123 Main St.",
-          "second_line": "Apt. 208",
-          "city": "San Francisco",
-          "state": "CA",
-          "zip": "91189",
-          "country": "United States",
-          "phone_number": "+1123456789",
-     },
-     lab_test_id="3fa85f64-5717-4562-b3fc-2c963f66afa6",
-     # Physician is optional
-     physician={
-          "first_name": "John",
-          "last_name": "Doe",
-          "email": "john@doe.com",
-          "npi": "123456789",
-          "licensed_states": ["CA", "NY"],
-          "created_at": "2022-07-06T22:20:26.796Z",
-          "updated_at": "2022-07-06T22:20:26.796Z"
-     },
-     # Health Insurance is optional
-     health_insurance={
-          "front_image": {                    // Health Insurance (Optional)
-               "content": "base64-encoded-image-content",
-               "content_type": "image/png",
-          },
-          "back_image": {
-               "content": "base64-encoded-image-content",
-               "content_type": "image/png",
-          },
-     },
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { CreateOrderRequestCompatible} from '@tryvital/vital-node/api/resources/labTests';
+import { Gender } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: CreateOrderRequestCompatible = {
+    userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    labTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    patientDetails: {
+        firstName: "John",
+        lastName: "Doe",
+        dob: new Date("2020-01-01"),
+        gender: Gender.Male,
+        phoneNumber: "+1123456789",
+        email: "email@email.com"
+    },
+    patientAddress: {
+      receiverName: "john Doe",
+      street: "123 Main St.",
+      streetNumber: "Apt. 208",
+      city: "San Francisco",
+      state: "CA",
+      zip: "91189",
+      country: "US",
+      phoneNumber: "+1123456789"
+    },
+}
+
+const data = await client.labTests.createOrder(request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+
+Vital vital = Vital.builder()
+      .apiKey("YOUR_API_KEY")
+      .environment(Environment.SANDBOX)
+      .build();
+
+PatientDetails details = PatientDetails.builder()
+      .firstName("John")
+      .lastName("Doe")
+      .dob(OffsetDateTime.parse("2020-01-01"))
+      .gender(Gender.MALE)
+      .phoneNumber("+1123456789")
+      .email("email@email.com")
+      .build();
+
+PatientAddressCompatible address = PatientAddressCompatible
+      .builder()
+      .street("123 Main St.")
+      .city("San Francisco")
+      .state("CA")
+      .zip("91189")
+      .country("US")
+      .phoneNumber("+1123456789")
+      .build();
+
+CreateOrderRequestCompatible request = CreateOrderRequestCompatible
+      .builder()
+      .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
+      .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
+      .patientDetails(details)
+      .patientAddress(address)
+      .build();
+
+var data = vital.labTests().createOrder(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
 )
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+details := &vital.PatientDetails{
+   FirstName:   "John",
+   LastName:    "Doe",
+   Dob:         time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
+   Gender:      vital.GenderMale,
+   PhoneNumber: "+1123456789",
+   Email:       "email@email.com",
+}
+
+address := &vital.PatientAddressCompatible{
+   ReceiverName: vital.String("john Doe"),
+   Street:       "123 Main St.",
+   StreetNumber: vital.String("Apt. 208"),
+   City:         "San Francisco",
+   State:        "CA",
+   Zip:          "91189",
+   Country:      "US",
+   PhoneNumber:  vital.String("+1123456789"),
+}
+
+request := &vital.CreateOrderRequestCompatible{
+   UserId:         "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+   LabTestId:      "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+   PatientDetails: details,
+   PatientAddress: address,
+}
+
+response, err := client.LabTests.CreateOrder(context.TODO(), request)
+if err != nil {
+   return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>

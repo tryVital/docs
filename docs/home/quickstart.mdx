@@ -104,12 +104,74 @@ curl --request POST \
      --data '{"client_user_id":"<YOUR_CLIENT_USER_ID>"}'
 ```
 
-```js JavaScript
-const user = await client.User.create(client_user_id);
+```js Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { UserCreateBody } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: UserCreateBody = {
+    clientUserId: "<client_user_id>"
+}
+
+const data = await client.user.create(request)
 ```
 
 ```python Python
-user = client.User.create(client_user_id)
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.user.create(client_user_id="<client_user_id>")
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.user.requests.UserCreateBody;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+UserCreateBody request = UserCreateBody
+     .builder()
+     .clientUserId("<client_user_id>")
+     .build();
+
+var data = vital.user().create(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.UserCreateBody{
+     ClientUserId: "<client_user_id>",
+}
+
+response, err := client.User.Create(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 ```swift Swift
@@ -247,11 +309,80 @@ summary data for a user. The request is simple and requires the Vital
 <SnippetGroup>
 
 ```python Python
-sleep_data = client.Sleep.get(user_id, start_date, end_date)
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.sleep.get(
+  user_id="<user_id>", 
+  start_date="2021-01-01", 
+  end_date="2021-01-02"
+)
 ```
 
-```js JavaScript
-const sleepData = await client.Sleep.get(userId, startDate, endDate);
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { SleepGetRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: SleepGetRequest = {
+    startDate: '2021-01-01',
+    endDate: '2021-01-02',
+}
+
+const data = await client.sleep.get('user_id', request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.sleep.requests.SleepGetRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+SleepGetRequest request = SleepGetRequest
+        .builder()
+        .startDate("2021-01-01")
+        .endDate("2021-01-02")
+        .build();
+
+var data = vital.sleep().get("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+EndDate := "2021-01-02"
+request := &vital.SleepGetRequest{
+  StartDate: "2021-01-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Sleep.Get(
+  context.TODO(), 
+  "<user_id>", 
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 ```swift Swift
