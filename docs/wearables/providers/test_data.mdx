@@ -52,28 +52,77 @@ curl --request POST \
      --data '{"user_id": "<user_id>", "provider": "<provider>"}'
 ```
 
-```js Node
-const { VitalClient } = require("Vital");
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { DemoConnectionCreationPayload, DemoProviders } from '@tryvital/vital-node/api';
+
 
 const client = new VitalClient({
-  api_key: <API_KEY>,
-  environment: "sandbox",
-  region: "us"
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const response = await client.Link.connectDemoProvider(userId, provider);
+const request: DemoConnectionCreationPayload = {
+    userId: "<user_id>",
+    provider: DemoProviders.<provider>,
+}
+const data = await client.link.connectDemoProvider(request);
 ```
 
 ```python Python
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Client(
-  api_key=<API_KEY>,
-  environment="sandbox",
-  region="us"
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-response = client.Link.demo_provider(user_id, provider)
+data = client.link.connect_demo_provider(user_id="<user_id>", provider=DemoProviders.<provider>)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
+import com.vital.api.types.DemoProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+DemoConnectionCreationPayload request = DemoConnectionCreationPayload
+        .builder()
+        .userId("<user_id>")
+        .provider(DemoProviders.<provider>)
+        .build();
+
+var data = vital.link().connectDemoProvider(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+request := &vital.DemoConnectionCreationPayload{
+  UserId:   "<user_id>",
+  Provider: vital.DemoProviders<provider_name>,
+}
+
+response, err := client.Link.ConnectDemoProvider(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>

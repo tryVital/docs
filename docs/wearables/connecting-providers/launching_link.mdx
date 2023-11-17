@@ -22,12 +22,80 @@ To do so, you just pass in the provider name as one of the parameter's to the li
 
 <SnippetGroup>
 
-```python Launching Vital-Link
-token = client.Link.create(user_id, "oura")
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LinkTokenExchange } from '@tryvital/vital-node/api';
+
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: LinkTokenExchange = {
+    userId: "<user_id>",
+    provider: "oura",
+}
+const data = await client.link.token(request)
 ```
 
-```js JavaScript
-const resp = await client.Link.create(client_user_id, "oura");
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.providers import Providers
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.link.token(user_id="<user_id>", provider=Providers.OURA)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.Providers;
+
+Vital vital = Vital.builder()
+     .apiKey("YOUR_API_KEY")
+     .environment(Environment.SANDBOX)
+     .build();
+
+LinkTokenExchange request = LinkTokenExchange
+     .builder()
+     .userId("<user_id>")
+     .provider(Providers.OURA)
+     .build();
+
+var data = vital.link().token(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+provider := vital.ProvidersOura
+request := &vital.LinkTokenExchange{
+     UserId:   "<user_id>",
+     Provider: &provider,
+}
+
+response, err := client.Link.Token(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 ```bash cURL
