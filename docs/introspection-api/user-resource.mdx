@@ -1,15 +1,14 @@
 ---
-title: UserResource Inspection Endpoint
+title: User Resources Introspection
 openapi: "/v2/introspect/resources"
 ---
 
 ## Overview
 
-Explore the functionality of the UserResource Inspection endpoint within the Introspection API to understand how your user data navigates through our system. 
-This endpoint offers detailed insights into your team's users, utilizing simple parameters for customization. 
-Its primary purpose is to facilitate self-debugging, empowering you to gain practical insights into the flow of your data. 
-Use this tool to efficiently examine and manage your user data analysis with ease.
+Diagnose user data unavailability through the User Resources Introspection API.
 
+This API offers detailed insights into all provider connections and collected resources of all users in your team,
+empowering you to perform an initial diagnosis of any user connection issue with ease.
 
 ## Query Parameters
 
@@ -21,7 +20,7 @@ Use this tool to efficiently examine and manage your user data analysis with eas
 The end-user can provide either a specific `user_id` or a `user_limit` value to retrieve information about their team's users.
 
 <Warning>
-Please note that user_limit is an upper_bound and the endpoint can return data for fewer users.
+Please note that `user_limit` is an upper bound and the endpoint can return data for fewer users.
 This would be the case if any of the top selected users had no available resource information.
 </Warning>
 
