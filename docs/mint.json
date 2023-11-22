@@ -60,6 +60,11 @@
       "url": "api-reference"
     },
     {
+      "name": "Introspection API",
+      "icon": "lightbulb",
+      "url": "introspection-api"
+    },
+    {
       "name": "Event Catalog",
       "icon": "rectangle-terminal",
       "url": "event-catalog"
@@ -136,6 +141,12 @@
         "wearables/guides/google_fit",
         "wearables/guides/my_fitness_pal",
         "wearables/guides/polar"
+      ]
+    },
+    {
+      "group": "Introspection API",
+      "pages": [
+        "introspection-api/user-resource"
       ]
     },
     {
