@@ -1,6 +1,6 @@
 ---
 title: User Resources Introspection
-openapi: "/v2/introspect/resources"
+
 ---
 
 ## Overview
@@ -103,3 +103,8 @@ curl --request GET \
       - `sent_count`: The count of data points sent.
 
 - `next`: A cursor for the next page of results, or `null` if there are no more pages.
+
+
+<Info>
+`oldest_data` refers to the oldest available data from data syncs that happened after the Introspection Api feature went live. (22.11.2023)
+</Info>
