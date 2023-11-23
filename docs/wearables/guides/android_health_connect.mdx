@@ -1,0 +1,153 @@
+---
+title: "Android Health Connect"
+---
+
+Android Health Connect is an SDK-based provider. This means that you access your user's wearable data by embedding either our [Native Android](/wearables/sdks/android), [Flutter](/wearables/sdks/flutter) or [React Native](/wearables/sdks/react_native) SDK into your own Android app. We have a guide for each of these SDKs that you should follow for more detail.
+
+# Configure your App Manifest
+
+Your app manifest (`AndroidManifest.xml`) must declare all the read permissions for all the data types you intend to sync.
+
+For example, if you intend to sync Blood Pressure records and Blood Glucose reocrds, your app manifest must contain the following
+`<uses-permission>` declarations:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- ... other declarations -->
+
+    <!-- BEGIN: Health Connect permissions -->
+    <uses-permission android:name="android.permission.health.READ_BLOOD_GLUCOSE" />
+    <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
+    <!-- END: Health Connect permissions -->
+</manifest>
+```
+
+| SDK `VitalResource` type | Read permissions required |
+| ------------------------ | ------------------------- |
+| `Profile`                | `android.permission.health.READ_HEIGHT` |
+| `Body`                   | `android.permission.health.READ_BODY_FAT`<br />`android.permission.health.READ_WEIGHT` |
+| `Workout`                | `android.permission.health.READ_EXERCISE`<br />`android.permission.health.READ_HEART_RATE`<br />`android.permission.health.READ_RESPIRATORY_RATE`<br />`android.permission.health.READ_DISTANCE`<br />`android.permission.health.READ_ACTIVE_CALORIES_BURNED`<br />`android.permission.health.READ_ELEVATION_GAINED`<br />`android.permission.health.READ_POWER`<br />`android.permission.health.READ_SPEED` |
+| `Activity`               | `android.permission.health.READ_ACTIVE_CALORIES_BURNED`<br />`android.permission.health.READ_BASAL_METABOLIC_RATE`<br />`android.permission.health.READ_TOTAL_CALORIES_BURNED`<br />`android.permission.health.READ_DISTANCE`<br />`android.permission.health.READ_STEPS`<br />`android.permission.health.READ_FLOORS_CLIMBED`<br />`android.permission.health.READ_DISTANCE`<br />`android.permission.health.READ_VO2_MAX` |
+| `Sleep`                  | `android.permission.health.READ_SLEEP`<br />`android.permission.health.READ_HEART_RATE`<br />`android.permission.health.READ_RESPIRATORY_RATE`<br />`android.permission.health.READ_HEART_RATE_VARIABILITY`<br />`android.permission.health.READ_OXYGEN_SATURATION`<br />`android.permission.health.READ_RESTING_HEART_RATE` |
+| `Glucose`                | `android.permission.health.READ_BLOOD_GLUCOSE` |
+| `BloodPressure`          | `android.permission.health.READ_BLOOD_PRESSURE` |
+| `HeartRate`              | `android.permission.health.READ_HEART_RATE` |
+| `Steps`                  | `android.permission.health.READ_STEPS` |
+| `ActiveEnergyBurned`     | `android.permission.health.READ_ACTIVE_CALORIES_BURNED` |
+| `BasalEnergyBurned`      | `android.permission.health.READ_ACTIVE_CALORIES_BURNED`<br />`android.permission.health.READ_BASAL_METABOLIC_RATE`<br />`android.permission.health.READ_TOTAL_CALORIES_BURNED` |
+| `Water`                  | `android.permission.health.READ_NUTRITION` |
+
+
+# Synchronization
+
+## Sync On App Launch
+
+Because Android Health Connect disallowes any data access when the app is in background, your app must be regularly opened by the end user
+for data to be synchronized. Hence, the Vital SDK can only provide Sync On App Launch as the default automatic behaviour.
+
+This Sync On App Launch behaviour occurs as part of your Vital Health SDK configuration call:
+
+* Native Android: `VitalHealthConnectManager.configureHealthConnectClient`
+* Flutter: `vital_health.configure`
+* React Native: `VitalHealth.configure`
+
+Before the call returns control to your application, the SDK checks whether that the Vital Core SDK has been signed in with a Vital user.
+If it does, it would automatically start an asynchronous job to synchronize all `VitalResource`s that are known to have permissions granted.
+
+## Ensure data sync can run to completion
+
+<Warning>This API is only accessible in Android native code, as it is not expressible through the restrictive React Native and Flutter interop.</Warning>
+
+Because Android Health Connect does not allow any data reads while the request is in the background, any on-going synchronization can be
+easily disrupted by the end user putting your app into background.
+
+To mitigate this, the Vital Health SDK can run the data synchronization process as a [Foreground Service](https://developer.android.com/guide/components/foreground-services),
+ensuring uninterrupted Health Connect read access until the synchronization ends (sans any intervention by the OS). You can opt-in to this mode
+by supplying a `SyncNotificationBuilder` when you configure the Vital Health SDK.
+
+Note that the `SyncNotificationBuilder` is required for opt-in, since the Android OS requires every Foreground Service to be accompanied by
+a user-visible notification.
+
+### Code example
+First, you can create a `SyncNotificationBuilder` class that returns a simple `Syncing {things}` message:
+```kotlin
+package io.tryvital.sample
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import androidx.core.app.NotificationCompat
+import io.tryvital.vitalhealthconnect.SyncNotificationBuilder
+import io.tryvital.vitalhealthconnect.model.VitalResource
+
+object VitalSyncNotificationBuilder: SyncNotificationBuilder {
+    override fun build(context: Context, resources: Set<VitalResource>): Notification {
+        return NotificationCompat.Builder(context, createChannel(context))
+            .setContentTitle("Vital Sync")
+            .setTicker("Vital Sync")
+            .setContentText("Syncing ${resources.map { it.toString() }.joinToString(", ")}")
+            .setOngoing(true)
+            .setSmallIcon(android.R.drawable.ic_popup_sync)
+            .build()
+    }
+
+    fun createChannel(context: Context): String {
+        val importance = NotificationManager.IMPORTANCE_MIN
+        val mChannel = NotificationChannel("VitalSyncNotificationBuilder", "Vital Sync", importance)
+        mChannel.description = "Notifies when Vital is syncing your data"
+        val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
+        return mChannel.id
+    }
+}
+```
+
+Then you can make use of the [App Startup](https://developer.android.com/topic/libraries/app-startup) framework to
+consistently initialize the Vital Health SDK with your `SyncNotificationBuilder` during app startup:
+
+<CodeGroup>
+```kotlin Initializer class
+package io.tryvital.sample
+
+import android.content.Context
+import androidx.startup.Initializer
+import io.tryvital.client.VitalClient
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+class VitalSDKInitializer : Initializer<VitalHealthConnectManager> {
+    override fun create(context: Context): VitalHealthConnectManager {
+        return VitalHealthConnectManager.getOrCreate(context).apply {
+            if (VitalClient.Status.SignedIn in VitalClient.status) {
+                configureHealthConnectClient(
+                    syncNotificationBuilder = VitalSyncNotificationBuilder
+                )
+            }
+        }
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>>> {
+        return emptyList()
+    }
+}
+```
+
+```xml Android Manifest
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" ...>
+    <application ...>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data  android:name="io.tryvital.sample.VitalSDKInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+</manifest>
+```
+</CodeGroup>
