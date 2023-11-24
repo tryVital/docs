@@ -60,11 +60,6 @@
       "url": "api-reference"
     },
     {
-      "name": "Introspection API",
-      "icon": "lightbulb",
-      "url": "introspection-api"
-    },
-    {
       "name": "Event Catalog",
       "icon": "rectangle-terminal",
       "url": "event-catalog"
@@ -147,7 +142,7 @@
     {
       "group": "Introspection API",
       "pages": [
-        "introspection-api/user-resource"
+        "wearables/introspection-api/user-resource"
       ]
     },
     {
