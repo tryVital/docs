@@ -30,8 +30,8 @@ patient_details = PatientDetails(
 
 patient_address = PatientAddressCompatible(
     receiver_name="John Doe",
-    street="Main St",
-    street_number="123",
+    first_line="Main St",
+    second_line="123",
     city="San Francisco",
     state="CA",
     zip="94111",
@@ -66,7 +66,7 @@ const request: RegisterTestkitRequest = {
     },
     patientAddress: {
         receiverName: "<receiver_name>",
-        street: "<street>",
+        FirstLine: "<street>",
         city: "<city>",
         state: "<state>",
         zip: "<zip>",
@@ -105,7 +105,7 @@ PatientDetails patientDetails = PatientDetails
 
 PatientAddressCompatible patientAddress = PatientAddressCompatible
         .builder()
-        .street("<street>")
+        .firstLine("<street>")
         .city("<city>")
         .state("<state>")
         .zip("<zip>")
@@ -144,7 +144,7 @@ request := &vital.RegisterTestkitRequest{
   },
   PatientAddress: &vital.PatientAddressCompatible{
     ReceiverName: vital.String("<receiver_name>"),
-    Street:       "<street>",
+    FirstLine:    "<street>",
     City:         "<city>",
     State:        "<state>",
     Zip:          "<zip_code>",

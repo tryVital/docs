@@ -290,6 +290,7 @@
         "api-reference/vitals/blood-pressure",
         "api-reference/vitals/caffeine",
         "api-reference/vitals/cholesterol",
+        "api-reference/vitals/electrocardiogram_voltage",
         "api-reference/vitals/glucose",
         "api-reference/vitals/heartrate",
         "api-reference/vitals/hrv",
@@ -298,8 +299,7 @@
         "api-reference/vitals/ige",
         "api-reference/vitals/mindfulness-minutes",
         "api-reference/vitals/respiratory-rate",
-        "api-reference/vitals/water",
-        "api-reference/vitals/electrocardiogram_voltage"
+        "api-reference/vitals/water"
       ]
     },
     {
