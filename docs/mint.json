@@ -61,7 +61,7 @@
     },
     {
       "name": "Event Catalog",
-      "icon": "rectangle-terminal",
+      "icon": "bolt",
       "url": "event-catalog"
     }
   ],
@@ -274,32 +274,27 @@
       "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
     },
     {
-      "group": "Activity Timeseries",
+      "group": "Timeseries",
       "pages": [
-        "api-reference/activity-timeseries/calories_active",
-        "api-reference/activity-timeseries/calories_basal",
-        "api-reference/activity-timeseries/distance",
-        "api-reference/activity-timeseries/floors_climbed",
-        "api-reference/activity-timeseries/steps"
-      ]
-    },
-    {
-      "group": "Vitals",
-      "pages": [
-        "api-reference/vitals/blood-oxygen",
-        "api-reference/vitals/blood-pressure",
-        "api-reference/vitals/caffeine",
-        "api-reference/vitals/cholesterol",
-        "api-reference/vitals/electrocardiogram_voltage",
-        "api-reference/vitals/glucose",
-        "api-reference/vitals/heartrate",
-        "api-reference/vitals/hrv",
-        "api-reference/vitals/hypnogram",
-        "api-reference/vitals/igg",
-        "api-reference/vitals/ige",
-        "api-reference/vitals/mindfulness-minutes",
-        "api-reference/vitals/respiratory-rate",
-        "api-reference/vitals/water"
+        "api-reference/timeseries/blood-oxygen",
+        "api-reference/timeseries/blood-pressure",
+        "api-reference/timeseries/caffeine",
+        "api-reference/timeseries/cholesterol",
+        "api-reference/timeseries/electrocardiogram_voltage",
+        "api-reference/timeseries/glucose",
+        "api-reference/timeseries/heartrate",
+        "api-reference/timeseries/hrv",
+        "api-reference/timeseries/hypnogram",
+        "api-reference/timeseries/igg",
+        "api-reference/timeseries/ige",
+        "api-reference/timeseries/mindfulness-minutes",
+        "api-reference/timeseries/respiratory-rate",
+        "api-reference/timeseries/water",
+        "api-reference/timeseries/calories_active",
+        "api-reference/timeseries/calories_basal",
+        "api-reference/timeseries/distance",
+        "api-reference/timeseries/floors_climbed",
+        "api-reference/timeseries/steps"
       ]
     },
     {
@@ -413,7 +408,7 @@
       ]
     },
     {
-      "group": "Vitals Timeseries",
+      "group": "timeseries Timeseries",
       "pages": [
         "event-catalog/daily.data.blood_pressure.created",
         "event-catalog/daily.data.blood_pressure.updated",
