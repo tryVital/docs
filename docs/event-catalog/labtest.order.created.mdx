@@ -39,9 +39,9 @@ Patient Address
 <Expandable title="PatientAddressCompatible" defaultOpen="true">
 <ResponseField name="receiver_name" type="string | null">
 </ResponseField>
-<ResponseField name="street" type="string" required="true">
+<ResponseField name="first_line" type="string" required="true">
 </ResponseField>
-<ResponseField name="street_number" type="string | null">
+<ResponseField name="second_line" type="string | null">
 </ResponseField>
 <ResponseField name="city" type="string" required="true">
 </ResponseField>
@@ -291,9 +291,9 @@ Shipping Details. For unregistered testkit orders.
 {
   "event_type": "labtest.order.created",
   "data": {
-    "id": "b316057a-11e6-472c-ab9d-1b6ef74a77a5",
-    "team_id": "e5c2a578-21cc-4950-af85-94fb152c7a33",
-    "user_id": "92e8cbd5-e342-4d9b-a806-048d18384f37",
+    "id": "fbdbb149-0003-4c6b-b86c-5361c674dc54",
+    "team_id": "adf1b64f-c225-463f-94f6-2d8c86c9a3f8",
+    "user_id": "104b51d3-f8ae-4c0e-8748-e2274cdb7cf0",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -334,7 +334,7 @@ Shipping Details. For unregistered testkit orders.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "5e9b206a-1253-4b9c-a0dc-dfb791a5a448",
+    "health_insurace_id": "b7fa8f9d-90a9-4572-8487-55dd3a5aa523",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
