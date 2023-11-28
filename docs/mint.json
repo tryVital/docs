@@ -385,7 +385,7 @@
       ]
     },
     {
-      "group": "Activity Timeseries",
+      "group": "Timeseries",
       "pages": [
         "event-catalog/daily.data.calories_active.created",
         "event-catalog/daily.data.calories_active.updated",
@@ -404,12 +404,7 @@
         "event-catalog/historical.data.distance.created",
         "event-catalog/historical.data.floors_climbed.created",
         "event-catalog/historical.data.steps.created",
-        "event-catalog/historical.data.vo2_max.created"
-      ]
-    },
-    {
-      "group": "timeseries Timeseries",
-      "pages": [
+        "event-catalog/historical.data.vo2_max.created",
         "event-catalog/daily.data.blood_pressure.created",
         "event-catalog/daily.data.blood_pressure.updated",
         "event-catalog/daily.data.blood_oxygen.created",
