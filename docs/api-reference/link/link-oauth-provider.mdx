@@ -15,6 +15,7 @@ curl --request GET \
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LinkTokenExchange, LinkGenerateOauthLinkRequest, OAuthProviders } from '@tryvital/vital-node/api';
 
 
 const client = new VitalClient({
@@ -22,32 +23,64 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.link.connectOauthProvider("<provider>")
+const request: LinkTokenExchange = {
+    userId: "<user_id>",
+}
+const tokenResponse = await client.link.token(request)
+
+const linkRequest: LinkGenerateOauthLinkRequest = {
+    vitalLinkToken: tokenResponse.linkToken,
+}
+
+const auth = await client.link.generateOauthLink(
+    OAuthProviders.<provider>,
+    linkRequest
+)
 ```
 
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
+from vital.types.o_auth_providers import OAuthProviders
 
 client = Vital(
   api_key="YOUR_API_KEY",
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.link.connect_oauth_provider(provider="<provider>")
+token_response = client.link.token(user_id="<user_id>")
+
+oauth = client.link.generate_oauth_link(
+  oauth_provider=OAuthProviders.<provider>,
+  vital_link_token=token_response.link_token,
+)
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
+import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.OAuthProviders;
 
 Vital vital = Vital.builder()
-      .apiKey("YOUR_API_KEY")
-      .environment(Environment.SANDBOX)
-      .build();
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
 
-var data = vital.link().connectOauthProvider("<provider");
+LinkTokenExchange request = LinkTokenExchange
+        .builder()
+        .userId("<user_id>")
+        .build();
+
+var token_response = vital.link().token(request);
+
+LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
+        .builder()
+        .vitalLinkToken(token_response.getLinkToken())
+        .build();
+
+var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
 ```
 
 ```go Go
@@ -62,12 +95,28 @@ client := vitalclient.NewClient(
   vitalclient.WithApiKey("<YOUR_API_KEY>"),
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
+provider := vital.ProvidersOura
+request := &vital.LinkTokenExchange{
+  UserId:   "<user_id>",
+  Provider: &provider,
+}
 
-response, err := client.Link.ConnectOauthProvider(context.TODO(), "<provider>")
+response, err := client.Link.Token(context.TODO(), request)
+
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n", response)
+
+generateLinkRequest := &vital.LinkGenerateOauthLinkRequest{
+  VitalLinkToken: response.LinkToken,
+}
+
+oauth, err := client.Link.GenerateOauthLink(context.TODO(), vital.OAuthProvidersOura, generateLinkRequest)
+
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", oauth)
 ```
 
 </RequestExample>

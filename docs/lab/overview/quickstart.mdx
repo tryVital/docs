@@ -279,8 +279,8 @@ data = client.lab_tests.create_order(
     ),
     patient_address=PatientAddressCompatible(
       receiver_name="john Doe",
-      street="123 Main St.",
-      street_number="Apt. 208",
+      first_line="123 Main St.",
+      second_line="Apt. 208",
       city="San Francisco",
       state="CA",
       zip="91189",
@@ -313,8 +313,8 @@ const request: CreateOrderRequestCompatible = {
     },
     patientAddress: {
       receiverName: "john Doe",
-      street: "123 Main St.",
-      streetNumber: "Apt. 208",
+      firstLine: "123 Main St.",
+      secondLine: "Apt. 208",
       city: "San Francisco",
       state: "CA",
       zip: "91189",
@@ -347,7 +347,7 @@ PatientDetails details = PatientDetails.builder()
 
 PatientAddressCompatible address = PatientAddressCompatible
       .builder()
-      .street("123 Main St.")
+      .firstLine("123 Main St.")
       .city("San Francisco")
       .state("CA")
       .zip("91189")
@@ -390,8 +390,8 @@ details := &vital.PatientDetails{
 
 address := &vital.PatientAddressCompatible{
    ReceiverName: vital.String("john Doe"),
-   Street:       "123 Main St.",
-   StreetNumber: vital.String("Apt. 208"),
+   FirstLine:    "123 Main St.",
+   SecondLine:   vital.String("Apt. 208"),
    City:         "San Francisco",
    State:        "CA",
    Zip:          "91189",
