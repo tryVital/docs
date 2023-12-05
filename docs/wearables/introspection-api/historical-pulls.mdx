@@ -1,0 +1,132 @@
+---
+title: Historical Pull Introspection
+
+---
+
+## Overview
+
+Diagnose user historical data unavailability through the User Resources Introspection API.
+
+This API offers detailed insights into all provider connections and collected historical resources of all users in your team,
+empowering you to perform an initial diagnosis of any user connection issue with ease.
+
+## Query Parameters
+
+- `user_id` (optional): Specifies one specific user ID.
+- `cursor` (optional): Cursor provided by the previous page.
+- `user_limit` (optional): Maximum number of users to return, defaults to and capped at 50.
+- `provider` (optional): Specific provider slug
+
+The end-user can provide either a specific `user_id` or a `user_limit` value to retrieve information about their team's users.
+
+<Warning>
+Please note that `user_limit` is an upper bound and the endpoint can return data for fewer users.
+This would be the case if any of the top selected users had no available resource information.
+</Warning>
+
+## Example Request
+
+<SnippetGroup>
+
+```bash Fetching information about user's resources
+curl --request GET \
+     --url {{BASE_URL}}/v2/introspect/historical_pull \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: <YOUR_API_KEY>' \
+     --data '{"user_id": "<user_id>"}'
+```
+
+</SnippetGroup>
+
+## Example Response
+
+```json
+{
+    "data": [
+        {
+            "user_id": "7aec8422-8174-4464-a4b2-b04c5939be0d",
+            "provider": {
+                "omron": {
+                    "pulled": {
+                        "distance": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 0,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "353965b18a72be648a030339f57451c2"
+                        },
+                        "steps": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 0,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "353965b18a72be648a030339f57451c2"
+                        },
+                        "activity": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 0,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "353965b18a72be648a030339f57451c2"
+                        },
+                        "heartrate": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 1,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "c2fff5e3d90310c5326725ffc301ec90"
+                        },
+                        "blood_pressure": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 1,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "c2fff5e3d90310c5326725ffc301ec90"
+                        },
+                        "weight": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 1,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "11a19cb5b05fb734f78deefe11100bef"
+                        },
+                        "fat": {
+                            "status": "success",
+                            "range_start": "2023-11-05T00:00:00+00:00",
+                            "range_end": "2023-12-05T00:00:00+00:00",
+                            "days_with_data": 1,
+                            "release": "0.0.0-dev.dea056a",
+                            "trace_id": "11a19cb5b05fb734f78deefe11100bef"
+                        }
+                    },
+                    "not_pulled": []
+                },
+            }
+        }
+    ],
+    "next": null
+}
+```
+
+## Response Structure
+
+- `data`: An array containing user information, including data from different providers.
+  - `user_id`: The unique identifier of the user.
+  - `provider`: Object containing provider-specific data.
+    - `<provider_slug>`: Provider-specific data structure.
+      - `pulled`: Json containing information about pulled resources
+        - `status`: Information about the status of historical pull. 
+        - `range_start`: Timestamp of the beginning of the requested range
+        - `range_end`: Timestamp of the end of the requested range
+        - `days_with_data`: Number of days within this range that contained data
+        - `release`: Release version of Vital Api
+        - `trace_id`: Unique identifier, that would allow a Vital engineer to investigate a potential failed pull
+     - `not_pulled`: List of resources that were not pulled
+
+- `next`: A cursor for the next page of results, or `null` if there are no more pages.
