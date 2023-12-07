@@ -120,12 +120,12 @@ curl --request GET \
   - `user_id`: The unique identifier of the user.
   - `provider`: Object containing provider-specific data.
     - `<provider_slug>`: Provider-specific data structure.
-      - `pulled`: Json containing information about pulled resources
+      - `pulled`: JSON containing information about pulled resources
         - `status`: Information about the status of historical pull. 
         - `range_start`: Timestamp of the beginning of the requested range
         - `range_end`: Timestamp of the end of the requested range
         - `days_with_data`: Number of days within this range that contained data
-        - `release`: Release version of Vital Api
+        - `release`: Release version of Vital API
         - `trace_id`: Unique identifier, that would allow a Vital engineer to investigate a potential failed pull
      - `not_pulled`: List of resources that were not pulled
 
