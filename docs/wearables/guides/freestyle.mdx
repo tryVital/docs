@@ -83,11 +83,35 @@ To connect your user to Vital via the Widget you can follow the guide [here](/we
 <CodeGroup>
 
 ```python Python
-link_token = client.Link.create(user_id)
+token_response = client.link.token(user_id="<user_id>")
 ```
 
-```javascript Javascript
-const { link_token } = await client.Link.create(userId);
+```javascript Node
+const request: LinkTokenExchange = {
+    userId: "<user_id>",
+}
+const data = await client.link.token(request)
+```
+
+```java Java
+LinkTokenExchange request = LinkTokenExchange
+     .builder()
+     .userId("<user_id>")
+     .build();
+
+var tokenResponse = vital.link().token(request);
+```
+
+```go Go
+request := &vital.LinkTokenExchange{
+     UserId:   "<user_id>",
+}
+
+tokenResponse, err := client.Link.Token(context.TODO(), request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </CodeGroup>
@@ -99,18 +123,46 @@ const { link_token } = await client.Link.create(userId);
 <CodeGroup>
 
 ```python Python
-client.Link.email_provider(
-   link_token, "freestyle_libre", email, region
+linkResponse = client.link.connect_email_auth_provider(
+  provider="freestyle_libre",
+  email="<email>",
+  vital_link_token=token_response.link_token
 )
 ```
 
-```javascript Javascript
-await client.Link.connectEmailProvider(
-  link_token,
-  "freestyle_libre",
-  email,
-  region
-);
+```javascript Node
+const linkRequest: EmailProviderAuthLink = {
+    vitalLinkToken: tokenResponse.linkToken,
+    email: "<email>"
+}
+
+const connectEmailResponse = await client.link.connectEmailAuthProvider(
+    "freestyle_libre",
+    linkRequest
+)
+```
+
+```java Java
+EmailProviderAuthLink request = EmailProviderAuthLink
+        .builder()
+        .vitalLinkToken(tokenResponse.getLinkToken())
+        .email("<email>")
+        .build();
+
+var data = vital.link().connectEmailAuthProvider("<provider", request);
+```
+
+```go Go
+emailAuthRequest := &vital.EmailProviderAuthLink{
+  VitalLinkToken: tokenResponse.LinkToken,
+  Email:          "<email>",
+}
+
+emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre", emailAuthRequest)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", emailAuth)
 ```
 
 </CodeGroup>
