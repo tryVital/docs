@@ -24,10 +24,9 @@ The Vital Mobile SDK user session lifecycle is expected to match your own user s
 
 1. When your app has successfully authenticated the user with your backend service, it should begin the process to sign-in with the Vital Mobile SDK.
 
-2. When your user has requested to sign out from your app, it should instruct the Vital Mobile SDK to reset its state.
+2. When your user has requested to sign out from your app, it instrucs the Vital Mobile SDK to reset its state.
 
-Your mobile apps typically only need to request the Vital Sign-In Token once through your backend service, and use the obtained
-Vital Sign-In Token sign-in with the Vital Mobile SDK. Once signed-in, Vital Mobile SDK maintains its user session in persistence storage.
+Your mobile apps typically only need to request the Vital Sign-In Token once through your backend service, and use the obtained Vital's `sign_in_token` with the Vital Mobile SDK. Once signed-in, the Vital Mobile SDK maintains its user session in persistence storage.
 
 
 <Info>Avoid requesting a Vital Sign-In Token through your backend every time the app relaunches.</Info>
@@ -36,23 +35,28 @@ Vital Sign-In Token sign-in with the Vital Mobile SDK. Once signed-in, Vital Mob
 
 <Steps>
   <Step title="Your app -> Your backend">
-    After your app has authenticated with your backend service, your client app detects that Vital Mobile SDK is in signed-out state.
-    Your app makes a `getVitalSignInToken` API call to your backend service using your own API authentication method.
+    Your app starts by authenticating with your backend. There are many ways to go about this process, either your own email/password method, or some OAuth Social login (e.g. Facebook, Apple, etc). Once your backend successfully authenticates your app, you should make a second request to authenticate the app's user against Vital - this will in turn allow you to configure the SDK. 
   </Step>
-  <Step title="Your backend -> Vital API">
-    Your backend service receives and validates the request, and forwards the request to the Vital [Create Sign-In Token API](/api-reference/user/create-sign-in-token) using your server-side Vital API Key secret.
+  <Step title="Your backend <-> Vital API">
+    Your backend service receives and validates the request. It then calls the Vital [Create Sign-In Token API](/api-reference/user/create-sign-in-token) using your server-side Vital API Key secret.
 
     ```bash
     curl --request POST
       --url '{{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token'
       --header 'X-Vital-API-Key: <YOUR-API-KEY>'
     ```
-  </Step>
-  <Step title="Vital API -> Your backend">
-    Vital API creates a new Vital Sign-In Token, and returns it to your backend service. Your backend service includes the Vital Sign-In Token as part of the `getVitalSignInToken` API response.
+
+    You then send back the response back to your app's user:
+
+    ```json
+    {
+      "user_id": "e209947b-323e-4108-8e18-1518b80da0bd",
+      "sign_in_token": "XYZ=="
+    }
+    ```
   </Step>
   <Step title="Your backend -> Your app">
-    Your app receives the API response and the Vital Sign-In Token. It then signs in with the Vital Mobile SDK using said token.
+    Your app receives the API response and the Vital Sign-In Token. It then signs in with the Vital Mobile SDK using the `sign_in_token`.
 
     <CodeGroup>
       ```swift Native iOS
