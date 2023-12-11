@@ -141,7 +141,8 @@
     {
       "group": "Introspection API",
       "pages": [
-        "wearables/introspection-api/user-resource"
+        "wearables/introspection-api/user-resource",
+        "wearables/introspection-api/historical-pulls"
       ]
     },
     {

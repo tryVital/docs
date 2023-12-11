@@ -73,11 +73,11 @@ LinkTokenExchange request = LinkTokenExchange
         .userId("<user_id>")
         .build();
 
-var token_response = vital.link().token(request);
+var tokenResponse = vital.link().token(request);
 
 LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
         .builder()
-        .vitalLinkToken(token_response.getLinkToken())
+        .vitalLinkToken(tokenResponse.getLinkToken())
         .build();
 
 var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
