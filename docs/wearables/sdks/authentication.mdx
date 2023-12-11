@@ -46,7 +46,7 @@ Your mobile apps typically only need to request the Vital Sign-In Token once thr
       --header 'X-Vital-API-Key: <YOUR-API-KEY>'
     ```
 
-    You then send back the response back to your app's user:
+    You then send the response back to your app:
 
     ```json
     {
@@ -56,13 +56,13 @@ Your mobile apps typically only need to request the Vital Sign-In Token once thr
     ```
   </Step>
   <Step title="Your backend -> Your app">
-    Your app receives the API response and the Vital Sign-In Token. It then signs in with the Vital Mobile SDK using the `sign_in_token`.
+    Your app receives the API response and Vital's `sign_in_token`. Finally, it signs in with the Vital Mobile SDK using the `signIn` method:
 
     <CodeGroup>
       ```swift Native iOS
       import VitalCore
 
-      let response: MyAPIResponse
+      let response: MyAPIResponse = // ....
 
       do {
         try await VitalClient.signIn(withToken: response.signInToken)
