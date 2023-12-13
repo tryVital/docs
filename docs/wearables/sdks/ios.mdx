@@ -28,6 +28,16 @@ We use SPM (Swift Package Manager) to manage dependencies. You can add `https://
 
 ## 3. Initial Setup
 
+<Warning>
+
+We strongly advise using the Vital Sign-In token approach described [here](/wearables/sdks/authentication#vital-sign-in-token).
+
+API Key is discouraged for production mobile apps, since it would be distributed as cleartext. API Key support is intended only for customer early evaluation in Sandbox.
+
+Use Vital Sign-In Token whenever possible.
+
+</Warning>
+
 To use our SDK, start by setting up `VitalClient`:
 
 ```swift

@@ -64,6 +64,17 @@ Please read the [Android SDK instructions on Health Connect](/wearables/sdks/and
 
 #### 3. Setup flutter
 
+<Warning>
+
+We strongly advise using the Vital Sign-In token approach described [here](/wearables/sdks/authentication#vital-sign-in-token).
+
+API Key is discouraged for production mobile apps, since it would be distributed as cleartext. API Key support is intended only for customer early evaluation in Sandbox.
+
+Use Vital Sign-In Token whenever possible.
+
+</Warning>
+
+
 First create your client:
 
 ```dart

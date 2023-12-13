@@ -42,6 +42,17 @@ pod install
 
 ## 4. Configure your dependencies
 
+<Warning>
+
+We strongly advise using the Vital Sign-In token approach described [here](/wearables/sdks/authentication#vital-sign-in-token).
+
+API Key is discouraged for production mobile apps, since it would be distributed as cleartext. API Key support is intended only for customer early evaluation in Sandbox.
+
+Use Vital Sign-In Token whenever possible.
+
+</Warning>
+
+
 You start by setting up the Core SDK. You need to configure it with your API key and the environment you want to use. You can find your API key in the Vital Dashboard. You can also enable logs by setting `logsEnabled` to true.
 You will need to chain the configuration according to the below order.
 
