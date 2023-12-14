@@ -184,6 +184,7 @@
       "group": "At-Home Phlebotomy",
       "pages": [
         "lab/at-home-phlebotomy/overview",
+        "lab/at-home-phlebotomy/service-tiers",
         "lab/at-home-phlebotomy/order-appointment-lifecycle",
         "lab/at-home-phlebotomy/webhooks",
         "lab/at-home-phlebotomy/communications"
@@ -317,6 +318,7 @@
       "pages": [
         "api-reference/lab-testing-at-home-phlebotomy/appointment-availability",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-booking",
+        "api-reference/lab-testing-at-home-phlebotomy/appointment-request",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-rescheduling",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-cancelling",
         "api-reference/lab-testing-at-home-phlebotomy/appointment-cancellation-reasons",
