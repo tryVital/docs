@@ -39,13 +39,13 @@ Constant: `labtest.appointment.update`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="start_at" type="string" required="true">
+<ResponseField name="start_at" type="string | null">
 Time is in UTC
 </ResponseField>
-<ResponseField name="end_at" type="string" required="true">
+<ResponseField name="end_at" type="string | null">
 Time is in UTC
 </ResponseField>
-<ResponseField name="iana_timezone" type="string" required="true">
+<ResponseField name="iana_timezone" type="string | null">
 </ResponseField>
 <ResponseField name="type" type="AppointmentType" required="true">
 <Expandable title="AppointmentType" defaultOpen="true">
@@ -89,9 +89,9 @@ Time is in UTC
 {
   "event_type": "labtest.appointment.update",
   "data": {
-    "id": "63dbdecc-395c-49a3-ba61-43474fde9e81",
-    "user_id": "80b1ea20-f976-445c-8970-248c1c0a3836",
-    "order_id": "3d734e75-8796-4a9e-8e49-948075b02c17",
+    "id": "14180467-237e-4c55-af17-6e9352cd0ddb",
+    "user_id": "0e94b7af-c9ec-463c-a585-cf6bc608d6ca",
+    "order_id": "e25ed49f-b309-4d9f-8344-33529a9b19f0",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",
