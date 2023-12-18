@@ -86,10 +86,20 @@ fmt.Printf("Received data %s\n", response)
 
 ```json Response
 {
-    "zip_code": "85004",
-    "phlebotomy": {
-        "is_served": true
-    }
+  "zip_code": "85004",
+  "phlebotomy": {
+    "is_served": true,
+    "providers": [
+        {
+          "name": "getlabs",
+          "tier": ["appointment-ready"]
+        },
+        {
+          "name": "phlebfinders",
+          "tier": ["appointment-request"]
+        }
+    ]
+  }
 }
 ```
 
