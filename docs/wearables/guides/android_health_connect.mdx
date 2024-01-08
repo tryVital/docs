@@ -6,7 +6,50 @@ Android Health Connect is an SDK-based provider. This means that you access your
 
 # Configure your App Manifest
 
-Your app manifest (`AndroidManifest.xml`) must declare all the read permissions for all the data types you intend to sync.
+## Health Connect privacy dialogue
+
+<Warning>Missing manifest declarations may result in Health Connect ignoring your app.</Warning>
+
+Check [the Health Connect Getting Started guide](https://developer.android.com/health-and-fitness/guides/health-connect/develop/get-started#show-privacy-policy) for the official requirements.
+
+Here is a minimum declaration example:
+
+```xml
+<manifest ...>
+    <application ...>
+        <!-- BEGIN: Mandatory for Health Connect permission flow (Android 13 or below) -->
+        <!-- Must either be your MainActivity, or a separate Activity; cannot be an activity-alias. -->
+        <activity android:name=".MainActivity" ...>
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+        <!-- END -->
+
+        <!-- BEGIN: Mandatory for Health Connect permission flow (Android 14 or above) -->
+        <!-- Can be an activity or an activity-alias. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".MainActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
+        <!-- END -->
+    </application>
+
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+</manifest>
+```
+
+## Health Connect permissions
+
+Your app manifest (`AndroidManifest.xml`) must declare all the read or write permissions for all the data types you intend to sync.
 
 For example, if you intend to sync Blood Pressure records and Blood Glucose reocrds, your app manifest must contain the following
 `<uses-permission>` declarations:
@@ -39,6 +82,77 @@ For example, if you intend to sync Blood Pressure records and Blood Glucose reoc
 | `BasalEnergyBurned`      | `android.permission.health.READ_ACTIVE_CALORIES_BURNED`<br />`android.permission.health.READ_BASAL_METABOLIC_RATE`<br />`android.permission.health.READ_TOTAL_CALORIES_BURNED` |
 | `Water`                  | `android.permission.health.READ_NUTRITION` |
 
+
+## Foreground Service permissions
+
+If you intend to enable the "Ensure data sync can run to completion" feature as mentioned below, you must make the following Foreground Service declarations in your App Manifest:
+
+```xml
+<manifest ...>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <application ...>
+        <!-- BEGIN: Mandatory for running Health Connect as foreground service on Android 14+ -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="shortService"
+            android:exported="false">
+        </service>
+        <!-- END: Mandatory for running Health Connect as foreground service on Android 14+ -->
+    </application>
+</manifest>
+```
+
+# Prepare your app architecture
+
+<Warning>Incompliance to the guidelines below may result in Health Connect permission flow failing to launch on specific Android OS versions.</Warning>
+
+## Native Android
+
+When requesting permission using the `ActivityResultContract` created by Vital Health `createPermissionRequestContract()`, you must launch
+the contract using AndroidX Activity Result API.
+
+Attempts to launch the contract manually via the legacy `Activity.startActivityForResult` API would result in an `android.content.ActivityNotFoundException`
+exception on Android 14 and later.
+
+## React Native
+
+The `MainActivity` of your Android host app project must be augmented with either of the two options below:
+
+1. Subclassing `VitalHealthReactActivity` provided by the Vital Health SDK `com.vitalhealthreactnative` package, instead of the default `ReactActivity`.
+
+2. Overriding `onRequestPermissionsResult(...)` so as to manually propagate permission request results to the Vital Health SDK.
+
+```kotlin
+// MainActivity in your host app project
+open class MainActivity: ReactActivity() {
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    // Propagate permission flow results to Vital Health SDK.
+    VitalHealthReactNativeModule.onRequestPermissionsResult(
+      this.reactInstanceManager,
+      requestCode,
+      permissions,
+      grantResults
+    )
+  }
+}
+```
+
+The argumentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
+which breaks the AndroidX Activity Result API required by Android Health Connect.
+
+## Flutter
+
+The `MainActivity` of your Android host app project must subclass `FlutterFragmentActivity` instead of `FlutterActivity`.
+
+This is because `FlutterFragmentActivity` is AndroidX compatible and therefore supports the Activity Result API as required by
+Android Health Connect, whilst `FlutterActivity` is not.
 
 # Synchronization
 
