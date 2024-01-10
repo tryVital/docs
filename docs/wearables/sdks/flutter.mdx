@@ -25,24 +25,7 @@ The Vital SDK is split into three main components: `vital_core`, `vital_health` 
 
 ## 2. Vital Core
 
-Initialise client with region, environment and api key
-
-```dart
-final client = VitalClient()
-  ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'sk_eu_...');
-```
-
-Query users:
-
-```dart
-final Response<List<User>> usersResponse = client.userService.getAll();
-```
-
-Link data provider:
-
-```dart
-client.linkProvider(user, 'strava','vitalexample: //callback');
-```
+Check out the [SDK Authentication guide](https://docs.tryvital.io/wearables/sdks/authentication) on the available SDK authentication schemes, and how to authenticate with the Vital Mobile SDK.
 
 ## 3. Vital Health
 
@@ -54,15 +37,15 @@ client.linkProvider(user, 'strava','vitalexample: //callback');
 
 ### 1. Getting Started
 
-#### 1. Setup ios
+#### 1. Setup iOS
 
 Please read the [iOS SDK instructions on Apple HealthKit](wearables/sdks/ios#6-vitalhealthkit). You need to edit your Capababilities and the `Info.plist` file.
 
-#### 2. Setup android
+#### 2. Setup Android
 
 Please read the [Android SDK instructions on Health Connect](/wearables/sdks/android#vitalhealthconnect-installation). You need to edit your `AndroidManifest.xml` and add an xml with your requested health permssions.
 
-#### 3. Setup flutter
+#### 3. Setup Flutter
 
 <Warning>
 
@@ -74,54 +57,60 @@ Use Vital Sign-In Token whenever possible.
 
 </Warning>
 
+Configure the SDK either by:
 
-First create your client:
+1. Signing in with a Vital Sign-In Token; or
+2. (Non-production only) Supplying a Vital API Key **and** a target User ID.
 
-```dart
-final HealthServices healthServices = HealthServices(
-  apiKey: apiKey,
-  region: region,
-  environment: Environment.sandbox,
-)
+Check out the [SDK Authentication guide](https://docs.tryvital.io/wearables/sdks/authentication) on the available SDK authentication schemes, and how to authenticate with the Vital Mobile SDK.
+
+<CodeGroup>
+```dart Vital Sign-In Token
+import 'package:vital_core/vital_core.dart' as vital_core;
+
+MyAPIResponse response;
+
+try {
+  await vital_core.signIn(response.signInToken)
+
+  Fimble.i("Signed in with Vital successfully")
+} catch (error) {
+  Fimble.e("Error signing in with Vital", error)
+}
 ```
+```dart Vital API Key
+import 'package:vital_core/vital_core.dart' as vital_core;
 
-You can then configure it:
+try {
+  await vital_core.configure(apiKey, environment, region);
+  await vital_core.setUserId(userId);
 
-```dart
-await healthServices.configureClient();
-
-await healthServices.configureHealth(
-      config: const HealthConfig(
-        iosConfig: IosHealthConfig(
-          backgroundDeliveryEnabled: true,
-        ),
-      ),
-    );
+  Fimble.i("Signed in with Vital successfully")
+} catch (error) {
+  Fimble.e("Error signing in with Vital", error)
+}
 ```
+</CodeGroup>
 
-And set the `userId`:
 
-```dart
-await client.healthServices.setUserId('eba7c0a2-dc01-49f5-a361-...);
-```
 
 ### 2. Using the SDK
 
 You need to ask for permissions before getting data. For example the following allows you to read and write water:
 
 ```dart
-final List<HealthResource> readResources = [HealthResource.water];
-final List<HealthResourceWrite> writeResources = [
-    HealthResourceWrite.water,
-  ];
+import 'package:vital_core/vital_health.dart' as vital_health;
 
-client.healthServices.ask(readResources, writeResources);
+final List<vital_health.VitalResource> readResources = ;
+await vital_health.askForPermission(readResources, []);
 ```
 
 And syncing data:
 
 ```dart
-client.healthServices.syncData();
+import 'package:vital_core/vital_health.dart' as vital_health;
+
+await vital_health.syncData();
 ```
 
 <Tip>
@@ -132,7 +121,9 @@ client.healthServices.syncData();
 You can also write data:
 
 ```dart
-client.healthServices.writeHealthData(HealthResourceWrite.water, startDate, endDate, 1000);
+import 'package:vital_core/vital_health.dart' as vital_health;
+
+await vital_health.writeHealthData(vital_health.HealthResourceWrite.water, startDate, endDate, 1000);
 ```
 
 <Tip>
@@ -140,46 +131,17 @@ client.healthServices.writeHealthData(HealthResourceWrite.water, startDate, endD
   `health_resource.dart` file.
 </Tip>
 
-Finally, observe the status stream, so you can react to changes:
+Finally, you can observe the `syncStatus` stream to get updates about the Vital Health SDK synchronization state.
 
 ```dart
-Stream<SyncStatus> status = client.healthServices.status;
+import 'package:vital_core/vital_health.dart' as vital_health;
+
+Stream<SyncStatus> status = vital_health.syncStatus;
 ```
 
-### 3. Background Delivery
+### 3. iOS HealthKit Background Delivery
 
-Setting up background syncing in Flutter follows the [same approach as native iOS](/wearables/sdks/ios/). You need to configure `VitalHealthKit` in the AppDelegate, otherwise background syncing won't work.
-
-You can do so by calling `VitalHealthKitClient.configure` inside `application:didFinishLaunchingWithOptions`:
-
-```swift
-import UIKit
-import Flutter
-import VitalHealthKit
-
-@UIApplicationMain
-@objc class AppDelegate: FlutterAppDelegate {
-  override func application(
-    _ application: UIApplication,
-    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-  ) -> Bool {
-
-      VitalHealthKitClient.configure(
-      .init(
-          mode: ..., // automatic by default
-          backgroundDeliveryEnabled: ..., // false by default
-          logsEnabled: ..., // false by default
-          numberOfDaysToBackFill: ..., // 90 by default
-      )
-    )
-
-    GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
-}
-```
-
-You can also check our [Flutter example](https://github.com/tryVital/vital-flutter/blob/main/example/ios/Runner/AppDelegate.swift#L11C1-L12C1). In our example, we use the `VitalHealthKitClient.automaticConfiguration()` variant. This version assumes that `VitalHealthKitClient.configure` was called at some point in the past (e.g. when the user was logged in). For example,`automaticConfiguration` is helpful when you are doing A/B testing and you only want to enroll certain users with Apple HealthKit.
+Refer to the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple_health_kit) on how to enable iOS HealthKit Background Delivery.
 
 ## 4. Vital Devices
 
@@ -243,46 +205,3 @@ Depending on the type of device you are connecting to, you will have to call dif
 
 After you have received samples depending on the type of device you might need to star scanning again to receive the
 next set of samples.
-
-# 5. Migrate from 0.3._ and 0.4._ to 0.5.\*
-
-Our original package **vital_flutter** is now separated into 3 packages: **vital_core**, **vital_health** and **vital_devices**.
-
-- **vital_core** contains the Vital Client
-- **vital_health** contains the Apple Health sync
-- **vital_devices** contains the sdk for bluetooth devices
-
-**vital_health** and **vital_devices** are dependent **vital_core.**
-
-To migrate you will need to add the new plugins you need in your **pubspec.yaml** file:
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  vital_core: ^latest_version
-  vital_health: ^latest_version
-  vital_devices: ^latest_version
-```
-
-All the imports have to be updated too. As an example:
-`import 'package:vital_flutter/services/data/user.dart';`
-
-needs to be changes
-`import 'package:vital_core/services/data/user.dart';`
-
-You can get all the classes by using:
-
-```dart
-import 'package:vital_core/vital_core.dart';
-import 'package:vital_devices/vital_devices.dart';
-import 'package:vital_health/vital_health.dart';
-```
-
-Your IDE should offer the correct import after you have updated your **pubspec.yaml**
-
-### Important changes
-
-- `DeviceManager` was moved out of the `VitalClient` to the **vital_devices** package
-- `HealthkitServices` is now in the **vital_health** package
-- `VitalClient` is now in **vital_core** package
