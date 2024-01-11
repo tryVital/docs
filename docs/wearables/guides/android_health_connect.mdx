@@ -4,9 +4,9 @@ title: "Android Health Connect"
 
 Android Health Connect is an SDK-based provider. This means that you access your user's wearable data by embedding either our [Native Android](/wearables/sdks/android), [Flutter](/wearables/sdks/flutter) or [React Native](/wearables/sdks/react_native) SDK into your own Android app. We have a guide for each of these SDKs that you should follow for more detail.
 
-# Configure your App Manifest
+## Configure your App Manifest
 
-## Health Connect privacy dialogue
+### Health Connect privacy dialogue
 
 <Warning>Missing manifest declarations may result in Health Connect ignoring your app.</Warning>
 
@@ -47,7 +47,7 @@ Here is a minimum declaration example:
 </manifest>
 ```
 
-## Health Connect permissions
+### Health Connect permissions
 
 Your app manifest (`AndroidManifest.xml`) must declare all the read or write permissions for all the data types you intend to sync.
 
@@ -83,7 +83,7 @@ For example, if you intend to sync Blood Pressure records and Blood Glucose reoc
 | `Water`                  | `android.permission.health.READ_NUTRITION` |
 
 
-## Foreground Service permissions
+### Foreground Service permissions
 
 If you intend to enable the "Ensure data sync can run to completion" feature as mentioned below, you must make the following Foreground Service declarations in your App Manifest:
 
@@ -103,11 +103,11 @@ If you intend to enable the "Ensure data sync can run to completion" feature as 
 </manifest>
 ```
 
-# Prepare your app architecture
+## Prepare your app architecture
 
 <Warning>Incompliance to the guidelines below may result in Health Connect permission flow failing to launch on specific Android OS versions.</Warning>
 
-## Native Android
+### Native Android
 
 When requesting permission using the `ActivityResultContract` created by Vital Health `createPermissionRequestContract()`, you must launch
 the contract using AndroidX Activity Result API.
@@ -115,7 +115,7 @@ the contract using AndroidX Activity Result API.
 Attempts to launch the contract manually via the legacy `Activity.startActivityForResult` API would result in an `android.content.ActivityNotFoundException`
 exception on Android 14 and later.
 
-## React Native
+### React Native
 
 The `MainActivity` of your Android host app project must be augmented with either of the two options below:
 
@@ -147,16 +147,16 @@ open class MainActivity: ReactActivity() {
 The argumentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
 which breaks the AndroidX Activity Result API required by Android Health Connect.
 
-## Flutter
+### Flutter
 
 The `MainActivity` of your Android host app project must subclass `FlutterFragmentActivity` instead of `FlutterActivity`.
 
 This is because `FlutterFragmentActivity` is AndroidX compatible and therefore supports the Activity Result API as required by
 Android Health Connect, whilst `FlutterActivity` is not.
 
-# Synchronization
+## Synchronization
 
-## Sync On App Launch
+### Sync On App Launch
 
 Because Android Health Connect disallowes any data access when the app is in background, your app must be regularly opened by the end user
 for data to be synchronized. Hence, the Vital SDK can only provide Sync On App Launch as the default automatic behaviour.
@@ -170,7 +170,7 @@ This Sync On App Launch behaviour occurs as part of your Vital Health SDK config
 Before the call returns control to your application, the SDK checks whether that the Vital Core SDK has been signed in with a Vital user.
 If it does, it would automatically start an asynchronous job to synchronize all `VitalResource`s that are known to have permissions granted.
 
-## Ensure data sync can run to completion
+### Ensure data sync can run to completion
 
 <Warning>This API is only accessible in Android native code, as it is not expressible through the restrictive React Native and Flutter interop.</Warning>
 
@@ -184,7 +184,7 @@ by supplying a `SyncNotificationBuilder` when you configure the Vital Health SDK
 Note that the `SyncNotificationBuilder` is required for opt-in, since the Android OS requires every Foreground Service to be accompanied by
 a user-visible notification.
 
-### Code example
+#### Code example
 First, you can create a `SyncNotificationBuilder` class that returns a simple `Syncing {things}` message:
 ```kotlin
 package io.tryvital.sample
