@@ -101,11 +101,15 @@ You need to ask for permissions before getting data. For example the following a
 ```dart
 import 'package:vital_core/vital_health.dart' as vital_health;
 
-final List<vital_health.VitalResource> readResources = ;
+final List<vital_health.HealthResource> readResources = [
+  vital_health.HealthResource.activity,
+  vital_health.HealthResource.sleep,
+  vital_health.HealthResource.workout,
+];
 await vital_health.askForPermission(readResources, []);
 ```
 
-And syncing data:
+And manually syncing data:
 
 ```dart
 import 'package:vital_core/vital_health.dart' as vital_health;
@@ -114,8 +118,13 @@ await vital_health.syncData();
 ```
 
 <Tip>
-  Syncing starts automatically without calling this method after the health
-  client initialised and the user id is set.
+  On iOS, syncing is onfigured automatically be triggered as soon as Apple HealthKit notifies
+  the Vital Mobile SDK of new data. If you have configured [iOS HealthKit Background Delivery](https://docs.tryvital.io/wearables/guides/apple_health_kit)
+  as well, syncing would continue in background without any user interaction.
+
+  On Android, syncing [needs to be manually initiated](https://docs.tryvital.io/wearables/guides/android_health_connect#sync-on-app-launch). Android
+  Health Connect also does not support syncing in background, since it only allows wearable data to be read whilst the app is in the foregorund (i.e.,
+  actively being used by the end user).
 </Tip>
 
 You can also write data:
