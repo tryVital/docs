@@ -99,7 +99,7 @@ try {
 You need to ask for permissions before getting data. For example the following allows you to read and write water:
 
 ```dart
-import 'package:vital_core/vital_health.dart' as vital_health;
+import 'package:vital_health/vital_health.dart' as vital_health;
 
 final List<vital_health.HealthResource> readResources = [
   vital_health.HealthResource.activity,
@@ -112,7 +112,7 @@ await vital_health.askForPermission(readResources, []);
 And manually syncing data:
 
 ```dart
-import 'package:vital_core/vital_health.dart' as vital_health;
+import 'package:vital_health/vital_health.dart' as vital_health;
 
 await vital_health.syncData();
 ```
@@ -130,7 +130,7 @@ await vital_health.syncData();
 You can also write data:
 
 ```dart
-import 'package:vital_core/vital_health.dart' as vital_health;
+import 'package:vital_health/vital_health.dart' as vital_health;
 
 await vital_health.writeHealthData(vital_health.HealthResourceWrite.water, startDate, endDate, 1000);
 ```
@@ -143,7 +143,7 @@ await vital_health.writeHealthData(vital_health.HealthResourceWrite.water, start
 Finally, you can observe the `syncStatus` stream to get updates about the Vital Health SDK synchronization state.
 
 ```dart
-import 'package:vital_core/vital_health.dart' as vital_health;
+import 'package:vital_health/vital_health.dart' as vital_health;
 
 Stream<SyncStatus> status = vital_health.syncStatus;
 ```
