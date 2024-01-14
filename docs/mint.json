@@ -101,6 +101,7 @@
         "wearables/connecting-providers/introduction",
         "wearables/connecting-providers/link_flow",
         "wearables/connecting-providers/launching_link",
+        "wearables/connecting-providers/auth_types",
         "wearables/connecting-providers/custom_widget",
         "wearables/connecting-providers/bring_your_own_oauth"
       ]

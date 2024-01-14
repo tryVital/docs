@@ -1,44 +1,171 @@
 ---
-title: "Custom Widget"
+title: "Building a Custom Widget"
 ---
 
-You may want to have your own custom Link widget to match your app's UI. This is useful for users who don't want to use Vital link but still want to use the Vital API.
-To authenticate without Vital link, you need to first generate a `link_token` for a specific user.
+You may want to have your own custom Link widget to match your app's UI. This is useful for customers who don't want to use Vital link but still want to use the Vital API.
+It's worthwhile ensuring that you have read the [Auth Types](/docs/auth-types) documentation before proceeding. A full code example in React Native can be seen [here](https://github.com/tryVital/vital-connect-rn).
+
+An overview of the process is as follows:
+
+1. Get a list of all available providers "/v2/providers"
+2. Build your UI using this list of providers
+3. On select of a provider, generate a link token for that provider "/v2/link/token"
+4. Use the link token to generate an oauth link, or authorize an email, or email and password.
+
+## 1. List of all available providers
+
+The first step to creating a custom widget is to make a call to the [providers endpoint](/docs/api-reference/providers). This will return a list of all available providers. You can then use this list to build your UI.
 
 <SnippetGroup>
 
 ```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LinkTokenExchange } from '@tryvital/vital-node/api';
-
+import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
+import {
+  LinkTokenExchange,
+  LinkGenerateOauthLinkRequest,
+  OAuthProviders,
+} from "@tryvital/vital-node/api";
 
 const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+  apiKey: "<my_api_key>",
+  environment: VitalEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
-    userId: "<user_id>",
-}
-const data = await client.link.token(request)
+const allProviders = await client.providers.get_all();
+
+// allProviders
+// [
+//   {
+//     "name": "Oura",
+//     "slug": "oura",
+//     "logo": "https://logo_url.com",
+//     "auth_type": "oauth",
+//     "supported_resources": ["workouts", "sleep"]
+//   }
+// ]
 ```
 
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
+from vital.types.o_auth_providers import OAuthProviders
 
 client = Vital(
   api_key="YOUR_API_KEY",
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.link.token(user_id="<user_id>")
+all_providers = client.providers.get_all()
+
+# allProviders
+# [
+#   {
+#     "name": "Oura",
+#     "slug": "oura",
+#     "logo": "https://logo_url.com",
+#     "auth_type": "oauth",
+#     "supported_resources": ["workouts", "sleep"]
+#   }
+# ]
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
 import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.OAuthProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var all_providers = vital.providers().getAll()
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.Providers.getAll(context.TODO())
+
+if err != nil {
+  return err
+}
+
+fmt.Printf("Received data %s\n", response)
+```
+
+</SnippetGroup>
+
+## 2. Build your UI in your app
+
+Once you have a list of all available providers, you can build your UI. You can use the `logo` field to display the provider's logo. You can use the `name` field to display the provider's name. You can use the `supported_resources` field to display the resources that the provider supports.
+
+<Frame caption="Building a custom UI">
+  <img
+    src="/img/custom_ui.gif"
+    width="50%"
+    alt="Custom UI"
+    className="w-2/5 h-2/5 block mx-auto"
+  />
+</Frame>
+
+## 3. Generate a link token
+
+Once a user has selected a provider, you can generate a link token. This link token is used to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/docs/api-reference/link#link-token-exchange).
+
+<SnippetGroup>
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
+import {
+  LinkTokenExchange,
+  LinkGenerateOauthLinkRequest,
+  OAuthProviders,
+} from "@tryvital/vital-node/api";
+
+const client = new VitalClient({
+  apiKey: "<my_api_key>",
+  environment: VitalEnvironment.Sandbox,
+});
+
+const request: LinkTokenExchange = {
+  userId: "<user_id>",
+};
+const tokenResponse = await client.link.token(request);
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.o_auth_providers import OAuthProviders
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+token_response = client.link.token(user_id="<user_id>")
+
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
+import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.OAuthProviders;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
@@ -52,12 +179,6 @@ LinkTokenExchange request = LinkTokenExchange
 
 var token_response = vital.link().token(request);
 
-LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
-        .builder()
-        .vitalLinkToken(token_response.getLinkToken())
-        .build();
-
-var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
 ```
 
 ```go Go
@@ -72,153 +193,24 @@ client := vitalclient.NewClient(
   vitalclient.WithApiKey("<YOUR_API_KEY>"),
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
+provider := vital.ProvidersOura
 request := &vital.LinkTokenExchange{
-     UserId: "<user_id>",
+  UserId:   "<user_id>",
+  Provider: &provider,
 }
 
 response, err := client.Link.Token(context.TODO(), request)
-if err != nil {
-  return err
-}
-fmt.Printf("Received data %s\n", response)
 
-```
-
-```bash
-curl --request POST \
-     --url {{BASE_URL}}/v2/link/token \
-     --header 'Accept: application/json' \
-     --header 'Content-Type: application/json'
-     --header 'x-vital-api-key: <API-KEY>'
-```
-
-</SnippetGroup>
-
-Once you have your Vital link token, you can use this to connect to a specific provider. Providers are split by their authentication flows: `EMAIL`, `OAUTH`, `PASSWORD`.
-
-### 'Email'
-
-Current email providers are:
-
-| Provider  | Description                |
-| --------- | -------------------------- |
-| `Freestyle` | Abbott CGM Glucose monitor |
-
-### 'Email + Password'
-
-Current email and password providers are:
-
-| Provider         | Description                        |
-| ---------------- | ---------------------------------- |
-| `Renpho`         | Fitness Scales                     |
-| `Zwift`          | Virtual cycling and running        |
-| `Peloton`        | Popular Indoor Exercise bike       |
-| `Eight Sleep`    | Smart Mattress                     |
-| `Beurer`         | Blood pressure and glucose devices |
-| `Whoop`          | Smart Activity Watches             |
-| `Hammerhead`     | Cycling Computer                   |
-| `Dexcom`         | CGM Glucose Monitor                |
-| `MyFitnessPal`   | Meal Tracking Application          |
-
-To connect a password provider:
-
-<SnippetGroup>
-
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { IndividualProviderData, PasswordProviders } from '@tryvital/vital-node/api';
-
-const request: IndividualProviderData = {
-    username: '<username>',
-    password: '<password>',
-}
-const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
-```
-
-```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.password_providers import PasswordProviders
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
-)
-
-data = client.link.connect_password_provider(
-  PasswordProviders.<provider>, 
-  username="<username>", 
-  password="<password>"
-)
-```
-
-```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.IndividualProviderData;
-import com.vital.api.types.PasswordProviders;
-
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
-
-IndividualProviderData request = IndividualProviderData
-        .builder()
-        .username("<username>")
-        .password("<password>")
-        .build();
-
-var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
-```
-
-```go Go
-import (
-  "context"
-
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-)
-
-client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
-)
-
-request := &vital.IndividualProviderData{
-  Username: "<username>",
-  Password: "<password>",
-}
-
-response, err := client.Link.ConnectPasswordProvider(
-  context.TODO(), 
-  vital.PasswordProviders<provider>, 
-  request
-)
-if err != nil {
-  return err
-}
 fmt.Printf("Received data %s\n", response)
 ```
 
 </SnippetGroup>
 
-### 'OAuth'
+## 4. Link the user to the provider
 
-Current OAuth providers are:
+Once you have a link token, you can use it to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/docs/api-reference/link#link-token-exchange).
 
-| Provider   | Description                                                   |
-| --------   | ------------------------------------------------------------- |
-| `Fitbit`   | Activity Trackers (all devices)                               |
-| `Garmin`   | Fitness watches (all devices)                                 |
-| `Oura`     | Smart Sleep tracking ring                                     |
-| `Strava`   | Running & Cycling Social Network                              |
-| `Wahoo`    | Cycling Equipment                                             |
-| `iHealth`  | Blood pressure, Fitness scales, Glucometers & Fitness watches |
-| `Withings` | Fitness scales, watches and health monitors                   |
-
-
-To connect an oauth provider:
+### Connect an oauth provider
 
 <SnippetGroup>
 
@@ -330,11 +322,327 @@ fmt.Printf("Received data %s\n", oauth)
 
 </SnippetGroup>
 
-For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
+### Connact an Email/Password provider
 
-The possible error codes that are returned are as follows:
-`401 INVALID_REQUEST` Link Token is Invalid
-`400 MISSING_LINK_TOKEN` Missing link token
-`400 INVALID_PROVIDER` Provider is not supported
-`400 INVALID_USER_ID` User id is incorrect
-`400 INVALID_CREDENTIALS` Credentials for provider are incorrect
+<SnippetGroup>
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { IndividualProviderData, PasswordProviders } from '@tryvital/vital-node/api';
+
+const request: IndividualProviderData = {
+    username: '<username>',
+    password: '<password>',
+}
+const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.password_providers import PasswordProviders
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.link.connect_password_provider(
+  PasswordProviders.<provider>,
+  username="<username>",
+  password="<password>"
+)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.IndividualProviderData;
+import com.vital.api.types.PasswordProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+IndividualProviderData request = IndividualProviderData
+        .builder()
+        .username("<username>")
+        .password("<password>")
+        .build();
+
+var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.IndividualProviderData{
+  Username: "<username>",
+  Password: "<password>",
+}
+
+response, err := client.Link.ConnectPasswordProvider(
+  context.TODO(),
+  vital.PasswordProviders<provider>,
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</SnippetGroup>
+
+### Bringing this all together
+
+Below is an example of how you can bring all of this together to build your own custom widget. This example is in React Native, but the same principles apply to any language.
+
+```javascript React Native
+import React, {useEffect, useState} from 'react';
+import {
+  SafeAreaView,
+  StatusBar,
+  Linking,
+  View,
+  useColorScheme,
+  Platform,
+} from 'react-native';
+import {VitalHealth, VitalResource} from '@tryvital/vital-health-react-native';
+
+const handleOAuth = async (userId: string, item: Provider) => {
+  const linkToken = await Client.Link.getLinkToken(
+    userId,
+    `${AppConfig.slug}://link`,
+  );
+  const link = await Client.Providers.getOauthUrl(item.slug, linkToken.link_token);
+
+  Linking.openURL(link.oauth_url);
+};
+
+const ListItem = ({
+  userId,
+  item,
+  navigation,
+}: {
+  userId: string;
+  item: Provider;
+  navigation: any;
+}) => {
+  const {colors} = useTheme();
+  const isDarkMode = useColorScheme() === 'dark';
+  const [isLoading, setLoading] = useState(false);
+
+  const handleNativeHealthKit = async () => {
+    const providerSlug =
+      Platform.OS == 'ios'
+        ? ManualProviderSlug.AppleHealthKit
+        : ManualProviderSlug.HealthConnect;
+
+    setLoading(true);
+
+    const isHealthSDKAvailable = await VitalHealth.isAvailable();
+    if (!isHealthSDKAvailable) {
+      console.warn('Health Connect is not available on this device.');
+      navigation.navigate('ConnectionCallback', {
+        state: 'failed',
+        provider: providerSlug,
+      });
+      return;
+    }
+
+    try {
+      await VitalHealth.configure({
+        logsEnabled: true,
+        numberOfDaysToBackFill: 30,
+        androidConfig: {syncOnAppStart: true},
+        iOSConfig: {
+          dataPushMode: 'automatic',
+          backgroundDeliveryEnabled: true,
+        },
+      });
+    } catch (e) {
+      setLoading(false);
+      console.warn(`Failed to configure ${providerSlug}`, e);
+      navigation.navigate('ConnectionCallback', {
+        state: 'failed',
+        provider: providerSlug,
+      });
+    }
+    await VitalHealth.setUserId(userId);
+    try {
+      await VitalHealth.askForResources([
+        VitalResource.Steps,
+        VitalResource.Activity,
+        VitalResource.HeartRate,
+        VitalResource.Sleep,
+        VitalResource.Workout,
+        VitalResource.BloodPressure,
+        VitalResource.Glucose,
+        VitalResource.Body,
+        VitalResource.Profile,
+        VitalResource.ActiveEnergyBurned,
+        VitalResource.BasalEnergyBurned,
+      ]);
+      await VitalCore.createConnectedSourceIfNotExist(providerSlug);
+      setLoading(false);
+      navigation.navigate('ConnectionCallback', {
+        state: 'success',
+        provider: providerSlug,
+      });
+    } catch (e) {
+      setLoading(false);
+      navigation.navigate('ConnectionCallback', {
+        state: 'failed',
+        provider: providerSlug,
+      });
+    }
+  };
+
+  const onPress = async () => {
+    if (item.auth_type === 'oauth') {
+      await handleOAuth(userId, item);
+    } else if (
+      item.slug === 'apple_health_kit' ||
+      item.slug === 'health_connect'
+    ) {
+      await handleNativeHealthKit();
+    }
+  };
+
+  return (
+    <Pressable onPress={() => onPress()}>
+      {({isHovered, isFocused, isPressed}) => {
+        return (
+        <HStack space={'md'} justifyContent="flex-start">
+            <VStack>
+            <Text color={colors.text} fontType="medium">
+                {item.name}
+            </Text>
+            <Text
+                fontType="regular"
+                color={colors.secondary}
+                size="xs"
+                flexShrink={1}
+                flexWrap="wrap">
+                {item.description}
+            </Text>
+            </VStack>
+        </HStack>
+        );
+      }}
+    </Pressable>
+  );
+};
+
+export const LinkDeviceScreen = ({navigation}) => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const {colors} = useTheme();
+  const styles = makeStyles(colors);
+  const [providers, setProviders] = React.useState<Provider[]>([]);
+  const [devices, setDevices] = React.useState<Provider[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [searchText, setSearchText] = React.useState('');
+  const [error, setError] = React.useState<string | null>(null);
+
+  const [userId, setUserId] = React.useState('');
+
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+    if (text === '' && text.length <= 2) {
+      setDevices(providers);
+    } else {
+      const filtered = providers.filter(item =>
+        item.name.toLowerCase().includes(text.toLowerCase()),
+      );
+      setDevices(filtered);
+    }
+  };
+  useEffect(() => {
+    const getDevices = async () => {
+      setLoading(true);
+      setError(null);
+      const user_id = await getData('user_id');
+      if (user_id) {
+        const providers = await Client.Providers.getProviders();
+        setLoading(false);
+        setUserId(user_id);
+        setProviders(providers);
+      } else {
+        setUserId('');
+        setLoading(false);
+        console.warn('Failed to get all supported providers');
+        setError('Failed to get devices');
+      }
+    };
+  }, [navigation]);
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={styles.container.backgroundColor}
+      />
+      <View
+        style={{
+          paddingVertical: 10,
+          paddingHorizontal: 16,
+          flex: 1,
+          width: '100%',
+        }}>
+        <VStack pb={10}>
+          <HStack
+            justifyContent={'space-between'}
+            py={'$3'}
+            alignItems="center">
+            <H1>Connect a Device</H1>
+            <Button onPress={() => navigation.goBack()} variant="link">
+              <Ionicons name="close-outline" size={25} color={colors.text} />
+            </Button>
+          </HStack>
+          <Input
+            variant="outline"
+            size="lg"
+            isDisabled={false}
+            isInvalid={false}
+            isReadOnly={false}>
+            <InputField
+              color={colors.text}
+              fontFamily={AppConfig.fonts.regular}
+              onChangeText={handleSearch}
+              value={searchText}
+              placeholder="Search"
+            />
+          </Input>
+        </VStack>
+
+        {!loading && error ? (
+          <VStack>
+            <Text fontType="light">Failed to get supported Providers</Text>
+          </VStack>
+        ) : (
+          <FlatList
+            data={devices}
+            renderItem={({item}) => (
+              <ListItem userId={userId} item={item} navigation={navigation} />
+            )}
+            keyExtractor={item => item.slug}
+          />
+        )}
+      </View>
+    </SafeAreaView>
+  );
+};
+
+```
