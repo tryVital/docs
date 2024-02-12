@@ -2,15 +2,13 @@
 title: "Provider Types"
 ---
 
-Providers have different authentication flows. Some require a username and password, others require an email address and password, and some require an OAuth flow.
-
-Vital supports the following provider types:
+Providers have different authentication flows. Some require a username and password, others require an email address and password. Vital supports the following provider types:
 
 - `OAuth`
 - `Email`
 - `Email + Password`
 
-The majority of providers are `OAuth` providers. These providers require a user to be redirected to a third party website to authenticate. Once authenticated, the user is redirected back to the link widget once connected.
+The majority of providers are `OAuth` providers. These providers require a user to be redirected to a third party website to authenticate. Once authenticated, the user is redirected back to the link widget.
 The `Email` and `Email + Password` providers require a user to enter their email address and password into the link widget. This is then sent to Vital and used to connect to the provider.
 
 The list of providers and their oauth types are as follows:
@@ -150,11 +148,11 @@ fmt.Printf("Received data %s\n", oauth)
 For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
 
 The possible error codes that are returned are as follows:
-`401 INVALID_REQUEST` Link Token is Invalid
-`400 MISSING_LINK_TOKEN` Missing link token
-`400 INVALID_PROVIDER` Provider is not supported
-`400 INVALID_USER_ID` User id is incorrect
-`400 INVALID_CREDENTIALS` Credentials for provider are incorrect
+- `401 INVALID_REQUEST` Link Token is Invalid
+- `400 MISSING_LINK_TOKEN` Missing link token
+- `400 INVALID_PROVIDER` Provider is not supported
+- `400 INVALID_USER_ID` User id is incorrect
+- `400 INVALID_CREDENTIALS` Credentials for provider are incorrect
 
 ### 'Email'
 
@@ -180,7 +178,7 @@ Current email and password providers are:
 | `MyFitnessPal`      | Meal Tracking Application          |
 | `Kardia`            | EKG Application                    |
 
-To connect a password provider:
+To connect a email and password provider:
 
 <SnippetGroup>
 
