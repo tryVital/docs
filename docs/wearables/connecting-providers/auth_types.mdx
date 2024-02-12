@@ -1,0 +1,262 @@
+---
+title: "Provider Types"
+---
+
+Providers have different authentication flows. Some require a username and password, others require an email address and password. Vital supports the following provider types:
+
+- `OAuth`
+- `Email`
+- `Email + Password`
+
+The majority of providers are `OAuth` providers. These providers require a user to be redirected to a third party website to authenticate. Once authenticated, the user is redirected back to the link widget.
+The `Email` and `Email + Password` providers require a user to enter their email address and password into the link widget. This is then sent to Vital and used to connect to the provider.
+
+The list of providers and their oauth types are as follows:
+
+### 'OAuth'
+
+Current OAuth providers are:
+
+| Provider     | Description                                                   |
+| ------------ | ------------------------------------------------------------- |
+| `Fitbit`     | Activity Trackers (all devices)                               |
+| `Garmin`     | Fitness watches (all devices)                                 |
+| `Oura`       | Smart Sleep tracking ring                                     |
+| `Strava`     | Running & Cycling Social Network                              |
+| `Wahoo`      | Cycling Equipment                                             |
+| `iHealth`    | Blood pressure, Fitness scales, Glucometers & Fitness watches |
+| `Withings`   | Fitness scales, watches and health monitors                   |
+| `Google Fit` | Activity Trackers (all devices)                               |
+| `Polar`      | Finnish sports tech pioneer                                   |
+| `Cronometer` | Nutrition data                                                |
+| `Omron`      | Blood Pressure data                                           |
+| `Whoop`      | Smart Activity Watches                                        |
+| `Dexcom`     | Glucose monitors                                              |
+
+To connect an oauth provider:
+
+<SnippetGroup>
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { LinkTokenExchange, LinkGenerateOauthLinkRequest, OAuthProviders } from '@tryvital/vital-node/api';
+
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: LinkTokenExchange = {
+    userId: "<user_id>",
+}
+const tokenResponse = await client.link.token(request)
+
+const linkRequest: LinkGenerateOauthLinkRequest = {
+    vitalLinkToken: tokenResponse.linkToken,
+}
+
+const auth = await client.link.generateOauthLink(
+    OAuthProviders.<provider>,
+    linkRequest
+)
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.o_auth_providers import OAuthProviders
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+token_response = client.link.token(user_id="<user_id>")
+
+oauth = client.link.generate_oauth_link(
+  oauth_provider=OAuthProviders.<provider>,
+  vital_link_token=token_response.link_token,
+)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
+import com.vital.api.resources.link.requests.LinkTokenExchange;
+import com.vital.api.types.OAuthProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+LinkTokenExchange request = LinkTokenExchange
+        .builder()
+        .userId("<user_id>")
+        .build();
+
+var token_response = vital.link().token(request);
+
+LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
+        .builder()
+        .vitalLinkToken(token_response.getLinkToken())
+        .build();
+
+var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+provider := vital.ProvidersOura
+request := &vital.LinkTokenExchange{
+  UserId:   "<user_id>",
+  Provider: &provider,
+}
+
+response, err := client.Link.Token(context.TODO(), request)
+
+if err != nil {
+  return err
+}
+
+generateLinkRequest := &vital.LinkGenerateOauthLinkRequest{
+  VitalLinkToken: response.LinkToken,
+}
+
+oauth, err := client.Link.GenerateOauthLink(context.TODO(), vital.OAuthProvidersOura, generateLinkRequest)
+
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", oauth)
+```
+
+</SnippetGroup>
+
+For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
+
+The possible error codes that are returned are as follows:
+- `401 INVALID_REQUEST` Link Token is Invalid
+- `400 MISSING_LINK_TOKEN` Missing link token
+- `400 INVALID_PROVIDER` Provider is not supported
+- `400 INVALID_USER_ID` User id is incorrect
+- `400 INVALID_CREDENTIALS` Credentials for provider are incorrect
+
+### 'Email'
+
+Current email providers are:
+
+| Provider    | Description                |
+| ----------- | -------------------------- |
+| `Freestyle` | Abbott CGM Glucose monitor |
+
+### 'Email + Password'
+
+Current email and password providers are:
+
+| Provider            | Description                        |
+| ------------------- | ---------------------------------- |
+| `Renpho`            | Fitness Scales                     |
+| `Zwift`             | Virtual cycling and running        |
+| `Peloton`           | Popular Indoor Exercise bike       |
+| `Eight Sleep`       | Smart Mattress                     |
+| `Beurer`            | Blood pressure and glucose devices |
+| `Hammerhead`        | Cycling Computer                   |
+| `Dexcom G6 & Older` | CGM Glucose Monitor                |
+| `MyFitnessPal`      | Meal Tracking Application          |
+| `Kardia`            | EKG Application                    |
+
+To connect a email and password provider:
+
+<SnippetGroup>
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { IndividualProviderData, PasswordProviders } from '@tryvital/vital-node/api';
+
+const request: IndividualProviderData = {
+    username: '<username>',
+    password: '<password>',
+}
+const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.password_providers import PasswordProviders
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.link.connect_password_provider(
+  PasswordProviders.<provider>,
+  username="<username>",
+  password="<password>"
+)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.link.requests.IndividualProviderData;
+import com.vital.api.types.PasswordProviders;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+IndividualProviderData request = IndividualProviderData
+        .builder()
+        .username("<username>")
+        .password("<password>")
+        .build();
+
+var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.IndividualProviderData{
+  Username: "<username>",
+  Password: "<password>",
+}
+
+response, err := client.Link.ConnectPasswordProvider(
+  context.TODO(),
+  vital.PasswordProviders<provider>,
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</SnippetGroup>
