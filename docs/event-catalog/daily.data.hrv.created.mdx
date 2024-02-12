@@ -39,17 +39,25 @@ The value of the measurement.
 </ResponseField>
 <ResponseField name="source_id" type="integer" required="true">
 </ResponseField>
-<ResponseField name="source" type="ClientFacingProvider" required="true">
-[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
-<Expandable title="ClientFacingProvider" defaultOpen="true">
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="string | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+</ResponseField>
 <ResponseField name="name" type="string" required="true">
-Name of source of information
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="slug" type="string" required="true">
-Slug for designated source
+[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="logo" type="string" required="true">
-URL for source logo
+[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -78,7 +86,7 @@ URL for source logo
   "data": {
     "data": [
       {
-        "timestamp": "2024-02-08T10:45:05.287683+00:00",
+        "timestamp": "2024-02-12T16:05:09.340806+00:00",
         "timezone_offset": null,
         "value": 48,
         "type": null,
@@ -86,12 +94,16 @@ URL for source logo
       }
     ],
     "source_id": 1,
+    "source": {
+      "provider": "oura",
+      "type": "ring"
+    },
     "provider": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "3668a806-8d4c-4591-9423-9e191016adab"
+    "user_id": "b0339d62-c728-415c-be45-6f04f317bd7b"
   }
 }
 ```
