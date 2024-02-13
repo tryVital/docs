@@ -1,0 +1,69 @@
+---
+title: "Data Attributions"
+---
+
+## Source Type
+
+For summary data types, you can identify the Source Type through `source.type`. This is available in both summary data events and API responses.
+
+For timeseries data types:
+
+* You can identify the Source Type through `$.data.source.type` in timeseries data events you received.
+* You can request timeseries data grouped by their Source Type through [the Grouped Timeseries Data API](/api-reference/timeseries-grouped/steps).
+
+
+### Common
+
+| Source Type        | Description  |
+| ------------------ | ------------ |
+| `unknown`          | The default value. Vital does not know how the provider collects this data. |
+| `app`              | The user manually enters this data through an app.   |
+| `multiple_sources` | This data is derived from multiple sources. |
+
+### Wearables
+
+| Source Type        | Description  |
+| ------------------ | ------------ |
+| `watch`            | A smart watch collects this data automatically. |
+| `phone`            | A smart phone collects this data automatically. |
+| `ring`             | A smart ring collects this data automatically.  |
+| `chest_strap`      | A smart chest strap collects this data automatically.  |
+
+### Health devices
+
+| Source Type        | Description  |
+| ------------------ | ------------ |
+| `manual_scan`      | A biosensor that needs to be manually scanned. |
+| `automatic`        | A biosensor that uploads data continuously in background. |
+| `fingerprick`      | A glucose testing device which analyzes fingerprick blood samples. |
+| `cuff`             | A blood pressure cuff. |
+
+### Supported providers
+
+The following provider integrations would tag data with Source Type:
+
+| Provider        | Source Types |
+| --------------- | ------------------------------------------------------ |
+| Apple HealthKit | `phone`, `watch`, `app`, `multiple_sources`, `unknown` [1] |
+| Fitbit          | `watch`, `scale`, `app`, `multiple_sources` |
+| Oura            | `ring`, `app`, `multiple_sources` |
+| Garmin          | `watch`, `scale`, `cuff`, `app`, `multiple_sources` |
+| Freestyle Libre | `automatic`, `manual_scan` |
+
+<sup>[1]</sup> Only data from Apple Watch, iPhone and Apple Health app are tagged. Data from third-party apps
+(like the Oura iOS app) are tagged as `unknown` currently.
+
+## App ID
+
+App ID indicates the origin application of the data.
+
+For summary data types, it is available at `source.app_id`. Note that App ID is unavailable on timeseries data at this time.
+
+### Supported providers
+
+The following provider integrations would tag data with App ID:
+
+| Provider               | Remarks |
+| ---------------------- | ------- |
+| Apple HealthKit        | App Store Bundle ID, or Unique Device ID (`com.apple.health.{UUID}`) for first-party data |
+| Android Health Connect | Android Application Package Name |
