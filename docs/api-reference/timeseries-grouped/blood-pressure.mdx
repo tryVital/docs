@@ -1,0 +1,114 @@
+---
+title: "Get Blood Pressure Grouped Data"
+openapi: "/v2/timeseries/{user_id}/blood_pressure/grouped"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/blood_pressure/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.vitals.blood_pressure_grouped(
+  user_id="<user_id>", 
+  start_date="2021-10-01", 
+  end_date="2021-10-02"
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { VitalsBloodPressureGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: VitalsBloodPressureGroupedRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.vitals.bloodPressureGrouped(
+    '<my_user_id>',
+    request
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.vitals.requests.VitalsBloodPressureGroupedRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+VitalsBloodPressureGroupedRequest request = VitalsBloodPressureGroupedRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.vitals().bloodPressureGrouped("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.VitalsBloodPressureGroupedRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Vitals.BloodPressureGrouped(context.TODO(), "*", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "groups": {
+    "oura": [
+      {
+        "timestamp": "2024-02-13T16:12:25+00:00",
+        "systolic": "125",
+        "diastolic": "75",
+        "unit": "mmHg"
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>

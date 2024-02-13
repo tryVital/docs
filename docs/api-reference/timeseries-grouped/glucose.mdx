@@ -1,0 +1,114 @@
+---
+title: "Get Glucose Grouped Data"
+openapi: "/v2/timeseries/{user_id}/glucose/grouped"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/glucose/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.vitals.glucose_grouped(
+  user_id="<user_id>", 
+  start_date="2021-10-01", 
+  end_date="2021-10-02"
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { VitalsGlucoseGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: VitalsGlucoseGroupedRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.vitals.glucoseGrouped(
+    '<my_user_id>',
+    request
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.vitals.requests.VitalsGlucoseGroupedRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+VitalsGlucoseGroupedRequest request = VitalsGlucoseGroupedRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.vitals().glucoseGrouped("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+EndDate := "2022-06-01"
+request := &vital.VitalsGlucoseGroupedRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Vitals.GlucoseGrouped(context.TODO(), "*", request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "groups": {
+    "oura": [
+      {
+        "timestamp": "2023-02-13T14:30:52+00:00",
+        "value": 0.5,
+        "type": "automatic | manual_scan",
+        "unit": "mmol/L"
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>
