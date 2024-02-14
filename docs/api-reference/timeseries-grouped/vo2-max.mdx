@@ -1,13 +1,13 @@
 ---
-title: "Floors Climbed"
-openapi: "GET /v2/timeseries/{user_id}/floors_climbed/grouped"
+title: "Vo2 Max"
+openapi: "GET /v2/timeseries/{user_id}/vo2_max/grouped"
 ---
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/floors_climbed/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/vo2_max/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -21,7 +21,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.vitals.floors_climbed_grouped(
+data = client.vitals.vo2_max_grouped(
   user_id="<user_id>", 
   start_date="2021-10-01", 
   end_date="2021-10-02"
@@ -30,19 +30,19 @@ data = client.vitals.floors_climbed_grouped(
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { VitalsFloorsClimbedGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
+import { VitalsVo2MaxGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: VitalsFloorsClimbedGroupedRequest = {
+const request: VitalsVo2MaxGroupedRequest = {
     startDate: "2022-05-01",
     endDate: "2022-06-01"
 }
 
-const data = await client.vitals.floorsClimbedGrouped(
+const data = await client.vitals.vo2MaxGrouped(
     '<my_user_id>',
     request
 );
@@ -51,19 +51,19 @@ const data = await client.vitals.floorsClimbedGrouped(
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.vitals.requests.VitalsFloorsClimbedGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsVo2MaxGroupedRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-VitalsFloorsClimbedGroupedRequest request = VitalsFloorsClimbedGroupedRequest.builder()
+VitalsVo2MaxGroupedRequest request = VitalsVo2MaxGroupedRequest.builder()
         .startDate("2022-05-01")
         .endDate("2022-06-01")
         .build();
 
-var data = vital.vitals().floorsClimbedGrouped("<user_id>", request);
+var data = vital.vitals().vo2MaxGrouped("<user_id>", request);
 ```
 
 ```go Go
@@ -80,12 +80,12 @@ client := vitalclient.NewClient(
 )
 
 EndDate := "2022-06-01"
-request := &vital.VitalsFloorsClimbedGroupedRequest{
+request := &vital.VitalsVo2MaxGroupedRequest{
   StartDate: "2022-05-01",
   EndDate:   &EndDate,
 }
 
-response, err := client.Vitals.FloorsClimbedGrouped(context.TODO(), "*", request)
+response, err := client.Vitals.Vo2MaxGrouped(context.TODO(), "*", request)
 if err != nil {
   return err
 }
@@ -103,8 +103,8 @@ fmt.Printf("Received data %s\n", response)
       {
         "start": "2023-02-13T14:30:52+00:00",
         "end": "2023-02-13T14:57:24+00:00",
-        "value": 2,
-        "unit": "count"
+        "value": 48,
+        "unit": "mL/kg/min"
       }
     ]
   }
