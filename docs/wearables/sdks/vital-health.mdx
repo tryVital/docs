@@ -12,17 +12,118 @@ Please consult the following guides on requirements and restrictions of Apple He
 
 The Health SDK guide focuses on the API usage of the Health SDK.
 
+## SDK configuration
+
+The Health SDK must be configured before use. The configuration is persistent, so
+you can do this only once, immediately after [a successful authentication with the Core SDK](/wearables/sdks/authentication).
+
+
+<CodeGroup>
+```swift Native iOS
+import VitalHealthKit
+
+VitalHealthKitClient.configure(
+  backgroundDeliveryEnabled: true
+)
+```
+
+```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+val manager = VitalHealthConnectManager.configure(context)
+manager.configureHealthConnectClient(
+  syncNotificationBuilder = null
+)
+```
+
+```typescript React Native
+import { VitalHealth, HealthConfig } from "@tryvital/vital-health-react-native";
+
+let config = new HealthConfig();
+config.iOSConfig.backgroundDeliveryEnabled = true;
+await VitalHealth.configure(config);
+```
+
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+await vital_health.configure(
+  config: const vital_health.HealthConfig(
+    iosConfig: vital_health.IosHealthConfig(
+      backgroundDeliveryEnabled: true,
+    ),
+  ),
+);
+```
+</CodeGroup>
+
+
 ## Request health data permissions
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
 
 <CodeGroup>
 ```swift Native iOS
+import VitalHealthKit
+
+await VitalHealthKitClient.shared.ask(
+  readPermissions: [.activity, .workout, .sleep],
+  writePermissions: []
+)
 ```
+
 ```kotlin Native Android
+val contract = vitalHealthConnectManager.createPermissionRequestContract(
+  readResources = set(
+    VitalResource.Activity,
+    VitalResource.Workout,
+    VitalResource.Sleep,
+  ),
+  writeResources = emptySet(),
+)
+
+//
+// Launch via Compose UI
+//
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.*
+
+val coroutineScope = rememberCoroutineScope()
+val permissionsLauncher = rememberLauncherForActivityResult(contract) { outcomeAsync ->
+  coroutineScope.launch {
+    val outcome = outcomeAsync.await()
+    Log.i("VitalPermissionOutcome", outcome.toString())
+  }
+}
+
+Button(onClick = { permissionsLauncher.launch(Unit) }) {
+  Text("Request")
+}
+
+//
+// Launch via AndroidX Activity Result API
+//
+import androidx.activity.ComponentActivity
+
+val activity: ComponentActivity
+activity.registerForActivityResult(contract) { outcomeAsync ->
+  CoroutineScope(Dispatchers.Main).launch {
+    val outcome = outcomeAsync.await()
+    Log.i("VitalPermissionOutcome", outcome.toString())
+  }
+}
 ```
+
 ```typescript React Native
+import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+
+await VitalHealth.ask(
+    [VitalResource.Activity, VitalResource.Workout, VitalResource.Sleep],
+    []
+)
 ```
+
 ```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 
@@ -44,11 +145,25 @@ You can force data sync to start with `syncData()`.
 
 <CodeGroup>
 ```swift Native iOS
+import VitalHealthKit
+
+VitalHealthKitClient.shared.syncData()
 ```
+
 ```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+val manager = VitalHealthConnectManager.getOrCreate(context)
+
+manager.syncData()
 ```
+
 ```typescript React Native
+import { VitalHealth } from "@tryvital/vital-health-react-native";
+
+await VitalHealth.syncData();
 ```
+
 ```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 
@@ -74,11 +189,38 @@ You can also write data back to Apple HealthKit and Android Health Connect:
 
 <CodeGroup>
 ```swift Native iOS
+import VitalHealthKit
+
+try await VitalHealthKitClient.shared.write(
+  input: .water(milliliters: 1000),
+  startDate: Date(),
+  endDate: Date()
+)
 ```
+
 ```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+import io.tryvital.vitalhealthconnect.model.WritableVitalResource
+
+val manager = VitalHealthConnectManager.getOrCreate(context)
+
+manager.writeRecord(
+    WritableVitalResource.Water,
+    Instant.now(),
+    Instant.now(),
+    100.0
+)
 ```
+
 ```typescript React Native
+await VitalHealth.writeHealthData(
+    VitalWriteResource.Water,
+    100.0,
+    new Date(),
+    new Date(),
+)
 ```
+
 ```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 
@@ -97,11 +239,36 @@ You can observe the `syncStatus` stream for continuous updates on the health dat
 
 <CodeGroup>
 ```swift Native iOS
+import VitalHealthKit
+
+VitalHealthKitClient.shared.status.sink { status in
+  print("Sync Status: \(status)")
+}
 ```
+
 ```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+
+val coroutineScope: CoroutineScope
+val manager = VitalHealthConnectManager.getOrCreate(context)
+
+manager.status
+  .onEach { status -> Log.i("HealthDataSync", "$status") }
+  .launchIn(coroutineScope)
 ```
+
 ```typescript React Native
+import { VitalHealthEvents, VitalHealthReactNativeModule } from "@tryvital/vital-health-react-native";
+
+const healthEventEmitter = new NativeEventEmitter(VitalHealthReactNativeModule);
+
+healthEventEmitter.addListener(VitalHealthEvents.statusEvent, (event: any) => {
+  console.log(VitalHealthEvents.statusEvent, event);
+});
 ```
+
 ```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 

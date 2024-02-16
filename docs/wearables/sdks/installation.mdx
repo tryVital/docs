@@ -58,10 +58,78 @@ Link `VitalHealthKit` and `VitalDevices` as appropriate. Note that `VitalCore` i
   {" "}
 </iframe>
 
+### CocoaPods
+
+Add the following declarations to your app target in your Podfile:
+
+```ruby
+pod 'VitalCore'
+pod 'VitalDevices'
+pod 'VitalHealthKit'
+```
+
 ## Android
 
+You can install the Vital SDK by adding the followings to your `build.gradle` file:
+
+```groovy
+repositories {
+  ...
+  maven { url 'https://jitpack.io' }
+}
+```
+
+```groovy
+implementation 'com.github.tryVital.vital-android:VitalClient:$vital_version'
+implementation 'com.github.tryVital.vital-android:VitalHealthConnect:$vital_version'
+implementation 'com.github.tryVital.vital-android:VitalDevices:$vital_version'
+```
+
+Replace `$vital_version` with the latest version of the SDK. You only need to add the dependencies
+for the components you want to use.
 
 ## React Native
 
+Install Vital SDK packages through NPM or Yarn:
+```commandline
+npm install @tryvital/vital-core-react-native
+npm install @tryvital/vital-health-react-native
+npm install @tryvital/vital-devices-react-native
+```
+
+Pull all dependencies for your React Native iOS project:
+```commandline
+cd ios
+pod install
+```
+
+<Info>
+`pod install` on your iOS project might error due to version lock conflicts on the Vital iOS libraries.
+This usually happens after you have bumped the React Native SDK package versions.
+
+Use `pod update` to resolve the conflict:
+```commandline
+pod update VitalCore VitalDevices VitalHealthKit --repo-update
+```
+</Info>
 
 ## Flutter
+
+Add Vital SDK packages to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  vital_core: ^3.1.1
+  vital_health: ^3.1.1
+  vital_devices: ^3.1.1
+```
+
+<Info>
+`pod install` on your iOS project might error due to version lock conflicts on the Vital iOS libraries.
+This usually happens after you have bumped the Flutter SDK package versions.
+
+Use `pod update` to resolve the conflict:
+```commandline
+pod update VitalCore VitalDevices VitalHealthKit --repo-update
+```
+</Info>

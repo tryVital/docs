@@ -8,8 +8,8 @@ title: "Devices SDK"
 Your app project must declare the required permission usage. This applies equally to both native,
 Flutter and React Native app projects.
 
-<Tabs>
-  <Tab title="iOS">
+<AccordionGroup>
+  <Accordion title="iOS projects">
   Add the following to your `Info.plist` file:
 
   ```xml
@@ -18,23 +18,23 @@ Flutter and React Native app projects.
   ```
 
   Bluetooth permission on iOS is automatically requested on the first scanning attempt.
-  </Tab>
-  <Tab title="Android">
+  </Accordion>
+  <Accordion title="Android projects">
   Add the following to your `AndroidManifest.xml`:
 
   ```xml
   <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
   <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
 
-          <!-- Request legacy Bluetooth permissions on older devices. -->
+  <!-- Request legacy Bluetooth permissions on older devices. -->
   <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
   <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
   ```
 
   You will have to request the appropriate permissions at in your app before you can call the Vital Devices SDK.
-  </Tab>
-
+  </Accordion>
+</AccordionGroup>
 
 ## Bluetooth devices
 
@@ -46,6 +46,8 @@ The SDK provides a list of supported Bluetooth devices. Select the matching inst
 ```swift Native iOS
 import VitalDevices
 
+let devicesManager = DevicesManager()
+
 /// Get the brands
 let brands = DevicesManager.brands()
 
@@ -54,15 +56,30 @@ let devices = DevicesManager.devices(for: brands[0])
 ```
 
 ```kotlin Native Android
+import io.tryvital.vitaldevices.*
+
+val deviceManager = VitalDeviceManager.create(context)
+
+val deviceModels = devices(Brand.AccuChek)
+val deviceModel = deviceModels[0]
 ```
+
 ```typescript React Native
+import { VitalDevicesManager } from "@tryvital/vital-devices-react-native";
+
+const devicesManager = new VitalDevicesManager();
+
+let deviceModels = VitalDevicesManager.supportedDevices;
+let deviceModel = deviceModels[0];
 ```
 
 ```dart Flutter
-final vitalDevices = DeviceManager();
+import 'package:vital_devices/vital_devices.dart';
 
-final deviceModels = await vitalDevices.getDevices(Brand.accuChek);
-final deviceModel = deviceModel[0];
+final deviceManager = DeviceManager();
+
+final deviceModels = await deviceManager.getDevices(Brand.accuChek);
+final deviceModel = deviceModels[0];
 ```
 </CodeGroup>
 
@@ -72,20 +89,50 @@ First you have to scan for one of the supported devices.
 
 <CodeGroup>
 ```swift Native iOS
-```
-```kotlin Native Android
-```
-```typescript React Native
-```
-```dart Flutter
-ScannedDevice? scannedDevice;
+let cancellable = devicesManager
+  .search(for: state.device)
+  .sink { scannedDevice in
+    print("Discovered: \(scannedDevice)")
+  }
 
-vitalDevices.scanForDevices(deviceModel).listen((newDevice) {
-  scannedDevice = newDevice;
+// Stop scanning
+cancellable.cancel()
+```
+
+```kotlin Native Android
+val job = deviceManager
+  .search(deviceModel)
+  .catch {
+      Log.i("Devices", "Error scanning ${it.message}", it.cause)
+  }
+  .onEach { scannedDevice ->
+      Log.i("Devices", "Discovered ${scannedDevice}")
+  }
+  .launchIn(Dispatchers.Main)
+
+// Stop scanning
+job.cancel()
+```
+
+```typescript React Native
+let scanner = deviceManager.scanForDevice(deviceModel, {
+    onDiscovered: (device) => {
+        console.log("Discovered: " + device)
+    },
+    onError: (error) => console.log(error)
+})
+
+// Stop scanning
+scanner.cancel()
+```
+
+```dart Flutter
+deviceManager.scanForDevices(deviceModel).listen((newDevice) {
+  Fimber.i("Discovered: $newDevice");
 });
 
 // Stop scanning
-await vitalDevices.stopScan();
+await deviceManager.stopScan();
 ```
 </CodeGroup>
 
@@ -95,14 +142,29 @@ Depending on the type of device you are connecting to, you will have to call dif
 
 <CodeGroup>
 ```swift Native iOS
+let scannedDevice: ScannedDevice
+let reader = deviceManager.bloodPressureReader(for: scannedDevice)
+
+reader.read(device: scannedDevice).sink { samples in
+  print("Read samples: \(samples)")
+}
 ```
+
 ```kotlin Native Android
+val scannedDevice: ScannedDevice
+
+val samples = deviceManager.bloodPressure(context, scannedDevice).read()
 ```
+
 ```typescript React Native
+let scannedDevice: ScannedDevice
+
+let samples = await devicesManager.readBloodPressure(scannedDevice.id)
 ```
+
 ```dart Flutter
 List<BloodPressureSample> bloodPressureSamples;
-bloodPressureSamples = await vitalDevices.readBloodPressureData(scannedDevice);
+bloodPressureSamples = await deviceManager.readBloodPressureData(scannedDevice);
 ```
 </CodeGroup>
 
@@ -110,14 +172,26 @@ bloodPressureSamples = await vitalDevices.readBloodPressureData(scannedDevice);
 
 <CodeGroup>
 ```swift Native iOS
+let scannedDevice: ScannedDevice
+let reader = deviceManager.glucoseMeter(for: scannedDevice)
+
+reader.read(device: scannedDevice).sink { samples in
+  print("Read samples: \(samples)")
+}
 ```
 ```kotlin Native Android
+val scannedDevice: ScannedDevice
+
+val samples = deviceManager.glucoseMeter(context, scannedDevice).read()
 ```
 ```typescript React Native
+let scannedDevice: ScannedDevice
+
+let samples = await devicesManager.readGlucoseMeter(scannedDevice.id)
 ```
 ```dart Flutter
 List<QuantitySample> glucoseSamples;
-glucoseSamples = await vitalDevices.readGlucoseMeterData(scannedDevice);
+glucoseSamples = await deviceManager.readGlucoseMeterData(scannedDevice);
 ```
 </CodeGroup>
 
@@ -149,27 +223,31 @@ let reader = Libre1Reader(
     queue: mainQueue
 )
 
-
 let reading = try await reader.read()
 ```
+
 ```kotlin Native Android
+import android.app.Activity
+import io.tryvital.vitaldevices.devices.Libre1Reader
+
+let currentActivity: Activity
+
+val reading = Libre1Reader.create(currentActivity).read()
 ```
+
 ```typescript React Native
+import { VitalDevicesManager } from "@tryvital/vital-devices-react-native";
+
+let devicesManager: VitalDeviceManager
+
+let result = await devicesManager.readLibre1("reading", "errored", "completed")
 ```
 </CodeGroup>
 
-A `reading` is a payload with two properties: 1) the sensor information 2) an array of glucose readings.
+`read()` returns a result object with two fields:
 
-<CodeGroup>
-```swift Native iOS
-let sensor: Libre1Sensor = reading.sensor
-let samples: [QuantitySample] = reading.samples
-```
-```kotlin Native Android
-```
-```typescript React Native
-```
-</CodeGroup>
+1. the sensor information; and
+2. a list of glucose samples.
 
 ## Posting device samples to Vital
 
@@ -179,9 +257,56 @@ To ensure that data are available, you would need to post the samples through th
 
 <CodeGroup>
 ```swift Native iOS
+import VitalCore
+
+let samples: [QuantitySample]
+
+try await VitalClient.shared.timeSeries.post(
+  .glucose(samples),
+  stage: .daily,
+  provider: .libre,
+  timeZone: .current
+)
 ```
+
 ```kotlin Native Android
+import android.content.Context
+import io.tryvital.client.*
+import io.tryvital.client.services.data.*
+
+val samples: List<QuantitySamplePayload>
+val context: android.content.Context
+
+val client = VitalClient.getOrCreate(context)
+
+await client.createConnectedSourceIfNotExist(ManualProviderSlug.LibreBLE)
+
+// NOTE:
+// For Blood Pressure, use `client.vitalsService.sendBloodPressure`.
+
+await client.vitalsService.sendQuantitySamples(
+    IngestibleTimeseriesResource.BloodGlucose,
+    VitalClient.currentUserId!!,
+    timeseriesPayload= TimeseriesPayload(
+        stage = DataStage.Daily,
+        provider = ManualProviderSlug.LibreBLE,
+        startDate = null,
+        endDate = null,
+        timeZoneId = TimeZone.getDefault().id,
+        data = samples,
+    )
+)
 ```
+
 ```typescript React Native
+import { ManualProviderSlug, QuantitySample, VitalCore } from "@tryvital/vital-core-react-native";
+
+let samples: QuantitySample[]
+
+await VitalCore.createConnectedSourceIfNotExist(ManualProviderSlug.LibreBLE)
+await VitalCore.postTimeSeriesData(
+    { "type": "glucose", "samples": samples },
+    ManualProviderSlug.LibreBLE
+)
 ```
 </CodeGroup>
