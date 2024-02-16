@@ -9,12 +9,16 @@ schemes, and how to authenticate with the Vital Mobile SDK.
 
 ## Accessing Vital API
 
-You can access Vital API through `VitalClient` with Dart-typed request methods and response models.
+You can access Vital API through `VitalClient` with typed request methods and response models.
 
 <CodeGroup>
 ```swift Native iOS
+// e.g. Link Service
+let linkService = VitalClient.shared.link
 ```
 ```kotlin Native Android
+// e.g. Link Service
+val linkService = VitalClient.getOrCreate(context).linkService
 ```
 ```dart Flutter
 import 'package:vital_core/vital_core.dart' as vital_core;
@@ -27,6 +31,9 @@ client = vital_core.VitalClient()
 
 // For customers using the Vital Sign-In Tokens scheme
 client = vital_core.VitalClient.forSignedInUser(environment: Environment.sandbox, region: Region.eu);
+
+// e.g. Link Service
+final linkService = client.linkService;
 ```
 </CodeGroup>
 
@@ -43,10 +50,9 @@ For the `redirectUrl`, you should set it to a URL with a custom URL scheme which
 
 <CodeGroup>
 ```swift Native iOS
-```
-```kotlin Native Android
-```
-```typescript React Native
+let widgetUrl = await VitalClient.shared.link.createProviderLink(
+  redirectURL: "x-vital-app://"
+)
 ```
 ```dart Flutter
 Uri widgetUrl = await client.linkWidgetUrl(redirectUrl: "x-vital-app://");

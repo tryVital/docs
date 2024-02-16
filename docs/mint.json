@@ -121,6 +121,16 @@
       ]
     },
     {
+      "group": "Mobile SDKs",
+      "pages": [
+        "wearables/sdks/installation",
+        "wearables/sdks/authentication",
+        "wearables/sdks/vital-core",
+        "wearables/sdks/vital-health",
+        "wearables/sdks/vital-devices"
+      ]
+    },
+    {
       "group": "Guides",
       "pages": [
         "wearables/guides/apple_health_kit",
@@ -139,16 +149,6 @@
         "wearables/guides/my_fitness_pal",
         "wearables/guides/polar",
         "wearables/guides/whoop"
-      ]
-    },
-    {
-      "group": "Mobile SDKs",
-      "pages": [
-        "wearables/sdks/authentication",
-        "wearables/sdks/ios",
-        "wearables/sdks/android",
-        "wearables/sdks/flutter",
-        "wearables/sdks/react_native"
       ]
     },
     {
@@ -705,6 +705,22 @@
     {
       "source": "/wearables/introspection-api/historical-pulls",
       "destination": "/api-reference/introspection/historical-pulls"
+    },
+    {
+      "source": "/wearables/sdks/ios",
+      "destination": "/wearables/sdks/installation"
+    },
+    {
+      "source": "/wearables/sdks/android",
+      "destination": "/wearables/sdks/installation"
+    },
+    {
+      "source": "/wearables/sdks/flutter",
+      "destination": "/wearables/sdks/installation"
+    },
+    {
+      "source": "/wearables/sdks/react_native",
+      "destination": "/wearables/sdks/installation"
     }
   ]
 }
