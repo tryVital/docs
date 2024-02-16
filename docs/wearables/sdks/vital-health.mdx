@@ -1,0 +1,110 @@
+---
+title: "Health SDK"
+---
+
+
+## Overview
+
+Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
+
+* [Apple HealthKit guide](/wearables/guides/apple_health_kit)
+* [Android Health Connect guide](/wearables/guides/android_health_connect)
+
+The Health SDK guide focuses on the API usage of the Health SDK.
+
+## Request health data permissions
+
+Before the SDK can read any data, you need to ask the end user to grant health data permissions.
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+final List<vital_health.HealthResource> readResources = [
+  vital_health.HealthResource.activity,
+  vital_health.HealthResource.sleep,
+  vital_health.HealthResource.workout,
+];
+await vital_health.askForPermission(readResources, []);
+```
+</CodeGroup>
+
+Note that the OS only prompts the end user once for each resource type. Subsequent requests are
+gracefully ignored by the OS.
+
+## Manually start data sync
+
+You can force data sync to start with `syncData()`.
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+await vital_health.syncData();
+```
+</CodeGroup>
+
+## Automatic Data Sync
+### iOS
+On iOS, syncing is triggered automatically as soon as Apple HealthKit notifies the Vital Mobile SDK of new data.
+If you have configured [iOS HealthKit Background Delivery](https://docs.tryvital.io/wearables/guides/apple_health_kit)
+as well, syncing would continue in background without any user interaction.
+
+### Android
+On Android, syncing [needs to be manually initiated](https://docs.tryvital.io/wearables/guides/android_health_connect#sync-on-app-launch). Android
+Health Connect also does not support syncing in background, since it only allows wearable data to be read whilst the app is in the foregorund (i.e.,
+actively being used by the end user).
+
+
+## Writing data
+
+You can also write data back to Apple HealthKit and Android Health Connect:
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+await vital_health.writeHealthData(vital_health.HealthResourceWrite.water, startDate, endDate, 1000);
+```
+</CodeGroup>
+
+<Tip>
+  Not all resources are writable in both iOS and Android. Please refer to the
+  `health_resource.dart` file.
+</Tip>
+
+## Sync Status
+
+You can observe the `syncStatus` stream for continuous updates on the health data sync status.
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+Stream<SyncStatus> status = vital_health.syncStatus;
+```
+</CodeGroup>

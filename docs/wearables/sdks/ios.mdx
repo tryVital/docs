@@ -272,44 +272,6 @@ You can check our example app, to see how we do it.
 
 </Warning>
 
-### 2. Freestyle Libre 1
-
-We currently support Libre 1 sensors via NFC readings. Please make sure you add NFC capabilities in your app:
-
-<img src="/img/iOS/nfc_permission.png" />
-
-Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
-
-To use the reader:
-
-```swift
-let reader = Libre1Reader(
-        readingMessage: "Ready for reading",
-        errorMessage: "Failed reading from sensor",
-        completionMessage: "Completed successfully!",
-        queue: mainQueue
-    )
-
-
-let reading = try await reader.read()
-```
-
-A `reading` is a payload with two properties: 1) the sensor information 2) an array of glucose readings.
-
-```swift
-
-let sensor: Libre1Sensor = reading.sensor
-let samples: [QuantitySample] = reading.samples
-```
-
-As previously mentioned, you are responsible for sending the samples to the server. You can do so via `VitalClient.shared.timeSeries.post`.
-
-<Warning>
-  Readings taken with the SDK are not guaranteed to match the official Freestyle
-  Libre app. This mismatch happens due to the algorithm difference used by us,
-  compared to the official Freestyle Libre.
-</Warning>
-
 ---
 
 ## 6. VitalHealthKit

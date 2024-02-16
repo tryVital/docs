@@ -1,0 +1,187 @@
+---
+title: "Devices SDK"
+---
+
+
+## Prerequisites
+
+Your app project must declare the required permission usage. This applies equally to both native,
+Flutter and React Native app projects.
+
+<Tabs>
+  <Tab title="iOS">
+  Add the following to your `Info.plist` file:
+
+  ```xml
+  <key>NSBluetoothAlwaysUsageDescription</key>
+  <string>Our app uses bluetooth to find, connect and transfer data between different devices</string>
+  ```
+
+  Bluetooth permission on iOS is automatically requested on the first scanning attempt.
+  </Tab>
+  <Tab title="Android">
+  Add the following to your `AndroidManifest.xml`:
+
+  ```xml
+  <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+          <!-- Request legacy Bluetooth permissions on older devices. -->
+  <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
+  ```
+
+  You will have to request the appropriate permissions at in your app before you can call the Vital Devices SDK.
+  </Tab>
+
+
+## Bluetooth devices
+
+### Choose Device Model
+
+The SDK provides a list of supported Bluetooth devices. Select the matching instance to prepare for scanning.
+
+<CodeGroup>
+```swift Native iOS
+import VitalDevices
+
+/// Get the brands
+let brands = DevicesManager.brands()
+
+/// Each brand has devices
+let devices = DevicesManager.devices(for: brands[0])
+```
+
+```kotlin Native Android
+```
+```typescript React Native
+```
+
+```dart Flutter
+final vitalDevices = DeviceManager();
+
+final deviceModels = await vitalDevices.getDevices(Brand.accuChek);
+final deviceModel = deviceModel[0];
+```
+</CodeGroup>
+
+### Scanning for devices
+
+First you have to scan for one of the supported devices. 
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+ScannedDevice? scannedDevice;
+
+vitalDevices.scanForDevices(deviceModel).listen((newDevice) {
+  scannedDevice = newDevice;
+});
+
+// Stop scanning
+await vitalDevices.stopScan();
+```
+</CodeGroup>
+
+Depending on the type of device you are connecting to, you will have to call different methods to connect to it.
+
+### Blood Pressure Monitor
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+List<BloodPressureSample> bloodPressureSamples;
+bloodPressureSamples = await vitalDevices.readBloodPressureData(scannedDevice);
+```
+</CodeGroup>
+
+### Glucose Meter
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+List<QuantitySample> glucoseSamples;
+glucoseSamples = await vitalDevices.readGlucoseMeterData(scannedDevice);
+```
+</CodeGroup>
+
+After you have received samples depending on the type of device you might need to star scanning again to receive the
+next set of samples.
+
+## Freestyle Libre 1
+
+<Warning>
+  Readings taken with the SDK are not guaranteed to match the official Freestyle
+  Libre app. This mismatch happens due to the algorithm difference used by us,
+  compared to the official Freestyle Libre.
+</Warning>
+
+We currently support Libre 1 sensors via NFC readings. Please make sure you add NFC capabilities in your app:
+
+<img src="/img/iOS/nfc_permission.png" />
+
+Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
+
+To use the reader:
+
+<CodeGroup>
+```swift Native iOS
+let reader = Libre1Reader(
+    readingMessage: "Ready for reading",
+    errorMessage: "Failed reading from sensor",
+    completionMessage: "Completed successfully!",
+    queue: mainQueue
+)
+
+
+let reading = try await reader.read()
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+</CodeGroup>
+
+A `reading` is a payload with two properties: 1) the sensor information 2) an array of glucose readings.
+
+<CodeGroup>
+```swift Native iOS
+let sensor: Libre1Sensor = reading.sensor
+let samples: [QuantitySample] = reading.samples
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+</CodeGroup>
+
+## Posting device samples to Vital
+
+Vital Devices SDK does not automatically send the samples back to Vital data store.
+
+To ensure that data are available, you would need to post the samples through the SDK:
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+</CodeGroup>

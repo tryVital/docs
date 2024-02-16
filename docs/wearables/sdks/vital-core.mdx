@@ -1,0 +1,54 @@
+---
+title: "Core SDK"
+---
+
+## Overview
+
+Check out the [SDK Authentication guide](https://docs.tryvital.io/wearables/sdks/authentication) on the available SDK authentication
+schemes, and how to authenticate with the Vital Mobile SDK.
+
+## Accessing Vital API
+
+You can access Vital API through `VitalClient` with Dart-typed request methods and response models.
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```dart Flutter
+import 'package:vital_core/vital_core.dart' as vital_core;
+
+vital_core.VitalClient client;
+
+// For customers using Vital API Keys for early evaluation.
+client = vital_core.VitalClient()
+  ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'sk_eu_...');
+
+// For customers using the Vital Sign-In Tokens scheme
+client = vital_core.VitalClient.forSignedInUser(environment: Environment.sandbox, region: Region.eu);
+```
+</CodeGroup>
+
+<br />
+
+<Info>Typed API access is not yet available in React Native.</Info>
+
+## Generating Vital Link URL
+
+You can obtain an URL to the Vital Link Widget through `VitalClient.linkWidgetUrl`. Note that the URL contains
+a short-lived token with 10-minute expiry.
+
+For the `redirectUrl`, you should set it to a URL with a custom URL scheme which your app would register to handle.
+
+<CodeGroup>
+```swift Native iOS
+```
+```kotlin Native Android
+```
+```typescript React Native
+```
+```dart Flutter
+Uri widgetUrl = await client.linkWidgetUrl(redirectUrl: "x-vital-app://");
+```
+</CodeGroup>
