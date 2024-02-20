@@ -20,16 +20,19 @@ Each Vital Sign-In Token is a short-live token which authorizes a Vital Mobile S
 
 ### General Expectations
 
-The Vital Mobile SDK user session lifecycle is expected to match your own user session lifecycle:
+The Vital Mobile SDK user session lifecycle should match your app's user session lifecycle:
 
-1. When your app has successfully authenticated the user with your backend service, it should begin the process to sign-in with the Vital Mobile SDK.
+1. When your app has signed in the app user, it should sign-in with the Vital Mobile SDK.
 
-2. When your user has requested to sign out from your app, it instrucs the Vital Mobile SDK to reset its state.
+2. When your app user is signing out from your app, it should instruct the Vital Mobile SDK to sign-out as well.
 
-Your mobile apps typically only need to request the Vital Sign-In Token once through your backend service, and use the obtained Vital's `sign_in_token` with the Vital Mobile SDK. Once signed-in, the Vital Mobile SDK maintains its user session in persistence storage.
+Vital Mobile SDK keeps a persistent user session on the device. This means your app only needs to sign in the user once,
+by requesting a Vital Sign-In Token through your backend.
 
-
-<Info>Avoid requesting a Vital Sign-In Token through your backend every time the app relaunches.</Info>
+<Info>
+Avoid signing in and out every time your app relaunches.
+Avoid requesting Vital Sign-In Token every time your app relaunches.
+</Info>
 
 ### API flow example
 
@@ -118,9 +121,12 @@ Your mobile apps typically only need to request the Vital Sign-In Token once thr
       }
       ```
     </CodeGroup>
-
+    <br />
     <Warning>
     `signIn()` throws an error when you have already signed in with the Vital SDK.
+
+    You can [inspect the Core SDK status](/wearables/sdks/vital-core#core-sdk-status) at any time for troubleshooting. You can
+    also rely on the Core SDK status to reconcile differences between your own user session state and Vital SDK sign-in.
     </Warning>
 
   </Step>
