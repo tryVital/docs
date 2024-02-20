@@ -119,6 +119,10 @@ Your mobile apps typically only need to request the Vital Sign-In Token once thr
       ```
     </CodeGroup>
 
+    <Warning>
+    `signIn()` throws an error when you have already signed in with the Vital SDK.
+    </Warning>
+
   </Step>
   <Step title="Voila!">
     The Vital Mobile SDK is good to go!
@@ -197,6 +201,40 @@ to enable SDK Automatic Configuration during app launch. This auto-configures th
 not limited to the API Key, the environment and the target User ID. Not only is this a prerequisite to enable HealthKit Background Delivery, this
 allows you also to only call `configure(...)` and `setUserId(...)` once to "sign-in" the user persistently when using the Vital API Key scheme.
 </Info>
+
+## Sign Out
+
+Regardless of the authentication scheme you used, you can sign out with the Vital SDK using `cleanUp()`.
+This erases any persistent user session and configuration stored by the Vital SDK.
+
+<CodeGroup>
+  ```swift Native iOS
+  import VitalCore
+
+  await VitalClient.shared.cleanUp()
+  ```
+
+  ```kotlin Native Android
+  import io.tryvital.client.VitalClient
+  import android.content.Context
+
+  val applicationContext: Context
+
+  VitalClient.getOrCreate(applicationContext).cleanUp()
+  ```
+
+  ```typescript React Native
+  import { VitalCore } from "@tryvital/vital-core-react-native";
+
+  await VitalCore.cleanUp();
+  ```
+
+  ```dart Flutter
+  import 'package:vital_core/vital_core.dart' as vital_core;
+
+  await vital_core.cleanUp();
+  ```
+</CodeGroup>
 
 ## Migrate from Vital API Keys to Vital Sign-In Tokens
 
