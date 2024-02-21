@@ -4,17 +4,22 @@ title: "Timestamps and Time Zones"
 
 ## Timestamps
 
-All Vital data timestamps are formatted using [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) as follows:
+All Vital data timestamps are ISO 8601 formatted as follows:
 
-| Providers       | Time Basis    | Pattern                                 |
-| --------------- | ------------  | --------------------------------------- |
-| Freestyle Libre | Floating Time | `YYYY-mm-ddTHH:mm:ss` (No TZ specifier) |
-| _Everyone else_ | UTC           | `YYYY-mm-ddTHH:mm:ss+00:00`             |
+| Providers       | Time Basis        | Pattern                                     |
+| --------------- | ----------------  | ------------------------------------------- |
+| Freestyle Libre <sup>[1]</sup> | Floating Time <sup>[2]</sup> | `YYYY-mm-ddTHH:mm:ss` (No TZ specifier) |
+| _Everyone else_ | UTC               | `YYYY-mm-ddTHH:mm:ss+00:00` (Always +00:00) |
 
 <Info>
+<sup>[1]</sup>
 Some older teams may see Freestyle Libre data timestamps with the `+00:00` misnomer.
 Please update your system to handle the format as stated. Once done, you can contact Vital support to
 disable the TZ specifier.
+</Info>
+<Info>
+<sup>[2]</sup> [Floating time](https://www.w3.org/International/wiki/FloatingTime) is not affixed to any time zone.
+This is not the same as time relative to a local time zone, i.e., a known UTC offset or geographical location.
 </Info>
 
 
