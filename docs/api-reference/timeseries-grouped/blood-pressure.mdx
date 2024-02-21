@@ -3,6 +3,16 @@ title: "Blood Pressure"
 openapi: "GET /v2/timeseries/{user_id}/blood_pressure/grouped"
 ---
 
+<Card
+  title="View Full Response Schema »"
+  icon="diamond-turn-right"
+  iconType="sharp-solid"
+  color="#F3A712"
+  href="https://api.tryvital.io/redoc#tag/timeseries/operation/get_blood_pressure_grouped"
+>
+  The Response section on the page still needs work. Click here to check out the complete schema.
+</Card>
+
 <RequestExample>
 
 ```bash cURL
@@ -101,7 +111,7 @@ fmt.Printf("Received data %s\n", response)
   "groups": {
     "oura": [
       {
-        "timestamp": "2024-02-21T16:21:50+00:00",
+        "timestamp": "2024-02-21T16:33:33+00:00",
         "systolic": "125",
         "diastolic": "75",
         "unit": "mmHg"
