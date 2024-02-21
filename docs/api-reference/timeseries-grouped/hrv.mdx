@@ -111,9 +111,17 @@ fmt.Printf("Received data %s\n", response)
   "groups": {
     "oura": [
       {
-        "timestamp": "2023-02-13T14:30:52+00:00",
-        "value": 48,
-        "unit": "rmssd"
+        "source": {
+          "provider": "oura",
+          "type": "ring"
+        },
+        "data": [
+          {
+            "timestamp": "2023-02-13T14:30:52+00:00",
+            "value": 48,
+            "unit": "rmssd"
+          }
+        ]
       }
     ]
   }

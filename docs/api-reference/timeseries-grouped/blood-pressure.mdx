@@ -111,10 +111,18 @@ fmt.Printf("Received data %s\n", response)
   "groups": {
     "oura": [
       {
-        "timestamp": "2024-02-21T16:33:33+00:00",
-        "systolic": "125",
-        "diastolic": "75",
-        "unit": "mmHg"
+        "source": {
+          "provider": "oura",
+          "type": "ring"
+        },
+        "data": [
+          {
+            "timestamp": "2024-02-21T22:32:39+00:00",
+            "systolic": "125",
+            "diastolic": "75",
+            "unit": "mmHg"
+          }
+        ]
       }
     ]
   }
