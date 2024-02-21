@@ -1,0 +1,138 @@
+---
+title: "Timestamps and Time Zones"
+---
+
+## Timestamps
+
+All Vital data timestamps are formatted using [RFC 3339](https://www.rfc-editor.org/rfc/rfc3339) as follows:
+
+| Providers       | Time Basis    | Pattern                                 |
+| --------------- | ------------  | --------------------------------------- |
+| Freestyle Libre | Floating Time | `YYYY-mm-ddTHH:mm:ss` (No TZ specifier) |
+| _Everyone else_ | UTC           | `YYYY-mm-ddTHH:mm:ss+00:00`             |
+
+<Info>
+Some older teams may see Freestyle Libre data timestamps with the `+00:00` misnomer.
+Please update your system to handle the format as stated. Once done, you can contact Vital support to
+disable the TZ specifier.
+</Info>
+
+
+## Time Zones
+
+Vital formats time zones in data as a _nullable_ integer offset to UTC:
+
+* A positive offset indicates east of UTC.
+* A negative offset indicates west of UTC.
+* `null` indicates the time zone information is absent.
+
+Each provider has their own affinity of time zone information:
+
+| Affinity                    | Time Basis    | Time Zone |
+| --------------------------- | ------------- | --------- |
+| ✅                          | UTC           | The data comes with time zone information. |
+| User Fallback, or UTC       | UTC           | We assume the data were captured in the [User Fallback Time Zone](#user-fallback-time-zone). We fallback to UTC if the former is not set. |
+| User Fallback, or Absent    | UTC           | We assume the data were captured in the [User Fallback Time Zone](#user-fallback-time-zone). Mark as no time zone (`null`) if the former is not set. |
+| Inferred, or Absent         | UTC           | We infer the time zone from the data. Mark as no time zone (`null`) if the inferrence fails. |
+| Absent                      | UTC           | We do not know the exact time zone the recording took place in. Mark as no time zone (`null`). |
+| Floating Time               | Floating Time | We do not know the exact time zone the recording took place in. Mark as no time zone (`null`). |
+
+### Cloud-based Providers
+
+| Provider                                                                        | Activity Summary (Daily)        | Session Summary (e.g. Sleep)     | Timeseries Sample                |
+|---------------------------------------------------------------------------------| ------------------------------- | -------------------------------- | -------------------------------- |
+| [Freestyle Libre](https://www.freestylelibre.co.uk/libre/) `freestyle_libre`    | _N/A_                           | _N/A_                            | Floating Time                    |
+| [Fitbit](https://www.fitbit.com/global/uk/home)          `fitbit`               | ✅                              | ✅                               | ✅                               |
+| [Garmin](https://www.garmin.com)                         `garmin`               | ✅                              | ✅                               | ✅                               |
+| [Google Fit](https://www.google.com/fit/)                `google_fit`           | User Fallback, or UTC           | User Fallback, or Absent         | Absent                           |
+| [Oura](https://ouraring.com)                             `oura`                 | ✅                              | ✅                               | ✅                               |
+| [Peloton](https://www.onepeloton.com)                    `peloton`              | _N/A_                           | ✅                               | _N/A_                            |
+| [Renpho](https://renpho.com)                             `renpho`               | _N/A_                           | ✅                               | Absent                           |
+| [Strava](https://www.strava.com)                         `strava`               | _N/A_                           | ✅                               | ✅                               |
+| [Wahoo](https://wahoofitness.com)                        `wahoo`                | _N/A_                           | Absent                           | _N/A_                            |
+| [Whoop](https://www.whoop.com)                           `whoop_v2`             | ✅                              | ✅                               | _N/A_                            |
+| [Zwift](https://zwift.com)                               `zwift`                | _N/A_                           | User Fallback, or Absent         | _N/A_                            |
+| [Withings](https://www.withings.com)                     `withings`             | ✅                              | ✅                               | ✅                               |
+| [iHealth](https://ihealthlabs.com)                       `ihealth`              | _N/A_                           | ✅                               | Absent                           |
+| [8Sleep](https://www.eightsleep.com)                     `eight_sleep`          | _N/A_                           | ✅                               | ✅                               |
+| [Hammerhead](https://www.hammerhead.io)                  `hammerhead`           | _N/A_                           | Inferred, or Absent              | Inferred, or Absent              |
+| [Dexcom](https://www.dexcom.com)                         `dexcom_v3`            | _N/A_                           | _N/A_                            | ✅                               |
+| [Polar](https://www.polar.com)                           `polar`                | ✅                              | ✅                               | ✅                               |
+| [Kardia](https://kardia.com/)                            `kardia`               | _N/A_                           | _N/A_                            | ✅                               |
+| [Omron](https://www.omron-healthcare.com)                `omron`                | ✅                              | _N/A_                            | ✅                               |
+
+### SDK-based Providers
+
+<Info>
+On-device data often do not capture the time zone at recording time.
+Vital SDK uses the device's current time zone as the fallback of closest approximation.
+</Info>
+
+| Provider                                                                                             | Activity Summary (Daily) | Session Summary        | Timeseries Samples     |
+|------------------------------------------------------------------------------------------------------| ------------------------ | ---------------------- | ---------------------- |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                       `apple_health_kit`     | ✅                       | ✅                     | ✅                     |
+| [Android Health Connect](https://developer.android.com/health-connect)        `health_connect`       | ✅                       | ✅                     | ✅                     |
+| [Omron](https://www.omron-healthcare.com)                                     `omron_ble`            | _N/A_                    | N/A                    | ✅                     |
+| [Contour](https://www.diabetes.ascensia.com)                                  `contour_ble`          | _N/A_                    | N/A                    | ✅                     |
+| [Accu-Chek](https://www.accu-chek.com)                                        `accuchek_ble`         | _N/A_                    | N/A                    | ✅                     |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/)                `freestyle_libre_ble`  | N/A                      | N/A                    | ✅                     |
+
+
+## Examples
+
+The data point was recorded on July 7, 2023 at 1:00 PM in UTC-07:00.
+
+```json
+{
+  "timestamp": "2023-07-07T20:00:00+00:00",
+  "timezone_offset": -25200
+}
+```
+
+The data point was timestamped to Aug 13, 2023 at 8:12 AM in UTC+00:00 (Zulu).
+We do not know the exact time zone the recording took place in.
+
+```json
+{
+  "timestamp": "2023-08-13T08:12:00+00:00",
+  "timezone_offset": null
+}
+```
+
+The data point was recorded on Sep 27, 2023 at 7:48 AM in floating time (whichever time zone the user was in).
+We do not know the exact time zone the recording took place in.
+
+```json
+{
+  "timestamp": "2023-08-13T07:48:00",
+  "timezone_offset": null
+}
+```
+
+## User Fallback Time Zone
+
+Some providers neither expose nor even capture time zone information at source. So Vital can only request data and interpret them strictly in UTC.
+
+If you prefer the data to be contextualize to the geographical location of a user, a Fallback Time Zone (denoted by an [IANA tz database identifier](https://data.iana.org/time-zones/tz-link.html))
+can be specified on a per-user basis. Once specified, Vital would use the time zone to pull data and interpret timestamps from any time zone unware providers from that point onwards. 
+
+You can specify the Fallback Time Zone when:
+
+* [Creating a new user](/api-reference/user/create-user); or
+* [Patching an existing user](/api-reference/user/patch-user)
+
+You will also get information about the source (by slug) and the last updated time of the Fallback Time Zone [when getting an existing user](/api-reference/user/get-user). Fallback Time Zone manually supplied via the REST API would always have a source slug of `manual`.
+
+```json Example
+{
+  "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
+  "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
+  "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
+  /** snipped **/
+  "fallback_time_zone": {
+    "id": "Europe/London",
+    "source_slug": "manual",
+    "updated_at": "2022-09-11T13:45:56+00:00"
+  }
+}
+```
