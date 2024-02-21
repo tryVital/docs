@@ -357,40 +357,49 @@
         {
           "group": "Vitals",
           "pages": [
-            "api-reference/timeseries/blood-oxygen",
-            "api-reference/timeseries/blood-pressure",
-            "api-reference/timeseries/cholesterol",
-            "api-reference/timeseries/electrocardiogram_voltage",
-            "api-reference/timeseries/glucose",
-            "api-reference/timeseries/heartrate",
-            "api-reference/timeseries/hrv",
-            "api-reference/timeseries/igg",
-            "api-reference/timeseries/ige",
-            "api-reference/timeseries/respiratory-rate"
+            "api-reference/timeseries-grouped/blood-oxygen",
+            "api-reference/timeseries-grouped/blood-pressure",
+            "api-reference/timeseries-grouped/cholesterol",
+            "api-reference/timeseries-grouped/electrocardiogram-voltage",
+            "api-reference/timeseries-grouped/glucose",
+            "api-reference/timeseries-grouped/heartrate",
+            "api-reference/timeseries-grouped/hrv",
+            "api-reference/timeseries-grouped/igg",
+            "api-reference/timeseries-grouped/ige",
+            "api-reference/timeseries-grouped/respiratory-rate",
+            "api-reference/timeseries-grouped/vo2-max"
+          ]
+        },
+        {
+          "group": "Body",
+          "pages": [
+            "api-reference/timeseries-grouped/body-fat",
+            "api-reference/timeseries-grouped/body-weight"
           ]
         },
         {
           "group": "Activity",
           "pages": [
-            "api-reference/timeseries/calories_active",
-            "api-reference/timeseries/calories_basal",
-            "api-reference/timeseries/distance",
-            "api-reference/timeseries/floors_climbed",
-            "api-reference/timeseries/steps"
+            "api-reference/timeseries-grouped/calories-active",
+            "api-reference/timeseries-grouped/calories-basal",
+            "api-reference/timeseries-grouped/distance",
+            "api-reference/timeseries-grouped/floors-climbed",
+            "api-reference/timeseries-grouped/steps"
           ]
         },
         {
           "group": "Wellness",
           "pages": [
-            "api-reference/timeseries/hypnogram",
-            "api-reference/timeseries/mindfulness-minutes"
+            "api-reference/timeseries-grouped/hypnogram",
+            "api-reference/timeseries-grouped/mindfulness-minutes",
+            "api-reference/timeseries-grouped/stress-level"
           ]
         },
         {
           "group": "Nutrition",
           "pages": [
-            "api-reference/timeseries/caffeine",
-            "api-reference/timeseries/water"
+            "api-reference/timeseries-grouped/caffeine",
+            "api-reference/timeseries-grouped/water"
           ]
         }
       ]
