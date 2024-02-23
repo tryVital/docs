@@ -210,14 +210,14 @@ allows you also to only call `configure(...)` and `setUserId(...)` once to "sign
 
 ## Sign Out
 
-Regardless of the authentication scheme you used, you can sign out with the Vital SDK using `cleanUp()`.
-This erases any persistent user session and configuration stored by the Vital SDK.
+Regardless of the authentication scheme you used, you can sign out with the Vital SDK using `signOut()`.
+This erases any persistent user session and configuration stored by the Vital Core and Health SDKs.
 
 <CodeGroup>
   ```swift Native iOS
   import VitalCore
 
-  await VitalClient.shared.cleanUp()
+  await VitalClient.shared.signOut()
   ```
 
   ```kotlin Native Android
@@ -226,19 +226,19 @@ This erases any persistent user session and configuration stored by the Vital SD
 
   val applicationContext: Context
 
-  VitalClient.getOrCreate(applicationContext).cleanUp()
+  VitalClient.getOrCreate(applicationContext).signOut()
   ```
 
   ```typescript React Native
   import { VitalCore } from "@tryvital/vital-core-react-native";
 
-  await VitalCore.cleanUp();
+  await VitalCore.signOut();
   ```
 
   ```dart Flutter
   import 'package:vital_core/vital_core.dart' as vital_core;
 
-  await vital_core.cleanUp();
+  await vital_core.signOut();
   ```
 </CodeGroup>
 
