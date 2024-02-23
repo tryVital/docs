@@ -115,6 +115,7 @@
       "pages": [
         "wearables/providers/introduction",
         "wearables/providers/resources",
+        "wearables/providers/heart_rate_zones",
         "wearables/providers/timestamps-and-time-zones",
         "wearables/providers/data-attributions",
         "wearables/providers/test_data"

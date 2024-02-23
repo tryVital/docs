@@ -1,0 +1,39 @@
+---
+title: "Heart rate zones in workouts"
+---
+
+
+## Heart Rate Zones Calculation and User Fallback Birth Date
+
+Heart rate zones refer to the segmentation of a workout session based on the percentage brackets of the user's maximum heart rate. [under 50%, 50-60%, 60-70%, 70-80%, 80-90%, above 90%]
+
+The maximum heart rate of an individual is calculated using a straightforward formula: `220 - age`.
+
+However, certain providers may not provide birth date information at the source, leaving Vital without the means to determine the user's age. To address this, we offer the alternative option of providing a Fallback Birth Date for your users.
+
+You can specify the Fallback Birth Date when:
+
+* [Creating a new user](/api-reference/user/create-user); or
+* [Patching an existing user](/api-reference/user/patch-user)
+
+You will also get information about the source (by slug) and the last updated time of the Fallback Birth Date [when getting an existing user](/api-reference/user/get-user). 
+Fallback Birth Date manually supplied via the REST API would always have a source slug of `manual`.
+
+
+<Info>
+If no birth date information is available, the assumed age of 30 is used in the calculations.
+</Info>
+
+```json Example
+{
+  "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
+  "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
+  "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
+  /** snipped **/
+  "fallback_birth_date": {
+    "value": "1980-09-12",
+    "source_slug": "manual",
+    "updated_at": "2022-09-11T13:45:56+00:00"
+  }
+}
+```
