@@ -42,33 +42,33 @@ We currently Support over 300+ devices, a full list can be seen below.
 
 ### SDK Based Providers
 
-| Provider                                                             | Slug                  | Description                                       |
-| -------------------------------------------------------------------- | --------------------- | ------------------------------------------------- |
-| [Accu-Chek](https://www.accu-chek.com) (Bluetooth)                   | `accuchek_ble`        | Glucose Strips/MySugr App                         |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/)              | `apple_health_kit`    | Health and fitness data on iPhone and Apple Watch |
-| [Beurer](https://www.beurer.com/web/gb/) (Bluetooth)                 | `beurer_ble`          | Beurer Blood Pressure monitors                    |
-| [Contour](https://www.diabetes.ascensia.com) (Bluetooth)             | `contour_ble`         | Glucometers                                       |
-| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (NFC) | `freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK       |
-| [Omron](https://www.omron-healthcare.com) (Bluetooth)                | `omron_ble`           | Blood Pressure monitors and scales                |
+| Provider                                                               | Slug                  | Description                                       |
+| ---------------------------------------------------------------------- | --------------------- | ------------------------------------------------- |
+| [Accu-Chek](https://www.accu-chek.com) (Bluetooth)                     | `accuchek_ble`        | Glucose Strips/MySugr App                         |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | `apple_health_kit`    | Health and fitness data on iPhone and Apple Watch |
+| [Beurer](https://www.beurer.com/web/gb/) (Bluetooth)                   | `beurer_ble`          | Beurer Blood Pressure monitors                    |
+| [Contour](https://www.diabetes.ascensia.com) (Bluetooth)               | `contour_ble`         | Glucometers                                       |
+| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (NFC)   | `freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK       |
+| [Omron](https://www.omron-healthcare.com) (Bluetooth)                  | `omron_ble`           | Blood Pressure monitors and scales                |
+| [Android Health Connect](https://developer.android.com/health-connect) | `health_connect`      | Health and fitness data on Android devices        |
 
-## Providers under active development
+## Providers under beta
 
-**Beta**: Currently under development. All providers here are available in sandbox and production, any feedback you have is greatly appreciated!
+**Beta**: Providers under beta, these are providers that have been recently added. All providers here are available in sandbox, any feedback you have is greatly appreciated!
 
-| Provider                                                               | Slug             | Description                                |
-| ---------------------------------------------------------------------- | ---------------- | ------------------------------------------ |
-| [Android Health Connect](https://developer.android.com/health-connect) | `health_connect` | Health and fitness data on Android devices |
-| [Kardia](https://kardia.com/)                                          | `kardia`         | Electrocardiogram readings                 |
-| [Omron](https://www.omron-healthcare.com) (Cloud)                      | `omron`          | Blood Pressure monitors and scales         |
+| Provider                                          | Slug     | Description                        |
+| ------------------------------------------------- | -------- | ---------------------------------- |
+| [Omron](https://www.omron-healthcare.com) (Cloud) | `omron`  | Blood Pressure monitors and scales |
+| [Kardia](https://kardia.com/)                     | `kardia` | Electrocardiogram readings         |
 
 **Planned**: On our roadmap
 
-| Provider                                        | Slug         | Description               | Stage   |
-| ----------------------------------------------- | ------------ | ------------------------- | ------- |
-| [Xiaomi](https://www.xiaomi.com)                | `xiaomi`     | All data                  | Enquire |
-| [Suunto](https://www.suunto.com)                | `suunto`     | Fitness Watch             | Planned |
-| [iGlucose](https://smartmeterrpm.com/iglucose/) | `iglucose`   | Glucose Strips            | Planned |
-| [KetoMojo](https://keto-mojo.com)               | TBD          | Glucose, Ketones and more | Planned |
+| Provider                                        | Slug       | Description               | Stage   |
+| ----------------------------------------------- | ---------- | ------------------------- | ------- |
+| [Xiaomi](https://www.xiaomi.com)                | `xiaomi`   | All data                  | Enquire |
+| [Suunto](https://www.suunto.com)                | `suunto`   | Fitness Watch             | Planned |
+| [iGlucose](https://smartmeterrpm.com/iglucose/) | `iglucose` | Glucose Strips            | Planned |
+| [KetoMojo](https://keto-mojo.com)               | TBD        | Glucose, Ketones and more | Planned |
 
 ## Full Device Support List
 
@@ -83,19 +83,20 @@ We currently Support over 300+ devices, a full list can be seen below.
 </iframe>
 
 ## Data Frequency
+
 Whenever Vital detects that new data is available, [data events](/event-catalog) are always sent to your configured endpoints, regardless of the provider being push-based or polling-based.
 
 ### Cloud Based Providers
+
 Cloud Based Providers can be divided in two main categories:
 
-* Push-based
+- Push-based
 
-    * When a cloud-based provider supports a push notify mechanism (typically webhooks), Vital would prefer to use it to drive data fetches. In other words, as soon as the provider notifies Vital of new data through the said mechanism, Vital fetches the latest data.
+  - When a cloud-based provider supports a push notify mechanism (typically webhooks), Vital would prefer to use it to drive data fetches. In other words, as soon as the provider notifies Vital of new data through the said mechanism, Vital fetches the latest data.
 
-* Polling-based
+- Polling-based
 
-    * For providers and/or resources without any push notify mechanism, Vital polls these resources at a regular schedule, typically every 15 minutes or so.
-
+  - For providers and/or resources without any push notify mechanism, Vital polls these resources at a regular schedule, typically every 15 minutes or so.
 
 | Provider                                                        | Description |
 | --------------------------------------------------------------- | ----------- |
@@ -122,13 +123,13 @@ Cloud Based Providers can be divided in two main categories:
 
 SDK Based Providers are all push-based, where data are pushed from the Vital SDK embedded inside your Android or iOS app.
 
-| Provider                                                                 | Description |
-| ------------------------------------------------------------------------ | ----------- |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                  | Sync on OS notification, variable frequency [1] |
-| [Android Health Connect](https://developer.android.com/health-connect)   | Sync On App Launch [2]      |
-| [Omron](https://www.omron-healthcare.com)                                | Manual Post             |
-| [Contour](https://www.diabetes.ascensia.com)                             | Manual Post             |
-| [Accu-Chek](https://www.accu-chek.com)                                   | Manual Post             |
+| Provider                                                               | Description                                     |
+| ---------------------------------------------------------------------- | ----------------------------------------------- |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | Sync on OS notification, variable frequency [1] |
+| [Android Health Connect](https://developer.android.com/health-connect) | Sync On App Launch [2]                          |
+| [Omron](https://www.omron-healthcare.com)                              | Manual Post                                     |
+| [Contour](https://www.diabetes.ascensia.com)                           | Manual Post                                     |
+| [Accu-Chek](https://www.accu-chek.com)                                 | Manual Post                                     |
 
 <Warning>
 [1] Notes on Sync on OS notification:
@@ -147,6 +148,7 @@ when certain opportunity arises (e.g., when Sleep Mode ends, or when the phone s
 Therefore, it is not recommended to base your UX around immediate availability of HealthKit data. The only exception
 is if your UX do involve the user actively using your iOS app. For example, iOS 17+ supports third-party apps initiating
 an Apple Watch workout session that would be live synced with your iPhone app.
+
 </Warning>
 
 <Warning>
@@ -158,6 +160,7 @@ provide Sync On App Launch as the default automatic behaviour.
 
 If automatic background monitoring is desired, your app would have to implement one of the [Android Foreground Service](https://developer.android.com/guide/components/foreground-services#background-start-restriction-exemptions)
 — e.g. high priority push from Firebase Cloud Messaging — during which your service manually initiate a Vital SDK sync.
+
 </Warning>
 
 ## Historical Days Retrieved
@@ -191,7 +194,7 @@ When a new provider is connected to a user, Vital retrieves the historical data 
 | [Dexcom](https://www.dexcom.com)                                             | `30`          |
 | [Dexcom (G6 And Older)](https://www.dexcom.com)                              | `1`           |
 | [MyFitnessPal](https://www.myfitnesspal.com)                                 | `14`          |
-| [Polar](https://www.polar.com/accesslink-api/#polar-accesslink-api)          | `28`*         |
+| [Polar](https://www.polar.com/accesslink-api/#polar-accesslink-api)          | `28`\*        |
 | [Cronometer](https://www.cronometer.com)                                     | `28`          |
 
 \* Polar only supports historical backfill for Sleep and Sleep Stream resources.
