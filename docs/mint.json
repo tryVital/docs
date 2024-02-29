@@ -63,6 +63,11 @@
       "name": "Event Catalog",
       "icon": "bolt",
       "url": "event-catalog"
+    },
+    {
+      "name": "Changelog",
+      "icon": "newspaper",
+      "url": "changelog"
     }
   ],
   "navigation": [
@@ -73,6 +78,14 @@
         "home/quickstart",
         "home/environments",
         "home/libraries"
+      ]
+    },
+    {
+      "group": "Wearables",
+      "pages": [
+        "changelog/wearables/api",
+        "changelog/wearables/providers",
+        "changelog/wearables/deprecations"
       ]
     },
     {
@@ -209,7 +222,6 @@
     {
       "group": "Core",
       "pages": [
-        "api-reference/changelog",
         {
           "group": "Users",
           "pages": [
