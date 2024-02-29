@@ -1,8 +1,15 @@
 ---
 title: Create Sign-In Token
 openapi: "POST /v2/user/{user_id}/sign_in_token"
-description: Create a [Vital Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) for your mobile apps to sign in with [Vital Mobile SDKs](/wearables/sdks/authentication).
 ---
+
+Create a [Vital Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) for your mobile apps to
+sign in with [Vital Mobile SDKs](/wearables/sdks/authentication).
+
+<Info>
+Avoid requesting Vital Sign-In Token every time your mobile app relaunches.
+Your mobile app only needs to sign-in once with the Vital Mobile SDK. A signed-in session is persistent on device.
+</Info>
 
 <RequestExample>
 

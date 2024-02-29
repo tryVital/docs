@@ -209,6 +209,7 @@
     {
       "group": "Core",
       "pages": [
+        "api-reference/changelog",
         {
           "group": "Users",
           "pages": [
