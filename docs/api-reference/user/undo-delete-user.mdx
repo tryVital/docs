@@ -1,23 +1,32 @@
 ---
-openapi: "DELETE /v2/user/{user_id}"
+title: "Undo User Deletion"
+openapi: "POST /v2/user/undo_delete"
 ---
 
-Deleting a user would also [deregister their all provider connections](/api-reference/user/deregister-a-provider) immediately.
-Vital erases the user data after a 7-day grace period.
+You can undo any [user deletion](/api-reference/user/delete-user) that is still in their 7-day
+grace period.
 
-<Info>
-If you wish to undo a user deletion for any reason, you can undo the deletion through the
-[Undo User Deletion](/api-reference/user/undo-delete-user) API. Note that undoing would not
-restore any provider connections.
-</Info>
+<Note>
+Undoing a deletion does not restore any provider connections.
+</Note>
+<Warning>
+You cannot undo a deletion if you have already [created a new user](/api-reference/user/create-user) using
+the same `client_user_id`.
+</Warning>
 
 <RequestExample>
 
 ```bash cURL
 curl --request DELETE \
-     --url {{BASE_URL}}/v2/user/{user_id} \
+     --url {{BASE_URL}}/v2/user/undo_delete \
      --header 'x-vital-api-key: <API_KEY>' \
-     --header 'Accept: application/json'
+     --header 'Accept: application/json' \
+     --header 'Content-Type: application/json' \
+     --data '
+{
+     "client_user_id": "8DS6YRVBCSQQ4S0",
+}
+'
 ```
 
 ```javascript Node
@@ -28,9 +37,9 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.user.delete(
-    '<user_id>'
-);
+const data = await client.user.undoDelete({
+    clientUserId: '8DS6YRVBCSQQ4S0',
+});
 ```
 
 ```python Python
@@ -42,21 +51,26 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.delete(
-    user_id="<user_id>"
+data = client.user.undo_delete(
+    client_user_id="8DS6YRVBCSQQ4S0"
 )
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
+import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.user().delete("<user_id>");
+UserUndoDeleteRequest request = UserUndoDeleteRequest.builder()
+        .clientUserId("8DS6YRVBCSQQ4S0")
+        .build();
+
+var data = vital.user().undoDelete(request);
 ```
 
 ```go Go
@@ -72,7 +86,10 @@ client := vitalclient.NewClient(
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.User.Delete(context.TODO(), "<user_id>")
+request = &vital.UserUndoDeleteRequest{
+  ClientUserId: "8DS6YRVBCSQQ4S0",
+}
+response, err := client.User.UndoDelete(context.TODO(), request)
 if err != nil {
   return err
 }

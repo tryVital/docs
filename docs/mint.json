@@ -216,6 +216,7 @@
             "api-reference/user/get-user",
             "api-reference/user/patch-user",
             "api-reference/user/delete-user",
+            "api-reference/user/undo-delete-user",
             "api-reference/user/get-users",
             "api-reference/user/create-sign-in-token"
           ]
