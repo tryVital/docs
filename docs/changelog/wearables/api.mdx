@@ -1,0 +1,73 @@
+---
+title: "API"
+---
+
+### User Undo Deletion
+
+You can now undo user deletion that is still in the 7-day grace period.
+
+<Accordion icon="trash-undo" iconType="duotone" title="Details">
+Check out the [User Undo Deletion](/api-reference/user/undo-delete-user) endpoint documentation.
+</Accordion>
+
+### Fallback Birth Date for Heart Rate Zones
+You can now set a Fallback Birth Date on a user.
+
+<Accordion icon="cake-candles" iconType="duotone" title="Details">
+Vital can use this to compute a more accurate workout Heart Rate Zones, when the provider
+exposes neither heart rate zones nor user age to Vital.
+
+Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-birth-date) documentation.
+</Accordion>
+
+### Grouped Timeseries
+You can now get grouped timeseries data.
+
+<Accordion icon="chart-scatter" iconType="duotone" title="Details">
+
+This initial release groups data by [Source Type](/wearables/providers/data-attributions#source-type)
+from [supported providers](/wearables/providers/data-attributions#supported-providers).
+
+Check out the [Blood Oxygen](/api-reference/timeseries-grouped/blood-oxygen) endpoint documentation for an example.
+</Accordion>
+
+
+### Historical Pull Introspection
+You can now introspect the status of all one-off user historical data pulls.
+
+<Accordion icon="binoculars" iconType="duotone" title="Details">
+It also provides the pulled date-time range, as well as a rough estimate of the amount of
+data ingested (in terms of "days with data").
+
+Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
+</Accordion>
+
+### User Resources Introspection
+You can now introspect user data ingestion statistics.
+
+<Accordion icon="binoculars" iconType="duotone" title="Details">
+For example, the endpoint provides:
+
+1. Oldest and newest data timestamp
+2. The number of objects sent in `*.created` events
+3. The status and time of the last ingestion attempt (polling or push)
+
+Check out the [User Resources Introspection](/api-reference/introspection/user-resources) endpoint documentation.
+</Accordion>
+
+
+### Vital Sign-In Token for Mobile SDKs
+
+Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
+
+<Accordion icon="id-badge" iconType="duotone" title="Details">
+It grants only user-scoped access to your mobile app sign-ins. This allows you to keep your Vital API Keys
+as server-side secrets.
+
+We encourage all customers using Vital API Keys in their production mobile apps to
+migrate to the Vital Sign-In Token scheme.
+
+Check out the [SDK Authentication](/wearables/sdks/authentication#vital-sign-in-token) guide on how to migrate to
+this scheme. Check out the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint documentation
+on how to generate tokens for your mobile app sign-ins.
+</Accordion>

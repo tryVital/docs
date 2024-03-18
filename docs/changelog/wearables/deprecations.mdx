@@ -1,0 +1,15 @@
+---
+title: "Deprecations"
+---
+
+### The `is_final` flag in `historical.data.*.created` events
+<Warning>The removal will happen on or after **15 April 2024**.</Warning>
+
+We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
+
+For each resource, Vital now signals one Historical Pull Completed event, only after we have finished fetching
+all data chunks. This means `is_final` no longer has a meaning, since the event itself is *final*.
+
+<Card title="Recommended Action">
+Stop parsing `is_final` as a required field when processing `historical.data.*.created` events.
+</Card>
