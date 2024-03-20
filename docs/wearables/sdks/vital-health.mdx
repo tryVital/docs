@@ -7,8 +7,8 @@ title: "Health SDK"
 
 Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
 
-* [Apple HealthKit guide](/wearables/guides/apple_health_kit)
-* [Android Health Connect guide](/wearables/guides/android_health_connect)
+* [Apple HealthKit guide](/wearables/guides/apple-healthkit)
+* [Android Health Connect guide](/wearables/guides/android-health-connect)
 
 The Health SDK guide focuses on the API usage of the Health SDK.
 
@@ -58,12 +58,13 @@ await vital_health.configure(
 </CodeGroup>
 
 
-## Request health data permissions
+## Ask user for health data permissions
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
 
-<CodeGroup>
-```swift Native iOS
+<Tabs>
+<Tab title="Native iOS">
+```swift
 import VitalHealthKit
 
 await VitalHealthKitClient.shared.ask(
@@ -71,9 +72,18 @@ await VitalHealthKitClient.shared.ask(
   writePermissions: []
 )
 ```
+</Tab>
 
-```kotlin Native Android
-val contract = vitalHealthConnectManager.createPermissionRequestContract(
+<Tab title="Native Android">
+<CodeGroup>
+```kotlin Android Compose
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.*
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+val manager: VitalHealthConnectManager = ...
+val contract = manager.createPermissionRequestContract(
   readResources = set(
     VitalResource.Activity,
     VitalResource.Workout,
@@ -81,13 +91,6 @@ val contract = vitalHealthConnectManager.createPermissionRequestContract(
   ),
   writeResources = emptySet(),
 )
-
-//
-// Launch via Compose UI
-//
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.material3.*
 
 val coroutineScope = rememberCoroutineScope()
 val permissionsLauncher = rememberLauncherForActivityResult(contract) { outcomeAsync ->
@@ -98,15 +101,17 @@ val permissionsLauncher = rememberLauncherForActivityResult(contract) { outcomeA
 }
 
 Button(onClick = { permissionsLauncher.launch(Unit) }) {
-  Text("Request")
+  Text("Ask for permission")
 }
+```
 
-//
-// Launch via AndroidX Activity Result API
-//
+```kotlin AndroidX Activity Result API
 import androidx.activity.ComponentActivity
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
 
-val activity: ComponentActivity
+val activity: ComponentActivity = ...
+val manager: VitalHealthConnectManager = ...
+
 activity.registerForActivityResult(contract) { outcomeAsync ->
   CoroutineScope(Dispatchers.Main).launch {
     val outcome = outcomeAsync.await()
@@ -114,8 +119,11 @@ activity.registerForActivityResult(contract) { outcomeAsync ->
   }
 }
 ```
+</CodeGroup>
+</Tab>
 
-```typescript React Native
+<Tab title="React Native">
+```typescript
 import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
 
 await VitalHealth.ask(
@@ -123,8 +131,10 @@ await VitalHealth.ask(
     []
 )
 ```
+</Tab>
 
-```dart Flutter
+<Tab title="Flutter">
+```dart
 import 'package:vital_health/vital_health.dart' as vital_health;
 
 final List<vital_health.HealthResource> readResources = [
@@ -134,10 +144,121 @@ final List<vital_health.HealthResource> readResources = [
 ];
 await vital_health.askForPermission(readResources, []);
 ```
-</CodeGroup>
+</Tab>
+</Tabs>
 
 Note that the OS only prompts the end user once for each resource type. Subsequent requests are
 gracefully ignored by the OS.
+
+
+## Automatic Data Sync
+
+Vital Health SDK automates data sync for you on both Android and iOS. Please first consult
+the provider-specific guides for the requirements and setup instructions:
+
+* [Apple HealthKit guide](/wearables/guides/apple-healthkit)
+* [Android Health Connect guide](/wearables/guides/android-health-connect)
+
+
+### iOS
+
+| Sync is automatically... |           |
+| ------------------------ | --------- |
+| Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
+| Triggered by             | Two behaviours: <ul><li>Foreground: Apple HealthKit immediately delivers buffered and new changes.</li><li>Background: Hourly batch delivery of changes, subject to OS throttling.</li></ul> |
+
+<Note>
+HealthKit change notification is an always-on behaviour.
+
+If you did not configure [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit)
+as instructed, your app will not receive any HealthKit change notification while it is in background.
+In turn, background sync would not occur.
+</Note>
+
+### Android
+
+| Sync is automatically... |           |
+| ------------------------ | --------- |
+| Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
+| Triggered by             | Two mechanisms: <ul><li>[Sync On App Launch](/wearables/guides/android-health-connect#sync-on-app-launch)</li><li>[Background Sync (Experimental)](/wearables/guides/android-health-connect#background-sync-experimental) if it is enabled.</li></ul> |
+
+<Note>
+Sync On App Launch is an always-on behaviour. Background Sync (Experimental) is an **opt-in** behaviour.
+
+Please refer to the [Android Health Connect guide](/wearables/guides/android-health-connect) for the full context
+and required configuration of these two behaviours.
+</Note>
+
+### Background Sync Frequency
+
+Vital Health SDK schedules hourly background sync with both Apple HealthKit and Android Health Connect, provided that you have:
+
+1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instruction; and
+2. Configured [Health Connect Background Sync (Experimental)](/wearables/guides/android-health-connect#background-sync-experimental) and request user permissions (when necessary) as per instruction.
+
+However, this schedule is only advisory. The OS has full discretion to defer the scheduled time based on runtime
+constraints like battery power, as well as platform background execution policies. For more detailed explanation, please refer to:
+
+* [Apple HealthKit: Sync Frequency](/wearables/guides/apple-healthkit#sync-frequency)
+* [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
+
+In other words, your product experience should not assume near real-time availability of wearable data, since the norm
+is a variable delay ranging from an hour to a day. Longer delay is also possible due to the lack of Internet
+connectivity, e.g.,  a long-haul flight, or an off-the-grid trip.
+
+The only possible exception is when your product experience does involve
+**active usage** of your consumer app with an active Internet connection. For example, iOS 17+ supports third-party
+apps initiating an Apple Watch workout session that would be live synced with your iPhone app.
+
+
+### Pausing Data Synchronization
+
+You can pause and unpause data sync at any time, without having to sign-out the user from the Vital Mobile SDK.
+Note that pausing data sync does not reset the incremental sync progress and does not trigger a historical stage
+upon unpause. It only "freezes" the sync progress.
+
+<CodeGroup>
+```swift Native iOS
+import VitalHealthKit
+
+// Pause Synchronization
+VitalHealthKitClient.shared.pauseSynchronization = true
+
+// Unpause Synchronization
+VitalHealthKitClient.shared.pauseSynchronization = false
+
+// Check if synchronization is paused
+print("Paused? \(VitalHealthKitClient.shared.pauseSynchronization)")
+```
+
+```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+val manager = VitalHealthConnectManager.getOrCreate(context)
+
+// Pause Synchronization
+manager.pauseSynchronization = true
+
+// Unpause Synchronization
+manager.pauseSynchronization = false
+
+// Check if synchronization is paused
+Log.i("sync", "Paused? ${manager.pauseSynchronization}")
+```
+
+```typescript React Native
+import { VitalHealth } from "@tryvital/vital-health-react-native";
+
+// Pause Synchronization
+await VitalHealth.setPauseSynchronization(true);
+
+// Unpause Synchronization
+await VitalHealth.setPauseSynchronization(false);
+
+// Check if synchronization is paused
+const isPaused = await VitalHealth.pauseSynchronization;
+```
+</CodeGroup>
 
 ## Manually start data sync
 
@@ -170,18 +291,6 @@ import 'package:vital_health/vital_health.dart' as vital_health;
 await vital_health.syncData();
 ```
 </CodeGroup>
-
-## Automatic Data Sync
-### iOS
-On iOS, syncing is triggered automatically as soon as Apple HealthKit notifies the Vital Mobile SDK of new data.
-If you have configured [iOS HealthKit Background Delivery](https://docs.tryvital.io/wearables/guides/apple_health_kit)
-as well, syncing would continue in background without any user interaction.
-
-### Android
-On Android, syncing [needs to be manually initiated](https://docs.tryvital.io/wearables/guides/android_health_connect#sync-on-app-launch). Android
-Health Connect also does not support syncing in background, since it only allows wearable data to be read whilst the app is in the foregorund (i.e.,
-actively being used by the end user).
-
 
 ## Writing data
 

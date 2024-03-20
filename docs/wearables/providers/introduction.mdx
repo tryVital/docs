@@ -125,43 +125,18 @@ SDK Based Providers are all push-based, where data are pushed from the Vital SDK
 
 | Provider                                                               | Description                                     |
 | ---------------------------------------------------------------------- | ----------------------------------------------- |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | Sync on OS notification, variable frequency [1] |
-| [Android Health Connect](https://developer.android.com/health-connect) | Sync On App Launch [2]                          |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | <ul><li>Auto sync on app launch and in foreground</li><li>Hourly Background Sync, subject to OS throttling</li></ul> |
+| [Android Health Connect](https://developer.android.com/health-connect) | <ul><li>Sync On App Launch</li><li>Opt-in Hourly Background Sync (Experimental), subject to OS throttling</li></ul> |
 | [Omron](https://www.omron-healthcare.com)                              | Manual Post                                     |
 | [Contour](https://www.diabetes.ascensia.com)                           | Manual Post                                     |
 | [Accu-Chek](https://www.accu-chek.com)                                 | Manual Post                                     |
 
-<Warning>
-[1] Notes on Sync on OS notification:
+For more information on Apple HealthKit and Android Health Connect, please refer to the specific guides:
 
-Apple HealthKit notifies new data immediately only when your iOS app is in the foreground with visible UI.
+* [Vital Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync)
+* [Apple HealthKit: Sync Frequency](/wearables/guides/apple-healthkit#sync-frequency)
+* [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
 
-Meanwhile, [properly configured](/wearables/guides/apple_health_kit) HealthKit apps in background with no visible UI are
-notified on an OS-throttled, opportunistic schedule that can dynamically change based on factors like CPU usage, battery usage,
-connectivity, Low Power Mode, and delivery history.
-
-The Vital SDK — or any third-party HealthKit apps — has no control over this, other than _suggesting_
-a background delivery frequency to the OS as the lower bound. The actual delivery frequency
-remains at full discretion of the OS, and can range from hourly, to once a day, or
-when certain opportunity arises (e.g., when Sleep Mode ends, or when the phone starts charging).
-
-Therefore, it is not recommended to base your UX around immediate availability of HealthKit data. The only exception
-is if your UX do involve the user actively using your iOS app. For example, iOS 17+ supports third-party apps initiating
-an Apple Watch workout session that would be live synced with your iPhone app.
-
-</Warning>
-
-<Warning>
-[2] Notes on Sync On App Launch:
-
-Because Android Health Connect disallowes any data access when the app is in background, your app
-must be regularly opened by the end user for data to be synchronized. Hence, the Vital SDK can only
-provide Sync On App Launch as the default automatic behaviour.
-
-If automatic background monitoring is desired, your app would have to implement one of the [Android Foreground Service](https://developer.android.com/guide/components/foreground-services#background-start-restriction-exemptions)
-— e.g. high priority push from Firebase Cloud Messaging — during which your service manually initiate a Vital SDK sync.
-
-</Warning>
 
 ## Historical Days Retrieved
 

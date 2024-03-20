@@ -202,7 +202,7 @@ Vital Mobile SDK can be configured to authenticate using API Key alongside a tar
 <Info>
 When running on iOS, the SDK must be **explicitly** configured before other SDK methods can be invoked.
 
-Alternatively, follow the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple_health_kit#2-integrate-with-ios-system-callbacks)
+Alternatively, follow the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#2-integrate-with-ios-system-callbacks)
 to enable SDK Automatic Configuration during app launch. This auto-configures the SDK using the last known configuration you supplied — including but
 not limited to the API Key, the environment and the target User ID. Not only is this a prerequisite to enable HealthKit Background Delivery, this
 allows you also to only call `configure(...)` and `setUserId(...)` once to "sign-in" the user persistently when using the Vital API Key scheme.

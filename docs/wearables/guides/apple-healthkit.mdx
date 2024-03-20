@@ -2,12 +2,28 @@
 title: "Apple HealthKit"
 ---
 
-Apple HealthKit is an SDK only provider. This means that you access your user's data by using either our [Native iOS](/wearables/sdks/ios), [Flutter](/wearables/sdks/flutter) or [React Native](/wearables/sdks/react_native) SDK. We have a guide for each of these SDKs that you should follow for more detail.
+Apple HealthKit is an SDK-based provider. Your Android consumer app would embed the Vital Mobile SDKs on a supported
+stack. Data are then pulled from the Apple HealthKit data store on the user's Android device.
 
-<Tip>
-  We recommend reading the [Native iOS Guide](/wearables/sdks/ios), since the
-  docs apply to all platforms.
-</Tip>
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK] guides for SDK installation
+instructions and general API usage. This guide contains information on the the behaviour and required configuration
+specific to the Apple HealthKit integration.
+
+## Sync Frequency
+
+| App state  | Behaviour |
+| ---------- | --------- |
+| Foreground | Apple HealthKit delivers any buffered and new changes immediately. |
+| Background | Hourly batch delivery of changes, subject to operating system throttling. |
+
+While the SDK schedules hourly data sync with Apple HealthKit, iOS has full discretion to defer the scheduled time
+based on factors like CPU usage, battery usage, connectivity, and Low Power Mode.
+
+In other words, the Vital SDK — or any third-party HealthKit apps — cannot guarantee the sync to happen on a strict
+schedule. The hourly schedule is advisory and non-binding from the persective of iOS. The actual delivery frequency
+can therefore fluctuate from hourly, to once a day, or when certain opportunity arises (e.g., when Sleep Mode ends,
+or when the phone starts charging).
+
 
 ## Background Delivery
 

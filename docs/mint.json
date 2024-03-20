@@ -147,7 +147,7 @@
     {
       "group": "Guides",
       "pages": [
-        "wearables/guides/apple_health_kit",
+        "wearables/guides/apple-healthkit",
         "wearables/guides/android-health-connect",
         {
           "group": "Dexcom",
@@ -754,6 +754,10 @@
     {
       "source": "/wearables/guides/android_health_connect",
       "destination": "/wearables/guides/android-health-connect"
+    },
+    {
+      "source": "/wearables/guides/apple_health_kit",
+      "destination": "/wearables/guides/apple-healthkit"
     }
   ]
 }

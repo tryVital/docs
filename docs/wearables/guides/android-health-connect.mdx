@@ -5,6 +5,10 @@ title: "Android Health Connect"
 Android Health Connect is an SDK-based provider. Your Android consumer app would embed the Vital Mobile SDKs on a supported
 stack. Data are then pulled from the Health Connect data store on the user's Android device.
 
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK] guides for SDK installation
+instructions and general API usage. This guide contains information on the the behaviour and required configuration
+specific to the Android Health Connect integration.
+
 ## Configure your AndroidManifest.xml
 
 ### Health Connect privacy dialogue
@@ -290,12 +294,14 @@ with pilot customers. It may be changed or retracted at short notice.
 </Warning>
 
 Vital Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
-experience with Android Health Connect, siimlar to [Background Delivery for Apple HealthKit](/wearables/guides/apple_health_kit#background-delivery) on iOS.
+experience with Android Health Connect, siimlar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
 
 
 ### Sync Frequency
 
-The SDK schedules hourly background sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
+The [Sync On App Launch](#sync-on-app-launch) behaviour is always-on.
+
+When Background Sync is enabled, the SDK additionally schedules hourly sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
 
 The OS has full discretion on whether to honour or defer the time as scheduled by the Vital Health SDK. This includes the policies
 of the base Android OS, as well as any vendor-specific OS augmentation.
@@ -388,7 +394,11 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     You can enable Background Sync through `enableBackgroundSyncContract()` (an AndroidX `ActivityResultContract`).
 
     If the runtime [requires an interactive permission request](#runtime-user-permission-android-12), this contract will launch
-    an Android Intent to request the _"Alarms & Reminders"_ permission. Otherwise, the contract returns `true` synchronously.
+    an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
+    or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
+    the contract returns `false`.
+    
+    Otherwise, the contract returns `true` synchronously when no user interaction is required.
 
     You must launch this `ActivityResultContract` either through the in-built Android Compose support, or
     through the AndroidX Activity Result API if you do not use Android Compose.
@@ -433,19 +443,18 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 
     If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
     `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
-    Otherwise, `enableBackgroundSync()` returns `true` immediately.
+    The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
+    For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
+
+    Otherwise, `enableBackgroundSync()` returns `true` immediately when no user interaction is required.
 
     You can also inspect if Background Sync has been enabled through the `isBackgroundSyncEnabled` property.
 
     <Note>
-    When running on iOS, both APIs return `true` immediately.
+    When running on iOS, both `enableBackgroundSync()` and `isBackgroundSyncEnabled` always return `true` immediately.
     </Note>
 
-    <Info>
-
-    </Info>
-
-    ```typescript Android Compose
+    ```typescript
     import { VitalHealth } from "@tryvital/vital-health-react-native";
 
     await VitalHealth.enableBackgroundSync();
@@ -461,26 +470,12 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 
     You can also inspect if Background Sync has been disabled through the `isBackgroundSyncEnabled` property.
 
-    <CodeGroup>
-    ```kotlin Android Compose
+    ```kotlin
     import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
 
     val manager: VitalHealthConnectManager = ...
     manager.disableBackgroundSync()
     ```
-
-    ```kotlin AndroidX Activity Result API
-    import androidx.activity.ComponentActivity
-    import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
-
-    val activity: ComponentActivity = ...
-    val manager: VitalHealthConnectManager = ...
-
-    activity.registerForActivityResult(contract) { success ->
-        Log.i("VitalBackgroundSync", "Enabled? $success")
-    }
-    ```
-    </CodeGroup>
     </Tab>
     <Tab title="React Native">
     You can disable Background Sync through the `disableBackgroundSync()` method.
@@ -492,7 +487,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     on iOS.
     </Note>
 
-    ```typescript Android Compose
+    ```typescript
     import { VitalHealth } from "@tryvital/vital-health-react-native";
 
     await VitalHealth.enableBackgroundSync();
@@ -501,6 +496,6 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 </Tabs>
 
 
-### Miscellanous
+### Miscellaneous
 
 When you `signOut()` a user, Vital SDK will automatically disable Background Sync.
