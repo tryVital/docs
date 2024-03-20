@@ -309,6 +309,15 @@ of the base Android OS, as well as any vendor-specific OS augmentation.
 For example, the device may enter [Doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) during device inactivity. Doze mode
 would batch and defer most Exact Alarms and other background work to run at a lower frequency.
 
+<Info>
+Not to be confused with Alarm Clock apps, **Exact Alarm** is the technical name of an Android framework for scheduling
+app wake-ups in background at certain wall clock time. It is the Vital Health SDK being silently "alarmed" in background.
+
+Your user **will not be alarmed hourly** as a result of enabling Background Sync.
+
+However, if the data sync took longer than 10 seconds, the OS might nudge them of this occurrence with a user-visible notification.
+The notification content is configurable by you — see the ["Running as Foreground Service"](#running-as-foreground-service) section for more details.
+</Info>
 
 ### Runtime Permission Request
 
