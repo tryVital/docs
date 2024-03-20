@@ -5,6 +5,10 @@ title: "Android Health Connect"
 Android Health Connect is an SDK-based provider. Your Android consumer app would embed the Vital Mobile SDKs on a supported
 stack. Data are then pulled from the Health Connect data store on the user's Android device.
 
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK] guides for SDK installation
+instructions and general API usage. This guide contains information on the the behaviour and required configuration
+specific to the Android Health Connect integration.
+
 ## Configure your AndroidManifest.xml
 
 ### Health Connect privacy dialogue
@@ -200,10 +204,35 @@ You can customize it through two ways:
 <Tabs>
 <Tab title="Native Android">
 
-Register your custom `SyncNotificationBuilder` with `VitalHealthConnectManager.syncNotificationBuilder` on App Startup.
-You could do this in an AndroidX Startup `Initializer` that lists the SDK `VitalHealthConnectInitializer` initializer as its dependency.
+Register your custom `SyncNotificationBuilder` through `VitalHealthConnectManager.syncNotificationBuilder`.
 
-```kotlin Native Android
+You should register it as soon as your app process is created. One way to ensure this is through the AndroidX Startup
+library. You can define an `Initializer` of your own that depends on the SDK `VitalHealthConnectInitializer`.
+
+#### An example App Startup Initializer implementation
+
+```kotlin
+package com.example.app
+
+import android.content.Context
+import androidx.startup.Initializer
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+import io.tryvital.vitalhealthconnect.VitalHealthConnectInitializer
+
+class ExampleSyncNotificationBuilderInitializer: Initializer<Unit> {
+    override fun create(context: Context) {
+        val manager = VitalHealthConnectManager.getOrCreate(context)
+        manager.syncNotificationBuilder = ExampleSyncNotificationBuilder
+    }
+
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf(
+        VitalHealthConnectInitializer::class.java,
+    )
+}
+```
+
+#### An example `SyncNotificationBuilder` implementation
+```kotlin
 package io.tryvital.sample
 
 import android.app.Notification
@@ -234,10 +263,6 @@ object ExampleSyncNotificationBuilder: SyncNotificationBuilder {
         return mChannel.id
     }
 }
-
-// In your Startup Initializer
-val manager = VitalHealthConnectManager.getOrCreate(context)
-manager.syncNotificationBuilder = 
 ```
 
 </Tab>
@@ -260,3 +285,217 @@ await VitalHealth.setSyncNotificationContent({
 
 </Tab>
 </Tabs>
+
+## Background Sync (Experimental)
+
+<Warning>
+This is an experimental feature which Vital is actively developing in collaboration
+with pilot customers. It may be changed or retracted at short notice.
+</Warning>
+
+Vital Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
+experience with Android Health Connect, siimlar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
+
+
+### Sync Frequency
+
+The [Sync On App Launch](#sync-on-app-launch) behaviour is always-on.
+
+When Background Sync is enabled, the SDK additionally schedules hourly sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
+
+The OS has full discretion on whether to honour or defer the time as scheduled by the Vital Health SDK. This includes the policies
+of the base Android OS, as well as any vendor-specific OS augmentation.
+
+For example, the device may enter [Doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) during device inactivity. Doze mode
+would batch and defer most Exact Alarms and other background work to run at a lower frequency.
+
+
+### Runtime Permission Request
+
+Since Android 12 (API Level 31), scheduling Exact Alarm (`SCHEDULE_EXACT_ALARM`) requires a runtime permission request from the user.
+More specifically:
+
+1. The user must go through an interactive flow to grant the _"Alarms & Reminders"_ permission.
+   * This flow is also reachable through the _"Alarms & Reminders"_ section in Android Settings.
+2. The user may refuse to grant the _"Alarms & Reminders"_ permission.
+3. The user may revoke the _"Alarms & Reminders"_ permission through Android Settings at any time.
+
+Since Android 13 (API Level 33), a new mutually exclusive `USE_EXACT_ALARM` permission was introduced. This permits your app to
+schedule Exact Alarms without interactive permission requests.
+
+<Warning>
+
+`USE_EXACT_ALARM` attracts scrutiny during Google Play Store review. Per the Google Play [Exact alarm permission policy](https://support.google.com/googleplay/android-developer/answer/9888170?hl=en-GB):
+
+> USE_EXACT_ALARM is a restricted permission and apps must only declare this permission if their core functionality supports
+> the need for an exact alarm. Apps that request this restricted permission are subject to review, and those that do not meet
+> the acceptable use case criteria will be disallowed from publishing on Google Play.
+>
+> _(excerpted on 20 March 2024)_
+
+If you choose to incorporate `USE_EXACT_ALARM`, you should prepare to justify to Google Play Store:
+
+1. Why hourly background sync is quintessential to your product experience; and
+2. Why the interactive permission request required by `SCHEDULE_EXACT_ALARM` is non-optimal to your product experience.
+
+</Warning>
+
+Here is a matrix summarizing the Exact Alarm permission request requirements:
+
+| Android OS           | API Level | Requirements |
+| -------------------- | --------- | ---------------- |
+| Android 11 or below  | &lt;=30   | No interactive permission request. |
+| Android 12           | 31, 32    | `SCHEDULE_EXACT_ALARM`: Requires a runtime permission request. Revokable. |
+| Android 13 and above | &gt;=33   | App must declare either:<ul><li>`SCHEDULE_EXACT_ALARM`: Requires runtime permission request. Revokable.</li><li>`USE_EXACT_ALARM`: No interactive permission request.</li></ul> |
+
+### Updating your AndroidManifest.xml
+
+Your app's AndroidManifest.xml must include the following `uses-permission` claims:
+
+<Tabs>
+    <Tab title="The SCHEDULE_EXACT_ALARM route">
+    <Note>
+    Make sure you read and understand [Runtime User Permission](#runtime-user-permission-android-12) before moving forward.
+    This option is mutually exclusive with `USE_EXACT_ALARM` in the second tab.
+    </Note>
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest ...>
+
+        <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    </manifest>
+    ```
+    </Tab>
+    <Tab title="The USE_EXACT_ALARM route">
+    <Warning>
+    Make sure you read and understand [Runtime User Permission](#runtime-user-permission-android-12) before moving forward,
+    especially the Google Play Store review policy surrounding the `USE_EXACT_ALARM` permission.
+    This option is mutually exclusive with `SCHEDULE_EXACT_ALARM` in the first tab.
+    </Warning>
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest ...>
+
+        <uses-permission android:name="android.permission.USE_EXACT_ALARM" android:minSdkVersion="33" />
+
+        <!-- Fallback to SCHEDULE_EXACT_ALARM on API Level 31-32 -->
+        <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+
+    </manifest>
+    ```
+    </Tab>
+</Tabs>
+
+### Enabling Background Sync
+
+<Tabs>
+    <Tab title="Native Android">
+    You can enable Background Sync through `enableBackgroundSyncContract()` (an AndroidX `ActivityResultContract`).
+
+    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12), this contract will launch
+    an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
+    or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
+    the contract returns `false`.
+    
+    Otherwise, the contract returns `true` synchronously when no user interaction is required.
+
+    You must launch this `ActivityResultContract` either through the in-built Android Compose support, or
+    through the AndroidX Activity Result API if you do not use Android Compose.
+
+    You can also inspect if Background Sync has been enabled through the `isBackgroundSyncEnabled` property.
+
+    <CodeGroup>
+    ```kotlin Android Compose
+    import androidx.activity.compose.rememberLauncherForActivityResult
+    import androidx.compose.runtime.rememberCoroutineScope
+    import androidx.compose.material3.*
+    import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+    val manager: VitalHealthConnectManager = ...
+
+    val permissionsLauncher = rememberLauncherForActivityResult(
+        manager.enableBackgroundSyncContract()
+    ) { success ->
+        Log.i("VitalBackgroundSync", "Enabled? $success")
+    }
+
+    Button(onClick = { permissionsLauncher.launch(Unit) }) {
+        Text("Enable Background Sync")
+    }
+    ```
+
+    ```kotlin AndroidX Activity Result API
+    import androidx.activity.ComponentActivity
+    import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+    val activity: ComponentActivity = ...
+    val manager: VitalHealthConnectManager = ...
+
+    activity.registerForActivityResult(contract) { success ->
+        Log.i("VitalBackgroundSync", "Enabled? $success")
+    }
+    ```
+    </CodeGroup>
+    </Tab>
+    <Tab title="React Native">
+    You can enable Background Sync through `enableBackgroundSync()`.
+
+    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
+    The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
+    For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
+
+    Otherwise, `enableBackgroundSync()` returns `true` immediately when no user interaction is required.
+
+    You can also inspect if Background Sync has been enabled through the `isBackgroundSyncEnabled` property.
+
+    <Note>
+    When running on iOS, both `enableBackgroundSync()` and `isBackgroundSyncEnabled` always return `true` immediately.
+    </Note>
+
+    ```typescript
+    import { VitalHealth } from "@tryvital/vital-health-react-native";
+
+    await VitalHealth.enableBackgroundSync();
+    ```
+    </Tab>
+</Tabs>
+
+### Disabling Background Sync
+
+<Tabs>
+    <Tab title="Native Android">
+    You can disable Background Sync through the `disableBackgroundSync()` method.
+
+    You can also inspect if Background Sync has been disabled through the `isBackgroundSyncEnabled` property.
+
+    ```kotlin
+    import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+    val manager: VitalHealthConnectManager = ...
+    manager.disableBackgroundSync()
+    ```
+    </Tab>
+    <Tab title="React Native">
+    You can disable Background Sync through the `disableBackgroundSync()` method.
+
+    You can also inspect if Background Sync has been disabled through the `isBackgroundSyncEnabled` property.
+
+    <Note>
+    When running on iOS, this API **is a no-op**. HealthKit Background Delivery is always-on
+    on iOS.
+    </Note>
+
+    ```typescript
+    import { VitalHealth } from "@tryvital/vital-health-react-native";
+
+    await VitalHealth.enableBackgroundSync();
+    ```
+    </Tab>
+</Tabs>
+
+
+### Miscellaneous
+
+When you `signOut()` a user, Vital SDK will automatically disable Background Sync.
