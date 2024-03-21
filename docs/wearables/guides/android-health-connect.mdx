@@ -5,7 +5,7 @@ title: "Android Health Connect"
 Android Health Connect is an SDK-based provider. Your Android consumer app would embed the Vital Mobile SDKs on a supported
 stack. Data are then pulled from the Health Connect data store on the user's Android device.
 
-Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK] guides for SDK installation
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK](/wearables/sdks/vital-health) guides for SDK installation
 instructions and general API usage. This guide contains information on the the behaviour and required configuration
 specific to the Android Health Connect integration.
 
@@ -284,6 +284,23 @@ await VitalHealth.setSyncNotificationContent({
 ```
 
 </Tab>
+
+<Tab title="Flutter">
+
+Register your custom copies through `vital_health.setSyncNotificationContent` as early as possible in
+your Flutter app startup logic.
+
+```typescript
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+vital_health.setSyncNotificationContent(vital_health.SyncNotificationContent(
+    "Example Sync",
+    "Syncing your data",
+    "Example Sync",
+    "Notifies when Example is syncing your data"));
+```
+
+</Tab>
 </Tabs>
 
 ## Background Sync (Experimental)
@@ -427,6 +444,9 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
         manager.enableBackgroundSyncContract()
     ) { success ->
         Log.i("VitalBackgroundSync", "Enabled? $success")
+
+        val enabled = manager.isBackgroundSyncEnabled
+        Log.i("VitalBackgroundSync", "Enabled? $enabled")
     }
 
     Button(onClick = { permissionsLauncher.launch(Unit) }) {
@@ -443,10 +463,14 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 
     activity.registerForActivityResult(contract) { success ->
         Log.i("VitalBackgroundSync", "Enabled? $success")
+
+        val enabled = manager.isBackgroundSyncEnabled
+        Log.i("VitalBackgroundSync", "Enabled? $enabled")
     }
     ```
     </CodeGroup>
     </Tab>
+
     <Tab title="React Native">
     You can enable Background Sync through `enableBackgroundSync()`.
 
@@ -466,7 +490,38 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     ```typescript
     import { VitalHealth } from "@tryvital/vital-health-react-native";
 
-    await VitalHealth.enableBackgroundSync();
+    const success = await VitalHealth.enableBackgroundSync();
+    console.log("background sync enabled?", success);
+
+    const enabled = await VitalHealth.isBackgroundSyncEnabled;
+    console.log("background sync enabled?", enabled);
+    ```
+    </Tab>
+
+    <Tab title="Flutter">
+    You can enable Background Sync through `enableBackgroundSync()`.
+
+    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
+    The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
+    For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
+
+    Otherwise, `enableBackgroundSync()` returns `true` immediately when no user interaction is required.
+
+    You can also inspect if Background Sync has been enabled through the `isBackgroundSyncEnabled` property.
+
+    <Note>
+    When running on iOS, both `enableBackgroundSync()` and `isBackgroundSyncEnabled` always return `true` immediately.
+    </Note>
+
+    ```typescript
+    import 'package:vital_health/vital_health.dart' as vital_health;
+
+    final success = await vital_health.enableBackgroundSync();
+    log("background sync enabled? ${success}")
+
+    final enabled = await vital_health.isBackgroundSyncEnabled;
+    log("background sync enabled? ${enabled}")
     ```
     </Tab>
 </Tabs>
@@ -484,8 +539,12 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 
     val manager: VitalHealthConnectManager = ...
     manager.disableBackgroundSync()
+
+    val enabled = manager.isBackgroundSyncEnabled
+    Log.i("VitalBackgroundSync", "Enabled? $enabled")
     ```
     </Tab>
+
     <Tab title="React Native">
     You can disable Background Sync through the `disableBackgroundSync()` method.
 
@@ -499,7 +558,30 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     ```typescript
     import { VitalHealth } from "@tryvital/vital-health-react-native";
 
-    await VitalHealth.enableBackgroundSync();
+    await VitalHealth.disableBackgroundSync();
+
+    const enabled = await VitalHealth.isBackgroundSyncEnabled;
+    console.log("background sync enabled?", enabled);
+    ```
+    </Tab>
+
+    <Tab title="Flutter">
+    You can disable Background Sync through the `disableBackgroundSync()` method.
+
+    You can also inspect if Background Sync has been disabled through the `isBackgroundSyncEnabled` property.
+
+    <Note>
+    When running on iOS, this API **is a no-op**. HealthKit Background Delivery is always-on
+    on iOS.
+    </Note>
+
+    ```dart
+    import 'package:vital_health/vital_health.dart' as vital_health;
+
+    await vital_health.disableBackgroundSync();
+
+    final enabled = await vital_health.isBackgroundSyncEnabled;
+    log("background sync enabled? ${enabled}")
     ```
     </Tab>
 </Tabs>
