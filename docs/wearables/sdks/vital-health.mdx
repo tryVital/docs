@@ -1,5 +1,6 @@
 ---
-title: "Health SDK"
+title: "Vital Health SDK"
+sidebarTitle: "Health SDK"
 ---
 
 
@@ -257,6 +258,19 @@ await VitalHealth.setPauseSynchronization(false);
 
 // Check if synchronization is paused
 const isPaused = await VitalHealth.pauseSynchronization;
+```
+
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+// Pause Synchronization
+await vital_health.setPauseSynchronization(true);
+
+// Unpause Synchronization
+await vital_health.setPauseSynchronization(false);
+
+// Check if synchronization is paused
+final isPaused = await vital_health.pauseSynchronization;
 ```
 </CodeGroup>
 
