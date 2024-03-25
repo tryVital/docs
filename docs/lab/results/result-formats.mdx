@@ -82,7 +82,7 @@ Results can fall into one of the following categories:
 
     Note that you will also find the `<1.2` value in the `notes` field.
 
-    A range result will always be a value following the pattern `[<>]=?\d+(\.\d+)?`.
+    A range result will always be a value following the pattern `^([<>]=?\d*(\.\d+)?|(\d*(\.\d+)?-\d*(\.\d+)?))$`.
 
 
 3. `ResultType.COMMENT` - A text result, e.g. `Positive`
