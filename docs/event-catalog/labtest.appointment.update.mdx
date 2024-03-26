@@ -6,6 +6,12 @@ description: "An apppointment has been updated or created"
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `labtest.appointment.update`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingAppointment" required="true">
 <Expandable title="ClientFacingAppointment" defaultOpen="true">
 <ResponseField name="id" type="string" required="true">
@@ -88,10 +94,13 @@ Time is in UTC
 ```json Example
 {
   "event_type": "labtest.appointment.update",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "4e1260ba-2d01-4d77-99be-73eaa5a584f6",
-    "user_id": "bbdc91e2-fa7f-4d78-a4bc-cf2377d766ae",
-    "order_id": "b35153ef-73b1-4ae9-97c9-a29bff706df5",
+    "id": "a9c00bc9-fbb3-49b6-af80-b0d8801da65e",
+    "user_id": "75a20b0c-1e55-4c8a-8ec0-7b02bf26b28d",
+    "order_id": "fe5eedad-7582-4c03-a0e2-ac380d2aaf11",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",

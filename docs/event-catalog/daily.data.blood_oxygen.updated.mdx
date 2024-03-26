@@ -13,6 +13,12 @@ previous versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.blood_oxygen.updated`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
@@ -83,6 +89,9 @@ URL for source logo
 ```json Example
 {
   "event_type": "daily.data.blood_oxygen.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "data": [
       {
@@ -103,7 +112,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "6aa6c982-fd36-4719-b210-7ac75b54d114"
+    "user_id": "77e28c16-e1f0-4d2b-94c6-2aeacfffe916"
   }
 }
 ```

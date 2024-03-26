@@ -6,6 +6,12 @@ description: "Historical pull of calories_active data has completed and you can 
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.calories_active.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="HistoricalDataCreated" required="true">
 <Expandable title="HistoricalDataCreated" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -25,10 +31,13 @@ Constant: `historical.data.calories_active.created`
 ```json Example
 {
   "event_type": "historical.data.calories_active.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "user_id": "51e285a7-503c-4991-8993-ca45286dc4ef",
-    "start_date": "2023-12-23T23:28:28.543768+00:00",
-    "end_date": "2024-03-22T23:28:28.543826+00:00",
+    "user_id": "05095305-47c1-4812-8c2c-c99f4b21a7c1",
+    "start_date": "2023-12-27T13:09:10.504561+00:00",
+    "end_date": "2024-03-26T13:09:10.504623+00:00",
     "is_final": true,
     "provider": "oura"
   }

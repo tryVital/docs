@@ -13,6 +13,12 @@ previous versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.caffeine.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
@@ -89,6 +95,9 @@ URL for source logo
 ```json Example
 {
   "event_type": "daily.data.caffeine.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "data": [
       {
@@ -110,7 +119,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "d6ee8df5-d5fe-4269-ae15-eb070c04761b"
+    "user_id": "aaddcae3-c06b-4924-a923-92defb2ff209"
   }
 }
 ```

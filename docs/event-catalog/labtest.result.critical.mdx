@@ -6,6 +6,12 @@ description: "A lab test result has critical markers"
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `labtest.result.critical`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingCriticalResult" required="true">
 <Expandable title="ClientFacingCriticalResult" defaultOpen="true">
 <ResponseField name="order_id" type="string" required="true">
@@ -38,13 +44,16 @@ When the result was last fetched from a laboratory.
 ```json Example
 {
   "event_type": "labtest.result.critical",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "order_id": "160b7954-bc3d-438c-a19b-493b13929407",
+    "order_id": "0f450fee-2d08-460f-bb91-32e8590dfcaa",
     "sample_id": "123456789",
     "status": "final",
     "interpretation": "normal",
-    "team_id": "03ce7ba3-3eaf-44cf-83cd-3dae04fcbeec",
-    "user_id": "3a94a1d2-e9ba-4d42-abd2-d5407fa79c9c",
+    "team_id": "9cd2a677-71ce-4104-a8a6-454c5ab23a1c",
+    "user_id": "4a7fd4e8-df3d-4539-9c19-9ee3e3346843",
     "created_at": "2020-01-01T00:00:00Z",
     "updated_at": "2020-01-01T00:00:00Z"
   }

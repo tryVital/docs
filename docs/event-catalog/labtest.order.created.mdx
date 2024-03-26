@@ -6,6 +6,12 @@ description: "Order for a lab test has been created"
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `labtest.order.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingOrder" required="true">
 <Expandable title="ClientFacingOrder" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -293,10 +299,13 @@ Schedule an Order to be processed in a future date.
 ```json Example
 {
   "event_type": "labtest.order.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "69ad7cc3-888d-4678-be86-a7c47a82d6ea",
-    "team_id": "f50750b8-979c-4c43-bf27-06bf192416d5",
-    "user_id": "6a5ea97d-ca9e-424b-87e7-4fe8a336dbf0",
+    "id": "d0788419-584c-4499-aa57-b9e960f78c03",
+    "team_id": "1e64b384-2e9e-4f8c-b6f5-688cf39d012c",
+    "user_id": "3627df73-a6d6-4e1e-8e19-5d2e53c5c0f6",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -337,7 +346,7 @@ Schedule an Order to be processed in a future date.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "21335d9b-4df7-4e8d-b160-383d91229ff1",
+    "health_insurace_id": "6002daa5-1b3d-40bc-ab9c-65f43164a22e",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",

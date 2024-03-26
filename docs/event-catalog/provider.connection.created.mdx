@@ -6,6 +6,12 @@ description: "Provider Connection has been established"
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `provider.connection.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ProviderConnectionCreated" required="true">
 <Expandable title="ProviderConnectionCreated" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -44,13 +50,16 @@ URL for source logo
 ```json Example
 {
   "event_type": "provider.connection.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "provider": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "34f03203-053a-48e7-b4a8-ddc29015a635"
+    "user_id": "8a2a490a-24ea-4aaf-ac63-040a3f3c0fb0"
   }
 }
 ```

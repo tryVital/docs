@@ -6,6 +6,12 @@ description: "Historical pull of vo2_max data has completed and you can now pull
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.vo2_max.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="HistoricalDataCreated" required="true">
 <Expandable title="HistoricalDataCreated" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -25,10 +31,13 @@ Constant: `historical.data.vo2_max.created`
 ```json Example
 {
   "event_type": "historical.data.vo2_max.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "user_id": "65205920-8b6c-49a0-a63d-9c92ba802a3d",
-    "start_date": "2023-12-23T23:28:28.562390+00:00",
-    "end_date": "2024-03-22T23:28:28.562445+00:00",
+    "user_id": "e9b6f4a8-ea19-484f-8ade-cb4d7b1394ba",
+    "start_date": "2023-12-27T13:09:11.463691+00:00",
+    "end_date": "2024-03-26T13:09:11.463749+00:00",
     "is_final": true,
     "provider": "oura"
   }

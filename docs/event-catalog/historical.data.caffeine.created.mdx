@@ -6,6 +6,12 @@ description: "Historical pull of caffeine data has completed and you can now pul
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.caffeine.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="HistoricalDataCreated" required="true">
 <Expandable title="HistoricalDataCreated" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -25,10 +31,13 @@ Constant: `historical.data.caffeine.created`
 ```json Example
 {
   "event_type": "historical.data.caffeine.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "user_id": "1a36793f-3e26-4381-9888-afcfd8898860",
-    "start_date": "2023-12-23T23:28:29.480195+00:00",
-    "end_date": "2024-03-22T23:28:29.480288+00:00",
+    "user_id": "78f25f29-809f-443f-b8f5-fecb35195957",
+    "start_date": "2023-12-27T13:09:12.692909+00:00",
+    "end_date": "2024-03-26T13:09:12.692974+00:00",
     "is_final": true,
     "provider": "oura"
   }

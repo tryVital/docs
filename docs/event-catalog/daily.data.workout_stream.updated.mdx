@@ -12,6 +12,12 @@ versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workout_stream.updated`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingShallowWorkoutStream" required="true">
 <Expandable title="ClientFacingShallowWorkoutStream" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -66,8 +72,11 @@ Slug for designated sport
 ```json Example
 {
   "event_type": "daily.data.workout_stream.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "workout_id": "9454a720-b24d-4e05-b9bf-80bd5dd1fe1b",
+    "workout_id": "45a63cac-5d82-40b8-a7dc-c4d59c2b1515",
     "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
     "source": {

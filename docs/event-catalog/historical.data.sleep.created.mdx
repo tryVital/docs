@@ -6,6 +6,12 @@ description: "Historical pull of sleep data has completed and you can now pull d
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `historical.data.sleep.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="HistoricalDataCreated" required="true">
 <Expandable title="HistoricalDataCreated" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -25,10 +31,13 @@ Constant: `historical.data.sleep.created`
 ```json Example
 {
   "event_type": "historical.data.sleep.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "user_id": "48026fb6-0c84-4700-99d3-99f2e28f38fa",
-    "start_date": "2023-12-23T23:28:27.775135+00:00",
-    "end_date": "2024-03-22T23:28:27.775203+00:00",
+    "user_id": "3def3d2f-82da-4101-8aa7-094e91fb05ac",
+    "start_date": "2023-12-27T13:09:13.300504+00:00",
+    "end_date": "2024-03-26T13:09:13.300557+00:00",
     "is_final": true,
     "provider": "oura"
   }

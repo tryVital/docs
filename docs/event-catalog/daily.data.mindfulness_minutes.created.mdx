@@ -13,6 +13,12 @@ previous versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.mindfulness_minutes.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingIntervalSample[]" required="true">
@@ -89,11 +95,14 @@ URL for source logo
 ```json Example
 {
   "event_type": "daily.data.mindfulness_minutes.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "data": [
       {
         "start": "2023-02-13T14:57:24+00:00",
-        "end": "2024-03-22T23:33:23.052383+00:00",
+        "end": "2024-03-26T13:14:04.177360+00:00",
         "timezone_offset": null,
         "value": 42,
         "type": null,
@@ -110,7 +119,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "11ddc7ee-2bcd-43ec-99a4-ec132e94febe"
+    "user_id": "afb7b02b-39f6-491d-bcd7-9007320a9f46"
   }
 }
 ```

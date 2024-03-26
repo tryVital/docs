@@ -12,6 +12,12 @@ versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.profile.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingProfile" required="true">
 <Expandable title="ClientFacingProfile" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -50,15 +56,18 @@ The identifier of the app which recorded this summary. This is only applicable t
 ```json Example
 {
   "event_type": "daily.data.profile.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "4c2ae075-3307-498f-8f84-642677be2ce4",
+    "id": "b29e3a81-89a2-44e2-b046-f4d8d1891a41",
     "height": 183,
     "source": {
       "name": "Oura",
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "8b47f600-7ccb-4eb1-9014-37f3a9d2de6b"
+    "user_id": "732ab4e5-0f26-410b-8ce3-4f669313a7f2"
   }
 }
 ```

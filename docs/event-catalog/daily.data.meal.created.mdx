@@ -12,6 +12,12 @@ versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.meal.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="MealInDBBase_ClientFacingSource_" required="true">
 <Expandable title="MealInDBBase_ClientFacingSource_" defaultOpen="true">
 <ResponseField name="id" type="string" required="true">
@@ -129,6 +135,9 @@ The identifier of the app which recorded this summary. This is only applicable t
 ```json Example
 {
   "event_type": "daily.data.meal.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
     "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5",

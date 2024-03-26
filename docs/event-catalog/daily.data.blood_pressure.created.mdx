@@ -13,6 +13,12 @@ previous versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.blood_pressure.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingBloodPressureTimeseries[]" required="true">
@@ -83,10 +89,13 @@ URL for source logo
 ```json Example
 {
   "event_type": "daily.data.blood_pressure.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "data": [
       {
-        "timestamp": "2024-03-22T23:28:23+00:00",
+        "timestamp": "2024-03-26T13:09:04+00:00",
         "timezone_offset": null,
         "systolic": "125",
         "diastolic": "75",
@@ -104,7 +113,7 @@ URL for source logo
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "4b04231b-093e-47a1-93e9-23c0f37409db"
+    "user_id": "298eb911-8c64-412f-871d-62aa28f500e3"
   }
 }
 ```

@@ -12,6 +12,12 @@ versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.body.created`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingBody" required="true">
 <Expandable title="ClientFacingBody" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -60,10 +66,13 @@ The identifier of the app which recorded this summary. This is only applicable t
 ```json Example
 {
   "event_type": "daily.data.body.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "9d561725-3ac3-4d02-8fa8-b8be940c903e",
-    "date": "2024-03-22T23:28:23+00:00",
-    "calendar_date": "2024-28-",
+    "id": "ccc9e397-92d6-43eb-a34a-3bd9497cfec1",
+    "date": "2024-03-26T13:09:04+00:00",
+    "calendar_date": "2024-09-",
     "weight": 80,
     "fat": 30,
     "height": 183,
@@ -72,7 +81,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       "slug": "oura",
       "logo": "https://logo_url.com"
     },
-    "user_id": "bec32136-848f-4bc3-9d72-0fc7078cd16c"
+    "user_id": "9f8bcf67-4d18-4140-8e68-cf8cf6629d52"
   }
 }
 ```

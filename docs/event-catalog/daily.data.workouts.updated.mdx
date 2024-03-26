@@ -12,6 +12,12 @@ versions.
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workouts.updated`
 </ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="data" type="ClientFacingWorkout" required="true">
 <Expandable title="ClientFacingWorkout" defaultOpen="true">
 <ResponseField name="user_id" type="string" required="true">
@@ -128,14 +134,17 @@ The identifier of the app which recorded this summary. This is only applicable t
 ```json Example
 {
   "event_type": "daily.data.workouts.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "72075731-35c9-4534-8798-ec3d60f5856c",
+    "id": "d34f05f8-cda1-49e0-8e73-0d4dfc8daf59",
     "average_hr": 100,
     "max_hr": 190,
     "distance": 1700,
-    "calendar_date": "2024-28-",
-    "time_start": "2024-03-22T22:28:23+00:00",
-    "time_end": "2024-03-22T23:28:23+00:00",
+    "calendar_date": "2024-09-",
+    "time_start": "2024-03-26T12:09:04+00:00",
+    "time_end": "2024-03-26T13:09:04+00:00",
     "calories": 300,
     "sport": {
       "id": 1,
@@ -153,7 +162,7 @@ The identifier of the app which recorded this summary. This is only applicable t
       10,
       200
     ],
-    "user_id": "dd49b4d9-ebf5-4f88-ac33-db4aef4b988b",
+    "user_id": "2cbb52d8-204b-4f73-8ce4-417e94365490",
     "moving_time": 100,
     "total_elevation_gain": 10,
     "elev_high": 20.2,
