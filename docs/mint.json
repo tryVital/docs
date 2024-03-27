@@ -235,7 +235,7 @@
           ]
         },
         {
-          "group": "Introspection",
+          "group": "Debugging",
           "pages": [
             "api-reference/introspection/user-resources",
             "api-reference/introspection/historical-pulls"

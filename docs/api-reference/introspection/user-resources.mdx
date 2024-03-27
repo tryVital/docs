@@ -1,109 +1,14 @@
 ---
-title: User Resources Introspection
-
+openapi: "GET /v2/introspect/resources"
 ---
 
 ## Overview
 
 Diagnose user data unavailability through the User Resources Introspection API.
 
-This API offers detailed insights into all provider connections and collected resources of all users in your team,
-empowering you to perform an initial diagnosis of any user connection issue with ease.
-
-## Query Parameters
-
-- `user_id` (optional): Specifies one specific user ID.
-- `cursor` (optional): Cursor provided by the previous page.
-- `user_limit` (optional): Maximum number of users to return, defaults to and capped at 50.
-- `provider` (optional): Specific provider slug
-
-The end-user can provide either a specific `user_id` or a `user_limit` value to retrieve information about their team's users.
+This API offers detailed insights into all provider connections and collected resources of all users in your team, empowering you to perform an initial diagnosis of any user connection issue with ease.
 
 <Warning>
 Please note that `user_limit` is an upper bound and the endpoint can return data for fewer users.
 This would be the case if any of the top selected users had no available resource information.
 </Warning>
-
-## Example Request
-
-<SnippetGroup>
-
-```bash Fetching information about user's resources
-curl -G -d user_id={{USER_ID}}
-    --url {{BASE_URL}}/v2/introspect/resources \
-    --header 'Content-Type: application/json' \
-    --header 'x-vital-api-key: <YOUR_API_KEY>' \
-```
-
-</SnippetGroup>
-
-## Example Response
-
-```json
-{
-  "data": [
-    {
-      "user_id": "005d908f-3ca3-455f-b5d0-922530b357a8",
-      "provider": {
-        "google_fit": {
-          "body": {
-            "last_attempt": {
-              "timestamp": "2023-11-17T14:02:03.349620+00:00",
-              "status": "success"
-            },
-            "oldest_data": "2023-11-14T22:17:08.581188+00:00",
-            "newest_data": "2023-11-17T14:02:03.349620+00:00",
-            "sent_count": 210
-          },
-          "workouts": {
-            "last_attempt": {
-              "timestamp": "2023-11-17T14:02:04.969167+00:00",
-              "status": "success"
-            },
-            "oldest_data": "2023-11-14T22:17:09.485401+00:00",
-            "newest_data": "2023-11-17T14:02:04.969167+00:00",
-            "sent_count": 211
-          },
-          "sleep": {
-            "last_attempt": {
-              "timestamp": "2023-11-17T14:02:04.520839+00:00",
-              "status": "success"
-            },
-            "oldest_data": "2023-11-14T22:17:08.966562+00:00",
-            "newest_data": "2023-11-17T14:02:04.520839+00:00",
-            "sent_count": 210
-          },
-          "activity": {
-            "last_attempt": {
-              "timestamp": "2023-11-17T14:02:03.010425+00:00",
-              "status": "success"
-            },
-            "oldest_data": "2023-11-14T22:17:08.191732+00:00",
-            "newest_data": "2023-11-17T14:02:03.010425+00:00",
-            "sent_count": 209
-          }
-        }
-      }
-    }
-  ],
-  "next": null
-}
-```
-
-## Response Structure
-
-- `data`: An array containing user information, including data from different providers.
-  - `user_id`: The unique identifier of the user.
-  - `provider`: Object containing provider-specific data.
-    - `<provider_slug>`: Provider-specific data structure.
-      - `last_attempt`: Information about the last attempt to retrieve data.
-      - `oldest_data`: Timestamp of the oldest data available.
-      - `newest_data`: Timestamp of the newest available data.
-      - `sent_count`: The count of data points sent.
-
-- `next`: A cursor for the next page of results, or `null` if there are no more pages.
-
-
-<Info>
-`oldest_data` refers to the oldest available data from data syncs that happened after the Introspection Api feature went live. (22.11.2023)
-</Info>
