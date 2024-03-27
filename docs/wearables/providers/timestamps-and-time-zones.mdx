@@ -8,19 +8,27 @@ All Vital data timestamps are ISO 8601 formatted as follows:
 
 | Providers       | Time Basis        | Pattern                                     |
 | --------------- | ----------------  | ------------------------------------------- |
-| Freestyle Libre <sup>[1]</sup> | Floating Time <sup>[2]</sup> | `YYYY-mm-ddTHH:mm:ss` (No TZ specifier) |
-| _Everyone else_ | UTC               | `YYYY-mm-ddTHH:mm:ss+00:00` (Always +00:00) |
+| Freestyle Libre <sup>[1]</sup> | Floating Time <sup>[2]</sup> | `YYYY-mm-ddTHH:mm:ss+00:00`<br />The `+00:00` TZ specifier should be **ignored** <sup>[3]</sup>. |
+| _Everyone else_ | UTC               | `YYYY-mm-ddTHH:mm:ss+00:00`<br />Always specified as `+00:00` (UTC). |
 
 <Info>
 <sup>[1]</sup>
-Some older teams may see Freestyle Libre data timestamps with the `+00:00` misnomer.
-Please update your system to handle the format as stated. Once done, you can contact Vital support to
-disable the TZ specifier.
+Some older teams may see floating time data (Freestyle Libre) without the `+00:00` TZ specifier,
+as part of an earlier iteration of the feature. Contact Vital support if you wish to disable this
+behaviour, or if you intend to adopt the Vital backend SDKs.
 </Info>
 <Info>
 <sup>[2]</sup> [Floating time](https://www.w3.org/International/wiki/FloatingTime) is not affixed to any time zone.
 This is not the same as time relative to a local time zone, i.e., a known UTC offset or geographical location.
 </Info>
+<Warning>
+<sup>[3]</sup> Vital sends timestamps in floating time with `+00:00` for OpenAPI 3.x interoperability. OAS 3
+requires all timestamps to be [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339), which in turn requires
+TZ specifier to be mandatory.
+
+When processing data from Freestyle Libre, you should [**reinterpret literally**](#data-point-in-floating-time-freestyle-libre)
+the date and time components as local date-time in the desired time zone. Do not convert from UTC/Zulu.
+</Warning>
 
 
 ## Time Zones
@@ -85,32 +93,67 @@ Vital SDK uses the device's current time zone as the fallback of closest approxi
 
 ## Examples
 
+### Data point with time zone offset
 The data point was recorded on July 7, 2023 at 1:00 PM in UTC-07:00.
 
 ```json
 {
-  "timestamp": "2023-07-07T20:00:00+00:00",
-  "timezone_offset": -25200
+  "source": {
+    "provider": "apple_health_kit",
+  },
+  "data": [
+    {
+      "timestamp": "2023-07-07T20:00:00+00:00",
+      "timezone_offset": -25200
+    }
+  ]
 }
 ```
+
+### Data point with no time zone offset (`null`)
 
 The data point was timestamped to Aug 13, 2023 at 8:12 AM in UTC+00:00 (Zulu).
 We do not know the exact time zone the recording took place in.
 
 ```json
 {
-  "timestamp": "2023-08-13T08:12:00+00:00",
-  "timezone_offset": null
+  "source": {
+    "provider": "apple_health_kit",
+  },
+  "data": [
+    {
+      "timestamp": "2023-08-13T08:12:00+00:00",
+      "timezone_offset": null
+    }
+  ]
 }
 ```
 
-The data point was recorded on Sep 27, 2023 at 7:48 AM in floating time (whichever time zone the user was in).
-We do not know the exact time zone the recording took place in.
+### Data point in floating time (Freestyle Libre)
+
+This Freestyle Libre data point was recorded on Sep 27, 2023 at 7:48 AM in floating time
+(whichever time zone the user was in). We do not know the exact time zone the recording took place in.
+
+You can display the date and time components literally to the user, e.g., `2023/09/27 07:48 AM`, as they
+are relative to their perception of local time.
+
+If you need to convert it to UTC for persistence, you need to pick a time zone based on your understanding
+of the user. Then you should reinterpret the date and time components **literally** in said time zone.
+
+For example, we knew that this example user is based in `America/New_York`. So we would interpret this data
+point to be in `2023/09/27 07:48 AM ET`. We then finally convert this to UTC, resulting in `2023/09/27 11:48 AM UTC`.
 
 ```json
 {
-  "timestamp": "2023-08-13T07:48:00",
-  "timezone_offset": null
+  "source": {
+    "provider": "freestyle_libre",
+  },
+  "data": [
+    {
+      "timestamp": "2023-09-27T07:48:00+00:00",
+      "timezone_offset": null
+    }
+  ]
 }
 ```
 
