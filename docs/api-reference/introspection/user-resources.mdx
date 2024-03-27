@@ -29,11 +29,10 @@ This would be the case if any of the top selected users had no available resourc
 <SnippetGroup>
 
 ```bash Fetching information about user's resources
-curl --request GET \
-     --url {{BASE_URL}}/v2/introspect/resources \
-     --header 'Content-Type: application/json' \
-     --header 'x-vital-api-key: <YOUR_API_KEY>' \
-     --data '{"user_id": "<user_id>"}'
+curl -G -d user_id={{USER_ID}}
+    --url {{BASE_URL}}/v2/introspect/resources \
+    --header 'Content-Type: application/json' \
+    --header 'x-vital-api-key: <YOUR_API_KEY>' \
 ```
 
 </SnippetGroup>
