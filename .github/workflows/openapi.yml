@@ -28,6 +28,7 @@ jobs:
         run: |
           echo "$GITHUB_WORKSPACE"
           wget https://api.tryvital.io/openapi.json -O ./docs/swagger.json
+          wget https://api.tryvital.io/management/openapi.json -O ./docs/org-management-api.json
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
