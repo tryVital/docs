@@ -428,26 +428,26 @@
         {
           "group": "Team",
           "pages": [
-            "api-reference/org-management/team/list-teams-in-org",
-            "api-reference/org-management/team/create-team-in-org",
-            "api-reference/org-management/team/get-team-in-org",
-            "api-reference/org-management/team/delete-team-in-org",
-            "api-reference/org-management/team/update-team-in-org"
+            "api-reference/org-management/team/list-teams",
+            "api-reference/org-management/team/create-team",
+            "api-reference/org-management/team/get-team",
+            "api-reference/org-management/team/delete-team",
+            "api-reference/org-management/team/update-team"
           ]
         },
         {
           "group": "Member",
           "pages": [
-            "api-reference/org-management/member/list-members-in-org",
-            "api-reference/org-management/member/remove-member-from-org"
+            "api-reference/org-management/member/list-members",
+            "api-reference/org-management/member/remove-member"
           ]
         },
         {
           "group": "Invite",
           "pages": [
-            "api-reference/org-management/invite/list-invites-in-org",
-            "api-reference/org-management/invite/create-or-resend-invite-in-org",
-            "api-reference/org-management/invite/revoke-invite-in-org"
+            "api-reference/org-management/invite/list-invites",
+            "api-reference/org-management/invite/create-or-resend-invite",
+            "api-reference/org-management/invite/revoke-invite"
           ]
         },
         {
