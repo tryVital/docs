@@ -1,5 +1,5 @@
 ---
-title: "Resolve Client User ID"
+title: "Get User by Client User ID"
 openapi: "GET /v2/user/resolve/{client_user_id}"
 description: "Get User by their `client_user_id`."
 ---
@@ -21,7 +21,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.user.resolve(
+const data = await client.user.getByClientUserId(
     '<client_user_id>'
 );
 ```
@@ -35,7 +35,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.resolve(
+data = client.user.get_by_client_user_id(
     client_user_id="<client_user_id>"
 )
 ```
@@ -49,7 +49,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.user().resolve("<client_user_id>");
+var data = vital.user().getByClientUserId("<client_user_id>");
 ```
 
 ```go Go
@@ -65,7 +65,7 @@ client := vitalclient.NewClient(
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.User.Resolve(context.TODO(), "<client_user_id>")
+response, err := client.User.GetByClientUserId(context.TODO(), "<client_user_id>")
 if err != nil {
   return err
 }
