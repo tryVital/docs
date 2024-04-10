@@ -1,0 +1,76 @@
+---
+title: "Resolve Client User ID"
+openapi: "GET /v2/user/resolve/{client_user_id}"
+description: "Get User by their `client_user_id`."
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url {{BASE_URL}}/v2/user/resolve/{client_user_id} \
+     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'Accept: application/json'
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.user.resolve(
+    '<client_user_id>'
+);
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.user.resolve(
+    client_user_id="<client_user_id>"
+)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.user().resolve("<client_user_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.User.Resolve(context.TODO(), "<client_user_id>")
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
