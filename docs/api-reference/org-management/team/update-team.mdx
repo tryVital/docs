@@ -6,3 +6,30 @@ title: "Update Team"
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
 
 <OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request PATCH \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team/{team_id} \
+  --header 'Content-Type: application/json' \
+  --header 'X-Vital-Org-Key: <api-key>' \
+  --data '{
+  "name": "<string>",
+  "sandbox": {
+    "lab_tests_patient_sms_communication_enabled": true,
+    "lab_tests_patient_email_communication_enabled": true,
+    "event_type_prefixes": [
+      "<string>"
+    ]
+  },
+  "production": {
+    "lab_tests_patient_sms_communication_enabled": true,
+    "lab_tests_patient_email_communication_enabled": true,
+    "event_type_prefixes": [
+      "<string>"
+    ]
+  }
+}'
+```
+</RequestExample>
