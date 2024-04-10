@@ -1,0 +1,27 @@
+---
+openapi: post /v1/org/{org_id}/team
+title: "Create Team"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team \
+  --header 'Content-Type: application/json' \
+  --header 'X-Vital-Org-Key: <api-key>' \
+  --data '{
+  "name": "<string>",
+  "region": "us",
+  "lab_tests_patient_sms_communication_enabled": true,
+  "lab_tests_patient_email_communication_enabled": true,
+  "event_type_prefixes": [
+    "<string>"
+  ]
+}'
+```
+</RequestExample>

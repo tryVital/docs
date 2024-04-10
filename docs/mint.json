@@ -22,6 +22,7 @@
       "name": "x-vital-api-key"
     }
   },
+  "openapi": ["swagger.json", "org-management-api.json"],
   "colors": {
     "primary": "#5C978D",
     "light": "#8FBDB5",
@@ -417,6 +418,67 @@
           "pages": [
             "api-reference/timeseries-grouped/caffeine",
             "api-reference/timeseries-grouped/water"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Org Management",
+      "pages": [
+        {
+          "group": "Team",
+          "pages": [
+            "api-reference/org-management/team/list-teams",
+            "api-reference/org-management/team/create-team",
+            "api-reference/org-management/team/get-team",
+            "api-reference/org-management/team/delete-team",
+            "api-reference/org-management/team/update-team"
+          ]
+        },
+        {
+          "group": "Member",
+          "pages": [
+            "api-reference/org-management/member/list-members",
+            "api-reference/org-management/member/remove-member"
+          ]
+        },
+        {
+          "group": "Invite",
+          "pages": [
+            "api-reference/org-management/invite/list-invites",
+            "api-reference/org-management/invite/create-or-resend-invite",
+            "api-reference/org-management/invite/revoke-invite"
+          ]
+        },
+        {
+          "group": "Org",
+          "pages": [
+            "api-reference/org-management/org/get-org",
+            "api-reference/org-management/org/update-org"
+          ]
+        },
+        {
+          "group": "Team API Keys",
+          "pages": [
+            "api-reference/org-management/team-api-keys/list-team-api-keys",
+            "api-reference/org-management/team-api-keys/create-team-api-key",
+            "api-reference/org-management/team-api-keys/delete-team-api-keys"
+          ]
+        },
+        {
+          "group": "Team Custom Credentials",
+          "pages": [
+            "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
+            "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
+            "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
+          ]
+        },
+        {
+          "group": "Team ETL Pipeline",
+          "pages": [
+            "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
+            "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
+            "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
           ]
         }
       ]

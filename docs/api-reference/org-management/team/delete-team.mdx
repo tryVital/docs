@@ -1,0 +1,17 @@
+---
+openapi: delete /v1/org/{org_id}/team/{team_id}
+title: "Delete Team"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request DELETE \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team/{team_id} \
+  --header 'X-Vital-Org-Key: <api-key>'
+```
+</RequestExample>

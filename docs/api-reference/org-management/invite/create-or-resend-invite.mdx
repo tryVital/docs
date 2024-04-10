@@ -1,0 +1,21 @@
+---
+openapi: post /v1/org/{org_id}/invite
+title: Create or Resend Invite
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/invite \
+  --header 'Content-Type: application/json' \
+  --header 'X-Vital-Org-Key: <api-key>' \
+  --data '{
+  "email": "<string>"
+}'
+```
+</RequestExample>
