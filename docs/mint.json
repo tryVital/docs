@@ -88,6 +88,11 @@
         "changelog/wearables/providers",
         "changelog/wearables/deprecations"
       ]
+    },{
+      "group": "Lab Testing",
+      "pages": [
+        "changelog/lab-testing/deprecations"
+      ]
     },
     {
       "group": "API",
