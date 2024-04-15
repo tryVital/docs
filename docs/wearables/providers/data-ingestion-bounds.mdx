@@ -1,0 +1,32 @@
+---
+title: "Data Ingestion Bounds"
+---
+
+## Data collection time bounds
+
+By default, all user connections in Vital system have no data collection time bounds set. 
+Vital will fetch historical data up to the provider's [limit](/wearables/providers/introduction#historical-days-retrieved) and continue to fetch new data daily until the connection is deregistered.
+
+##  Setting Ingestion Start and End Dates
+
+You can set and update the Ingestion Start and End Dates during:
+
+* [Creating a new user](/api-reference/user/create-user); or
+
+* [Patching an existing user](/api-reference/user/patch-user)
+
+
+<Info>
+If no ingestion bounds are set, data will be fetched continuously without any restrictions
+</Info>
+
+```json Example
+{
+  "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
+  "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
+  "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
+  /** snipped **/
+  "ingestion_start": "2024-01-01",
+  "ingestion_end": "2024-12-15",
+}
+```
