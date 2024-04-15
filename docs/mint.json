@@ -136,6 +136,7 @@
         "wearables/providers/resources",
         "wearables/providers/heart-rate-zones",
         "wearables/providers/timestamps-and-time-zones",
+        "wearables/providers/data-ingestion-bounds",
         "wearables/providers/data-attributions",
         "wearables/providers/test_data"
       ]
