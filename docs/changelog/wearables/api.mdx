@@ -7,7 +7,7 @@ title: "API"
 When a user connection to a provider is established, the webhook event now includes a resource availability
 report of the connection.
 
-<Accordion icon="signal-bars" iconType="duotone" title="Details">
+<Accordion icon="signal-bars" iconType="duotone" title="Details" defaultOpen>
 We introduce this because this helps you understand what resources would and would not be available on
 a new connection. We also provide insights into how partial consents from users during the OAuth authentication
 flow can influence the resource availability, so that you can take actions accordingly.
@@ -35,7 +35,7 @@ Check out the [Provider Connection Created](/event-catalog/provider.connection.c
 ### Updating your Team Brand Information (Apr 24)
 You can now manage Brand Information of your Vital Teams through the Org Management API.
 
-<Accordion icon="billboard" iconType="duotone" title="Details">
+<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
 Team Brand Information is used in:
 
 1. the Vital-hosted [Link widget](/wearables/connecting-providers/introduction);
@@ -56,7 +56,7 @@ Check out the [Update Team](/api-reference/org-management/team/update-team) and
 We have introduced Vital Org, a new level that groups all your Vital Teams. Your Vital Teams have been
 transparently grouped and migrated to the new structure.
 
-<Accordion icon="building" iconType="duotone" title="Details">
+<Accordion icon="building" iconType="duotone" title="Details" defaultOpen>
 We introduced this to provide a unified billing and administrative experience for customers having these use cases:
 
 1. multi-region presence; or
@@ -78,7 +78,7 @@ Check out the [Org Management API](/api-reference/org-management) documentation.
 
 All events now include Team ID, User ID and Client User ID as top-level fields.
 
-<Accordion icon="message" iconType="duotone" title="Details">
+<Accordion icon="message" iconType="duotone" title="Details" defaultOpen>
 We introduced this because this helps reduce a Vital User ID -> Client User ID database lookup on your end.
 
 Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
@@ -113,7 +113,7 @@ Check out the [Webhook Event Structure](/webhooks/event-structure) documentation
 The [Create User](/api-reference/user/create-user) endpoint has improved handling of
 conflicts in Client User ID.
 
-<Accordion icon="circle-exclamation" iconType="duotone" title="Details">
+<Accordion icon="circle-exclamation" iconType="duotone" title="Details" defaultOpen>
 We introduced this because the user creation endpoint being idempotent can help
 simplify your application logic.
 
@@ -128,14 +128,14 @@ Check out the [Create User](/api-reference/user/create-user) endpoint documentat
 
 You can now undo user deletion that is still in the 7-day grace period.
 
-<Accordion icon="trash-undo" iconType="duotone" title="Details">
+<Accordion icon="trash-undo" iconType="duotone" title="Details" defaultOpen>
 Check out the [User Undo Deletion](/api-reference/user/undo-delete-user) endpoint documentation.
 </Accordion>
 
 ### Fallback Birth Date for Heart Rate Zones
 You can now set a Fallback Birth Date on a user.
 
-<Accordion icon="cake-candles" iconType="duotone" title="Details">
+<Accordion icon="cake-candles" iconType="duotone" title="Details" defaultOpen>
 Vital can use this to compute a more accurate workout Heart Rate Zones, when the provider
 exposes neither heart rate zones nor user age to Vital.
 
@@ -145,7 +145,7 @@ Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-
 ### Grouped Timeseries (Feb 24)
 You can now get grouped timeseries data.
 
-<Accordion icon="chart-scatter" iconType="duotone" title="Details">
+<Accordion icon="chart-scatter" iconType="duotone" title="Details" defaultOpen>
 
 This initial release groups data by [Source Type](/wearables/providers/data-attributions#source-type)
 from [supported providers](/wearables/providers/data-attributions#supported-providers).
@@ -157,7 +157,7 @@ Check out the [Blood Oxygen](/api-reference/timeseries-grouped/blood-oxygen) end
 ### Historical Pull Introspection (Dec 23)
 You can now introspect the status of all one-off user historical data pulls.
 
-<Accordion icon="binoculars" iconType="duotone" title="Details">
+<Accordion icon="binoculars" iconType="duotone" title="Details" defaultOpen>
 It also provides the pulled date-time range, as well as a rough estimate of the amount of
 data ingested (in terms of "days with data").
 
@@ -167,7 +167,7 @@ Check out the [Historical Pull Introspection](/api-reference/introspection/histo
 ### User Resources Introspection (Dec 23)
 You can now introspect user data ingestion statistics.
 
-<Accordion icon="binoculars" iconType="duotone" title="Details">
+<Accordion icon="binoculars" iconType="duotone" title="Details" defaultOpen>
 For example, the endpoint provides:
 
 1. Oldest and newest data timestamp
@@ -182,7 +182,7 @@ Check out the [User Resources Introspection](/api-reference/introspection/user-r
 
 Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
 
-<Accordion icon="id-badge" iconType="duotone" title="Details">
+<Accordion icon="id-badge" iconType="duotone" title="Details" defaultOpen>
 It grants only user-scoped access to your mobile app sign-ins. This allows you to keep your Vital API Keys
 as server-side secrets.
 
