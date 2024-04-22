@@ -2,28 +2,51 @@
 title: "API"
 ---
 
-### User Undo Deletion
 
-You can now undo user deletion that is still in the 7-day grace period.
+### Understanding Resource Availability (Apr 24)
+When a user connection to a provider is established, the webhook event now includes a resource availability
+report of the connection.
 
-<Accordion icon="trash-undo" iconType="duotone" title="Details">
-Check out the [User Undo Deletion](/api-reference/user/undo-delete-user) endpoint documentation.
+<Accordion icon="signal-bars" iconType="duotone" title="Details" defaultOpen>
+We introduce this because this helps you understand what resources would and would not be available on
+a new connection. We also provide insights into how partial consents from users during the OAuth authentication
+flow can influence the resource availability, so that you can take actions accordingly.
+
+This resource availability report is based on the permissions *(also known as API access scopes)* the user has
+granted during the authentication process.
+
+In some cases, a provider resource may be available, but some information could be absent due to
+some optional scopes having been denied by the user. The availability report includes a full breakdown
+of granted and denied scopes by their optionality.
+
+<Note>
+If the provider has no concept of API access scopes, we report all resources as available.
+</Note>
+
+You can also query this information at any time through the
+[Get User Connections](/api-reference/user/get-users-connected-providers) endpoint.
+
+Check out the [Provider Connection Created](/event-catalog/provider.connection.created)
+(`provider.connection.created`) event schema and the [Get User Connections](/api-reference/user/get-users-connected-providers) endpoint documentation.
+
 </Accordion>
 
-### Fallback Birth Date for Heart Rate Zones
+
+### Fallback Birth Date for Heart Rate Zones (Feb 24)
 You can now set a Fallback Birth Date on a user.
 
-<Accordion icon="cake-candles" iconType="duotone" title="Details">
+<Accordion icon="cake-candles" iconType="duotone" title="Details" defaultOpen>
 Vital can use this to compute a more accurate workout Heart Rate Zones, when the provider
 exposes neither heart rate zones nor user age to Vital.
 
 Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-birth-date) documentation.
 </Accordion>
 
-### Grouped Timeseries
+
+### Grouped Timeseries (Feb 24)
 You can now get grouped timeseries data.
 
-<Accordion icon="chart-scatter" iconType="duotone" title="Details">
+<Accordion icon="chart-scatter" iconType="duotone" title="Details" defaultOpen>
 
 This initial release groups data by [Source Type](/wearables/providers/data-attributions#source-type)
 from [supported providers](/wearables/providers/data-attributions#supported-providers).
@@ -32,20 +55,20 @@ Check out the [Blood Oxygen](/api-reference/timeseries-grouped/blood-oxygen) end
 </Accordion>
 
 
-### Historical Pull Introspection
+### Historical Pull Introspection (Dec 23)
 You can now introspect the status of all one-off user historical data pulls.
 
-<Accordion icon="binoculars" iconType="duotone" title="Details">
+<Accordion icon="binoculars" iconType="duotone" title="Details" defaultOpen>
 It also provides the pulled date-time range, as well as a rough estimate of the amount of
 data ingested (in terms of "days with data").
 
 Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
 </Accordion>
 
-### User Resources Introspection
+### User Resources Introspection (Dec 23)
 You can now introspect user data ingestion statistics.
 
-<Accordion icon="binoculars" iconType="duotone" title="Details">
+<Accordion icon="binoculars" iconType="duotone" title="Details" defaultOpen>
 For example, the endpoint provides:
 
 1. Oldest and newest data timestamp
@@ -56,11 +79,11 @@ Check out the [User Resources Introspection](/api-reference/introspection/user-r
 </Accordion>
 
 
-### Vital Sign-In Token for Mobile SDKs
+### Vital Sign-In Token for Mobile SDKs (Nov 23)
 
 Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
 
-<Accordion icon="id-badge" iconType="duotone" title="Details">
+<Accordion icon="id-badge" iconType="duotone" title="Details" defaultOpen>
 It grants only user-scoped access to your mobile app sign-ins. This allows you to keep your Vital API Keys
 as server-side secrets.
 

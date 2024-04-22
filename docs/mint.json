@@ -82,13 +82,20 @@
       ]
     },
     {
+      "group": "Core",
+      "pages": [
+        "changelog/core/api"
+      ]
+    },
+    {
       "group": "Wearables",
       "pages": [
         "changelog/wearables/api",
         "changelog/wearables/providers",
         "changelog/wearables/deprecations"
       ]
-    },{
+    },
+    {
       "group": "Lab Testing",
       "pages": [
         "changelog/lab-testing/deprecations"
