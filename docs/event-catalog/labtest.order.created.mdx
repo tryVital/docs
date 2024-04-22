@@ -70,22 +70,19 @@ The Vital Test associated with the order
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 </ResponseField>
-<ResponseField name="sample_type" type="LabTestSampleType" required="true">
-<Expandable title="LabTestSampleType" defaultOpen="true">
-</Expandable>
+<ResponseField name="sample_type" type="enum<string>" required="true">
+Available options: `dried_blood_spot`, `serum`, `saliva`, `urine`.
 </ResponseField>
-<ResponseField name="method" type="LabTestCollectionMethod" required="true">
-<Expandable title="LabTestCollectionMethod" defaultOpen="true">
-</Expandable>
+<ResponseField name="method" type="enum<string>" required="true">
+Available options: `testkit`, `walk_in_test`, `at_home_phlebotomy`.
 </ResponseField>
 <ResponseField name="price" type="number" required="true">
 </ResponseField>
 <ResponseField name="is_active" type="boolean" required="true">
 Deprecated. Use status instead.
 </ResponseField>
-<ResponseField name="status" type="LabTestStatus" required="true">
-<Expandable title="LabTestStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="status" type="enum<string>" required="true">
+Available options: `active`, `pending_approval`, `inactive`.
 </ResponseField>
 <ResponseField name="fasting" type="boolean | null">
 Defines whether a lab test requires fasting.
@@ -128,9 +125,8 @@ Defines whether a lab test requires fasting.
 </ResponseField>
 <ResponseField name="provider_id" type="string | null">
 </ResponseField>
-<ResponseField name="type" type="MarkerType | null">
-<Expandable title="MarkerType" defaultOpen="true">
-</Expandable>
+<ResponseField name="type" type="enum<string> | null">
+Available options: `biomarker`, `panel`.
 </ResponseField>
 <ResponseField name="unit" type="string | null">
 </ResponseField>
@@ -239,15 +235,13 @@ When your order was last updated.
 </ResponseField>
 <ResponseField name="created_at" type="string" required="true">
 </ResponseField>
-<ResponseField name="status" type="OrderStatus" required="true">
-<Expandable title="OrderStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="status" type="enum<string>" required="true">
+Available options: `received.walk_in_test.ordered`, `received.walk_in_test.requisition_created`, `completed.walk_in_test.completed`, `sample_with_lab.walk_in_test.partial_results`, `failed.walk_in_test.sample_error`, `cancelled.walk_in_test.cancelled`, `received.at_home_phlebotomy.ordered`, `received.at_home_phlebotomy.requisition_created`, `collecting_sample.at_home_phlebotomy.appointment_pending`, `collecting_sample.at_home_phlebotomy.appointment_scheduled`, `collecting_sample.at_home_phlebotomy.draw_completed`, `collecting_sample.at_home_phlebotomy.appointment_cancelled`, `completed.at_home_phlebotomy.completed`, `sample_with_lab.at_home_phlebotomy.partial_results`, `cancelled.at_home_phlebotomy.cancelled`, `failed.at_home_phlebotomy.sample_error`, `received.testkit.ordered`, `received.testkit.awaiting_registration`, `received.testkit.requisition_created`, `received.testkit.registered`, `collecting_sample.testkit.transit_customer`, `collecting_sample.testkit.out_for_delivery`, `collecting_sample.testkit.with_customer`, `collecting_sample.testkit.transit_lab`, `sample_with_lab.testkit.delivered_to_lab`, `completed.testkit.completed`, `failed.testkit.failure_to_deliver_to_customer`, `failed.testkit.failure_to_deliver_to_lab`, `failed.testkit.sample_error`, `failed.testkit.lost`, `cancelled.testkit.cancelled`, `cancelled.testkit.do_not_process`.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="status" type="OrderTopLevelStatus | null">
-<Expandable title="OrderTopLevelStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="status" type="enum<string> | null">
+Available options: `received`, `collecting_sample`, `sample_with_lab`, `completed`, `cancelled`, `failed`.
 </ResponseField>
 <ResponseField name="physician" type="ClientFacingPhysician | null">
 <Expandable title="ClientFacingPhysician" defaultOpen="true">
@@ -294,8 +288,7 @@ Schedule an Order to be processed in a future date.
 </ResponseField>
 </Expandable>
 </ResponseField>
-# Examples
-<CodeGroup>
+<ResponseExample>
 ```json Example
 {
   "event_type": "labtest.order.created",
@@ -303,9 +296,9 @@ Schedule an Order to be processed in a future date.
   "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "a82b5d9d-12c7-4944-b94b-47eb7e57f2b8",
-    "team_id": "83590a67-7985-4357-8f69-cee8b7622789",
-    "user_id": "99b30b69-e59c-4899-82a0-9fc05418104a",
+    "id": "823b7af1-dc57-437d-91af-6035044354c3",
+    "team_id": "0c6e699c-1338-4c8b-8fe0-4b9fa91fbd3d",
+    "user_id": "3c9aed6b-a21c-493e-b2d5-83d56b66c9f4",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -346,7 +339,7 @@ Schedule an Order to be processed in a future date.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "03776f69-dc35-49c9-9291-a84a95dd2da5",
+    "health_insurace_id": "c06d2838-6550-4a89-8c57-9d924b3af829",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
@@ -373,4 +366,4 @@ Schedule an Order to be processed in a future date.
   }
 }
 ```
-</CodeGroup>
+</ResponseExample>

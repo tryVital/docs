@@ -53,25 +53,21 @@ Time is in UTC
 </ResponseField>
 <ResponseField name="iana_timezone" type="string | null">
 </ResponseField>
-<ResponseField name="type" type="AppointmentType" required="true">
-<Expandable title="AppointmentType" defaultOpen="true">
-</Expandable>
+<ResponseField name="type" type="enum<string>" required="true">
+Available options: `phlebotomy`.
 </ResponseField>
-<ResponseField name="provider" type="AppointmentProvider" required="true">
-<Expandable title="AppointmentProvider" defaultOpen="true">
-</Expandable>
+<ResponseField name="provider" type="enum<string>" required="true">
+Available options: `getlabs`, `axlehealth`, `phlebfinders`.
 </ResponseField>
-<ResponseField name="status" type="AppointmentStatus" required="true">
-<Expandable title="AppointmentStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="status" type="enum<string>" required="true">
+Available options: `confirmed`, `pending`, `in_progress`, `completed`, `cancelled`.
 </ResponseField>
 <ResponseField name="provider_id" type="string" required="true">
 </ResponseField>
 <ResponseField name="can_reschedule" type="boolean" required="true">
 </ResponseField>
-<ResponseField name="event_status" type="AppointmentEventStatus" required="true">
-<Expandable title="AppointmentEventStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="event_status" type="enum<string>" required="true">
+Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progress`.
 </ResponseField>
 <ResponseField name="event_data" type="object | null">
 </ResponseField>
@@ -79,9 +75,8 @@ Time is in UTC
 <Expandable title="Item Schema: ClientFacingAppointmentEvent" defaultOpen="true">
 <ResponseField name="created_at" type="string" required="true">
 </ResponseField>
-<ResponseField name="status" type="AppointmentEventStatus" required="true">
-<Expandable title="AppointmentEventStatus" defaultOpen="true">
-</Expandable>
+<ResponseField name="status" type="enum<string>" required="true">
+Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progress`.
 </ResponseField>
 <ResponseField name="data" type="object | null">
 </ResponseField>
@@ -89,8 +84,7 @@ Time is in UTC
 </ResponseField>
 </Expandable>
 </ResponseField>
-# Examples
-<CodeGroup>
+<ResponseExample>
 ```json Example
 {
   "event_type": "labtest.appointment.update",
@@ -98,9 +92,9 @@ Time is in UTC
   "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "66d2b51f-945a-42fc-a6d0-0f59e2366ad8",
-    "user_id": "e2073000-144e-4549-8bd6-f93a52f1c787",
-    "order_id": "cf1c151d-2a20-4c12-b60e-bd0a7369c9d4",
+    "id": "9415a0ed-ca0a-4f5d-ad93-94dfef8c6fcb",
+    "user_id": "63e9e98e-7f8f-444b-832c-54ed0133b485",
+    "order_id": "052dd8c3-7e29-462d-a277-b67db3b9c1aa",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",
@@ -140,4 +134,4 @@ Time is in UTC
   }
 }
 ```
-</CodeGroup>
+</ResponseExample>

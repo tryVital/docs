@@ -43,12 +43,40 @@ URL for source logo
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="resource_availability" type="object" required="true">
+<ResponseField name="resource_availability" type="Record<string, ResourceAvailability>" required="true">
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="ResourceAvailability | null">
+<Expandable title="ResourceAvailability" defaultOpen="true">
+<ResponseField name="status" type="enum<string>" required="true">
+Available options: `available`, `unavailable`.
+</ResponseField>
+<ResponseField name="scope_requirements" type="ScopeRequirementsGrants | null">
+<Expandable title="ScopeRequirementsGrants" defaultOpen="true">
+<ResponseField name="user_granted" type="ScopeRequirements_str_" required="true">
+<Expandable title="ScopeRequirements_str_" defaultOpen="true">
+<ResponseField name="required" type="string" required="true">
+</ResponseField>
+<ResponseField name="optional" type="string" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
-# Examples
-<CodeGroup>
+<ResponseField name="user_denied" type="ScopeRequirements_str_" required="true">
+<Expandable title="ScopeRequirements_str_" defaultOpen="true">
+<ResponseField name="required" type="string" required="true">
+</ResponseField>
+<ResponseField name="optional" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
 ```json Example
 {
   "event_type": "provider.connection.created",
@@ -57,12 +85,48 @@ URL for source logo
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "provider": {
-      "name": "Oura",
-      "slug": "oura",
+      "name": "Fitbit",
+      "slug": "fitbit",
       "logo": "https://logo_url.com"
     },
-    "user_id": "22c56c9d-efca-4d6a-92e6-2ee82ffd8c01"
+    "user_id": "18d01b30-520f-4ee5-97e0-1cacf7c45873",
+    "resource_availability": {
+      "body": {
+        "status": "available",
+        "scope_requirements": {
+          "user_granted": {
+            "required": [
+              "weight"
+            ],
+            "optional": []
+          },
+          "user_denied": {
+            "required": [],
+            "optional": []
+          }
+        }
+      },
+      "sleep": {
+        "status": "unavailable",
+        "scope_requirements": {
+          "user_granted": {
+            "required": [],
+            "optional": []
+          },
+          "user_denied": {
+            "required": [
+              "sleep"
+            ],
+            "optional": [
+              "heartrate",
+              "oxygen_saturation",
+              "respiratory_rate"
+            ]
+          }
+        }
+      }
+    }
   }
 }
 ```
-</CodeGroup>
+</ResponseExample>

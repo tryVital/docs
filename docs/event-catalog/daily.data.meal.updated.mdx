@@ -89,18 +89,114 @@ Amount of sugar in grams (g)
 </ResponseField>
 <ResponseField name="micros" type="Micros | null">
 <Expandable title="Micros" defaultOpen="true">
-<ResponseField name="minerals" type="object | null">
+<ResponseField name="minerals" type="Record<string, object> | null">
 Amount of each mineral in grams (g)
-</ResponseField>
-<ResponseField name="trace_elements" type="object | null">
-Amount of each trace element in grams (g)
-</ResponseField>
-<ResponseField name="vitamins" type="object | null">
-Amount of each vitamin in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="data" type="object | null">
+<ResponseField name="trace_elements" type="Record<string, object> | null">
+Amount of each trace element in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="vitamins" type="Record<string, object> | null">
+Amount of each vitamin in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="data" type="Record<string, ClientFacingFood> | null">
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="ClientFacingFood | null">
+<Expandable title="ClientFacingFood" defaultOpen="true">
+<ResponseField name="energy" type="Energy | null">
+<Expandable title="Energy" defaultOpen="true">
+<ResponseField name="unit" type="string" required="true">
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="macros" type="Macros | null">
+<Expandable title="Macros" defaultOpen="true">
+<ResponseField name="carbs" type="number | null">
+Amount of carbohydrates in grams (g)
+</ResponseField>
+<ResponseField name="protein" type="number | null">
+Amount of protein in grams (g)
+</ResponseField>
+<ResponseField name="fats" type="Fats | null">
+Details of fat content
+<Expandable title="Fats" defaultOpen="true">
+<ResponseField name="saturated" type="number | null">
+Amount of saturated fats in grams (g)
+</ResponseField>
+<ResponseField name="monounsaturated" type="number | null">
+Amount of monounsaturated fats in grams (g)
+</ResponseField>
+<ResponseField name="polyunsaturated" type="number | null">
+Amount of polyunsaturated fats in grams (g)
+</ResponseField>
+<ResponseField name="omega3" type="number | null">
+Amount of Omega-3 fatty acids in grams (g)
+</ResponseField>
+<ResponseField name="omega6" type="number | null">
+Amount of Omega-6 fatty acids in grams (g)
+</ResponseField>
+<ResponseField name="total" type="number | null">
+Total amount of fats in grams (g)
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="alcohol" type="number | null">
+Amount of alcohol in grams (g)
+</ResponseField>
+<ResponseField name="water" type="number | null">
+Amount of water in grams (g)
+</ResponseField>
+<ResponseField name="fibre" type="number | null">
+Amount of dietary fiber in grams (g)
+</ResponseField>
+<ResponseField name="sugar" type="number | null">
+Amount of sugar in grams (g)
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="micros" type="Micros | null">
+<Expandable title="Micros" defaultOpen="true">
+<ResponseField name="minerals" type="Record<string, object> | null">
+Amount of each mineral in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="trace_elements" type="Record<string, object> | null">
+Amount of each trace element in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="vitamins" type="Record<string, object> | null">
+Amount of each vitamin in grams (g)
+<Expandable defaultOpen>
+<ResponseField name="{key=*}" type="number | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
@@ -130,8 +226,7 @@ The identifier of the app which recorded this summary. This is only applicable t
 </ResponseField>
 </Expandable>
 </ResponseField>
-# Examples
-<CodeGroup>
+<ResponseExample>
 ```json Example
 {
   "event_type": "daily.data.meal.updated",
@@ -201,4 +296,4 @@ The identifier of the app which recorded this summary. This is only applicable t
   }
 }
 ```
-</CodeGroup>
+</ResponseExample>
