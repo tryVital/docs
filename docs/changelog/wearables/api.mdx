@@ -8,8 +8,12 @@ When a user connection to a provider is established, the webhook event now inclu
 report of the connection.
 
 <Accordion icon="signal-bars" iconType="duotone" title="Details">
-This report is based on the permissions *(also known as API access scopes)* the user has granted during
-the authentication process.
+We introduce this because this helps you understand what resources would and would not be available on
+a new connection. We also provide insights into how partial consents from users during the OAuth authentication
+flow can influence the resource availability, so that you can take actions accordingly.
+
+This resource availability report is based on the permissions *(also known as API access scopes)* the user has
+granted during the authentication process.
 
 In some cases, a provider resource may be available, but some information could be absent due to
 some optional scopes having been denied by the user. The availability report includes a full breakdown
