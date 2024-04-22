@@ -2,6 +2,11 @@
 openapi: "POST /v2/user"
 ---
 
+<Note>
+When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request error response
+includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
+</Note>
+
 <RequestExample>
 
 ```bash cURL

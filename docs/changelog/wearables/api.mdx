@@ -2,7 +2,125 @@
 title: "API"
 ---
 
-### User Undo Deletion
+
+### Understanding Resource Availability (Apr 24)
+When a user connection to a provider is established, the webhook event now includes a resource availability
+report of the connection.
+
+<Accordion icon="signal-bars" iconType="duotone" title="Details">
+This report is based on the permissions *(also known as API access scopes)* the user has granted during
+the authentication process.
+
+In some cases, a provider resource may be available, but some information could be absent due to
+some optional scopes having been denied by the user. The availability report includes a full breakdown
+of granted and denied scopes by their optionality.
+
+<Note>
+If the provider has no concept of API access scopes, we report all resources as available.
+</Note>
+
+You can also query this information at any time through the
+[Get User Connections](/api-reference/user/get-users-connected-providers) endpoint.
+
+Check out the [Provider Connection Created](/event-catalog/provider.connection.created)
+(`provider.connection.created`) event schema and the [Get User Connections](/api-reference/user/get-users-connected-providers) endpoint documentation.
+
+</Accordion>
+
+
+### Updating your Team Brand Information (Apr 24)
+You can now manage Brand Information of your Vital Teams through the Org Management API.
+
+<Accordion icon="billboard" iconType="duotone" title="Details">
+Team Brand Information is used in:
+
+1. the Vital-hosted [Link widget](/wearables/connecting-providers/introduction);
+2. all user communications [Vital Lab Testing](/lab/overview/introduction) sent on your behalf; and
+3. the Vital-hosted Appointment Booking page for [Vital Lab Testing](/lab/overview/introduction).
+
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+Check out the [Update Team](/api-reference/org-management/team/update-team) and 
+[Create Team](/api-reference/org-management/team/create-team) endpoint documentation.
+
+</Accordion>
+
+### Vital Orgs and Org Management API (Apr 24)
+We have introduced Vital Org, a new level that groups all your Vital Teams. Your Vital Teams have been
+transparently grouped and migrated to the new structure.
+
+<Accordion icon="building" iconType="duotone" title="Details">
+We introduced this to provide a unified billing and administrative experience for customers having these use cases:
+
+1. multi-region presence; or
+2. user organization with diverging team-level configurations.
+
+
+We introduced the Org Management API because customers have asked for the programmatic access to
+dyanmically create Vital Teams and manage different aspects of their Vital Teams.
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+Check out the [Org Management API](/api-reference/org-management) documentation.
+
+</Accordion>
+
+### New webhook event top-level fields (Mar 24)
+
+All events now include Team ID, User ID and Client User ID as top-level fields.
+
+<Accordion icon="message" iconType="duotone" title="Details">
+We introduced this because this helps reduce a Vital User ID -> Client User ID database lookup on your end.
+
+Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
+
+#### Before
+```json Basic event structure
+{
+  "data": {
+    # ... event specific data
+  },
+  "event_type": "daily.data.glucose.created",
+}
+```
+
+#### After
+```json Basic event structure
+{
+  "data": {
+    # ... event specific data
+  },
+  "event_type": "daily.data.glucose.created",
+  "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
+  "client_user_id": "01HW3FSNVCHC3B2QB5N0ZAAAVG",
+  "team_id": "6b74423d-0504-4470-9afb-477252ccf67a"
+}
+```
+
+</Accordion>
+
+### Improved error response for User creation conflicts (Mar 24)
+
+The [Create User](/api-reference/user/create-user) endpoint has improved handling of
+conflicts in Client User ID.
+
+<Accordion icon="circle-exclamation" iconType="duotone" title="Details">
+We introduced this because the user creation endpoint being idempotent can help
+simplify your application logic.
+
+When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request response
+now includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
+
+Check out the [Create User](/api-reference/user/create-user) endpoint documentation.
+</Accordion>
+
+
+### User Undo Deletion (Feb 24)
 
 You can now undo user deletion that is still in the 7-day grace period.
 
@@ -20,7 +138,7 @@ exposes neither heart rate zones nor user age to Vital.
 Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-birth-date) documentation.
 </Accordion>
 
-### Grouped Timeseries
+### Grouped Timeseries (Feb 24)
 You can now get grouped timeseries data.
 
 <Accordion icon="chart-scatter" iconType="duotone" title="Details">
@@ -32,7 +150,7 @@ Check out the [Blood Oxygen](/api-reference/timeseries-grouped/blood-oxygen) end
 </Accordion>
 
 
-### Historical Pull Introspection
+### Historical Pull Introspection (Dec 23)
 You can now introspect the status of all one-off user historical data pulls.
 
 <Accordion icon="binoculars" iconType="duotone" title="Details">
@@ -42,7 +160,7 @@ data ingested (in terms of "days with data").
 Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
 </Accordion>
 
-### User Resources Introspection
+### User Resources Introspection (Dec 23)
 You can now introspect user data ingestion statistics.
 
 <Accordion icon="binoculars" iconType="duotone" title="Details">
@@ -56,7 +174,7 @@ Check out the [User Resources Introspection](/api-reference/introspection/user-r
 </Accordion>
 
 
-### Vital Sign-In Token for Mobile SDKs
+### Vital Sign-In Token for Mobile SDKs (Nov 23)
 
 Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
 
