@@ -107,7 +107,6 @@
         "api-details/authentication",
         "api-details/data_flow",
         "api-details/rate_limiting",
-        "api-details/errors",
         "api-details/regions",
         "api-details/custom-encryption-keys"
       ]
@@ -128,6 +127,7 @@
         "wearables/connecting-providers/link_flow",
         "wearables/connecting-providers/launching_link",
         "wearables/connecting-providers/auth_types",
+        "wearables/connecting-providers/errors",
         "wearables/connecting-providers/custom_widget",
         "wearables/connecting-providers/bring_your_own_oauth"
       ]
