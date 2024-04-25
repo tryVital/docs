@@ -1,0 +1,67 @@
+---
+title: "Link Errors"
+---
+
+## Error delivery
+
+### URL Query
+
+Vital performs a 307 Temporary Redirect to the `redirect_url` specified in your Link Token in the following scenarios:
+
+* All connections via [the Vital Link widget](/wearables/connecting-providers/introduction)
+* [Connect OAuth Provider](/api-reference/link/link-oauth-provider) endpoint used by your [Custom Widget](/wearables/connecting-providers/custom_widget)
+
+Error parameters would be appended to the `redirect_url` before the redirection. For example,
+given a redirect_url of `https://example.com/vital/callback`:
+
+```
+https://example.com/vital/callback
+?state=error
+&error_type=provider_credential_error
+&error=Invalid%20username%20or%20password
+```
+
+
+### JSON Response
+
+Vital responds 200 OK with a JSON response in the following scenarios:
+
+* [Connect Password Provider](/api-reference/link/link-password-provider) endpoint used by your [Custom Widget](/wearables/connecting-providers/custom_widget)
+* [Connect Email Provider](/api-reference/link/link-email-provider) endpoint used by your [Custom Widget](/wearables/connecting-providers/custom_widget)
+
+Error parameters would be embedded into the JSON response. For example:
+```json
+{
+  "state": "error",
+  "error_type": "provider_credential_error",
+  "error": "Invalid username or password"
+}
+```
+
+## Error Parameters
+
+<ResponseField name="state" type="const string">
+Constant: `error`
+</ResponseField>
+
+<ResponseField name="error_type" type="string">
+One of the [Link Error Types](#error-types).
+</ResponseField>
+
+<ResponseField name="error" type="string">
+A human-readable error explanation for troubleshooting purposes.
+Your application logic should not rely on this message.
+</ResponseField>
+
+## Error Types
+
+| Error Type                   | Description                                    |
+| ---------------------------- | ---------------------------------------------- |
+| `invalid_token`              | The Link Token is invalid or has expired.      |
+| `token_not_validated`        | The OAuth Link process has not been initiated via the [Link OAuth Provider](/api-reference/link/link-oauth-provider) endpoint. |
+| `token_consumed`             | The Link Token has been used to initiate a connection. |
+| `provider_credential_error`  | OAuth: An error occurred during the provider authentication flow. Password & Email: The supplied user credential is invalid. |
+| `provider_api_error`         | The credential is valid, but an error occurred on an API call required by Vital to fully establish the connection. |
+| `unsupported_region`         | The region you specified is not supported. <Info>Freestyle Libre only.</Info> |
+| `duplicate_connection`       | The provider credential has an existing connection to a different user in your team. <Info>Applicable only if you have opted in to the `reject_duplicate_connection` team setting.</Info> |
+| `required_scopes_not_granted`| User did not grant **all** required scopes, so Vital cannot establish the connection. |
