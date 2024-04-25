@@ -64,4 +64,4 @@ Your application logic should not rely on this message.
 | `provider_api_error`         | The credential is valid, but an error occurred on an API call required by Vital to fully establish the connection. |
 | `unsupported_region`         | The region you specified is not supported. <Info>Freestyle Libre only.</Info> |
 | `duplicate_connection`       | The provider credential has an existing connection to a different user in your team. <Info>Applicable only if you have opted in to the `reject_duplicate_connection` team setting.</Info> |
-| `required_scopes_not_granted`| **ALL** required scopes have not been granted. |
+| `required_scopes_not_granted`| User did not grant **all** required scopes, so Vital cannot establish the connection. |
