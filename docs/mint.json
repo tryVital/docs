@@ -493,6 +493,13 @@
             "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
             "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
           ]
+        },
+        {
+          "group": "Team Scope Requirements",
+          "pages": [
+            "api-reference/org-management/team-scope-requirements/get-team-scope-requirements",
+            "api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements"
+          ]
         }
       ]
     },
