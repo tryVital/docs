@@ -3,13 +3,13 @@ title: "API"
 ---
 
 ### Team Scope Requirements (Apr 24)
-You can now tailor your Vital Team's OAuth scopes using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements)
-to define the necessary permissions for a user's connection to be successful.
+You can now tailor what scopes Vital would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
+This applies when your user connects to an [OAuth provider](/wearables/connecting-providers/auth_types) which supports scopes.
 
 <Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
-When the `user_must_grant` list under Team Scope Requirements setting is not empty, Vital ensures that a user's connection succeeds only if all the required scopes are granted.
+Vital ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
 
-The scopes specified under `user_may_grant`, will be visible for the user to opt in to, but without affecting the status of their connection.
+The scopes specified as `user_may_grant` would be requested alongside the `user_must_grant` scopes. However, unlike `user_must_grant`, they do not prevent the connection from being established.
 
 <Info>
 Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
