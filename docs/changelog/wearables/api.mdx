@@ -3,6 +3,47 @@ title: "API"
 ---
 
 
+### Reject Duplicate Connections (Apr 24)
+You can now configure your Vital Team through the [Org Management API](/api-reference/org-management/team/update-team)
+to reject duplicate wearable connections.
+
+<Accordion icon="person-military-pointing" iconType="duotone" title="Details" defaultOpen>
+When the `reject_duplicate_connection` setting is enabled on the Team, Vital checks whether or
+not the provider-reported user ID is already connected to an existing User in your Team.
+
+If it does, the Link API would report the [`duplicate_connection` error](/wearables/connecting-providers/errors).
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+Check out the [Update Team](/api-reference/org-management/team/update-team) and 
+[Create Team](/api-reference/org-management/team/create-team) endpoint documentation on how to
+enable the setting.
+
+Check out the [Link Errors](/wearables/connecting-providers/errors) documentation on how to
+catch the `duplicate_connection` error.
+
+</Accordion>
+
+
+### Link Error reporting (Apr 24)
+The Link API now reports errors in terms of a predefined set of [Error Types](/wearables/connecting-providers/errors)
+on which your application logic can depend.
+
+<Accordion icon="circle-exclamation" iconType="duotone" title="Details" defaultOpen>
+We introduce this because there has not been a dependable way for your application logic
+to understand why a connection attempt has failed, and in turn this prevents your application
+from providing actionable messages to your end users.
+
+Depending on how you initiate the Link flow, the Link Error would be reported either as a
+URL query parameter, or as part of the JSON response.
+
+Check out the [Link Errors](/wearables/connecting-providers/errors) documentation for the detailed guidance.
+
+</Accordion>
+
+
 ### Understanding Resource Availability (Apr 24)
 When a user connection to a provider is established, the webhook event now includes a resource availability
 report of the connection.
