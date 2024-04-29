@@ -1,0 +1,17 @@
+---
+openapi: get /v1/org/{org_id}/team/{team_id}/scope_requirements
+title: Get Team Scope Requirements
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team/{team_id}/scope_requirements \
+  --header 'X-Vital-Org-Key: <api-key>'
+```
+</RequestExample>

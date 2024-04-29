@@ -1,0 +1,25 @@
+---
+openapi: post /v1/org/{org_id}/team/{team_id}/scope_requirements
+title: Set Team Scope Requirements
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team/{team_id}/scope_requirements \
+  --header 'Content-Type: application/json' \
+  --header 'X-Vital-Org-Key: <api-key>' \
+  --data '{
+   "fitbit": null,
+   "oura": {
+        "user_must_grant": ["daily"],
+        "user_may_grant": ["workout"]
+   }
+}'
+```
+</RequestExample>

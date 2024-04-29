@@ -2,6 +2,24 @@
 title: "API"
 ---
 
+### Team Scope Requirements (Apr 24)
+You can now tailor what scopes Vital would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
+This applies when your user connects to an [OAuth provider](/wearables/connecting-providers/auth_types) which supports scopes.
+
+<Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
+Vital ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
+
+The scopes specified as `user_may_grant` would be requested alongside the `user_must_grant` scopes. However, unlike `user_must_grant`, they do not prevent the connection from being established.
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+Check out the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements/upsert-team-scope-requirements) and 
+[Get Team Scope Requirements](/api-reference/org-management/team-scope-requirements/get-team-scope-requirements/upsert-team-scope-requirements) endpoint documentation on how to
+enable the setting.
+
+</Accordion>
 
 ### Reject Duplicate Connections (Apr 24)
 You can now configure your Vital Team through the [Org Management API](/api-reference/org-management/team/update-team)
