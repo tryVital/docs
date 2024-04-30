@@ -2,14 +2,278 @@
 title: "Deprecations"
 ---
 
+### Redefining Source and Provider
+
+<Warning>The stated removals in this section will happen on or after **31 July 2024**.</Warning>
+
+Vital has redefined what _Source_ and _Provider_ means across our API and event schemas:
+
+<Accordion title="The new definitions of Provider and Source">
+
+| Entity   | Definition               |
+| -------- | ------------------------ |
+| Source   | The source context of a specific summary or a specific timeseries value group. | 
+| Provider | A wearable data provider (an app, a platform, a service, or Vital Mobile SDKs). |
+
+A _Source_ context comprises of:
+* the Provider (slug only)
+* the [Source Type](/wearables/providers/data-attributions#source-type)
+* the [App ID](/wearables/providers/data-attributions#app-id) (_optional_)
+
+We have also plans for the _Source_ context to include source device metadata where available.
+
+A _Provider_ object is a short description of a wearable data provider. It comprises of the familiar
+`name`, `logo` and `slug` trio you have been receiving in many data events.
+
+</Accordion>
+
+To migrate to the new definitions, Vital is announcing the following deprecations:
+
+<Steps>
+  <Step title="All Data Dvents (daily.data.*)" stepNumber="1" titleSize="p">
+    Inside the Source context located at `$.data.source`, the `name`, `logo`, and `slug` fields are
+    now deprecated.
+
+    Vital no longer embeds these _Provider_ object fields in every data event, except for the provider
+    slug.
+
+    Using the [Steps data event](/event-catalog/daily.data.steps.created) as an illustration, originally
+    the `source` field describes the wearable data provider:
+    ```json daily.data.steps.created (Original)
+    {
+        "event_type": "daily.data.steps.created",
+        "data": {
+            "data": [...],
+            "source": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://example.com/oura.svg"
+            }
+        },
+        "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
+    }
+    ```
+
+    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this steps timeseries
+    value group. So Vital has introduced a few new _Source_ context fields:
+
+    ```json daily.data.steps.created (Current)
+    {
+        "event_type": "daily.data.steps.created",
+        "data": {
+            "data": [...],
+            "source": {
+                "provider": "oura",
+                "type": "ring",
+                "app_id": null,
+
+                /** BEGIN: deprecated Provider fields **/
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://example.com/oura.svg"
+                /** END: deprecated Provider fields **/
+            }
+        },
+        "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
+    }
+    ```
+
+    Once the deprecation cycle ends, Vital will remove the deprecated fields:
+
+    ```json daily.data.steps.created (Future)
+    {
+        "event_type": "daily.data.steps.created",
+        "data": {
+            "data": [...],
+            "source": {
+                "provider": "oura",
+                "type": "ring",
+                "app_id": null
+            }
+        },
+        "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
+    }
+    ```
+
+    <Card title="Recommended Action" icon="lightbulb-exclamation-on">
+    Stop parsing `name`, `logo` and `slug` when processing the `$.data.source` field in
+    **all Data Events** (daily.data.*).
+    </Card>
+    <Info>
+    If you need the Provider information, you can obtain it through the [Get Providers](/api-reference/providers)
+    endpoint.
+    </Info>
+  </Step>
+
+  <Step title="Get Summary endpoints" stepNumber="2" titleSize="p">
+
+    <Note>
+    This applies to:
+    * Get Activity: `GET /v2/summary/activity/*`
+    * Get Body: `GET /v2/summary/body/*`
+    * Get Meal: `GET /v2/summary/meal/*`
+    * Get Profile: `GET /v2/summary/profile/*`
+    * Get Sleep: `GET /v2/summary/sleep/*`
+    * Get Workouts: `GET /v2/summary/workouts/*`
+    </Note>
+
+    Similar to changes to the Data Events, the `name`, `logo`, and `slug` sub-fields under the `source` field
+    in each and every summary are now deprecated.
+
+    Vital no longer embeds these _Provider_ object fields in every summary, except for the provider
+    slug.
+
+    Using the [Get Profile endpoint](/api-reference/profile/get-summary) as an illustration, originally
+    the `source` field describes the wearable data provider:
+    ```json Profile (Original)
+    {
+        "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
+        "date": "2022-08-04",
+        "height": 183,
+        "source": {
+            "name": "Oura",
+            "slug": "oura",
+            "logo": "https://logo_url.com"
+        },
+        "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
+    }
+    ```
+
+    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this Profile
+    summary. So Vital has introduced a few new _Source_ context fields:
+
+    ```json Profile (Current)
+    {
+        "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
+        "date": "2022-08-04",
+        "height": 183,
+        "source": {
+            "provider": "oura",
+            "type": "app",
+            "app_id": null,
+
+            /** BEGIN: deprecated Provider fields **/
+            "name": "Oura",
+            "slug": "oura",
+            "logo": "https://example.com/oura.svg"
+            /** END: deprecated Provider fields **/
+        },
+        "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
+    }
+    ```
+
+    Once the deprecation cycle ends, Vital will remove the deprecated fields:
+
+    ```json Profile (Future)
+    {
+        "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
+        "date": "2022-08-04",
+        "height": 183,
+        "source": {
+            "provider": "oura",
+            "type": "app",
+            "app_id": null
+        },
+        "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
+    }
+    ```
+
+    <Card title="Recommended Action" icon="lightbulb-exclamation-on">
+    Stop parsing `name`, `logo` and `slug` fields in **all Get Summary endpoint** responses.
+    </Card>
+
+    <Info>
+    If you need the Provider information, you can obtain it through the [Get Providers](/api-reference/providers)
+    endpoint.
+    </Info>
+  </Step>
+
+  <Step title="Provider Connection events" stepNumber="3" titleSize="p">
+
+    <Note>
+    This applies to:
+    * Provider Connection Created: `provider.connection.created`.
+    </Note>
+
+    Vital has renamed the `source` field in this event to `provider`, aligning with the redefinition of _Source_
+    and _Provider_.
+
+    To illustrate the change, originally the `source` field describes the wearable data provider:
+    ```json provider.connection.created (Original)
+    {
+        "event_type": "provider.connection.created",
+        "data": {
+            "source": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://logo_url.com"
+            },
+            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
+            "resource_availability": {...}
+        }
+    }
+    ```
+
+    As part of this redefinition, `source` is no longer applicable here. Vital has introduced an identical
+    `provider` field as its replacement.
+
+    ```json provider.connection.created (Current)
+    {
+        "event_type": "provider.connection.created",
+        "data": {
+            "provider": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://logo_url.com"
+            },
+            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
+            "resource_availability": {...},
+
+            /** BEGIN: deprecated field **/
+            "source": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://logo_url.com"
+            }
+            /** END: deprecated field **/
+        }
+    }
+    ```
+
+    Once the deprecation cycle ends, Vital will remove the deprecated `source` field:
+
+    ```json provider.connection.created (Future)
+    {
+        "event_type": "provider.connection.created",
+        "data": {
+            "provider": {
+                "name": "Oura",
+                "slug": "oura",
+                "logo": "https://logo_url.com"
+            },
+            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
+            "resource_availability": {...}
+        }
+    }
+    ```
+
+    <Card title="Recommended Action" icon="lightbulb-exclamation-on">
+    Update your `provider.connection.created` event parsing logic to parse the `provider` field,
+    and stop parsing the `source` field.
+    </Card>
+  </Step>
+</Steps>
+
+
 ### The `is_final` flag in `historical.data.*.created` events
-<Warning>The removal will happen on or after **15 April 2024**.</Warning>
+
+<Warning>The removal will happen on or after **31 June 2024**.</Warning>
 
 We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
 
 For each resource, Vital now signals one Historical Pull Completed event, only after we have finished fetching
 all data chunks. This means `is_final` no longer has a meaning, since the event itself is *final*.
 
-<Card title="Recommended Action">
+<Card title="Recommended Action" icon="lightbulb-exclamation-on">
 Stop parsing `is_final` as a required field when processing `historical.data.*.created` events.
 </Card>
