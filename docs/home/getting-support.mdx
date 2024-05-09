@@ -1,0 +1,55 @@
+---
+title: "Getting Support"
+---
+
+When you encounter an issue which you cannot figure out, or an unexpected API error, you are
+welcome to get in touch with Vital support through these channels:
+
+* Email Support (help@tryvital.io)
+* Vital Slack community support channel (#vital-support)
+* Your dedicated Slack support channel (Scale plan customers).
+
+We appreciate as much context as possible when you raise an issue. This helps us understand your
+issue, enabling a quicker investigation turnaround.
+
+
+### Basic information
+
+| Item | Remarks |
+| ---- | ------- |
+| Your Vital Team ID | - |
+| Your Vital region | US or EU |
+| The Vital User ID | ...if the issue occurs on a specific user. |
+| The Vital environment | Sandbox, Production or both |
+
+### Issues with SDK behaviour
+
+
+| Item | Remarks |
+| ---- | ------- |
+| SDK Platform | Native, React Native, Flutter |
+| SDK Version | - |
+| Operating System | Android or iOS                |
+| Auth Scheme  | Vital Sign-In Token, or Team API Key |
+
+
+### Issues with Vital API
+
+When you encounter an unexpected response from the Vital API, please provide
+the `traceparent` header value from the HTTP response you received if possible. This
+helps us narrow down the context surrounding your issue.
+
+A `traceparent` response header looks like this:
+
+```
+traceparent: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
+```
+
+It contains a trace ID that links back to the original API request:
+
+* If you make the API request without a `traceparent` header, Vital's infrastructure
+  assigns a unique trace ID to it on entry.
+
+* If your API request is instrumented using OpenTelemetry, W3C Trace Context or other
+  interoperable tools, these tools would inject a `traceparent` header automatically.
+  Vital's instructure would adopt the trace ID from your API request.
