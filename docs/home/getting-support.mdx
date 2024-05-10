@@ -1,0 +1,91 @@
+---
+title: "Getting Support"
+---
+
+## Support channels
+
+When you encounter an issue which you cannot figure out, or an unexpected API error, you are
+welcome to get in touch with Vital support through these channels:
+
+* Email Support (help@tryvital.io)
+* Vital Slack community support channel (#vital-support)
+* Your dedicated Slack support channel (for Scale plan customers).
+
+We appreciate as much context as possible when you raise an issue. This helps us understand your
+issue, enabling a quicker investigation turnaround.
+
+## I have an issue with...
+
+### Anything in general
+
+| Item                  | Remarks                                    |
+| --------------------- | ------------------------------------------ |
+| Your Vital Team ID    | -                                          |
+| Your Vital region     | US or EU                                   |
+| The Vital User ID     | ...if the issue occurs on a specific user. |
+| The Vital environment | Sandbox, Production or both                |
+
+### Vital Mobile SDK
+
+| Item               | Remarks                       |
+| ------------------ | ----------------------------- |
+| Vital SDK Platform | Native, React Native, Flutter |
+| Vital SDK Version  | -                             |
+| Device OS          | Android or iOS                |
+| Device OS Version  | -                             |
+| Auth Scheme        | Vital Sign-In Token, or Team API Key |
+
+
+### A Vital API endpoint
+
+When you encounter an unexpected response from the Vital API, please provide
+the `traceparent` header value from the HTTP response you received if possible. This
+helps us narrow down the context surrounding your issue.
+
+A `traceparent` response header looks like this:
+
+```
+traceparent: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
+```
+
+It contains a trace ID that links back to the original API request:
+
+* If you make the API request without a `traceparent` header, Vital's infrastructure
+  assigns a unique trace ID to it on entry.
+
+* If your API request is instrumented using OpenTelemetry, W3C Trace Context or other
+  interoperable tools, these tools would inject a `traceparent` header automatically.
+  Vital's infrastructure would adopt the trace ID from your API request.
+
+
+### A wearables provider connection
+
+Before reporting an issue, we encourage you to try out the following steps:
+
+<Steps>
+    <Step title="Check the resource availability" icon="circle-question">
+    The [Get User Connections](https://docs.tryvital.io/api-reference/user/get-users-connected-providers) endpoint
+    reports the resource availability of all the connections. More specifically, it tells you:
+
+    1. What resources are available for a given user connection
+    2. Why each individual resource is available or unavailable, in terms of provider API access scopes.
+    </Step>
+
+    <Step title="Issues with historical pulls?" icon="clock-rotate-left">
+    If you are having issues with historical data specifically, the [Historical Pull Introspection](https://docs.tryvital.io/api-reference/introspection/historical-pulls) endpoint
+    provides a track record of historical pulls of all your user connections.
+    </Step>
+
+    <Step title="Issues with data availability?" icon="sparkles">
+    If you have troubles with data availability in general, the [User Resource Introspection](https://docs.tryvital.io/api-reference/introspection/user-resources) endpoint
+    is a live data ingestion record of all your user connections.
+    
+    <Note>
+    This is inclusive of all historical data covered by the
+    Historical Pull Introspection endpoint.
+    </Note>
+    </Step>
+</Steps>
+
+If you are not able to diagnose your issue using these tools, feel free to contact
+Vital support for further assistance.
