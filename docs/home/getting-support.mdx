@@ -24,7 +24,6 @@ issue, enabling a quicker investigation turnaround.
 
 ### Issues with SDK behaviour
 
-
 | Item               | Remarks                       |
 | ------------------ | ----------------------------- |
 | Vital SDK Platform | Native, React Native, Flutter |
@@ -54,3 +53,31 @@ It contains a trace ID that links back to the original API request:
 * If your API request is instrumented using OpenTelemetry, W3C Trace Context or other
   interoperable tools, these tools would inject a `traceparent` header automatically.
   Vital's infrastructure would adopt the trace ID from your API request.
+
+
+### Issues with Wearables Provider Connections
+
+Before reporting an issue, we encourage you to try out the following steps:
+
+<Steps>
+    <Step title="Check the resource availability" number="1">
+    The [Get User Connections](https://docs.tryvital.io/api-reference/user/get-users-connected-providers) endpoint
+    reports the resource availability of all the connections. More specifically, it tells you:
+
+    1. What resources are available for a given user connection
+    2. Why each individual resource is available or unavailable, in terms of provider API access scopes.
+    </Step>
+
+    <Step title="Check the historical pull record" number="2">
+    If you have troubles with historical data specifically, the [Historical Pull Introspection](https://docs.tryvital.io/api-reference/introspection/historical-pulls) endpoint
+    provides a track record of historical pulls of all your user connections.
+    </Step>
+
+    <Step title="Check the user resource record" number="3">
+    If you have troubles with data availability in general, the [User Resource Introspection](https://docs.tryvital.io/api-reference/introspection/user-resources) endpoint
+    is a live data ingestion record of all your user connections.
+    </Step>
+</Steps>
+
+If you are not able to diagnose your issue using these tools, feel free to contact
+Vital support for further assistance.
