@@ -2,6 +2,8 @@
 title: "Getting Support"
 ---
 
+## Support channels
+
 When you encounter an issue which you cannot figure out, or an unexpected API error, you are
 welcome to get in touch with Vital support through these channels:
 
@@ -12,8 +14,9 @@ welcome to get in touch with Vital support through these channels:
 We appreciate as much context as possible when you raise an issue. This helps us understand your
 issue, enabling a quicker investigation turnaround.
 
+## I have an issue with...
 
-### Basic information
+### Anything in general
 
 | Item                  | Remarks                                    |
 | --------------------- | ------------------------------------------ |
@@ -22,7 +25,7 @@ issue, enabling a quicker investigation turnaround.
 | The Vital User ID     | ...if the issue occurs on a specific user. |
 | The Vital environment | Sandbox, Production or both                |
 
-### Issues with SDK behaviour
+### Vital Mobile SDK
 
 | Item               | Remarks                       |
 | ------------------ | ----------------------------- |
@@ -33,7 +36,7 @@ issue, enabling a quicker investigation turnaround.
 | Auth Scheme        | Vital Sign-In Token, or Team API Key |
 
 
-### Issues with Vital API
+### A Vital API endpoint
 
 When you encounter an unexpected response from the Vital API, please provide
 the `traceparent` header value from the HTTP response you received if possible. This
@@ -55,12 +58,12 @@ It contains a trace ID that links back to the original API request:
   Vital's infrastructure would adopt the trace ID from your API request.
 
 
-### Issues with Wearables Provider Connections
+### A wearables provider connection
 
 Before reporting an issue, we encourage you to try out the following steps:
 
 <Steps>
-    <Step title="Check the resource availability" number="1">
+    <Step title="Check the resource availability" icon="circle-question">
     The [Get User Connections](https://docs.tryvital.io/api-reference/user/get-users-connected-providers) endpoint
     reports the resource availability of all the connections. More specifically, it tells you:
 
@@ -68,14 +71,19 @@ Before reporting an issue, we encourage you to try out the following steps:
     2. Why each individual resource is available or unavailable, in terms of provider API access scopes.
     </Step>
 
-    <Step title="Check the historical pull record" number="2">
-    If you have troubles with historical data specifically, the [Historical Pull Introspection](https://docs.tryvital.io/api-reference/introspection/historical-pulls) endpoint
+    <Step title="Issues with historical pulls?" icon="clock-rotate-left">
+    If you are having issues with historical data specifically, the [Historical Pull Introspection](https://docs.tryvital.io/api-reference/introspection/historical-pulls) endpoint
     provides a track record of historical pulls of all your user connections.
     </Step>
 
-    <Step title="Check the user resource record" number="3">
+    <Step title="Issues with data availability?" icon="sparkles">
     If you have troubles with data availability in general, the [User Resource Introspection](https://docs.tryvital.io/api-reference/introspection/user-resources) endpoint
     is a live data ingestion record of all your user connections.
+    
+    <Note>
+    This is inclusive of all historical data covered by the
+    Historical Pull Introspection endpoint.
+    </Note>
     </Step>
 </Steps>
 
