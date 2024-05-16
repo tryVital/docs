@@ -1,16 +1,106 @@
 ---
-title: "Freestyle Libre"
+title: "Abbott LibreView"
+description: "For Abbott CGMs, e.g. Freestyle Libre."
 ---
 
+## Overview
+
+Vital has launched a new **Abbott LibreView integration** (`abbott_libreview`) for Abbott CGMs:
+
+* Users can connect their CGM devices simply by signing in with their LibreView patient account.
+* You no longer need to maintain a LibreView practice.
+* You no longer need to instruct your users to share/connect to your practice, before they attempt to connect via Vital Link. 
+
+The practice-based `freestyle_libre` integration will remain active to serve existing connections.
+
+| Provider Slug      | Remarks                   |
+| ------------------ | ------------------------- | 
+| `abbott_libreview` | Connect via LibreView patient account | 
+| `freestyle_libre`  | _Deprecated_              |
+
+## LibreView data use floating time basis
+
+All LibreView (Freestyle Libre) data are in **floating time basis**.
+
+Please go through the [Timestamps and Time Zones](/wearables/providers/timestamps-and-time-zones) guide to understand the
+implications, as well as how to properly handle floating time data.
+
+## Connecting a LibreView patient account
+
+### Vital Link Widget
+
+Abbott LibreView is automatically available as an option in the [Vital Link Widget](/wearables/connecting-providers/launching_link).
+
+### Vital Link API (custom widget)
+
+If you intend to build a [custom widget on top of the Vital Link API](/wearables/connecting-providers/custom_widget), Abbott LibreView is
+exposed as a **password provider**:
+
+<Steps>
+  <Step number="1" title="Generate a Link Token">
+  Start the linking process by [generating a short-lived Link Token](/api-reference/link/generate-link-token).
+  </Step>
+
+  <Step number="2" title="Submit username, password and region">
+  Submit the username, password and region of the LibreView patient account to the [Link Password Provider](/api-reference/link/link-password-provider) endpoint.
+
+  <Note>
+  You must specify the [LibreView region](#supported-libreview-regions).
+  The region must align with the region in which the patient account is registered in.
+
+  For example, for a patient account registered in Netherlands:
+  ```json
+  {
+    "username": "patient@example.com",
+    "password": "pAssW0rD",
+    "region": "nl"
+  }
+  ```
+  </Note>
+
+  </Step>
+
+  <Step number="3" title="Handle the multi-factor authentication request">
+  The [Link Password Provider](/api-reference/link/link-password-provider) endpoint responds with `state: "pending_provider_mfa"`,
+  alongside the MFA method being used, as well as a MFA hint.
+
+  This means the user must complete multi-factor authentication before Vital can establish the connection. You should prompt the user
+  to input the verification code they received out-of-band.
+  </Step>
+
+  <Step number="4" title="Submit the MFA Code">
+  Submit the MFA code to the [Complete Password Provider MFA](/api-reference/link/complete-password-provider-mfa) endpoint.
+
+  <Note>You must use the same Link Token you generated in Step 1.</Note>
+  </Step>
+
+  <Step number="5" title="Linking completed">
+  The linking process is completed. Historical pulls are scheduled to start as soon as possible.
+  </Step>
+</Steps>
+
+### Supported LibreView regions
+
+| LibreView Region                               | 
+| ---------------------------------------------- | 
+| United States (`us`)                           | 
+| Canada (`ca`)                                  | 
+| India (`in`)                                   | 
+| Europe (`eu`)                                  | 
+| Singapore (`sg`)                               | 
+| Australia (`au`)                               | 
+| Germany (`de`)                                 | 
+| Netherlands (`nl`)                             | 
+| Brazil (`br`)                                  | 
+
+
+## Setting up practice connections (Legacy integration)
+
 <Warning>
-
-Libre's API does not record the timestamp's offset associated with a user's reading.
-Although Vital returns timestamps in the UTC format (e.g. `2022-04-20T13:02:01+00:00`) this doesn't hold true for Libre. The time returned is the user's timezone when they took a reading. Our recommendation is for you to record the timezone offset
-of each user and adjust the timestamps accordingly.
-
+This guide applies **only** to the legacy `freestyle_libre` integration that relies on practice-based connections.
 </Warning>
 
-## Adding users to a Practice
+### Adding users to a Practice
 
 When integrating with Vital, you have two options: use Vital's practice, or yours. We call the latter a custom practice. Depending on the approach, you need to instruct your user's to connect their Libre account to a practice.
 
@@ -18,7 +108,7 @@ This allows Vital to start pulling data from their account. This is done through
 
 <img src="/img/connect_libreview.png" className="w-2/5 block mx-auto" />
 
-### Custom Practice (Enterprise only)
+#### Custom Practice (Enterprise only)
 
 <Warning>
   If you want to use a Custom Practice, you need an Enterprise Account. Please
@@ -55,7 +145,7 @@ Freestyle Libre is available in different regions, ensure you invite the correct
 | Brazil (`br`)                                  | 
 | _(\*) Default Freestyle region if unspecified_ |
 
-### Vital Practices
+#### Vital Practices
 
 <Info>
   You can use a Vital practices to test the integration with Freestyle Libre.
@@ -71,13 +161,13 @@ Vital has two practices (depending on environment) this applies to all regions:
 
 You need to ask your user to add one of the above practices in their Libre App. Once that's done, data will start flowing.
 
-## Vital Widget
+### Vital Link Widget
 
-To connect your user to Vital via the Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
+To connect your user to Vital via the Link Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
 
 <img src="/img/libre_connect.png" className="w-2/5 block mx-auto" />
 
-## Vital Link
+### Vital Link API (custom widget)
 
 1. To connect to Freestyle Libre, you must create a Vital Link token.
 

@@ -22,10 +22,9 @@ We currently Support over 300+ devices, a full list can be seen below.
 | [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       | Dexcom CGM Glucose monitors                                   | [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                    |
 | [Dexcom (G6 And Older)](https://www.dexcom.com)      | `dexcom`          | Dexcom CGM Glucose monitors                                   | Password authentication                                                              |
 | [8Sleep](https://www.eightsleep.com)                 | `eight_sleep`     | Smart Mattress                                                | Password authentication                                                              |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/) | `freestyle_libre` | Abbott CGM Glucose monitor                                    | [LibreView practice connection](/wearables/guides/freestyle)                         |
+| [Abbott LibreView](https://www.libreview.com/)       | `abbott_libreview`| Abbott CGM Glucose monitor                                    | Password authentication (via LibreView patient account)                              |
 | [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Activity Trackers (all devices)                               | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
 | [Garmin](https://www.garmin.com)                     | `garmin`          | Fitness watches (all devices)                                 | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
-| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | Activity Trackers (all devices)                               | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
 | [Hammerhead](https://www.hammerhead.io)              | `hammerhead`      | Cycling computers                                             | Password authentication                                                              |
 | [iHealth](https://ihealthlabs.com)                   | `ihealth`         | Blood pressure, Fitness scales, Glucometers & Fitness watches | [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                    |
 | [MyFitnessPal](https://www.myfitnesspal.com)         | `my_fitness_pal`  | Nutrition data                                                | [MyFitnessPal Diary Sharing Key](/wearables/guides/my_fitness_pal)                   |
@@ -39,6 +38,15 @@ We currently Support over 300+ devices, a full list can be seen below.
 | [Zwift](https://zwift.com)                           | `zwift`           | Virtual cycling and running                                   | Password authentication                                                              |
 | [Polar](https://www.polar.com/accesslink-api/)       | `polar`           | Finnish sports tech pioneer                                   | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
 | [Cronometer](https://www.cronometer.com)             | `cronometer`      | Nutrition data                                                | Vital branded OAuth, or [BYOO](/wearables/connecting-providers/bring_your_own_oauth) |
+
+#### Deprecated providers
+
+| Provider                                             | Slug              | Remarks                                                                                       |
+| ---------------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------- |
+| [Freestyle](https://www.freestylelibre.co.uk/libre/) | `freestyle_libre` | Vital has launched an improved Abbott LibreView (`abbott_librewview`) integration.            |
+| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | Google will shut down Google Fit on June 30, 2025, with no cloud-based replacement. Android Health Connect is the successor. |
+
+
 
 ### SDK Based Providers
 

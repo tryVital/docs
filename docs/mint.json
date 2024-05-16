@@ -162,6 +162,7 @@
     {
       "group": "Guides",
       "pages": [
+        "wearables/guides/abbott-libreview",
         "wearables/guides/apple-healthkit",
         "wearables/guides/android-health-connect",
         {
@@ -172,7 +173,6 @@
           ]
         },
         "wearables/guides/fitbit",
-        "wearables/guides/freestyle",
         "wearables/guides/garmin",
         "wearables/guides/google_fit",
         "wearables/guides/my_fitness_pal",
@@ -280,7 +280,8 @@
             "api-reference/link/link-oauth-provider",
             "api-reference/link/link-password-provider",
             "api-reference/link/link-email-provider",
-            "api-reference/link/link-demo-provider"
+            "api-reference/link/link-demo-provider",
+            "api-reference/link/complete-password-provider-mfa"
           ]
         }
       ]
@@ -843,6 +844,10 @@
     {
       "source": "/wearables/guides/apple_health_kit",
       "destination": "/wearables/guides/apple-healthkit"
+    },
+    {
+      "source": "/wearables/guides/freestyle",
+      "destination": "/wearables/guides/abbott-libreview"
     }
   ]
 }
