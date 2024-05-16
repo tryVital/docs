@@ -2,7 +2,7 @@
 title: "Ask on Order Entry (AOE)"
 ---
 
-Some biomarkers require answers to clinical questions, this is refered to as AOE. These can be as simple as the volume of a particular marker, or the ethnicity of the patient.
+Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker, or the ethnicity of the patient.
 
 
 There are 4 types of AOE:
@@ -24,6 +24,10 @@ As an example, let's look at the `Lead, Blood (Adult)` marker. We've ommited som
 
 ```json
 {
+  "id": 173,
+  "name": "Lead, Blood (Adult)",
+  "provider_id": "007625",
+  ...
   "questions": [
     {
       "id": 1234567890251,
@@ -51,10 +55,10 @@ As an example, let's look at the `Lead, Blood (Adult)` marker. We've ommited som
       "sequence": 1
     },
   ]
-}
+`
 ```
 
-Each question has it's own `id`, which will be required to answer it. The types we refered to above are an enum that is represented by `type`.
+Each question has it's own `id`, which will be required to answer it. The types we referred to above are an enum that is represented by `type`.
 
 The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multiple_choice`, otherwise it is empty.
 
@@ -82,6 +86,45 @@ You will populate this list with the answers to the questions defined in the `ma
 
 The `marker_id` refers to the Vital [marker id](/api-reference/lab-testing/biomarkers), and the `question_id` to the id of the question being answered.
 
+For example, marker `Leader, Blood (Adult)`, has the following data:
+
+```json
+{
+  "id": 173,
+  "name": "Lead, Blood (Adult)",
+  "provider_id": "007625",
+  ...
+  "questions": [
+    {
+      "id": 1234567890251,
+      "code": "BLPURP",
+      "type": "choice",
+      "value": "BLOOD LEAD PURPOSE",
+      "answers": [
+        {
+          "id": 1234567890252,
+          "code": "LCANS4",
+          "value": "I - INITIAL"
+        },
+        {
+          "id": 1234567890253,
+          "code": "LCANS5",
+          "value": "R - REPEAT"
+        },
+        {
+          "id": 1234567890254,
+          "code": "LCANS6",
+          "value": "F - FOLLOW-UP"
+        }
+      ],
+      "required": true,
+      "sequence": 1
+    },
+  ]
+```
+
+In order to answer the required question, you will need the `marker_id` which is the `id` field, the `question_id` in `questions[0].id` and one of the `code` values in the `question[0].answers` field.
+
 ### Answer types
 
 The `answer` field contains the actual answer to the question and it's value will depend on the type and question itself.
@@ -93,6 +136,7 @@ In this case, the `answer` should contain the `code` field in the list of `answe
 e.g The question is as follows for marker of id `173`:
 ```json
 {
+  "id": 173,
   "questions": [
     {
       "id": 1234567890251,
@@ -143,8 +187,9 @@ This case can encompass many responses, and depends on the question itself.
 e.g The question is as follows for marker of id `173`:
 ```json
 {
+  "id": 173,
   "questions": [
-    {    {
+    {
       "id": 1234567890304,
       "code": "EDDATE",
       "type": "text",
@@ -177,6 +222,7 @@ In this case, the `answer` should be a numeric string representation of the actu
 e.g The question is as follows for marker of id `173`:
 ```json
 {
+  "id": 173,
   "questions": [
     {
       "id": 1234567890240,
