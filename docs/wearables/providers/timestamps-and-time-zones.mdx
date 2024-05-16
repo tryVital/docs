@@ -52,27 +52,27 @@ Each provider has their own affinity of time zone information:
 
 ### Cloud-based Providers
 
-| Provider                                                                        | Activity Summary (Daily)        | Session Summary (e.g. Sleep)     | Timeseries Sample                |
-|---------------------------------------------------------------------------------| ------------------------------- | -------------------------------- | -------------------------------- |
-| [Freestyle Libre](https://www.freestylelibre.co.uk/libre/) `freestyle_libre`    | _N/A_                           | _N/A_                            | Floating Time                    |
-| [Fitbit](https://www.fitbit.com/global/uk/home)          `fitbit`               | ✅                              | ✅                               | ✅                               |
-| [Garmin](https://www.garmin.com)                         `garmin`               | ✅                              | ✅                               | ✅                               |
-| [Google Fit](https://www.google.com/fit/)                `google_fit`           | User Fallback, or UTC           | User Fallback, or Absent         | Absent                           |
-| [Oura](https://ouraring.com)                             `oura`                 | ✅                              | ✅                               | ✅                               |
-| [Peloton](https://www.onepeloton.com)                    `peloton`              | _N/A_                           | ✅                               | _N/A_                            |
-| [Renpho](https://renpho.com)                             `renpho`               | _N/A_                           | ✅                               | Absent                           |
-| [Strava](https://www.strava.com)                         `strava`               | _N/A_                           | ✅                               | ✅                               |
-| [Wahoo](https://wahoofitness.com)                        `wahoo`                | _N/A_                           | Absent                           | _N/A_                            |
-| [Whoop](https://www.whoop.com)                           `whoop_v2`             | ✅                              | ✅                               | _N/A_                            |
-| [Zwift](https://zwift.com)                               `zwift`                | _N/A_                           | User Fallback, or Absent         | _N/A_                            |
-| [Withings](https://www.withings.com)                     `withings`             | ✅                              | ✅                               | ✅                               |
-| [iHealth](https://ihealthlabs.com)                       `ihealth`              | _N/A_                           | ✅                               | Absent                           |
-| [8Sleep](https://www.eightsleep.com)                     `eight_sleep`          | _N/A_                           | ✅                               | ✅                               |
-| [Hammerhead](https://www.hammerhead.io)                  `hammerhead`           | _N/A_                           | Inferred, or Absent              | Inferred, or Absent              |
-| [Dexcom](https://www.dexcom.com)                         `dexcom_v3`            | _N/A_                           | _N/A_                            | ✅                               |
-| [Polar](https://www.polar.com)                           `polar`                | ✅                              | ✅                               | ✅                               |
-| [Kardia](https://kardia.com/)                            `kardia`               | _N/A_                           | _N/A_                            | ✅                               |
-| [Omron](https://www.omron-healthcare.com)                `omron`                | ✅                              | _N/A_                            | ✅                               |
+| Provider                                                                        | Activity Summary (Daily)        | Session Summary (e.g. Sleep)     | Timeseries Sample                | Remarks |
+|---------------------------------------------------------------------------------| ------------------------------- | -------------------------------- | -------------------------------- | ------- |
+| [Freestyle Libre](https://www.freestylelibre.co.uk/libre/) `freestyle_libre`    | _N/A_                           | _N/A_                            | Floating Time                    | |
+| [Fitbit](https://www.fitbit.com/global/uk/home)          `fitbit`               | ✅                              | ✅                               | ✅                               | ⚠️ [Time Zones](/wearables/guides/fitbit#time-zone-resolution) |
+| [Garmin](https://www.garmin.com)                         `garmin`               | ✅                              | ✅                               | ✅                               | |
+| [Google Fit](https://www.google.com/fit/)                `google_fit`           | User Fallback, or UTC           | User Fallback, or Absent         | Absent                           | |
+| [Oura](https://ouraring.com)                             `oura`                 | ✅                              | ✅                               | ✅                               | |
+| [Peloton](https://www.onepeloton.com)                    `peloton`              | _N/A_                           | ✅                               | _N/A_                            | |
+| [Renpho](https://renpho.com)                             `renpho`               | _N/A_                           | ✅                               | Absent                           | |
+| [Strava](https://www.strava.com)                         `strava`               | _N/A_                           | ✅                               | ✅                               | |
+| [Wahoo](https://wahoofitness.com)                        `wahoo`                | _N/A_                           | Absent                           | _N/A_                            | |
+| [Whoop](https://www.whoop.com)                           `whoop_v2`             | ✅                              | ✅                               | _N/A_                            | |
+| [Zwift](https://zwift.com)                               `zwift`                | _N/A_                           | User Fallback, or Absent         | _N/A_                            | |
+| [Withings](https://www.withings.com)                     `withings`             | ✅                              | ✅                               | ✅                               | |
+| [iHealth](https://ihealthlabs.com)                       `ihealth`              | _N/A_                           | ✅                               | Absent                           | |
+| [8Sleep](https://www.eightsleep.com)                     `eight_sleep`          | _N/A_                           | ✅                               | ✅                               | |
+| [Hammerhead](https://www.hammerhead.io)                  `hammerhead`           | _N/A_                           | Inferred, or Absent              | Inferred, or Absent              | |
+| [Dexcom](https://www.dexcom.com)                         `dexcom_v3`            | _N/A_                           | _N/A_                            | ✅                               | |
+| [Polar](https://www.polar.com)                           `polar`                | ✅                              | ✅                               | ✅                               | |
+| [Kardia](https://kardia.com/)                            `kardia`               | _N/A_                           | _N/A_                            | ✅                               | |
+| [Omron](https://www.omron-healthcare.com)                `omron`                | ✅                              | _N/A_                            | ✅                               | |
 
 ### SDK-based Providers
 
@@ -184,3 +184,4 @@ You will also get information about the source (by slug) and the last updated ti
   }
 }
 ```
+

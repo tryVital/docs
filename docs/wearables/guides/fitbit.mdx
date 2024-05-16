@@ -20,3 +20,34 @@ Given this constraint, Vital constructs a respiratory rate timeseries for Fitbit
 * Vital creates a respiratory rate data point for each hypnogram segment reported.
 * The data point value will be one of the four average values mentioned, based on the stage represented by the segment.
 * The data point will be timestamped to the **midnpoint** of the segment.
+
+## Time Zone resolution
+
+Fitbit stores all their data in floating time. Moreover, They do not tag most of their data points or summaries with time zone information.
+
+Since Vital uses [UTC time basis](/wearables/providers/timestamps-and-time-zones), Vital has to convert the floating
+time basis to the UTC time basis, before we can ingest the data and forward it onwards to you. To facilitate this
+conversion, we must make an educated guess on the user's time zone.
+
+Vital makes the best time zone guess in the following precedences:
+
+<Steps>
+    <Step number="1" title="Fitbit Profile">
+    If the user has granted the Profile scope, Vital uses the timezone offset as provided by their Fitbit Profile.
+    </Step>
+
+    <Step number="2" title="Most recent Fitbit activity">
+    If the user has granted the Activity scope, Vital uses the timezone offset from the most recently recorded activity (if any).
+    </Step>
+
+    <Step number="3" title="User Fallback Time Zone">
+    If neither Fitbit data sources are available, Vital would use [User Fallback Time Zone](/wearables/providers/timestamps-and-time-zones#user-fallback-time-zone)
+    if it has been set.
+    </Step>
+
+    <Step number="4" title="Naively assuming UTC">
+    If none of above is available, Vital assumes naively that everything happens in UTC (+00:00).
+
+    <Note>This is usually incorrect, except for users living an all-year UTC (+00:00) region.</Note>
+    </Step>
+</Steps>

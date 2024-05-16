@@ -3,6 +3,23 @@ title: "Providers"
 ---
 
 
+### Removed Fitbit and Oura required scopes (May 24)
+
+The Fitbit profile scope and Oura email scope are no longer required for establishing connections.
+
+For Fitbit specifically, please be aware of the [updated Fitbit Time Zone resolution precedences](/wearables/guides/fitbit#time-zone-resolution). When
+your user refuses to grant both the activity and the profile scope, Fitbit data are more likely be timestamped incorrectly in UTC time basis
+due to inaccurate or unavailable time zone information.
+
+<Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
+We have now updated our Fitbit and Oura integrations not to depend on these scopes to be **minimally functional**.
+
+If you are interested in requiring your users to grant certain scopes when connecting an OAuth provider, check out the
+[Team Scope Requirements](/changelog/wearables/api#team-scope-requirements-apr-24) changelog entry and
+the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requirements/get-team-scope-requirements) endpoint for more information.
+</Accordion>
+
+
 ### Freestyle Libre: India region (Apr 24)
 Our Freestyle Libre integration now supports the LibreView India region.
 
