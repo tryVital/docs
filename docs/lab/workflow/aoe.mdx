@@ -1,0 +1,205 @@
+---
+title: "Ask on Order Entry (AOE)"
+---
+
+Some biomarkers require answers to clinical questions, this is refered to as AOE. These can be as simple as the volume of a particular marker, or the ethnicity of the patient.
+
+
+There are 4 types of AOE:
+
+1. `choice`
+2. `multiple_choice`
+3. `numeric`
+4. `text`
+
+`choice` and `multiple_choice` have a set list of answers to pick from, while `numeric` and `text` don't and are free form responses.
+
+AOE questions can also be required or optional.
+
+## Where to find the questions
+
+As these AOE are directly related to biomarkers, you can find them in the [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) endpoint, in the `aoe` object.
+
+As an example, let's look at the `Lead, Blood (Adult)` marker. We've ommited some extra questions for the sake of this doc.
+
+```json
+{
+  "questions": [
+    {
+      "id": 1234567890251,
+      "code": "BLPURP",
+      "type": "choice",
+      "value": "BLOOD LEAD PURPOSE",
+      "answers": [
+        {
+          "id": 1234567890252,
+          "code": "LCANS4",
+          "value": "I - INITIAL"
+        },
+        {
+          "id": 1234567890253,
+          "code": "LCANS5",
+          "value": "R - REPEAT"
+        },
+        {
+          "id": 1234567890254,
+          "code": "LCANS6",
+          "value": "F - FOLLOW-UP"
+        }
+      ],
+      "required": true,
+      "sequence": 1
+    },
+  ]
+}
+```
+
+Each question has it's own `id`, which will be required to answer it. The types we refered to above are an enum that is represented by `type`.
+
+The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multiple_choice`, otherwise it is empty.
+
+`required` deems whether the questions MUST be answered in order for the order to be valid.
+
+## How to answer
+
+Answering is done at order time, via the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint, in the field `aoe_answers`.
+
+This field has the following format:
+
+```json
+{
+    "aoe_answers": [
+        {
+            "marker_id": <int>,
+            "question_id": <int>,
+            "answer": <str>,
+        }
+    ]
+}
+```
+
+You will populate this list with the answers to the questions defined in the `marker` object, as explained [above](/lab/workflow/aoe#where-to-find-the-questions).
+
+The `marker_id` refers to the Vital [marker id](/api-reference/lab-testing/biomarkers), and the `question_id` to the id of the question being answered.
+
+### Answer types
+
+The `answer` field contains the actual answer to the question and it's value will depend on the type and question itself.
+
+1. `choice` and `multiple_choice`
+
+In this case, the `answer` should contain the `code` field in the list of `answers` provided, as shown [here](/lab/workflow/aoe#where-to-find-the-questions).
+
+e.g The question is as follows for marker of id `173`:
+```json
+{
+  "questions": [
+    {
+      "id": 1234567890251,
+      "code": "BLPURP",
+      "type": "choice",
+      "value": "BLOOD LEAD PURPOSE",
+      "answers": [
+        {
+          "id": 1234567890252,
+          "code": "LCANS4",
+          "value": "I - INITIAL"
+        },
+        {
+          "id": 1234567890253,
+          "code": "LCANS5",
+          "value": "R - REPEAT"
+        },
+        {
+          "id": 1234567890254,
+          "code": "LCANS6",
+          "value": "F - FOLLOW-UP"
+        }
+      ],
+      "required": true,
+      "sequence": 1
+    },
+  ]
+}
+```
+
+The answer is:
+```json
+{
+    "aoe_answers": [
+        {
+            "marker_id": 173,
+            "question_id": 1234567890251,
+            "answer": "LCANS4",
+        }
+    ]
+}
+```
+
+2. `text`
+
+This case can encompass many responses, and depends on the question itself.
+
+e.g The question is as follows for marker of id `173`:
+```json
+{
+  "questions": [
+    {    {
+      "id": 1234567890304,
+      "code": "EDDATE",
+      "type": "text",
+      "value": "EDD/EDC DATE",
+      "answers": [],
+      "required": true,
+      "sequence": 2
+    }, 
+  ]
+}
+```
+
+The answer is:
+```json
+{
+    "aoe_answers": [
+        {
+            "marker_id": 173,
+            "question_id": 1234567890304,
+            "answer": "19900101",
+        }
+    ]
+}
+```
+
+3. `numeric`
+
+In this case, the `answer` should be a numeric string representation of the actual value.
+
+e.g The question is as follows for marker of id `173`:
+```json
+{
+  "questions": [
+    {
+      "id": 1234567890240,
+      "code": "COLVOL",
+      "type": "numeric",
+      "value": "URINE VOLUME (MILLILITERS)",
+      "answers": [],
+      "required": true,
+      "sequence": 1
+    }
+  ]
+}
+```
+
+The answer is:
+```json
+{
+    "aoe_answers": [
+        {
+            "marker_id": 173,
+            "question_id": 1234567890240,
+            "answer": "1000",
+        }
+    ]
+}
+```
