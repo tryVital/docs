@@ -132,6 +132,37 @@ Available options: `biomarker`, `panel`.
 </ResponseField>
 <ResponseField name="price" type="string | null">
 </ResponseField>
+<ResponseField name="aoe" type="AoE | null">
+<Expandable title="AoE" defaultOpen="true">
+<ResponseField name="questions" type="Question[]" required="true">
+<Expandable title="Item Schema: Question" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="required" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="code" type="string" required="true">
+</ResponseField>
+<ResponseField name="value" type="string" required="true">
+</ResponseField>
+<ResponseField name="type" type="enum<string>" required="true">
+Available options: `choice`, `text`, `numeric`, `multi_choice`.
+</ResponseField>
+<ResponseField name="sequence" type="integer" required="true">
+</ResponseField>
+<ResponseField name="answers" type="Answer[]" required="true">
+<Expandable title="Item Schema: Answer" defaultOpen="true">
+<ResponseField name="id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="code" type="string" required="true">
+</ResponseField>
+<ResponseField name="value" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="is_delegated" type="boolean | null">
@@ -296,9 +327,9 @@ Schedule an Order to be processed in a future date.
   "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "3df25d61-e951-49c6-a362-e0dd1fac7673",
-    "team_id": "d36d30d9-a42c-4bd4-8de7-b56fcf2f8267",
-    "user_id": "71cd3773-7b51-43f9-805a-16f31d9bdfcf",
+    "id": "dcb7f5a7-c793-4bb2-93a5-097484abfd82",
+    "team_id": "5972988b-018e-44c9-9f64-a6b96fcc5ab4",
+    "user_id": "2e5bb0a8-0232-4058-8944-d9d208d7f7b8",
     "patient_details": {
       "dob": "2020-01-01",
       "gender": "male"
@@ -339,7 +370,7 @@ Schedule an Order to be processed in a future date.
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "91d08268-835d-4d7a-815f-5d00b9214b06",
+    "health_insurace_id": "02d8a870-01bc-4d11-abf1-216808900d74",
     "requisition_form_url": "https://www.example.com",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
