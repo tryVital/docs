@@ -18,9 +18,9 @@ AOE questions can also be required or optional.
 
 ## Where to find the questions
 
-As these AOE are directly related to biomarkers, you can find them in the [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) endpoint, in the `aoe` object.
+As these AOE are directly related to biomarkers, you can find them in the [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) endpoint or in the [`GET /v3/lab_tests/{lab_test_id}/markers`](/api-reference/lab-testing/lab-test-markers) endpoint, in the `aoe` object.
 
-As an example, let's look at the `Lead, Blood (Adult)` marker. We've ommited some extra questions for the sake of this doc.
+As an example, let's look at the `Lead, Blood (Adult)` marker. We have omitted some extra questions for the sake of this doc.
 
 ```json
 {
@@ -58,11 +58,11 @@ As an example, let's look at the `Lead, Blood (Adult)` marker. We've ommited som
 `
 ```
 
-Each question has it's own `id`, which will be required to answer it. The types we referred to above are an enum that is represented by `type`.
+Each question has it's own `id`, which will be required to answer it. The types we refer to above are an enum that is represented by `type`.
 
 The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multiple_choice`, otherwise it is empty.
 
-`required` deems whether the questions MUST be answered in order for the order to be valid.
+`required` deems whether the questions MUST be answered in order for the order to be valid, otherwise a error will be shown `Missing required questions - "question"`.
 
 ## How to answer
 
