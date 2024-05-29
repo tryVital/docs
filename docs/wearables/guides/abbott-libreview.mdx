@@ -5,18 +5,27 @@ description: "For Abbott CGMs, e.g. Freestyle Libre."
 
 ## Overview
 
-Vital has launched a new **Abbott LibreView integration** (`abbott_libreview`) for Abbott CGMs:
-
-* Users can connect their CGM devices simply by signing in with their LibreView patient account.
-* You no longer need to maintain a LibreView practice.
-* You no longer need to instruct your users to share/connect to your practice, before they attempt to connect via Vital Link. 
-
-The practice-based `freestyle_libre` integration will remain active to serve existing connections.
+Vital supports two ways to connect to LibreView for Abbott CGMs:
 
 | Provider Slug      | Remarks                   |
 | ------------------ | ------------------------- | 
 | `abbott_libreview` | Connect via LibreView patient account | 
-| `freestyle_libre`  | _Deprecated_              |
+| `freestyle_libre`  | Connect via Vital's LibreView practice, or your own custom practice. |
+
+### `freestyle_libre` for practice-based connections
+
+With the `freestyle_libre` integration, users have to share/connect their LibreView patient account
+with either Vital's LibreView practice, or a custom practice of yours.
+
+Vital accesses the patient CGM data as a member of the LibreView practice.
+
+### `abbott_libreview` for patient-based connections
+
+With the `abbott_libreview` integration, users can connect their CGM devices simply by signing in with their LibreView patient account.
+Vital accesses the patient CGM data as their personal account.
+
+* You would not need to maintain a LibreView practice.
+* You would not need to instruct your users to share/connect to your practice, before they attempt to connect via Vital Link. 
 
 ## LibreView data use floating time basis
 
@@ -25,7 +34,7 @@ All LibreView (Freestyle Libre) data are in **floating time basis**.
 Please go through the [Timestamps and Time Zones](/wearables/providers/timestamps-and-time-zones) guide to understand the
 implications, as well as how to properly handle floating time data.
 
-## Connecting a LibreView patient account
+## Connecting a LibreView patient account (`abbott_libreview`)
 
 ### Vital Link Widget
 
@@ -94,11 +103,7 @@ exposed as a **password provider**:
 | Brazil (`br`)                                  | 
 
 
-## Setting up practice connections (Legacy integration)
-
-<Warning>
-This guide applies **only** to the legacy `freestyle_libre` integration that relies on practice-based connections.
-</Warning>
+## Setting up practice-based connections (`freestyle_libre`)
 
 ### Adding users to a Practice
 
@@ -108,12 +113,11 @@ This allows Vital to start pulling data from their account. This is done through
 
 <img src="/img/connect_libreview.png" className="w-2/5 block mx-auto" />
 
-#### Custom Practice (Enterprise only)
+#### Custom Practice
 
-<Warning>
-  If you want to use a Custom Practice, you need an Enterprise Account. Please
-  contact support@tryvital.io.
-</Warning>
+<Info>
+`freestyle_libre` custom practice connections is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
 
 <Info>
 Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital in the appropriate Vital region for your Freestyle account.
