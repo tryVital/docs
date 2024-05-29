@@ -8,11 +8,12 @@ All Vital data timestamps are ISO 8601 formatted as follows:
 
 | Providers       | Time Basis        | Pattern                                     |
 | --------------- | ----------------  | ------------------------------------------- |
-| Freestyle Libre <sup>[1]</sup> | Floating Time <sup>[2]</sup> | `YYYY-mm-ddTHH:mm:ss+00:00`<br />The `+00:00` TZ specifier should be **ignored** <sup>[3]</sup>. |
+| `abbott_libreview`<br />`freestyle_libre` <sup>[1]</sup> | Floating Time <sup>[2]</sup> | `YYYY-mm-ddTHH:mm:ss+00:00`<br />The `+00:00` TZ specifier should be **ignored** <sup>[3]</sup>. |
 | _Everyone else_ | UTC               | `YYYY-mm-ddTHH:mm:ss+00:00`<br />Always specified as `+00:00` (UTC). |
 
 <Info>
 <sup>[1]</sup>
+`freestyle_libre` specific:
 Some older teams may see floating time data (Freestyle Libre) without the `+00:00` TZ specifier,
 as part of an earlier iteration of the feature. Contact Vital support if you wish to disable this
 behaviour, or if you intend to adopt the Vital backend SDKs.
@@ -55,6 +56,7 @@ Each provider has their own affinity of time zone information:
 | Provider                                                                        | Activity Summary (Daily)        | Session Summary (e.g. Sleep)     | Timeseries Sample                | Remarks |
 |---------------------------------------------------------------------------------| ------------------------------- | -------------------------------- | -------------------------------- | ------- |
 | [Freestyle Libre](https://www.freestylelibre.co.uk/libre/) `freestyle_libre`    | _N/A_                           | _N/A_                            | Floating Time                    | |
+| [Abbott LibreView](https://www.libreview.com/) `abbott_libreview`               | _N/A_                           | _N/A_                            | Floating Time                    | |
 | [Fitbit](https://www.fitbit.com/global/uk/home)          `fitbit`               | ✅                              | ✅                               | ✅                               | ⚠️ [Time Zones](/wearables/guides/fitbit#time-zone-resolution) |
 | [Garmin](https://www.garmin.com)                         `garmin`               | ✅                              | ✅                               | ✅                               | |
 | [Google Fit](https://www.google.com/fit/)                `google_fit`           | User Fallback, or UTC           | User Fallback, or Absent         | Absent                           | |
@@ -129,7 +131,7 @@ We do not know the exact time zone the recording took place in.
 }
 ```
 
-### Data point in floating time (Freestyle Libre)
+### Data point in floating time (Abbott Libreview & Freestyle Libre)
 
 This Freestyle Libre data point was recorded on Sep 27, 2023 at 7:48 AM in floating time
 (whichever time zone the user was in). We do not know the exact time zone the recording took place in.
