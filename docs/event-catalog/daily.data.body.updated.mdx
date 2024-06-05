@@ -31,11 +31,17 @@ User id returned by vital create user request. This id should be stored in your 
 <ResponseField name="calendar_date" type="string" required="true">
 Date of the summary in the YYYY-mm-dd format.
 </ResponseField>
-<ResponseField name="weight" type="number | null">
+<ResponseField name="weight" type="anyOf | null">
 Weight in kg::kg
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="fat" type="number | null">
+<ResponseField name="fat" type="anyOf | null">
 Body fat percentage::perc
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
@@ -45,8 +51,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -64,24 +73,24 @@ The identifier of the app which recorded this summary. This is only applicable t
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.body.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "0f7867f1-7c28-4f1a-bb24-e78e1387cb59",
-    "date": "2024-05-28T09:15:48+00:00",
-    "calendar_date": "2024-15-",
-    "weight": 80,
+    "calendar_date": "2023-02-27",
+    "date": "2023-02-27T12:31:24+00:00",
     "fat": 30,
     "height": 183,
+    "id": "8be1306e-01fc-46b1-b5d1-a9e39052db09",
     "source": {
+      "logo": "https://logo_url.com",
       "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
+      "slug": "oura"
     },
-    "user_id": "366a54e5-cbe9-4082-8247-ee1c8d2dec5f"
-  }
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537",
+    "weight": 80
+  },
+  "event_type": "daily.data.body.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

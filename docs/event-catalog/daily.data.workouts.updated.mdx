@@ -25,20 +25,35 @@ User id returned by vital create user request. This id should be stored in your 
 </ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="title" type="string | null">
+<ResponseField name="title" type="anyOf | null">
 Title given for the workout
+Any of:
+* string
+* null
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
+<ResponseField name="timezone_offset" type="anyOf | null">
 Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="average_hr" type="integer | null">
+<ResponseField name="average_hr" type="anyOf | null">
 Average heart rate during workout::bpm
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="max_hr" type="integer | null">
+<ResponseField name="max_hr" type="anyOf | null">
 Max heart rate during workout::bpm
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="distance" type="number | null">
+<ResponseField name="distance" type="anyOf | null">
 Distance travelled during workout::meters
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="calendar_date" type="string" required="true">
 Date of the workout summary in the YYYY-mm-dd format. This generally matches the workout start date.
@@ -49,8 +64,11 @@ Start time of the workout::time
 <ResponseField name="time_end" type="string" required="true">
 End time of the workout::time
 </ResponseField>
-<ResponseField name="calories" type="number | null">
+<ResponseField name="calories" type="anyOf | null">
 Calories burned during the workout::kCal
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="sport" type="ClientFacingSport | null">
 Sport&#x27;s name
@@ -65,41 +83,83 @@ Slug for designated sport
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="hr_zones" type="integer | null">
+<ResponseField name="hr_zones" type="anyOf | null">
 Time in seconds spent in different heart rate zones &lt;50%, 50-60%, 60-70%, 70-80%, 80-90%, 90%+. Due to rounding errors, it&#x27;s possible that summing all values is different than the total time of the workout. Not available for all providers::seconds
+Any of:
+* array
+* null
 </ResponseField>
-<ResponseField name="moving_time" type="integer | null">
+<ResponseField name="moving_time" type="anyOf | null">
 Time spent active during the workout::seconds
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="total_elevation_gain" type="number | null">
+<ResponseField name="total_elevation_gain" type="anyOf | null">
 Elevation gain during the workout::meters
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="elev_high" type="number | null">
+<ResponseField name="elev_high" type="anyOf | null">
 Highest point of elevation::meters
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="elev_low" type="number | null">
+<ResponseField name="elev_low" type="anyOf | null">
 Lowest point of elevation::meters
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="average_speed" type="number | null">
+<ResponseField name="average_speed" type="anyOf | null">
 Average speed during workout in m/s::meters/sec
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="max_speed" type="number | null">
+<ResponseField name="max_speed" type="anyOf | null">
 Max speed during workout in m/s::meters/sec
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="average_watts" type="number | null">
+<ResponseField name="average_watts" type="anyOf | null">
 Average watts burned during exercise::watts
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="device_watts" type="number | null">
+<ResponseField name="device_watts" type="anyOf | null">
 Watts burned during exercise::watts
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="max_watts" type="number | null">
+<ResponseField name="max_watts" type="anyOf | null">
 Max watts burned during exercise::watts
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="weighted_average_watts" type="number | null">
+<ResponseField name="weighted_average_watts" type="anyOf | null">
 Weighted average watts burned during exercise::watts
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="map" type="object | null">
+<ResponseField name="steps" type="anyOf | null">
+Number of steps accumulated during this workout::count
+Any of:
+* integer
+* null
+</ResponseField>
+<ResponseField name="map" type="anyOf | null">
 Map of workouts encoded as polyline
+Any of:
+* object
+* null
 </ResponseField>
 <ResponseField name="provider_id" type="string" required="true">
 Provider ID given for that specific workout
@@ -113,8 +173,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -132,28 +195,17 @@ The identifier of the app which recorded this summary. This is only applicable t
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.workouts.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "cbcd6236-6315-49dc-8f76-e885a839a1bd",
     "average_hr": 100,
-    "max_hr": 190,
-    "distance": 1700,
-    "calendar_date": "2024-15-",
-    "time_start": "2024-05-28T08:15:48+00:00",
-    "time_end": "2024-05-28T09:15:48+00:00",
+    "average_speed": 4.2,
+    "average_watts": 100,
+    "calendar_date": "2023-02-27",
     "calories": 300,
-    "sport": {
-      "id": 1,
-      "name": "football"
-    },
-    "source": {
-      "provider": "strava",
-      "type": "unknown",
-      "app_id": null
-    },
+    "device_watts": 80,
+    "distance": 1700,
+    "elev_high": 20.2,
+    "elev_low": -10.2,
     "hr_zones": [
       100,
       90,
@@ -161,21 +213,33 @@ The identifier of the app which recorded this summary. This is only applicable t
       10,
       200
     ],
-    "user_id": "0e6e3cde-df5c-4eab-a9d4-c17789f332cc",
-    "moving_time": 100,
-    "total_elevation_gain": 10,
-    "elev_high": 20.2,
-    "elev_low": -10.2,
-    "average_speed": 4.2,
-    "max_speed": 7.8,
-    "average_watts": 100,
-    "device_watts": 80,
-    "max_watts": 200,
-    "weighted_average_watts": 250,
+    "id": "185d0f34-dfc0-429f-84f9-b24030914bdd",
     "map": {
       "summary_polyline": "agn~Ftb{uOvr@daBunBjdBkHwiD????~Ngn@ha@_N~Ql`@"
-    }
-  }
+    },
+    "max_hr": 190,
+    "max_speed": 7.8,
+    "max_watts": 200,
+    "moving_time": 100,
+    "source": {
+      "app_id": null,
+      "provider": "strava",
+      "type": "unknown"
+    },
+    "sport": {
+      "id": 1,
+      "name": "football"
+    },
+    "steps": null,
+    "time_end": "2023-02-27T12:31:24+00:00",
+    "time_start": "2023-02-27T11:31:24+00:00",
+    "total_elevation_gain": 10,
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537",
+    "weighted_average_watts": 250
+  },
+  "event_type": "daily.data.workouts.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

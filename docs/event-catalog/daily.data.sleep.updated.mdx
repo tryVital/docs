@@ -37,8 +37,11 @@ UTC Time when the sleep period started
 <ResponseField name="bedtime_stop" type="string" required="true">
 UTC Time when the sleep period ended
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
+<ResponseField name="timezone_offset" type="anyOf | null">
 Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+Any of:
+* integer
+* null
 </ResponseField>
 <ResponseField name="duration" type="integer" required="true">
 Total duration of the sleep period (sleep.duration = sleep.bedtime_end - sleep.bedtime_start)::seconds
@@ -58,35 +61,65 @@ Total amount of REM sleep registered during the sleep period, minutes::seconds
 <ResponseField name="deep" type="integer" required="true">
 Total amount of deep (N3) sleep registered during the sleep period::seconds
 </ResponseField>
-<ResponseField name="score" type="integer | null">
+<ResponseField name="score" type="anyOf | null">
 A value between 1 and 100 representing how well the user slept. Currently only available for Withings, Oura, Whoop and Garmin::scalar
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="hr_lowest" type="integer | null">
+<ResponseField name="hr_lowest" type="anyOf | null">
 The lowest heart rate (5 minutes sliding average) registered during the sleep period::beats per minute
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="hr_average" type="integer | null">
+<ResponseField name="hr_average" type="anyOf | null">
 The average heart rate registered during the sleep period::beats per minute
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="efficiency" type="number | null">
+<ResponseField name="efficiency" type="anyOf | null">
 Sleep efficiency is the percentage of the sleep period spent asleep (100% * sleep.total / sleep.duration)::perc
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="latency" type="integer | null">
+<ResponseField name="latency" type="anyOf | null">
 Detected latency from bedtime_start to the beginning of the first five minutes of persistent sleep::seconds
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="temperature_delta" type="number | null">
+<ResponseField name="temperature_delta" type="anyOf | null">
 Skin temperature deviation from the long-term temperature average::celcius
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="skin_temperature" type="number | null">
+<ResponseField name="skin_temperature" type="anyOf | null">
 The skin temperature::celcius
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="hr_dip" type="number | null">
+<ResponseField name="hr_dip" type="anyOf | null">
 Sleeping Heart Rate Dip is the percentage difference between your average waking heart rate and your average sleeping heart rate. In health studies, a greater &quot;dip&quot; is typically seen as a positive indicator of overall health. Currently only available for Garmin::perc
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="average_hrv" type="number | null">
+<ResponseField name="average_hrv" type="anyOf | null">
 The average heart rate variability registered during the sleep period::rmssd
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="respiratory_rate" type="number | null">
+<ResponseField name="respiratory_rate" type="anyOf | null">
 Average respiratory rate::breaths per minute
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
@@ -97,8 +130,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -111,101 +147,30 @@ The identifier of the app which recorded this summary. This is only applicable t
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="sleep_stream" type="ClientFacingSleepStream | null">
-<Expandable title="ClientFacingSleepStream" defaultOpen="true">
-<ResponseField name="hrv" type="ClientFacingHRVTimeseries[] | null">
-<Expandable title="Item Schema: ClientFacingHRVTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
-Deprecated
+<ResponseField name="sleep_stream" type="anyOf | null">
+Any of:
+* ClientFacingSleepStream
+* null
+<Expandable title="ClientFacingSleepStream">
+<ResponseField name="hrv" type="anyOf | null">
+Any of:
+* array
+* null
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
-Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+<ResponseField name="heartrate" type="anyOf | null">
+Any of:
+* array
+* null
 </ResponseField>
-<ResponseField name="type" type="string | null">
-The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
+<ResponseField name="hypnogram" type="anyOf | null">
+Any of:
+* array
+* null
 </ResponseField>
-<ResponseField name="unit" type="string" required="true">
-Measured in rmssd.
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
-</ResponseField>
-<ResponseField name="value" type="number" required="true">
-HRV calculated using rmssd during sleep
-</ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="heartrate" type="ClientFacingHeartRateTimeseries[] | null">
-<Expandable title="Item Schema: ClientFacingHeartRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
-Deprecated
-</ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
-Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-</ResponseField>
-<ResponseField name="type" type="string | null">
-The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
-</ResponseField>
-<ResponseField name="unit" type="string" required="true">
-Measured in bpm.
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
-</ResponseField>
-<ResponseField name="value" type="number" required="true">
-Heart rate in bpm
-</ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="hypnogram" type="ClientFacingHypnogramTimeseries[] | null">
-<Expandable title="Item Schema: ClientFacingHypnogramTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
-Deprecated
-</ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
-Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-</ResponseField>
-<ResponseField name="type" type="string | null">
-The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
-</ResponseField>
-<ResponseField name="unit" type="string" required="true">
-enum: 1: deep, 2: light, 3: rem, 4: awake, -1: missing_data.
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-Depracated. The start time (inclusive) of the interval.
-</ResponseField>
-<ResponseField name="start" type="string" required="true">
-The start time (inclusive) of the interval.
-</ResponseField>
-<ResponseField name="end" type="string" required="true">
-The end time (exclusive) of the interval.
-</ResponseField>
-<ResponseField name="value" type="number" required="true">
-Hypnogram for sleep stages &lcub;&quot;deep&quot;: 1, &quot;light&quot;: 2, &quot;rem&quot;: 3, &quot;awake&quot;: 4, &quot;manual&quot;: 5, &quot;missing_data&quot;: -1&rcub;
-</ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="respiratory_rate" type="ClientFacingRespiratoryRateTimeseries[] | null">
-<Expandable title="Item Schema: ClientFacingRespiratoryRateTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
-Deprecated
-</ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
-Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
-</ResponseField>
-<ResponseField name="type" type="string | null">
-The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
-</ResponseField>
-<ResponseField name="unit" type="string" required="true">
-Measured in bpm.
-</ResponseField>
-<ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
-</ResponseField>
-<ResponseField name="value" type="number" required="true">
-Average respiratory rate::breaths per minute
-</ResponseField>
-</Expandable>
+<ResponseField name="respiratory_rate" type="anyOf | null">
+Any of:
+* array
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -214,38 +179,38 @@ Average respiratory rate::breaths per minute
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.sleep.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "ccb32266-a169-4a37-a00c-127ea1021d1d",
-    "date": "2024-05-28T09:15:48+00:00",
-    "calendar_date": "2024-05-28",
-    "bedtime_start": "2024-05-28T09:15:48+00:00",
-    "bedtime_stop": "2024-05-28T09:15:48+00:00",
-    "timezone_offset": 2400,
-    "duration": 28800,
-    "total": 28800,
+    "average_hrv": 78,
     "awake": 2400,
+    "bedtime_start": "2023-02-27T12:31:24+00:00",
+    "bedtime_stop": "2023-02-27T12:31:24+00:00",
+    "calendar_date": "2023-02-27",
+    "date": "2023-02-27T12:31:24+00:00",
+    "deep": 2400,
+    "duration": 28800,
+    "efficiency": 0.97,
+    "hr_average": 50,
+    "hr_lowest": 43,
+    "id": "e2e0eb04-6641-4858-9de5-649efb41b346",
+    "latency": 1000,
     "light": 2400,
     "rem": 2400,
-    "deep": 2400,
-    "hr_lowest": 43,
-    "hr_average": 50,
-    "efficiency": 0.97,
-    "latency": 1000,
-    "temperature_delta": -0.2,
-    "skin_temperature": 36.5,
-    "average_hrv": 78,
     "respiratory_rate": 14,
+    "skin_temperature": 36.5,
     "source": {
+      "app_id": null,
       "provider": "oura",
-      "type": "unknown",
-      "app_id": null
+      "type": "unknown"
     },
-    "user_id": "260242c3-f3f3-4bdb-a174-cc44efadc943"
-  }
+    "temperature_delta": -0.2,
+    "timezone_offset": 2400,
+    "total": 28800,
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
+  },
+  "event_type": "daily.data.sleep.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

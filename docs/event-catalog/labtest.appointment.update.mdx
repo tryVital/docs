@@ -24,7 +24,10 @@ Constant: `labtest.appointment.update`
 <Expandable title="USAddress" defaultOpen="true">
 <ResponseField name="first_line" type="string" required="true">
 </ResponseField>
-<ResponseField name="second_line" type="string | null">
+<ResponseField name="second_line" type="anyOf | null">
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="city" type="string" required="true">
 </ResponseField>
@@ -32,8 +35,11 @@ Constant: `labtest.appointment.update`
 </ResponseField>
 <ResponseField name="zip_code" type="string" required="true">
 </ResponseField>
-<ResponseField name="unit" type="string | null">
+<ResponseField name="unit" type="anyOf | null">
 [⚠️ Deprecated] Deprecated. Use `second_line` instead to provide the unit number. Subject to removal after 20 Nov 2023.
+Any of:
+* string
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -45,13 +51,22 @@ Constant: `labtest.appointment.update`
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="start_at" type="string | null">
+<ResponseField name="start_at" type="anyOf" required="true">
 Time is in UTC
+Any of:
+* string
+* null
 </ResponseField>
-<ResponseField name="end_at" type="string | null">
+<ResponseField name="end_at" type="anyOf" required="true">
 Time is in UTC
+Any of:
+* string
+* null
 </ResponseField>
-<ResponseField name="iana_timezone" type="string | null">
+<ResponseField name="iana_timezone" type="anyOf | null">
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="type" type="enum<string>" required="true">
 Available options: `phlebotomy`.
@@ -69,7 +84,10 @@ Available options: `confirmed`, `pending`, `in_progress`, `completed`, `cancelle
 <ResponseField name="event_status" type="enum<string>" required="true">
 Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progress`.
 </ResponseField>
-<ResponseField name="event_data" type="object | null">
+<ResponseField name="event_data" type="anyOf | null">
+Any of:
+* object
+* null
 </ResponseField>
 <ResponseField name="events" type="ClientFacingAppointmentEvent[]" required="true">
 <Expandable title="Item Schema: ClientFacingAppointmentEvent" defaultOpen="true">
@@ -78,7 +96,10 @@ Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progres
 <ResponseField name="status" type="enum<string>" required="true">
 Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progress`.
 </ResponseField>
-<ResponseField name="data" type="object | null">
+<ResponseField name="data" type="anyOf | null">
+Any of:
+* object
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -87,38 +108,22 @@ Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progres
 <ResponseExample>
 ```json Example
 {
-  "event_type": "labtest.appointment.update",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "ca639b09-21fb-4508-b527-695f22cf238b",
-    "user_id": "159a63ff-4d00-4361-b21c-63e761496f8a",
-    "order_id": "d3a0842e-789e-4b46-9676-bf4fec110357",
     "address": {
+      "city": "San Francisco",
+      "country": "United States",
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",
-      "city": "San Francisco",
       "state": "CA",
-      "zip_code": "91189",
-      "country": "United States"
+      "zip_code": "91189"
     },
-    "location": {
-      "lng": -122.4194155,
-      "lat": 37.7749295
-    },
-    "start_at": "2022-01-01T00:00:00",
-    "end_at": "2022-01-01T00:00:00",
-    "iana_timezone": "America/New_York",
-    "type": "phlebotomy",
-    "provider": "getlabs",
-    "status": "confirmed",
-    "event_status": "scheduled",
-    "provider_id": "123",
     "can_reschedule": true,
+    "end_at": "2022-01-01T00:00:00",
     "event_data": {
       "description": "Metadata field containing provider specific data, like cancellation reason or origin"
     },
+    "event_status": "scheduled",
     "events": [
       {
         "created_at": "2022-01-01T00:00:00Z",
@@ -130,8 +135,24 @@ Available options: `pending`, `scheduled`, `completed`, `cancelled`, `in_progres
         "data": null,
         "status": "completed"
       }
-    ]
-  }
+    ],
+    "iana_timezone": "America/New_York",
+    "id": "a81841fb-4d3b-4de7-93c2-3bb8dabc5c92",
+    "location": {
+      "lat": 37.7749295,
+      "lng": -122.4194155
+    },
+    "order_id": "558ff8b6-e489-4582-b495-25cab1b3cf4b",
+    "provider": "getlabs",
+    "provider_id": "123",
+    "start_at": "2022-01-01T00:00:00",
+    "status": "confirmed",
+    "type": "phlebotomy",
+    "user_id": "778126b1-3525-4c40-80e3-04f1f1a64aeb"
+  },
+  "event_type": "labtest.appointment.update",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

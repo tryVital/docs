@@ -25,7 +25,10 @@ User id returned by vital create user request. This id should be stored in your 
 </ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="height" type="integer | null">
+<ResponseField name="height" type="anyOf | null">
+Any of:
+* integer
+* null
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
@@ -35,8 +38,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -54,20 +60,20 @@ The identifier of the app which recorded this summary. This is only applicable t
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.profile.created",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "94817d38-5b39-45c1-9240-9540886ee6bb",
     "height": 183,
+    "id": "ceb39d90-5ba6-472b-9cb8-b5c128da5038",
     "source": {
+      "logo": "https://logo_url.com",
       "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
+      "slug": "oura"
     },
-    "user_id": "f7a66f4b-3909-436d-9d7d-bf0f58b2141e"
-  }
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
+  },
+  "event_type": "daily.data.profile.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

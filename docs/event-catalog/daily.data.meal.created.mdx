@@ -34,81 +34,124 @@ Constant: `daily.data.meal.created`
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 </ResponseField>
-<ResponseField name="energy" type="Energy | null">
-<Expandable title="Energy" defaultOpen="true">
-<ResponseField name="unit" type="string" required="true">
+<ResponseField name="energy" type="anyOf" required="true">
+Any of:
+* Energy
+* null
+<Expandable title="Energy">
+<ResponseField name="unit" type="const string" required="true">
+Constant: `kcal`
 </ResponseField>
 <ResponseField name="value" type="number" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="macros" type="Macros | null">
-<Expandable title="Macros" defaultOpen="true">
-<ResponseField name="carbs" type="number | null">
+<ResponseField name="macros" type="anyOf" required="true">
+Any of:
+* Macros
+* null
+<Expandable title="Macros">
+<ResponseField name="carbs" type="anyOf | null">
 Amount of carbohydrates in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="protein" type="number | null">
+<ResponseField name="protein" type="anyOf | null">
 Amount of protein in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="fats" type="Fats | null">
 Details of fat content
 <Expandable title="Fats" defaultOpen="true">
-<ResponseField name="saturated" type="number | null">
+<ResponseField name="saturated" type="anyOf | null">
 Amount of saturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="monounsaturated" type="number | null">
+<ResponseField name="monounsaturated" type="anyOf | null">
 Amount of monounsaturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="polyunsaturated" type="number | null">
+<ResponseField name="polyunsaturated" type="anyOf | null">
 Amount of polyunsaturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="omega3" type="number | null">
+<ResponseField name="omega3" type="anyOf | null">
 Amount of Omega-3 fatty acids in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="omega6" type="number | null">
+<ResponseField name="omega6" type="anyOf | null">
 Amount of Omega-6 fatty acids in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="total" type="number | null">
+<ResponseField name="total" type="anyOf | null">
 Total amount of fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="alcohol" type="number | null">
+<ResponseField name="alcohol" type="anyOf | null">
 Amount of alcohol in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="water" type="number | null">
+<ResponseField name="water" type="anyOf | null">
 Amount of water in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="fibre" type="number | null">
+<ResponseField name="fibre" type="anyOf | null">
 Amount of dietary fiber in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="sugar" type="number | null">
+<ResponseField name="sugar" type="anyOf | null">
 Amount of sugar in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="micros" type="Micros | null">
-<Expandable title="Micros" defaultOpen="true">
-<ResponseField name="minerals" type="Record<string, object> | null">
+<ResponseField name="micros" type="anyOf" required="true">
+Any of:
+* Micros
+* null
+<Expandable title="Micros">
+<ResponseField name="minerals" type="anyOf | null">
 Amount of each mineral in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
+Any of:
+* object
+* null
 </ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="trace_elements" type="Record<string, object> | null">
+<ResponseField name="trace_elements" type="anyOf | null">
 Amount of each trace element in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
+Any of:
+* object
+* null
 </ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="vitamins" type="Record<string, object> | null">
+<ResponseField name="vitamins" type="anyOf | null">
 Amount of each vitamin in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
-</ResponseField>
-</Expandable>
+Any of:
+* object
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -116,81 +159,124 @@ Amount of each vitamin in grams (g)
 <Expandable defaultOpen>
 <ResponseField name="{key=*}" type="ClientFacingFood | null">
 <Expandable title="ClientFacingFood" defaultOpen="true">
-<ResponseField name="energy" type="Energy | null">
-<Expandable title="Energy" defaultOpen="true">
-<ResponseField name="unit" type="string" required="true">
+<ResponseField name="energy" type="anyOf | null">
+Any of:
+* Energy
+* null
+<Expandable title="Energy">
+<ResponseField name="unit" type="const string" required="true">
+Constant: `kcal`
 </ResponseField>
 <ResponseField name="value" type="number" required="true">
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="macros" type="Macros | null">
-<Expandable title="Macros" defaultOpen="true">
-<ResponseField name="carbs" type="number | null">
+<ResponseField name="macros" type="anyOf | null">
+Any of:
+* Macros
+* null
+<Expandable title="Macros">
+<ResponseField name="carbs" type="anyOf | null">
 Amount of carbohydrates in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="protein" type="number | null">
+<ResponseField name="protein" type="anyOf | null">
 Amount of protein in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="fats" type="Fats | null">
 Details of fat content
 <Expandable title="Fats" defaultOpen="true">
-<ResponseField name="saturated" type="number | null">
+<ResponseField name="saturated" type="anyOf | null">
 Amount of saturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="monounsaturated" type="number | null">
+<ResponseField name="monounsaturated" type="anyOf | null">
 Amount of monounsaturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="polyunsaturated" type="number | null">
+<ResponseField name="polyunsaturated" type="anyOf | null">
 Amount of polyunsaturated fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="omega3" type="number | null">
+<ResponseField name="omega3" type="anyOf | null">
 Amount of Omega-3 fatty acids in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="omega6" type="number | null">
+<ResponseField name="omega6" type="anyOf | null">
 Amount of Omega-6 fatty acids in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="total" type="number | null">
+<ResponseField name="total" type="anyOf | null">
 Total amount of fats in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="alcohol" type="number | null">
+<ResponseField name="alcohol" type="anyOf | null">
 Amount of alcohol in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="water" type="number | null">
+<ResponseField name="water" type="anyOf | null">
 Amount of water in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="fibre" type="number | null">
+<ResponseField name="fibre" type="anyOf | null">
 Amount of dietary fiber in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="sugar" type="number | null">
+<ResponseField name="sugar" type="anyOf | null">
 Amount of sugar in grams (g)
+Any of:
+* number
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="micros" type="Micros | null">
-<Expandable title="Micros" defaultOpen="true">
-<ResponseField name="minerals" type="Record<string, object> | null">
+<ResponseField name="micros" type="anyOf | null">
+Any of:
+* Micros
+* null
+<Expandable title="Micros">
+<ResponseField name="minerals" type="anyOf | null">
 Amount of each mineral in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
+Any of:
+* object
+* null
 </ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="trace_elements" type="Record<string, object> | null">
+<ResponseField name="trace_elements" type="anyOf | null">
 Amount of each trace element in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
+Any of:
+* object
+* null
 </ResponseField>
-</Expandable>
-</ResponseField>
-<ResponseField name="vitamins" type="Record<string, object> | null">
+<ResponseField name="vitamins" type="anyOf | null">
 Amount of each vitamin in grams (g)
-<Expandable defaultOpen>
-<ResponseField name="{key=*}" type="number | null">
-</ResponseField>
-</Expandable>
+Any of:
+* object
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -206,8 +292,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -229,18 +318,9 @@ The identifier of the app which recorded this summary. This is only applicable t
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.meal.created",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
-    "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5",
-    "priority_id": 42,
-    "source_id": 10,
-    "provider_id": "123456",
-    "timestamp": "2019-08-24T14:15:22Z",
-    "name": "Dinner",
+    "created_at": "2019-08-24T14:15:22Z",
     "data": {
       "Chiken coquet starter": {
         "energy": {
@@ -249,15 +329,15 @@ The identifier of the app which recorded this summary. This is only applicable t
         },
         "macros": {
           "carbs": 75.0,
-          "protein": 10.0,
           "fats": {
-            "saturated": 98,
             "monounsaturated": 1,
-            "polyunsaturated": 1,
             "omega3": 0,
             "omega6": 0,
+            "polyunsaturated": 1,
+            "saturated": 98,
             "total": 100
           },
+          "protein": 10.0,
           "sugar": 25.0
         },
         "micros": {
@@ -273,10 +353,10 @@ The identifier of the app which recorded this summary. This is only applicable t
         },
         "macros": {
           "carbs": 0.0,
-          "protein": 0.0,
           "fats": {
             "total": 0.0
           },
+          "protein": 0.0,
           "sugar": 0.0
         },
         "micros": {
@@ -286,14 +366,23 @@ The identifier of the app which recorded this summary. This is only applicable t
         }
       }
     },
+    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+    "name": "Dinner",
+    "priority_id": 42,
+    "provider_id": "123456",
     "source": {
+      "logo": "https://logo_url.com",
       "name": "MyFitnessPal",
-      "slug": "my_fitness_pal",
-      "logo": "https://logo_url.com"
+      "slug": "my_fitness_pal"
     },
-    "created_at": "2019-08-24T14:15:22Z",
-    "updated_at": "2019-08-24T14:15:22Z"
-  }
+    "source_id": 10,
+    "timestamp": "2019-08-24T14:15:22Z",
+    "updated_at": "2019-08-24T14:15:22Z",
+    "user_id": "a169451c-8525-4352-b8ca-070dd449a1a5"
+  },
+  "event_type": "daily.data.meal.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

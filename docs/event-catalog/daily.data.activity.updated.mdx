@@ -31,29 +31,53 @@ User id returned by vital create user request. This id should be stored in your 
 <ResponseField name="calendar_date" type="string" required="true">
 Date of the summary in the YYYY-mm-dd format.
 </ResponseField>
-<ResponseField name="calories_total" type="number | null">
+<ResponseField name="calories_total" type="anyOf | null">
 Total energy consumption during the day including Basal Metabolic Rate in kilocalories::kilocalories
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="calories_active" type="number | null">
+<ResponseField name="calories_active" type="anyOf | null">
 Energy consumption caused by the physical activity of the day in kilocalories::kilocalories
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="steps" type="integer | null">
+<ResponseField name="steps" type="anyOf | null">
 Total number of steps registered during the day::steps
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="daily_movement" type="number | null">
+<ResponseField name="daily_movement" type="anyOf | null">
 [⚠️ Deprecated] Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="distance" type="number | null">
+<ResponseField name="distance" type="anyOf | null">
 Distance traveled during activities throughout the day::meters
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="low" type="number | null">
+<ResponseField name="low" type="anyOf | null">
 Number of minutes during the day with low intensity activity (e.g. household work)::minutes
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="medium" type="number | null">
+<ResponseField name="medium" type="anyOf | null">
 Number of minutes during the day with medium intensity activity (e.g. walking)::minutes
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="high" type="number | null">
+<ResponseField name="high" type="anyOf | null">
 Number of minutes during the day with high intensity activity (e.g. running)::minutes
+Any of:
+* number
+* null
 </ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 Source the data has come from.
@@ -64,8 +88,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -78,29 +105,53 @@ The identifier of the app which recorded this summary. This is only applicable t
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="floors_climbed" type="integer | null">
+<ResponseField name="floors_climbed" type="anyOf | null">
 Number of floors climbed by the user::count
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="time_zone" type="string | null">
+<ResponseField name="time_zone" type="anyOf | null">
 [DEPRECATED] The time zone full identifier for the data. Example: &#x27;Europe/London&#x27;.
+Any of:
+* string
+* null
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
+<ResponseField name="timezone_offset" type="anyOf | null">
 Timezone offset from UTC as seconds. For example, EEST (Eastern European Summer Time, +3h) is 10800. PST (Pacific Standard Time, -8h) is -28800::seconds
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="heart_rate" type="ClientFacingHeartRate | null">
+<ResponseField name="heart_rate" type="anyOf | null">
 Heart rate daily summary.
-<Expandable title="ClientFacingHeartRate" defaultOpen="true">
-<ResponseField name="avg_bpm" type="number | null">
+Any of:
+* ClientFacingHeartRate
+* null
+<Expandable title="ClientFacingHeartRate">
+<ResponseField name="avg_bpm" type="anyOf | null">
 Average heart rate::bpm
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="min_bpm" type="number | null">
+<ResponseField name="min_bpm" type="anyOf | null">
 Minimum heart rate::bpm
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="max_bpm" type="number | null">
+<ResponseField name="max_bpm" type="anyOf | null">
 Maximum heart rate::bpm
+Any of:
+* number
+* null
 </ResponseField>
-<ResponseField name="resting_bpm" type="number | null">
+<ResponseField name="resting_bpm" type="anyOf | null">
 Resting heart rate::bpm
+Any of:
+* number
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -109,36 +160,36 @@ Resting heart rate::bpm
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.activity.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "date": "2024-05-28T09:15:48+00:00",
-    "calendar_date": "2024-05-28",
-    "calories_total": 100,
+    "calendar_date": "2023-03-22",
     "calories_active": 2000,
-    "steps": 10000,
+    "calories_total": 100,
     "daily_movement": 200,
-    "low": 6400,
-    "medium": 6400,
-    "high": 6000,
+    "date": "2023-03-22T00:00:00+00:00",
     "floors_climbed": 10,
-    "timezone_offset": 3600,
-    "time_zone": "Europe/London",
     "heart_rate": {
       "avg_bpm": 80,
-      "min_bpm": 60,
       "max_bpm": 100,
+      "min_bpm": 60,
       "resting_bpm": 60
     },
+    "high": 6000,
+    "low": 6400,
+    "medium": 6400,
     "source": {
+      "logo": "https://logo_url.com",
       "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
+      "slug": "oura"
     },
-    "user_id": "97caef6c-d78a-4ac7-86db-f951bae79ea2"
-  }
+    "steps": 10000,
+    "time_zone": "Europe/London",
+    "timezone_offset": 3600,
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
+  },
+  "event_type": "daily.data.activity.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

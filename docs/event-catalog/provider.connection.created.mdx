@@ -50,8 +50,11 @@ URL for source logo
 <ResponseField name="status" type="enum<string>" required="true">
 Available options: `available`, `unavailable`.
 </ResponseField>
-<ResponseField name="scope_requirements" type="ScopeRequirementsGrants | null">
-<Expandable title="ScopeRequirementsGrants" defaultOpen="true">
+<ResponseField name="scope_requirements" type="anyOf | null">
+Any of:
+* ScopeRequirementsGrants
+* null
+<Expandable title="ScopeRequirementsGrants">
 <ResponseField name="user_granted" type="ScopeRequirements_str_" required="true">
 <Expandable title="ScopeRequirements_str_" defaultOpen="true">
 <ResponseField name="required" type="string" required="true">
@@ -79,54 +82,54 @@ Available options: `available`, `unavailable`.
 <ResponseExample>
 ```json Example
 {
-  "event_type": "provider.connection.created",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "provider": {
+      "logo": "https://logo_url.com",
       "name": "Fitbit",
-      "slug": "fitbit",
-      "logo": "https://logo_url.com"
+      "slug": "fitbit"
     },
-    "user_id": "2b9cab0b-e898-4376-8387-e6a8004e775e",
     "resource_availability": {
       "body": {
-        "status": "available",
         "scope_requirements": {
+          "user_denied": {
+            "optional": [],
+            "required": []
+          },
           "user_granted": {
+            "optional": [],
             "required": [
               "weight"
-            ],
-            "optional": []
-          },
-          "user_denied": {
-            "required": [],
-            "optional": []
+            ]
           }
-        }
+        },
+        "status": "available"
       },
       "sleep": {
-        "status": "unavailable",
         "scope_requirements": {
-          "user_granted": {
-            "required": [],
-            "optional": []
-          },
           "user_denied": {
-            "required": [
-              "sleep"
-            ],
             "optional": [
               "heartrate",
               "oxygen_saturation",
               "respiratory_rate"
+            ],
+            "required": [
+              "sleep"
             ]
+          },
+          "user_granted": {
+            "optional": [],
+            "required": []
           }
-        }
+        },
+        "status": "unavailable"
       }
-    }
-  }
+    },
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
+  },
+  "event_type": "provider.connection.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

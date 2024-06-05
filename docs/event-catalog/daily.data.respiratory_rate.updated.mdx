@@ -23,14 +23,23 @@ Constant: `daily.data.respiratory_rate.updated`
 <Expandable title="TimeseriesData" defaultOpen="true">
 <ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
 <Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
-<ResponseField name="id" type="integer | null">
+<ResponseField name="id" type="anyOf | null">
 Deprecated
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="timezone_offset" type="integer | null">
+<ResponseField name="timezone_offset" type="anyOf | null">
 Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+Any of:
+* integer
+* null
 </ResponseField>
-<ResponseField name="type" type="string | null">
+<ResponseField name="type" type="anyOf | null">
 The reading type of the measurement. This is applicable only to Cholesterol, IGG and IGE.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
@@ -53,8 +62,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -87,33 +99,33 @@ URL for source logo
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.respiratory_rate.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "data": [
       {
-        "start": "2023-02-13T14:30:52+00:00",
         "end": "2023-02-13T14:57:24+00:00",
+        "start": "2023-02-13T14:30:52+00:00",
         "timezone_offset": null,
-        "value": 15.5,
         "type": null,
-        "unit": "bpm"
+        "unit": "bpm",
+        "value": 15.5
       }
     ],
-    "source_id": 1,
+    "provider": {
+      "logo": "https://logo_url.com",
+      "name": "Oura",
+      "slug": "oura"
+    },
     "source": {
       "provider": "oura",
       "type": "ring"
     },
-    "provider": {
-      "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
-    },
-    "user_id": "2a9e562c-1b71-46bf-8d53-b0d2487628e6"
-  }
+    "source_id": 1,
+    "user_id": "652779a6-7539-429d-8b0a-04bd3e81b341"
+  },
+  "event_type": "daily.data.respiratory_rate.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

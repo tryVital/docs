@@ -38,8 +38,11 @@ Provider slug. e.g., `oura`, `fitbit`, `garmin`.
 <ResponseField name="type" type="string | null">
 The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
 </ResponseField>
-<ResponseField name="app_id" type="string | null">
+<ResponseField name="app_id" type="anyOf | null">
 The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 [⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
@@ -70,25 +73,25 @@ Slug for designated sport
 <ResponseExample>
 ```json Example
 {
-  "event_type": "daily.data.workout_stream.updated",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "workout_id": "0b3a1008-46cc-4f67-8a22-58c244bc116e",
-    "provider_id": "123dashd9",
     "message": "Due to payload size limits, to access the workout stream, please use the /v2/timeseries/workouts/{workout_id}/stream endpoint.",
+    "provider_id": "123dashd9",
     "source": {
+      "logo": "https://logo_url.com",
       "name": "Oura",
-      "slug": "oura",
-      "logo": "https://logo_url.com"
+      "slug": "oura"
     },
     "sport": {
       "id": 1,
       "name": "Running",
       "slug": "running"
-    }
-  }
+    },
+    "workout_id": "185d0f34-dfc0-429f-84f9-b24030914bdd"
+  },
+  "event_type": "daily.data.workout_stream.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>

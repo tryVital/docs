@@ -27,16 +27,16 @@ Constant: `provider.connection.error`
 <ResponseExample>
 ```json Example
 {
-  "event_type": "provider.connection.error",
-  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
-  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
-    "provider": "oura",
-    "user_id": "757db90e-a303-47c9-a654-c8d97a14fb6b",
+    "error_details": "Failed to pull provider data",
     "message": "We are having issues fetching information for user.                             We won't try to fetch again from this specific provider. Please reconnect device.",
-    "error_details": "Failed to pull provider data"
-  }
+    "provider": "oura",
+    "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
+  },
+  "event_type": "provider.connection.error",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
 ```
 </ResponseExample>
