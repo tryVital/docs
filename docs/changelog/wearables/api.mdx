@@ -2,6 +2,18 @@
 title: "API"
 ---
 
+### Introspection: Historical Pull Timeline (Apr 24)
+The Historical Pull Introspection endpoint now reports the execution timeline of historical pulls.
+
+<Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
+The timeline tracks when the historical pull was scheduled, started, and eventually ended (success or failure). This
+improves the visibility around the latency of historical pulls, as well as providing more indicator of an incomplete
+execution.
+
+Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
+
+</Accordion>
+
 ### Team Scope Requirements (Apr 24)
 You can now tailor what scopes Vital would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
 This applies when your user connects to an [OAuth provider](/wearables/connecting-providers/auth_types) which supports scopes.

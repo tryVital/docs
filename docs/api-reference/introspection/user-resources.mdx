@@ -12,3 +12,64 @@ This API offers detailed insights into all provider connections and collected re
 Please note that `user_limit` is an upper bound and the endpoint can return data for fewer users.
 This would be the case if any of the top selected users had no available resource information.
 </Warning>
+
+
+## Response Structure
+
+<ResponseField name="data" type="object[]" required>
+  An array containing user information, including data from different providers.
+
+  <Expandable defaultOpen>
+    <ResponseField name="user_id" type="string" required>
+      The unique identifier of the user.
+    </ResponseField>
+
+    <ResponseField name="provider" type="Map<string, object>" required>
+      A map where each key-value pair describes the historical pull status of a specific provider.
+
+      <Expandable defaultOpen>
+        <ResponseField name="{PROVIDER_SLUG}" type="object" required>
+            the historical pull status of a specific provider, keyed by the provider slug.
+
+            <Expandable defaultOpen>
+            <ResponseField name="{RESOURCE}" type="object" required>
+                The historical pull status of a resource with this provider, keyed by the resource type.
+
+                
+                <Expandable defaultOpen>
+
+                <ResponseField name="oldest_data" type="string">
+                    The oldest data timestamp that Vital has observed for this resource.
+                </ResponseField>
+
+                <ResponseField name="newest_data" type="string">
+                    The newest data timestamp that Vital has observed for this resource.
+                </ResponseField>
+
+                <ResponseField name="sent_count" type="number">
+                    The number of summaries or samples Vital has sent so far.
+                </ResponseField>
+
+                <ResponseField name="last_attempt" type="object">
+                    <Expandable defaultOpen>
+                    <ResponseField name="timestamp" type="string">
+                        For polling-based resources, the time when the last polling attempt has happened.
+                        For push-based resources, the last time when Vital has ingested data.
+                    </ResponseField>
+
+                    <ResponseField name="status" type="string">
+                        The status of the last attempt.
+
+                        Possible value: `success`, `failure`
+                    </ResponseField>
+                    </Expandable>
+                </ResponseField>
+                </Expandable>     
+            </ResponseField>
+            </Expandable>              
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
