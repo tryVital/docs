@@ -3,6 +3,34 @@ title: "Providers"
 ---
 
 
+### Steps count in workouts (May 24)
+
+Workouts now include the total steps count during the session (if available).
+
+<Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
+Check out the [Get Workouts](/api-reference/workouts/get-summary) endpoint and
+the [Workout Created](/event-catalog/daily.data.workouts.created) event for more information.
+</Accordion>
+
+
+### New Abbott LibreView integration (May 24)
+
+Vital has introduced an new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
+accepting LibreView patient account credentials.
+
+<Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
+This is an alternative option to our practice-based Freestyle Libre provider (`freestyle_libre`).
+
+With `abbott_libreview`, Vital uses the provided LibreView patient account credentials to connect directly
+to LibreView. There is no involvement of a LibreView practice in this integration.
+
+Note that both practice-based and patient-based connections would continue to be supported in parallel. The
+`abbott_libreview` integration does not replace the `freestyle_libre` integration.
+
+Check out the [Abbott LibreView / Freestyle Libre](/wearables/guides/abbott-libreview) guide for more information.
+</Accordion>
+
+
 ### Removed Fitbit and Oura required scopes (May 24)
 
 The Fitbit profile scope and Oura email scope are no longer required for establishing connections.
