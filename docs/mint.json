@@ -99,6 +99,7 @@
     {
       "group": "Lab Testing",
       "pages": [
+        "changelog/lab-testing/api",
         "changelog/lab-testing/deprecations"
       ]
     },
