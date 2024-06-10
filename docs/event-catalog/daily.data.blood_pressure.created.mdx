@@ -44,10 +44,6 @@ Any of:
 <ResponseField name="unit" type="string" required="true">
 The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
 </ResponseField>
-<ResponseField name="grouping" type="_ClientFacingSampleGroupingKeys | null">
-<Expandable title="_ClientFacingSampleGroupingKeys" defaultOpen="true">
-</Expandable>
-</ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
 </ResponseField>
 <ResponseField name="systolic" type="number" required="true">
@@ -72,14 +68,14 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="name" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+<ResponseField name="slug" type="string" required="true" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="logo" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -109,7 +105,7 @@ URL for source logo
       {
         "diastolic": 75,
         "systolic": 125,
-        "timestamp": "2024-06-08T21:27:49+00:00",
+        "timestamp": "2024-06-10T14:34:11+00:00",
         "timezone_offset": null,
         "type": null,
         "unit": "mmHg"
@@ -125,7 +121,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "93d6a992-8136-4654-8814-abb06ff06ad3"
+    "user_id": "dd6eb540-e2c1-486b-9992-940699d8a352"
   },
   "event_type": "daily.data.blood_pressure.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

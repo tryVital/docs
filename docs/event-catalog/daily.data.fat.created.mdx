@@ -21,8 +21,8 @@ Constant: `daily.data.fat.created`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
-<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingBodyFatTimeseries[]" required="true">
+<Expandable title="Item Schema: ClientFacingBodyFatTimeseries" defaultOpen="true">
 <ResponseField name="id" type="anyOf | null">
 Deprecated
 Any of:
@@ -42,7 +42,7 @@ Any of:
 * null
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
-The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+Measured in percentage (0-100).
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
@@ -68,14 +68,14 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="name" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+<ResponseField name="slug" type="string" required="true" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="logo" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -107,7 +107,7 @@ URL for source logo
         "timezone_offset": null,
         "type": null,
         "unit": "%",
-        "value": 36
+        "value": 50
       }
     ],
     "provider": {
@@ -120,7 +120,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "c2dc8ad8-262d-4720-b2e4-3844e62ecc70"
+    "user_id": "fafb903c-dfb9-48a6-9d28-72bf255b6bf8"
   },
   "event_type": "daily.data.fat.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

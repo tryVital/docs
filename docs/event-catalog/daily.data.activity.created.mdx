@@ -25,8 +25,8 @@ User id returned by vital create user request. This id should be stored in your 
 </ResponseField>
 <ResponseField name="id" type="string" required="true">
 </ResponseField>
-<ResponseField name="date" type="string" required="true">
-[⚠️ Deprecated] Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
+<ResponseField name="date" type="string" required="true" deprecated>
+Date of the specified record, formatted as ISO8601 datetime string in UTC 00:00. Deprecated in favour of calendar_date.
 </ResponseField>
 <ResponseField name="calendar_date" type="string" required="true">
 Date of the summary in the YYYY-mm-dd format.
@@ -49,8 +49,8 @@ Any of:
 * integer
 * null
 </ResponseField>
-<ResponseField name="daily_movement" type="anyOf | null">
-[⚠️ Deprecated] Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
+<ResponseField name="daily_movement" type="anyOf | null" deprecated>
+Deprecated. Daily physical activity as equal meters i.e. amount of walking needed to get the same amount of activity::meters
 Any of:
 * number
 * null
@@ -94,14 +94,14 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="name" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+<ResponseField name="slug" type="string" required="true" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="logo" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>

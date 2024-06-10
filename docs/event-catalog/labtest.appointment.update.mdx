@@ -35,8 +35,8 @@ Any of:
 </ResponseField>
 <ResponseField name="zip_code" type="string" required="true">
 </ResponseField>
-<ResponseField name="unit" type="anyOf | null">
-[⚠️ Deprecated] Deprecated. Use `second_line` instead to provide the unit number. Subject to removal after 20 Nov 2023.
+<ResponseField name="unit" type="anyOf | null" deprecated>
+Deprecated. Use `second_line` instead to provide the unit number. Subject to removal after 20 Nov 2023.
 Any of:
 * string
 * null
@@ -137,18 +137,18 @@ Any of:
       }
     ],
     "iana_timezone": "America/New_York",
-    "id": "37a020cd-43b8-455f-883c-fede5207e7f4",
+    "id": "e8282976-4a6a-4080-8c70-2b38b2a2d1a8",
     "location": {
       "lat": 37.7749295,
       "lng": -122.4194155
     },
-    "order_id": "c37437dd-70e1-4962-b039-32161f5c111c",
+    "order_id": "7529ba01-16d5-452d-a6ef-27159d516f8e",
     "provider": "getlabs",
     "provider_id": "123",
     "start_at": "2022-01-01T00:00:00",
     "status": "confirmed",
     "type": "phlebotomy",
-    "user_id": "859293b0-2225-4fed-a7d2-0adc0d4390c2"
+    "user_id": "507202f3-94ab-4662-8631-240f37e3035f"
   },
   "event_type": "labtest.appointment.update",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

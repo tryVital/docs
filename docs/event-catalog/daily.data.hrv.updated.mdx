@@ -21,8 +21,8 @@ Constant: `daily.data.hrv.updated`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingTimeseries[]" required="true">
-<Expandable title="Item Schema: ClientFacingTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingHRVTimeseries[]" required="true">
+<Expandable title="Item Schema: ClientFacingHRVTimeseries" defaultOpen="true">
 <ResponseField name="id" type="anyOf | null">
 Deprecated
 Any of:
@@ -42,13 +42,13 @@ Any of:
 * null
 </ResponseField>
 <ResponseField name="unit" type="string" required="true">
-The unit of the value. We use SI units where possible, e.g. mmol/L for glucose/cholesterol, bpm for heart rate, etc.
+Measured in rmssd.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
 The timestamp of the measurement.
 </ResponseField>
 <ResponseField name="value" type="number" required="true">
-The value of the measurement.
+HRV calculated using rmssd during sleep
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -68,14 +68,14 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="name" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+<ResponseField name="slug" type="string" required="true" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true">
-[⚠️ Deprecated] Deprecated. Subject to removal after 1 Jan 2024.
+<ResponseField name="logo" type="string" required="true" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -120,7 +120,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "a8996cbf-bda7-4b52-8170-cebb52127e25"
+    "user_id": "29f63666-75dc-446a-90ec-278b1daaf503"
   },
   "event_type": "daily.data.hrv.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

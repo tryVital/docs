@@ -1,17 +1,17 @@
 ---
-title: "daily.data.respiratory_rate.updated"
-description: "Existing respiratory_rate discrete samples have been updated"
+title: "daily.data.body_temperature_delta.updated"
+description: "Existing body_temperature_delta interval samples have been updated"
 ---
 <Warning>
 Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(respiratory_rate, fitbit, 2023-01-23T12:34:56Z)`.
+its source (ID or slug) and its timestamp. e.g., `(body_temperature_delta, fitbit, 2023-01-23T12:34:56Z)`.
 
 If multiple samples are received at the same triple key, the last sample received replaces all its
 previous versions.
 </Warning>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `daily.data.respiratory_rate.updated`
+Constant: `daily.data.body_temperature_delta.updated`
 </ResponseField>
 <ResponseField name="team_id" type="string" required="true">
 </ResponseField>
@@ -21,8 +21,8 @@ Constant: `daily.data.respiratory_rate.updated`
 </ResponseField>
 <ResponseField name="data" type="TimeseriesData" required="true">
 <Expandable title="TimeseriesData" defaultOpen="true">
-<ResponseField name="data" type="ClientFacingRespiratoryRateTimeseries[]" required="true">
-<Expandable title="Item Schema: ClientFacingRespiratoryRateTimeseries" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingBodyTemperatureDeltaSample[]" required="true">
+<Expandable title="Item Schema: ClientFacingBodyTemperatureDeltaSample" defaultOpen="true">
 <ResponseField name="id" type="anyOf | null">
 Deprecated
 Any of:
@@ -41,14 +41,26 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="unit" type="string" required="true">
-Measured in bpm.
+<ResponseField name="unit" type="const string" required="true">
+Constant: `°C`
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
-The timestamp of the measurement.
+Depracated. The start time (inclusive) of the interval.
+</ResponseField>
+<ResponseField name="start" type="string" required="true">
+The start time (inclusive) of the interval.
+</ResponseField>
+<ResponseField name="end" type="string" required="true">
+The end time (exclusive) of the interval.
 </ResponseField>
 <ResponseField name="value" type="number" required="true">
-Average respiratory rate::breaths per minute
+The recorded value for the interval.
+</ResponseField>
+<ResponseField name="sensor_location" type="anyOf" required="true">
+Location of the temperature sensor.
+Any of:
+* string
+* null
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -104,11 +116,12 @@ URL for source logo
     "data": [
       {
         "end": "2023-02-13T14:57:24+00:00",
+        "sensor_location": "wrist",
         "start": "2023-02-13T14:30:52+00:00",
         "timezone_offset": null,
         "type": null,
-        "unit": "bpm",
-        "value": 15.5
+        "unit": "\u00b0C",
+        "value": -1.0
       }
     ],
     "provider": {
@@ -121,9 +134,9 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "3431b551-f28b-4892-a170-62f0eece28cf"
+    "user_id": "31374be7-10d3-45f2-b354-48f8b9954761"
   },
-  "event_type": "daily.data.respiratory_rate.updated",
+  "event_type": "daily.data.body_temperature_delta.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
   "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }
