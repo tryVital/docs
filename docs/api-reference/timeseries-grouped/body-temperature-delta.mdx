@@ -1,6 +1,6 @@
 ---
-title: "Cholesterol"
-openapi: "GET /v2/timeseries/{user_id}/cholesterol/grouped"
+title: "Body Temperature Delta"
+openapi: "GET /v2/timeseries/{user_id}/body_temperature_delta/grouped"
 ---
 
 <Card
@@ -8,7 +8,7 @@ openapi: "GET /v2/timeseries/{user_id}/cholesterol/grouped"
   icon="diamond-turn-right"
   iconType="sharp-solid"
   color="#F3A712"
-  href="https://api.tryvital.io/redoc#tag/timeseries/operation/get_cholesterol_grouped"
+  href="https://api.tryvital.io/redoc#tag/timeseries/operation/get_body_temperature_delta_grouped"
 >
   The Response section on the page still needs work. Click here to check out the complete schema.
 </Card>
@@ -17,7 +17,7 @@ openapi: "GET /v2/timeseries/{user_id}/cholesterol/grouped"
 
 ```bash cURL
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/cholesterol/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/body_temperature_delta/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -31,7 +31,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.vitals.cholesterol_grouped(
+data = client.vitals.body_temperature_delta_grouped(
   user_id="<user_id>", 
   start_date="2021-10-01", 
   end_date="2021-10-02"
@@ -40,19 +40,19 @@ data = client.vitals.cholesterol_grouped(
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { VitalsCholesterolGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
+import { VitalsBodyTemperatureDeltaGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: VitalsCholesterolGroupedRequest = {
+const request: VitalsBodyTemperatureDeltaGroupedRequest = {
     startDate: "2022-05-01",
     endDate: "2022-06-01"
 }
 
-const data = await client.vitals.cholesterolGrouped(
+const data = await client.vitals.bodyTemperatureDeltaGrouped(
     '<my_user_id>',
     request
 );
@@ -61,19 +61,19 @@ const data = await client.vitals.cholesterolGrouped(
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.vitals.requests.VitalsCholesterolGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsBodyTemperatureDeltaGroupedRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-VitalsCholesterolGroupedRequest request = VitalsCholesterolGroupedRequest.builder()
+VitalsBodyTemperatureDeltaGroupedRequest request = VitalsBodyTemperatureDeltaGroupedRequest.builder()
         .startDate("2022-05-01")
         .endDate("2022-06-01")
         .build();
 
-var data = vital.vitals().cholesterolGrouped("<user_id>", request);
+var data = vital.vitals().bodyTemperatureDeltaGrouped("<user_id>", request);
 ```
 
 ```go Go
@@ -90,12 +90,12 @@ client := vitalclient.NewClient(
 )
 
 EndDate := "2022-06-01"
-request := &vital.VitalsCholesterolGroupedRequest{
+request := &vital.VitalsBodyTemperatureDeltaGroupedRequest{
   StartDate: "2022-05-01",
   EndDate:   &EndDate,
 }
 
-response, err := client.Vitals.CholesterolGrouped(context.TODO(), "*", request)
+response, err := client.Vitals.BodyTemperatureDeltaGrouped(context.TODO(), "*", request)
 if err != nil {
   return err
 }
@@ -113,28 +113,11 @@ fmt.Printf("Received data %s\n", response)
       {
         "data": [
           {
-            "timestamp": "2023-02-13T14:30:52+00:00",
-            "type": "cholesterol/ldl",
-            "unit": "mmol/L",
-            "value": 0.6
-          },
-          {
-            "timestamp": "2023-02-13T14:30:52+00:00",
-            "type": "cholesterol/hdl",
-            "unit": "mmol/L",
-            "value": 0.2
-          },
-          {
-            "timestamp": "2023-02-13T14:30:52+00:00",
-            "type": "cholesterol/total",
-            "unit": "mmol/L",
-            "value": 0.7
-          },
-          {
-            "timestamp": "2023-02-13T14:30:52+00:00",
-            "type": "cholesterol/triglycerides",
-            "unit": "mmol/L",
-            "value": 0.7
+            "end": "2023-02-13T14:57:24+00:00",
+            "sensor_location": "wrist",
+            "start": "2023-02-13T14:30:52+00:00",
+            "unit": "\u00b0C",
+            "value": -1.0
           }
         ],
         "source": {
