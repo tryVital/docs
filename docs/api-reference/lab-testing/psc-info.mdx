@@ -1,12 +1,12 @@
 ---
-openapi: "GET /v3/order/area/info"
+openapi: "GET /v3/order/psc/info"
 ---
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-     --url '{{BASE_URL}}/v3/order/area/info?zip_code=85004' \
+     --url '{{BASE_URL}}/v3/order/psc/info?zip_code=85004&lab_id=27' \
      --header 'accept: application/json' \
      --header 'x-vital-api-key: {YOUR_KEY}'
 ```
@@ -20,40 +20,42 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get_area_info(zip_code="85004")
+data = client.lab_tests.get_psc_info(zip_code="85004", lab_id=27)
 ```
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LabTestsGetAreaInfoRequest } from '@tryvital/vital-node/api/resources/labTests';
+import { LabTestsGetPscInfoRequest } from '@tryvital/vital-node/api/resources/labTests';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: LabTestsGetAreaInfoRequest = {
-    zipCode: "85004"
+const request: LabTestsGetPSCInfoRequest = {
+    zipCode: "85004",
+    labId: 27,
 }
 
-const data = await client.labTests.getAreaInfo(request);
+const data = await client.labTests.getPscInfo(request);
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.vital.api.resources.labtests.requests.LabTestsGetPscInfoRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-LabTestsGetAreaInfoRequest request = LabTestsGetAreaInfoRequest.builder()
+LabTestsGetPscInfoRequest request = LabTestsGetPscInfoRequest.builder()
         .zipCode("85004")
+        .labId(27)
         .build();
 
-var data = vital.labTests().getAreaInfo(request);
+var data = vital.labTests().getPscInfo(request);
 ```
 
 ```go Go
@@ -69,11 +71,12 @@ client := vitalclient.NewClient(
   vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-request := &vital.LabTestsGetAreaInfoRequest{
+request := &vital.LabTestsGetPscInfoRequest{
   ZipCode: "85004",
+  LabId: 27,
 }
 
-response, err := client.LabTests.GetAreaInfo(context.TODO(), request)
+response, err := client.LabTests.GetPscInfo(context.TODO(), request)
 if err != nil {
   return err
 }
@@ -86,28 +89,23 @@ fmt.Printf("Received data %s\n", response)
 
 ```json Response
 {
-  "zip_code": "85004",
-  "phlebotomy": {
-    "is_served": true,
-    "providers": [
-        {
-          "name": "getlabs",
-          "tier": ["appointment-ready"]
-        },
-        {
-          "name": "phlebfinders",
-          "tier": ["appointment-request"]
-        }
-    ]
-  },
-  "psc": {
-    "locations": {
-      "labcorp": {
-        "within_radius": 5,
-        "radius": 25000
-      }
-    }
-  }
+  "lab_id": 27,
+  "pscs": [
+    {
+      "metadata": {
+        "name": "LABCORP",
+        "state": "AZ",
+        "city": "Phoenix",
+        "zip_code": "85006",
+        "address": "1300 N 12th St",
+        "unit": "Ste 300",
+        "phone_number": "480-878-3988",
+        "fax_number": "844-346-5903",
+        "hours": null
+      },
+      "distance": 1829
+    },
+  ]
 }
 ```
 
