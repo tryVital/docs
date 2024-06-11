@@ -9,8 +9,8 @@ Vital supports two ways to connect to LibreView for Abbott CGMs:
 
 | Provider Slug      | Remarks                   |
 | ------------------ | ------------------------- | 
-| `abbott_libreview` | Connect via LibreView patient account | 
-| `freestyle_libre`  | Connect via Vital's LibreView practice, or your own custom practice. |
+| `abbott_libreview` | Connect via LibreView patient account in any region. | 
+| `freestyle_libre`  | Connect via regional LibreView practices (Vital-managed, or custom practices). |
 
 ### `freestyle_libre` for practice-based connections
 
@@ -21,11 +21,11 @@ Vital accesses the patient CGM data as a member of the LibreView practice.
 
 ### `abbott_libreview` for patient-based connections
 
-With the `abbott_libreview` integration, users can connect their CGM devices simply by signing in with their LibreView patient account.
-Vital accesses the patient CGM data as their personal account.
+With the `abbott_libreview` integration, users can connect their Abbott CGM devices simply by signing in
+with their LibreView patient account. Vital accesses the patient CGM data as their personal account.
 
-* You would not need to maintain a LibreView practice.
-* You would not need to instruct your users to share/connect to your practice, before they attempt to connect via Vital Link. 
+* You would not need to maintain any LibreView practices.
+* You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Vital Link. 
 
 ## LibreView data use floating time basis
 
@@ -50,21 +50,11 @@ exposed as a **password provider**:
   Start the linking process by [generating a short-lived Link Token](/api-reference/link/generate-link-token).
   </Step>
 
-  <Step number="2" title="Submit username, password and region">
-  Submit the username, password and region of the LibreView patient account to the [Link Password Provider](/api-reference/link/link-password-provider) endpoint.
+  <Step number="2" title="Submit username and password">
+  Submit the username and password of the LibreView patient account to the [Link Password Provider](/api-reference/link/link-password-provider) endpoint.
 
   <Note>
-  You must specify the [LibreView region](#supported-libreview-regions).
-  The region must align with the region in which the patient account is registered in.
-
-  For example, for a patient account registered in Netherlands:
-  ```json
-  {
-    "username": "patient@example.com",
-    "password": "pAssW0rD",
-    "region": "nl"
-  }
-  ```
+  You need not specify any region in your request. Vital will match the correct LibreView region transparently.
   </Note>
 
   </Step>
@@ -87,21 +77,6 @@ exposed as a **password provider**:
   The linking process is completed. Historical pulls are scheduled to start as soon as possible.
   </Step>
 </Steps>
-
-### Supported LibreView regions
-
-| LibreView Region                               | 
-| ---------------------------------------------- | 
-| United States (`us`)                           | 
-| Canada (`ca`)                                  | 
-| India (`in`)                                   | 
-| Europe (`eu`)                                  | 
-| Singapore (`sg`)                               | 
-| Australia (`au`)                               | 
-| Germany (`de`)                                 | 
-| Netherlands (`nl`)                             | 
-| Brazil (`br`)                                  | 
-
 
 ## Setting up practice-based connections (`freestyle_libre`)
 
