@@ -2,10 +2,9 @@
 title: "Bring Your Own OAuth"
 ---
 
-<Info>
-Bring Your Own OAuth (BYOO) is available for [the Grow and Scale plans](https://tryvital.io/pricing).
-Whoop BYOO is available for [the Launch, Grow and Scale plans](https://tryvital.io/pricing).
-</Info>
+import BYOO from '/snippets/byoo.mdx';
+
+<BYOO />
 
 Vital supports bringing your own OAuth application credentials, so that your user would see the OAuth consent flow
 in your own brand when they connect to cloud-based OAuth providers.
@@ -18,7 +17,67 @@ Typically when you don't use custom credentials your oauth screen will look like
 
 With custom credentials you can use your own team name and setup your own logo for the provider.
 
-## How to setup custom OAuth application credentials
+## OAuth Providers supporting BYOO
+
+| Provider                                             | Slug              | Remarks                      |
+| ---------------------------------------------------- | ----------------- | ---------------------------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | -                            |
+| [Garmin](https://www.garmin.com)                     | `garmin`          | -                            |
+| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | -                            |
+| [Oura](https://ouraring.com)                         | `oura`            | -                            |
+| [Strava](https://www.strava.com)                     | `strava`          | -                            |
+| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | -                            |
+| [Withings](https://www.withings.com)                 | `withings`        | -                            |
+| [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       | [↗️ Guide](/wearables/guides/dexcom_v3) |
+| [Whoop](https://www.whoop.com)                       | `whoop_v2`        | [↗️ Guide](/wearables/guides/whoop)|
+| [Polar](https://www.polar.com/accesslink-api/)       | `polar`           | -                            |
+| [Cronometer](https://www.cronometer.com)             | `cronometer`      | -                            |
+| [Omron](https://www.omron-healthcare.com)            | `omron`           | -                            |
+
+## Setting up your OAuth credentials
+
+### Through the Org Management API
+
+<OrgManagementAPI />
+
+You can apply and update your OAuth credentials programmatically using the
+[Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials) endpoint.
+
+<AccordionGroup>
+<Accordion title="Credentials that are activated immediately" icon="bolt">
+
+BYOO credentials for the following providers are immediately active, once set through the [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials):
+
+| Provider                                             | Slug              |
+| ---------------------------------------------------- | ----------------- |
+| [Garmin](https://www.garmin.com)                     | `garmin`          |
+| [Google Fit](https://www.google.com/fit/)            | `google_fit`      |
+| [Oura](https://ouraring.com)                         | `oura`            |
+| [Strava](https://www.strava.com)                     | `strava`          |
+| [Wahoo](https://wahoofitness.com)                    | `wahoo`           |
+| [Withings](https://www.withings.com)                 | `withings`        |
+| [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       |
+| [Whoop](https://www.whoop.com)                       | `whoop_v2`        |
+| [Polar](https://www.polar.com/accesslink-api/)       | `polar`           |
+| [Cronometer](https://www.cronometer.com)             | `cronometer`      |
+| [Omron](https://www.omron-healthcare.com)            | `omron`           |
+
+</Accordion>
+
+<Accordion title="Credentials that need support intervention once set" icon="message-question">
+
+While you can supply your BYOO credentials for the following providers
+through the [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials),
+it would not be immediately active and requires Vital support intervention:
+
+| Provider                                             | Slug              | Remarks             |
+| ---------------------------------------------------- | ----------------- | ---------------------------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Contact Vital support for instructions to complete the webhook subscriber setup. |
+
+</Accordion>
+</AccordionGroup>
+
+### Through Vital Support
 
 To setup custom OAuth application credentials, you need to do the following:
 
@@ -36,17 +95,3 @@ To setup custom OAuth application credentials, you need to do the following:
 Some Oauth providers are unavailable unless you can <b>Bring Your Own OAuth (BYOO)</b> — you will have to apply directly
 to the provider for an OAuth application, and provide Vital your assigned credentials once the application is accepted.
 </Note>
-
-## OAuth providers
-
-| Provider                                             | Slug              | OAuth availability           |
-| ---------------------------------------------------- | ----------------- | ---------------------------- |
-| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Vital branded OAuth, or BYOO |
-| [Garmin](https://www.garmin.com)                     | `garmin`          | Vital branded OAuth, or BYOO |
-| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | Vital branded OAuth, or BYOO |
-| [Oura](https://ouraring.com)                         | `oura`            | Vital branded OAuth, or BYOO |
-| [Strava](https://www.strava.com)                     | `strava`          | Vital branded OAuth, or BYOO |
-| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | Vital branded OAuth, or BYOO |
-| [Withings](https://www.withings.com)                 | `withings`        | Vital branded OAuth, or BYOO |
-| [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       | BYOO only [(Guide)](/wearables/guides/dexcom_v3) |
-| [Whoop](https://www.whoop.com)                       | `whoop_v2`        | BYOO only [(Guide)](/wearables/guides/whoop)|
