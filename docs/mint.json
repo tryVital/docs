@@ -307,9 +307,7 @@
         {
           "group": "Area Info",
           "pages": [
-            "api-reference/lab-testing/area-info",
-            "api-reference/lab-testing/psc-info",
-            "api-reference/lab-testing/order-psc-info"
+            "api-reference/lab-testing/area-info"
           ]
         },
         {
