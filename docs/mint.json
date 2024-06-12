@@ -417,7 +417,9 @@
           "group": "Body",
           "pages": [
             "api-reference/timeseries-grouped/body-fat",
-            "api-reference/timeseries-grouped/body-weight"
+            "api-reference/timeseries-grouped/body-weight",
+            "api-reference/timeseries-grouped/body-temperature",
+            "api-reference/timeseries-grouped/body-temperature-delta"
           ]
         },
         {
@@ -744,7 +746,7 @@
       "group": "Body Timeseries",
       "pages": [
         {
-          "group": "Fat",
+          "group": "Body Fat",
           "pages": [
             "event-catalog/daily.data.fat.created",
             "event-catalog/daily.data.fat.updated",
@@ -752,11 +754,27 @@
           ]
         },
         {
-          "group": "Weight",
+          "group": "Body Weight",
           "pages": [
             "event-catalog/daily.data.weight.created",
             "event-catalog/daily.data.weight.updated",
             "event-catalog/historical.data.weight.created"
+          ]
+        },
+        {
+          "group": "Body Temperature",
+          "pages": [
+            "event-catalog/daily.data.body_temperature.created",
+            "event-catalog/daily.data.body_temperature.updated",
+            "event-catalog/historical.data.body_temperature.created"
+          ]
+        },
+        {
+          "group": "Body Temperature Delta",
+          "pages": [
+            "event-catalog/daily.data.body_temperature_delta.created",
+            "event-catalog/daily.data.body_temperature_delta.updated",
+            "event-catalog/historical.data.body_temperature_delta.created"
           ]
         }
       ]
