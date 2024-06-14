@@ -5,43 +5,105 @@ sidebarTitle: "Authentication"
 
 ## Vital Sign-In Token
 
-Each Vital Sign-In Token is a short-live token which authorizes a Vital Mobile SDK instance to sign in as a specific user.
+In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with Vital Mobile SDK
+as an individual user in your Team. The app installation would be granted only Vital API access
+scoped to that specific user.
+
+Instead of hardcoding a [Vital API Key](#vital-api-keys), your app would request your own backend to generate
+a **Vital Sign-In Token** for the user, through your own API authentication and authorization system.
+
+In this model, your Vital API Keys are kept strictly as a server-side secret.
 
 <CardGroup cols={2}>
   <Card title="Persistence" icon="hand-wave">
-    The user session is persistent on the device once signed in, until you reset the SDK, your app is uninstalled, or you have deleted the user through the Vital API.
+    The signed-in user is persistent across app relaunch and device reboots.
   </Card>
   <Card title="Access Scope" icon="lock">
     Only user-level resources of the signed-in user can be accessed.
   </Card>
 </CardGroup>
 
-<Warning>With Vital Sign-In Tokens, your Vital API Keys can be kept strictly as server-side secrets.</Warning>
-
 ### General Expectations
 
-The Vital Mobile SDK user session lifecycle should match your app's user session lifecycle:
+You would sign-in and sign-out of the Vital Mobile SDK as an integral part of your app user lifecycle:
 
-1. When your app has signed in the app user, it should sign-in with the Vital Mobile SDK.
+1. When the user signs in to your app, you would request the Vital Sign-In Token from your backend, and then sign in with the Vital Mobile SDK.
 
-2. When your app user is signing out from your app, it should instruct the Vital Mobile SDK to sign-out as well.
+2. When the user signs out from your app, you would also sign out from the Vital Mobile SDK.
 
-Vital Mobile SDK keeps a persistent user session on the device. This means your app only needs to sign in the user once,
-by requesting a Vital Sign-In Token through your backend.
+Generally speaking, you sign in a user only once with the Vital Mobile SDK. This is because Vital Mobile SDK
+persists the signed-in user — as well as any settings and sync state — across app relaunches and device reboot. 
+
+Having said that, you might want to reconcile the Vital SDK sign-in state with your app's own user state as well.
+For example, you can do this during app launch. You can do this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) inspection methods.
+
+If you are integrating Vital into your existing production app, such reconcilation process would also act as a one-off migration to
+setup the Vital SDK for your users upgrading from an older app release.
 
 <Info>
-Avoid signing in and out every time your app relaunches.
-Avoid requesting Vital Sign-In Token every time your app relaunches.
+It is unnecessary to request and sign-in Vital Sign-In Token every time your app launches.
+You only need to sign-in a user once.
 </Info>
 
-### API flow example
+<Warning>
+Do not sign in and sign out every time your app relaunches.
+</Warning>
+
+### Case Study: A typical Backend - Mobile App flow
 
 <Steps>
-  <Step title="Your app -> Your backend">
-    Your app starts by authenticating with your backend. There are many ways to go about this process, either your own email/password method, or some OAuth Social login (e.g. Facebook, Apple, etc). Once your backend successfully authenticates your app, you should make a second request to authenticate the app's user against Vital - this will in turn allow you to configure the SDK. 
+  <Step title="Your app -> Your identity provider">
+    ```mermaid
+    sequenceDiagram
+        participant Your App
+        actor Your Identity Provider
+        autonumber
+        Your App->>Your Identity Provider: User authentication
+        Your Identity Provider-->>Your App: Token Secret for authenticating to your Backend API
+    ```
+
+    Your end user signs in with your Identity Provider — a separate IdP, or your own API acting as one — through password authentication,
+    Social Login, Single Sign-On (SSO) or any other authentication methods.
+
   </Step>
-  <Step title="Your backend <-> Vital API">
-    Your backend service receives and validates the request. It then calls the Vital [Create Sign-In Token API](/api-reference/user/create-sign-in-token) using your server-side Vital API Key secret.
+  <Step title="Your app -> Your backend API">
+    ```mermaid
+    sequenceDiagram
+        participant Your App
+        actor Your Backend
+        autonumber
+        Your App->>Your Backend: Request the user profile
+        Your Backend-->>Your App: User profile
+        Your App->>Your Backend: Request a Vital Sign-In Token for the user
+    ```
+
+    Once your user has successfully authenticated, your app is issued with token secrets for accessing your backend API.
+    Your app stores these token secrets securely.
+    
+    It then makes some API requests to your backend API, in order to gather all information required to setup your app
+    into an authenticated state.
+
+    Among these API requests, one would be requesting your backend API to issue a Vital Sign-In Token for your authenticated user.
+  </Step>
+  <Step title="Your backend service <-> Vital API">
+    ```mermaid
+    sequenceDiagram
+        actor Your Backend
+        actor Vital API
+        autonumber
+        Your Backend->>Vital API: Token Request via API Key
+        Vital API-->>Your Backend: Issued a Vital Sign-In Token
+    ```
+
+    Your backend API receives and validates the token issuance request. Once validated, your backend service uses the
+    Vital API Key — kept as a server-side secret — to fuilfill the request:
+    
+    * Look up the Vital User associated with this authenticated user;
+
+    * If one does not yet exist, call the [Create User](/api-reference/user/create-user) endpoint to create a Vital User; and
+
+    * Call the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint to obtain a Vital Sign-In Token for
+      this Vital user.
 
     ```bash
     curl --request POST
@@ -49,7 +111,7 @@ Avoid requesting Vital Sign-In Token every time your app relaunches.
       --header 'X-Vital-API-Key: <YOUR-API-KEY>'
     ```
 
-    You then send the response back to your app:
+    Your backend API then responds to your app with the obtained Vital Sign-In Token:
 
     ```json
     {
@@ -58,8 +120,21 @@ Avoid requesting Vital Sign-In Token every time your app relaunches.
     }
     ```
   </Step>
-  <Step title="Your backend -> Your app">
-    Your app receives the API response and Vital's `sign_in_token`. Finally, it signs in with the Vital Mobile SDK using the `signIn` method:
+  <Step title="Your backend API -> Your app">
+    ```mermaid
+    sequenceDiagram
+        participant Your App
+        participant Vital Mobile SDK
+        actor Your Backend
+        autonumber
+        Your Backend-->>Your App: The Vital Sign-In Token
+        Your App->>Vital Mobile SDK: Sign in with Vital Sign-In Token
+    ```
+
+    Your app receives a response from your backend API, which includes the Vital Sign-In Token for the authenticated
+    user.
+    
+    Your app then calls the Vital Mobile SDK `signIn` method with the Vital Sign-In Token:
 
     <CodeGroup>
       ```swift Native iOS
@@ -131,7 +206,8 @@ Avoid requesting Vital Sign-In Token every time your app relaunches.
 
   </Step>
   <Step title="Voila!">
-    The Vital Mobile SDK is good to go!
+    The Vital Mobile SDK is now signed-in with the Vital User associated with your authenticated user.
+    You can now proceed to use all the Vital SDK features.
   </Step>
 </Steps>
 
@@ -142,7 +218,7 @@ Avoid requesting Vital Sign-In Token every time your app relaunches.
 API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
 API Key support is intended only for customer early evaluation in Sandbox.
 
-Use [Vital Sign-In Token](#vital-sign-in-tokens) whenever possible.
+Use [Vital Sign-In Token](#vital-sign-in-token) whenever possible.
 </Warning>
 
 Vital Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
