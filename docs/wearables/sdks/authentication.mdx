@@ -10,7 +10,7 @@ as an individual user in your Team. The app installation would be granted only V
 scoped to that specific user.
 
 Instead of hardcoding a [Vital API Key](#vital-api-keys), your app would request your own backend to generate
-a **Vital Sign-In Token** for the user, through your own API authentication and authorization system.
+a **Vital Sign-In Token** for the user, through your own API authentication and authorization systems.
 
 In this model, your Vital API Keys are kept strictly as a server-side secret.
 
@@ -23,31 +23,90 @@ In this model, your Vital API Keys are kept strictly as a server-side secret.
   </Card>
 </CardGroup>
 
-### General Expectations
+### Overview
 
-You would sign-in and sign-out of the Vital Mobile SDK as an integral part of your app user lifecycle:
+<AccordionGroup>
+
+<Accordion title="Sign in once" icon="right-to-bracket" iconType="sharp-solid" defaultOpen>
+
+In typical circumstances, within each app installation, you would sign in your authenticated user only once
+with the Vital Mobile SDK. You would do so as part of your app's user lifecycle.
+
+There are some known circumstances where you would have to sign in the user again:
+
+* You have signed out your user in response to your app's user lifecycle changes; or
+* The Vital SDK sign-in state is out of sync with your app's user lifecycle; or
+* The SDK automatically signed out, because it had detected the deletion of the Vital User (through refresh token flow failure).
+
+<Note>
+It is unnecessary to request and sign-in with the Vital Sign-In Token every time your app launches.
+</Note>
+
+</Accordion>
+
+<Accordion title="Integrating into your app's user lifecycle" icon="arrows-spin" iconType="sharp-solid" defaultOpen>
+
+You should sign-in and sign-out of the Vital Mobile SDK as an integral part of your app's user lifecycle:
 
 1. When the user signs in to your app, you would request the Vital Sign-In Token from your backend, and then sign in with the Vital Mobile SDK.
 
 2. When the user signs out from your app, you would also sign out from the Vital Mobile SDK.
 
-Generally speaking, you sign in a user only once with the Vital Mobile SDK. This is because Vital Mobile SDK
-persists the signed-in user — as well as any settings and sync state — across app relaunches and device reboot. 
+Vital Mobile SDK persists the signed-in Vital User — as well as any settings and sync state — across app relaunches and device reboot. 
 
-Having said that, you might want to reconcile the Vital SDK sign-in state with your app's own user state as well.
-For example, you can do this during app launch. You can do this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) inspection methods.
+</Accordion>
 
-If you are integrating Vital into your existing production app, such reconcilation process would also act as a one-off migration to
-setup the Vital SDK for your users upgrading from an older app release.
+<Accordion title="A recommendation to perform regular reconciliation" icon="merge" iconType="sharp-solid" defaultOpen>
 
-<Info>
-It is unnecessary to request and sign-in Vital Sign-In Token every time your app launches.
-You only need to sign-in a user once.
-</Info>
+We recommend regularly reconciling the state of the Vital Mobile SDK and your app's user lifecycle. This is because:
+
+1. The SDK sign-in process involves remote API calls, which can fail due to Internet connectivity;
+
+2. The Vital SDK sign-in state could be out of sync with your app's user lifecycle, depending on how you
+   architect the integration; and
+
+3. If you are integrating Vital Mobile SDK into an existing production app, this reconciliation can serve
+   as a one-off migration for app installations upgrading from an older version of your app.
+
+You can achieve this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) API in three steps:
+
+1. Query the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) Status and the Current User ID; 
+2. Compare these against your app's user state; and
+3. Only if a discrepancy is detected, perform a Vital SDK sign-in or sign-out in accordance to the discrepancy.
+
+You would typically schedule this as an asynchronous task that spawns when your application process launches.
 
 <Warning>
-Do not sign in and sign out every time your app relaunches.
+Do not sign in and sign out every time your application process launches.
 </Warning>
+
+</Accordion>
+
+
+<Accordion title="Technical details" icon="circle-info" iconType="sharp-solid" defaultOpen>
+
+**Vital Sign-In Token** is a short-lived bearer token issued for a specific Vital User.
+Vital Mobile SDK uses it to sign in with Vital's Identity Provider as the Vital User represented by the
+token.
+
+Each app installation can only have one active signed-in Vital User.
+
+Internally, the Vital Mobile SDK:
+
+1. **exchanges** the short-lived Vital Sign-In Token for a permanent sign-in, which is in the form of
+  an OAuth 2.0 access token and an OAuth 2.0 refresh token.
+2. discards the Vital Sign-In Token upon a successful exchange.
+3. stores these token secrets securely in the device persistent storage.
+4. calls the Vital API using the OAuth 2.0 access token.
+5. transparently manages the OAuth 2.0 refresh token flow to keep the access token fresh and valid.
+
+This is why the documentation emphasizes the "sign in once" expectation. The SDK does not rely on
+the Vital Sign-In Token for day-to-day operation and API calls. It only needs this artifact once upfront
+to exchange for the token secrets it needs.
+
+</Accordion>
+
+</AccordionGroup>
 
 ### Case Study: A typical Backend - Mobile App flow
 
@@ -95,8 +154,7 @@ Do not sign in and sign out every time your app relaunches.
         Vital API-->>Your Backend: Issued a Vital Sign-In Token
     ```
 
-    Your backend API receives and validates the token issuance request. Once validated, your backend service uses the
-    Vital API Key — kept as a server-side secret — to fuilfill the request:
+    Your backend API receives and validates the token issuance request. Once validated, your backend service:
     
     * Look up the Vital User associated with this authenticated user;
 
@@ -104,6 +162,11 @@ Do not sign in and sign out every time your app relaunches.
 
     * Call the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint to obtain a Vital Sign-In Token for
       this Vital user.
+
+    <Note>
+    Only this step would use a [Vital API Key](/api-details/authentication). Because this step happens in your
+    backend service, this enables you to keep the Vital API Key strictly as a server-side secret.
+    </Note>
 
     ```bash
     curl --request POST
