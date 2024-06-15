@@ -36,7 +36,7 @@ There are some known circumstances where you would have to sign in the user agai
 
 * You have signed out your user in response to your app's user lifecycle changes; or
 * The Vital SDK sign-in state is out of sync with your app's user lifecycle; or
-* The SDK automatically signed out, because it had detected the deletion of the Vital User (through refresh token flow failure).
+* The SDK automatically signed out, because it had detected the deletion of the Vital User.
 
 <Note>
 It is unnecessary to request and sign-in with the Vital Sign-In Token every time your app launches.
@@ -62,8 +62,8 @@ We recommend regularly reconciling the state of the Vital Mobile SDK and your ap
 
 1. The SDK sign-in process involves remote API calls, which can fail due to Internet connectivity;
 
-2. The Vital SDK sign-in state could be out of sync with your app's user lifecycle, depending on how you
-   architect the integration; and
+2. Unknown edge cases in your integration of Vital Core SDK into your app's user lifecycle may result in
+   the state being out of sync; and
 
 3. If you are integrating Vital Mobile SDK into an existing production app, this reconciliation can serve
    as a one-off migration for app installations upgrading from an older version of your app.
