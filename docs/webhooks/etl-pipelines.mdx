@@ -33,6 +33,7 @@ The following destinations are supported:
 | ---- | ---- | ----- |
 | RabbitMQ | Password | Depends on your RabbitMQ broker configuration. |
 | Google Cloud Pub/Sub | IAM | [Pub/Sub Message Ordering](https://cloud.google.com/pubsub/docs/ordering) is supported. |
+| Azure Event Hub | [SAS Key](https://learn.microsoft.com/en-gb/azure/service-bus-messaging/service-bus-sas) | Depends on your Azure Event Hub configuration. |
 
 For evaluation and zero downtime transition, Vital supports double writing both to your Svix webhook endpoints,
 and to the message queue source of your ETL pipelines.
@@ -53,6 +54,7 @@ Each message would be published by Vital message queue with the following attrib
 | Attribute | event_type | Vital event type, e.g., daily.data.activity.created |
 | Attribute | blob_type | json : UTF8 JSON document |
 | Attribute | blob_codec | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
+| Attribute | idempotency_key | Unique key that allows detection of subsequent retries of the same request |
 | Data | - | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
 | Ordering Key | - | Vital User ID (If you have enabled Message Ordering) |
 
@@ -141,3 +143,33 @@ When you have completed the setup, please provide Vital the following informatio
 
 - An `ampqs://` connection string with username and password embedded
 - Whether or not you want larger blobs (≥ 1KiB) to be gzipped.
+
+## Azure Event Hub
+
+### Message Structure
+
+Each message would be published by Vital message queue with the following attributes:
+
+| Type | Key | Value |
+| --- | --- | --- |
+| Attribute | event_type | Vital event type, e.g., daily.data.activity.created |
+| Attribute | blob_type | json: UTF8 JSON document |
+| Attribute | blob_codec | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
+| Attribute | idempotency_key | Unique key that allows detection of subsequent retries of the same request |
+| Data | - | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
+| Partition Key | - | Vital User ID |
+
+<Info>Payload smaller than 1KiB would not be compressed.</Info>
+
+<Info>
+At this time, Vital message queue publishes exclusively JSON blobs (`blob_type == json`).
+
+Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `Content-Type` and `Content-Encoding`.
+</Info>
+
+### Information needed by Vital
+
+When you have completed the setup, please provide Vital the following information:
+
+- A [connection string](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string) of the following format:  `Endpoint=sb://<NamespaceName>.servicebus.windows.net/;SharedAccessKeyName=<KeyName>;SharedAccessKey=<KeyValue>`
+- Name of your event hub
