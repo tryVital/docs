@@ -2,9 +2,26 @@
 title: "Resources"
 ---
 
-## Intro
+## Overview
 
-At Vital, a resource represents a set of fields. Each resource is an abstraction for the different categories of data available for each provider. We currently support two kinds of resources: summary and timeseries. Summary resources are made up of many fields. While timeseries represent the values of a single field over time.
+There are two broad resource categories provided by Vital:
+
+* A **Summary** type is a summarization of a specific calendar day or a session.
+* A **Timeseries** type is a time-ordered collection of data samples.
+
+There is no relation in resource availability among these two categories. Some providers do offer both,
+while some providers offer only one category. For example:
+
+* Fitbit provides daily activity summaries, as well as **some** high-frequency activity timeseries data.
+* Oura provides only daily activity summary, without any complementary high-frequency activity timeseries data.
+
+There is also no strict relation between a field in a _Summary_ type and a _Timeseries_ type.
+For example:
+
+* The existence of a `sleep_efficiency` summary field does not imply that there is a corresponding `sleep_efficiency` timeseries.
+* The existence of a Glucose Timeseries type does not imply that there is a corresponding `glucose` summary field.
+* A _Timeseries_ type could derive multiple summary fields, e.g., heart rate statistics and HR zones.
+
 
 ### Summary types
 
