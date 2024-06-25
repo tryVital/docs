@@ -56,13 +56,21 @@ documentation below on how to detect a compressed blob versus an uncompressed bl
 Vital establish connections to your ETL Pipeline destination through a static pool of IPs. Contact Vital support to
 obtain the up-to-date static IP list.
 
-### Double writing during transition
+### Double writing for migration
 
 To ensure smooth switchover from Webhooks to your new ETL Pipelines destination, Vital supports double writing events
 to the combination of:
 
 * all your Webhook endpoints; and
 * your ETL Pipelines destination.
+
+<Info>
+This is not a proper fan-out feature, and is only intended to aid customers evaluating and one-off migrating
+between destinations.
+
+There can only be one _preferred_ destination, and the secondary destination(s) do not enjoy the same reliability
+guarantee as the _preferred_ one.
+</Note>
 
 ### Pushed Historical Data
 
