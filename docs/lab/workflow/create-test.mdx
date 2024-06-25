@@ -1,15 +1,12 @@
 ---
-title: "Creating a Lab Test (Beta)"
+title: "Creating a Lab Test"
 ---
 
 Vital provides a way to create your own lab tests. These are made up of:
 
-1. One or more marker IDs.
+1. One or more marker IDs or Provider IDs.
 2. The lab ID.
 3. The collection method: `testkit`, `walk_in_test`, or `at_home_phlebotomy`.
-4. The sample type: `dried_blood_spot`, `saliva`, `urine` or `serum`.
-
-The latter are directly related to the labs. Meaning you can only pick types the chosen lab supports.
 
 Once a Lab Test is created and approved, you can use it when making a order.
 
@@ -32,7 +29,6 @@ To begin, make a request to our [`GET /v3/lab_tests/labs`](/api-reference/lab-te
     "city": "San Francisco",
     "zipcode": "91789",
     "collection_methods": ["testkit", "at_home_phlebomoty"],
-    "sample_types": ["saliva", "serum"]
   }
 ]
 ```
@@ -85,10 +81,13 @@ data = client.LabTests.create_test(
   description="Example test",
   lab_id=1,
   method="at_home_phlebomoty",
-  sample_type="serum",
-  markers=[1, 2],
+  provider_ids=["006056", "070085"] # or use the marker ids e.g marker_ids=[1, 2],
 )
 ```
+
+<Note>
+It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared accross environments. Not all labs provide these, so in their bbsence, use the marker id.
+</Note>
 
 Once your lab test creation is successful you will receive the following response:
 
