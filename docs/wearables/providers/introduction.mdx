@@ -142,41 +142,34 @@ For more information on Apple HealthKit and Android Health Connect, please refer
 * [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
 
 
-## Historical Days Retrieved
+## Historical Data Pull Range
 
-When a new provider is connected to a user, Vital retrieves the historical data for this user from the connected provider. The following number of historical days of data are retrieved for each provider:
+Vital fetches the historical data immediately when the connection is established. The pull range
+can be estimated by `[now - days_to_pull, now]`. 
 
-| Provider                                                                     | Historic Days |
-| ---------------------------------------------------------------------------- | ------------- |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/)                         | `90`          |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                              | `90`          |
-| [Garmin](https://www.garmin.com)                                             | `90`          |
-| [Google Fit](https://www.google.com/fit/)                                    | `90`          |
-| [Oura](https://ouraring.com)                                                 | `180`         |
-| [Peloton](https://www.onepeloton.com)                                        | `180`         |
-| [Renpho](https://renpho.com)                                                 | `180`         |
-| [Strava](https://www.strava.com)                                             | `14`          |
-| [Wahoo](https://wahoofitness.com)                                            | `180`         |
-| [Whoop](https://www.whoop.com)                                               | `180`         |
-| [Zwift](https://zwift.com)                                                   | `270`         |
-| [Withings](https://www.withings.com)                                         | `90`          |
-| [iHealth](https://ihealthlabs.com)                                           | `7`           |
-| [8Sleep](https://www.eightsleep.com)                                         | `90`          |
-| [Omron](https://www.omron-healthcare.com) (SDK)                              | `90`          |
-| [Contour](https://www.diabetes.ascensia.com) (SDK)                           | `90`          |
-| [Accu-Chek](https://www.accu-chek.com) (SDK)                                 | `90`          |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)                | 30, Configurable          |
-| [Android Health Connect](https://developer.android.com/health-connect) (SDK) | 30, Configurable          |
-| [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (SDK)         | `90`          |
-| [Braun Healthcare](https://www.braunhealthcare.com)                          | `90`          |
-| [Hammerhead](https://www.hammerhead.io)                                      | `30`          |
-| [Dexcom](https://www.dexcom.com)                                             | `30`          |
-| [Dexcom (G6 And Older)](https://www.dexcom.com)                              | `1`           |
-| [MyFitnessPal](https://www.myfitnesspal.com)                                 | `14`          |
-| [Polar](https://www.polar.com/accesslink-api/#polar-accesslink-api)          | `28`\*        |
-| [Cronometer](https://www.cronometer.com)                                     | `28`          |
-
-\* Polar only supports historical backfill for Sleep and Sleep Stream resources.
+| Provider                                                                     | Default      | Configurable | Remarks |
+| ---------------------------------------------------------------------------- | ------------ | ------------ | ------- |
+| [Abbott LibreView](https://www.libreview.com)                                | 90 days      | ❌           | - |
+| [Fitbit](https://www.fitbit.com/global/uk/home)                              | 90 days      | ⚠️            | Activity and heartrate timeseries data are fixed to 14 days. |
+| [Garmin](https://www.garmin.com)                                             | 90 days      | ✅           | - |
+| [Google Fit](https://www.google.com/fit/)                                    | 90 days      | ✅           | - |
+| [Oura](https://ouraring.com)                                                 | 180 days     | ✅           | - |
+| [Peloton](https://www.onepeloton.com)                                        | 180 days     | ✅           | - |
+| [Renpho](https://renpho.com)                                                 | 180 days     | ✅           | - |
+| [Strava](https://www.strava.com)                                             | 14 days      | ✅           | - |
+| [Wahoo](https://wahoofitness.com)                                            | 180 days     | ✅           | - |
+| [Whoop](https://www.whoop.com)                                               | 180 days     | ✅           | - |
+| [Zwift](https://zwift.com)                                                   | 270 days     | ✅           | - |
+| [Withings](https://www.withings.com)                                         | 90 days      | ✅           | - |
+| [8Sleep](https://www.eightsleep.com)                                         | 90 days      | ✅           | - |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/) (SDK)                | 30 days      | ✅           | - |
+| [Android Health Connect](https://developer.android.com/health-connect) (SDK) | 30 days      | ❌           | Google restricts access to historical data to [30 days before the first successful permission request](https://developer.android.com/health-and-fitness/guides/health-connect/develop/frequently-asked-questions#time-range). |
+| [Hammerhead](https://www.hammerhead.io)                                      | 30 days      | ✅           | - |
+| [Dexcom](https://www.dexcom.com)                                             | 30 days      | ✅           | - |
+| [Dexcom (G6 And Older)](https://www.dexcom.com)                              | 1 day        | ❌           | - |
+| [MyFitnessPal](https://www.myfitnesspal.com)                                 | 14 days      | ✅           | - |
+| [Polar](https://www.polar.com/accesslink-api/#polar-accesslink-api)          | 28 days      | ❌           | Polar only supports historical backfill for Sleep and Sleep Stream resources. |
+| [Cronometer](https://www.cronometer.com)                                     | 28 days      | ✅           | - |
 
 <Info>
 
