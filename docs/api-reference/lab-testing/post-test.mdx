@@ -19,11 +19,10 @@ client = Vital(
 )
 
 data = client.lab_tests.create(
-    marker_ids=[160], 
+    provider_ids=["000110"], 
     lab_id=123, 
     name="<name>", 
     method=LabTestCollectionMethod.TESTKIT, 
-    sample_type=LabTestSampleType.DRIED_BLOOD_SPOT, 
     description="<description>"
 )
 ```
@@ -38,11 +37,10 @@ const client = new VitalClient({
 });
 
 const request: CreateLabTestRequest = {
-    markerIds: [160],
+    providerIds: ["000110"],
     labId: 123,
     name: '<name>',
     method: LabTestCollectionMethod.Testkit,
-    sampleType: LabTestSampleType.DriedBloodSpot,
     description: '<description>',
 }
 
@@ -67,9 +65,8 @@ CreateLabTestRequest request = CreateLabTestRequest
         .labId(123)
         .name("<name>")
         .method(LabTestCollectionMethod.TESTKIT)
-        .sampleType(LabTestSampleType.DRIED_BLOOD_SPOT)
         .description("<description")
-        .markerIds(List.of(160))
+        .providerIds(List.of("001100"))
         .build();
 
 var data = vital.labTests().create(request);
@@ -89,11 +86,10 @@ client := vitalclient.NewClient(
 )
 
 request := &vital.CreateLabTestRequest{
-  MarkerIds:   []int{160},
+  ProviderIds:   []int{"001100"},
   LabId:       123,
   Name:        "<name>",
   Method:      vital.LabTestCollectionMethodTestkit,
-  SampleType:  vital.LabTestSampleTypeDriedBloodSpot,
   Description: "<description>",
 }
 
