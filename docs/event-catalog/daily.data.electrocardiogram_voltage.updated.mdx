@@ -65,13 +65,13 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true" deprecated>
+<ResponseField name="name" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true" deprecated>
+<ResponseField name="slug" type="string | null" deprecated>
 Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true" deprecated>
+<ResponseField name="logo" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
@@ -117,7 +117,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "6b62e178-4287-4c16-a902-aa842518e93b"
+    "user_id": "53bfbfe8-d87e-42a3-941e-788975579b3c"
   },
   "event_type": "daily.data.electrocardiogram_voltage.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

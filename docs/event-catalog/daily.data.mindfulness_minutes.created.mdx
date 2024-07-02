@@ -74,13 +74,13 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true" deprecated>
+<ResponseField name="name" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true" deprecated>
+<ResponseField name="slug" type="string | null" deprecated>
 Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true" deprecated>
+<ResponseField name="logo" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
@@ -109,7 +109,7 @@ URL for source logo
   "data": {
     "data": [
       {
-        "end": "2024-06-28T17:17:57.244422+00:00",
+        "end": "2024-07-02T15:30:19.035512+00:00",
         "start": "2023-02-13T14:57:24+00:00",
         "timezone_offset": null,
         "type": null,
@@ -127,7 +127,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "175b34e4-184b-495d-92c9-3a58f4ee35fc"
+    "user_id": "642a06b9-75e7-4377-a682-76143162c982"
   },
   "event_type": "daily.data.mindfulness_minutes.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

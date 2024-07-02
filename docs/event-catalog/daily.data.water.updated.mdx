@@ -68,13 +68,13 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true" deprecated>
+<ResponseField name="name" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true" deprecated>
+<ResponseField name="slug" type="string | null" deprecated>
 Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true" deprecated>
+<ResponseField name="logo" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
@@ -121,7 +121,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "75596c4c-ea1f-43c7-9ad5-9825b165d52c"
+    "user_id": "20b858ee-ad4b-400e-8608-05dbdf37243a"
   },
   "event_type": "daily.data.water.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

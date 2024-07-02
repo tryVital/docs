@@ -74,13 +74,13 @@ Any of:
 * string
 * null
 </ResponseField>
-<ResponseField name="name" type="string" required="true" deprecated>
+<ResponseField name="name" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="slug" type="string" required="true" deprecated>
+<ResponseField name="slug" type="string | null" deprecated>
 Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
 </ResponseField>
-<ResponseField name="logo" type="string" required="true" deprecated>
+<ResponseField name="logo" type="string | null" deprecated>
 Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
@@ -127,7 +127,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "4742161a-127a-4032-8f5b-d51983191e65"
+    "user_id": "ff873f8f-7d64-41ff-9d8c-5298794294e0"
   },
   "event_type": "daily.data.distance.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
