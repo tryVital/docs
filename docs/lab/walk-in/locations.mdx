@@ -1,0 +1,47 @@
+---
+title: "Patient Service Centers"
+---
+
+Verifying if a particular zip code is serviceable is an important step, as not all labs have patient service centers within a state or within a reasonable distance.
+
+The recommend high level flow for verifying PSC availability at Vital is:
+
+- Fetch PSC location data via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint, the response payload should look like this:
+
+```json
+{
+  "zip_code": "85004",
+  "central_labs": {
+    "labcorp": {
+        "within_radius": 5, # number of PSC's within radius of provided zip code
+        "radius": "25" # miles
+    }
+  }
+  ...
+}
+```
+
+If specific data regarding the PSC's is required, then you can also query the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) for specific information on the PSC's within the radius of the provided zip code.
+
+```json
+{
+  "lab_id": 27,
+  "slug": "labcorp",
+  "patient_service_centers": [
+    {
+      "metadata": {
+        "name": "LABCORP",
+        "state": "AZ",
+        "city": "Phoenix",
+        "zip_code": "85006",
+        "address": "1300 N 12th St",
+        "unit": "Ste 300",
+        "phone_number": "480-878-3988",
+        "fax_number": "844-346-5903",
+        "hours": null
+      },
+      "distance": "25",
+    },
+  ]
+}
+```
