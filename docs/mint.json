@@ -224,7 +224,8 @@
         "lab/walk-in/overview",
         "lab/walk-in/order-lifecycle",
         "lab/walk-in/webhooks",
-        "lab/walk-in/communications"
+        "lab/walk-in/communications",
+        "lab/walk-in/locations"
       ]
     },
     {
@@ -307,7 +308,9 @@
         {
           "group": "Area Info",
           "pages": [
-            "api-reference/lab-testing/area-info"
+            "api-reference/lab-testing/area-info",
+            "api-reference/lab-testing/psc-info",
+            "api-reference/lab-testing/order-psc-info"
           ]
         },
         {
