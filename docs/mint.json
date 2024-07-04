@@ -197,11 +197,11 @@
         "lab/workflow/lab-test-lifecycle",
         "lab/workflow/order-requirements",
         "lab/workflow/scheduled-orders",
-        "lab/workflow/tracking-progress",
         "lab/workflow/cancelling-an-order",
         "lab/workflow/create-test",
         "lab/workflow/order-registrable-testkit",
-        "lab/workflow/aoe"
+        "lab/workflow/aoe",
+        "lab/workflow/partials"
       ]
     },
     {
