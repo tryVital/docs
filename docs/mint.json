@@ -502,6 +502,14 @@
           ]
         },
         {
+          "group": "Team Data Pull Preferences",
+          "pages": [
+            "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
+            "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
+            "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
+          ]
+        },
+        {
           "group": "Team ETL Pipeline",
           "pages": [
             "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",

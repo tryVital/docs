@@ -1,0 +1,79 @@
+---
+openapi: get /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
+title: Get Team Data Pull Preferences
+---
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team_data_pull_preferences/{env}/{region} \
+  --header 'X-Vital-Org-Key: <api-key>'
+```
+</RequestExample>
+
+## Overview
+
+See your team's data pull preferences for each provider.
+The endpoint will return the default vital settings if no custom preferences are set.
+
+## Response Structure
+
+<ResponseField name="data_pull_preferences" type="object[]" required>
+  An array containing team data pull preferences.
+
+  <Expandable defaultOpen>
+    <ResponseField name="team_id" type="string" required>
+      The unique identifier of the team.
+    </ResponseField>
+
+    <ResponseField name="providers" type="Map<string, object>" required>
+      A map where each key-value pair describes the historical pull preferences of a specific provider.
+
+      <Expandable defaultOpen>
+        <ResponseField name="{PROVIDER_SLUG}" type="object" required>
+            The historical pull preferences of a specific provider, keyed by the provider slug.
+
+            <ResponseField name="default" type="object" required>
+                The default historical pull preferences for this provider.
+
+                <Expandable defaultOpen>
+                    <ResponseField name="historical_days_to_pull" type="number">
+                        The default number of days to pull historical data.
+                    </ResponseField>
+
+                    <ResponseField name="historical_days_to_pull_limit" type="number">
+                        The maximum supported number of days to pull historical data.
+                    </ResponseField>
+                </Expandable>
+            </ResponseField>
+
+            <ResponseField name="resource_overrides" type="Map<string, object>">
+                A map where each key-value pair describes the historical pull preferences of a specific resource.
+                These will override the default preferences.
+
+                <ResponseField name="{RESOURCE}" type="object" required>
+                    The historical pull preferences of a resource with this provider, keyed by the resource type.
+
+                    <Expandable defaultOpen>
+                        <ResponseField name="historical_days_to_pull" type="number">
+                            The number of days to pull historical data for this resource.
+                        </ResponseField>
+
+                        <ResponseField name="historical_days_to_pull_limit" type="number">
+                            The maximum supported number of days to pull historical data for this resource.
+                        </ResponseField>
+                    </Expandable>
+                </ResponseField>
+            </ResponseField>
+        </ResponseField>
+      </Expandable>
+    </ResponseField>
+  </Expandable>
+  <ResponseField name="next_cursor" type="string">
+    The cursor to fetch the next page of data.
+  </ResponseField>
+</ResponseField>
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
