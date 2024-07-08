@@ -1,13 +1,11 @@
 ---
-title: "Launching link"
+title: "Launching Link"
 ---
 
-Vital Link can easily be integrated into your applications via our Python and React libraries,
-which you can use with your credentials to get started today.
+<Steps>
 
-### Vital Link Walkthrough
-
-1. Once you have a `user_id`, you can use this to generate a link token.
+<Step number="1" title="Your Backend">
+Create a Vital Link Token for a user using the [Create Link Token](/api-reference/link/generate-link-token) endpoint.
 
 <Note>
 
@@ -107,12 +105,45 @@ curl --request POST \
 ```
 
 </SnippetGroup>
+<br />
+</Step>
 
-2. Use the link token to [launch the link
-   widget](/wearables/vital-link/link_flow) on your
-   frontend. This will launch link widget straight into the login flow for the
-   provider.
+<Step number="2" title="Your Frontend">
+Use the Link Token to [launch the Link Widget](/wearables/vital-link/link_flow) on your frontend.
 
+<img src="/img/link_specific.png" width={"60%"} />{" "}
+
+<AccordionGroup>
+
+<Accordion title="Option 1: Opening the Link Widget by URL" icon="link" iconType="sharp-solid" defaultOpen>
+
+You can launch the Vital Link Widget by its URL:
+
+* If you have created the Link Token for a specific OAuth provider, Vital Link will dispatch
+the user automatically to the provider's sign-in page.
+
+* Otherwise, your user will be presented with a list of providers to connect to. You can
+  customize the list via the `filter_on_providers` parameter when creating the Link Token.
+
+| Environment | URL format |
+| ----------- | ---------- |
+| Sandbox US  | `https://link.tryvital.io/?token={LINK_TOKEN}&env=sandbox&region=us` |
+| Sandbox EU  | `https://link.tryvital.io/?token={LINK_TOKEN}&env=sandbox&region=eu` |
+| Production US  | `https://link.tryvital.io/?token={LINK_TOKEN}&env=production&region=us` |
+| Production EU  | `https://link.tryvital.io/?token={LINK_TOKEN}&env=production&region=eu` |
+
+
+When the Link flow completes, the flow will redirect to the `redirect_url` you specified earlier
+when creating the Link Token. We will also append query parameters to the redirection target
+based on the Link flow outcome:
+
+| Flow state | Query parameters |
+| ---------- | ---------------- |
+| Success    | `state=success`  |
+| Error      | See [Link Errors](https://docs.tryvital.io/wearables/connecting-providers/errors). |
+
+</Accordion>
+<Accordion title="Option 2: Using the `useVitalLink` React hook (`@tryvital/vital-link`)" icon="react" iconType="sharp-solid">
 ```js Launching Vital-Link
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
@@ -175,7 +206,8 @@ const App = props => {
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
+</Accordion>
+</AccordionGroup>
+</Step>
 
-3. This will launch the Vital Link widget, where your user can connect their account to Vital.
-
-<img src="/img/link_specific.png" width={"60%"} />{" "}
+</Steps>
