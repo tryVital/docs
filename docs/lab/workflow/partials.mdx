@@ -3,7 +3,7 @@ title: "Partial Result Notifications"
 ---
 
 Orders may have partial results, meaning that the lab has made available part of the result, while the full result is not complete. In general, these are short lived and as such, Vital does not expose them via webhooks.
-Some orders however have long lived partial results, specifically when one ordered marker takes significantly longer to result then the others. 
+Some orders however have long lived partial results, specifically when one ordered marker takes significantly longer to result than the others. 
 
 In these situations, clients may want to be notified of the existance of partial results. As such, Vital provides a team level configuration that enables the delivery of partial result webhooks. Similarly to other events, these are triggered via a `labtest.order.updated` event in the system.
 
@@ -41,7 +41,7 @@ For example, in the second partial result, you would receive a webhook with the 
   "notes": "This is a note",
   "created_at": "2020-01-01T00:00:00Z",
   "updated_at": "2020-01-01T00:00:00Z",
-  "status": "partial_results",
+  "status": "sample_with_lab",
   "events": [
     {
       "id": 1,
@@ -61,7 +61,7 @@ For example, in the second partial result, you would receive a webhook with the 
     {
       "id": 4,
       "created_at": "2022-01-04T00:00:00Z",
-      "status": "completed.walk_in_test.partial_results"
+      "status": "sample_with_lab.walk_in_test.partial_results"
     }
   ]
 }
