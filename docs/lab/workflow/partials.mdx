@@ -1,22 +1,17 @@
 ---
-title: "Webhooks"
+title: "Partial Result Notifications"
 ---
 
-The following webhook events are of interest, when placing a Walk-in order. Those are
-described in detail in the following sections.
+Orders may have partial results, meaning that the lab has made available part of the result, while the full result is not complete. In general, these are short lived and as such, Vital does not expose them via webhooks.
+Some orders however have long lived partial results, specifically when one ordered marker takes significantly longer to result then the others. 
 
-## Order webhook events
+In these situations, clients may want to be notified of the existance of partial results. As such, Vital provides a team level configuration that enables the delivery of partial result webhooks. Similarly to other events, these are triggered via a `labtest.order.updated` event in the system.
 
-Based on the status present in [`Order Lifecycle`](/lab/walk-in/order-lifecycle),
-Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
-[`labtest.order.updated`](/event-catalog/labtest.order.updated).
+Orders can also experience multiple partials in their lifecycle. In these cases, Vital will send a webhook for each partial update. So if your order experiences two partial results before a final, complete result, you should expect to receive two `labtest.order.updated` webhooks with `partial` status.
 
-The `labtest.order.created` event is triggered when an order is created in the system,
-having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
+For example, in the second partial result, you would receive a webhook with the following body:
 
-<Note>The `partial_results` status does not trigger a Webhook unless specifically requested from Vital.</Note>
-
-The webhook payload body will have the following information if the Order is in the `completed` status:
+<Note>Note that the `events` block contains two `sample_with_lab.walk_in_test.partial_results` events.</Note>
 
 ```json Walk-in Order Updated
 {
@@ -46,7 +41,7 @@ The webhook payload body will have the following information if the Order is in 
   "notes": "This is a note",
   "created_at": "2020-01-01T00:00:00Z",
   "updated_at": "2020-01-01T00:00:00Z",
-  "status": "completed",
+  "status": "partial_results",
   "events": [
     {
       "id": 1,
@@ -66,7 +61,7 @@ The webhook payload body will have the following information if the Order is in 
     {
       "id": 4,
       "created_at": "2022-01-04T00:00:00Z",
-      "status": "completed.walk_in_test.completed"
+      "status": "completed.walk_in_test.partial_results"
     }
   ]
 }
