@@ -11,6 +11,22 @@ title: "Installation"
 | --------- | ----------- |
 | Minimum deployment target | iOS 14.0 |
 
+<Note>
+If you are integrating on React Native or Flutter, or integrating on Native iOS via CocoaPods,
+make sure you have updated the minimum iOS deployment target in:
+
+* your `Podfile`; and
+* your iOS App Target.
+
+```diff Podfile
+# e.g., React Native default
+-platform :ios, min_ios_version_supported
+
+# Set minimum deployment target to be iOS 14.0.
++platform :ios, '14.0'
+```
+</Note>
+
 ### Android
 <Info>Applies also to Flutter and React Native projects.</Info>
 
