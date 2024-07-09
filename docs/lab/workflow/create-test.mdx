@@ -5,7 +5,6 @@ title: "Creating a Lab Test"
 Vital provides a way to create your own lab tests. These are made up of:
 
 1. One or more marker IDs or Provider IDs.
-2. The lab ID.
 3. The collection method: `testkit`, `walk_in_test`, or `at_home_phlebotomy`.
 
 Once a Lab Test is created and approved, you can use it when making a order.
@@ -17,23 +16,7 @@ Once a Lab Test is created and approved, you can use it when making a order.
 
 ### Example
 
-To begin, make a request to our [`GET /v3/lab_tests/labs`](/api-reference/lab-testing/labs), to get all available labs.
-
-```json Get all available labs
-[
-  {
-    "id": 1,
-    "slug": "labcorp",
-    "name": "LabCorp",
-    "first_line_address": "123 Main St",
-    "city": "San Francisco",
-    "zipcode": "91789",
-    "collection_methods": ["testkit", "at_home_phlebomoty"],
-  }
-]
-```
-
-Once you've picked a lab, you can fetch all available markers. This is done via our [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers).
+To begin, make a request to our [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) endpoint, in order to choose the markers you want to test for.
 
 ```json Get all markers
 {
@@ -69,7 +52,7 @@ Once you've picked a lab, you can fetch all available markers. This is done via 
 
 With this information, you can create a lab test using [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test).
 
-As an example, let's say you wanted a test from `Labcorp`:
+As an example, let's say you wanted a test from `Labcorp`, with markers with provider ids `006056` and `070085`:
 
 ```python Create a new test
 from vital import Client
@@ -79,7 +62,6 @@ client = Client(api_key, "sandbox")
 data = client.LabTests.create_test(
   name="Example test",
   description="Example test",
-  lab_id=1,
   method="at_home_phlebomoty",
   provider_ids=["006056", "070085"] # or use the marker ids e.g marker_ids=[1, 2],
 )
