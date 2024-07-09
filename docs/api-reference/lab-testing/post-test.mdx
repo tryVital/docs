@@ -20,7 +20,6 @@ client = Vital(
 
 data = client.lab_tests.create(
     provider_ids=["000110"], 
-    lab_id=123, 
     name="<name>", 
     method=LabTestCollectionMethod.TESTKIT, 
     description="<description>"
@@ -38,7 +37,6 @@ const client = new VitalClient({
 
 const request: CreateLabTestRequest = {
     providerIds: ["000110"],
-    labId: 123,
     name: '<name>',
     method: LabTestCollectionMethod.Testkit,
     description: '<description>',
@@ -62,7 +60,6 @@ Vital vital = Vital.builder()
 
 CreateLabTestRequest request = CreateLabTestRequest
         .builder()
-        .labId(123)
         .name("<name>")
         .method(LabTestCollectionMethod.TESTKIT)
         .description("<description")
@@ -87,7 +84,6 @@ client := vitalclient.NewClient(
 
 request := &vital.CreateLabTestRequest{
   ProviderIds:   []int{"001100"},
-  LabId:       123,
   Name:        "<name>",
   Method:      vital.LabTestCollectionMethodTestkit,
   Description: "<description>",
