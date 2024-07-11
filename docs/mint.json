@@ -392,6 +392,12 @@
         {
           "group": "Body",
           "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
+        },
+        {
+          "group": "Menstrual Cycle",
+          "pages": [
+            "api-reference/menstrual-cycle/get-summary"
+          ]
         }
       ]
     },
@@ -582,6 +588,14 @@
             "event-catalog/daily.data.meal.created",
             "event-catalog/daily.data.meal.updated",
             "event-catalog/historical.data.meal.created"
+          ]
+        },
+        {
+          "group": "Menstrual Cycle",
+          "pages": [
+            "event-catalog/daily.data.menstrual_cycle.created",
+            "event-catalog/daily.data.menstrual_cycle.updated",
+            "event-catalog/historical.data.menstrual_cycle.created"
           ]
         },
         {
