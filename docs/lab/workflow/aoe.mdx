@@ -38,6 +38,7 @@ As an example, let's look at the `Lead, Blood (Adult)` marker. We have omitted s
       "code": "BLPURP",
       "type": "choice",
       "value": "BLOOD LEAD PURPOSE",
+      "constraint": null,
       "answers": [
         {
           "id": 1234567890252,
@@ -104,6 +105,7 @@ For example, marker `Leader, Blood (Adult)`, has the following data:
       "code": "BLPURP",
       "type": "choice",
       "value": "BLOOD LEAD PURPOSE",
+      "constraint": null,
       "answers": [
         {
           "id": 1234567890252,
@@ -147,6 +149,7 @@ e.g The question is as follows for marker of id `173`:
       "code": "BLPURP",
       "type": "choice",
       "value": "BLOOD LEAD PURPOSE",
+      "constraint": null,
       "answers": [
         {
           "id": 1234567890252,
@@ -188,6 +191,10 @@ The answer is:
 
 This case can encompass many responses, and depends on the question itself.
 
+<Note>
+In some instances, the `text` case contains a `constraint` field. This is a string tooltip indicator of the constraints applied by the lab on this particular question.
+</Note>
+
 e.g The question is as follows for marker of id `173`:
 ```json
 {
@@ -197,6 +204,7 @@ e.g The question is as follows for marker of id `173`:
       "id": 1234567890304,
       "code": "EDDATE",
       "type": "text",
+      "constraint": null,
       "value": "EDD/EDC DATE",
       "answers": [],
       "required": true,
@@ -232,6 +240,7 @@ e.g The question is as follows for marker of id `173`:
       "id": 1234567890240,
       "code": "COLVOL",
       "type": "numeric",
+      "constraint": null,
       "value": "URINE VOLUME (MILLILITERS)",
       "answers": [],
       "required": true,
