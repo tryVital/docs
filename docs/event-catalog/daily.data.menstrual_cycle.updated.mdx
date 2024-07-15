@@ -1,0 +1,197 @@
+---
+title: "daily.data.menstrual_cycle.updated"
+description: "An existing menstrual cycle has been updated"
+---
+<Warning>
+Each summary object is uniquely identified by its `id`.
+
+If multiple events are received at the same `id`, the last event received replaces all its previous
+versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.menstrual_cycle.updated`
+</ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="MenstrualCycle" required="true">
+<Expandable title="MenstrualCycle" defaultOpen="true">
+<ResponseField name="period_start" type="string" required="true">
+</ResponseField>
+<ResponseField name="period_end" type="anyOf" required="true">
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="cycle_end" type="anyOf" required="true">
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="is_predicted" type="boolean | null">
+</ResponseField>
+<ResponseField name="menstrual_flow" type="MenstrualFlowEntry[] | null">
+<Expandable title="Item Schema: MenstrualFlowEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="flow" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="cervical_mucus" type="CervicalMucusEntry[] | null">
+<Expandable title="Item Schema: CervicalMucusEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="quality" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="intermenstrual_bleeding" type="IntermenstrualBleedingEntry[] | null">
+<Expandable title="Item Schema: IntermenstrualBleedingEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="contraceptive" type="ContraceptiveEntry[] | null">
+<Expandable title="Item Schema: ContraceptiveEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="type" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="detected_deviations" type="DetectedDeviationEntry[] | null">
+<Expandable title="Item Schema: DetectedDeviationEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="deviation" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="ovulation_test" type="OvulationTestEntry[] | null">
+<Expandable title="Item Schema: OvulationTestEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="test_result" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="home_pregnancy_test" type="HomePregnancyTestEntry[] | null">
+<Expandable title="Item Schema: HomePregnancyTestEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="test_result" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="home_progesterone_test" type="HomeProgesteroneTestEntry[] | null">
+<Expandable title="Item Schema: HomeProgesteroneTestEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="test_result" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="sexual_activity" type="SexualActivityEntry[] | null">
+<Expandable title="Item Schema: SexualActivityEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="protection_used" type="anyOf" required="true">
+Any of:
+* boolean
+* null
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="basal_body_temperature" type="BasalBodyTemperatureEntry[] | null">
+<Expandable title="Item Schema: BasalBodyTemperatureEntry" defaultOpen="true">
+<ResponseField name="date" type="string" required="true">
+</ResponseField>
+<ResponseField name="value" type="number" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="anyOf | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="name" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="slug" type="string | null" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="logo" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
+  "data": {
+    "basal_body_temperature": [],
+    "cervical_mucus": [],
+    "contraceptive": [],
+    "cycle_end": "2024-05-01",
+    "detected_deviations": [],
+    "home_pregnancy_test": [],
+    "home_progesterone_test": [],
+    "intermenstrual_bleeding": [
+      {
+        "date": "2024-04-17"
+      }
+    ],
+    "is_predicted": false,
+    "menstrual_flow": [
+      {
+        "date": "2024-04-07",
+        "flow": "light"
+      },
+      {
+        "date": "2024-04-10",
+        "flow": "medium"
+      },
+      {
+        "date": "2024-04-11",
+        "flow": "heavy"
+      }
+    ],
+    "ovulation_test": [],
+    "period_end": "2024-04-11",
+    "period_start": "2024-04-07",
+    "sexual_activity": [
+      {
+        "date": "2024-04-13",
+        "protection_used": true
+      }
+    ],
+    "source": {
+      "app_id": "com.apple.Health",
+      "provider": "apple_health_kit",
+      "type": "app"
+    }
+  },
+  "event_type": "daily.data.menstrual_cycle.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
+}
+```
+</ResponseExample>
