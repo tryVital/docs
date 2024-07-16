@@ -1,0 +1,67 @@
+---
+openapi: post /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
+title: Post Team Data Pull Preferences
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team_data_pull_preferences/{env}/{region} \
+  --header 'X-Vital-Org-Key: <api-key>'
+  --data '{
+    "team_ids": [
+        "<uuid>"
+    ],
+    "providers": {
+        "oura": {
+            "default": {
+                "historical_days_to_pull": 120
+            },
+            "resource_overrides": {
+                "sleep": {
+                    "historical_days_to_pull": 180
+                }
+            }
+        }
+    }
+}'
+```
+</RequestExample>
+
+<Warning>
+    Setting high values in these settings may result in delays in received data and impact the daily polling due to providers' rate limits.
+    We recommend setting the custom historical days ranges only with [BYOO](/wearables/connecting-providers/bring_your_own_oauth) setups.
+</Warning>
+
+## Supported Providers
+
+| Providers |  Max supported number of days | Resource Specific Limits (days) |
+| ----------- | --------------- | --------------- |
+| OURA | 365 | - |
+| FITBIT | 365 | heartrate (14), calories_active (14), distance (14), steps (14) |
+| GARMIN | 365 | - |
+| STRAVA | 365 | - |
+| WITHINGS | 365 | - |
+| PELOTON | 365 | - |
+| WAHOO | 365 | - |
+| ZWIFT | 365 | - |
+| FREESTYLE_LIBRE | 365 | - |
+| ABBOTT_LIBREVIEW | 365 | - |
+| EIGHT_SLEEP | 365 | - |
+| RENPHO | 365 | - |
+| OMRON | 365 | - |
+| DEXCOM_V3 | 365 | - |
+| HAMMERHEAD | 365 | - |
+| POLAR | 28 | - |
+| CRONOMETER | 365 | - |
+| KARDIA | 365 | - |
+| WHOOP_V2 | 365 | - |
+| APPLE_HEALTH_KIT | 365 | - |
+| GOOGLE_FIT | 365 | - |
+| BUERER_API | 365 | - |
+

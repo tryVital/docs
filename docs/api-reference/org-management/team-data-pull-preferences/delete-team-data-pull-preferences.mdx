@@ -1,0 +1,20 @@
+---
+openapi: delete /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
+title: Delete Team Data Pull Preferences
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+<Info>
+   Deleting preferences for a provider will revert to the default settings.
+</Info>
+
+<RequestExample>
+```bash cURL
+curl --request DELETE \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team_data_pull_preferences/{env}/{region} \
+  --header 'X-Vital-Org-Key: <api-key>'
+```
+</RequestExample>

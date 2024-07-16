@@ -1,0 +1,20 @@
+---
+openapi: get /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
+title: Get Team Data Pull Preferences
+---
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/team_data_pull_preferences/{env}/{region} \
+  --header 'X-Vital-Org-Key: <api-key>'
+```
+</RequestExample>
+
+<Info>
+The endpoint will return the default vital settings if no custom preferences are set.
+</Info>
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
