@@ -5,7 +5,7 @@ title: "Ask on Order Entry (AOE)"
 Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker, or the ethnicity of the patient.
 
 <Note>
-Questions that are related to fasting (e.g  code `FSTING`) do not need to be answered, even tho they are marked as `required`. We use the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time.
+Questions that are related to fasting (e.g  code `FSTING`) do not need to be answered. Vital uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
 </Note>
 
 
