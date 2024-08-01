@@ -12,7 +12,6 @@ curl --request POST \
      --data '
 {
     "insurance_name": "BLUE SHIELD PROMISE",
-    "insurance_state": "CA",
 }
 '
 ```
@@ -93,17 +92,22 @@ fmt.Printf("Received data %s\n", response)
 <ResponseExample>
 ```json Response
 [
-    {
-        "code": "FCREF",
-        "name": "BLUE SHIELD PROMISE",
-        "orgAddress": {
-                "first_line": "601 POTRERO GRANDE DR",
-                "city": "MONTEREY PARK",
-                "state": "CA",
-                "zip": "91755",
-                "country": "USA"
-        }
+  {
+    "code": "AARPA",
+    "name": "AARP",
+    "aliases": [
+      "AARP",
+      "AARP"
+    ],
+    "org_address": {
+      "first_line": "PO BOX 740819",
+      "second_line": null,
+      "country": "US",
+      "zip": "30374",
+      "city": "ATLANTA",
+      "state": "GA"
     }
+  },
 ]
 ```
 </ResponseExample>
