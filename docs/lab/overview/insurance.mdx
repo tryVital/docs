@@ -5,11 +5,15 @@ title: "Insurance Ordering"
 Vital supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
 
 
-## Creating an Insurance in Vital
+## Setting Insurance Data
 
 To place an order for a `user` in Vital with commercial insurance, you must first provide Vital with insurance data.
 
-This can be done via the `POST /{user_id}/info` endpoint, with the following payload:
+This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/create-insurance) endpoint, with the following payload:
+
+<Note>
+Note that you can only set insurance data for users that already have patient information set, either via an order or via the [`PATCH /v2/user/{user_id}/info`](/api-reference/user/upsert-info).
+</Note>
 
 ```json
 "insurance": {
