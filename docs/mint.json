@@ -188,6 +188,7 @@
         "lab/overview/testing-modalities",
         "lab/overview/quickstart",
         "lab/overview/physicians",
+        "lab/overview/insurance",
         "lab/overview/sandbox"
       ]
     },

@@ -1,0 +1,137 @@
+---
+title: "Insurance Ordering"
+---
+
+Vital supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
+
+
+## Creating an Insurance in Vital
+
+To place an order for a `user` in Vital with commercial insurance, you must first provide Vital with insurance data.
+
+This can be done via the `POST /{user_id}/info` endpoint, with the following payload:
+
+```json
+"insurance": {
+    "payor_code": "string",
+    "member_id": "string",
+    "group_id": "string", // optional
+    "relationship": "Self, Spouse, Other",
+    "insured": {
+        "first_name": "string",
+        "last_name": "string",
+        "dob": "YYYY-MM-DD",
+        "gender": "string",
+        "address": {
+            "first_line": "string", 
+            "second_line": "string", // optional
+            "zip_code": "string",
+            "state": "string",
+            "city": "string",
+        },
+        "phone_number": "string",
+        "email": "string"
+    },
+    "guarantor": {
+        "first_name": "string",
+        "last_name": "string",
+        "dob": "YYYY-MM-DD",
+        "gender": "string",
+        "address": {
+            "first_line": "string", 
+            "second_line": "string", // optional
+            "zip_code": "string",
+            "state": "string",
+            "city": "string",
+        },
+        "phone_number": "string",
+        "email": "string",
+    } // optional if relationship is Self
+}
+```
+
+### Insured, Guarantor and Relationship
+
+First, let's understand the `relationship`, `insured` and `guarantor` fields.
+
+`insured` refers to the insured person, and must always be provided. The `relationship` field, is the relationship between the insured person and the holder of the insurance.
+For example, if the insured person and the insurance holder are the same, then the relationship is `Self`.
+
+The `guarantor` is an optional field, that must be provided when the relationship is NOT `Self`. The guarantor is the financially responsible party.
+
+
+### Payor Code
+
+The `payor code` is a lab specific identifier for an insurance company. Vital has abstracted this away into our own Vital payor codes, allowing customers to supply one code for all labs.
+
+To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor) endpoint, using the insurance company name, and select the `code` from your insurance company.
+
+```json
+[
+  {
+    "code": "AARPA",
+    "name": "AARP",
+    "aliases": [
+      "AARP",
+      "AARP"
+    ],
+    "org_address": {
+      "first_line": "PO BOX 740819",
+      "second_line": null,
+      "country": "US",
+      "zip": "30374",
+      "city": "ATLANTA",
+      "state": "GA"
+    }
+  },
+]
+```
+
+
+
+## Ordering
+
+Once the above steps are complete, you can place an order as usual, with two differences.
+
+In order to trigger the commercial insurance flow, you must supply the following extra fields in the [POST /order](/api-reference/lab-testing/create-order) payload:
+
+```json
+{
+	"icd_codes": ["ICD.10"], 
+	"billing_type": "commercial_insurance" 
+}
+```
+
+### Billing type
+
+By default, Vital orders are Client Bill. In order to trigger the insurance flow, you must supply the `billing_type` field, with `commercial_insurance`.
+
+### Diagnosis Codes
+
+Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing-insurance/search-diagnosis) endpoint.
+
+
+
+## Insurance Availability
+
+Not all labs and not all states are cleared for insurance ordering. You can verify if a zip code is served for insurance via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint.
+
+If a particular lab supports insurance, then you should see `commercial_insurance` in the supported bill types.
+
+```json
+{
+  "zip_code": "85007",
+  "central_labs": {
+    "labcorp": {
+      "patient_service_centers": {
+        "within_radius": 15,
+        "radius": "25"
+      },
+      "supported_bill_types": [
+        "commercial_insurance"
+      ]
+    },
+    ...
+  }
+}
+```
