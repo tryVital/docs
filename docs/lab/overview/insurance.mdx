@@ -4,6 +4,10 @@ title: "Insurance Ordering"
 
 Vital supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
 
+<Note>
+Only commercial payors are supported and public insurance payors (medicare, medicaid, etc...) are not supported.
+</Note>
+
 
 ## Setting Insurance Data
 
@@ -14,6 +18,8 @@ This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/creat
 <Note>
 Note that you can only set insurance data for users that already have patient information set, either via an order or via the [`PATCH /v2/user/{user_id}/info`](/api-reference/user/upsert-info).
 </Note>
+
+It is expected that insurance data will become outdated or change with time. It is the customer's responsability to update this data with Vital in order to minimise the risk of a denied claim.
 
 ```json
 "insurance": {
@@ -58,15 +64,15 @@ Note that you can only set insurance data for users that already have patient in
 
 First, let's understand the `relationship`, `insured` and `guarantor` fields.
 
-`insured` refers to the insured person, and must always be provided. The `relationship` field, is the relationship between the insured person and the holder of the insurance.
+`insured` refers to the insured person, and must always be provided. The `relationship` field, is the relationship between the patient and the holder of the insurance.
 For example, if the insured person and the insurance holder are the same, then the relationship is `Self`.
 
-The `guarantor` is an optional field, that must be provided when the relationship is NOT `Self`. The guarantor is the financially responsible party.
+The `guarantor` is an optional field, that must be provided when the relationship is **NOT** `Self`. The guarantor is the financially responsible party. If provided when the relationship is `Self`, we will store it, but it may not be propagated to all lab partners, as not all partners accept a guarantor in this situation.
 
 
 ### Payor Code
 
-The `payor code` is a lab specific identifier for an insurance company. Vital has abstracted this away into our own Vital payor codes, allowing customers to supply one code for all labs.
+The `payor code` is a lab specific identifier for an insurance company. Vital has abstracted this away into our own Vital payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
 
 To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor) endpoint, using the insurance company name, and select the `code` from your insurance company.
 
@@ -139,3 +145,11 @@ If a particular lab supports insurance, then you should see `commercial_insuranc
   }
 }
 ```
+
+
+## Error Cases
+
+1. Order with `commercial_insurance` billing for a lab that does not support it.
+2. Order with `commercial_insurance` billing for a state that does not support it.
+3. Order with `commercial_insurance` billing and provide no ICD codes or invalid ICD codes.
+4. Order with `commercial_insurance` billing and the user has no insurance data.
