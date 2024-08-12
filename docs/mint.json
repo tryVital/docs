@@ -680,6 +680,14 @@
             "event-catalog/daily.data.vo2_max.updated",
             "event-catalog/historical.data.vo2_max.created"
           ]
+        },
+        {
+          "group": "Workout Duration",
+          "pages": [
+            "event-catalog/daily.data.workout_duration.created",
+            "event-catalog/daily.data.workout_duration.updated",
+            "event-catalog/historical.data.workout_duration.created"
+          ]
         }
       ]
     },
@@ -737,6 +745,14 @@
           "pages": [
             "event-catalog/daily.data.igg.created",
             "event-catalog/daily.data.igg.updated"
+          ]
+        },
+        {
+          "group": "Insulin Injection",
+          "pages": [
+            "event-catalog/daily.data.insulin_injection.created",
+            "event-catalog/daily.data.insulin_injection.updated",
+            "event-catalog/historical.data.insulin_injection.created"
           ]
         },
         {
@@ -803,6 +819,19 @@
       ]
     },
     {
+      "group": "Diary Timeseries",
+      "pages": [
+        {
+          "group": "Note",
+          "pages": [
+            "event-catalog/daily.data.note.created",
+            "event-catalog/daily.data.note.updated",
+            "event-catalog/historical.data.note.created"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Nutrition Timeseries",
       "pages": [
         {
@@ -819,6 +848,14 @@
             "event-catalog/daily.data.water.created",
             "event-catalog/daily.data.water.updated",
             "event-catalog/historical.data.water.created"
+          ]
+        },
+        {
+          "group": "Carbohydrates",
+          "pages": [
+            "event-catalog/daily.data.carbohydrates.created",
+            "event-catalog/daily.data.carbohydrates.updated",
+            "event-catalog/historical.data.carbohydrates.created"
           ]
         }
       ]
