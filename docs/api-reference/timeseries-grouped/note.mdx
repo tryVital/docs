@@ -1,6 +1,6 @@
 ---
-title: "Mindfulness Minutes"
-openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes/grouped"
+title: "Note"
+openapi: "GET /v2/timeseries/{user_id}/note/grouped"
 ---
 
 <Card
@@ -8,7 +8,7 @@ openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes/grouped"
   icon="diamond-turn-right"
   iconType="sharp-solid"
   color="#F3A712"
-  href="https://api.tryvital.io/redoc#tag/timeseries/operation/get_mindfulness_minutes_grouped"
+  href="https://api.tryvital.io/redoc#tag/timeseries/operation/get_note_grouped"
 >
   The Response section on the page still needs work. Click here to check out the complete schema.
 </Card>
@@ -17,7 +17,7 @@ openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes/grouped"
 
 ```bash cURL
 curl --request GET \
-     --url {{BASE_URL}}/v2/timeseries/{user_id}/mindfulness_minutes/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --url {{BASE_URL}}/v2/timeseries/{user_id}/note/grouped?start_date={{START_DATE}}&end_date={{END_DATE}} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -31,7 +31,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.vitals.mindfulness_minutes_grouped(
+data = client.vitals.note_grouped(
   user_id="<user_id>", 
   start_date="2021-10-01", 
   end_date="2021-10-02"
@@ -40,19 +40,19 @@ data = client.vitals.mindfulness_minutes_grouped(
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { VitalsMindfulnessMinutesGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
+import { VitalsNoteGroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: VitalsMindfulnessMinutesGroupedRequest = {
+const request: VitalsNoteGroupedRequest = {
     startDate: "2022-05-01",
     endDate: "2022-06-01"
 }
 
-const data = await client.vitals.mindfulnessMinutesGrouped(
+const data = await client.vitals.noteGrouped(
     '<my_user_id>',
     request
 );
@@ -61,19 +61,19 @@ const data = await client.vitals.mindfulnessMinutesGrouped(
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.vitals.requests.VitalsMindfulnessMinutesGroupedRequest;
+import com.vital.api.resources.vitals.requests.VitalsNoteGroupedRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-VitalsMindfulnessMinutesGroupedRequest request = VitalsMindfulnessMinutesGroupedRequest.builder()
+VitalsNoteGroupedRequest request = VitalsNoteGroupedRequest.builder()
         .startDate("2022-05-01")
         .endDate("2022-06-01")
         .build();
 
-var data = vital.vitals().mindfulnessMinutesGrouped("<user_id>", request);
+var data = vital.vitals().noteGrouped("<user_id>", request);
 ```
 
 ```go Go
@@ -90,12 +90,12 @@ client := vitalclient.NewClient(
 )
 
 EndDate := "2022-06-01"
-request := &vital.VitalsMindfulnessMinutesGroupedRequest{
+request := &vital.VitalsNoteGroupedRequest{
   StartDate: "2022-05-01",
   EndDate:   &EndDate,
 }
 
-response, err := client.Vitals.MindfulnessMinutesGrouped(context.TODO(), "*", request)
+response, err := client.Vitals.NoteGrouped(context.TODO(), "*", request)
 if err != nil {
   return err
 }
@@ -113,10 +113,14 @@ fmt.Printf("Received data %s\n", response)
       {
         "data": [
           {
-            "end": "2024-08-14T13:31:50.846994+00:00",
-            "start": "2023-02-13T14:57:24+00:00",
-            "unit": "min",
-            "value": 42
+            "end": "2023-02-13T14:30:52+00:00",
+            "start": "2023-02-13T14:30:52+00:00",
+            "type": [
+              "food",
+              "exercise"
+            ],
+            "unit": "text",
+            "value": "Lorem ipsum dolor sit amet"
           }
         ],
         "source": {
