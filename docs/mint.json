@@ -85,7 +85,8 @@
     {
       "group": "Core",
       "pages": [
-        "changelog/core/api"
+        "changelog/core/api",
+        "changelog/core/dashboard"
       ]
     },
     {

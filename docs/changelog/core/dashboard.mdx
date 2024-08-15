@@ -1,0 +1,42 @@
+---
+title: "Dashboard"
+---
+
+### Enhanced Order Page Search and Filtering (Aug 15)
+
+The order page now includes robust search and filtering capabilities, enabling users to efficiently locate specific orders and data.
+
+<Accordion icon="magnifying-glass" iconType="duotone" title="Details" defaultOpen>
+
+We have added a new search bar that will support filtering by the following. Only one search bar filter can be active at any given time.
+
+- Search bar filtering:
+    - Patient or recipient (in the case of at-home kits) first or last name
+    - Patient email
+    - Patient date of birth in the YYYY-MM-DD format.
+        - E.g. “1988” will filter for all patients born in 1988. “1988-03” will filter for all patients born in March of 1988 and “1988-03-07” will filter for all patients born on March 7th, 1988.
+    - User ID
+    - Client user ID
+    - Order ID
+    - Order status
+
+We have also added the ability to filter by date or date range for the created date or the date of the last event update. Note that the dates will filter based on the created date in the UTC timezone. These filters will stack as an “AND” with the previous filters. E.g. “patient’s name is ‘John’ and order was created in the last 30 days”. If both created at and last updated at date filters are active they will stack as an “AND” with all other filters.
+
+- Date filtering:
+    - Filter on the created date of the order.
+        - For tests that are scheduled in the future, the creation date of the order, not the scheduled date is utilized in the filter.
+    - Filter on the updated date of the order
+        - This allows you to filter based on all the orders that have last changed state in a particular time. Note that this filters only on the last time an order changed state.
+
+In addition we will support filtering by a number of more advanced fields. These filters stack as an AND in addition to all previous filters, with one important exception. If multiple filters from the same field are active (e.g. filtering for both completed status and partial results status) those filters will stack as an OR. That means selecting multiple filters on the order status will filter for all of the statuses selected.
+
+- Advanced filtering fields:
+    - Status
+        - This is the current status of the order. Note that some statuses are unique to a collection modality such as mobile phlebotomy or self-collected test kits.
+        - You can have multiple Status filters active simultaneously.
+    - Order type
+        - This allows you to filter based on the order type - at-home phlebotomy, walk-in test, at home test kit.
+        - You can have multiple Status filters active simultaneously
+    - Activation type
+        - This allows you to filter specifically for tests that are scheduled in the future (Activation Type = Scheduled) or test kits that were either not scheduled, or were scheduled in some date in the past (Activation type = Current).
+</Accordion>
