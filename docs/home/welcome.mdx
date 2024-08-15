@@ -46,40 +46,51 @@ description: "Here you'll find guides, resources, and references to build using 
 ## Popular Topics
 
 <CardGroup cols={1}>
-  <Card title="Apple HealthKit" icon="apple" href="/wearables/sdks/ios">
+  <Card title="Apple HealthKit" icon="apple" href="/wearables/guides/apple-healthkit">
     Apple HealthKit is one of the biggest providers of fitness and health data.
-    Here you can learn how to integrate it with via our SDKs. We currently
-    support iOS, Flutter and React Native.
+
+    Learn how to integrate with Apple HealthKit using Vital Mobile SDKs, available in
+    Native iOS, React Native and Flutter.
+  </Card>
+  <Card title="Android Health Connect" icon="android" href="/wearables/guides/android-health-connect">
+    Android Health Connect is one of the emerging fitness and health data platform.
+
+    Learn how to integrate with Apple HealthKit using Vital Mobile SDKs, available in
+    Native Android, React Native and Flutter.
   </Card>
   <Card
-    title="Vital Link"
+    title="Vital Link Widget"
     icon="link"
-    href="/wearables/vital-link/introduction"
+    href="/wearables/connecting-providers/introduction"
   >
-    Vital Link is what allows your users to connect their wearable devices to
-    Vital. It's a simple widget that you can add to your app. Learn how to
-    integrate it here.
+    Vital Link enables your users to connect their account with with their wearable data providers.
+  
+    Learn how to integrate the Link Widget for a no-fuzz starter integration.
   </Card>
   <Card
-    title="Fields per Resource per Provider"
-    icon="files"
-    href="/wearables/providers/resources"
+    title="Vital Link API"
+    icon="link"
+    href="/wearables/connecting-providers/custom_widget"
   >
-    A provider like Garmin can have multiple resources (e.g. Workouts, Sleep).
-    Each resource, might not have all the fields. Learn which fields are
-    available for each resource here.
+    Learn how to use the Vital Link API to build your own Link Widget.
   </Card>
-  <Card title="Webhooks" icon="radar" href="/webhooks/introduction">
-    Webhooks are the preferred way for Vital to send information to you when
-    something happens. Here you can find the different flows for historical data
-    and daily.
+  <Card title="Timestamps and Time Zones" icon="clock" href="/wearables/providers/timestamps-and-time-zones">
+    Learn about timestamp and time zone handling of wearable device data.
+  </Card>
+  <Card title="Webhooks & Events" icon="radar" href="/webhooks/introduction">
+    Vital can push wearable device data as webhook events to you as soon as they are discovered.
+
+    Learn about the delivery stages, event structure as well as the advanced ETL Pipeline options
+    for high volume needs.
   </Card>
   <Card
-    title="Demo accounts"
+    title="Synthetic Data"
     icon="parachute-box"
     href="/wearables/providers/test_data"
   >
-    Our demo accounts allow you to generate fake data for particular providers.
-    This makes the testing process much easier! Learn how to use them here.
+    Demo Connections generate synthetic data that mimick specific providers, which provides
+    an alternative way for you to test your Vital integration.
+
+    Learn how to use demo connections.
   </Card>
 </CardGroup>
