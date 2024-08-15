@@ -3,12 +3,45 @@ title: "Providers"
 ---
 
 
+### Apple HealthKit data sync improvements (Aug 24)
+
+An overhauled Apple HealthKit sync engine is now available across all Vital Mobile SDK platforms.
+The changes bring historical data sync incrementality, prioritization, network resiliency and reduced resource usage.
+
+<Accordion icon="apple" iconType="duotone" title="Details" defaultOpen>
+
+1. Most resources now use a resumable sync & upload process.
+
+    * This enables the SDK to make constant forward progress, especially when you have specified a very large historical pull stage (60-365 days)
+      through the [Team Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences) API.
+
+2. The SDK now prioritises syncing of summary types over timeseries data.
+
+    * During the historical pull stage, all timeseries resources would be suppressed until all the summary types have been successfully uploaded.
+
+    * After the historical pull stage, the SDK would make forward progress on summary types, before it proceeds to deal with the more CPU-time consuming timeseries data that are more prone to operating system throttling.
+
+3. With an updated iOS App Target configuration, the SDK would now self-register as a `BGProcessingTask` or `BGHealthResearchTask` (iOS 17+) to the iOS BackgroundTasks framework.
+
+    * This would provide the SDK an additional opportunity to complete any resource sync that is not able to complete during normal HealthKit background delivery.
+
+    * Please refer to the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#1-setup-app-entitlements) on how to update your iOS App Target configuration in Xcode.
+
+| Platform       | Release Note |
+| -------------- | ------------ |
+| Native iOS     | [vital-ios 1.2.2](https://github.com/tryVital/vital-ios/releases/tag/1.2.2) |
+| Flutter        | [vital-flutter 4.2.1](https://github.com/tryVital/vital-flutter/releases/tag/vital_health-v4.2.1) |
+| React Native   | [vital-react-native 4.2.1](https://github.com/tryVital/vital-react-native/releases/tag/4.2.1) |
+
+</Accordion>
+
+
 ### Menstrual Cycle Tracking (July 24)
 
 Menstrual cycle tracking data can now be collected through the Apple HealthKit and Android
 Health Connect integrations.
 
-<Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
+<Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
 Ask for data permission on the `MenstrualCycle` resource from the user through the Vital Health SDK.
 
 Check out the [Get Menstrual Cycles](/api-reference/menstrual-cycle/get-summary) endpoint and
