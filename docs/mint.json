@@ -44,17 +44,7 @@
     "name": "Home",
     "icon": "house"
   },
-  "anchors": [
-    {
-      "name": "Wearables",
-      "icon": "watch-fitness",
-      "url": "wearables"
-    },
-    {
-      "name": "Lab Testing",
-      "icon": "flask",
-      "url": "lab"
-    },
+  "tabs": [
     {
       "name": "API Reference",
       "icon": "rectangle-terminal",
@@ -69,6 +59,18 @@
       "name": "Changelog",
       "icon": "newspaper",
       "url": "changelog"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Wearables",
+      "icon": "watch-fitness",
+      "url": "wearables"
+    },
+    {
+      "name": "Lab Testing",
+      "icon": "flask",
+      "url": "lab"
     }
   ],
   "navigation": [
