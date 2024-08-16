@@ -362,7 +362,6 @@
           "group": "Sleep",
           "pages": [
             "api-reference/sleep/get-summary",
-            "api-reference/sleep/get-stream",
             "api-reference/sleep/get-raw"
           ]
         },
