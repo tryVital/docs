@@ -86,16 +86,15 @@ pod 'VitalHealthKit'
 
 ## Android
 
-Add the Sonatype OSS Release Maven repository to your `build.gradle` file:
+Make sure Maven Central is included in the list of repositories in your `build.gradle`.
 
 ```groovy
 repositories {
-  ...
-  maven { url 'https://s01.oss.sonatype.org/content/repositories/releases/' }
+  mavenCentral()
 }
 ```
 
-Then include the Android SDK artifacts you need as dependencies of your app or library modules:
+Then include our Android SDK artifacts as dependencies of your modules as needed:
 
 ```groovy
 def vital_version = '3.2.1'
