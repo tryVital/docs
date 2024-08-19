@@ -250,64 +250,15 @@ let result = await devicesManager.readLibre1("reading", "errored", "completed")
 1. the sensor information; and
 2. a list of glucose samples.
 
-## Posting device samples to Vital
+## Upload device samples to Vital
 
-Vital Devices SDK does not automatically send the samples back to Vital data store.
+<Note>
+This automatic behaviour is available since Vital iOS 1.0.0, Vital Android 3.0.0, Vital Flutter SDK 4.0.0
+and Vital React Native 4.0.0.
+</Note>
 
-To ensure that data are available, you would need to post the samples through the SDK:
+Vital Devices SDK automatically uploads any blood pressure and glucose samples discovered during
+the read operation, provided that the Vital Core SDK [has a signed-in user](/wearables/sdks/vital-core#core-sdk-status).
 
-<CodeGroup>
-```swift Native iOS
-import VitalCore
-
-let samples: [QuantitySample]
-
-try await VitalClient.shared.timeSeries.post(
-  .glucose(samples),
-  stage: .daily,
-  provider: .libre,
-  timeZone: .current
-)
-```
-
-```kotlin Native Android
-import android.content.Context
-import io.tryvital.client.*
-import io.tryvital.client.services.data.*
-
-val samples: List<QuantitySamplePayload>
-val context: android.content.Context
-
-val client = VitalClient.getOrCreate(context)
-
-await client.createConnectedSourceIfNotExist(ManualProviderSlug.LibreBLE)
-
-// NOTE:
-// For Blood Pressure, use `client.vitalsService.sendBloodPressure`.
-
-await client.vitalsService.sendQuantitySamples(
-    IngestibleTimeseriesResource.BloodGlucose,
-    VitalClient.currentUserId!!,
-    timeseriesPayload= TimeseriesPayload(
-        stage = DataStage.Daily,
-        provider = ManualProviderSlug.LibreBLE,
-        startDate = null,
-        endDate = null,
-        timeZoneId = TimeZone.getDefault().id,
-        data = samples,
-    )
-)
-```
-
-```typescript React Native
-import { ManualProviderSlug, QuantitySample, VitalCore } from "@tryvital/vital-core-react-native";
-
-let samples: QuantitySample[]
-
-await VitalCore.createConnectedSourceIfNotExist(ManualProviderSlug.LibreBLE)
-await VitalCore.postTimeSeriesData(
-    { "type": "glucose", "samples": samples },
-    ManualProviderSlug.LibreBLE
-)
-```
-</CodeGroup>
+The SDK does not currently buffer samples that fail to upload. You might want to ensure that the
+device has Internet connectivity before initiating the read operation.
