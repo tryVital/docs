@@ -83,6 +83,11 @@
       "url": "api-reference"
     },
     {
+      "name": "Lab Testing API",
+      "icon": "flask",
+      "url": "api-reference/lab-testing"
+    },
+    {
       "name": "Org Management API",
       "icon": "building",
       "url": "api-reference/org-management"
@@ -307,67 +312,62 @@
       ]
     },
     {
-      "group": "Lab Testing",
+      "group": "Orders",
       "pages": [
-        {
-          "group": "Orders",
-          "pages": [
-            "api-reference/lab-testing/create-order",
-            "api-reference/lab-testing/get-orders",
-            "api-reference/lab-testing/get-order",
-            "api-reference/lab-testing/cancel-order",
-            "api-reference/lab-testing/requisition-pdf",
-            "api-reference/lab-testing/create-unregistered-order",
-            "api-reference/lab-testing/register-order",
-            "api-reference/lab-testing/labels-pdf",
-            "api-reference/lab-testing/simulate-order"
-          ]
-        },
-        {
-          "group": "Area Info",
-          "pages": [
-            "api-reference/lab-testing/area-info",
-            "api-reference/lab-testing/psc-info",
-            "api-reference/lab-testing/order-psc-info"
-          ]
-        },
-        {
-          "group": "At-home Phlebotomy",
-          "pages": [
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-availability",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-booking",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-request",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-rescheduling",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-cancelling",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-cancellation-reasons",
-            "api-reference/lab-testing-at-home-phlebotomy/get-appointment"
-          ]
-        },
-        {
-          "group": "Tests",
-          "pages": [
-            "api-reference/lab-testing/tests",
-            "api-reference/lab-testing/biomarkers",
-            "api-reference/lab-testing/labs",
-            "api-reference/lab-testing/post-test",
-            "api-reference/lab-testing/lab-test-markers"
-          ]
-        },
-        {
-          "group": "Results",
-          "pages": [
-            "api-reference/results/get-results",
-            "api-reference/results/get-results-pdf",
-            "api-reference/results/get-results-metadata"
-          ]
-        },
-        {
-          "group": "Health Insurance",
-          "pages": [
-            "api-reference/lab-testing-insurance/search-payor",
-            "api-reference/lab-testing-insurance/search-diagnosis"
-          ]
-        }
+        "api-reference/lab-testing/create-order",
+        "api-reference/lab-testing/get-orders",
+        "api-reference/lab-testing/get-order",
+        "api-reference/lab-testing/cancel-order",
+        "api-reference/lab-testing/requisition-pdf",
+        "api-reference/lab-testing/create-unregistered-order",
+        "api-reference/lab-testing/register-order",
+        "api-reference/lab-testing/labels-pdf",
+        "api-reference/lab-testing/simulate-order"
+      ]
+    },
+    {
+      "group": "Area Info",
+      "pages": [
+        "api-reference/lab-testing/area-info",
+        "api-reference/lab-testing/psc-info",
+        "api-reference/lab-testing/order-psc-info"
+      ]
+    },
+    {
+      "group": "At-home Phlebotomy",
+      "pages": [
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
+        "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
+      ]
+    },
+    {
+      "group": "Tests",
+      "pages": [
+        "api-reference/lab-testing/tests",
+        "api-reference/lab-testing/biomarkers",
+        "api-reference/lab-testing/labs",
+        "api-reference/lab-testing/post-test",
+        "api-reference/lab-testing/lab-test-markers"
+      ]
+    },
+    {
+      "group": "Results",
+      "pages": [
+        "api-reference/lab-testing/results/get-results",
+        "api-reference/lab-testing/results/get-results-pdf",
+        "api-reference/lab-testing/results/get-results-metadata"
+      ]
+    },
+    {
+      "group": "Health Insurance",
+      "pages": [
+        "api-reference/lab-testing/insurance/search-payor",
+        "api-reference/lab-testing/insurance/search-diagnosis"
       ]
     },
     {
@@ -947,6 +947,18 @@
     {
       "source": "/wearables/guides/freestyle",
       "destination": "/wearables/guides/abbott-libreview"
+    },
+    {
+      "source": "/api-reference/lab-testing-insurance/:subpaths*",
+      "destination": "/api-reference/lab-testing/insurance/:subpaths*"
+    },
+    {
+      "source": "/api-reference/lab-testing-at-home-phlebotomy/:subpaths*",
+      "destination": "/api-reference/lab-testing/at-home-phlebotomy/:subpaths*"
+    },
+    {
+      "source": "/api-reference/results/:subpaths*",
+      "destination": "/api-reference/lab-testing/results/:subpaths*"
     }
   ]
 }
