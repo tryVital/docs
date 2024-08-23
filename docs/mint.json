@@ -63,6 +63,11 @@
   ],
   "anchors": [
     {
+      "name": "Home",
+      "icon": "house",
+      "url": "home"
+    },
+    {
       "name": "Wearables",
       "icon": "watch-fitness",
       "url": "wearables"
@@ -71,6 +76,16 @@
       "name": "Lab Testing",
       "icon": "flask",
       "url": "lab"
+    },
+    {
+      "name": "Vital API",
+      "icon": "square-code",
+      "url": "api-reference"
+    },
+    {
+      "name": "Org Management API",
+      "icon": "building",
+      "url": "api-reference/org-management"
     }
   ],
   "navigation": [
@@ -459,79 +474,74 @@
       ]
     },
     {
-      "group": "Org Management",
+      "group": "Team",
       "pages": [
-        {
-          "group": "Team",
-          "pages": [
-            "api-reference/org-management/team/list-teams",
-            "api-reference/org-management/team/create-team",
-            "api-reference/org-management/team/get-team",
-            "api-reference/org-management/team/delete-team",
-            "api-reference/org-management/team/update-team"
-          ]
-        },
-        {
-          "group": "Member",
-          "pages": [
-            "api-reference/org-management/member/list-members",
-            "api-reference/org-management/member/remove-member"
-          ]
-        },
-        {
-          "group": "Invite",
-          "pages": [
-            "api-reference/org-management/invite/list-invites",
-            "api-reference/org-management/invite/create-or-resend-invite",
-            "api-reference/org-management/invite/revoke-invite"
-          ]
-        },
-        {
-          "group": "Org",
-          "pages": [
-            "api-reference/org-management/org/get-org",
-            "api-reference/org-management/org/update-org"
-          ]
-        },
-        {
-          "group": "Team API Keys",
-          "pages": [
-            "api-reference/org-management/team-api-keys/list-team-api-keys",
-            "api-reference/org-management/team-api-keys/create-team-api-key",
-            "api-reference/org-management/team-api-keys/delete-team-api-keys"
-          ]
-        },
-        {
-          "group": "Team Custom Credentials",
-          "pages": [
-            "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
-            "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
-            "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
-          ]
-        },
-        {
-          "group": "Team Data Pull Preferences",
-          "pages": [
-            "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
-            "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
-            "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
-          ]
-        },
-        {
-          "group": "Team ETL Pipeline",
-          "pages": [
-            "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
-            "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
-            "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
-          ]
-        },
-        {
-          "group": "Team Scope Requirements",
-          "pages": [
-            "api-reference/org-management/team-scope-requirements/get-team-scope-requirements",
-            "api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements"
-          ]
-        }
+        "api-reference/org-management/team/list-teams",
+        "api-reference/org-management/team/create-team",
+        "api-reference/org-management/team/get-team",
+        "api-reference/org-management/team/delete-team",
+        "api-reference/org-management/team/update-team"
+      ]
+    },
+    {
+      "group": "Team API Keys",
+      "pages": [
+        "api-reference/org-management/team-api-keys/list-team-api-keys",
+        "api-reference/org-management/team-api-keys/create-team-api-key",
+        "api-reference/org-management/team-api-keys/delete-team-api-keys"
+      ]
+    },
+    {
+      "group": "Team Custom Credentials",
+      "pages": [
+        "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
+      ]
+    },
+    {
+      "group": "Team Data Pull Preferences",
+      "pages": [
+        "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
+        "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
+        "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
+      ]
+    },
+    {
+      "group": "Team ETL Pipeline",
+      "pages": [
+        "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
+        "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
+        "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
+      ]
+    },
+    {
+      "group": "Team Scope Requirements",
+      "pages": [
+        "api-reference/org-management/team-scope-requirements/get-team-scope-requirements",
+        "api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements"
+      ]
+    },
+    {
+      "group": "Member",
+      "pages": [
+        "api-reference/org-management/member/list-members",
+        "api-reference/org-management/member/remove-member"
+      ]
+    },
+    {
+      "group": "Invite",
+      "pages": [
+        "api-reference/org-management/invite/list-invites",
+        "api-reference/org-management/invite/create-or-resend-invite",
+        "api-reference/org-management/invite/revoke-invite"
+      ]
+    },
+    {
+      "group": "Org",
+      "pages": [
+        "api-reference/org-management/org/get-org",
+        "api-reference/org-management/org/update-org"
       ]
     },
     {
