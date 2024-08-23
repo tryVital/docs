@@ -8,7 +8,7 @@ import OrgManagementAPI from '/snippets/org-management-api.mdx';
 ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
-[Events](/webhooks/introduction) can be published directly to a supported message queue source of
+[Events](/webhooks/introduction) can be published directly to a supported event queue source of
 your ETL pipelines. This means you need not provision Internet reachable, unauthenticated HTTPS endpoints
 in order to ingest Vital events as webhooks.
 
@@ -34,7 +34,7 @@ The following destinations are supported:
 | Name | Authentication | Publication Order |
 | ---- | ---- | ----- |
 | RabbitMQ | Password | Depends on your RabbitMQ broker configuration. |
-| Google Cloud Pub/Sub | IAM | [Pub/Sub Message Ordering](https://cloud.google.com/pubsub/docs/ordering) is supported. |
+| Google Cloud Pub/Sub | IAM | [Pub/Sub Event Ordering](https://cloud.google.com/pubsub/docs/ordering) is supported. |
 | Azure Event Hub | [SAS Key](https://learn.microsoft.com/en-gb/azure/service-bus-messaging/service-bus-sas) | Depends on your Azure Event Hub configuration. |
 
 ## Event Schema
@@ -93,35 +93,37 @@ Feel free to reach out Vital support if you need assisted setup, or if you need 
 
 ## Google Cloud Pub/Sub
 
-### Message Structure
+### Event Structure
 
-Each message would be published by Vital with the following attributes:
+Each event is published with these Cloud Pub/Sub message attributes:
 
 | Type | Key | Value |
 | --- | --- | --- |
-| Attribute | event_type | Vital event type, e.g., daily.data.activity.created |
-| Attribute | blob_type | json : UTF8 JSON document |
-| Attribute | blob_codec | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
-| Attribute | idempotency_key | Unique key that allows detection of subsequent retries of the same request |
-| Data | - | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
-| Ordering Key | - | Vital User ID (If you have enabled Message Ordering) |
+| Attribute | `event_type` | Vital event type, e.g., `daily.data.activity.created` |
+| Attribute | `blob_type` | `json` : UTF8 JSON document |
+| Attribute | `blob_codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
+| Attribute | `idempotency_key` | Unique ID of the event |
+| Ordering Key | - | Vital User ID (If you have enabled Event Ordering) |
 
-<Info>Payload smaller than 1KiB would not be compressed.</Info>
+<Info>
+Payload smaller than 1KiB would not be compressed. You must check `blob_codec` to identify if decompression of
+the message payload blob is necessary.
+</Info>
 
 <Info>
 At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
 
-Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `blob_type` and `blob_codec`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob_type` and `blob_codec`.
 </Info>
 
-### Pub/Sub message ordering
+### Pub/Sub event ordering
 
-If you wish to receive message for each Vital user in their publication order, Vital supports Pub/Sub Message Ordering, and uses the Vital User ID as the message ordering key. 
+If you wish to receive event for each Vital user in their publication order, Vital supports Pub/Sub Event Ordering, and uses the Vital User ID as the event ordering key. 
 
-Vital publishes all messages through the `us-central1` and `europe-west1` PubSub regional endpoints.
+Vital publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
 
 <Warning>
-Pub/Sub Exactly Once Delivery is **discouraged** to be used together with Message Ordering. Our own trial suggested that the combination would struggle to move high volume of messages.
+Pub/Sub Exactly Once Delivery is **discouraged** to be used together with Event Ordering. Our own trial suggested that the combination would struggle to move high volume of events.
 </Warning>
 
 ### IAM Permission
@@ -137,65 +139,93 @@ Or more specifically these permissions if you wish to create a custom IAM role w
 - `pubsub.topics.publish`
 
 | Environment | Region | Service Account |
-| --- | --- | --- |
-| Sandbox | US | customer-topics-us@vital-sandbox.iam.gserviceaccount.com |
-| Sandbox | Europe | customer-topics-eu@vital-sandbox.iam.gserviceaccount.com |
-| Production | US | customer-topics-us@vital-prod-307415.iam.gserviceaccount.com |
-| Production | Europe | customer-topics-eu@vital-prod-307415.iam.gserviceaccount.com |
+| ----------- | --- | --- |
+| Sandbox     | US | customer-topics-us@vital-sandbox.iam.gserviceaccount.com |
+| Sandbox     | Europe | customer-topics-eu@vital-sandbox.iam.gserviceaccount.com |
+| Production  | US | customer-topics-us@vital-prod-307415.iam.gserviceaccount.com |
+| Production  | Europe | customer-topics-eu@vital-prod-307415.iam.gserviceaccount.com |
 
 ## RabbitMQ
 
-### Message Structure
+### Event Structure
 
-Each message would be published by Vital with the following attributes:
+Each event is published with these RabbitMQ message custom headers:
 
 | Key | Value |
 | --- | --- |
-| Routing Key | Vital event type, e.g., daily.data.activity.created |
-| Content-Type | application/json : UTF8 JSON document |
-| Content-Encoding | gzip: The blob is compressed by gzip. null/absent: The blob is uncompressed. |
+| Routing Key | Vital event type, e.g., `daily.data.activity.created` |
+| `Content-Type` | application/json : UTF8 JSON document |
+| `Content-Encoding` | gzip: The blob is compressed by gzip. null/absent: The blob is uncompressed. |
 | Data | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
 
-<Info>Payload smaller than 1KiB would not be compressed.</Info>
+<Info>
+Payload smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
+decompression of the message payload blob is necessary.
+</Info>
 
 <Info>
 At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
 
-Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `Content-Type` and `Content-Encoding`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
 </Info>
 
-### Exchange requirements
+### Broker authentication
 
 Vital only supports password authentication at this time.
 
-Vital publishes messages with the following settings:
+Vital publishes events with the following settings:
 
 - Publisher Confirm mode is required
-- Messages are published with the Mandatory flag but without the Immediate flag.
-- Messages are published with Event Type as the Routing Key.
+- Events are published with the Mandatory flag but without the Immediate flag.
+- Events are published with Event Type as the Routing Key.
 
 Please get in touch if these need to be configured differently for your RabbitMQ exchange.
 
 
 ## Azure Event Hub
 
-### Message Structure
+### Event Structure
 
-Each message would be published by Vital with the following attributes:
+Each event is published with these [Azure EventData Properties](https://learn.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventdata.properties?view=azure-dotnet#azure-messaging-eventhubs-eventdata-properties):
 
-| Type | Key | Value |
-| --- | --- | --- |
-| Attribute | event_type | Vital event type, e.g., daily.data.activity.created |
-| Attribute | blob_type | json: UTF8 JSON document |
-| Attribute | blob_codec | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
-| Attribute | idempotency_key | Unique key that allows detection of subsequent retries of the same request |
-| Data | - | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
-| Partition Key | - | Vital User ID |
+| Type     | Key              | Value |
+| -------- | ---------------- | ----- |
+| Property | event-type       | Vital event type, e.g., `daily.data.activity.created` |
+| Property | user-id          | Vital User ID of the event subject |
+| Property | team-id          | Vital Team ID of the event subject |
+| Property | content-encoding | `gzip`: The blob is compressed by gzip. absent: The blob is uncompressed. |
+| Property | idempotency-key  | Unique ID of the event |
+| Partition Key | -           | Vital User ID |
+| Data     | -                | The JSON blob. This may or may not be compressed — see `content-encoding`. |
 
-<Info>Payload smaller than 1KiB would not be compressed.</Info>
+<Info>
+By default, payload smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
+decompression of the message payload blob is necessary.
+
+To force Vital to always compress the payload, set `compression: always` on your
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+</Info>
 
 <Info>
 At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
 
-Having said that, you are strongly encouraged to check for and drop any messages with unrecognized `Content-Type` and `Content-Encoding`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
 </Info>
+
+### Broker authentication
+
+Vital connects to your Azure Event Hub namespace through a connection URL you supplied in your
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration:
+
+* It must embed a Event Hub Shared Access Signature (SAS); and
+* It must **not** specify an Event Hub — the default Event Hub should be declared separately as part of your
+  [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+
+
+### Multiple Event Hubs
+
+You can configure your [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
+to route certain events to designated Event Hubs that are _not_ the default Event Hub.
+
+You can do so by declaring a list of Event Hub Matchers (`event_hub_matchers`) in your configuration. For every outbound event, 
+Vital sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
