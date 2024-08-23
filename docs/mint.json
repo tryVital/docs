@@ -78,17 +78,22 @@
       "url": "lab"
     },
     {
-      "name": "Vital API",
+      "name": "Core",
       "icon": "square-code",
       "url": "api-reference"
     },
     {
-      "name": "Lab Testing API",
+      "name": "Data Access",
+      "icon": "magnifying-glass",
+      "url": "api-reference/data"
+    },
+    {
+      "name": "Lab Testing",
       "icon": "flask",
       "url": "api-reference/lab-testing"
     },
     {
-      "name": "Org Management API",
+      "name": "Org Management",
       "icon": "building",
       "url": "api-reference/org-management"
     }
@@ -261,54 +266,37 @@
       ]
     },
     {
-      "group": "Core",
+      "group": "User Management",
       "pages": [
-        {
-          "group": "Users",
-          "pages": [
-            "api-reference/user/create-user",
-            "api-reference/user/get-user",
-            "api-reference/user/resolve-user",
-            "api-reference/user/patch-user",
-            "api-reference/user/delete-user",
-            "api-reference/user/undo-delete-user",
-            "api-reference/user/get-users",
-            "api-reference/user/create-sign-in-token"
-          ]
-        },
-        {
-          "group": "Debugging",
-          "pages": [
-            "api-reference/introspection/user-resources",
-            "api-reference/introspection/historical-pulls"
-          ]
-        }
+        "api-reference/user/create-user",
+        "api-reference/user/get-user",
+        "api-reference/user/resolve-user",
+        "api-reference/user/patch-user",
+        "api-reference/user/delete-user",
+        "api-reference/user/undo-delete-user",
+        "api-reference/user/get-users",
+        "api-reference/user/create-sign-in-token"
       ]
     },
     {
-      "group": "Wearables",
+      "group": "Device Connections",
       "pages": [
         "api-reference/providers",
-        {
-          "group": "Connections",
-          "pages": [
-            "api-reference/user/get-users-connected-providers",
-            "api-reference/user/refresh-user-data",
-            "api-reference/user/deregister-a-provider"
-          ]
-        },
-        {
-          "group": "Link",
-          "pages": [
-            "api-reference/link/generate-link-token",
-            "api-reference/link/create-code",
-            "api-reference/link/link-oauth-provider",
-            "api-reference/link/link-password-provider",
-            "api-reference/link/link-email-provider",
-            "api-reference/link/link-demo-provider",
-            "api-reference/link/complete-password-provider-mfa"
-          ]
-        }
+        "api-reference/user/get-users-connected-providers",
+        "api-reference/user/refresh-user-data",
+        "api-reference/user/deregister-a-provider"
+      ]
+    },
+    {
+      "group": "Link",
+      "pages": [
+        "api-reference/link/generate-link-token",
+        "api-reference/link/create-code",
+        "api-reference/link/link-oauth-provider",
+        "api-reference/link/link-password-provider",
+        "api-reference/link/link-email-provider",
+        "api-reference/link/link-demo-provider",
+        "api-reference/link/complete-password-provider-mfa"
       ]
     },
     {
@@ -371,106 +359,103 @@
       ]
     },
     {
-      "group": "Summary Data",
+      "group": "Debugging",
       "pages": [
-        {
-          "group": "Sleep",
-          "pages": [
-            "api-reference/sleep/get-summary",
-            "api-reference/sleep/get-raw"
-          ]
-        },
-        {
-          "group": "Meal",
-          "pages": ["api-reference/meal/get-summary"]
-        },
-        {
-          "group": "Workouts",
-          "pages": [
-            "api-reference/workouts/get-summary",
-            "api-reference/workouts/get-stream",
-            "api-reference/workouts/get-raw"
-          ]
-        },
-        {
-          "group": "Profile",
-          "pages": [
-            "api-reference/profile/get-summary",
-            "api-reference/profile/get-raw"
-          ]
-        },
-        {
-          "group": "Activity",
-          "pages": [
-            "api-reference/activity/get-summary",
-            "api-reference/activity/get-raw"
-          ]
-        },
-        {
-          "group": "Body",
-          "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
-        },
-        {
-          "group": "Menstrual Cycle",
-          "pages": [
-            "api-reference/menstrual-cycle/get-summary"
-          ]
-        }
+        "api-reference/data/introspection/user-resources",
+        "api-reference/data/introspection/historical-pulls"
       ]
     },
     {
-      "group": "Timeseries Data",
+      "group": "Sleep",
       "pages": [
-        {
-          "group": "Vitals",
-          "pages": [
-            "api-reference/timeseries-grouped/blood-oxygen",
-            "api-reference/timeseries-grouped/blood-pressure",
-            "api-reference/timeseries-grouped/cholesterol",
-            "api-reference/timeseries-grouped/electrocardiogram-voltage",
-            "api-reference/timeseries-grouped/glucose",
-            "api-reference/timeseries-grouped/heartrate",
-            "api-reference/timeseries-grouped/hrv",
-            "api-reference/timeseries-grouped/igg",
-            "api-reference/timeseries-grouped/ige",
-            "api-reference/timeseries-grouped/respiratory-rate",
-            "api-reference/timeseries-grouped/vo2-max"
-          ]
-        },
-        {
-          "group": "Body",
-          "pages": [
-            "api-reference/timeseries-grouped/body-fat",
-            "api-reference/timeseries-grouped/body-weight",
-            "api-reference/timeseries-grouped/body-temperature",
-            "api-reference/timeseries-grouped/body-temperature-delta"
-          ]
-        },
-        {
-          "group": "Activity",
-          "pages": [
-            "api-reference/timeseries-grouped/calories-active",
-            "api-reference/timeseries-grouped/calories-basal",
-            "api-reference/timeseries-grouped/distance",
-            "api-reference/timeseries-grouped/floors-climbed",
-            "api-reference/timeseries-grouped/steps"
-          ]
-        },
-        {
-          "group": "Wellness",
-          "pages": [
-            "api-reference/timeseries-grouped/hypnogram",
-            "api-reference/timeseries-grouped/mindfulness-minutes",
-            "api-reference/timeseries-grouped/stress-level"
-          ]
-        },
-        {
-          "group": "Nutrition",
-          "pages": [
-            "api-reference/timeseries-grouped/caffeine",
-            "api-reference/timeseries-grouped/water"
-          ]
-        }
+        "api-reference/data/sleep/get-summary",
+        "api-reference/data/sleep/get-raw"
+      ]
+    },
+    {
+      "group": "Meal",
+      "pages": ["api-reference/data/meal/get-summary"]
+    },
+    {
+      "group": "Workouts",
+      "pages": [
+        "api-reference/data/workouts/get-summary",
+        "api-reference/data/workouts/get-stream",
+        "api-reference/data/workouts/get-raw"
+      ]
+    },
+    {
+      "group": "Profile",
+      "pages": [
+        "api-reference/data/profile/get-summary",
+        "api-reference/data/profile/get-raw"
+      ]
+    },
+    {
+      "group": "Activity",
+      "pages": [
+        "api-reference/data/activity/get-summary",
+        "api-reference/data/activity/get-raw"
+      ]
+    },
+    {
+      "group": "Body",
+      "pages": ["api-reference/data/body/get-summary", "api-reference/data/body/get-raw"]
+    },
+    {
+      "group": "Menstrual Cycle",
+      "pages": [
+        "api-reference/data/menstrual-cycle/get-summary"
+      ]
+    },
+    {
+      "group": "Vitals Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/blood-oxygen",
+        "api-reference/data/timeseries/blood-pressure",
+        "api-reference/data/timeseries/cholesterol",
+        "api-reference/data/timeseries/electrocardiogram-voltage",
+        "api-reference/data/timeseries/glucose",
+        "api-reference/data/timeseries/heartrate",
+        "api-reference/data/timeseries/hrv",
+        "api-reference/data/timeseries/igg",
+        "api-reference/data/timeseries/ige",
+        "api-reference/data/timeseries/respiratory-rate",
+        "api-reference/data/timeseries/vo2-max"
+      ]
+    },
+    {
+      "group": "Body Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/body-fat",
+        "api-reference/data/timeseries/body-weight",
+        "api-reference/data/timeseries/body-temperature",
+        "api-reference/data/timeseries/body-temperature-delta"
+      ]
+    },
+    {
+      "group": "Activity Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/calories-active",
+        "api-reference/data/timeseries/calories-basal",
+        "api-reference/data/timeseries/distance",
+        "api-reference/data/timeseries/floors-climbed",
+        "api-reference/data/timeseries/steps"
+      ]
+    },
+    {
+      "group": "Wellness Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/hypnogram",
+        "api-reference/data/timeseries/mindfulness-minutes",
+        "api-reference/data/timeseries/stress-level"
+      ]
+    },
+    {
+      "group": "Nutrition Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/caffeine",
+        "api-reference/data/timeseries/water"
       ]
     },
     {
@@ -910,11 +895,11 @@
   "redirects": [
     {
       "source": "/wearables/introspection-api/user-resource",
-      "destination": "/api-reference/introspection/user-resources"
+      "destination": "/api-reference/data/introspection/user-resources"
     },
     {
       "source": "/wearables/introspection-api/historical-pulls",
-      "destination": "/api-reference/introspection/historical-pulls"
+      "destination": "/api-reference/data/introspection/historical-pulls"
     },
     {
       "source": "/wearables/sdks/ios",
@@ -959,6 +944,38 @@
     {
       "source": "/api-reference/results/:subpaths*",
       "destination": "/api-reference/lab-testing/results/:subpaths*"
+    },
+    {
+      "source": "/api-reference/data/workouts/:subpaths*",
+      "destination": "/api-reference/data/workouts/:subpaths*"
+    },
+    {
+      "source": "/api-reference/data/sleep/:subpaths*",
+      "destination": "/api-reference/data/sleep/:subpaths*"
+    },
+    {
+      "source": "/api-reference/data/meal/:subpaths*",
+      "destination": "/api-reference/data/meal/:subpaths*"
+    },
+    {
+      "source": "/api-reference/profile/:subpaths*",
+      "destination": "/api-reference/data/profile/:subpaths*"
+    },
+    {
+      "source": "/api-reference/data/body/:subpaths*",
+      "destination": "/api-reference/data/body/:subpaths*"
+    },
+    {
+      "source": "/api-reference/menstrual-cycle/:subpaths*",
+      "destination": "/api-reference/data/menstrual-cycle/:subpaths*"
+    },
+    {
+      "source": "/api-reference/data/timeseries/:subpaths*",
+      "destination": "/api-reference/data/timeseries/:subpaths*"
+    },
+    {
+      "source": "/api-reference/introspection/:subpaths*",
+      "destination": "/api-reference/data/introspection/:subpaths*"
     }
   ]
 }
