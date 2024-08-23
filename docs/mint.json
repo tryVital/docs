@@ -191,6 +191,7 @@
         "lab/overview/testing-modalities",
         "lab/overview/quickstart",
         "lab/overview/physicians",
+        "lab/overview/insurance",
         "lab/overview/sandbox"
       ]
     },
@@ -253,7 +254,12 @@
             "api-reference/user/delete-user",
             "api-reference/user/undo-delete-user",
             "api-reference/user/get-users",
-            "api-reference/user/create-sign-in-token"
+            "api-reference/user/create-sign-in-token",
+            "api-reference/user/upsert-info",
+            "api-reference/user/get-info-latest",
+            "api-reference/user/create-insurance",
+            "api-reference/user/get-latest-insurance"
+
           ]
         },
         {
