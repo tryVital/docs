@@ -65,7 +65,7 @@
     {
       "name": "Home",
       "icon": "house",
-      "url": "home"
+      "url": "/"
     },
     {
       "name": "Wearables",
@@ -481,7 +481,8 @@
       "pages": [
         "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
         "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
-        "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
+        "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials"
       ]
     },
     {
