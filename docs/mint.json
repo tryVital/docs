@@ -947,15 +947,15 @@
       "destination": "/api-reference/lab-testing/results/:subpaths*"
     },
     {
-      "source": "/api-reference/data/workouts/:subpaths*",
+      "source": "/api-reference/workouts/:subpaths*",
       "destination": "/api-reference/data/workouts/:subpaths*"
     },
     {
-      "source": "/api-reference/data/sleep/:subpaths*",
+      "source": "/api-reference/sleep/:subpaths*",
       "destination": "/api-reference/data/sleep/:subpaths*"
     },
     {
-      "source": "/api-reference/data/meal/:subpaths*",
+      "source": "/api-reference/meal/:subpaths*",
       "destination": "/api-reference/data/meal/:subpaths*"
     },
     {
@@ -963,7 +963,7 @@
       "destination": "/api-reference/data/profile/:subpaths*"
     },
     {
-      "source": "/api-reference/data/body/:subpaths*",
+      "source": "/api-reference/body/:subpaths*",
       "destination": "/api-reference/data/body/:subpaths*"
     },
     {
@@ -971,7 +971,7 @@
       "destination": "/api-reference/data/menstrual-cycle/:subpaths*"
     },
     {
-      "source": "/api-reference/data/timeseries/:subpaths*",
+      "source": "/api-reference/timeseries-grouped/:subpaths*",
       "destination": "/api-reference/data/timeseries/:subpaths*"
     },
     {
