@@ -11,10 +11,26 @@ The query schema and the behaviour is subject to change based on beta feedback.
 <AccordionGroup>
 
 <Accordion title="Receiving data in JSON" icon="brackets-curly" defaultOpen>
-JSON is the default output format. Each query instruction outputs one JSON dataframe to the `$.dataframes` array,
+JSON is the default output format. Each query instruction outputs one entry containing a dataframe to the `$.results` array,
 in the declaration order of the query instructions.
 
-You may specify `Accept: application/json` in your request header if desired.
+```json
+{
+    "results": [
+        "instruction": {
+            /** the corresponding query instruction **/
+        },
+        "dataframe": {
+            "partition": [...],
+            "sleep.efficiency.min": [...],
+            "sleep.efficiency.max": [...],
+            "sleep.efficiency.mean": [...],
+            "sleep.efficiency.newest": [...]
+        }
+    ]
+}
+```
+
 </Accordion>
 
 
