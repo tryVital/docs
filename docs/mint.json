@@ -10,6 +10,7 @@
       "apiKey": "phc_pjvYzFeBB6z4l6JByNiic3SoHt74M9Lqw1SVrR95OCd"
     }
   },
+  "versions": ["release", "beta"],
   "api": {
     "baseUrl": [
       "https://api.tryvital.io",
@@ -86,6 +87,12 @@
       "name": "Data Access",
       "icon": "magnifying-glass",
       "url": "api-reference/data"
+    },
+    {
+      "name": "Horizon AI",
+      "icon": "brain-circuit",
+      "url": "api-reference/horizon-ai",
+      "version": "beta"
     },
     {
       "name": "Lab Testing",
@@ -457,6 +464,14 @@
         "api-reference/data/timeseries/caffeine",
         "api-reference/data/timeseries/water"
       ]
+    },
+    {
+      "group": "Aggregation",
+      "pages": [
+        "api-reference/horizon-ai/aggregation/overview",
+        "api-reference/horizon-ai/aggregation/query-one"
+      ],
+      "version": "beta"
     },
     {
       "group": "Team",
