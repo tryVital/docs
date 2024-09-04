@@ -2,6 +2,34 @@
 title: "Deprecations"
 ---
 
+### `lab_test_id` in the [POST /v3/order](/api-reference/lab-testing/create-order) endpoint.
+
+`lab_test_id` is deprecated in favor of the `order_set` field. More information [here](/lab/workflow/ordering).
+
+<Steps>
+  <Step title="Remove lab_test_id usage" stepNumber="1" titleSize="p">
+    In the `order` payload, remove the usage of `lab_test_id`
+    ```json
+    {
+        "lab_test_id": "some_id" # Remove this
+    }
+    ```
+  </Step>
+  <Step title="Use the order_set field" stepNumber="2" titleSize="p">
+    In the `order` payload, add the `order_set` object.
+    ```json
+    {
+        "order_set": {
+            "lab_test_ids": ["some_id"]
+        }
+    }
+    ```
+  </Step>
+
+</Steps>
+
+
+
 ### `value` field in the `results` object
 
 We are removing the `value` field from the [results object](/api-reference/results/get-results), as it does not accuratly capture all possible result values. In turn, we've introduced the `result` field.

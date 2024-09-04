@@ -1,0 +1,111 @@
+---
+title: "Ordering"
+---
+
+# Lab Tests and Markers
+
+Vital has two concepts to grasp regarding orderable panels/biomarkers:
+
+1. Markers
+2. Lab Tests
+
+### Markers
+
+[_Markers_](/api-reference/lab-testing/biomarkers) are individual, orderable tests, at the lab level. So, for example, at _Labcorp_ you can order a `Lipid Panel` test and a `Vitamin D` test, a `panel` and a `biomarker` respectively. At Vital, these are both refered to as **markers**.
+
+### Lab Tests
+
+[_Lab Tests_](/api-reference/lab-testing/post-test) are a collection of markers, or a preset combination of markers, that you can order. Using the example above, you can create a `Labcorp Lipid Panel and Vitamin D` lab test. You can then place orders at Vital using this preset. This is useful for situations where you repeatedly want to order the same markers.
+
+
+# Ordering 
+
+When placing an [Order](/api-reference/lab-testing/create-order), you will see an `order_set` field. This is what defines what markers will be ordered.
+
+There are multiple combinations allowed with this field, so let's explore all of them.
+
+### Ordering a _Lab Test_
+
+When ordering from **one** previously created _Lab Test_, the `order_set` field should be populated as follows:
+
+```json
+{
+    "order_set": {
+        "lab_test_ids": [<lab_test_id>]
+    }
+}
+````
+
+### Ordering from multiple _Lab Tests_
+
+You may want to combine two or more existing Lab Tests without creating a new one. This is possible by doing:
+
+```json
+{
+    "order_set": {
+        "lab_test_ids": [<lab_test_id_1>, <lab_test_id_2>]
+    }
+}
+````
+
+### Ordering without a _Lab Test_ 
+
+This is what Vital calls `à la carte` ordering. You may want to order from the marker compendium without creating a preset.
+
+<Note>
+This is a team level configuration that must be requested from Vital. Not all markers can be ordered in this manner. 
+</Note>
+
+It is possible to order `a-la-carte` using Vital `marker_ids` or the lab's `provider_id`.
+
+```json
+{
+    "order_set": {
+        "add_on": {
+            "provider_ids": ["322022"]
+        }
+    },
+    "collection_method": "walk_in_test"
+}
+````
+
+### Order _Lab Tests_ with extra _Markers_
+
+You may also add extra **markers** to an order. For example, you want to order the `Labcorp Lipid Panel and Vitamin D` but for this particular patient, you also want to order a `CBC Panel`.
+
+```json
+{
+    "order_set": {
+        "lab_test_ids": [<lab_test_id>],
+        "add_on": {
+            "provider_ids": ["322022"]
+            # "marker_id": [1]
+        }
+    },
+    collection_method: "walk_in_test"
+}
+````
+
+<Note>
+When supplying the `add_on` field, it is always required to provide the `collection_method` field.
+</Note>
+
+
+## Collection Method
+
+Further explored in the documentation, Vital also has the concept of _Collection Method_. Vital currently supports three methods, [`At Home Phlebotomy`](lab/at-home-phlebotomy/overview), [`Walk In Phlebotomy`](lab/walk-in/overview) and [`Testkits`](lab/testkits/overview).
+When ordering, you must select one of these, either at lab test creation, or at ordering time.
+
+
+```json
+{
+    "order_set": {
+        "lab_test_ids": [<lab_test_id>],
+    },
+    "collection_method": "walk_in_test"
+}
+````
+
+## À La Carte Markers
+
+As mentioned above, not all `markers` are `a la carte` orderable. You can find which one's are orderable via the [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers).
