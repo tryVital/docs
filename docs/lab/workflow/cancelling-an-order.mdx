@@ -10,12 +10,130 @@ Cancelling an order depends how far along in the process the order is in. If an 
 
 It's possible to cancel it by making a request to the [cancel endpoint](/lab/workflow/cancelling-an-order#cancel-endpoint).
 
+For at-home phlebotomy, cancel the appointment first if it has been scheduled. You can cancel a phlebotomy appointment by making a request to the [phlebotomy appointment cancellation endpoint](/lab/workflow/cancelling-an-order#cancel-appointment-endpoint).
+
 <Warning>
 When it comes to cancelling an order, to avoid the financial costs associated with late cancelling, we advise the following:
 
 * For test-kits, we recommend cancelling the order before it's shipped. Kits are typically shipped within 24 hours after they are ordered.
 * For at-home phlebotomy, appointments can be cancelled without consequence with a notice of at least 24 hours. Cancelling an order with less than 24h notice may incur a financial cost.
 </Warning>
+
+### Cancel appointment endpoint
+
+<SnippetGroup>
+
+```bash cURL
+curl --request PATCH \
+     --url '{{BASE_URL}}/v3/order/<order_id>/phlebotomy/appointment/cancel' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '{"cancellation_reason_id": "7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9"}'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.cancel_phlebotomy_appointment(
+		order_id="<order_id>",
+		cancellation_reason_id="<cancellation_reason_id>",
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import {  AppointmentCancelRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: AppointmentCancelRequest = {
+    cancellationReasonId: "<reason_id>",
+}
+
+const data = await client.labTests.cancelPhlabotomyAppointment("<order_id>", request);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.AppointmentCancelRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+AppointmentCancelRequest request = AppointmentCancelRequest
+        .builder()
+        .cancellationReasonId("<reason_id")
+        .build();
+
+var data = vital.labTests().cancelPhlabotomyAppointment("<order_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.AppointmentCancelRequest{
+    CancellationReasonId: "<cancellation_reason_id>",
+}
+
+response, err := client.LabTests.CancelPhlabotomyAppointment(context.TODO(), "<order_id>", request)
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</SnippetGroup>
+
+You will receive a response specifying awhether the order was successfully cancelled or not.
+
+```json Appointent Cancellation response
+{
+    "id": "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    "user_id": "202b2c2f-fb4c-44dc-a4f8-621186fde227",
+    "address": {
+        "first_line": "West Lincoln Street",
+        "second_line": "",
+        "city": "Phoenix",
+        "state": "AZ",
+        "zip_code": "85004",
+        "unit": "14"
+    },
+    "location": {
+        "lng": -112.0772235,
+        "lat": 33.4421912
+    },
+    "start_at": "2023-05-17T20:00:00+00:00",
+    "end_at": "2023-05-17T22:00:00+00:00",
+    "iana_timezone": "America/Phoenix",
+    "type": "phlebotomy",
+    "provider": "getlabs",
+    "status": "cancelled",
+    "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
+    "can_reschedule": true
+}
+```
 
 ### Cancel endpoint
 
@@ -89,7 +207,7 @@ fmt.Printf("Received data %s\n", response)
 
 You will receive a response specifying whether the order was successfully cancelled or not.
 
-```json Test order updated
+```json Cancellation response
 {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"),
         "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
