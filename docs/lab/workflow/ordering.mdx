@@ -28,25 +28,49 @@ There are multiple combinations allowed with this field, so let's explore all of
 
 When ordering from **one** previously created _Lab Test_, the `order_set` field should be populated as follows:
 
-```json
-{
-    "order_set": {
-        "lab_test_ids": [<lab_test_id>]
-    }
-}
-````
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.create_order(
+        order_set=OrderSet(
+            lab_test_ids=["lab_test_id"]
+        )
+        ...
+)
+```
+</SnippetGroup>
 
 ### Ordering from multiple _Lab Tests_
 
 You may want to combine two or more existing Lab Tests without creating a new one. This is possible by doing:
 
-```json
-{
-    "order_set": {
-        "lab_test_ids": [<lab_test_id_1>, <lab_test_id_2>]
-    }
-}
-````
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.create_order(
+        order_set=OrderSet(
+            lab_test_ids=["lab_test_id1", "lab_test_id_2"]
+        )
+        ...
+)
+```
+</SnippetGroup>
 
 ### Ordering without a _Lab Test_ 
 
@@ -58,33 +82,58 @@ This is a team level configuration that must be requested from Vital. Not all ma
 
 It is possible to order `a-la-carte` using Vital `marker_ids` or the lab's `provider_id`.
 
-```json
-{
-    "order_set": {
-        "add_on": {
-            "provider_ids": ["322022"]
-        }
-    },
-    "collection_method": "walk_in_test"
-}
-````
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.create_order(
+        order_set=OrderSet(
+            add_on=AddOn(
+                provider_ids=["322022"]
+                # marker_ids=[1] 
+            )
+        ),
+        collection_method="walk_in_test",
+        ...
+)
+```
+</SnippetGroup>
 
 ### Order _Lab Tests_ with extra _Markers_
 
 You may also add extra **markers** to an order. For example, you want to order the `Labcorp Lipid Panel and Vitamin D` but for this particular patient, you also want to order a `CBC Panel`.
 
-```json
-{
-    "order_set": {
-        "lab_test_ids": [<lab_test_id>],
-        "add_on": {
-            "provider_ids": ["322022"]
-            # "marker_id": [1]
-        }
-    },
-    collection_method: "walk_in_test"
-}
-````
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.create_order(
+        order_set=OrderSet(
+            lab_test_ids=["lab_test_id"],
+            add_on=AddOn(
+                provider_ids=["322022"]
+                # marker_ids=[1] 
+            )
+        ),
+        collection_method="walk_in_test",
+        ...
+)
+```
+</SnippetGroup>
 
 <Note>
 When supplying the `add_on` field, it is always required to provide the `collection_method` field.
@@ -97,15 +146,49 @@ Further explored in the documentation, Vital also has the concept of _Collection
 When ordering, you must select one of these, either at lab test creation, or at ordering time.
 
 
-```json
-{
-    "order_set": {
-        "lab_test_ids": [<lab_test_id>],
-    },
-    "collection_method": "walk_in_test"
-}
-````
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+client.lab_tests.create_order(
+        order_set=OrderSet(
+            lab_test_ids=["lab_test_id"],
+        ),
+        collection_method="walk_in_test",
+        ...
+)
+```
+</SnippetGroup>
 
 ## À La Carte Markers
 
 As mentioned above, not all `markers` are `a la carte` orderable. You can find which one's are orderable via the [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers).
+
+<SnippetGroup>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+markers = client.lab_tests.get_markers(
+        name="322022",
+        a_la_carte_enabled=True
+)
+
+if not all([m.a_la_carte_enabled for m in markers.markers]):
+    raise Exception("Markers not a_la_carte_enabled")
+```
+</SnippetGroup>
+
