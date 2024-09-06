@@ -229,6 +229,7 @@
     {
       "group": "Workflow",
       "pages": [
+        "lab/workflow/ordering",
         "lab/workflow/lab-test-lifecycle",
         "lab/workflow/order-requirements",
         "lab/workflow/scheduled-orders",
@@ -564,7 +565,7 @@
         {
           "group": "Appointments",
           "pages": [
-            "event-catalog/labtest.appointment.update"
+            "event-catalog/labtest.appointment.updated"
           ]
         }
       ]
