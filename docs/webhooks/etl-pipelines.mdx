@@ -8,9 +8,9 @@ import OrgManagementAPI from '/snippets/org-management-api.mdx';
 ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
-[Events](/webhooks/introduction) can be published directly to a supported event queue source of
-your ETL pipelines. This means you need not provision Internet reachable, unauthenticated HTTPS endpoints
-in order to ingest Vital events as webhooks.
+With ETL Pipelines, Vital streams all [Vital events](/webhooks/event-structure) continuously to a supported destination
+over direct authenticated TLS connections. Compared to [Webhooks](/webhooks/introduction), this simplifies your operational
+complexity by removing the need to operate public unauthenticated HTTPS endpoints for receiving incoming Webhooks.
 
 <CardGroup cols={2}>
   <Card title="Scalable" icon="arrow-up-right-dots">
@@ -99,10 +99,10 @@ Each event is published with these Cloud Pub/Sub message attributes:
 
 | Type | Key | Value |
 | --- | --- | --- |
-| Attribute | `event_type` | Vital event type, e.g., `daily.data.activity.created` |
-| Attribute | `blob_type` | `json` : UTF8 JSON document |
-| Attribute | `blob_codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
-| Attribute | `idempotency_key` | Unique ID of the event |
+| Attribute | `event-type` | Vital event type, e.g., `daily.data.activity.created` |
+| Attribute | `blob-type` | `json` : UTF8 JSON document |
+| Attribute | `blob-codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
+| Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
 | Ordering Key | - | Vital User ID (If you have enabled Event Ordering) |
 
 <Info>
@@ -111,9 +111,9 @@ the message payload blob is necessary.
 </Info>
 
 <Info>
-At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Vital publishes exclusively JSON blobs (`blob-type == json`).
 
-Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob_type` and `blob_codec`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob-type` and `blob-codec`.
 </Info>
 
 ### Pub/Sub event ordering
@@ -194,13 +194,13 @@ Each event is published with these [Azure EventData Properties](https://learn.mi
 | Property | user-id          | Vital User ID of the event subject |
 | Property | team-id          | Vital Team ID of the event subject |
 | Property | content-encoding | `gzip`: The blob is compressed by gzip. absent: The blob is uncompressed. |
-| Property | idempotency-key  | Unique ID of the event |
+| Property | idempotency-key  | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
 | Partition Key | -           | Vital User ID |
 | Data     | -                | The JSON blob. This may or may not be compressed — see `content-encoding`. |
 
 <Info>
 By default, payload smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
-decompression of the message payload blob is necessary.
+decompression of the event payload blob is necessary.
 
 To force Vital to always compress the payload, set `compression: always` on your
 [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
