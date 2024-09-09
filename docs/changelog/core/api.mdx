@@ -2,11 +2,37 @@
 title: "API"
 ---
 
+### Prepare Team Custom Credentials endpoint (Aug 2024)
+
+The new [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials) endpoint
+provides instructions for preparation of [Bring Your Own OAuth](/wearables/connecting-providers/bring_your_own_oauth) custom credentials.
+
+You can use the information to configure things like OAuth callback URI and the Webhook URI (if applicable), before activating it on your
+Vital Team through the [Set Team Custom Credential](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials)
+endpoint.
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+
+### Azure Event Hub: Flexible routing (Aug 2024)
+
+You can now configure your [Azure Event Hub destination in ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub)
+to route Vital data events to different Event Hubs based on their event type prefix.
+
+Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple-event-hubs) documentation.
+
+<Info>
+ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+
 ### Azure Event Hubs as ETL Pipeline destination (Jun 2024)
 
 You can now receive [events](/webhooks/introduction) from Vital directly with your Azure Event Hubs.
 
-Check out the [ETL Pipelines](/webhooks/etl-pipelines) documentation.
+Check out the [ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub) documentation.
 
 <Info>
 ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
