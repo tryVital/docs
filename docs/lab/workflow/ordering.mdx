@@ -1,14 +1,18 @@
 ---
 title: "Ordering"
-version: beta
 ---
 
 # Lab Tests and Markers
 
-Vital has two concepts to grasp regarding orderable panels/biomarkers:
+Vital has a series of concepts to grasp regarding ordering: 
 
-1. Markers
-2. Lab Tests
+- [Lab Tests](/lab/workflow/create-test)
+- [Lifecyle of an Order](/lab/workflow/lab-test-lifecycle)
+- [AoE](/lab/workflow/aoe)
+- [Registrable Kits](/lab/workflow/order-registrable-testkit)
+- [Scheduled Orders](/lab/workflow/scheduled-orders)
+
+In this document, we will focus on orderable panels/biomarkers.
 
 ### Markers
 
@@ -193,3 +197,16 @@ if not all([m.a_la_carte_enabled for m in markers.markers]):
 ```
 </SnippetGroup>
 
+
+
+## Error Cases
+
+With the existance of various allowed combinations with the `order_set` field, there's many validations that are done server side. Here are some of the errors you can expect to encounter:
+
+### 400 Bad Request
+
+1. `collection_method must be set if add_on is set`: When the `add_on` field is supplied, you must provide the `collection_method`.
+2. `marker_ids or provider_ids must be set in add_on`: One of `marker_ids` or `provider_ids` must be set, if the `add_on` field is provided.
+3. `cannot set both marker_ids and provider_ids in add_on`: Similarly, only one of the former fields can be provided.
+4. `cannot order lab_tests from multiple labs`: You can only order multiple lab tests from the same lab.
+5. `cannot order with lab tests with multiple collection methods`: You must supply a `collection_method` if ordering multiple lab tests with multiple collection methods.
