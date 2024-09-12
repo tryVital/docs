@@ -478,6 +478,14 @@
       "group": "Aggregation",
       "pages": [
         "api-reference/horizon-ai/aggregation/overview",
+        {
+          "group": "Query DSL",
+          "pages": [
+            "api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
+            "api-reference/horizon-ai/aggregation/query-dsl/select-clause",
+            "api-reference/horizon-ai/aggregation/query-dsl/group-by-clause"
+          ]
+        },
         "api-reference/horizon-ai/aggregation/query-one"
       ],
       "version": "beta"

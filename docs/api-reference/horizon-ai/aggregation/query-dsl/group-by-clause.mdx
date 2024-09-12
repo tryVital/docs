@@ -1,0 +1,130 @@
+---
+title: group_by clause
+icon: objects-column
+iconType: duotone
+---
+
+
+## Group by a truncated datetime
+
+Group the input rows based on the specified column expression truncated to the specified granularity.
+This is similar to the `DATE_TRUNC` function in SQL.
+
+<AccordionGroup>
+<Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+| Argument         | Remarks 
+| ---------------- | ---------------
+| date_trunc       | The date or time period to truncate the input datetime to.
+| arg              | The input expression — only an [Index Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#index-column-expression) is accepted.
+
+</Accordion>
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+`group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
+
+See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+</Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+# Truncate to every 1 day.
+va.select(...).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "day"),
+)
+
+# Truncate to every 3 months.
+va.select(...).group_by(
+    va.date_trunc(va.Sleep.index(), 3, "month"),
+)
+```
+
+```python JSON DSL
+# Truncate to every 1 day.
+{
+    "group_by": [
+        {
+            "date_trunc": { "value": 1, "unit": "day" },
+            "arg": { "index": "sleep" }
+        }
+    ]
+}
+
+# Truncate to every 3 months.
+{
+    "group_by": [
+        {
+            "date_trunc": { "value": 3, "unit": "month" },
+            "arg": { "index": "sleep" }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+
+
+## Group by a date or time component
+
+
+Group the input rows based on a specific date or time component extracted from the specified column expression.
+This is similar to the `DATE_PART` function in SQL.
+
+<AccordionGroup>
+<Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+| Argument         | Remarks 
+| ---------------- | ---------------
+| date_part        | The date or time unit to extract.
+| arg              | The input expression — only an [Index Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#index-column-expression) is accepted.
+
+</Accordion>
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+`group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
+
+See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+</Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+# Extract the weekday
+va.select(...).group_by(
+    va.date_part(va.Sleep.index(), "weekday"),
+)
+
+# Extract the day-of-month
+va.select(...).group_by(
+    va.date_part(va.Sleep.index(), "day")
+)
+```
+
+```python JSON DSL
+# Extract the weekday
+{
+    "group_by": [
+        {
+            "date_part": "weekday",
+            "arg": { "index": "sleep" }
+        }
+    ]
+}
+
+# Extract the day-of-month
+{
+    "group_by": [
+        {
+            "date_part": "day",
+            "arg": { "index": "sleep" }
+        }
+    ]
+}
+```
+</CodeGroup>
+
