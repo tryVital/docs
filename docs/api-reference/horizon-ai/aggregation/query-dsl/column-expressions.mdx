@@ -1,0 +1,54 @@
+---
+title: Column expressions
+icon: table-columns
+---
+
+### Table Column expression
+
+Your Query Instruction can pull data from [Vital resources](/wearables/providers/resources)
+through table column expressions:
+
+| Table                                 | Python DSL            | JSON DSL                    
+| ------------------------------------- | --------------------- | ----------------------------
+| Sleep summary<br/>`sleep`             | `Sleep.col("$1")`     | `{ "sleep": "$1" }`
+| Activity daily summary<br/>`activity` | `Activity.col("$1")`  | `{ "activity": "$1" }`
+
+Each Table Column expression can select one column (a field) of the table (the Vital resource).
+You can use multiple Table Column expressions to select multiple columns in the same query.
+
+<Info>
+Cross-table query instruction is not supported — you cannot mix Table Column expressions from
+different tables in the same query instruction.
+</Info>
+
+<Note>
+Column expressions for summary types, timeseries types as well as lab testing biomarkers
+are planned to be introduced gradually.
+</Note>
+
+
+### Index Column expression
+
+Each Vital resource has a primary datetime index. Your Query Instruction can reference this datetime
+index using the special Index Column expression:
+
+| Table                                | Index                | Python DSL          | JSON DSL                    
+| ------------------------------------ | -------------------- | ------------------- | ----------------------------
+| Sleep summary<br/>`sleep`            | Session end datetime | `Sleep.index()`     | `{ "index": "sleep" }`
+| Activity daily summary<br/>`activity`| Calendar date        | `Activity.index()`  | `{ "index": "activity" }`
+
+
+
+### Group Key Column expression
+
+
+When your Query Instruction uses [the `group_by` clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause), each expression
+in the `group_by` clause creates a temporary Group Key Column (`group_key.$OFFSET`). These temporary columns are then used to
+facilitate the data grouping and aggregation as specified by your Query Instruction.
+
+You can refer to these columns using the special Group Key Column expression:
+
+| Group Key Columns | Python DSL       | JSON DSL 
+| ----------------- | ---------------- | -----------------------
+| All               | `group_key("*")` | `{ "group_key": "*" }`
+| `$N`-th              | `group_key($N)` | `{ "group_key": $N }`
