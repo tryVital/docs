@@ -1,0 +1,158 @@
+---
+title: "Azure Event Hubs"
+icon: "microsoft"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
+
+<Info>
+ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+## Event Structure
+
+Each event is published with these [Azure EventData Properties](https://learn.microsoft.com/en-us/dotnet/api/azure.messaging.eventhubs.eventdata.properties?view=azure-dotnet#azure-messaging-eventhubs-eventdata-properties):
+
+| Type     | Key              | Value |
+| -------- | ---------------- | ----- |
+| Property | event-type       | Vital event type, e.g., `daily.data.activity.created` |
+| Property | user-id          | Vital User ID of the event subject |
+| Property | team-id          | Vital Team ID of the event subject |
+| Property | content-encoding | `gzip`: The blob is compressed by gzip. absent: The blob is uncompressed. |
+| Property | idempotency-key  | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
+| Partition Key | -           | Vital User ID |
+| Data     | -                | The JSON blob. This may or may not be compressed — see `content-encoding`. |
+
+<Info>
+By default, payload smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
+decompression of the event payload blob is necessary.
+
+To force Vital to always compress the payload, set `compression: always` on your
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+</Info>
+
+<Info>
+At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
+
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
+</Info>
+
+## Broker authentication
+
+Vital connects to your Azure Event Hub namespace through a connection URL you supplied in your
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration:
+
+* It must embed a Event Hub Shared Access Signature (SAS); and
+* It must **not** specify an Event Hub — the default Event Hub should be declared separately as part of your
+  [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+
+
+## Configuration
+
+<OrgManagementAPI />
+
+You can manage your Azure Event Hub destination through the Org Management API
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
+
+A basic configuration would look as such:
+
+```json
+{
+  "team_id": "TEAM_ID",
+  "preferences": {
+    "enabled": ["azure_amqp"],
+    "preferred": "azure_amqp",
+  },
+  "azure_amqp": {
+    "connection_string": "Endpoint://...;...",
+    "default_event_hub": "vital_event_ingestion"
+  },
+  "push_historical_data": true
+}
+```
+
+### Multiple Event Hubs
+
+You can [configure your Azure Event Hub destination](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
+to route certain events to designated Event Hubs that are _not_ the default Event Hub.
+
+You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`) . For every outbound event, 
+Vital sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
+
+```json Example
+"azure_amqp": {
+  ...,
+
+  "event_hub_matchers": [
+    {
+      "event_type_prefix": "labtest.",
+      "event_hub": "labtest-events"
+    },
+    {
+      "event_type_prefix": "daily.",
+      "event_hub": "wearable-events"
+    },
+    {
+      "event_type_prefix": "historical.",
+      "event_hub": "wearable-events"
+    },
+    {
+      "event_type_prefix": "provider.",
+      "event_hub": "wearable-events"
+    }
+  ]
+}
+```
+
+### Azure Blob Storage
+
+
+You can [configure your Azure Event Hub destination](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
+to route certain events to an Azure Blob Storage container. This is useful if you have enabled the Provider Raw Data firehose, which may
+publish raw data events beyond the 1 MiB size limit of Azure Event Hub.
+
+Vital writes each matched event as a Block Blob. The blob name follows the standard format of:
+
+```
+# uncompressed
+{team-id}/{user-id}/{timestamp_rfc3339}#{event-type}#{idempotency-key}.json
+
+# gzip compressed
+{team-id}/{user-id}/{timestamp_rfc3339}#{event-type}#{idempotency-key}.json.gz
+```
+
+You can do so by declaring an Event Hub Matcher that targets a Blob Storage container instead of an Event Hub:
+
+```json Example
+"azure_amqp": {
+  ...,
+
+  "event_hub_matchers": [
+    {
+      "event_type_prefix": "raw.garmin.",
+      "blob_storage": {
+        "connection_string": "Endpoint://...;...",
+        "container": "garmin-raw-data"
+      }
+    },
+    {
+      "event_type_prefix": "raw.",
+      "blob_storage": {
+        "connection_string": "Endpoint://...;...",
+        "container": "provider-raw-data"
+      }
+    },
+    {
+      "event_type_prefix": "daily.",
+      "event_hub": "wearable-events"
+    },
+    ...
+  ]
+}
+```
+
+<Warning>
+Some polling-based providers can write 96 writes per day per user on certain event types, e.g., like `daily.data.activity.*` and
+`raw.fitbit.daily_activity_summary`. Azure Blob Storage typically charges based on volume and classes of operations, in addition
+to the retention cost.
+</Warning>

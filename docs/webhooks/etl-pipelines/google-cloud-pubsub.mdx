@@ -1,0 +1,87 @@
+---
+title: "Google Cloud Pub/Sub"
+icon: "google"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
+
+<Info>
+ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+# Event Structure
+
+Each event is published with these Cloud Pub/Sub message attributes:
+
+| Type | Key | Value |
+| --- | --- | --- |
+| Attribute | `event-type` | Vital event type, e.g., `daily.data.activity.created` |
+| Attribute | `blob-type` | `json` : UTF8 JSON document |
+| Attribute | `blob-codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
+| Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
+| Ordering Key | - | Vital User ID (If you have enabled Event Ordering) |
+
+<Info>
+Payload smaller than 1KiB would not be compressed. You must check `blob_codec` to identify if decompression of
+the message payload blob is necessary.
+</Info>
+
+<Info>
+At this time, Vital publishes exclusively JSON blobs (`blob-type == json`).
+
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob-type` and `blob-codec`.
+</Info>
+
+## Pub/Sub event ordering
+
+If you wish to receive event for each Vital user in their publication order, Vital supports Pub/Sub Event Ordering, and uses the Vital User ID as the event ordering key. 
+
+Vital publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
+
+<Warning>
+Pub/Sub Exactly Once Delivery is **discouraged** to be used together with Event Ordering. Our own trial suggested that the combination would struggle to move high volume of events.
+</Warning>
+
+## IAM Permission
+
+Grant the relevant IAM Principals on your topic with these pre-defined roles:
+
+- Pub/Sub Publisher (`roles/pubsub.publisher`)
+- Pub/Sub Viewer (`roles/pubsub.viewer`)
+
+Or more specifically these permissions if you wish to create a custom IAM role with a minimized grant:
+
+- `pubsub.topics.get`
+- `pubsub.topics.publish`
+
+| Environment | Region | Service Account |
+| ----------- | --- | --- |
+| Sandbox     | US | customer-topics-us@vital-sandbox.iam.gserviceaccount.com |
+| Sandbox     | Europe | customer-topics-eu@vital-sandbox.iam.gserviceaccount.com |
+| Production  | US | customer-topics-us@vital-prod-307415.iam.gserviceaccount.com |
+| Production  | Europe | customer-topics-eu@vital-prod-307415.iam.gserviceaccount.com |
+
+## Configuration
+
+<OrgManagementAPI />
+
+You can manage your RabbitMQ destination through the Org Management API
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
+
+A basic configuration would look as such:
+
+```json
+{
+  "team_id": "TEAM_ID",
+  "preferences": {
+    "enabled": ["cloud_pubsub"],
+    "preferred": "cloud_pubsub",
+  },
+  "cloud_pubsub": {
+      "project": "my-gcp-project-123456",
+      "topic": "event-ingestion",
+      "message_ordering": true
+  },
+  "push_historical_data": true
+}
+```

@@ -1,0 +1,68 @@
+---
+title: "RabbitMQ"
+icon: "rabbit"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
+
+<Info>
+ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+## Event Structure
+
+Each event is published with these RabbitMQ message custom headers:
+
+| Key | Value |
+| --- | --- |
+| Routing Key | Vital event type, e.g., `daily.data.activity.created` |
+| `Content-Type` | application/json : UTF8 JSON document |
+| `Content-Encoding` | gzip: The blob is compressed by gzip. null/absent: The blob is uncompressed. |
+| Data | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
+
+<Info>
+Payload smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
+decompression of the message payload blob is necessary.
+</Info>
+
+<Info>
+At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
+
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
+</Info>
+
+## Broker authentication
+
+Vital only supports password authentication at this time.
+
+Vital publishes events with the following settings:
+
+- Publisher Confirm mode is required
+- Events are published with the Mandatory flag but without the Immediate flag.
+- Events are published with Event Type as the Routing Key.
+
+Please get in touch if these need to be configured differently for your RabbitMQ exchange.
+
+## Configuration
+
+<OrgManagementAPI />
+
+You can manage your RabbitMQ destination through the Org Management API
+[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
+
+A basic configuration would look as such:
+
+```json
+{
+  "team_id": "TEAM_ID",
+  "preferences": {
+    "enabled": ["rabbitmq"],
+    "preferred": "rabbitmq",
+  },
+  "rabbitmq": {
+      "uri": "amqps://...",
+      "exchange": "default"
+  },
+  "push_historical_data": true
+}
+```

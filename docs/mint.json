@@ -153,8 +153,16 @@
       "pages": [
         "webhooks/introduction",
         "webhooks/event-structure",
-        "webhooks/debugging",
-        "webhooks/etl-pipelines"
+        "webhooks/debugging"
+      ]
+    },
+    {
+      "group": "ETL Pipelines",
+      "pages": [
+        "webhooks/etl-pipelines/overview",
+        "webhooks/etl-pipelines/google-cloud-pubsub",
+        "webhooks/etl-pipelines/rabbitmq",
+        "webhooks/etl-pipelines/azure-event-hubs"
       ]
     },
     {
