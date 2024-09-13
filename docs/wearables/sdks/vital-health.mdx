@@ -13,6 +13,61 @@ Please consult the following guides on requirements and restrictions of Apple He
 
 The Health SDK guide focuses on the API usage of the Health SDK.
 
+## Configure your App Delegate (iOS only)
+
+<Note>This applies to all iOS integrations — Native iOS, React Native or Flutter.</Note>
+
+Your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation must call `VitalHealthKitClient.automaticConfiguration()` 
+before it returns.
+
+
+<Accordion title="Details" icon="apple">
+
+Vital needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
+require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
+[[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
+
+If this requirement is not satisfied, background delivery may be missed, and the app process may be terminated.
+
+For React Native and Flutter apps, the AppDelegate is part of the template Swift or Objective-C code in your generated Xcode project.
+
+<CodeGroup>
+
+```swift Swift / Flutter
+import VitalHealthKit
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
+
+    VitalHealthKitClient.automaticConfiguration()
+
+    // ...
+
+    return true
+  }
+}
+```
+
+```swift Objective-C / React Native
+#import "AppDelegate.h"
+#import "VitalHealthKitConfiguration.h"
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  [VitalHealthKitConfiguration automaticConfiguration];
+
+  // ...
+
+  return YES;
+}
+```
+</CodeGroup>
+
+</Accordion>
+
 ## SDK configuration
 
 The Health SDK must be configured before use. The configuration is persistent, so
@@ -63,9 +118,8 @@ await vital_health.configure(
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
 
-<Tabs>
-<Tab title="Native iOS">
-```swift
+<CodeGroup>
+```swift Native iOS
 import VitalHealthKit
 
 await VitalHealthKitClient.shared.ask(
@@ -73,11 +127,13 @@ await VitalHealthKitClient.shared.ask(
   writePermissions: []
 )
 ```
-</Tab>
 
-<Tab title="Native Android">
-<CodeGroup>
-```kotlin Android Compose
+```kotlin Native Android
+
+//
+// Android Compose
+//
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.material3.*
@@ -104,9 +160,10 @@ val permissionsLauncher = rememberLauncherForActivityResult(contract) { outcomeA
 Button(onClick = { permissionsLauncher.launch(Unit) }) {
   Text("Ask for permission")
 }
-```
 
-```kotlin AndroidX Activity Result API
+//
+// AndroidX Activity Result API
+//
 import androidx.activity.ComponentActivity
 import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
 
@@ -120,11 +177,8 @@ activity.registerForActivityResult(contract) { outcomeAsync ->
   }
 }
 ```
-</CodeGroup>
-</Tab>
 
-<Tab title="React Native">
-```typescript
+```typescript React Native
 import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
 
 await VitalHealth.ask(
@@ -132,10 +186,8 @@ await VitalHealth.ask(
     []
 )
 ```
-</Tab>
 
-<Tab title="Flutter">
-```dart
+```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 
 final List<vital_health.HealthResource> readResources = [
@@ -145,12 +197,15 @@ final List<vital_health.HealthResource> readResources = [
 ];
 await vital_health.askForPermission(readResources, []);
 ```
-</Tab>
-</Tabs>
+</CodeGroup>
 
-Note that the OS only prompts the end user once for each resource type. Subsequent requests are
+Note that the operating system only prompts the end user once for each resource type. Subsequent requests are
 gracefully ignored by the OS.
 
+<Warning>
+The health data read permission prompted is managed by the operating system. Vital cannot customize or
+alter its behaviour.
+</Warning>
 
 ## Automatic Data Sync
 
