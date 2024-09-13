@@ -453,3 +453,35 @@ import 'package:vital_health/vital_health.dart' as vital_health;
 Stream<SyncStatus> status = vital_health.syncStatus;
 ```
 </CodeGroup>
+
+
+## Sync Progress Debugging UI (iOS only)
+
+Vital Health SDK for iOS includes a `ForEachVitalResource` — a pre-baked SwiftUI View providing a
+live-updated sync progress feed of all the `VitalResource`s whose permissions have been asked for.
+
+You can use `ForEachVitalResource()` in any position which you would use `ForEach`. For example,
+you can use it inside a `Section` of a `List`:
+
+```swift Native iOS
+import VitalHealthKit
+
+struct SyncProgressView: View {
+  var view: some View {
+    List {
+      Section(header: Text("Sync Progress")) {
+        ForEachVitalResource()
+      }
+    }
+  }
+}
+```
+
+If you are using UIKit, you can still access it through `UIHostingController`:
+
+```swift Native iOS
+let viewController: UIViewController
+
+let hostingController = UIHostingController(rootView: SyncProgressView())
+viewController.present(hostingController, animated: true, completion: nil)
+```

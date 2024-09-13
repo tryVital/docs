@@ -189,3 +189,27 @@ Aside from the Core SDK Status, you can also query the Vital User ID of the sign
 ## Reset the SDK (Sign Out)
 
 Refer to [the Sign Out section in the SDK Authentication guide](/wearables/sdks/authentication#sign-out).
+
+
+## Verbose Logging to Console/Logcat
+
+Enable verbose logging. Applies to all Vital Mobile SDKs.
+
+<Note>
+On Android, verbose logging is enabled by default when running as a debuggable build
+(i.e., with `ApplicationInfo.FLAG_DEBUGGABLE`).
+</Note>
+
+<CodeGroup>
+  ```swift Native iOS
+  import VitalCore
+
+  VitalLogger.stdOutEnabled = true
+  ```
+
+  ```kotlin Native Android
+  import io.tryvital.client.utils.VitalLogger
+
+  VitalLogger.getOrCreate().enabled = true
+  ```
+</CodeGroup>
