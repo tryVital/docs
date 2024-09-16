@@ -15,19 +15,24 @@ The Health SDK guide focuses on the API usage of the Health SDK.
 
 ## Configure your App Delegate (iOS only)
 
-<Note>This applies to all iOS integrations — Native iOS, React Native or Flutter.</Note>
+<Note>
+This applies to all iOS integrations — Native iOS, React Native or Flutter.
+</Note>
 
-Your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation must call `VitalHealthKitClient.automaticConfiguration()` 
-before it returns.
+<Warning>
+You must configure your App Delegate as instructed if you use Vital Health SDK on iOS. Not doing so
+may result in missing background delivery, or app process termination by the operating system.
+</Warning>
+
+In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation, it **must** call Vital Health SDK
+`automaticConfiguration()` synchronously before it returns.
 
 
-<Accordion title="Details" icon="apple">
+<Accordion title="Details" icon="apple" defaultOpen>
 
 Vital needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
 require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
 [[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
-
-If this requirement is not satisfied, background delivery may be missed, and the app process may be terminated.
 
 For React Native and Flutter apps, the AppDelegate is part of the template Swift or Objective-C code in your generated Xcode project.
 
