@@ -62,6 +62,11 @@ setup your iOS app target as an eligible target for Apple HealthKit Background D
 
 ## Setting up Apple HealthKit Background Delivery
 
+<Warning>
+You **MUST** [configure your App Delegate](/wearables/sdks/vital-health#configure-your-app-delegate-ios-only) for 
+Apple HealthKit Background Delivery to function as expected.
+</Warning>
+
 
 Vital Health SDK can subscribe to Apple HealthKit Background Delivery, so that data sync can happen automatically in
 background. The subscription persists even when:
