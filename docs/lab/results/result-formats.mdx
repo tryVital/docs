@@ -216,3 +216,33 @@ In order to obtain this data, you can use the following endpoints:
     This allows you to see all markers associated with a lab test and it's expected results.
 
 
+#### Missing Results
+
+At times labs will commit mistakes, and expected results will be missing. Vital identifies these and parses them into a separate structure, named `missing_results`.
+
+This data has the following format:
+
+```python
+name: str
+slug: str
+reason: FailureType
+loinc: str | None = None
+loinc_slug: str | None = None
+provider_id: str | None = None
+```
+
+`reason` is the Vital assigned failure enum, which contains a series of reasons for the missing result. These can be as follows:
+
+```python
+"quantity_not_sufficient_failure"
+"collection_process_failure"
+"drop_off_failure"
+"internal_lab_failure"
+"order_entry_failure"
+"non_failure"
+"unknown_failure"
+"patient_condition_failure"
+"missing_result_calc_failure"
+"missing_demo_aoe_calc_failure"
+```
+
