@@ -231,18 +231,45 @@ loinc_slug: str | None = None
 provider_id: str | None = None
 ```
 
-`reason` is the Vital assigned failure enum, which contains a series of reasons for the missing result. These can be as follows:
+`reason` is the Vital assigned error type.
+The error type is inferred from the comments received from the lab. They are to help assess possibly root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve more granular understanding of failure modes.
 
-```python
-"quantity_not_sufficient_failure"
-"collection_process_failure"
-"drop_off_failure"
-"internal_lab_failure"
-"order_entry_failure"
-"non_failure"
-"unknown_failure"
-"patient_condition_failure"
-"missing_result_calc_failure"
-"missing_demo_aoe_calc_failure"
-```
+1. `quantity_not_sufficient_failure`
 
+   The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being to unable to collect the proper volume of blood from the sample, or the phlebotomist not collecting all of the sample they were meant to collect.
+
+2. `collection_process_failure`
+   
+   This is indicative of potential failures to follow the entirety phlebotomy process, often immediately following the collection. For example, improper centrifugation of the collected sample, improper refrigeration. While these are the most likely causes, there are other reasons for why sample quality may have been degraded.
+
+3. `drop_off_failure`
+   
+   This speaks to a specific form of collection process failures. Specifically that the sample was not received by the lab in proper condition. Possible issues correspond to improper freezing, or refrigeration, or was exposed to excessive transport delay.
+
+4. `internal_lab_failure`
+   
+   This speaks to failures that are most likely to have happened internal to the lab. This includes issues such as misplacing a collected sample, or errors that could not be best attributed to any external cause.
+
+5. `order_entry_failure`
+
+   The test was not performed because it was not properly ordered at the lab.
+
+6. `non_failure`
+
+   This speaks to a failure that should not impact the patient. For example, it may indicate that a duplicate test was ordered.
+
+7. `unknown_failure`
+
+   This is a failure mode that could not be properly attributed to any specific failure mode. Potentially the results were simply left out and Vital was not provided any additional information.
+
+8. `patient_condition_failure`
+
+   This speaks to a failure to result due to specifics of the patient's physical condition. For example, the patient may have had some food very high in fats that immediately prior to a collection. It is possible that improper storage and handling can cause samples to fail in ways that appear to be a patient condition failure.
+
+9. `missing_result_calc_failure`
+
+   This failure indicates that a calculated field is missing because the underlying tests required to perform the calculation were either unable to be processed, or yielded a result outside of the allowable parameters to perform the calculation
+
+10. `missing_demo_aoe_calc_failure`
+   
+   Some results may require additional information reported in AOE (ask on order entry) in order to yield results, such as age, to be properly calculated.
