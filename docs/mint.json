@@ -475,6 +475,13 @@
       ]
     },
     {
+      "group": "Horizon AI Python SDK",
+      "pages": [
+        "api-reference/horizon-ai/python-sdk/getting-started"
+      ],
+      "version": "beta"
+    },
+    {
       "group": "Aggregation",
       "pages": [
         "api-reference/horizon-ai/aggregation/overview",

@@ -1,0 +1,98 @@
+---
+title: "Getting Started"
+---
+
+<Note>
+The [`vital` PyPI package](/home/libraries)  (Vital API Python SDK) provides typed bindings
+of the Vital API in Python that tracks our OpenAPI Schema.
+
+Horizon AI Python SDK is a standalone product offering, separately from the `vital` PyPI package.
+</Note>
+
+**Horizon AI Python SDK** bridges Vital's data aggregation and intelligence capabilities with the
+rich Python ecosystem for scientific computing and data analysis.
+
+## Authentication
+
+<AccordionGroup>
+
+<Accordion title="Deployed Services" icon="server" defaultOpen>
+Use the same [Vital API Keys](/api-details/authentication#server-to-server) your system used to interact with Vital API.
+
+To set the Vital API Key for the Horizon AI Python SDK, you can:
+* Pass the Vital API Key explicitly to the Horizon AI SDK entity's constructor (e.g., the Query Executor); or
+* Set the Vital API Key as the `VITAL_API_KEY` environment variable.
+
+</Accordion>
+
+<Accordion title="Data Scientists and Developers" icon="user" defaultOpen>
+Sign-in locally on your machine with your [Vital Dashboard](https://app.tryvital.io/) account. You can
+do so through the [Horizon AI SDK Command Line Tool](#sdk-command-line-tool) as detailed below.
+</Accordion>
+
+</AccordionGroup>
+
+## Installation
+
+### Aggregation API
+
+<Steps>
+
+<Step title="Add a dependency">
+Add the `vitalx-aggregation` package to your project.
+
+```bash
+poetry add vitalx-aggregation
+```
+</Step>
+
+</Steps>
+
+### SDK Command Line Tool
+
+<Steps>
+
+<Step title="Add a dependency">
+Add the `vitalx-cli` package as a dev dependency to your project.
+
+```bash
+poetry add -G dev vitalx-cli
+```
+</Step>
+
+<Step title="Start the device authentication process">
+Call the `auth login` CLI subcommand on the `vitalx-cli` package.
+
+```bash
+poetry run vitalx-cli auth login
+```
+</Step>
+
+<Step title="Sign in with your Vital Dashboard account">
+You would be prompted in your default web browser to sign-in to the [Vital Dashboard](https://app.tryvital.io/).
+You will then be asked to confirm the device authorization.
+
+<Frame>
+<img src="/img/horizon-ai/python-sdk-cli-signin.png" alt="Device Confirmation prompt" width="300" />
+</Frame>
+</Step>
+
+<Step title="Voila!">
+You have now signed-in. You can now use any Horizon AI SDK entity without a Vital API Key.
+
+<Note>
+Your permanent session is stored at `~/.vitalx/`.
+</Note>
+
+</Step>
+
+</Steps>
+
+
+## Example
+
+[tryvital/vitalx-notebook](https://github.com/tryVital/vitalx-notebook) is a pre-configured Jupyter Notebook project
+with dependencies on Aggregation API and SDK Command Line Tool pre-configured.
+
+The notebook also includes an example to compute _Chronotypes_ using the Aggregation API.
+
