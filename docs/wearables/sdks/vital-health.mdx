@@ -221,12 +221,13 @@ alter its behaviour.
 
 You can check if your app has already asked the user _at least once_ before, for permissions on a specific `VitalResource`.
 
-If your app has already did, any further attempt to [Ask for Permission](#ask-user-for-health-data-permissions) would
-be gracefully ignored by the operating system.
+Because [Ask for Permission](#ask-user-for-health-data-permissions) are gracefully ignored by the operating system beyond
+the first time, checking before asking can help you skip the parts of your UX journey that only makes sense to users
+going through [Ask for Permission](#ask-user-for-health-data-permissions) for the first time.
 
 The only exception to this behaviour is when a `VitalResource` pulls a new data type introduced in a new OS release.
-In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in a permission
-prompt that asks for permissions to read these new data types.
+In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in a OS permission
+prompt that asks for permissions on _specifically_ those new data types.
 
 If you wish
 to provide a way for users to review their permission grants or denials, you can
@@ -297,8 +298,8 @@ The best course of action out of this is to inform your users of the location wh
 
 <Note>
 
-When designing your user experience, **do not assume** you can re-engage the end user after the
-[Ask for Permission](#ask-user-for-health-data-permissions) based on permission grants and denials.
+When designing your user experience, **assume** you would have zero knowledge of
+permission grants and denials after the user has gone through the [Ask for Permission](#ask-user-for-health-data-permissions) flow.
 
 </Note>
 
