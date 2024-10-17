@@ -172,6 +172,11 @@ The Vital walk-in test Order ID
 </ResponseField>
 <ResponseField name="updated_at" type="string" required="true">
 </ResponseField>
+<ResponseField name="appointment_id" type="anyOf | null">
+Any of:
+* string
+* null
+</ResponseField>
 </Expandable>
 </ResponseField>
 </Expandable>
@@ -297,7 +302,7 @@ When your order was last updated.
 <ResponseField name="created_at" type="string" required="true">
 </ResponseField>
 <ResponseField name="status" type="enum<string>" required="true">
-Available options: `received.walk_in_test.ordered`, `received.walk_in_test.requisition_created`, `completed.walk_in_test.completed`, `sample_with_lab.walk_in_test.partial_results`, `failed.walk_in_test.sample_error`, `cancelled.walk_in_test.cancelled`, `received.at_home_phlebotomy.ordered`, `received.at_home_phlebotomy.requisition_created`, `collecting_sample.at_home_phlebotomy.appointment_pending`, `collecting_sample.at_home_phlebotomy.appointment_scheduled`, `collecting_sample.at_home_phlebotomy.draw_completed`, `collecting_sample.at_home_phlebotomy.appointment_cancelled`, `completed.at_home_phlebotomy.completed`, `sample_with_lab.at_home_phlebotomy.partial_results`, `cancelled.at_home_phlebotomy.cancelled`, `failed.at_home_phlebotomy.sample_error`, `received.testkit.ordered`, `received.testkit.awaiting_registration`, `received.testkit.requisition_created`, `received.testkit.registered`, `collecting_sample.testkit.transit_customer`, `collecting_sample.testkit.out_for_delivery`, `collecting_sample.testkit.with_customer`, `collecting_sample.testkit.transit_lab`, `sample_with_lab.testkit.delivered_to_lab`, `completed.testkit.completed`, `failed.testkit.failure_to_deliver_to_customer`, `failed.testkit.failure_to_deliver_to_lab`, `failed.testkit.sample_error`, `failed.testkit.lost`, `cancelled.testkit.cancelled`, `cancelled.testkit.do_not_process`.
+Available options: `received.walk_in_test.ordered`, `received.walk_in_test.requisition_created`, `completed.walk_in_test.completed`, `sample_with_lab.walk_in_test.partial_results`, `failed.walk_in_test.sample_error`, `cancelled.walk_in_test.cancelled`, `collecting_sample.walk_in_test.appointment_pending`, `collecting_sample.walk_in_test.appointment_scheduled`, `collecting_sample.walk_in_test.appointment_cancelled`, `received.at_home_phlebotomy.ordered`, `received.at_home_phlebotomy.requisition_created`, `collecting_sample.at_home_phlebotomy.appointment_pending`, `collecting_sample.at_home_phlebotomy.appointment_scheduled`, `collecting_sample.at_home_phlebotomy.draw_completed`, `collecting_sample.at_home_phlebotomy.appointment_cancelled`, `completed.at_home_phlebotomy.completed`, `sample_with_lab.at_home_phlebotomy.partial_results`, `cancelled.at_home_phlebotomy.cancelled`, `failed.at_home_phlebotomy.sample_error`, `received.testkit.ordered`, `received.testkit.awaiting_registration`, `received.testkit.requisition_created`, `received.testkit.registered`, `collecting_sample.testkit.transit_customer`, `collecting_sample.testkit.out_for_delivery`, `collecting_sample.testkit.with_customer`, `collecting_sample.testkit.transit_lab`, `sample_with_lab.testkit.delivered_to_lab`, `completed.testkit.completed`, `failed.testkit.failure_to_deliver_to_customer`, `failed.testkit.failure_to_deliver_to_lab`, `failed.testkit.sample_error`, `failed.testkit.lost`, `cancelled.testkit.cancelled`, `cancelled.testkit.do_not_process`.
 </ResponseField>
 </Expandable>
 </ResponseField>
@@ -428,8 +433,8 @@ Any of:
         "status": "collecting_sample.testkit.transit_customer"
       }
     ],
-    "health_insurace_id": "a2b5bff7-22cb-414e-bc40-2151c8203ecf",
-    "id": "c413895a-bb7a-4141-a5b1-db9e13661170",
+    "health_insurace_id": "aa067148-7218-43d7-94a1-0a694a1e1253",
+    "id": "3f4c3498-ec81-408a-a2f0-8607ded2b11f",
     "lab_test": {
       "description": "Cholesterol test",
       "method": "testkit",
@@ -453,9 +458,9 @@ Any of:
     "requisition_form_url": "https://www.example.com",
     "sample_id": "123456789",
     "status": "collecting_sample",
-    "team_id": "ce830392-94e7-47ac-8054-1d979fdb8e38",
+    "team_id": "40ddec15-ec35-4b3a-81fe-aceb96a84313",
     "updated_at": "2020-01-01T00:00:00Z",
-    "user_id": "8746ab18-e529-4afb-96a5-26d28f895d26"
+    "user_id": "65403d36-0ab7-405f-b161-5eee69795aaf"
   },
   "event_type": "labtest.order.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
