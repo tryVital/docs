@@ -300,14 +300,14 @@
             "api-reference/user/create-insurance",
             "api-reference/user/get-latest-insurance"
           ]
-        },
-        {
-          "group": "Debugging",
-          "pages": [
-            "api-reference/introspection/user-resources",
-            "api-reference/introspection/historical-pulls"
-          ]
         }
+      ]
+    },
+    {
+      "group": "Debugging",
+      "pages": [
+        "api-reference/introspection/user-resources",
+        "api-reference/introspection/historical-pulls"
       ]
     },
     {
