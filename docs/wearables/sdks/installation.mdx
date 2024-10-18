@@ -86,23 +86,23 @@ pod 'VitalHealthKit'
 
 ## Android
 
-You can install the Vital SDK by adding the followings to your `build.gradle` file:
+Make sure Maven Central is included in the list of repositories in your `build.gradle`.
 
 ```groovy
 repositories {
-  ...
-  maven { url 'https://jitpack.io' }
+  mavenCentral()
 }
 ```
 
-```groovy
-implementation 'com.github.tryVital.vital-android:VitalClient:$vital_version'
-implementation 'com.github.tryVital.vital-android:VitalHealthConnect:$vital_version'
-implementation 'com.github.tryVital.vital-android:VitalDevices:$vital_version'
-```
+Then include our Android SDK artifacts as dependencies of your modules as needed:
 
-Replace `$vital_version` with the latest version of the SDK. You only need to add the dependencies
-for the components you want to use.
+```groovy
+def vital_version = '3.2.1'
+
+implementation 'io.tryvital:vital-client:$vital_version'
+implementation 'io.tryvital:vital-health-connect:$vital_version'
+implementation 'io.tryvital:vital-devices:$vital_version'
+```
 
 ## React Native
 

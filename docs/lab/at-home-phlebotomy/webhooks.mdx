@@ -71,7 +71,7 @@ The webhook payload body will have the following information if the Order is in 
 ## Appointment webhook events
 
 Based on the status present in [`Order and Appointment Lifecycle - Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle#appointment-lifecycle),
-Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.update) webhook event.
+Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
 
 <Info>
     The `labtest.appointment.updated` event is triggered for all possible appointment statuses, and is the **recommended** way of integrating to fetch all
@@ -82,7 +82,7 @@ The webhook payload body may have the following information if the appointment i
 
 ```json Phlebotomy Appointment Updated
 {
-  "event_type": "labtest.appointment.update",
+  "event_type": "labtest.appointment.updated",
   "data": {
     "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
     "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",

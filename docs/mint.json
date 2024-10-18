@@ -10,6 +10,7 @@
       "apiKey": "phc_pjvYzFeBB6z4l6JByNiic3SoHt74M9Lqw1SVrR95OCd"
     }
   },
+  "versions": ["release", "beta"],
   "api": {
     "baseUrl": [
       "https://api.tryvital.io",
@@ -44,17 +45,7 @@
     "name": "Home",
     "icon": "house"
   },
-  "anchors": [
-    {
-      "name": "Wearables",
-      "icon": "watch-fitness",
-      "url": "wearables"
-    },
-    {
-      "name": "Lab Testing",
-      "icon": "flask",
-      "url": "lab"
-    },
+  "tabs": [
     {
       "name": "API Reference",
       "icon": "rectangle-terminal",
@@ -71,6 +62,49 @@
       "url": "changelog"
     }
   ],
+  "anchors": [
+    {
+      "name": "Home",
+      "icon": "house",
+      "url": "/"
+    },
+    {
+      "name": "Wearables",
+      "icon": "watch-fitness",
+      "url": "wearables"
+    },
+    {
+      "name": "Lab Testing",
+      "icon": "flask",
+      "url": "lab"
+    },
+    {
+      "name": "Core",
+      "icon": "square-code",
+      "url": "api-reference"
+    },
+    {
+      "name": "Data Access",
+      "icon": "magnifying-glass",
+      "url": "api-reference/data"
+    },
+    {
+      "name": "Horizon AI",
+      "icon": "brain-circuit",
+      "url": "api-reference/horizon-ai",
+      "version": "beta"
+    },
+    {
+      "name": "Lab Testing",
+      "icon": "flask",
+      "url": "api-reference/lab-testing"
+    },
+    {
+      "name": "Org Management",
+      "icon": "building",
+      "url": "api-reference/org-management"
+    }
+  ],
   "navigation": [
     {
       "group": "Home",
@@ -85,7 +119,8 @@
     {
       "group": "Core",
       "pages": [
-        "changelog/core/api"
+        "changelog/core/api",
+        "changelog/core/dashboard"
       ]
     },
     {
@@ -109,8 +144,7 @@
         "api-details/authentication",
         "api-details/data_flow",
         "api-details/rate_limiting",
-        "api-details/regions",
-        "api-details/custom-encryption-keys"
+        "api-details/regions"
       ]
     },
     {
@@ -118,8 +152,16 @@
       "pages": [
         "webhooks/introduction",
         "webhooks/event-structure",
-        "webhooks/debugging",
-        "webhooks/etl-pipelines"
+        "webhooks/debugging"
+      ]
+    },
+    {
+      "group": "ETL Pipelines",
+      "pages": [
+        "webhooks/etl-pipelines/overview",
+        "webhooks/etl-pipelines/google-cloud-pubsub",
+        "webhooks/etl-pipelines/rabbitmq",
+        "webhooks/etl-pipelines/azure-event-hubs"
       ]
     },
     {
@@ -176,7 +218,7 @@
         "wearables/guides/fitbit",
         "wearables/guides/garmin",
         "wearables/guides/google_fit",
-        "wearables/guides/my_fitness_pal",
+        "wearables/guides/omron",
         "wearables/guides/polar",
         "wearables/guides/whoop"
       ]
@@ -195,6 +237,7 @@
     {
       "group": "Workflow",
       "pages": [
+        "lab/workflow/ordering",
         "lab/workflow/lab-test-lifecycle",
         "lab/workflow/order-requirements",
         "lab/workflow/scheduled-orders",
@@ -239,7 +282,7 @@
       ]
     },
     {
-      "group": "Core",
+      "group": "User Management",
       "pages": [
         {
           "group": "Users",
@@ -256,7 +299,6 @@
             "api-reference/user/get-info-latest",
             "api-reference/user/create-insurance",
             "api-reference/user/get-latest-insurance"
-
           ]
         },
         {
@@ -266,276 +308,280 @@
             "api-reference/introspection/historical-pulls"
           ]
         }
-      ]
     },
     {
-      "group": "Wearables",
+      "group": "Device Connections",
       "pages": [
         "api-reference/providers",
-        {
-          "group": "Connections",
-          "pages": [
-            "api-reference/user/get-users-connected-providers",
-            "api-reference/user/refresh-user-data",
-            "api-reference/user/deregister-a-provider"
-          ]
-        },
-        {
-          "group": "Link",
-          "pages": [
-            "api-reference/link/generate-link-token",
-            "api-reference/link/create-code",
-            "api-reference/link/link-oauth-provider",
-            "api-reference/link/link-password-provider",
-            "api-reference/link/link-email-provider",
-            "api-reference/link/link-demo-provider",
-            "api-reference/link/complete-password-provider-mfa"
-          ]
-        }
+        "api-reference/user/get-users-connected-providers",
+        "api-reference/user/refresh-user-data",
+        "api-reference/user/deregister-a-provider"
       ]
     },
     {
-      "group": "Lab Testing",
+      "group": "Link",
       "pages": [
-        {
-          "group": "Orders",
-          "pages": [
-            "api-reference/lab-testing/create-order",
-            "api-reference/lab-testing/get-orders",
-            "api-reference/lab-testing/get-order",
-            "api-reference/lab-testing/cancel-order",
-            "api-reference/lab-testing/requisition-pdf",
-            "api-reference/lab-testing/create-unregistered-order",
-            "api-reference/lab-testing/register-order",
-            "api-reference/lab-testing/labels-pdf",
-            "api-reference/lab-testing/simulate-order"
-          ]
-        },
-        {
-          "group": "Area Info",
-          "pages": [
-            "api-reference/lab-testing/area-info",
-            "api-reference/lab-testing/psc-info",
-            "api-reference/lab-testing/order-psc-info"
-          ]
-        },
-        {
-          "group": "At-home Phlebotomy",
-          "pages": [
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-availability",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-booking",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-request",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-rescheduling",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-cancelling",
-            "api-reference/lab-testing-at-home-phlebotomy/appointment-cancellation-reasons",
-            "api-reference/lab-testing-at-home-phlebotomy/get-appointment"
-          ]
-        },
-        {
-          "group": "Tests",
-          "pages": [
-            "api-reference/lab-testing/tests",
-            "api-reference/lab-testing/biomarkers",
-            "api-reference/lab-testing/labs",
-            "api-reference/lab-testing/post-test",
-            "api-reference/lab-testing/lab-test-markers"
-          ]
-        },
-        {
-          "group": "Results",
-          "pages": [
-            "api-reference/results/get-results",
-            "api-reference/results/get-results-pdf",
-            "api-reference/results/get-results-metadata"
-          ]
-        },
-        {
-          "group": "Health Insurance",
-          "pages": [
-            "api-reference/lab-testing-insurance/search-payor",
-            "api-reference/lab-testing-insurance/search-diagnosis"
-          ]
-        }
+        "api-reference/link/generate-link-token",
+        "api-reference/link/create-code",
+        "api-reference/link/link-oauth-provider",
+        "api-reference/link/link-password-provider",
+        "api-reference/link/link-email-provider",
+        "api-reference/link/link-demo-provider",
+        "api-reference/link/complete-password-provider-mfa"
       ]
     },
     {
-      "group": "Summary Data",
+      "group": "Orders",
       "pages": [
-        {
-          "group": "Sleep",
-          "pages": [
-            "api-reference/sleep/get-summary",
-            "api-reference/sleep/get-stream",
-            "api-reference/sleep/get-raw"
-          ]
-        },
-        {
-          "group": "Meal",
-          "pages": ["api-reference/meal/get-summary"]
-        },
-        {
-          "group": "Workouts",
-          "pages": [
-            "api-reference/workouts/get-summary",
-            "api-reference/workouts/get-stream",
-            "api-reference/workouts/get-raw"
-          ]
-        },
-        {
-          "group": "Profile",
-          "pages": [
-            "api-reference/profile/get-summary",
-            "api-reference/profile/get-raw"
-          ]
-        },
-        {
-          "group": "Activity",
-          "pages": [
-            "api-reference/activity/get-summary",
-            "api-reference/activity/get-raw"
-          ]
-        },
-        {
-          "group": "Body",
-          "pages": ["api-reference/body/get-summary", "api-reference/body/get-raw"]
-        },
-        {
-          "group": "Menstrual Cycle",
-          "pages": [
-            "api-reference/menstrual-cycle/get-summary"
-          ]
-        }
+        "api-reference/lab-testing/create-order",
+        "api-reference/lab-testing/get-orders",
+        "api-reference/lab-testing/get-order",
+        "api-reference/lab-testing/cancel-order",
+        "api-reference/lab-testing/requisition-pdf",
+        "api-reference/lab-testing/create-unregistered-order",
+        "api-reference/lab-testing/register-order",
+        "api-reference/lab-testing/labels-pdf",
+        "api-reference/lab-testing/simulate-order"
       ]
     },
     {
-      "group": "Timeseries Data",
+      "group": "Area Info",
       "pages": [
-        {
-          "group": "Vitals",
-          "pages": [
-            "api-reference/timeseries-grouped/blood-oxygen",
-            "api-reference/timeseries-grouped/blood-pressure",
-            "api-reference/timeseries-grouped/cholesterol",
-            "api-reference/timeseries-grouped/electrocardiogram-voltage",
-            "api-reference/timeseries-grouped/glucose",
-            "api-reference/timeseries-grouped/heartrate",
-            "api-reference/timeseries-grouped/hrv",
-            "api-reference/timeseries-grouped/igg",
-            "api-reference/timeseries-grouped/ige",
-            "api-reference/timeseries-grouped/respiratory-rate",
-            "api-reference/timeseries-grouped/vo2-max"
-          ]
-        },
-        {
-          "group": "Body",
-          "pages": [
-            "api-reference/timeseries-grouped/body-fat",
-            "api-reference/timeseries-grouped/body-weight",
-            "api-reference/timeseries-grouped/body-temperature",
-            "api-reference/timeseries-grouped/body-temperature-delta"
-          ]
-        },
-        {
-          "group": "Activity",
-          "pages": [
-            "api-reference/timeseries-grouped/calories-active",
-            "api-reference/timeseries-grouped/calories-basal",
-            "api-reference/timeseries-grouped/distance",
-            "api-reference/timeseries-grouped/floors-climbed",
-            "api-reference/timeseries-grouped/steps"
-          ]
-        },
-        {
-          "group": "Wellness",
-          "pages": [
-            "api-reference/timeseries-grouped/hypnogram",
-            "api-reference/timeseries-grouped/mindfulness-minutes",
-            "api-reference/timeseries-grouped/stress-level"
-          ]
-        },
-        {
-          "group": "Nutrition",
-          "pages": [
-            "api-reference/timeseries-grouped/caffeine",
-            "api-reference/timeseries-grouped/water"
-          ]
-        }
+        "api-reference/lab-testing/area-info",
+        "api-reference/lab-testing/psc-info",
+        "api-reference/lab-testing/order-psc-info"
       ]
     },
     {
-      "group": "Org Management",
+      "group": "At-home Phlebotomy",
       "pages": [
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
+        "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
+        "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
+      ]
+    },
+    {
+      "group": "Tests",
+      "pages": [
+        "api-reference/lab-testing/tests",
+        "api-reference/lab-testing/biomarkers",
+        "api-reference/lab-testing/labs",
+        "api-reference/lab-testing/post-test",
+        "api-reference/lab-testing/lab-test-markers"
+      ]
+    },
+    {
+      "group": "Results",
+      "pages": [
+        "api-reference/lab-testing/results/get-results",
+        "api-reference/lab-testing/results/get-results-pdf",
+        "api-reference/lab-testing/results/get-results-metadata"
+      ]
+    },
+    {
+      "group": "Health Insurance",
+      "pages": [
+        "api-reference/lab-testing/insurance/search-payor",
+        "api-reference/lab-testing/insurance/search-diagnosis"
+      ]
+    },
+    {
+      "group": "Debugging",
+      "pages": [
+        "api-reference/data/introspection/user-resources",
+        "api-reference/data/introspection/historical-pulls"
+      ]
+    },
+    {
+      "group": "Sleep",
+      "pages": [
+        "api-reference/data/sleep/get-summary",
+        "api-reference/data/sleep/get-raw"
+      ]
+    },
+    {
+      "group": "Meal",
+      "pages": ["api-reference/data/meal/get-summary"]
+    },
+    {
+      "group": "Workouts",
+      "pages": [
+        "api-reference/data/workouts/get-summary",
+        "api-reference/data/workouts/get-stream",
+        "api-reference/data/workouts/get-raw"
+      ]
+    },
+    {
+      "group": "Profile",
+      "pages": [
+        "api-reference/data/profile/get-summary",
+        "api-reference/data/profile/get-raw"
+      ]
+    },
+    {
+      "group": "Activity",
+      "pages": [
+        "api-reference/data/activity/get-summary",
+        "api-reference/data/activity/get-raw"
+      ]
+    },
+    {
+      "group": "Body",
+      "pages": ["api-reference/data/body/get-summary", "api-reference/data/body/get-raw"]
+    },
+    {
+      "group": "Menstrual Cycle",
+      "pages": [
+        "api-reference/data/menstrual-cycle/get-summary"
+      ]
+    },
+    {
+      "group": "Vitals Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/blood-oxygen",
+        "api-reference/data/timeseries/blood-pressure",
+        "api-reference/data/timeseries/cholesterol",
+        "api-reference/data/timeseries/electrocardiogram-voltage",
+        "api-reference/data/timeseries/glucose",
+        "api-reference/data/timeseries/heartrate",
+        "api-reference/data/timeseries/hrv",
+        "api-reference/data/timeseries/igg",
+        "api-reference/data/timeseries/ige",
+        "api-reference/data/timeseries/respiratory-rate",
+        "api-reference/data/timeseries/vo2-max"
+      ]
+    },
+    {
+      "group": "Body Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/body-fat",
+        "api-reference/data/timeseries/body-weight",
+        "api-reference/data/timeseries/body-temperature",
+        "api-reference/data/timeseries/body-temperature-delta"
+      ]
+    },
+    {
+      "group": "Activity Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/calories-active",
+        "api-reference/data/timeseries/calories-basal",
+        "api-reference/data/timeseries/distance",
+        "api-reference/data/timeseries/floors-climbed",
+        "api-reference/data/timeseries/steps"
+      ]
+    },
+    {
+      "group": "Wellness Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/hypnogram",
+        "api-reference/data/timeseries/mindfulness-minutes",
+        "api-reference/data/timeseries/stress-level"
+      ]
+    },
+    {
+      "group": "Nutrition Timeseries",
+      "pages": [
+        "api-reference/data/timeseries/caffeine",
+        "api-reference/data/timeseries/water"
+      ]
+    },
+    {
+      "group": "Horizon AI Python SDK",
+      "pages": [
+        "api-reference/horizon-ai/python-sdk/getting-started"
+      ],
+      "version": "beta"
+    },
+    {
+      "group": "Aggregation",
+      "pages": [
+        "api-reference/horizon-ai/aggregation/overview",
         {
-          "group": "Team",
+          "group": "Query DSL",
           "pages": [
-            "api-reference/org-management/team/list-teams",
-            "api-reference/org-management/team/create-team",
-            "api-reference/org-management/team/get-team",
-            "api-reference/org-management/team/delete-team",
-            "api-reference/org-management/team/update-team"
+            "api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
+            "api-reference/horizon-ai/aggregation/query-dsl/select-clause",
+            "api-reference/horizon-ai/aggregation/query-dsl/group-by-clause"
           ]
         },
-        {
-          "group": "Member",
-          "pages": [
-            "api-reference/org-management/member/list-members",
-            "api-reference/org-management/member/remove-member"
-          ]
-        },
-        {
-          "group": "Invite",
-          "pages": [
-            "api-reference/org-management/invite/list-invites",
-            "api-reference/org-management/invite/create-or-resend-invite",
-            "api-reference/org-management/invite/revoke-invite"
-          ]
-        },
-        {
-          "group": "Org",
-          "pages": [
-            "api-reference/org-management/org/get-org",
-            "api-reference/org-management/org/update-org"
-          ]
-        },
-        {
-          "group": "Team API Keys",
-          "pages": [
-            "api-reference/org-management/team-api-keys/list-team-api-keys",
-            "api-reference/org-management/team-api-keys/create-team-api-key",
-            "api-reference/org-management/team-api-keys/delete-team-api-keys"
-          ]
-        },
-        {
-          "group": "Team Custom Credentials",
-          "pages": [
-            "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
-            "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
-            "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
-          ]
-        },
-        {
-          "group": "Team Data Pull Preferences",
-          "pages": [
-            "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
-            "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
-            "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
-          ]
-        },
-        {
-          "group": "Team ETL Pipeline",
-          "pages": [
-            "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
-            "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
-            "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
-          ]
-        },
-        {
-          "group": "Team Scope Requirements",
-          "pages": [
-            "api-reference/org-management/team-scope-requirements/get-team-scope-requirements",
-            "api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements"
-          ]
-        }
+        "api-reference/horizon-ai/aggregation/query-one"
+      ],
+      "version": "beta"
+    },
+    {
+      "group": "Team",
+      "pages": [
+        "api-reference/org-management/team/list-teams",
+        "api-reference/org-management/team/create-team",
+        "api-reference/org-management/team/get-team",
+        "api-reference/org-management/team/delete-team",
+        "api-reference/org-management/team/update-team"
+      ]
+    },
+    {
+      "group": "Team API Keys",
+      "pages": [
+        "api-reference/org-management/team-api-keys/list-team-api-keys",
+        "api-reference/org-management/team-api-keys/create-team-api-key",
+        "api-reference/org-management/team-api-keys/delete-team-api-keys"
+      ]
+    },
+    {
+      "group": "Team Custom Credentials",
+      "pages": [
+        "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials",
+        "api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials"
+      ]
+    },
+    {
+      "group": "Team Data Pull Preferences",
+      "pages": [
+        "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
+        "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
+        "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
+      ]
+    },
+    {
+      "group": "Team ETL Pipeline",
+      "pages": [
+        "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
+        "api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines",
+        "api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines"
+      ]
+    },
+    {
+      "group": "Team Scope Requirements",
+      "pages": [
+        "api-reference/org-management/team-scope-requirements/get-team-scope-requirements",
+        "api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements"
+      ]
+    },
+    {
+      "group": "Member",
+      "pages": [
+        "api-reference/org-management/member/list-members",
+        "api-reference/org-management/member/remove-member"
+      ]
+    },
+    {
+      "group": "Invite",
+      "pages": [
+        "api-reference/org-management/invite/list-invites",
+        "api-reference/org-management/invite/create-or-resend-invite",
+        "api-reference/org-management/invite/revoke-invite"
+      ]
+    },
+    {
+      "group": "Org",
+      "pages": [
+        "api-reference/org-management/org/get-org",
+        "api-reference/org-management/org/update-org"
       ]
     },
     {
@@ -557,7 +603,7 @@
         {
           "group": "Appointments",
           "pages": [
-            "event-catalog/labtest.appointment.update"
+            "event-catalog/labtest.appointment.updated"
           ]
         }
       ]
@@ -686,6 +732,14 @@
             "event-catalog/daily.data.vo2_max.updated",
             "event-catalog/historical.data.vo2_max.created"
           ]
+        },
+        {
+          "group": "Workout Duration",
+          "pages": [
+            "event-catalog/daily.data.workout_duration.created",
+            "event-catalog/daily.data.workout_duration.updated",
+            "event-catalog/historical.data.workout_duration.created"
+          ]
         }
       ]
     },
@@ -743,6 +797,14 @@
           "pages": [
             "event-catalog/daily.data.igg.created",
             "event-catalog/daily.data.igg.updated"
+          ]
+        },
+        {
+          "group": "Insulin Injection",
+          "pages": [
+            "event-catalog/daily.data.insulin_injection.created",
+            "event-catalog/daily.data.insulin_injection.updated",
+            "event-catalog/historical.data.insulin_injection.created"
           ]
         },
         {
@@ -809,6 +871,19 @@
       ]
     },
     {
+      "group": "Diary Timeseries",
+      "pages": [
+        {
+          "group": "Note",
+          "pages": [
+            "event-catalog/daily.data.note.created",
+            "event-catalog/daily.data.note.updated",
+            "event-catalog/historical.data.note.created"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Nutrition Timeseries",
       "pages": [
         {
@@ -825,6 +900,14 @@
             "event-catalog/daily.data.water.created",
             "event-catalog/daily.data.water.updated",
             "event-catalog/historical.data.water.created"
+          ]
+        },
+        {
+          "group": "Carbohydrates",
+          "pages": [
+            "event-catalog/daily.data.carbohydrates.created",
+            "event-catalog/daily.data.carbohydrates.updated",
+            "event-catalog/historical.data.carbohydrates.created"
           ]
         }
       ]
@@ -867,11 +950,11 @@
   "redirects": [
     {
       "source": "/wearables/introspection-api/user-resource",
-      "destination": "/api-reference/introspection/user-resources"
+      "destination": "/api-reference/data/introspection/user-resources"
     },
     {
       "source": "/wearables/introspection-api/historical-pulls",
-      "destination": "/api-reference/introspection/historical-pulls"
+      "destination": "/api-reference/data/introspection/historical-pulls"
     },
     {
       "source": "/wearables/sdks/ios",
@@ -904,6 +987,50 @@
     {
       "source": "/wearables/guides/freestyle",
       "destination": "/wearables/guides/abbott-libreview"
+    },
+    {
+      "source": "/api-reference/lab-testing-insurance/:subpaths*",
+      "destination": "/api-reference/lab-testing/insurance/:subpaths*"
+    },
+    {
+      "source": "/api-reference/lab-testing-at-home-phlebotomy/:subpaths*",
+      "destination": "/api-reference/lab-testing/at-home-phlebotomy/:subpaths*"
+    },
+    {
+      "source": "/api-reference/results/:subpaths*",
+      "destination": "/api-reference/lab-testing/results/:subpaths*"
+    },
+    {
+      "source": "/api-reference/workouts/:subpaths*",
+      "destination": "/api-reference/data/workouts/:subpaths*"
+    },
+    {
+      "source": "/api-reference/sleep/:subpaths*",
+      "destination": "/api-reference/data/sleep/:subpaths*"
+    },
+    {
+      "source": "/api-reference/meal/:subpaths*",
+      "destination": "/api-reference/data/meal/:subpaths*"
+    },
+    {
+      "source": "/api-reference/profile/:subpaths*",
+      "destination": "/api-reference/data/profile/:subpaths*"
+    },
+    {
+      "source": "/api-reference/body/:subpaths*",
+      "destination": "/api-reference/data/body/:subpaths*"
+    },
+    {
+      "source": "/api-reference/menstrual-cycle/:subpaths*",
+      "destination": "/api-reference/data/menstrual-cycle/:subpaths*"
+    },
+    {
+      "source": "/api-reference/timeseries-grouped/:subpaths*",
+      "destination": "/api-reference/data/timeseries/:subpaths*"
+    },
+    {
+      "source": "/api-reference/introspection/:subpaths*",
+      "destination": "/api-reference/data/introspection/:subpaths*"
     }
   ]
 }

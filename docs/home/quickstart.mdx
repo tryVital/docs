@@ -191,7 +191,7 @@ You can now make API calls to retrieve data for that Source.
 ### How it works
 
 As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
-A more detailed explanation on how linking works can be found in [link flow](/wearables/vital-link/link_flow)
+A more detailed explanation on how linking works can be found in [link flow](/wearables/connecting-providers/link_flow)
 
 The first step is to create a new `link_token` by making a `/link/token` request and passing in the
 required configuration. This `link_token` is a short lived, one-time use token that authenticates your
@@ -199,22 +199,19 @@ app with Vital Link, our frontend module.
 
 ```python Generating a Link Token
 # TEST BACKEND IMPLEMENTATION
-from http.client import HTTPException
-from tracemalloc import start
-from typing import Optional
-from vital import Client
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.client import Vital
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-import os
-from dotenv import load_dotenv
-load_dotenv()
+
+client = Vital(
+  api_key=<YOUR_API_KEY>,
+  environment=VitalEnvironment.SANDBOX,
+  timeout=30
+)
 
 app = FastAPI()
-VITAL_API_KEY = os.getenv("VITAL_API_KEY")
-VITAL_ENVIRONMENT = os.getenv("VITAL_ENV")
-
-client = Client(api_key=VITAL_API_KEY, environment=VITAL_ENVIRONMENT)
 
 app.add_middleware(  # type: ignore
     CORSMiddleware,
@@ -227,7 +224,8 @@ app.add_middleware(  # type: ignore
 
 @app.get("/token/{user_key}")
 def get_token(user_key: str):
-    return client.Link.create(user_key)
+    return client.link.token(user_id=user_key)
+
 
 ```
 

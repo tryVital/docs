@@ -109,6 +109,14 @@ Any of:
 * number
 * null
 </ResponseField>
+<ResponseField name="state" type="anyOf | null">
+Some providers can provide updates to the sleep summary hours after the sleep period has ended. This field indicates the state of the sleep summary. For example, TENTATIVE means the summary is an intial prediction from the provider and can be subject to change. Currently only available for Garmin and EightSleep::str
+Any of:
+* SleepSummaryState
+* null
+<Expandable title="SleepSummaryState">
+</Expandable>
+</ResponseField>
 <ResponseField name="average_hrv" type="anyOf | null">
 The average heart rate variability registered during the sleep period::rmssd
 Any of:

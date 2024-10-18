@@ -4,6 +4,7 @@ title: Post Team Data Pull Preferences
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
+import HistoricalPullLimitTable from '/snippets/historical-pull-limits.mdx';
 
 <OrgManagementAPI />
 
@@ -34,34 +35,28 @@ curl --request POST \
 </RequestExample>
 
 <Warning>
-    Setting high values in these settings may result in delays in received data and impact the daily polling due to providers' rate limits.
-    We recommend setting the custom historical days ranges only with [BYOO](/wearables/connecting-providers/bring_your_own_oauth) setups.
+By setting a higher value, you acknowledge your awareness of _the facts of API life_ that:
+
+1. historical pulls may take longer to complete;
+2. historical pulls may run into provider rate limiting; and
+3. regular data polling may consequentially be delayed as a knock-on effect.
 </Warning>
+
+<Warning>
+Provider rate limiting typically happens at OAuth application level.
+
+Therefore, Vital recommends [Bring Your Own OAuth](/wearables/connecting-providers/bring_your_own_oauth)
+if you want to set an extended historical pull range. This creates a rate limit quota dedicated to
+your Vital Team, not being shared with other Vital customers.
+</Warning>
+
+<Info>
+The Team Data Pull Preferences you specified is _advisory_. There are scenarios in which Vital systems
+may not adhere strictly to your stated preferences.
+</Info>
+
+
 
 ## Supported Providers
 
-| Providers |  Max supported number of days | Resource Specific Limits (days) |
-| ----------- | --------------- | --------------- |
-| OURA | 365 | - |
-| FITBIT | 365 | heartrate (14), calories_active (14), distance (14), steps (14) |
-| GARMIN | 365 | - |
-| STRAVA | 365 | - |
-| WITHINGS | 365 | - |
-| PELOTON | 365 | - |
-| WAHOO | 365 | - |
-| ZWIFT | 365 | - |
-| FREESTYLE_LIBRE | 365 | - |
-| ABBOTT_LIBREVIEW | 365 | - |
-| EIGHT_SLEEP | 365 | - |
-| RENPHO | 365 | - |
-| OMRON | 365 | - |
-| DEXCOM_V3 | 365 | - |
-| HAMMERHEAD | 365 | - |
-| POLAR | 28 | - |
-| CRONOMETER | 365 | - |
-| KARDIA | 365 | - |
-| WHOOP_V2 | 365 | - |
-| APPLE_HEALTH_KIT | 365 | - |
-| GOOGLE_FIT | 365 | - |
-| BUERER_API | 365 | - |
-
+<HistoricalPullLimitTable />

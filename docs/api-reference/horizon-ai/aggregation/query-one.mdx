@@ -1,0 +1,44 @@
+---
+title: Query a single user
+openapi: post /aggregate/v1/query_one/{user_id}
+---
+
+<Warning>
+Aggregation API is currently in closed beta.
+The query schema and the behaviour is subject to change based on beta feedback.
+</Warning>
+
+<AccordionGroup>
+
+<Accordion title="Receiving data in JSON" icon="brackets-curly" defaultOpen>
+JSON is the default output format. Each query instruction outputs one entry containing a dataframe to the `$.results` array,
+in the declaration order of the query instructions.
+
+```json
+{
+    "results": [
+        "instruction": {
+            /** the corresponding query instruction **/
+        },
+        "dataframe": {
+            "partition": [...],
+            "sleep.efficiency.min": [...],
+            "sleep.efficiency.max": [...],
+            "sleep.efficiency.mean": [...],
+            "sleep.efficiency.newest": [...]
+        }
+    ]
+}
+```
+
+</Accordion>
+
+
+<Accordion title="Receiving data in Parquet" icon="chevrons-up" defaultOpen>
+Specify `Accept: application/vnd.vital.tar+gzip+parquet` in your request header.
+
+The response body is a gzipped Tarball of multiple Parquet files, namely `0.parquet`, `1.parquet`, `2.parquet`, etc.
+The numbering corresponds to the declaration order of the query instructions.
+</Accordion>
+
+</AccordionGroup>

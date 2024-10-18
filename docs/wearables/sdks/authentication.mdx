@@ -206,7 +206,7 @@ to exchange for the token secrets it needs.
       let response: MyAPIResponse = // ....
 
       do {
-        try await VitalClient.signIn(withToken: response.signInToken)
+        try await VitalClient.signIn(withRawToken: response.signInToken)
 
         print("Signed in with Vital successfully")
       } catch let error {

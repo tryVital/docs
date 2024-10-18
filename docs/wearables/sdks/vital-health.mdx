@@ -13,6 +13,66 @@ Please consult the following guides on requirements and restrictions of Apple He
 
 The Health SDK guide focuses on the API usage of the Health SDK.
 
+## Configure your App Delegate (iOS only)
+
+<Note>
+This applies to all iOS integrations — Native iOS, React Native or Flutter.
+</Note>
+
+<Warning>
+You must configure your App Delegate as instructed if you use Vital Health SDK on iOS. Not doing so
+may result in missing background delivery, or app process termination by the operating system.
+</Warning>
+
+In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation, it **must** call Vital Health SDK
+`automaticConfiguration()` synchronously before it returns.
+
+
+<Accordion title="Details" icon="apple" defaultOpen>
+
+Vital needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
+require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
+[[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
+
+For React Native and Flutter apps, the AppDelegate is part of the template Swift or Objective-C code in your generated Xcode project.
+
+<CodeGroup>
+
+```swift Swift / Flutter
+import VitalHealthKit
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
+
+    VitalHealthKitClient.automaticConfiguration()
+
+    // ...
+
+    return true
+  }
+}
+```
+
+```swift Objective-C / React Native
+#import "AppDelegate.h"
+#import "VitalHealthKitConfiguration.h"
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  [VitalHealthKitConfiguration automaticConfiguration];
+
+  // ...
+
+  return YES;
+}
+```
+</CodeGroup>
+
+</Accordion>
+
 ## SDK configuration
 
 The Health SDK must be configured before use. The configuration is persistent, so
@@ -63,9 +123,8 @@ await vital_health.configure(
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
 
-<Tabs>
-<Tab title="Native iOS">
-```swift
+<CodeGroup>
+```swift Native iOS
 import VitalHealthKit
 
 await VitalHealthKitClient.shared.ask(
@@ -73,11 +132,13 @@ await VitalHealthKitClient.shared.ask(
   writePermissions: []
 )
 ```
-</Tab>
 
-<Tab title="Native Android">
-<CodeGroup>
-```kotlin Android Compose
+```kotlin Native Android
+
+//
+// Android Compose
+//
+
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.material3.*
@@ -104,9 +165,10 @@ val permissionsLauncher = rememberLauncherForActivityResult(contract) { outcomeA
 Button(onClick = { permissionsLauncher.launch(Unit) }) {
   Text("Ask for permission")
 }
-```
 
-```kotlin AndroidX Activity Result API
+//
+// AndroidX Activity Result API
+//
 import androidx.activity.ComponentActivity
 import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
 
@@ -120,11 +182,8 @@ activity.registerForActivityResult(contract) { outcomeAsync ->
   }
 }
 ```
-</CodeGroup>
-</Tab>
 
-<Tab title="React Native">
-```typescript
+```typescript React Native
 import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
 
 await VitalHealth.ask(
@@ -132,10 +191,8 @@ await VitalHealth.ask(
     []
 )
 ```
-</Tab>
 
-<Tab title="Flutter">
-```dart
+```dart Flutter
 import 'package:vital_health/vital_health.dart' as vital_health;
 
 final List<vital_health.HealthResource> readResources = [
@@ -145,12 +202,106 @@ final List<vital_health.HealthResource> readResources = [
 ];
 await vital_health.askForPermission(readResources, []);
 ```
-</Tab>
-</Tabs>
+</CodeGroup>
 
-Note that the OS only prompts the end user once for each resource type. Subsequent requests are
-gracefully ignored by the OS.
+Regardless of whether the user has granted or denied the permissions, any subsequent re-request would
+be non-interactive and returns instantly. This is because the operating system only prompts the end user
+once for each resource type.
 
+If you wish
+to provide a way for users to review their permission grants or denials, you can
+[inform them of the system app location where they can do so](#check-if-a-read-permission-was-granted-or-denied-spoiler-you-cant).
+
+<Warning>
+The health data read permission prompted is managed by the operating system. Vital cannot customize or
+alter its behaviour.
+</Warning>
+
+## Check if your app has asked for permissions before
+
+You can check if your app has already asked the user _at least once_ before, for permissions on a specific `VitalResource`.
+
+Because [Ask for Permission](#ask-user-for-health-data-permissions) are gracefully ignored by the operating system beyond
+the first time, checking before asking can help you skip the parts of your UX journey that only makes sense to users
+going through [Ask for Permission](#ask-user-for-health-data-permissions) for the first time.
+
+The only exception to this behaviour is when a `VitalResource` pulls a new data type introduced in a new OS release.
+In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in a OS permission
+prompt that asks for permissions on _specifically_ those new data types.
+
+If you wish
+to provide a way for users to review their permission grants or denials, you can
+[inform them of the system app location where they can do so](#check-if-a-read-permission-was-granted-or-denied-spoiler-you-cant).
+
+
+<CodeGroup>
+```swift Native iOS
+import VitalHealthKit
+
+VitalHealthKitClient.shared.hasAskedForPermission(resource: .activity)
+```
+
+```kotlin Native Android
+import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+
+val manager = VitalHealthConnectManager.configure(context)
+manager.hasAskedForPermission(VitalResource.Activity)
+```
+
+```typescript React Native
+import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+
+await VitalHealth.hasAskedForPermission(VitalResource.Activity);
+```
+
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+await vital_health.hasAskedForPermission(vital_health.HealthResource.Activity);
+```
+</CodeGroup>
+
+
+## Check if a read permission was granted or denied (⚠️ Spoiler: You can't)
+
+Vital Health SDK allows you to [ask for permission](#ask-user-for-health-data-permissions) and
+[check if your app has asked for permission before](#check-if-your-app-has-asked-for-permissions-before).
+
+However, Vital Health SDK **cannot** tell you:
+
+1. Whether or not a user has granted or denied a read permission after the [Ask for Permission](#ask-user-for-health-data-permissions) has concluded.
+1. The state of a read permission at any exact moment — granted or denied.
+
+Apple made a deliberate choice to conceal the state of HealthKit data type read permissions from third-party apps.
+Quoting [Apple's own words](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614154-authorizationstatus) (as at 27 September 2024):
+
+> To help prevent possible leaks of sensitive health information, your app cannot determine whether or not a user has granted permission to read data.
+>
+> If you are not given permission, it simply appears as if there is no data of the requested type in the HealthKit store.
+>
+> [...]
+
+In other words, all third-party apps — including anyone using the Vital Health SDK — would:
+
+1. not be able to determine if a particular read permission has been granted or denied by the user;
+
+2. not be able to manage or review read permissions inside their app.
+
+The best course of action out of this is to inform your users of the location where they can review and manage their health data read permissions:
+
+| Operating System     | System App         | Location |
+| -------------------- | ------------------ | -------- |
+| iOS 8.0 and above    | Health app         | Sharing > Apps and Services |
+| iOS 15.0 and above   | Settings app       | Privacy & Security > Health |
+| Android 13 or below  | Health Connect app | Apps and Permissions |
+| Android 14 and above | Settings app       | Health Connect > Apps and Permissions |
+
+<Note>
+
+When designing your user experience, **assume** you would have zero knowledge of
+permission grants and denials after the user has gone through the [Ask for Permission](#ask-user-for-health-data-permissions) flow.
+
+</Note>
 
 ## Automatic Data Sync
 
@@ -398,3 +549,35 @@ import 'package:vital_health/vital_health.dart' as vital_health;
 Stream<SyncStatus> status = vital_health.syncStatus;
 ```
 </CodeGroup>
+
+
+## Sync Progress Debugging UI (iOS only)
+
+Vital Health SDK for iOS includes a `ForEachVitalResource` — a pre-baked SwiftUI View providing a
+live-updated sync progress feed of all the `VitalResource`s whose permissions have been asked for.
+
+You can use `ForEachVitalResource()` in any position which you would use `ForEach`. For example,
+you can use it inside a `Section` of a `List`:
+
+```swift Native iOS
+import VitalHealthKit
+
+struct SyncProgressView: View {
+  var view: some View {
+    List {
+      Section(header: Text("Sync Progress")) {
+        ForEachVitalResource()
+      }
+    }
+  }
+}
+```
+
+If you are using UIKit, you can still access it through `UIHostingController`:
+
+```swift Native iOS
+let viewController: UIViewController
+
+let hostingController = UIHostingController(rootView: SyncProgressView())
+viewController.present(hostingController, animated: true, completion: nil)
+```

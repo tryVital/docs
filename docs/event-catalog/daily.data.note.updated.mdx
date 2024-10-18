@@ -1,0 +1,146 @@
+---
+title: "daily.data.note.updated"
+description: "Existing note interval samples have been updated"
+---
+<Warning>
+Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
+its source (ID or slug) and its timestamp. e.g., `(note, fitbit, 2023-01-23T12:34:56Z)`.
+
+If multiple samples are received at the same triple key, the last sample received replaces all its
+previous versions.
+</Warning>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.note.updated`
+</ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="TimeseriesData" required="true">
+<Expandable title="TimeseriesData" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingNoteSample[]" required="true">
+<Expandable title="Item Schema: ClientFacingNoteSample" defaultOpen="true">
+<ResponseField name="id" type="anyOf | null">
+Deprecated
+Any of:
+* integer
+* null
+</ResponseField>
+<ResponseField name="timezone_offset" type="anyOf | null">
+Time zone UTC offset in seconds. Positive offset indicates east of UTC; negative offset indicates west of UTC; and null indicates the time zone information is unavailable at source.
+Any of:
+* integer
+* null
+</ResponseField>
+<ResponseField name="type" type="anyOf | null">
+The reading type of the measurement. This is applicable only to Cholesterol, IGG, IGE and InsulinInjection.
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="unit" type="string" required="true">
+User notes as text.
+</ResponseField>
+<ResponseField name="timestamp" type="string" required="true">
+Depracated. The start time (inclusive) of the interval.
+</ResponseField>
+<ResponseField name="start" type="string" required="true">
+The start time (inclusive) of the interval.
+</ResponseField>
+<ResponseField name="end" type="string" required="true">
+The end time (exclusive) of the interval.
+</ResponseField>
+<ResponseField name="value" type="string" required="true">
+The recorded value for the interval.
+</ResponseField>
+<ResponseField name="tags" type="anyOf | null">
+What the note refers to.
+Any of:
+* array
+* null
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="source_id" type="integer" required="true">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="anyOf | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="name" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="slug" type="string | null" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="logo" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="provider" type="ClientFacingProvider" required="true">
+<Expandable title="ClientFacingProvider" defaultOpen="true">
+<ResponseField name="name" type="string" required="true">
+Name of source of information
+</ResponseField>
+<ResponseField name="slug" type="string" required="true">
+Slug for designated source
+</ResponseField>
+<ResponseField name="logo" type="string" required="true">
+URL for source logo
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
+  "data": {
+    "data": [
+      {
+        "end": "2023-02-13T14:30:52+00:00",
+        "start": "2023-02-13T14:30:52+00:00",
+        "timezone_offset": null,
+        "type": [
+          "food",
+          "exercise"
+        ],
+        "unit": "text",
+        "value": "Lorem ipsum dolor sit amet"
+      }
+    ],
+    "provider": {
+      "logo": "https://logo_url.com",
+      "name": "Oura",
+      "slug": "oura"
+    },
+    "source": {
+      "provider": "oura",
+      "type": "ring"
+    },
+    "source_id": 1,
+    "user_id": "f9e3a2b9-94a8-42bc-8a5e-671c6892e4e0"
+  },
+  "event_type": "daily.data.note.updated",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
+}
+```
+</ResponseExample>

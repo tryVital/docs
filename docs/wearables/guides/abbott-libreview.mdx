@@ -34,6 +34,20 @@ All LibreView (Freestyle Libre) data are in **floating time basis**.
 Please go through the [Timestamps and Time Zones](/wearables/providers/timestamps-and-time-zones) guide to understand the
 implications, as well as how to properly handle floating time data.
 
+
+## Libre Notes Timeseries
+
+LibreView, in addition to standard CGM data, provides insights manually added by the user.
+This data is available in the following types:
+
+* `note`: A general note added by the user, often providing context for other entries.
+* `carbohydrates`: Grams of carbohydrates logged by the user.
+* `insulin_injection`: Units of insulin injected by the user, categorized as either `rapid_acting` or `long_acting`.
+
+<Info>
+  Timestamps for these events have hourly granularity and are marked with the beginning of the hour.
+</Info>
+
 ## Connecting a LibreView patient account (`abbott_libreview`)
 
 ### Vital Link Widget

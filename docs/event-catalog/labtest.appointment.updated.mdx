@@ -1,10 +1,10 @@
 ---
-title: "labtest.appointment.update"
+title: "labtest.appointment.updated"
 description: "An apppointment has been updated or created"
 ---
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
-Constant: `labtest.appointment.update`
+Constant: `labtest.appointment.updated`
 </ResponseField>
 <ResponseField name="team_id" type="string" required="true">
 </ResponseField>
@@ -69,10 +69,10 @@ Any of:
 * null
 </ResponseField>
 <ResponseField name="type" type="enum<string>" required="true">
-Available options: `phlebotomy`.
+Available options: `phlebotomy`, `patient_service_center`.
 </ResponseField>
 <ResponseField name="provider" type="enum<string>" required="true">
-Available options: `getlabs`, `axlehealth`, `phlebfinders`.
+Available options: `getlabs`, `axlehealth`, `phlebfinders`, `quest`.
 </ResponseField>
 <ResponseField name="status" type="enum<string>" required="true">
 Available options: `confirmed`, `pending`, `in_progress`, `completed`, `cancelled`.
@@ -137,20 +137,20 @@ Any of:
       }
     ],
     "iana_timezone": "America/New_York",
-    "id": "e36dbdf5-f4a3-412d-90ce-9686bcddc7db",
+    "id": "551252a3-3205-48d6-8cee-d52f9c8b1313",
     "location": {
       "lat": 37.7749295,
       "lng": -122.4194155
     },
-    "order_id": "3f5470aa-f122-4119-9a4d-e82c7489d3b9",
+    "order_id": "ae8d5f4c-5ff6-43cf-ad5b-07a56b70a73e",
     "provider": "getlabs",
     "provider_id": "123",
     "start_at": "2022-01-01T00:00:00",
     "status": "confirmed",
     "type": "phlebotomy",
-    "user_id": "bbbb6b63-2f76-4ffe-934a-61a2d95d9802"
+    "user_id": "f783c861-687a-4693-99e7-01f11bdfe20a"
   },
-  "event_type": "labtest.appointment.update",
+  "event_type": "labtest.appointment.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
   "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
 }

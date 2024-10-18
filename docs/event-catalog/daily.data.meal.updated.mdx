@@ -128,6 +128,12 @@ Any of:
 * number
 * null
 </ResponseField>
+<ResponseField name="cholesterol" type="anyOf | null">
+Amount of cholesterol in grams (g)
+Any of:
+* number
+* null
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="micros" type="anyOf" required="true">
@@ -253,6 +259,12 @@ Any of:
 * number
 * null
 </ResponseField>
+<ResponseField name="cholesterol" type="anyOf | null">
+Amount of cholesterol in grams (g)
+Any of:
+* number
+* null
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseField name="micros" type="anyOf | null">
@@ -313,6 +325,11 @@ Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 <ResponseField name="updated_at" type="string" required="true">
 </ResponseField>
+<ResponseField name="source_app_id" type="anyOf | null">
+Any of:
+* string
+* null
+</ResponseField>
 </Expandable>
 </ResponseField>
 <ResponseExample>
@@ -372,9 +389,10 @@ Deprecated. Subject to removal after 1 Jan 2024.
     "provider_id": "123456",
     "source": {
       "logo": "https://logo_url.com",
-      "name": "MyFitnessPal",
-      "slug": "my_fitness_pal"
+      "name": "Apple Health Kit",
+      "slug": "apple_health_kit"
     },
+    "source_app_id": "com.myfitnesspal.mfp",
     "source_id": 10,
     "timestamp": "2019-08-24T14:15:22Z",
     "updated_at": "2019-08-24T14:15:22Z",

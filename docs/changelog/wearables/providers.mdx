@@ -3,12 +3,45 @@ title: "Providers"
 ---
 
 
-### Menstrual Cycle Tracking (July 24)
+### Apple HealthKit data sync improvements (Aug 2024)
+
+An overhauled Apple HealthKit sync engine is now available across all Vital Mobile SDK platforms.
+The changes bring historical data sync incrementality, prioritization, network resiliency and reduced resource usage.
+
+<Accordion icon="apple" iconType="duotone" title="Details" defaultOpen>
+
+1. Most resources now use a resumable sync & upload process.
+
+    * This enables the SDK to make constant forward progress, especially when you have specified a very large historical pull stage (60-365 days)
+      through the [Team Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences) API.
+
+2. The SDK now prioritises syncing of summary types over timeseries data.
+
+    * During the historical pull stage, all timeseries resources would be suppressed until all the summary types have been successfully uploaded.
+
+    * After the historical pull stage, the SDK would make forward progress on summary types, before it proceeds to deal with the more CPU-time consuming timeseries data that are more prone to operating system throttling.
+
+3. With an updated iOS App Target configuration, the SDK would now self-register as a `BGProcessingTask` or `BGHealthResearchTask` (iOS 17+) to the iOS BackgroundTasks framework.
+
+    * This would provide the SDK an additional opportunity to complete any resource sync that is not able to complete during normal HealthKit background delivery.
+
+    * Please refer to the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#1-setup-app-entitlements) on how to update your iOS App Target configuration in Xcode.
+
+| Platform       | Release Note |
+| -------------- | ------------ |
+| Native iOS     | [vital-ios 1.2.2](https://github.com/tryVital/vital-ios/releases/tag/1.2.2) |
+| Flutter        | [vital-flutter 4.2.1](https://github.com/tryVital/vital-flutter/releases/tag/vital_health-v4.2.1) |
+| React Native   | [vital-react-native 4.2.1](https://github.com/tryVital/vital-react-native/releases/tag/4.2.1) |
+
+</Accordion>
+
+
+### Menstrual Cycle Tracking (July 2024)
 
 Menstrual cycle tracking data can now be collected through the Apple HealthKit and Android
 Health Connect integrations.
 
-<Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
+<Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
 Ask for data permission on the `MenstrualCycle` resource from the user through the Vital Health SDK.
 
 Check out the [Get Menstrual Cycles](/api-reference/menstrual-cycle/get-summary) endpoint and
@@ -17,7 +50,7 @@ for more information.
 </Accordion>
 
 
-### Steps count in workouts (May 24)
+### Steps count in workouts (May 2024)
 
 Workouts now include the total steps count during the session (if available).
 
@@ -27,7 +60,7 @@ the [Workout Created](/event-catalog/daily.data.workouts.created) event for more
 </Accordion>
 
 
-### New Abbott LibreView integration (May 24)
+### New Abbott LibreView integration (May 2024)
 
 Vital has introduced an new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
 accepting LibreView patient account credentials.
@@ -45,7 +78,7 @@ Check out the [Abbott LibreView / Freestyle Libre](/wearables/guides/abbott-libr
 </Accordion>
 
 
-### Removed Fitbit and Oura required scopes (May 24)
+### Removed Fitbit and Oura required scopes (May 2024)
 
 The Fitbit profile scope and Oura email scope are no longer required for establishing connections.
 
@@ -62,7 +95,7 @@ the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requi
 </Accordion>
 
 
-### Freestyle Libre: India region (Apr 24)
+### Freestyle Libre: India region (Apr 2024)
 Our Freestyle Libre integration now supports the LibreView India region.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
@@ -70,7 +103,7 @@ Check out the [Freestyle Libre](/wearables/guides/freestyle#custom-practice-ente
 </Accordion>
 
 
-### Health Connect Background Sync (Mar 24)
+### Health Connect Background Sync (Mar 2024)
 Vital Mobile SDK now includes an experimental Background Sync feature for Android Health Connect.
 
 <Accordion icon="robot" iconType="duotone" title="Details" defaultOpen>
@@ -88,7 +121,7 @@ of the experimental Background Sync :
 </Accordion>
 
 
-### Expanded Source Type attribution (Feb 24)
+### Expanded Source Type attribution (Feb 2024)
 Data from Fitbit, Oura, Garmin and Freestyle Libre now comes with Source Type attributions.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>

@@ -9,6 +9,55 @@ Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital 
 instructions and general API usage. This guide contains information on the the behaviour and required configuration
 specific to the Android Health Connect integration.
 
+## Getting Started
+
+To enable this integration, you would need to integrate [Vital Core SDK](/wearables/sdks/vital-core) and
+[Vital Health SDK](/wearables/sdks/vital-core) into your Native iOS, React Native or Flutter mobile app.
+
+<Steps>
+
+<Step title="Add Vital SDKs as dependencies">
+Review the [installation requirements and package installation instructions](/wearables/sdks/installation).
+</Step>
+
+<Step title="Integrate with Vital Mobile SDK Authentication">
+Follow the [SDK Authentication](/wearables/sdks/authentication) guidance to integrate your app with the authentication
+mechanism of Vital Core SDK.
+</Step>
+
+<Step title="Configure Health SDK and ask user for read permissions">
+Follow the [Vital Health SDK](/wearables/sdks/vital-health) starting guidance to
+[configure the Health SDK](/wearables/sdks/vital-health#sdk-configuration) and to 
+[ask for health data read permissions](/wearables/sdks/vital-health#ask-user-for-health-data-permissions) from your user.
+
+<Note>
+Health data sync is activated only on `VitalResource`s which you have asked permissions from your user for. If you
+did not ask for permissions, data sync would not occur.
+</Note>
+</Step>
+
+<Step title="[Optional] Customize the Foreground Service notification">
+Follow the [Running as Foreground Service](#running-as-foreground-service) guidance below to
+customize the Foreground Service notification which may be shown by the Android OS during
+any prolonged health data sync attempts.
+</Step>
+
+<Step title="[Optional] Configure Background Sync (experimental)">
+Follow the [Background Sync (experimental)](#background-sync-experimental) guidance below to
+configure regular background sync.
+</Step>
+
+</Steps>
+
+
+## Review the Google Play Store policy
+
+Apps using Android Health Connect **require prior Google approval** before they can be released on Google Play Store.
+
+Check out the official [Google Play Store policy on Android Health Connect](https://support.google.com/googleplay/android-developer/answer/12991134?hl=en-GB).
+Note that the application form is located under the "How do I access data through Health Connect?" section.
+
+
 ## Configure your AndroidManifest.xml
 
 ### Health Connect privacy dialogue
