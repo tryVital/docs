@@ -1,28 +1,55 @@
 ---
-title: "Order Lifecycle"
+title: "Order and Appointment Lifecycle"
 ---
+
+The **Walk-In Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
+the **appointment** lifecycle, detailed in the following sections.
+
+## Order Lifecycle
 
 As discussed in [`Lab Test Lifecycle - Statuses`](/lab/workflow/lab-test-lifecycle#statuses),
 each lab testing modality has the following format
 
 ```[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]```
 
-For each modality, there can be multiple **low-level status**, for **Walk-in** orders the
+For each modality, there can be multiple **low-level status**, for **At Home Phlebotomy** the
 possible low-level status are:
 
 - `ordered`: Vital received the order, stored it into our system, and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
-- `partial_results`: The laboratory has made partial results available.
+- `appointment_pending`: An appointment was placed in Vital's system for the order, but doesn't have a scheduled date.
+- `appointment_scheduled`: An appointment was scheduled or rescheduled for the order.
+- `appointment_cancelled`: The appointment was cancelled, by either the patient, Vital or you.
+- `partial_results`: The laboratory has started making partial results available.
 - `completed`: The laboratory processed the blood sample and final results are available.
 - `cancelled`: The order was cancelled by either the patient, Vital or you.
 
 The Finite State Machine that defines the possible transitions for the low-level statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the Walk-in Order low-level statuses.">
-    <img src="/img/walk_in_order_lifecycle.jpg"/>
+<Frame caption="Possible state transitions for the Walk-In Phlebotomy Order low-level statuses.">
+    <img src="/img/walkin-statuses.png"/>
 </Frame>
 
 <br />
 
 <Info>In **sandbox**, there is no async transition from the `ordered` state to the `requisition_created` state, this must be **manually triggered** via the **Vital Dashboard**.</Info>
+
+## Appointment Lifecycle
+
+The appointment lifecycle is separate from the order lifecyle, and it corresponds to a single appointment.
+The possible status are defined as follows:
+
+- `pending`: An appointment was placed in the system, and is pending updates from the phlebotomy service.
+- `scheduled`: An appointment was scheduled or rescheduled.
+
+The Finite State Machine that defines the possible transitions for the appointment statuses described above is illustrated
+in the following diagram.
+
+<Frame caption="Possible state transitions for the At-Home Phlebotomy Appointment statuses.">
+    <img src="/img/walkin_appt_statuses.png"/>
+</Frame>
+
+The events are related to a single appointment. An order can have multiple existing appointments in Vital system, although only one appointment will be considered active
+and returned when using the [GET Appointment endpoint](/api-reference/lab-testing-at-home-phlebotomy/get-appointment).
+

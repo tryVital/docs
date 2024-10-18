@@ -1,0 +1,98 @@
+---
+openapi: "GET /v3/order/{order_id}/psc/appointment"
+---
+
+<RequestExample>
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.get_psc_appointment(order_id="<order_id>")
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.labTests.getpscAppointment("<order_id>");
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labTests().getpscAppointment("<order_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabTests.GetpscAppointment(context.TODO(), "<order_id>")
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+{
+    "id": "413d7205-f8a9-42ed-aa4a-edb99e481ca0",
+    "user_id": "202b2c2f-fb4c-44dc-a4f8-621186fde227",
+    "address": {
+        "first_line": "West Lincoln Street",
+        "second_line": "",
+        "city": "Phoenix",
+        "state": "AZ",
+        "zip_code": "85004",
+        "unit": "14"
+    },
+    "location": {
+        "lng": -112.0772235,
+        "lat": 33.4421912
+    },
+    "start_at": "2023-05-17T20:00:00+00:00",
+    "end_at": "2023-05-17T22:00:00+00:00",
+    "iana_timezone": "America/Phoenix",
+    "type": "patient_service_center",
+    "provider": "quest",
+    "status": "confirmed",
+    "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
+    "can_reschedule": true
+}
+```
+</ResponseExample>
