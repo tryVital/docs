@@ -230,6 +230,7 @@
         "lab/overview/testing-modalities",
         "lab/overview/quickstart",
         "lab/overview/physicians",
+        "lab/overview/insurance",
         "lab/overview/sandbox"
       ]
     },
@@ -283,15 +284,30 @@
     {
       "group": "User Management",
       "pages": [
-        "api-reference/user/create-user",
-        "api-reference/user/get-user",
-        "api-reference/user/resolve-user",
-        "api-reference/user/patch-user",
-        "api-reference/user/delete-user",
-        "api-reference/user/undo-delete-user",
-        "api-reference/user/get-users",
-        "api-reference/user/create-sign-in-token"
-      ]
+        {
+          "group": "Users",
+          "pages": [
+            "api-reference/user/create-user",
+            "api-reference/user/get-user",
+            "api-reference/user/resolve-user",
+            "api-reference/user/patch-user",
+            "api-reference/user/delete-user",
+            "api-reference/user/undo-delete-user",
+            "api-reference/user/get-users",
+            "api-reference/user/create-sign-in-token",
+            "api-reference/user/upsert-info",
+            "api-reference/user/get-info-latest",
+            "api-reference/user/create-insurance",
+            "api-reference/user/get-latest-insurance"
+          ]
+        },
+        {
+          "group": "Debugging",
+          "pages": [
+            "api-reference/introspection/user-resources",
+            "api-reference/introspection/historical-pulls"
+          ]
+        }
     },
     {
       "group": "Device Connections",
