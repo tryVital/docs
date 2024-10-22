@@ -12,7 +12,7 @@ each lab testing modality has the following format
 
 ```[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]```
 
-For each modality, there can be multiple **low-level status**, for **At Home Phlebotomy** the
+For each modality, there can be multiple **low-level status**, for **Walk-In Phlebotomy** the
 possible low-level status are:
 
 - `ordered`: Vital received the order, stored it into our system, and started processing it asynchronously.
@@ -46,10 +46,10 @@ The possible status are defined as follows:
 The Finite State Machine that defines the possible transitions for the appointment statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the At-Home Phlebotomy Appointment statuses.">
+<Frame caption="Possible state transitions for the Walk-In Phlebotomy Appointment statuses.">
     <img src="/img/walkin_appt_statuses.png"/>
 </Frame>
 
 The events are related to a single appointment. An order can have multiple existing appointments in Vital system, although only one appointment will be considered active
-and returned when using the [GET Appointment endpoint](/api-reference/lab-testing-at-home-phlebotomy/get-appointment).
+and returned when using the [GET Appointment endpoint](/api-reference/lab-testing/psc-schedulling/get-psc-appointment).
 
