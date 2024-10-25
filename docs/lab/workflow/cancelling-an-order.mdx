@@ -21,7 +21,7 @@ When it comes to cancelling an order, to avoid the financial costs associated wi
 
 ### Cancel appointment endpoint
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash cURL
 curl --request PATCH \
@@ -104,7 +104,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 You will receive a response specifying awhether the order was successfully cancelled or not.
 
@@ -137,7 +137,7 @@ You will receive a response specifying awhether the order was successfully cance
 
 ### Cancel endpoint
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash cURL
 curl --request DELETE \
@@ -203,7 +203,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 You will receive a response specifying whether the order was successfully cancelled or not.
 
