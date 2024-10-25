@@ -41,7 +41,7 @@ After creating the user, the `Users` page of your dashboard will look like this:
 
 Now you can create a demo connection for the Vital user you just created, in this case `150db84c-537c-4cad-a6e9-24dc589d7fa2`. You can directly hit the [API endpoint](/api-reference/link/link-demo-provider) or using one of our client libraries, as shown below:
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash Creating a demo connection
 curl --request POST \
@@ -125,7 +125,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 After the demo connection is created, a Fitbit logo will appear beside your user.
 

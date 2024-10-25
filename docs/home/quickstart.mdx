@@ -93,7 +93,7 @@ Enter a new `client_user_id` and tap Create:
 
 This can also be achieved via the API as follows.
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash Creating a Vital user (bash)
 curl --request POST \
@@ -178,7 +178,7 @@ fmt.Printf("Received data %s\n", response)
 let user = try await VitalClient.shared.user.create(clientUserId)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ## 4. Connecting a source
 
@@ -304,7 +304,7 @@ summary data for a user. The request is simple and requires the Vital
 
 **Getting user sleep data**
 
-<SnippetGroup>
+<CodeGroup>
 
 ```python Python
 from vital.client import Vital
@@ -387,7 +387,7 @@ fmt.Printf("Received data %s\n", response)
 let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, endDate)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ## 6. SDK's and Libraries
 

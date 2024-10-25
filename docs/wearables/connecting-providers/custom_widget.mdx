@@ -16,7 +16,7 @@ An overview of the process is as follows:
 
 The first step to creating a custom widget is to make a call to the [providers endpoint](/docs/api-reference/providers). This will return a list of all available providers. You can then use this list to build your UI.
 
-<SnippetGroup>
+<CodeGroup>
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
@@ -106,7 +106,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ## 2. Build your UI in your app
 
@@ -125,7 +125,7 @@ Once you have a list of all available providers, you can build your UI. You can 
 
 Once a user has selected a provider, you can generate a link token. This link token is used to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/docs/api-reference/link#link-token-exchange).
 
-<SnippetGroup>
+<CodeGroup>
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
@@ -204,7 +204,7 @@ response, err := client.Link.Token(context.TODO(), request)
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ## 4. Link the user to the provider
 
@@ -212,7 +212,7 @@ Once you have a link token, you can use it to generate an oauth link, or authori
 
 ### Connect an oauth provider
 
-<SnippetGroup>
+<CodeGroup>
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
@@ -320,11 +320,11 @@ if err != nil {
 fmt.Printf("Received data %s\n", oauth)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ### Connact an Email/Password provider
 
-<SnippetGroup>
+<CodeGroup>
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
@@ -403,7 +403,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ### Bringing this all together
 
