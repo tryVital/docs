@@ -17,7 +17,7 @@ In the context of our API, a user refers to the patient who will be undergoing t
 
 You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash Creating a Vital user (bash)
 curl --request POST \
@@ -98,13 +98,13 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ### (2) Listing Available Tests
 
 To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [setup a call](/lab/overview/introduction#production-launch) and get you ready for launch!
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash Listing available tests (bash)
 curl --request GET \
@@ -170,7 +170,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 This will return a list of all the available tests to you. They include a description, turnaround time and price:
 
@@ -213,7 +213,7 @@ You can then use the test `id` when creating an order.
 
 Ordering a test for your user is as simple as making an API call:
 
-<SnippetGroup>
+<CodeGroup>
 
 ```bash Ordering a test (bash)
 curl --request POST \
@@ -413,7 +413,7 @@ if err != nil {
 fmt.Printf("Received data %s\n", response)
 ```
 
-</SnippetGroup>
+</CodeGroup>
 
 ```json Response
 {
