@@ -2,8 +2,19 @@
 title: "Introduction to Link"
 ---
 
-Vital Link is a client-side component your users will interact with in order to link their accounts with Vital. It allows you to access their accounts via the Vital API.
+import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 
-Vital Link will handle credential validation and multi-factor authentication. Links works across modern browsers and mobile browsers via webviews.
+Vital Link enables your users to connect their accounts with [supported cloud-based providers](https://docs.tryvital.io/wearables/providers/introduction)
+to Vital.
+
+Vital Link is offered in two forms:
+
+* [Vital Link Widget](/wearables/connecting-providers/link_flow) is a web flow hosted by Vital, providing a complete
+  provider connection wizard UX that is ready to integrate.
+
+* [Vital Link API](/wearables/connecting-providers/custom_widget) allows you to build your own Link Widget like user experience.
+
+
+<LinkSDKProvider />
 
 ![link-gif](https://storage.googleapis.com/vital-assets/vitalLink.gif)

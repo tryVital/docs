@@ -1,21 +1,40 @@
 ---
 title: "Link Flow"
+mode: "wide"
 ---
 
-The link flow starts when a user wants to connect a wearable device with Vital. An overview of the process can be found below.
-To start integrating Vital Link make sure you have your `api_key` from your team [dashboard](https://app.tryvital.io).
+import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 
-Before initialising the link flow, ensure you have generated a `user_id` for the specific user. This should be done when a user signs up to your service and is to be stored alongside your user entry in your database. [See](/home/quickstart#3-creating-your-first-user) for more details on how to create a `user_id`.
+<LinkSDKProvider />
 
-<div className="flex flex-row">
 
-1. To launch Vital link, first generate a link_token by passing the `user_id` to the `/link/token` endpoint.
-2. Pass the link_token into the Vital link component to open the link for the user. Please note: the `link_token` is a short-lived one-time use token.
-3. Use the onSuccess, onError, onExit callbacks to handle different events on your frontend.
+The Vital Link flow starts when a user wants to connect a wearable device with Vital. An overview of the process can be found below.
+
+<Steps>
+
+<Step title="Pre-requisites">
+Make sure that:
+
+1. You have your Vital API Key [dashboard](https://app.tryvital.io) ready to use.
+
+2. You have created a Vital User that corresponds to a user in your domain. [See](/home/quickstart#3-creating-your-first-user) for an example.
+</Step>
+
+<Step title="Generate a Link Token">
+Call the [Generate a Link Token endpoint](/api-reference/link/generate-link-token) with the target User ID using your Vital API Key.
+</Step>
+
+<Step title="Initiate the Link Flow">
+The API response provides a short-lived Link Token (`link_token`), as well as a Web URL (`link_web_url`).
+
+You can use the Web URL to launch the Vital Link Widget directly. Alternatively, you can use the Link Token
+in concert with the Vital Link API to [build your custom Link Widget experience](/wearables/connecting-providers/custom_widget).
+</Step>
+
+</Steps>
 
 <img
   src="https://storage.googleapis.com/vital-assets/link-flow-explainer.png"
   width="50%"
 />
 
-</div>
