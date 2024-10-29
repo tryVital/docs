@@ -366,6 +366,17 @@
       ]
     },
     {
+      "group": "Patient Service Center (PSC)",
+      "pages": [
+        "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
+        "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
+        "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
+        "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
+        "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
+        "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
+      ]
+    },
+    {
       "group": "Tests",
       "pages": [
         "api-reference/lab-testing/tests",
