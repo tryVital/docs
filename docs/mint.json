@@ -172,8 +172,14 @@
         "wearables/connecting-providers/launching_link",
         "wearables/connecting-providers/auth_types",
         "wearables/connecting-providers/errors",
-        "wearables/connecting-providers/custom_widget",
-        "wearables/connecting-providers/bring_your_own_oauth"
+        "wearables/connecting-providers/custom_widget"
+      ]
+    },
+    {
+      "group": "Bring Your Own OAuth",
+      "pages": [
+        "wearables/connecting-providers/bring-your-own-oauth/overview",
+        "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
       ]
     },
     {
@@ -1038,6 +1044,10 @@
     {
       "source": "/api-reference/introspection/:subpaths*",
       "destination": "/api-reference/data/introspection/:subpaths*"
+    },
+    {
+      "source": "/wearables/connecting-providers/bring_your_own_oauth",
+      "destination": "/wearables/connecting-providers/bring-your-own-oauth/overview"
     }
   ]
 }
