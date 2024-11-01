@@ -23,8 +23,8 @@ A table of the **Order Status** and **default SMS** is provided bellow:
 | --- | --- |
 | `ordered` | _"Hi, `{patient_first_name}`, your order for the `{team_name}` walk-in-test has been placed! We'll provide you with updates on the status of your order via text messages :)."_ |
 | `requisition_created` | _"Hey `{patient_first_name}`, it's time to visit your local `{lab_name}` center. Please check the email you just received for instructions."_ |
-| `appointment_scheduled` | _"Your appointment with the lab has been booked at {date} over at {address}!"_ |
-| `appointment_cancelled` | _"Hey, your lab appointment at {date} for {team_name} has been cancelled."_ |
+| `appointment_scheduled` | _"Your appointment with the lab has been booked at {date} over at {address}!"_ <Note>This message is sent only for Quest orders and Quest appointments placed through Vital API.</Note> |
+| `appointment_cancelled` | _"Hey, your lab appointment at {date} for {team_name} has been cancelled."_ <Note>This message is sent only for Quest orders and Quest appointments placed through Vital API.</Note> |
 | `completed` | _"Your results have finished processing, your results should be ready soon."_ |
 | `cancelled` | _"Hey, your order for the `{team_name}` walk-in-test has been cancelled. If this is by accident please contact support."_ |
 
