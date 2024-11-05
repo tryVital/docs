@@ -40,9 +40,9 @@ UTC Time when the sleep period ended
 <ResponseField name="type" type="enum<string>" required="true">
 
 `long_sleep`: &gt;=3 hours of sleep;
-`short_sleep`: &lt;3 hours of sleep that was ended before 6:00 PM in local time;
+`short_sleep`: &lt;3 hours of sleep;
 `acknowledged_nap`: User-acknowledged naps, typically under 3 hours of sleep;
-`indeterminate`: The sleep session recording is ongoing.
+`unknown`: The sleep session recording is ongoing.
 Available options: `long_sleep`, `short_sleep`, `acknowledged_nap`, `unknown`.
 </ResponseField>
 <ResponseField name="timezone_offset" type="anyOf | null">
