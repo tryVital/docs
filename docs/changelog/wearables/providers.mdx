@@ -2,6 +2,26 @@
 title: "Providers"
 ---
 
+### Sleep Type (Nov 2024)
+
+New Sleep summaries now have a new _Sleep Type_ field.
+
+<Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
+
+Vital maps the Sleep Type from the source provider whenever possible. If this is unavailable at source,
+Vital infers the Sleep Type based on the sleep session duration.
+
+Sleep Type         | Description
+------------------ | -----------------
+`long_sleep`       | &gt;=3 hours of sleep
+`short_sleep`      | &lt;3 hours of sleep
+`acknowledged_nap` | User-acknowledged naps, typically under 3 hours of sleep
+`unknown`          | The sleep session recording is ongoing.
+
+Check out the [Get Sleep endpoint](/api-reference/data/sleep/get-summary) and the [Sleep data events](/event-catalog/daily.data.sleep.created)
+in the Event Catalog for more information.
+
+</Accordion>
 
 ### Apple HealthKit data sync improvements (Aug 2024)
 
