@@ -91,38 +91,30 @@ fmt.Printf("Received data %s\n", response)
   },
   "results": [
     {
-      "name": "Hemoglobin",
-      "slug": "hemoglobin",
-      "unit": "g/dL",
-      "notes": null,
-      "value": 18.9, # deprecated
-      "timestamp": null,
-      "max_range_value": 17.7,
-      "min_range_value": 13.0,
-      "is_above_max_range": true,
-      "is_below_min_range": false,
-      "interpretation": "abnormal",
-      "result": "18.90",
+      "name": "Sex Horm Binding Glob, Serum",
+      "slug": "sex-horm-binding-glob-serum",
+      "value": 30.4,
+      "result": "30.4",
       "type": "numeric",
-      "loinc": "0001-1",
-      "loinc_slug": "hemoglobin-mass-vol"
-    },
-    {
-      "name": "Sodium",
-      "slug": "unknown",
-      "unit": "mmol/L",
-      "notes": null,
-      "value": 136, # deprecated
-      "timestamp": null,
-      "max_range_value": 144,
-      "min_range_value": 134,
+      "unit": "nmol/L",
+      "timestamp": "2024-10-31T09:08:00+00:00",
+      "notes": "Final",
+      "min_range_value": 24.6,
+      "max_range_value": 122,
       "is_above_max_range": false,
       "is_below_min_range": false,
       "interpretation": "normal",
-      "result": "136",
-      "type": "numeric",
-      "loinc": "0001-2",
-      "loinc_slug": "sodium"
+      "loinc": "13967-5",
+      "loinc_slug": "sex-hormone-binding-globulin-moles-vol",
+      "provider_id": "082016",
+      "source_markers": [
+        {
+          "marker_id": 229,
+          "name": "Testosterone Free, Profile I",
+          "slug": "testosterone-free-profile-i",
+          "provider_id": "140226"
+        }
+      ]
     }
   ]
 }
