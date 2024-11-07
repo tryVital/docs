@@ -66,6 +66,8 @@ is_below_min_range: bool | None
 interpretation: str = Interpretation.NORMAL
 loinc: str | None
 loinc_slug: str | None
+provider_id: str | None
+source_markers: List[ParentBiomarkerData] | None 
 ```
 
 #### ResultType
@@ -101,6 +103,7 @@ Interpretation is a string value that can be one of the following:
 2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
 3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
     In this case, refer to the [critical values](/lab/workflow/lab-test-lifecycle#critical-results) section.
+
 
 #### Standardisation - LOINC
 
@@ -215,6 +218,44 @@ In order to obtain this data, you can use the following endpoints:
 
     This allows you to see all markers associated with a lab test and it's expected results.
 
+#### Source Markers
+
+As mentioned above, a marker can be composed of one or more results. This means that if you order a `Lipid Panel`, there will be no `Lipid Panel` result returned, but instead a series of markers that originate from the `Lipid Panel`.
+
+Vital identifies the source marker via the `source_markers` field.
+
+```json
+    {
+      "name": "Sex Horm Binding Glob, Serum",
+      "slug": "sex-horm-binding-glob-serum",
+      "value": 30.4,
+      "result": "30.4",
+      "type": "numeric",
+      "unit": "nmol/L",
+      "timestamp": "2024-10-31T09:08:00+00:00",
+      "notes": "Final",
+      "min_range_value": 24.6,
+      "max_range_value": 122,
+      "is_above_max_range": false,
+      "is_below_min_range": false,
+      "interpretation": "normal",
+      "loinc": "13967-5",
+      "loinc_slug": "sex-hormone-binding-globulin-moles-vol",
+      "provider_id": "082016",
+      "source_markers": [
+        {
+          "marker_id": 229,
+          "name": "Testosterone Free, Profile I",
+          "slug": "testosterone-free-profile-i",
+          "provider_id": "140226"
+        }
+      ]
+    },
+```
+
+When Vital cannot identify the source, then this field will be `null`, indicating that this is an unsolicited result.
+There may also be more than one `source` marker, if there are two or more ordered markers that contain the same underlying result, using the same testing method.
+
 
 #### Missing Results
 
@@ -230,6 +271,7 @@ note: str | None = None
 loinc: str | None = None
 loinc_slug: str | None = None
 provider_id: str | None = None
+source_markers: List[ParentBiomarkerData] | None = None
 ```
 
 `inferred_failure_type` is the Vital assigned error type.
