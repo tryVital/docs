@@ -2,40 +2,163 @@
 title: "Introduction"
 ---
 
-Webhooks are a way to receive data from Vital. We frequently poll to receive data from the various providers. By registering webhooks, you avoid unnecessarily hitting our servers for data. We have several webhook event types that you can subscribe to. You can see these in the dashboard under the webhooks sections.
+With Webhooks and [ETL Pipelines](/webhooks/etl-pipelines/overview), Vital pushes any new data or updates to your endpoint
+or your ETL destination as soon as they are discovered.
 
-## Historical Data Flow
 
-When a user first connects a device to Vital, Vital backend pulls _historical_ data. Historical data is all data that exists on a user's account, prior to them linking their wearable account with Vital. This can take several minutes for all the data to be retrieved and to be readily accessible.
+## Connection Created stage
 
-When data is available, the backend triggers a `historical.data.<resource_type>.created` webhook event. The `resource_type` is determined by the `provider` - more information on which resources a provider can support can be found [here](/wearables/providers/resources).
+When a user successfully connects a provider through [Vital Link](/wearables/connecting-providers/introduction), Vital sends a
+Provider Connection Created event to acknowledge it:
 
-We send a webhook event for each resource a provider supports. In certain cases, where a user has large amounts of historical data, we send webhook events for each ordered-chunk (most-recent first). The `is_final` flag is used to indicate that the data collection is complete.
+<AccordionGroup>
+
+<Accordion title="Event Type" defaultOpen>
+`provider.connection.created`
+</Accordion>
+
+<Accordion title="Example" defaultOpen>
+
+Check out the [Provider Connection Created event](/event-catalog/provider.connection.created) in the Event Catalog.
 
 ```json Webhook Event
+{
+  "event_type": "provider.connection.created",
+  "data": {
+    "user_id": "4eca10f9-...",
+    "provider": {
+      "name": "Strava",
+      "slug": "strava",
+      "logo": "https://storage.googleapis.com/vital-assets/strava.png"
+    },
+    "resource_availability": { ... }
+  }
+}
+```
+</Accordion>
+
+</AccordionGroup>
+
+## Historical Data Backfill stage
+
+Vital also schedules jobs to backfill _historical_ data upon connection establishment.
+
+Historical data are data that exist prior to the connection establishment. Because this can [amount to months of data](/wearables/providers/introduction#historical-data-pull-range)
+— and might potentially run into temporary provider-side API rate limits — these backfill jobs may take minutes to hours to complete.
+
+<Note>
+You can inspect the status of historical data backfill jobs of each individual user through [Vital Dashboard](https://app.tryvital.io) or
+[Vital API](/api-reference/data/introspection/historical-pulls).
+</Note>
+
+Once the historical data backfill job of a specific [resource](/wearables/providers/resources) has **fully** completed, Vital sends a **Historical Pull Completion** event for the resource:
+
+<AccordionGroup>
+
+<Accordion title="Event Type" defaultOpen>
+`historical.data.{RESOURCE}.created`
+</Accordion>
+
+<Accordion title="Usage" defaultOpen>
+
+This event is a data-less notification.
+
+Use the [Vital Data Access API](/api-reference/data/sleep/get-summary) to fetch the resource you are interested in.
+
+Constrain your API call using the information in the Historical Pull Completion event. For example, the event includes the
+[provider](/wearables/providers/introduction) slug as well as full datetime range which Vital has looked through.
+
+</Accordion>
+
+<Accordion title="Example" defaultOpen>
+
+Check out the [Historical Workout Data Pull Completion event](/event-catalog/historical.data.workouts.created) in the Event Catalog.
+
+```json
 {
   "event_type": "historical.data.workouts.created",
   "data": {
     "user_id": "e9e072e8-...",
     "start_date": "2020-06-21T08:23:01+00:00",
     "end_date": "1996-11-02T14:39:28+00:00",
-    "is_final": true,
     "provider": "zwift"
   }
 }
 ```
+</Accordion>
+</AccordionGroup>
 
-When you receive the historical backfill event, you should make an API call for the specific resource you received the webhook event for. As an example, if you receive the event `historical.data.workouts.created` you should make a call to `GET` workout data from the API. Historical data can be quite big, so we don't send the full payload in a webhook.
+<Note>
+[ETL Pipelines](/webhooks/etl-pipelines/overview) can opt-in to receive historical data as _Vital Data Events_
+(as outlined below in the [Incremental Data stage](#incremental-data-stage) section).
 
-## Daily Data Flow
 
-After a user has connected and historical data is backfilled, any new data is sent in the payload of the `daily.data.<resource_type>.*` webhook.
+Note that Vital would still send the Historical Pull Completion event to signal the completion of the historical data backfill stage.
+</Note>
 
-Examples of each payload are provided in the [webhooks dashboard](https://app.tryvital.io). You can send test events which contain the different payloads you may receive throughout the integrations lifecyle.
+## Incremental Data stage
+
+Once the historical data backfill stage completes, Vital [monitors for new data and changes](/wearables/providers/introduction#data-frequency).
+
+Whenever new data or changes are discovered, Vital sends them out as **Data Events** as soon as possible:
+
+<Note>
+You can inspect the state of incremental data updates of each individual user through [Vital Dashboard](https://app.tryvital.io) or
+[Vital API](/api-reference/data/introspection/user-resources).
+</Note>
+
+<AccordionGroup>
+
+<Accordion title="Event Types" defaultOpen>
+
+* Initial discovery — `daily.data.{RESOURCE}.created`
+* Subsequent updates — `daily.data.{RESOURCE}.updated`
+
+<Warning>
+Treat the `daily.data` prefix as a misnomer for _Incremental Data_. It **does not** imply a daily delivery schedule.
+</Warning>
+
+</Accordion>
+
+
+<Accordion title="Usage" defaultOpen>
+
+Vital sends out _Data Events_ as soon as we discover new or updated entries as reported by a provider. This also implies:
+
+1. Vital does not prioritize or aggregate Data Events across providers:
+
+    * You may receive multiple events of the same type from a single provider, because the provider supports multiple
+      sources, devices or apps (e.g., iPhone sleeps and Apple Watch sleeps from Apple HealthKit);
+    * You may receive multiple events of the same type from multiple providers, because the user has connected to multiple
+      providers.
+
+2. There is no standard Data Event delivery frequency or schedule across providers _and_ resources:
+
+    * Some may be sent only once per day;
+    * Some may be sent multiple times at irregular times;
+    * Some may appear to be sent on a regular schedule throughout the day.
+
+Your system typically would ingest relevant Vital Data Events into a database.
+
+You can query the database with any business rules and query constraints suitable to your product experience. This may include
+your own data prioritization rules based on, e.g., [Source Type](/wearables/providers/data-attributions#source-type).
+
+
+<Note>
+Vital also offers the [Horizon AI Aggregation API](/api-reference/horizon-ai/aggregation/overview) for your data aggregation
+and consolidation needs.
+</Note>
+
+</Accordion>
+
+
+<Accordion title="Example" defaultOpen>
+
+Check out the [Workout Created event](/event-catalog/daily.data.workouts.created) in the Event Catalog.
 
 <Warning>The event structure and deduplication semantic of [summary types](/wearables/providers/resources) and [timeseries types](/wearables/providers/resources) have a few key differences. Please refer to [Event Structure](/webhooks/event-structure) for a more in-depth discussion.</Warning>
 
-```json Webhook Event
+```json
 {
   "event_type": "daily.data.workouts.created",
   "data": {
@@ -47,39 +170,19 @@ Examples of each payload are provided in the [webhooks dashboard](https://app.tr
     "calories": 4470,
     "hr_zones": [8279],
     "user_id": "ab3247dc-...",
-    "moving_time": 4719,
-    "total_elevation_gain": 8967,
-    "elev_high": 3868,
-    "max_speed": 8371,
-    "average_watts": 9029,
-    "max_watts": 1551,
+    ...,
     "provider_id": "dolor ipsum reiciendis Lorem veniam elit. esse",
     "source": {
-      "name": "Zwift",
-      "slug": "zwift",
-      "logo": "https://logo.png"
+      "provider": "zwift",
+      "type": "unknown"
     }
   }
 }
 ```
+</Accordion>
 
-## Connection Created
+</AccordionGroup>
 
-Once a connection between a provider and a user is established, we will send a webhook confirming it.
-
-```json Webhook Event
-{
-  "event_type": "provider.connection.created",
-  "data": {
-    "user_id": "4eca10f9-...",
-    "source": {
-      "source_name": "Strava",
-      "source_slug": "strava",
-      "source_logo": "https://storage.googleapis.com/vital-assets/strava.png"
-    }
-  }
-}
-```
 
 ## Deep Dive into Vital Webhooks
 
