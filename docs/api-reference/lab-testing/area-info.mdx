@@ -81,34 +81,3 @@ fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
-
-<ResponseExample>
-
-```json Response
-{
-  "zip_code": "85004",
-  "phlebotomy": {
-    "is_served": true,
-    "providers": [
-        {
-          "name": "getlabs",
-          "tier": ["appointment-ready"]
-        },
-        {
-          "name": "phlebfinders",
-          "tier": ["appointment-request"]
-        }
-    ]
-  },
-  "central_labs": {
-    "labcorp": {
-      "patient_service_centers": {
-        "within_radius": 5,
-        "radius": "25"
-      }
-    }
-  }
-}
-```
-
-</ResponseExample>
