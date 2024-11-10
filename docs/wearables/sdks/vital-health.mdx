@@ -6,18 +6,48 @@ sidebarTitle: "Health SDK"
 
 ## Overview
 
+<Note>
+  Make sure you have successfully integrated with a Vital Mobile SDK authentication scheme, before you proceed
+  to try out Vital Health SDK.
+
+  <Card title="Mobile SDK Authentication" icon="id-card" href="/wearables/sdks/authentication" horizontal>
+    Learn how to authenticate your mobile app user with Vital Mobile SDK.
+  </Card>
+</Note>
+
+This Vital Health SDK guidance page focuses on the inital setup and API usage of the Health SDK that is common to both
+the Apple HealthKit and Android Health Connect integration.
+
 Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
 
-* [Apple HealthKit guide](/wearables/guides/apple-healthkit)
-* [Android Health Connect guide](/wearables/guides/android-health-connect)
+<Card title="Apple HealthKit" icon="apple" href="/wearables/guides/apple-healthkit" horizontal>
+  Learn how to integrate with Apple HealthKit through Vital Mobile SDKs, available in
+  Native iOS, React Native and Flutter.
+</Card>
+<Card title="Android Health Connect" icon="android" href="/wearables/guides/android-health-connect" horizontal>
+  Learn how to integrate with Android Health Connect through Vital Mobile SDKs, available in
+  Native Android, React Native and Flutter.
+</Card>
 
-The Health SDK guide focuses on the API usage of the Health SDK.
 
-## Configure your App Delegate (iOS only)
+## Initial Setup
+
+### iOS apps: Configure your App Delegate
+
+This section applies to:
+
+* 🔘 Native iOS apps
+* 🔘 React Native iOS apps
+
+This section does not apply to:
+
+* ❌ Fluter iOS apps (using Vital Flutter SDK 4.3.8 or later).
 
 <Note>
-This applies to all iOS integrations — Native iOS, React Native or Flutter.
+Vital **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
+You need not manual edit your AppDelegate in **Flutter** iOS projects.
 </Note>
+
 
 <Warning>
 You must configure your App Delegate as instructed if you use Vital Health SDK on iOS. Not doing so
@@ -34,11 +64,11 @@ Vital needs to register various handlers with the system frameworks like Apple H
 require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
 [[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
 
-For React Native and Flutter apps, the AppDelegate is part of the template Swift or Objective-C code in your generated Xcode project.
+For React Native apps, the AppDelegate is part of the template Swift or Objective-C code in your generated Xcode project.
 
 <CodeGroup>
 
-```swift Swift / Flutter
+```swift Swift
 import VitalHealthKit
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -73,7 +103,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 </Accordion>
 
-## SDK configuration
+### Configure the Vital Health SDK
 
 The Health SDK must be configured before use. The configuration is persistent, so
 you can do this only once, immediately after [a successful authentication with the Core SDK](/wearables/sdks/authentication).
@@ -118,8 +148,9 @@ await vital_health.configure(
 ```
 </CodeGroup>
 
+## Health Data Permissions
 
-## Ask user for health data permissions
+### Ask user for health data permissions
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
 
@@ -217,7 +248,7 @@ The health data read permission prompted is managed by the operating system. Vit
 alter its behaviour.
 </Warning>
 
-## Check if your app has asked for permissions before
+### Check if your app has asked for permissions before
 
 You can check if your app has already asked the user _at least once_ before, for permissions on a specific `VitalResource`.
 
@@ -262,7 +293,7 @@ await vital_health.hasAskedForPermission(vital_health.HealthResource.Activity);
 </CodeGroup>
 
 
-## Check if a read permission was granted or denied (⚠️ Spoiler: You can't)
+### Check if a read permission was granted or denied (⚠️ Spoiler: You can't)
 
 Vital Health SDK allows you to [ask for permission](#ask-user-for-health-data-permissions) and
 [check if your app has asked for permission before](#check-if-your-app-has-asked-for-permissions-before).
@@ -553,6 +584,9 @@ Stream<SyncStatus> status = vital_health.syncStatus;
 
 ## Sync Progress Debugging UI (iOS only)
 
+<AccordionGroup>
+
+<Accordion title="Sync Progress View on Native iOS" defaultOpen>
 Vital Health SDK for iOS includes a `ForEachVitalResource` — a pre-baked SwiftUI View providing a
 live-updated sync progress feed of all the `VitalResource`s whose permissions have been asked for.
 
@@ -581,3 +615,31 @@ let viewController: UIViewController
 let hostingController = UIHostingController(rootView: SyncProgressView())
 viewController.present(hostingController, animated: true, completion: nil)
 ```
+</Accordion>
+
+<Accordion title="Sync Progress UI on Flutter / React Native" defaultOpen>
+You can open the Apple HealthKit Sync Progress Inspector UI through a simple call:
+
+<CodeGroup>
+```dart Flutter
+import 'package:vital_health/vital_health.dart' as vital_health;
+
+unawaited(vital_health.openSyncProgressView());
+```
+
+```typescript React Native
+import { VitalHealth } from "@tryvital/vital-health-react-native";
+
+await VitalHealth.openSyncProgressView();
+```
+</CodeGroup>
+
+This Sync Progress Inspector UI provides a live-updated sync progress feed of all the VitalResources whose permissions have been asked for.
+
+<Note>
+Note that it is currently a no-op on Android.
+</Note>
+
+</Accordion>
+
+</AccordionGroup>
