@@ -20,20 +20,41 @@ With custom credentials you can use your own team name and setup your own logo f
 
 ## OAuth Providers supporting BYOO
 
-| Provider                                             | Slug              | Remarks                      |
-| ---------------------------------------------------- | ----------------- | ---------------------------- |
-| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | -                            |
-| [Garmin](https://www.garmin.com)                     | `garmin`          | -                            |
-| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | -                            |
-| [Oura](https://ouraring.com)                         | `oura`            | -                            |
-| [Strava](https://www.strava.com)                     | `strava`          | -                            |
-| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | -                            |
-| [Withings](https://www.withings.com)                 | `withings`        | -                            |
+| Provider                                             | Slug              | Remarks                                |
+| ---------------------------------------------------- | ----------------- | -------------------------------------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | -                                      |
+| [Garmin](https://www.garmin.com)                     | `garmin`          | -                                      |
+| [Google Fit](https://www.google.com/fit/)            | `google_fit`      | -                                      |
+| [Oura](https://ouraring.com)                         | `oura`            | -                                      |
+| [Strava](https://www.strava.com)                     | `strava`          | -                                      |
+| [Wahoo](https://wahoofitness.com)                    | `wahoo`           | -                                      |
+| [Withings](https://www.withings.com)                 | `withings`        | -                                      |
 | [Dexcom](https://www.dexcom.com)                     | `dexcom_v3`       | [↗️ Guide](/wearables/guides/dexcom_v3) |
-| [Whoop](https://www.whoop.com)                       | `whoop_v2`        | [↗️ Guide](/wearables/guides/whoop)|
-| [Polar](https://www.polar.com/accesslink-api/)       | `polar`           | -                            |
-| [Cronometer](https://www.cronometer.com)             | `cronometer`      | -                            |
-| [Omron](https://www.omron-healthcare.com)            | `omron`           | -                            |
+| [Whoop](https://www.whoop.com)                       | `whoop_v2`        | [↗️ Guide](/wearables/guides/whoop)     |
+| [Polar](https://www.polar.com/accesslink-api/)       | `polar`           | -                                      |
+| [Cronometer](https://www.cronometer.com)             | `cronometer`      | -                                      |
+| [Omron](https://www.omron-healthcare.com)            | `omron`           | -                                      |
+
+### Provider Rate Limits
+
+<Note>
+This section documents the _starting_ rate limit of a brand new OAuth application, should you choose to BYOO.
+</Note>
+
+| Provider                                             | Starting Rate Limit                                                                 |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)      | 150 requests per hour per user                                                      |
+| [Garmin](https://www.garmin.com)                     | 10,000 days of data oer minute                                                      |
+| [Google Fit](https://www.google.com/fit/)            | 600 requests per minute                                                             |
+| [Oura](https://ouraring.com)                         | 5,000 requests per 5 minutes                                                        |
+| [Strava](https://www.strava.com)                     | 100 requests per 15 minutes<br />1,000 requests per day                             | 
+| [Wahoo](https://wahoofitness.com)                    | 200 requests per 5 minutes<br />1,000 requests per hour<br />5,000 requests per day |
+| [Withings](https://www.withings.com)                 | 120 requests per minute                                                             |
+| [Dexcom](https://www.dexcom.com)                     | 60,000 requests per hour                                                            |
+| [Whoop](https://www.whoop.com)                       | 100 requests per minute<br />10,000 requests per day                                |
+| [Polar](https://www.polar.com/accesslink-api/)       | 20 requests per 15 minutes per user<br />100 requests per day per user              |
+| [Cronometer](https://www.cronometer.com)             | N/A                                                                                 |
+| [Omron](https://www.omron-healthcare.com)            | N/A                                                                                 |
 
 ## Setting up your OAuth credentials
 
@@ -41,11 +62,19 @@ With custom credentials you can use your own team name and setup your own logo f
 
 <OrgManagementAPI />
 
-You can apply and update your OAuth credentials programmatically using the
-[Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials) endpoint.
+<Steps>
+<Step title="Setup your OAuth application">
+Use the [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials)
+endpoint to obtain the instructions to setup your OAuth application.
+</Step>
+
+<Step title="Set your application credentials">
+Use the [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials) endpoint
+to apply your OAuth application credentials to your Vital Team.
+
 
 <AccordionGroup>
-<Accordion title="Credentials that are activated immediately" icon="bolt">
+<Accordion title="Credentials that are activated immediately" icon="bolt" defaultOpen>
 
 BYOO credentials for the following providers are immediately active, once set through the [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials):
 
@@ -65,18 +94,20 @@ BYOO credentials for the following providers are immediately active, once set th
 
 </Accordion>
 
-<Accordion title="Credentials that need support intervention once set" icon="message-question">
+<Accordion title="Credentials that need support intervention once set" icon="message-question" defaultOpen>
 
-While you can supply your BYOO credentials for the following providers
-through the [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials),
-it would not be immediately active and requires Vital support intervention:
+The following providers are not immediately active. You need to take a couple of extra steps to activate them:
 
-| Provider                                             | Slug              | Remarks             |
-| ---------------------------------------------------- | ----------------- | ---------------------------- |
-| [Fitbit](https://www.fitbit.com/global/uk/home)      | `fitbit`          | Contact Vital support for instructions to complete the webhook subscriber setup. |
+[Fitbit](https://www.fitbit.com/global/uk/home) (`fitbit`)
+
+1. You must press the "Verify" button on all the Webhook Subscribers in the Fitbit Developer Portal.
+2. Once the buttons are gone and replaced by (usually zeroed) delivery statistics, it implies that Fitbit has completed the verification challenge with Vital.
 
 </Accordion>
 </AccordionGroup>
+
+</Step>
+</Steps>
 
 ### Through Vital Support
 
@@ -87,6 +118,7 @@ To setup custom OAuth application credentials, you need to do the following:
 3. Email Support@tryvital.io or message us on Slack with the following information:
    - The provider you want to customize
    - The client ID and client secret for the provider
+      - Use tools like [Doppler Secret Share](https://share.doppler.com) or [1Password](https://1password.com) to protect your credentials.
    - The redirect URI for the provider
    - The name of your team
    - The logo for your team
