@@ -214,13 +214,8 @@
         "wearables/guides/abbott-libreview",
         "wearables/guides/apple-healthkit",
         "wearables/guides/android-health-connect",
-        {
-          "group": "Dexcom",
-          "pages": [
-            "wearables/guides/dexcom_v3",
-            "wearables/guides/dexcom"
-          ]
-        },
+        "wearables/guides/dexcom_v3",
+        "wearables/guides/dexcom",
         "wearables/guides/fitbit",
         "wearables/guides/garmin",
         "wearables/guides/google_fit",

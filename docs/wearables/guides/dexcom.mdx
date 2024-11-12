@@ -1,22 +1,49 @@
 ---
-title: "Dexcom (G6 And Older)"
+title: "Dexcom (G6 and older)"
 ---
+
+<Note>
+`dexcom` is the provider slug for Dexcom (G6 and older).<br />
+For the OAuth-based `dexcom_v3` integration, see [Dexcom (OAuth based)](./dexcom_v3).
+</Note>
+
 
 <Warning>
 
-This provider is being phased out in favour of the new [Dexcom V3 Api](./dexcom_v3). Consider migrating to the new API at your earliest convinence.
+This provider is being phased out in favour of the new [OAuth-based Dexcom](./dexcom_v3) integration. Consider migrating to the new API at your earliest convinence.
 
 </Warning>
 
-<Info>
-
-Please make sure you have the dexcom mobile application installed and *sharing* enabled. You will need to invite `support@tryvital.io` in the mobile application before you can connect with Vital.
-
-</Info>
 
 ## Enabling Dexcom Share
 
-You can follow the guides by [Dexcom](https://www.dexcom.com/faqs/how-do-i-share-my-dexcom-g6-glucose-data-followers) on how to enable sharing for your device. Ensure you use the application for your device and not Dexcom Clarity.
+Your user needs to enable [Dexcom Share](https://www.dexcom.com/faqs/how-do-i-share-my-dexcom-g6-glucose-data-followers) for this connection to work:
+
+<Steps>
+<Step title="Install Dexcom mobile app">
+They **must** use the Dexcom G6 mobile app ([iOS](https://apps.apple.com/us/app/dexcom-g6/id1209262925), [Android](https://play.google.com/store/apps/details?id=com.dexcom.g6)).
+
+Note that the Dexcom Clarity app would not work for this integration.
+</Step>
+
+<Step title="Enable Dexcom Share">
+Please refer to the [official help article on how to enable Dexcom Share](https://www.dexcom.com/faqs/how-do-i-share-my-dexcom-g6-glucose-data-followers).
+
+They **must** have at least one follower<sup>[1]</sup> on Dexcom Share to keep the sharing activated. Otherwise, the API would
+stop reporting data to Vital.
+
+<Info>
+<sup>[1]</sup> You can setup your own Dexcom account for your user to add as a follower in the Dexcom G6 mobile app.
+Alternatively, your user can invite `support@tryvital.io` as a follower.
+</Info>
+</Step>
+
+<Step title="Connect via Vital Link">
+They **must** connect to Vital using their _own_ Dexcom account — the one which their Dexcom G6 app is signed into.
+This should **not** be the accounts of the followers.
+</Step>
+
+</Steps>
 
 ## Vital Widget
 
