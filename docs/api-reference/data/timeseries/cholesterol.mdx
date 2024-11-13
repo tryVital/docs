@@ -103,3 +103,48 @@ fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
+
+<ResponseExample>
+
+```json Example
+{
+  "groups": {
+    "oura": [
+      {
+        "data": [
+          {
+            "timestamp": "2023-02-13T14:30:52+00:00",
+            "type": "cholesterol/ldl",
+            "unit": "mmol/L",
+            "value": 0.6
+          },
+          {
+            "timestamp": "2023-02-13T14:30:52+00:00",
+            "type": "cholesterol/hdl",
+            "unit": "mmol/L",
+            "value": 0.2
+          },
+          {
+            "timestamp": "2023-02-13T14:30:52+00:00",
+            "type": "cholesterol/total",
+            "unit": "mmol/L",
+            "value": 0.7
+          },
+          {
+            "timestamp": "2023-02-13T14:30:52+00:00",
+            "type": "cholesterol/triglycerides",
+            "unit": "mmol/L",
+            "value": 0.7
+          }
+        ],
+        "source": {
+          "provider": "oura",
+          "type": "ring"
+        }
+      }
+    ]
+  }
+}
+```
+
+</ResponseExample>
