@@ -38,7 +38,25 @@ Any of:
 * null
 </ResponseField>
 <ResponseField name="fat" type="anyOf | null">
-Body fat percentage::perc
+Total body fat percentage::perc
+Any of:
+* number
+* null
+</ResponseField>
+<ResponseField name="water_percentage" type="anyOf | null">
+Water percentage in the body::perc
+Any of:
+* number
+* null
+</ResponseField>
+<ResponseField name="muscle_mass_percentage" type="anyOf | null">
+Muscle mass percentage in the body::perc
+Any of:
+* number
+* null
+</ResponseField>
+<ResponseField name="visceral_fat_index" type="anyOf | null">
+Visceral fat index::scalar
 Any of:
 * number
 * null
@@ -80,12 +98,15 @@ Deprecated. Subject to removal after 1 Jan 2024.
     "fat": 30,
     "height": 183,
     "id": "8be1306e-01fc-46b1-b5d1-a9e39052db09",
+    "muscle_mass_percentage": 40.2,
     "source": {
       "logo": "https://logo_url.com",
-      "name": "Oura",
-      "slug": "oura"
+      "name": "Withings",
+      "slug": "withings"
     },
     "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537",
+    "visceral_fat_index": 4.5,
+    "water_percentage": 55.4,
     "weight": 80
   },
   "event_type": "daily.data.body.created",
