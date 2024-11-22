@@ -2,6 +2,20 @@
 title: "Providers"
 ---
 
+### Body Summary model extension (Nov 2024)
+
+The Body Summary model now includes 3 new fields:
+ * `water_percentage` - The percentage of water in the body.
+ * `muscle_mass_percentage` - The percentage of muscle mass in the body.
+ * `visceral_fat_index` - Provider's score of visceral fat levels.
+
+At the time of writing all three are only available from the Withings provider.
+
+<Accordion icon="chart-scatter" iconType="duotone" title="Details" defaultOpen>
+Check out the [Get Body Summary](/api-reference/body/get-summary) endpoint and
+the [Body Created](/event-catalog/daily.data.body.created) event for more information.
+</Accordion>
+
 ### Sleep Type (Nov 2024)
 
 New Sleep summaries now have a new _Sleep Type_ field.
