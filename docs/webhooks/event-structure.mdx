@@ -2,6 +2,9 @@
 title: "Event Structure"
 ---
 
+import SummaryID from '/snippets/data/summary-id.mdx';
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
+
 All our webhook events have the following standard structure:
 
 * A top-level `event_type` field, specifying the payload type contained in the `data` field.
@@ -82,7 +85,9 @@ Wearable data events have the following extended standard structure:
 Each time a [summary object](/wearables/providers/resources) is created or updated, Vital emits a data event for the occurrence.
 The object is made available directly at the top-level `data` field (JSON path: `$.data`), alongside the standard fields listed above.
 
-<Warning>Summary types are uniquely identified by its `id`. If multiple events are received at the same `id`, the last event replaces all its previous versions.</Warning>
+<Note>
+<SummaryID />
+</Note>
 
 <CodeGroup>
 ```json Summary data event structure
@@ -143,8 +148,9 @@ The object is made available directly at the top-level `data` field (JSON path: 
 Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
 The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
 
-<Warning>Each sample can be uniquely identified by a triple key (3-tuple) comprising of its resource type name, its source (ID or slug) and its timestamp. If multiple samples are received at
-the same tuple, the last sample replaces all its previous versions.</Warning>
+<Note>
+<TimeseriesID />
+</Note>
 
 <Info>While most timeseries data are immutable, there have been exceptions of some sources aggregating some data types using time bucketing,
 and some may even send updates ASAP on time buckets that have incomplete data. For example, activity timeseries data from Apple HealthKit
