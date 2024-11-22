@@ -2,13 +2,11 @@
 title: "daily.data.blood_pressure.created"
 description: "New blood pressure samples have been created"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(blood_pressure, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.blood_pressure.created`
@@ -105,7 +103,7 @@ URL for source logo
       {
         "diastolic": 75,
         "systolic": 125,
-        "timestamp": "2024-11-22T15:47:08+00:00",
+        "timestamp": "2024-11-22T21:15:04+00:00",
         "timezone_offset": null,
         "type": null,
         "unit": "mmHg"
@@ -121,7 +119,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "5e245900-dde2-49f8-b596-b8f29bb06ce2"
+    "user_id": "f1cec73d-6ab2-484b-9a81-fc51bcb8351d"
   },
   "event_type": "daily.data.blood_pressure.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

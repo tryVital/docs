@@ -2,13 +2,11 @@
 title: "daily.data.caffeine.updated"
 description: "Existing caffeine interval samples have been updated"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(caffeine, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.caffeine.updated`
@@ -127,7 +125,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "22ff1ca8-1664-451a-a7c6-ff050eb72358"
+    "user_id": "43a5a026-5c61-4979-ab4e-b7af3ff0d0ac"
   },
   "event_type": "daily.data.caffeine.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

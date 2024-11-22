@@ -2,13 +2,11 @@
 title: "daily.data.vo2_max.updated"
 description: "Existing vo2_max interval samples have been updated"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(vo2_max, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.vo2_max.updated`
@@ -127,7 +125,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "60c2e23f-4a6a-4588-8dda-cea4beafbeb4"
+    "user_id": "0fdcb08d-56e6-43df-ad36-0646a0379c85"
   },
   "event_type": "daily.data.vo2_max.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

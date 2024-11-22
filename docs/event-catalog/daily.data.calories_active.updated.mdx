@@ -2,13 +2,11 @@
 title: "daily.data.calories_active.updated"
 description: "Existing calories_active interval samples have been updated"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(calories_active, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.calories_active.updated`
@@ -127,7 +125,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "18cf9f46-b07b-4123-9caa-3feb1fa5d5fa"
+    "user_id": "5173c207-5fe5-4eb4-84d5-8d550237c208"
   },
   "event_type": "daily.data.calories_active.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

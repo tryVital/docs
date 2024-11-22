@@ -2,13 +2,11 @@
 title: "daily.data.heartrate.created"
 description: "New heartrate discrete samples have been created"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(heartrate, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.heartrate.created`
@@ -120,7 +118,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "6a4ab2dc-1ee6-43f3-9390-4b932a23c451"
+    "user_id": "8a429c1b-5fd5-4235-b711-dd289ea1ef3c"
   },
   "event_type": "daily.data.heartrate.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

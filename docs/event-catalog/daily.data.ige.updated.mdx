@@ -2,13 +2,11 @@
 title: "daily.data.ige.updated"
 description: "Existing ige discrete samples have been updated"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(ige, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.ige.updated`
@@ -120,7 +118,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "61013464-f312-42f6-a490-cb31803ac0f8"
+    "user_id": "2ec86ee4-6b73-47ca-9cf1-08508f05a865"
   },
   "event_type": "daily.data.ige.updated",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

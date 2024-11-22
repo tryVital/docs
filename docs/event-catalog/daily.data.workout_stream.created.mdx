@@ -2,12 +2,11 @@
 title: "daily.data.workout_stream.created"
 description: "A workout stream has been created, and can be accessed via the /v2/timeseries/workouts/&lcub;workout_id&rcub;/stream endpoint."
 ---
-<Warning>
-Each summary object is uniquely identified by its `id`.
+import SummaryID from '/snippets/data/summary-id.mdx';
 
-If multiple events are received at the same `id`, the last event received replaces all its previous
-versions.
-</Warning>
+<Info>
+<SummaryID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.workout_stream.created`

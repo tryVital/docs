@@ -2,13 +2,11 @@
 title: "daily.data.insulin_injection.created"
 description: "New insulin_injection interval samples have been created"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(insulin_injection, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.insulin_injection.created`
@@ -124,7 +122,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "31070153-b5f4-4f60-bede-a4954d82f756"
+    "user_id": "30415bdd-1378-4dd7-a292-17530def9787"
   },
   "event_type": "daily.data.insulin_injection.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

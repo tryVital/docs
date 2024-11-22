@@ -2,13 +2,11 @@
 title: "daily.data.hrv.created"
 description: "New hrv discrete samples have been created"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(hrv, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.hrv.created`
@@ -120,7 +118,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "96fc6ac9-6615-44ce-9405-a07e76276505"
+    "user_id": "0c233131-5e04-4338-9660-b7f78cf294df"
   },
   "event_type": "daily.data.hrv.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

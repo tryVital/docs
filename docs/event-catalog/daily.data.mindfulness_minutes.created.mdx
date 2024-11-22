@@ -2,13 +2,11 @@
 title: "daily.data.mindfulness_minutes.created"
 description: "New mindfulness_minutes interval samples have been created"
 ---
-<Warning>
-Each sample is uniquely identified by a triple key (3-tuple) comprising of its resource type name,
-its source (ID or slug) and its timestamp. e.g., `(mindfulness_minutes, fitbit, 2023-01-23T12:34:56Z)`.
+import TimeseriesID from '/snippets/data/timeseries-id.mdx';
 
-If multiple samples are received at the same triple key, the last sample received replaces all its
-previous versions.
-</Warning>
+<Info>
+<TimeseriesID />
+</Info>
 # Properties
 <ResponseField name="event_type" type="const string" required="true">
 Constant: `daily.data.mindfulness_minutes.created`
@@ -109,7 +107,7 @@ URL for source logo
   "data": {
     "data": [
       {
-        "end": "2024-11-22T15:52:07.553100+00:00",
+        "end": "2024-11-22T21:20:02.724690+00:00",
         "start": "2023-02-13T14:57:24+00:00",
         "timezone_offset": null,
         "type": null,
@@ -127,7 +125,7 @@ URL for source logo
       "type": "ring"
     },
     "source_id": 1,
-    "user_id": "9ca60595-f8c1-468c-a1dd-e28f4aa62275"
+    "user_id": "9e2d1e69-6467-41db-ba67-bc756ac9b434"
   },
   "event_type": "daily.data.mindfulness_minutes.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
