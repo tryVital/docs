@@ -61,6 +61,12 @@ Any of:
 * number
 * null
 </ResponseField>
+<ResponseField name="bone_mass_percentage" type="anyOf | null">
+Bone mass percentage in the body::perc
+Any of:
+* number
+* null
+</ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
 <ResponseField name="provider" type="string" required="true">
@@ -93,6 +99,7 @@ Deprecated. Subject to removal after 1 Jan 2024.
 {
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
+    "bone_mass_percentage": 4.3,
     "calendar_date": "2023-02-27",
     "date": "2023-02-27T12:31:24+00:00",
     "fat": 30,
