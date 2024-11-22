@@ -1,0 +1,92 @@
+---
+title: "Summary"
+openapi: "GET /v2/summary/sleep_cycle/{user_id}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url {{BASE_URL}}/v2/summary/sleep_cycle/{user_id}?start_date={{START_DATE}}&end_date={{END_DATE}} \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.sleep_cycle.get(
+  user_id="<user_id>", 
+  start_date="2021-01-01", 
+  end_date="2021-01-02"
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { SleepCycleGetRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: SleepCycleGetRequest = {
+    startDate: '2021-01-01',
+    endDate: '2021-01-02',
+}
+
+const data = await client.sleepCycle.get('user_id', request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.sleep_cycle.requests.SleepCycleGetRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+SleepCycleGetRequest request = SleepCycleGetRequest
+        .builder()
+        .startDate("2021-01-01")
+        .endDate("2021-01-02")
+        .build();
+
+var data = vital.sleepCycle().get("<user_id>", request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+)
+
+EndDate := "2021-01-02"
+request := &vital.SleepCycleGetRequest{
+  StartDate: "2021-01-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.SleepCycle.Get(
+  context.TODO(), 
+  "<user_id>", 
+  request
+)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
