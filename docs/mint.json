@@ -686,6 +686,14 @@
           ]
         },
         {
+          "group": "Sleep Cycle",
+          "pages": [
+            "event-catalog/daily.data.sleep_cycle.created",
+            "event-catalog/daily.data.sleep_cycle.updated",
+            "event-catalog/historical.data.sleep_cycle.created"
+          ]
+        },
+        {
           "group": "Workout",
           "pages": [
             "event-catalog/daily.data.workouts.created",
