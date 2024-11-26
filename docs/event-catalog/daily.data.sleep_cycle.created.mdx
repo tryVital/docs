@@ -1,0 +1,130 @@
+---
+title: "daily.data.sleep_cycle.created"
+description: "A new sleep cycle has been created"
+---
+import SummaryID from '/snippets/data/summary-id.mdx';
+
+<Info>
+<SummaryID />
+</Info>
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `daily.data.sleep_cycle.created`
+</ResponseField>
+<ResponseField name="team_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="client_user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="data" type="ClientFacingSleepCycle" required="true">
+<Expandable title="ClientFacingSleepCycle" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
+<ResponseField name="sleep_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="session_start" type="string" required="true">
+</ResponseField>
+<ResponseField name="session_end" type="string" required="true">
+</ResponseField>
+<ResponseField name="stage_start_offset_second" type="integer" required="true">
+</ResponseField>
+<ResponseField name="stage_end_offset_second" type="integer" required="true">
+</ResponseField>
+<ResponseField name="stage_type" type="VitalSleepStage[]" required="true">
+<Expandable title="Item Schema: VitalSleepStage" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="time_zone" type="anyOf | null">
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="source_provider" type="anyOf" required="true">
+Any of:
+* Providers
+* Labs
+<Expandable title="Providers">
+</Expandable>
+<Expandable title="Labs">
+</Expandable>
+</ResponseField>
+<ResponseField name="source_type" type="string" required="true">
+</ResponseField>
+<ResponseField name="source_app_id" type="anyOf | null">
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="source" type="ClientFacingSource" required="true">
+<Expandable title="ClientFacingSource" defaultOpen="true">
+<ResponseField name="provider" type="string" required="true">
+Provider slug. e.g., `oura`, `fitbit`, `garmin`.
+</ResponseField>
+<ResponseField name="type" type="string | null">
+The type of the data source (app or device) by which the summary or the timeseries data were recorded. This defaults to `unknown` when Vital cannot extract or infer that information
+</ResponseField>
+<ResponseField name="app_id" type="anyOf | null">
+The identifier of the app which recorded this summary. This is only applicable to multi-source providers like Apple Health and Android Health Connect.
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="name" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="slug" type="string | null" deprecated>
+Deprecated. Use `provider` instead. Subject to removal after 1 Jan 2024.
+</ResponseField>
+<ResponseField name="logo" type="string | null" deprecated>
+Deprecated. Subject to removal after 1 Jan 2024.
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseExample>
+```json Example
+{
+  "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
+  "data": {
+    "id": "f1b3b3b3-1b3b-1b3b-1b3b-1b3b3b3b3b3b",
+    "session_end": "2022-01-01T08:00:00",
+    "session_start": "2022-01-01T00:00:00",
+    "sleep_id": "f1b3b3b3-1b3b-1b3b-1b3b-1b3b3b3b3b3b",
+    "source": {
+      "app_id": null,
+      "provider": "oura",
+      "type": "ring"
+    },
+    "source_provider": "oura",
+    "source_type": "ring",
+    "stage_end_offset_second": [
+      300,
+      600,
+      900,
+      1200
+    ],
+    "stage_start_offset_second": [
+      0,
+      300,
+      600,
+      900
+    ],
+    "stage_type": [
+      1,
+      2,
+      3,
+      1
+    ],
+    "time_zone": "America/Los_Angeles",
+    "user_id": "f1b3b3b3-1b3b-1b3b-1b3b-1b3b3b3b3b3b"
+  },
+  "event_type": "daily.data.sleep_cycle.created",
+  "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec"
+}
+```
+</ResponseExample>
