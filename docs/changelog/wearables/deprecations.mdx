@@ -2,6 +2,18 @@
 title: "Deprecations"
 ---
 
+### The `hypnogram` timeseries type
+
+<Warning>The removal will happen on or after **31 January 2025**.</Warning>
+
+We have introduced a new Sleep Cycle summary type (`sleep_cycle`) which captures the detailed hypnogram of a sleep session.
+It replaces the existing `hypnogram` timeseries type. More details can be found here: [Sleep Cycle Summary](/api-reference/data/sleep-cycle/get-summary)
+
+<Card title="Recommended Action" icon="lightbulb-exclamation-on">
+Start processing the new `historical.data.sleep_cycle.created`, `daily.data.sleep_cycle.created` and `daily.data.sleep_cycle.updated` events.
+Stop processing the `historical.timeseries.hypnogram.created`, `daily.timeseries.hypnogram.created` and `daily.timeseries.hypnogram.updated` events.
+</Card>
+
 ### Redefining Source and Provider
 
 <Warning>The stated removals in this section will happen on or after **31 July 2024**.</Warning>

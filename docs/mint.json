@@ -417,6 +417,12 @@
       ]
     },
     {
+      "group": "Sleep Cycle",
+      "pages": [
+        "api-reference/data/sleep-cycle/get-summary"
+      ]
+    },
+    {
       "group": "Meal",
       "pages": ["api-reference/data/meal/get-summary"]
     },
@@ -677,6 +683,14 @@
             "event-catalog/daily.data.sleep.created",
             "event-catalog/daily.data.sleep.updated",
             "event-catalog/historical.data.sleep.created"
+          ]
+        },
+        {
+          "group": "Sleep Cycle",
+          "pages": [
+            "event-catalog/daily.data.sleep_cycle.created",
+            "event-catalog/daily.data.sleep_cycle.updated",
+            "event-catalog/historical.data.sleep_cycle.created"
           ]
         },
         {
@@ -1037,6 +1051,10 @@
     {
       "source": "/api-reference/menstrual-cycle/:subpaths*",
       "destination": "/api-reference/data/menstrual-cycle/:subpaths*"
+    },
+    {
+      "source": "/api-reference/sleep-cycle/:subpaths*",
+      "destination": "/api-reference/data/sleep-cycle/:subpaths*"
     },
     {
       "source": "/api-reference/timeseries-grouped/:subpaths*",
