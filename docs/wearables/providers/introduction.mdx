@@ -5,6 +5,8 @@ title: "Supported providers"
 import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
 import HistoricalPullLimitTable from '/snippets/historical-pull-limits.mdx';
 
+import BYOO from '/snippets/byoo.mdx';
+
 We currently Support over 300+ devices, a full list can be seen below.
 
 ## Cloud Based Providers
@@ -15,10 +17,12 @@ We currently Support over 300+ devices, a full list can be seen below.
   provide Vital your assigned credentials once the application is accepted.
 </Note>
 
+
+### Generally Available
+
 | Provider (Slug)                                                          | Description                                                   | Availability                                                                         | Remarks |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
 | [Beurer](https://www.beurer.com/web/gb/)         <br />`beurer_api`      | Beurer Blood Pressure monitors                                | All Vital Teams                                                                      | Password Auth |
-| [Dexcom](https://www.dexcom.com)                 <br />`dexcom_v3`       | Dexcom CGM Glucose monitors                                   | ⚠️ [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                  | Password Auth<br />[↗️ Guide](/wearables/guides/dexcom_v3) |
 | [Dexcom (G6 And Older)](https://www.dexcom.com)  <br />`dexcom`          | Dexcom CGM Glucose monitors                                   | All Vital Teams                                                                      | Password Auth<br />[↗️ Guide](/wearables/guides/dexcom) |
 | [8Sleep](https://www.eightsleep.com)             <br />`eight_sleep`     | Smart Mattress                                                | All Vital Teams                                                                      | Password Auth |
 | [Abbott LibreView](https://www.libreview.com/)   <br />`abbott_libreview`| Abbott CGM Glucose monitor                                    | All Vital Teams                                                                      | Password Auth<br />[↗️ Guide](/wearables/guides/abbott-libreview) |
@@ -26,17 +30,34 @@ We currently Support over 300+ devices, a full list can be seen below.
 | [Fitbit](https://www.fitbit.com/global/uk/home)  <br />`fitbit`          | Activity Trackers (all devices)                               | All Vital Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/fitbit) |
 | [Garmin](https://www.garmin.com)                 <br />`garmin`          | Fitness watches (all devices)                                 | All Vital Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/garmin) |
 | [Hammerhead](https://www.hammerhead.io)          <br />`hammerhead`      | Cycling computers                                             | All Vital Teams                                                                      | Password Auth |
-| [iHealth](https://ihealthlabs.com)               <br />`ihealth`         | Blood pressure, Fitness scales, Glucometers & Fitness watches | ⚠️  [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                 | OAuth |
 | [Oura](https://ouraring.com)                     <br />`oura`            | Smart Sleep tracking ring                                     | All Vital Teams                                                                      | OAuth |
 | [Peloton](https://www.onepeloton.com)            <br />`peloton`         | Popular Indoor Exercise bike                                  | All Vital Teams                                                                      | Password Auth |
 | [Renpho](https://renpho.com)                     <br />`renpho`          | Fitness Scales                                                | All Vital Teams                                                                      | Password Auth |
 | [Strava](https://www.strava.com)                 <br />`strava`          | Running & Cycling Social Network                              | All Vital Teams                                                                      | OAuth |
 | [Wahoo](https://wahoofitness.com)                <br />`wahoo`           | Cycling Equipment                                             | All Vital Teams                                                                      | OAuth |
-| [Whoop](https://www.whoop.com)                   <br />`whoop_v2`        | Your Personal Digital Fitness and Health Coach                | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth<br />[↗️ Guide](/wearables/guides/whoop) |
 | [Withings](https://www.withings.com)             <br />`withings`        | Fitness scales, watches and health monitors                   | All Vital Teams                                                                      | OAuth |
 | [Zwift](https://zwift.com)                       <br />`zwift`           | Virtual cycling and running                                   | All Vital Teams                                                                      | Password Auth |
 | [Polar](https://www.polar.com/accesslink-api/)   <br />`polar`           | Finnish sports tech pioneer                                   | All Vital Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/polar) |
 | [Cronometer](https://www.cronometer.com)         <br />`cronometer`      | Nutrition data                                                | All Vital Teams                                                                      | OAuth |
+| [Ultrahuman](https://www.cronometer.com)         <br />`ultrahuman`      | Real-time nutrition and fitness tracking                      | 🧪 **Open Beta**<br />All Vital Teams                                                       | OAuth |
+
+### BYOO-only
+
+<BYOO />
+
+<Warning>
+Some BYOO providers do not have a developer program with open sign-up.
+</Warning>
+
+| Provider (Slug)                                                          | Description                                                   | Availability                                                                         | Remarks |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
+| [Dexcom](https://www.dexcom.com)                 <br />`dexcom_v3`       | Dexcom CGM Glucose monitors                                   | ⚠️ [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                  | Password Auth<br />[↗️ Guide](/wearables/guides/dexcom_v3) |
+| [iHealth](https://ihealthlabs.com)               <br />`ihealth`         | Blood pressure, Fitness scales, Glucometers & Fitness watches | ⚠️  [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                 | OAuth |
+| [Whoop](https://www.whoop.com)                   <br />`whoop_v2`        | Your Personal Digital Fitness and Health Coach                | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth<br />[↗️ Guide](/wearables/guides/whoop) |
+| [MyFitnessPal API](https://www.myfitnesspalapi.com) <br />`my_fitness_pal_v2` | Nutrition data                                           | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth |
+| [MapMyFitness](https://developer.mapmyfitness.com)         <br />`map_my_fitness`  | Technology for all atheletes                        | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth |
+
+
 
 ### Deprecated providers
 
