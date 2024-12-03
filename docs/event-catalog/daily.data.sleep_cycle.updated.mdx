@@ -32,6 +32,14 @@ Constant: `daily.data.sleep_cycle.updated`
 <ResponseField name="stage_end_offset_second" type="integer" required="true">
 </ResponseField>
 <ResponseField name="stage_type" type="VitalSleepStage[]" required="true">
+
+Sleep stage classification:
+`-1`: Unknown or unclassified sleep stage;
+`1`: Deep sleep;
+`2`: Light/non-REM sleep;
+`3`: Rapid Eye Movement sleep;
+`4`: Awake period;
+`5`: Manually classified stage.
 <Expandable title="Item Schema: VitalSleepStage" defaultOpen="true">
 </Expandable>
 </ResponseField>
