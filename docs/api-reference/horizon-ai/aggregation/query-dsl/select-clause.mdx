@@ -1,5 +1,5 @@
 ---
-title: select clause
+title: SELECT clause
 icon: hand-pointer
 ---
 
@@ -27,6 +27,32 @@ va.select(va.Sleep.col("efficiency"))
 ```
 </CodeGroup>
 
+
+## Perform an analysis and select the output value
+
+Perform data analysis with in-built algorithms using value macro expressions:
+
+* [Sleep Analysis](/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis) value macro expressions
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+The name of the value macro, e.g., `sleep_score` for the Chronotype value macro.
+</Accordion>
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.Sleep.chronotype())
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "chronotype" }
+    ]
+}
+```
+</CodeGroup>
 
 
 ## Aggregate a table column

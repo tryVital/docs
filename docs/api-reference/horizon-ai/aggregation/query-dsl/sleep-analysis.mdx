@@ -1,0 +1,119 @@
+---
+title: Sleep Analysis
+description: Value macro expressions for Sleep Analysis
+icon: moon
+---
+
+
+## Chronotype
+
+Determine the chronotype of each sleep session.
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+`chronotype`
+</Accordion>
+
+### Get last chronotype of the week
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Sleep.chronotype().latest()
+).group_by(
+    date_trunc(Sleep.index(), 1, "week")
+)
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "func": "latest", "arg": { "value_macro": "chronotype" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": {
+                "unit": "week",
+                "value": 1
+            }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+### Get chronotype
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.Sleep.chronotype())
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "chronotype" }
+    ]
+}
+```
+</CodeGroup>
+
+
+
+## Sleep Score
+
+Calculate a Sleep Score (0 to 100) for each sleep session.
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+`sleep_score`
+</Accordion>
+
+
+### Get mean sleep score of the week
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Sleep.score().mean()
+).group_by(
+    date_trunc(Sleep.index(), 1, "week")
+)
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "func": "mean", "arg": { "value_macro": "sleep_score" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": {
+                "unit": "week",
+                "value": 1
+            }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+### Get sleep score
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.Sleep.score())
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "sleep_score" }
+    ]
+}
+```
+</CodeGroup>
+
