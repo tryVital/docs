@@ -2,9 +2,39 @@
 title: "Garmin"
 ---
 
-## Connecting Garmin to Vital
+## Webhooks & Events
 
-Vital! You can do this with Vital Link Widget or programatically like any other [OAuth](/api-reference/link/link-oauth-provider) providers.
+Garmin connections have a non-standard [webhook lifecycle](/webhooks/introduction):
+
+<Steps>
+<Step title="The Connection Created stage">
+You will receive a [Provider Connection Created event](/webhooks/introduction#connection-created-stage) normally.
+</Step>
+
+<Step title="The Historical Data Backfill stage">
+You would receive a [Historical Pull Completion event](/webhooks/introduction#historical-data-backfill-stage) **immediately** after the connection creation. 
+
+Garmin differs in that receiving a Historical Pull Completion event does not indicate availability of historical data through the Vital API.
+</Step>
+
+<Step title="The Incremental Data stage">
+All **historical and new data** are delivered incrementally as [Data Events](/webhooks/introduction#incremental-data-stage) (`daily.data.*.*`).
+</Step>
+
+<Note>
+This behaviour is exclusive to Garmin, as a downstream effect of Garmin's unique historical data access mechanism for third-party integrations.
+</Note>
+
+## Re-running the historical data backfill stage
+
+When a user with an existing connection re-authenticates with the provider through [Vital Link](https://docs.tryvital.io/wearables/connecting-providers/introduction), Vital re-runs
+the [Historical Data Backfill stage](/webhooks/introduction#historical-data-backfill-stage) automatically.
+
+However, this **does not apply to Garmin** — you must first [deregister](/api-reference/user/deregister-a-provider) said users' existing Garmin connection for the re-run to take effect.
+
+<Note>
+This behaviour is exclusive to Garmin, as a downstream effect of Garmin's unique historical data access mechanism for third-party integrations.
+</Note>
 
 ## Vital Widget
 
@@ -19,19 +49,3 @@ To connect your device with the _widget_, follow the link wizard ensuring and en
 </Frame>
 
 <br />
-
-## Webhooks
-
-<Warning>
-  This provider doesn't send historical webhooks. This is in constrast with
-  other providers we have. This means you will receive `daily.data.<resource_type>.created` instead.
-</Warning>
-
-On successful connection, you will receive:
-
-- [Connection create](/webhooks/data_flow#connection-created) wehbook.
-- [Daily webhooks](/webhooks/data_flow#daily-data-flow) `daily.data.<resource_type>.created` and `daily.data.<resource_type>.updated` are issued, as new or more up-to-date data becomes available.
-
-## Deregistering
-
-In order to receive a new historical backfill, for an existing connected source, you need to first [deregister](/api-reference/user/deregister-a-provider) before reconnecting the user via the Garmin OAuth flow or Vital Link. This is unique to Garmin. For other providers, you can reconnect a user to an existing account and a new historical backfill is triggered.
