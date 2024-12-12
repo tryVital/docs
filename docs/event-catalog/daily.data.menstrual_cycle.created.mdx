@@ -17,8 +17,10 @@ Constant: `daily.data.menstrual_cycle.created`
 </ResponseField>
 <ResponseField name="client_user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="data" type="MenstrualCycle" required="true">
-<Expandable title="MenstrualCycle" defaultOpen="true">
+<ResponseField name="data" type="ClientFacingMenstrualCycle" required="true">
+<Expandable title="ClientFacingMenstrualCycle" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
 <ResponseField name="period_start" type="string" required="true">
 </ResponseField>
 <ResponseField name="period_end" type="anyOf" required="true">
@@ -114,6 +116,24 @@ Any of:
 </ResponseField>
 </Expandable>
 </ResponseField>
+<ResponseField name="source_provider" type="anyOf" required="true">
+Any of:
+* Providers
+* Labs
+<Expandable title="Providers">
+</Expandable>
+<Expandable title="Labs">
+</Expandable>
+</ResponseField>
+<ResponseField name="source_type" type="string" required="true">
+</ResponseField>
+<ResponseField name="source_app_id" type="anyOf | null">
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
 <ResponseField name="source" type="ClientFacingSource" required="true">
 <Expandable title="ClientFacingSource" defaultOpen="true">
 <ResponseField name="provider" type="string" required="true">
@@ -153,6 +173,7 @@ Deprecated. Subject to removal after 1 Jan 2024.
     "detected_deviations": [],
     "home_pregnancy_test": [],
     "home_progesterone_test": [],
+    "id": "e1274c3e-c035-4bd7-86aa-2eb15d6d0137",
     "intermenstrual_bleeding": [
       {
         "date": "2024-04-17"
@@ -186,7 +207,11 @@ Deprecated. Subject to removal after 1 Jan 2024.
       "app_id": "com.apple.Health",
       "provider": "apple_health_kit",
       "type": "app"
-    }
+    },
+    "source_app_id": "com.apple.Health",
+    "source_provider": "apple_health_kit",
+    "source_type": "app",
+    "user_id": "cbd8b986-4225-4d36-8e2c-046ff2702769"
   },
   "event_type": "daily.data.menstrual_cycle.created",
   "team_id": "e89cc9fe-e1c0-41bc-a83a-728b8cb1056f",

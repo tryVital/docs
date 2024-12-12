@@ -72,7 +72,8 @@ Any of:
 <ResponseField name="sport" type="ClientFacingSport | null">
 Sport&#x27;s name
 <Expandable title="ClientFacingSport" defaultOpen="true">
-<ResponseField name="id" type="integer" required="true">
+<ResponseField name="id" type="integer" required="true" deprecated>
+This ID is unstable across environments. Use the slug instead.
 </ResponseField>
 <ResponseField name="name" type="string" required="true">
 Sport&#x27;s name
