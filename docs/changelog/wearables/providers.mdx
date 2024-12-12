@@ -1,6 +1,34 @@
 ---
-title: "Providers"
+title: "Provider and Resources"
 ---
+
+
+### Electrocardiogram, Heart Rate Alert and AFib Burden (Dec 2024)
+
+Vital now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
+
+Resource                                                | Apple HealthKit | Fitbit | Withings | Kardia
+------------------------------------------------------- | --------------- | ------ | -------- | -------
+Electrocardiogram Summary<br />`electrocardiogram`      | ✅              | -      | ✅        | ✅
+ECG Voltage timeseries<br />`electrocardiogram_voltage` | ✅              | -      | ✅        | ✅
+Heart Rate Alert<br />`heart_rate_alert`                | ✅ <sup>[1]</sup> | ✅ <sup>[2]</sup> | ✅ <sup>[2]</sup> | ✅ <sup>[2]</sup>
+AFib Burden<br />`afib_burden`                          | ✅              | -      | -         | -
+
+<sup>[1]</sup> Irregular rhythm alerts, high heart rate alerts and low heart rate alerts.<br />
+<sup>[2]</sup> Irregular rhythm alerts only.
+
+<Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
+For more information, check out:
+* the [Get Electrocardiogram](/api-reference/data/electrocardiogram/get-summary) endpoint documentation;
+* the [Get Electrocardiogram Voltage](/api-reference/data/timeseries/electrocardiogram-voltage) endpoint documentation;
+* the [Get Heart Rate Alert](/api-reference/data/timeseries/heart-rate-alert) endpoint documentation; and
+* the [Get AFib Burden](/api-reference/data/timeseries/afib-burden) endpoint documentation;
+* the [Electrocardiogram data events](/event-catalog/daily.data.electrocardiogram.created) in the Event Catalog;
+* the [Electrocardiogram Voltage data events](/event-catalog/daily.data.electrocardiogram_voltage.created) in the Event Catalog;
+* the [Heart Rate Alert data events](/event-catalog/daily.data.heart_rate_alert.created) in the Event Catalog; and
+* the [AFib Burden data events](/event-catalog/daily.data.afib_burden.created) in the Event Catalog.
+
+</Accordion>
 
 
 ### Sleep Cycle Summary Type (Nov 2024)

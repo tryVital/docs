@@ -1,13 +1,20 @@
 ---
 title: "Summary"
-openapi: "GET /v2/summary/menstrual_cycle/{user_id}"
+openapi: "GET /v2/summary/electrocardiogram/{user_id}"
 ---
+
+<Note>
+The Electrocardiogram summary type does not embed the voltage measurements.
+
+Use the [Get Electrocardiogram Voltage](/api-reference/data/timeseries/electrocardiogram-voltage) endpoint
+with the `session_start` and `session-end` timestamps to query the voltage measurements.
+</Note>
 
 <RequestExample>
 
 ```bash Shell
 curl --request GET \
-     --url {{BASE_URL}}/v2/summary/menstrual_cycle/{user_id} \
+     --url {{BASE_URL}}/v2/summary/electrocardiogram/{user_id} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```
@@ -21,7 +28,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.menstrual_cycle.get(
+data = client.electrocardiogram.get(
     user_id="*",
     start_date="2022-05-01",
     end_date="2022-06-01"
@@ -30,19 +37,19 @@ data = client.menstrual_cycle.get(
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { MenstrualCycleGetRequest } from '@tryvital/vital-node/api/resources/menstrualCycle';
+import { ElectrocardiogramGetRequest } from '@tryvital/vital-node/api/resources/electrocardiogram';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: MenstrualCycleGetRequest = {
+const request: ElectrocardiogramGetRequest = {
     startDate: "2022-05-01",
     endDate: "2022-06-01"
 }
 
-const data = await client.menstrualCycle.get(
+const data = await client.electrocardiogram.get(
     '<my_user_id>',
     request
 );
@@ -51,19 +58,19 @@ const data = await client.menstrualCycle.get(
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.menstrualCycle.requests.MenstrualCycleGetRequest;
+import com.vital.api.resources.electrocardiogram.requests.ElectrocardiogramGetRequest;
 
 Vital vital = Vital.builder()
                 .apiKey("YOUR_API_KEY")
                 .environment(Environment.SANDBOX)
                 .build();
 
-MenstrualCycleGetRequest request = MenstrualCycleGetRequest.builder()
+ElectrocardiogramGetRequest request = ElectrocardiogramGetRequest.builder()
                 .startDate("2022-05-01")
                 .endDate("2022-06-01")
                 .build();
 
-var data = vital.menstrualCycle().get("<my_user_id>", request);
+var data = vital.electrocardiogram().get("<my_user_id>", request);
 ```
 
 ```go Go
@@ -80,12 +87,12 @@ client := vitalclient.NewClient(
 )
 
 EndDate := "2022-06-01"
-request := &vital.MenstrualCycleGetRequest{
+request := &vital.ElectrocardiogramGetRequest{
   StartDate: "2022-05-01",
   EndDate:   &EndDate,
 }
 
-response, err := client.MenstrualCycle.Get(context.TODO(), "*", request)
+response, err := client.Electrocardiogram.Get(context.TODO(), "*", request)
 if err != nil {
   return err
 }
