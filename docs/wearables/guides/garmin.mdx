@@ -12,9 +12,13 @@ You will receive a [Provider Connection Created event](/webhooks/introduction#co
 </Step>
 
 <Step title="The Historical Data Backfill stage">
-You would receive a [Historical Pull Completion event](/webhooks/introduction#historical-data-backfill-stage) **immediately** after the connection creation. 
+You would receive a [Historical Pull Completion event](/webhooks/introduction#historical-data-backfill-stage) **immediately** after the connection creation.
+However, if you query Vital API immediately, you would observe **no historical data**.
 
-Garmin differs in that receiving a Historical Pull Completion event does not indicate availability of historical data through the Vital API.
+<Warning>
+The Historical Pull Completion event for Garmin connections does not indicate availability of historical data through the Vital API.
+</Warning>
+
 </Step>
 
 <Step title="The Incremental Data stage">
@@ -28,10 +32,10 @@ This behaviour is exclusive to Garmin, as a downstream effect of Garmin's unique
 
 ## Re-running the historical data backfill stage
 
-When a user with an existing connection re-authenticates with the provider through [Vital Link](https://docs.tryvital.io/wearables/connecting-providers/introduction), Vital re-runs
+Normally, when a user with an existing connection re-authenticates with the provider through [Vital Link](https://docs.tryvital.io/wearables/connecting-providers/introduction), Vital re-runs
 the [Historical Data Backfill stage](/webhooks/introduction#historical-data-backfill-stage) automatically.
 
-However, this **does not apply to Garmin** — you must first [deregister](/api-reference/user/deregister-a-provider) said users' existing Garmin connection for the re-run to take effect.
+However, this **does not apply to Garmin** connections — you must first [deregister](/api-reference/user/deregister-a-provider) said users' existing Garmin connection for the re-run to take effect.
 
 <Note>
 This behaviour is exclusive to Garmin, as a downstream effect of Garmin's unique historical data access mechanism for third-party integrations.
