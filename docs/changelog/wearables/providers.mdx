@@ -7,15 +7,19 @@ title: "Provider and Resources"
 
 Vital now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
 
-Resource                                                | Apple HealthKit | Fitbit | Withings | Kardia
+Resource                                                | Apple HealthKit <sup>[3]</sup> | Fitbit | Withings | Kardia
 ------------------------------------------------------- | --------------- | ------ | -------- | -------
 Electrocardiogram Summary<br />`electrocardiogram`      | ✅              | -      | ✅        | ✅
 ECG Voltage timeseries<br />`electrocardiogram_voltage` | ✅              | -      | ✅        | ✅
 Heart Rate Alert<br />`heart_rate_alert`                | ✅ <sup>[1]</sup> | ✅ <sup>[2]</sup> | ✅ <sup>[2]</sup> | ✅ <sup>[2]</sup>
 AFib Burden<br />`afib_burden`                          | ✅              | -      | -         | -
 
+<Info>
 <sup>[1]</sup> Irregular rhythm alerts, high heart rate alerts and low heart rate alerts.<br />
-<sup>[2]</sup> Irregular rhythm alerts only.
+<sup>[2]</sup> Irregular rhythm alerts only.<br />
+<sup>[3]</sup> Requires Vital iOS SDK 1.3.0+, Vital Flutter SDK 4.4.0+ or Vital React Native SDK 5.1.0+.
+</Info>
+
 
 <Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
 For more information, check out:
