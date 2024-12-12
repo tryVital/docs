@@ -28,7 +28,7 @@ For example:
 | Granularity | Resources       |
 | ----------- | --------------- |
 | Daily       | `activity` |
-| Session     | `sleep`, `workouts`, `body`, `meal`, `menstrual_cycle`, `workout_stream`, `sleep_stream` |
+| Session     | `sleep`, `workouts`, `body`, `meal`, `menstrual_cycle`, `electrocardiogram`, `workout_stream` |
 | Single      | `profile` |
 
 ### Discrete Timeseries types
@@ -38,7 +38,7 @@ Each value is associated with a single point in time.
 | Category          | Resources |
 | ----------------- | --------- |
 | Cardiorespiratory | `respiratory_rate` |
-| Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv` |
+| Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv`, `electrocardiogram_voltage` |
 | Wellness          | `stress_level` |
 | Body              | `fat`, `weight` |
 | Lab Testing       | `cholesterol`, `igg`, `ige` |
@@ -49,12 +49,13 @@ Each value is associated with a half-open time interval (`[start, end[`).
 
 | Category          | Resources |
 | ----------------- | --------- |
-| Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps` |
-| Body              | `body_temperature`, `body_temperature_delta` |
+| Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps`, `workout_duration` |
+| Body              | `body_temperature`, `body_temperature_delta`, `insulin_injection` |
+| Vitals            | `afib_burden`, `heart_rate_alert` |
 | Cardiorespiratory | `vo2_max` |
-| Sleep             | `hypnogram` |
-| Nutrition         | `water`, `caffeine` |
+| Nutrition         | `carbohydrates`, `caffeine`, `water` |
 | Wellness          | `mindfulness_minutes` |
+| Diary             | `note` |
 
 ## Summary types by providers
 
