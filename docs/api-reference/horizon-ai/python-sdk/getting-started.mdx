@@ -61,11 +61,20 @@ poetry add -G dev vitalx-cli
 </Step>
 
 <Step title="Start the device authentication process">
-Call the `auth login` CLI subcommand on the `vitalx-cli` package.
+Create the `~/.vitalx` directory, and grant it execute permission. The SDK requires execute
+permission to maintain a file lock.
+
+```bash
+mkdir -p ~/.vitalx && chmod +x ~/.vitalx
+```
+
+Call the `auth login` CLI subcommand on the `vitalx-cli` package to start the authentication
+process.
 
 ```bash
 poetry run vitalx-cli auth login
 ```
+
 </Step>
 
 <Step title="Sign in with your Vital Dashboard account">
