@@ -1,6 +1,6 @@
 ---
 title: Query a single user
-openapi: post /aggregate/v1/query_one/{user_id}
+openapi: post /aggregate/v1/user/{user_id}/query
 ---
 
 <Warning>
@@ -17,15 +17,12 @@ in the declaration order of the query instructions.
 ```json
 {
     "results": [
-        "instruction": {
-            /** the corresponding query instruction **/
-        },
-        "dataframe": {
-            "partition": [...],
-            "sleep.efficiency.min": [...],
-            "sleep.efficiency.max": [...],
-            "sleep.efficiency.mean": [...],
-            "sleep.efficiency.newest": [...]
+        "table": {
+            "index": [...],
+            "min": [...],
+            "max": [...],
+            "mean": [...],
+            "newest": [...]
         }
     ]
 }
