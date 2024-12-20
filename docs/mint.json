@@ -399,7 +399,8 @@
       "group": "Health Insurance",
       "pages": [
         "api-reference/lab-testing/insurance/search-payor",
-        "api-reference/lab-testing/insurance/search-diagnosis"
+        "api-reference/lab-testing/insurance/search-diagnosis",
+        "api-reference/lab-testing/insurance/search-payor-get"
       ]
     },
     {

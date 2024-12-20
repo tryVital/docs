@@ -1,0 +1,38 @@
+---
+openapi: "GET /v3/insurance/search/payor"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/insurance/search/payor?insurance_name=AETNA' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' 
+'
+```
+
+</RequestExample>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "code": "AARPA",
+    "name": "AARP",
+    "aliases": [
+      "AARP",
+      "AARP"
+    ],
+    "org_address": {
+      "first_line": "PO BOX 740819",
+      "second_line": null,
+      "country": "US",
+      "zip": "30374",
+      "city": "ATLANTA",
+      "state": "GA"
+    }
+  },
+]
+```
+</ResponseExample>

@@ -75,7 +75,9 @@ The `guarantor` is an optional field, that must be provided when the relationshi
 
 The `payor code` is a lab specific identifier for an insurance company. Vital has abstracted this away into our own Vital payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
 
-To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor) endpoint, using the insurance company name, and select the `code` from your insurance company.
+To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
+
+It is also possible to use this endpoint to search using external provider's payor codes (e.g Change HealthCare or Availity).
 
 ```json
 [
