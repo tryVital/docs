@@ -27,6 +27,23 @@ with their LibreView patient account. Vital accesses the patient CGM data as the
 * You would not need to maintain any LibreView practices.
 * You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Vital Link. 
 
+
+#### ⚠️ Prepare for regular disconnection with `abbott_libreview`
+
+Patient-based connections through `abbott_libreview` may **disconnect** at least once a year due to password rotation enforcement.
+
+You can observe the error state through:
+
+1. the [Provider Connection Error](/event-catalog/provider.connection.error) event; and
+2. the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers).
+
+When you detect a disconnection, guide your user to:
+
+1. Sign into the LibreLink app or the LibreView web portal.
+2. Update their account passwords.
+3. Use the Vital Link Widget or your custom widget to re-establish the `abbott_libreview` connection.
+
+
 ## LibreView data use floating time basis
 
 All LibreView (Freestyle Libre) data are in **floating time basis**.
@@ -102,50 +119,69 @@ This allows Vital to start pulling data from their account. This is done through
 
 <img src="/img/connect_libreview.png" className="w-2/5 block mx-auto" />
 
-#### Custom Practice
+### Supported Regions
+
+#### 🇺🇸 Vital US region
+
+| Region    | Country/Region coverage            |
+| --------- | ---------------------------------- | 
+| `us` \*   | United States                      |
+| `ca`      | Canada                             | 
+| `in`      | Singapore, Hong Kong, India, Philippines, South Korea, Taiwan |
+
+_(\*) Default if region is unspecified._
+
+#### 🇪🇺 Vital EU region
+
+| Region   | Country/Region coverage             |
+| -------- | ----------------------------------- | 
+| `eu` \*  | United Kingdom, Ireland             |
+| `sg`     | Singapore, Hong Kong, India, Philippines, South Korea, Taiwan | 
+| `au`     | Australia                           | 
+| `de`     | Germany                             | 
+| `fr`     | France                              |
+| `nl`     | Netherlands, Wider Europe           |
+| `br`     | Brazil                              |
+
+_(\*) Default if region is unspecified._
+
+<Warning>
+Europe and European Union patients outside United Kingdom, Ireland, Germany and France should connect through the `nl` region.
+</Warning>
+
+### Bring Your Own Practice
 
 <Info>
 `freestyle_libre` custom practice connections is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
-<Info>
-Please make sure you invite Vital to your practice as a clinician with admin rights. To connect a user to Vital you must first connect your Freestyle practice to Vital in the appropriate Vital region for your Freestyle account.
+<Steps>
 
-If you get stuck at any point join our Slack channel or send us a message to support@tryvital.io
+<Step title="Obtain the Vital practice email address">
+Get in touch with [Vital Support](/home/getting-support) to request the region-specific Vital practice email address.
+</Step>
 
-</Info>
+<Step title="Invite the Vital practice">
+Invite the Vital practice email address to join your LibreView practice as a **Care Team Admin**.
+</Step>
 
-Freestyle Libre is available in different regions, ensure you invite the correct email as an admin of your practice:
+<Step title="Confirm with Vital support">
+Inform Vital support of the invitation, and wait for the support acknowledgement of successful practice connection.
+</Step>
 
-**Vital US Region**
+</Steps>
 
-| Freestyle Region                               | 
-| ---------------------------------------------- | 
-| United States (`us`) \*                        | 
-| Canada (`ca`)                                  | 
-| India (`in`)                                  | 
-| _(\*) Default Freestyle region if unspecified_ |
+Once the connection is established, Vital Link would recognize all patient emails having connected to your LibreView practice.
+These patients do not need to connect separately to the [Vital practices](#using-vital-practices).
 
-**Vital EU Region**
-
-| Freestyle Region                               | 
-| ---------------------------------------------- | 
-| Europe (`eu`) \*                               | 
-| Singapore (`sg`)                               | 
-| Australia (`au`)                               | 
-| Germany (`de`)                                 | 
-| Netherlands (`nl`)                             | 
-| Brazil (`br`)                                  | 
-| _(\*) Default Freestyle region if unspecified_ |
-
-#### Vital Practices
+### Using Vital Practices
 
 <Info>
-  You can use a Vital practices to test the integration with Freestyle Libre.
+  You can use a Vital practice to test the integration with Freestyle Libre.
   This modality is available to all subscriptions.
 </Info>
 
-Vital has two practices (depending on environment) this applies to all regions:
+Vital has two LibreView Practices that are available in all supported regions:
 
 | Environment | Practice Name    |
 | ----------- | ---------------- |
