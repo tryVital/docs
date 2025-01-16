@@ -27,6 +27,23 @@ with their LibreView patient account. Vital accesses the patient CGM data as the
 * You would not need to maintain any LibreView practices.
 * You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Vital Link. 
 
+
+#### ⚠️ Prepare for regular disconnection with `abbott_libreview`
+
+Patient-based connections through `abbott_libreview` may **disconnect** at least once a year due to password rotation enforcement.
+
+You can observe the error state through:
+
+1. the [Provider Connection Error](/event-catalog/provider.connection.error) event; and
+2. the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers).
+
+When you detect a disconnection, guide your user to:
+
+1. Sign into the LibreLink app or the LibreView web portal.
+2. Update their account passwords.
+3. Use the Vital Link Widget or your custom widget to re-establish the `abbott_libreview` connection.
+
+
 ## LibreView data use floating time basis
 
 All LibreView (Freestyle Libre) data are in **floating time basis**.
