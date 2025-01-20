@@ -197,7 +197,11 @@ Refer to [the Sign Out section in the SDK Authentication guide](/wearables/sdks/
 
 ## Verbose Logging to Console/Logcat
 
-Enable verbose logging. Applies to all Vital Mobile SDKs.
+You can enable verbose logging to have a deeper look into how Vital Mobile SDK is reacting to your calls, as well as
+all the automatic behaviours that the SDK is performing in background.
+
+To avoid any missing log entry, you should enable verbose logging as early as possible — preferably before any usage of
+any Vital Mobile SDKs.
 
 <Note>
 On Android, verbose logging is enabled by default when running as a debuggable build
@@ -205,15 +209,42 @@ On Android, verbose logging is enabled by default when running as a debuggable b
 </Note>
 
 <CodeGroup>
-  ```swift Native iOS
-  import VitalCore
+```swift Native iOS (Swift)
+import VitalCore
 
-  VitalLogger.stdOutEnabled = true
-  ```
+class AppDelegate: NSObject, UIApplicationDelegate {
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
+  ) -> Bool {
 
-  ```kotlin Native Android
-  import io.tryvital.client.utils.VitalLogger
+    VitalLogger.stdOutEnabled = true
 
-  VitalLogger.getOrCreate().enabled = true
-  ```
+    // ...
+
+    return true
+  }
+}
+```
+
+```objc Native iOS (Objective-C)
+#import "AppDelegate.h"
+
+@import VitalCore
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+  VitalLoggerObjC.stdOutEnabled = YES;
+
+  // ...
+
+  return YES;
+}
+```
+
+```kotlin Native Android
+import io.tryvital.client.utils.VitalLogger
+
+VitalLogger.getOrCreate().enabled = true
+```
 </CodeGroup>
