@@ -156,10 +156,24 @@ Any of:
 * null
 </ResponseField>
 <ResponseField name="map" type="anyOf | null">
-Map of workouts encoded as polyline
+Map of the workout
 Any of:
-* object
+* ClientFacingWorkoutMap
 * null
+<Expandable title="ClientFacingWorkoutMap">
+<ResponseField name="polyline" type="anyOf | null">
+Polyline of the map
+Any of:
+* string
+* null
+</ResponseField>
+<ResponseField name="summary_polyline" type="anyOf | null">
+A lower resolution summary of the polyline
+Any of:
+* string
+* null
+</ResponseField>
+</Expandable>
 </ResponseField>
 <ResponseField name="provider_id" type="string" required="true">
 Provider ID given for that specific workout
