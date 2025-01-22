@@ -1,0 +1,13 @@
+---
+title: "Bulk Export"
+openapi: "POST /v2/link/bulk_export"
+---
+
+import ConnectionMigration from '/snippets/connection-migration.mdx';
+
+<ConnectionMigration />
+
+<Warning>
+You should [pause the connections](/api-reference/link/bulk-pause) before bulk exporting them. Pausing stops
+Vital systems from refreshing the connections, ensuring the exported data are most up-to-date.
+</Warning>

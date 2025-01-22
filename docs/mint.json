@@ -332,6 +332,16 @@
       ]
     },
     {
+      "group": "Link Migration",
+      "pages": [
+        "api-reference/link/bulk-import",
+        "api-reference/link/bulk-trigger-historical-pull",
+        "api-reference/link/bulk-pause",
+        "api-reference/link/bulk-export"
+      ],
+      "version": "beta"
+    },
+    {
       "group": "Orders",
       "pages": [
         "api-reference/lab-testing/create-order",
