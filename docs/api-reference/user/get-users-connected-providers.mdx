@@ -81,6 +81,7 @@ fmt.Printf("Received data %s\n", response)
             "slug": "fitbit",
             "logo": "https://example.com/fitbit.png",
             "status": "connected",
+            "created_on": "2010-01-23T12:34:56+00:00",
             "resource_availability": {
                 "body": {
                     "status": "available",
@@ -116,79 +117,11 @@ fmt.Printf("Received data %s\n", response)
                         }
                     }
                 }
-            }
+            },
+            "error_details": null
         }
     ]
 }
 ```
 
 </ResponseExample>
-
-### Response object schema
-<ResponseField name="providers" type="object[]" required>
-  <Expandable defaultOpen>
-    <ResponseField name="name" type="string" required>
-    </ResponseField>
-    <ResponseField name="slug" type="string" required>
-    </ResponseField>
-    <ResponseField name="logo" type="string" required>
-    </ResponseField>
-    <ResponseField name="status" type="string" required>
-    Possible value: `connected`, `paused` or `error`.
-    </ResponseField>
-    <ResponseField name="resource_availability" type="object" required>
-      <Expandable defaultOpen>
-        <ResponseField name="{resource_slug}" type="object" required>
-          `{resource_type}` is the same resource slug used across all APIs and data events.
-          e.g. `activity`, `workouts`, `sleep`, etc.
-
-          <Expandable defaultOpen>
-            <ResponseField name="status" type="string" required>
-            Possible value: `available` or `unavailable`.
-
-            A resource is available only when the user has granted **all required scopes**.
-
-            </ResponseField>
-            <ResponseField name="scope_requirements" type="object | null" required>
-              Scope requirements of this provider resource. If the provider
-              has no concept of API access scopes, this is `null`.
-
-              <Expandable defaultOpen>
-                <ResponseField name="user_granted" type="object" required>
-                  Scope(s) granted by the user.
-
-                  <Expandable defaultOpen>
-                    <ResponseField name="required" type="string[]" required>
-                      Scope(s) that must be granted for this resource to be
-                      minimally functional.
-                    </ResponseField>
-                    <ResponseField name="optional" type="string[]" required>
-                      Scope(s) that would enrich this resource with more
-                      information, but are not required for the resource to be
-                      functional.
-                    </ResponseField>
-                  </Expandable>
-                </ResponseField>
-                <ResponseField name="user_denied" type="object" required>
-                  Scope(s) denied by the user.
-
-                  <Expandable defaultOpen>
-                    <ResponseField name="required" type="string[]" required>
-                      Scope(s) that must be granted for this resource to be
-                      minimally functional.
-                    </ResponseField>
-                    <ResponseField name="optional" type="string[]" required>
-                      Scope(s) that would enrich this resource with more
-                      information, but are not required for the resource to be
-                      functional.
-                    </ResponseField>
-                  </Expandable>
-                </ResponseField>
-              </Expandable>
-            </ResponseField>
-          </Expandable>
-        </ResponseField>
-      </Expandable>
-    </ResponseField>
-  </Expandable>
-</ResponseField>
