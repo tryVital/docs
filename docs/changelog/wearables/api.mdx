@@ -2,6 +2,17 @@
 title: "API"
 ---
 
+### Link API Improvements (Jan 2025)
+
+We have increased Link Token expiry from 15 minutes to 60 minutes.
+
+We have also added an `on_error=redirect` Link Token option which forces any error scenario to redirect to your specified `redirect_url`
+URL, disabling any in-built error handling behaviour in the Link Widget.
+
+<Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
+Check out the [Link Error](/wearables/connecting-providers/errors) format and the [Generate a Link Token](/api-reference/link/generate-link-token) endpoint documentation.
+</Accordion>
+
 ### Extendable Historical Date Ranges (Jul 2024)
 We now offer the ability to set custom historical data ranges for wearables providers, with resource-level granularity.
 
