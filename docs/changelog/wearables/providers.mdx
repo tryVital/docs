@@ -3,6 +3,30 @@ title: "Provider and Resources"
 ---
 
 
+### Improved LibreView practice connection process (Jan 2025)
+
+You can now connect LibreView patients in to [46 regions in the EU environment](/wearables/guides/abbott-libreview#vital-eu-region)
+and [8 regions in the US environment](/wearables/guides/abbott-libreview#vital-us-region).
+
+<Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
+Previously, the Link API and Link Widget listed only the regions to which our practice account was registered. However, these
+practice accounts can often connect to patients in a larger geographical area beyond the region of registration. For example,
+patients in most EMEA countries can connect through our Netherlands practice account.
+
+Therefore, we have now changed:
+
+1. Link Widget to display an exhaustive list of regions which our practice account can reach; and
+2. Link API to accept any ISO 3166-1 code that is on the list.
+
+In other words, say if you have a patient domiciled in Belgium, it is no longer necessary to teach them to choose "Netherlands" when
+connecting through the Link Widget. They can now intuitively choose "Belgium" when asked by the Link Widget.
+
+Check out the [Abbott LibreView](/wearables/guides/abbott-libreview) guide and
+the [Connect Email Provider](/api-reference/link/link-email-provider) endpoint
+for more information.
+
+</Accordion>
+
 ### Electrocardiogram, Heart Rate Alert and AFib Burden (Dec 2024)
 
 Vital now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
