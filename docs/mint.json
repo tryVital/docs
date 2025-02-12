@@ -560,6 +560,15 @@
       "version": "beta"
     },
     {
+      "group": "Continuous Query",
+      "pages": [
+        "api-reference/horizon-ai/continuous-query/create",
+        "api-reference/horizon-ai/continuous-query/list",
+        "api-reference/horizon-ai/continuous-query/get-result-table"
+      ],
+      "version": "beta"
+    },
+    {
       "group": "Team",
       "pages": [
         "api-reference/org-management/team/list-teams",
