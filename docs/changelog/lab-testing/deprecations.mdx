@@ -42,3 +42,7 @@ Parse the `result` field in accordance to the `result_type` field. [More informa
 ### `requisition_form_url` in the `order` object
 
 This field is a signed GCP bucket URL, which is only active for 7 days. It will be removed in favor of the [download PDF](/api-reference/lab-testing/requisition-pdf) endpoint.
+
+### `GET /v3/lab_tests` in favor of `GET /v3/lab_test`
+
+The endpoint `GET /v3/lab_tests` is deprecated in favor of `GET /v3/lab_test`. The new endpoint will return a paginated list of lab tests and supports two new parameters: `lab_test_limit` and `next_cursor`.

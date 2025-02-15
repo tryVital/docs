@@ -390,6 +390,7 @@
       "group": "Tests",
       "pages": [
         "api-reference/lab-testing/tests",
+        "api-reference/lab-testing/tests-paginated",
         "api-reference/lab-testing/biomarkers",
         "api-reference/lab-testing/labs",
         "api-reference/lab-testing/post-test",
