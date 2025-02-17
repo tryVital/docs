@@ -23,11 +23,14 @@ Constant: `daily.data.meal.updated`
 </ResponseField>
 <ResponseField name="user_id" type="string" required="true">
 </ResponseField>
-<ResponseField name="priority_id" type="integer" required="true">
+<ResponseField name="priority_id" type="integer" required="true" deprecated>
+This value has no meaning.
 </ResponseField>
-<ResponseField name="source_id" type="integer" required="true">
+<ResponseField name="source_id" type="integer" required="true" deprecated>
+This value has no meaning.
 </ResponseField>
-<ResponseField name="provider_id" type="string" required="true">
+<ResponseField name="provider_id" type="string" required="true" deprecated>
+This value is identical to `id`.
 </ResponseField>
 <ResponseField name="timestamp" type="string" required="true">
 </ResponseField>
@@ -320,9 +323,11 @@ Deprecated. Subject to removal after 1 Jan 2024.
 </ResponseField>
 </Expandable>
 </ResponseField>
-<ResponseField name="created_at" type="string" required="true">
+<ResponseField name="created_at" type="string" required="true" deprecated>
+This value is identical to `timestamp`.
 </ResponseField>
-<ResponseField name="updated_at" type="string" required="true">
+<ResponseField name="updated_at" type="string" required="true" deprecated>
+This value is identical to `timestamp`.
 </ResponseField>
 <ResponseField name="source_app_id" type="anyOf | null">
 Any of:
