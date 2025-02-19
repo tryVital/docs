@@ -80,11 +80,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 
 request := &vital.UserCreateBody{
@@ -156,11 +157,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 
 response, err := client.LabTests.Get(context.TODO())
@@ -372,11 +374,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 
 details := &vital.PatientDetails{

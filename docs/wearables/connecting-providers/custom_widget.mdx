@@ -94,11 +94,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 
 response, err := client.Providers.getAll(context.TODO())
@@ -191,11 +192,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 provider := vital.ProvidersOura
 request := &vital.LinkTokenExchange{
@@ -294,11 +296,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 provider := vital.ProvidersOura
 request := &vital.LinkTokenExchange{
@@ -384,11 +387,12 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  vitalclient.WithApiKey("<YOUR_API_KEY>"),
-  vitalclient.WithBaseURL(vital.Environments.Sandbox),
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
 )
 
 request := &vital.IndividualProviderData{
