@@ -92,7 +92,7 @@ The SDK normally reports one of the following status combinations:
 
   val applicationContext: Context
 
-  VitalClient.getOrCreate(applicationContext)
+  option.getOrCreate(applicationContext)
   val status = VitalClient.status
   ```
 
@@ -173,7 +173,7 @@ Aside from the Core SDK Status, you can also query the Vital User ID of the sign
 
   val applicationContext: Context
 
-  VitalClient.getOrCreate(applicationContext)
+  option.getOrCreate(applicationContext)
   val userId = VitalClient.currentUserId
   ```
 
