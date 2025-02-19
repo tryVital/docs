@@ -223,7 +223,7 @@ to exchange for the token secrets it needs.
       val applicationContext: Context
 
       try {
-        option.signIn(applicationContext, response.signInToken)
+        VitalClient.signIn(applicationContext, response.signInToken)
 
         Log.i("vital_sdk", "Signed in with Vital successfully")
       } catch (e: Throwable) {
@@ -290,11 +290,11 @@ Vital Mobile SDK can be configured to authenticate using API Key alongside a tar
   ```swift Native iOS
   import VitalCore
 
-  option.configure(
+  VitalClient.configure(
     apiKey: "sk_us_...",
     environment: .sandbox(.us)
   )
-  option.setUserId(UUID(uuidString: "ccd6f98d-3a2a-433b-a114-8fe064f301ed")!)
+  VitalClient.setUserId(UUID(uuidString: "ccd6f98d-3a2a-433b-a114-8fe064f301ed")!)
   ```
 
   ```kotlin Native Android
@@ -303,13 +303,13 @@ Vital Mobile SDK can be configured to authenticate using API Key alongside a tar
 
   val applicationContext: Context
 
-  option.configure(
+  VitalClient.configure(
     applicationContext,
     Region.US,
     Environment.Sandbox,
     "sk_us_..."
   )
-  option.setUserId(applicationContext, "ccd6f98d-3a2a-433b-a114-8fe064f301ed")
+  VitalClient.setUserId(applicationContext, "ccd6f98d-3a2a-433b-a114-8fe064f301ed")
   ```
 
   ```typescript React Native
@@ -365,7 +365,7 @@ This erases any persistent user session and configuration stored by the Vital Co
 
   val applicationContext: Context
 
-  option.getOrCreate(applicationContext).signOut()
+  VitalClient.getOrCreate(applicationContext).signOut()
   ```
 
   ```typescript React Native
@@ -433,12 +433,12 @@ It is as simple as performing a one-off migration logic during app launch:
 
   val applicationContext: Context
 
-  option.getOrCreate(applicationContext)
+  VitalClient.getOrCreate(applicationContext)
 
   if (VitalClient.Status.useApiKey in VitalClient.status) {
     try {
         val response = callBackend(...)
-        option.signIn(applicationContext, response.signInToken)
+        VitalClient.signIn(applicationContext, response.signInToken)
 
         Log.i("vital_sdk", "Signed in with Vital successfully")
     } catch (e: Throwable) {
