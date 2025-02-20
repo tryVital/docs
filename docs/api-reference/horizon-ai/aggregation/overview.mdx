@@ -1,4 +1,4 @@
-The Horizon AI Aggregation API consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction)
+The Horizon AI Aggregation Query consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction)
 and [source types](/wearables/providers/data-attributions#source-type) into simple tabular outputs.
 
 ![A high-level illustration of the inputs and outputs of the Aggregation API](/img/aggregation/overview.png)
@@ -17,17 +17,24 @@ experimentations.
 Work with time zone agnostic outputs that are indexed in the user's perception of time (i.e., _floating time_).
 </Card>
 
-## How can I use Aggregation API?
+## Aggregation API and Continuous Query
 
 <Warning>
-Aggregation API is currently in closed beta.
+Aggregation API and Continuous Query are currently in closed beta.
 The query schema and the behaviour is subject to change based on beta feedback.
 </Warning>
 
-You can make use of Vital Aggregation API through these channels:
+The Horizon AI Aggregation Query can be utilised through two different solutions:
 
-| Channel | Remarks |
-| ------- | ------- |
-| [Vital Horizon AI Python SDK](/api-reference/horizon-ai/python-sdk/getting-started) | The `vitalx-aggregation` package provides an expressive Python Query DSL with [Polars DataFrame](https://pola.rs) integrations. |
-| [Vital Aggregation API endpoint](/api-reference/horizon-ai/aggregation/query-one) | JSON API calls. |
-| [Typed bindings of Vital API](/home/libraries) | Call the Aggregation API in Go, Java, Node and Python. |
+### Aggregation API
+
+A real-time API enabling quick data analysis for individual users, offering:
+- Flexible aggregation and arithmetic capabilities
+- Dynamic query adjustment, making it ideal for interactive dashboards and data exploration
+
+### Continuous Query
+
+An automatic system running queries continuously in the background, which:
+- Enables team-wide aggregations, triggered only as data changes are detected
+- Is great for visualisation of results on known, mature aggregation queries
+- Can push aggregation results to your webhook endpoints / ETL pipelines
