@@ -20,6 +20,8 @@ Constant: `provider.connection.error`
 </ResponseField>
 <ResponseField name="message" type="string" required="true">
 </ResponseField>
+<ResponseField name="error_type" type="string" required="true">
+</ResponseField>
 <ResponseField name="error_details" type="string" required="true">
 </ResponseField>
 </Expandable>
@@ -30,6 +32,7 @@ Constant: `provider.connection.error`
   "client_user_id": "3Zru4O8cBEiwGTsXgUQGaQ==",
   "data": {
     "error_details": "Failed to pull provider data",
+    "error_type": "token_refresh_failed",
     "message": "We are having issues fetching information for user.                             We won't try to fetch again from this specific provider. Please reconnect device.",
     "provider": "oura",
     "user_id": "1449752e-0d8a-40e0-9206-91ab099b2537"
