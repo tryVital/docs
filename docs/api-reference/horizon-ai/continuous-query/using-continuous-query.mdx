@@ -1,0 +1,21 @@
+---
+title: Using Continuous Query
+---
+
+Continuous Queries are inherently an extension of queries written using the Aggregation Query DSL.
+These are applied to the entire team and run continuously in the background, triggered only when data changes are detected.
+
+![A high-level illustration of the continuous query structure](/img/aggregation/cont-query.png)
+
+You can manage your Continuous Query using our [Org Management API](/api-reference/org-management):
+
+- [Create Continuous Query Endpoint](/api-reference/horizon-ai/continuous-query/create)
+- [List Continuous Queries Endpoint](/api-reference/horizon-ai/continuous-query/list)
+
+<Info>
+Continuos Query has to include at least one group_by expression and select all Group Key columns.
+</Info>
+
+or through the Vital dashboard:
+
+![Screenshot of the query creator](/img/aggregation/query-creator-dashboard.png)

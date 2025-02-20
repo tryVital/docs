@@ -1,0 +1,130 @@
+---
+title: Examples
+---
+
+A couple of examples to get you started with Continuous Query:
+
+## Daily Sleep Analysis
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"), 
+    va.Sleep.col("efficiency").mean(),
+    va.Sleep.score().mean(),
+    va.Sleep.chronotype().newest()
+).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "day")
+).split_by_source(enabled=False)
+.finalize()
+```
+
+```python JSON DSL
+{
+  "select": [
+    {
+      "group_key": "*"
+    },
+    {
+      "arg": {
+        "sleep": "efficiency"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "value_macro": "sleep_score",
+        "version": "automatic"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "value_macro": "chronotype",
+        "version": "automatic"
+      },
+      "func": "newest"
+    }
+  ],
+  "group_by": [
+    {
+      "date_trunc": {
+        "value": 1,
+        "unit": "day"
+      },
+      "arg": {
+        "index": "sleep"
+      }
+    }
+  ],
+  "split_by_source": false
+}
+```
+</CodeGroup>
+
+## Weekly Insights Into Users Activity
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"), 
+    va.Activity.col("heart_rate_resting").mean(),
+    va.Activity.col("calories_total").max(),
+    va.Activity.col("steps").min(),
+    va.Activity.col("duration_active_seconds").mean()
+).group_by(
+    va.date_trunc(va.Activity.index(), 1, "week")
+).split_by_source(enabled=False)
+.finalize()
+```
+
+```python JSON DSL
+{
+  "select": [
+    {
+      "group_key": "*"
+    },
+    {
+      "arg": {
+        "activity": "heart_rate_resting"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "activity": "calories_total"
+      },
+      "func": "max"
+    },
+    {
+      "arg": {
+        "activity": "steps"
+      },
+      "func": "min"
+    },
+    {
+      "arg": {
+        "activity": "duration_active_seconds"
+      },
+      "func": "mean"
+    },
+  ],
+  "group_by": [
+    {
+      "date_trunc": {
+        "value": 1,
+        "unit": "week"
+      },
+      "arg": {
+        "index": "activity"
+      }
+    }
+  ],
+  "split_by_source": false
+}
+```
+</CodeGroup>
