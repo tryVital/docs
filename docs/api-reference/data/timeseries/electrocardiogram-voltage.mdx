@@ -82,12 +82,11 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
 EndDate := "2022-06-01"

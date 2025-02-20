@@ -82,12 +82,11 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
 EndDate := "2022-06-01"
@@ -116,7 +115,7 @@ fmt.Printf("Received data %s\n", response)
           {
             "diastolic": 75,
             "systolic": 125,
-            "timestamp": "2025-02-19T13:43:26+00:00",
+            "timestamp": "2025-02-20T15:25:39+00:00",
             "unit": "mmHg"
           }
         ],
