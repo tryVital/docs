@@ -1,0 +1,134 @@
+---
+title: "labtest.appointment.update"
+description: "An apppointment has been updated or created"
+---
+# Properties
+<ResponseField name="event_type" type="const string" required="true">
+Constant: `labtest.appointment.update`
+</ResponseField>
+<ResponseField name="data" type="ClientFacingAppointment" required="true">
+<Expandable title="ClientFacingAppointment" defaultOpen="true">
+<ResponseField name="id" type="string" required="true">
+</ResponseField>
+<ResponseField name="user_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="order_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="address" type="USAddress" required="true">
+<Expandable title="USAddress" defaultOpen="true">
+<ResponseField name="first_line" type="string" required="true">
+</ResponseField>
+<ResponseField name="second_line" type="string | null">
+</ResponseField>
+<ResponseField name="city" type="string" required="true">
+</ResponseField>
+<ResponseField name="state" type="string" required="true">
+</ResponseField>
+<ResponseField name="zip_code" type="string" required="true">
+</ResponseField>
+<ResponseField name="unit" type="string | null">
+[⚠️ Deprecated] Deprecated. Use `second_line` instead to provide the unit number. Subject to removal after 20 Nov 2023.
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="location" type="LngLat" required="true">
+<Expandable title="LngLat" defaultOpen="true">
+<ResponseField name="lng" type="number" required="true">
+</ResponseField>
+<ResponseField name="lat" type="number" required="true">
+</ResponseField>
+</Expandable>
+</ResponseField>
+<ResponseField name="start_at" type="string" required="true">
+Time is in UTC
+</ResponseField>
+<ResponseField name="end_at" type="string" required="true">
+Time is in UTC
+</ResponseField>
+<ResponseField name="iana_timezone" type="string" required="true">
+</ResponseField>
+<ResponseField name="type" type="AppointmentType" required="true">
+<Expandable title="AppointmentType" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="provider" type="AppointmentProvider" required="true">
+<Expandable title="AppointmentProvider" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="status" type="AppointmentStatus" required="true">
+<Expandable title="AppointmentStatus" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="provider_id" type="string" required="true">
+</ResponseField>
+<ResponseField name="can_reschedule" type="boolean" required="true">
+</ResponseField>
+<ResponseField name="event_status" type="AppointmentEventStatus" required="true">
+<Expandable title="AppointmentEventStatus" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="event_data" type="object | null">
+</ResponseField>
+<ResponseField name="events" type="ClientFacingAppointmentEvent[]" required="true">
+<Expandable title="Item Schema: ClientFacingAppointmentEvent" defaultOpen="true">
+<ResponseField name="created_at" type="string" required="true">
+</ResponseField>
+<ResponseField name="status" type="AppointmentEventStatus" required="true">
+<Expandable title="AppointmentEventStatus" defaultOpen="true">
+</Expandable>
+</ResponseField>
+<ResponseField name="data" type="object | null">
+</ResponseField>
+</Expandable>
+</ResponseField>
+</Expandable>
+</ResponseField>
+# Examples
+<CodeGroup>
+```json Example
+{
+  "event_type": "labtest.appointment.update",
+  "data": {
+    "id": "485e8e4e-0ce9-45dd-8ac8-c920824a6b92",
+    "user_id": "2288d031-e625-4943-8a6d-d89975162316",
+    "order_id": "2398f634-7e52-4bb4-9fe4-1f491602a338",
+    "address": {
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip_code": "91189",
+      "country": "United States"
+    },
+    "location": {
+      "lng": -122.4194155,
+      "lat": 37.7749295
+    },
+    "start_at": "2022-01-01T00:00:00",
+    "end_at": "2022-01-01T00:00:00",
+    "iana_timezone": "America/New_York",
+    "type": "phlebotomy",
+    "provider": "getlabs",
+    "status": "confirmed",
+    "event_status": "scheduled",
+    "provider_id": "123",
+    "can_reschedule": true,
+    "event_data": {
+      "description": "Metadata field containing provider specific data, like cancellation reason or origin"
+    },
+    "events": [
+      {
+        "created_at": "2022-01-01T00:00:00Z",
+        "data": null,
+        "status": "scheduled"
+      },
+      {
+        "created_at": "2022-01-02T00:00:00Z",
+        "data": null,
+        "status": "completed"
+      }
+    ]
+  }
+}
+```
+</CodeGroup>

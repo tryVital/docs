@@ -762,6 +762,17 @@
       ]
     },
     {
+      "group": "Continuous Query",
+      "pages": [
+        {
+          "group": "Result Table",
+          "pages": [
+            "event-catalog/continuous_query.result_table.changed"
+          ]
+        }
+      ]
+    },
+    {
       "group": "Activity Timeseries",
       "pages": [
         {
