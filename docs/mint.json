@@ -535,10 +535,12 @@
       ]
     },
     {
-      "group": "Aggregation API",
+      "group": "Aggregation Query",
       "pages": [
         "api-reference/horizon-ai/aggregation/overview",
-        "api-reference/horizon-ai/aggregation/query-one"
+        "api-reference/horizon-ai/aggregation/using-continuous-query",
+        "api-reference/horizon-ai/aggregation/using-query-api",
+        "api-reference/horizon-ai/aggregation/examples"
       ],
       "version": "beta"
     },
@@ -553,6 +555,13 @@
       "version": "beta"
     },
     {
+      "group": "Aggregation API",
+      "pages": [
+        "api-reference/horizon-ai/aggregation/query-one"
+      ],
+      "version": "beta"
+    },
+    {
       "group": "Horizon AI Python SDK",
       "pages": [
         "api-reference/horizon-ai/python-sdk/getting-started"
@@ -560,10 +569,16 @@
       "version": "beta"
     },
     {
-      "group": "Continuous Query",
+      "group": "Managing Continuous Query",
       "pages": [
         "api-reference/horizon-ai/continuous-query/create",
-        "api-reference/horizon-ai/continuous-query/list",
+        "api-reference/horizon-ai/continuous-query/list"
+      ],
+      "version": "beta"
+    },
+    {
+      "group": "Continuous Query Results",
+      "pages": [
         "api-reference/horizon-ai/continuous-query/get-result-table"
       ],
       "version": "beta"

@@ -1,4 +1,4 @@
-The Horizon AI Aggregation API consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction)
+The Horizon AI Aggregation Query consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction)
 and [source types](/wearables/providers/data-attributions#source-type) into simple tabular outputs.
 
 ![A high-level illustration of the inputs and outputs of the Aggregation API](/img/aggregation/overview.png)
@@ -17,17 +17,33 @@ experimentations.
 Work with time zone agnostic outputs that are indexed in the user's perception of time (i.e., _floating time_).
 </Card>
 
-## How can I use Aggregation API?
+## Aggregation API and Continuous Query
 
 <Warning>
-Aggregation API is currently in closed beta.
+Aggregation API and Continuous Query are currently in closed beta.
 The query schema and the behaviour is subject to change based on beta feedback.
 </Warning>
 
-You can make use of Vital Aggregation API through these channels:
+The Horizon AI Aggregation Query can be utilised through two different solutions:
 
-| Channel | Remarks |
-| ------- | ------- |
-| [Vital Horizon AI Python SDK](/api-reference/horizon-ai/python-sdk/getting-started) | The `vitalx-aggregation` package provides an expressive Python Query DSL with [Polars DataFrame](https://pola.rs) integrations. |
-| [Vital Aggregation API endpoint](/api-reference/horizon-ai/aggregation/query-one) | JSON API calls. |
-| [Typed bindings of Vital API](/home/libraries) | Call the Aggregation API in Go, Java, Node and Python. |
+### Aggregation API
+* Rapid Insights: Ideal for quick analysis, allowing developers to experiment with individual user data immediately.
+* Flexible Outputs: Produces easy-to-use DataFrames that work seamlessly with popular data analysis tools.
+* Cost and Time Efficiency: Get aggregated insights without having to dump all user data from the API.
+* Build Dynamic Dashboards: Queries are adjustable and executed in real time, suitable for dynamic dashboards that need to support flexible adjustments of query based on user inputs.
+
+### Continuous Query
+* Automatic Evaluation: Best suited for scenarios requiring ongoing data monitoring and updates, automatically re-evaluating queries when new data is available.
+* Streamlined Workflows: Minimizes manual effort and efficiently manages large datasets, making it ideal for continuous reporting and collaboration within teams.
+* Pushed Changes: New and changed query results are pushed to you as webhooks via svix or ETL Pipelines
+
+### Decision Guide
+<Steps>
+<Step title="Experiment with Aggregation API">
+    Start with Aggregation API if you need quick insights, one-time analysis or query experimentation using an individual user's data.
+</Step>
+<Step title="Productize with Continuous Query">
+    Switch to Continuous Query once you have queries which you wish to turn into a continuously updated, named dataset and to receive change events for.
+</Step>
+</Steps>
+Choose based on your current needs — rapid analysis and iteration with Aggregation API or continual data monitoring with Continuous Query. Both features use the same Query DSL, complement each other and can adapt as your product evolves.
