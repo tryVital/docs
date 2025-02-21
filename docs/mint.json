@@ -538,9 +538,9 @@
       "group": "Aggregation Query",
       "pages": [
         "api-reference/horizon-ai/aggregation/overview",
-        "api-reference/horizon-ai/continuous-query/using-continuous-query",
+        "api-reference/horizon-ai/aggregation/using-continuous-query",
         "api-reference/horizon-ai/aggregation/using-query-api",
-        "api-reference/horizon-ai/continuous-query/examples"
+        "api-reference/horizon-ai/aggregation/examples"
       ],
       "version": "beta"
     },
