@@ -2,20 +2,42 @@
 title: Using Continuous Query
 ---
 
-Continuous Queries are inherently an extension of queries written using the Aggregation Query DSL.
-These are applied to the entire team and run continuously in the background, triggered only when data changes are detected.
+You can subscribe to an [Aggregation Query](/api-reference/horizon-ai/aggregation/overview) by converting them
+into a **Continuous Query**.
 
-![A high-level illustration of the continuous query structure](/img/aggregation/cont-query.png)
+A Continuous Query:
+
+* runs automatically across all users in your Team; and
+* runs intelligently in the background, continuously monitoring for new data provider connections and user resource changes.
+* pushes any query result changes as _Data Events_ to [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
+
+![A high-level illustration of the continuous query structure](/img/aggregation/continuous-query.png)
+
+With Continuous Query, you can focus on adding value to your product with the aggregated data insights:
+
+* you need not build your own scalable data pipeline from scratch to ingest, store and aggregate standardized device data.
+* you need not poll the Query API to receive query results.
+
+
+## Continuous Query requirements
+
+While Continuous Query uses the same [Query DSL](/api-reference/horizon-ai/aggregation/query-dsl/) as the Query API, some
+restrictions are in place:
+
+* The query must [group by a truncated datetime](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause#group-by-a-truncated-datetime).
+* The query must [select all group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns).
+
+<Note>
+Do reach out to us if your use case is hampered by these restrictions.
+</Note>
+
+## Managing your Continuous Queries
 
 You can manage your Continuous Query using our [Org Management API](/api-reference/org-management):
 
 - [Create Continuous Query Endpoint](/api-reference/horizon-ai/continuous-query/create)
 - [List Continuous Queries Endpoint](/api-reference/horizon-ai/continuous-query/list)
 
-<Info>
-Continuos Query has to include at least one group_by expression and select all Group Key columns.
-</Info>
-
-or through the Vital dashboard:
+You can also manage them through the _Continuous Query_ section of the Vital Dashboard:
 
 ![Screenshot of the query creator](/img/aggregation/query-creator-dashboard.png)
