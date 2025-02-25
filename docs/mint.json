@@ -555,13 +555,6 @@
       "version": "beta"
     },
     {
-      "group": "Aggregation API",
-      "pages": [
-        "api-reference/horizon-ai/aggregation/query-one"
-      ],
-      "version": "beta"
-    },
-    {
       "group": "Horizon AI Python SDK",
       "pages": [
         "api-reference/horizon-ai/python-sdk/getting-started"
@@ -580,6 +573,13 @@
       "group": "Continuous Query Results",
       "pages": [
         "api-reference/horizon-ai/continuous-query/get-result-table"
+      ],
+      "version": "beta"
+    },
+    {
+      "group": "Query API",
+      "pages": [
+        "api-reference/horizon-ai/aggregation/query-one"
       ],
       "version": "beta"
     },
