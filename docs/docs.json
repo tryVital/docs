@@ -1326,10 +1326,12 @@
                 "icon": "brain-circuit",
                 "groups": [
                   {
-                    "group": "Aggregation API",
+                    "group": "Aggregation Query",
                     "pages": [
                       "api-reference/horizon-ai/aggregation/overview",
-                      "api-reference/horizon-ai/aggregation/query-one"
+                      "api-reference/horizon-ai/aggregation/using-continuous-query",
+                      "api-reference/horizon-ai/aggregation/using-query-api",
+                      "api-reference/horizon-ai/aggregation/examples"
                     ]
                   },
                   {
@@ -1345,6 +1347,25 @@
                     "group": "Horizon AI Python SDK",
                     "pages": [
                       "api-reference/horizon-ai/python-sdk/getting-started"
+                    ]
+                  },
+                  {
+                    "group": "Managing Continuous Query",
+                    "pages": [
+                      "api-reference/horizon-ai/continuous-query/create",
+                      "api-reference/horizon-ai/continuous-query/list"
+                    ]
+                  },
+                  {
+                    "group": "Continuous Query Results",
+                    "pages": [
+                      "api-reference/horizon-ai/continuous-query/get-result-table"
+                    ]
+                  },
+                  {
+                    "group": "Query API",
+                    "pages": [
+                      "api-reference/horizon-ai/aggregation/query-one"
                     ]
                   }
                 ]
