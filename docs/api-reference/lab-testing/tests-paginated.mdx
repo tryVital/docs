@@ -1,9 +1,7 @@
 ---
 title: "Get Available Tests"
-openapi: "GET /v3/lab_tests"
+openapi: "GET /v3/lab_test"
 ---
-
-> **Deprecated:** This endpoint is deprecated. Please use the paginated version `/v3/lab_test` instead.
 
 <RequestExample>
 
@@ -16,7 +14,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get();
+data = client.lab_tests.get_paginated();
 ```
 
 ```javascript Node
@@ -27,7 +25,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.get();
+const data = await client.labTests.getPaginated();
 ```
 
 
@@ -40,7 +38,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().get();
+var data = vital.labTests().getPaginated();
 ```
 
 ```go Go
@@ -49,15 +47,14 @@ import (
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
 )
 
 client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.Get(context.TODO())
+response, err := client.LabTests.GetPaginated(context.TODO())
 if err != nil {
     return err
 }
@@ -70,32 +67,35 @@ fmt.Printf("Received data %s\n", response)
 <ResponseExample>
 
 ```json Response
-[
-  {
-    "lab_test": {
-      "name": "Lipids Panel",
-      "description": "Cholesterol test",
-      "sample_type": "dried blood spot",
-      "method": "testkit",
-      "price": 10,
-      "is_active": true,
-      "lab": {
-        "slug": "USSL",
-        "name": "US Specialty Lab",
-        "first_line_address": "123 Main St",
-        "city": "New York",
-        "zipcode": "10001"
-      },
-      "markers": [
-        {
-          "name": "Thyroid Stimulating Hormone",
-          "slug": "tsh",
-          "description": ""
-        }
-      ]
+{
+  "data": [
+    {
+      "lab_test": {
+        "name": "Lipids Panel",
+        "description": "Cholesterol test",
+        "sample_type": "dried blood spot",
+        "method": "testkit",
+        "price": 10,
+        "is_active": true,
+        "lab": {
+          "slug": "USSL",
+          "name": "US Specialty Lab",
+          "first_line_address": "123 Main St",
+          "city": "New York",
+          "zipcode": "10001"
+        },
+        "markers": [
+          {
+            "name": "Thyroid Stimulating Hormone",
+            "slug": "tsh",
+            "description": ""
+          }
+        ]
+      }
     }
-  }
-]
+  ],
+  "next_cursor": null
+}
 ```
 
 </ResponseExample>
