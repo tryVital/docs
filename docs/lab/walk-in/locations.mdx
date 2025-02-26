@@ -64,6 +64,9 @@ Vital allows booking of appointments directly with the Patient Service Centers f
 
 You can use the [availability API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) to obtain the available slots. You can feed in the `site_code` you obtain from the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly. If you provider a zip code, a max of 3 PSC locations will be displayed.
 
+Note that since this endpoint can return availability for multiple PSC's, there may be multiple timezones. The individual start and end times are in UTC, and each location has it's own `iana_timezone` key which should be used to convert these start and end dates to the correct timezone.
+The overarching `timezone` key will always be `null` in this endpoint`
+
 
 ## Booking
 
