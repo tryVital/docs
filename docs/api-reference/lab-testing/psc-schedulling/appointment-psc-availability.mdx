@@ -12,7 +12,7 @@ curl --request POST \
      --header 'x-vital-api-key: {YOUR_KEY}' \
      --data '
 {
-    "lab": "quest,
+    "lab": "quest",
     "zip_code": "85004",
     "radius": "25",
 }
@@ -23,7 +23,6 @@ curl --request POST \
 <ResponseExample>
 ```json Response
 {
-    "timezone":"America/Phoenix",
     "slots": [
         {
             "location": {
@@ -39,7 +38,8 @@ curl --request POST \
                     "zip_code": "85006",
                 },
                 "code": "23070",
-                "name": "QUEST"
+                "name": "QUEST",
+                "iana_timezone": "America/Los_Angeles"
             },
             "date":"2023-05-09",
             "slots": [
@@ -48,9 +48,9 @@ curl --request POST \
                     "start": "2023-05-09T17:00:00+00:00",
                     "end": "2023-05-09T19:00:00+00:00",
                     "expires_at": "2023-05-09T12:39:57.827000+00:00",
-                    "price": 3500,
+                    "price": 0.0,
                     "is_priority": true,
-                    "num_appointments_available": 5
+                    "num_appointments_available": 1
                 },
                 ...
             ],
@@ -78,14 +78,15 @@ curl --request POST \
                     "start": "2023-05-10T12:00:00+00:00",
                     "end": "2023-05-10T14:00:00+00:00",
                     "expires_at": "2023-05-09T12:39:57.852000+00:00",
-                    "price": 7900,
+                    "price": 0.0,
                     "is_priority": true,
-                    "num_appointments_available": 5
+                    "num_appointments_available": 1
                 },
                 ...
             ],
         },
-    ]
+    ],
+    "timezone": null
 }
 ```
 </ResponseExample>
