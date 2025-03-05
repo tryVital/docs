@@ -1332,6 +1332,7 @@
                       "api-reference/horizon-ai/aggregation/overview",
                       "api-reference/horizon-ai/aggregation/using-continuous-query",
                       "api-reference/horizon-ai/aggregation/using-query-api",
+                      "api-reference/horizon-ai/aggregation/data-prioritization",
                       "api-reference/horizon-ai/aggregation/examples"
                     ]
                   },

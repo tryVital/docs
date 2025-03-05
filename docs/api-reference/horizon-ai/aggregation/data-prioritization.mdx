@@ -1,0 +1,93 @@
+---
+title: Data Prioritization
+---
+
+## Overview
+
+Data prioritization automatically kicks in whenever you use a [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause).
+
+Within each group outlined by your [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause), the query executor would:
+
+* Sub-group the data further by their provider and their [Source Type](/wearables/providers/data-attributions);
+* Keep only data from the sub-group that has the highest source type priority, or the highest provider priority if multiple sub-group
+  exists for the same source type.
+
+<Note>
+Data prioritization works only in a [Group By](/api-reference/horizon-ai/query-dsl/group-by-clause) context.
+</Note>
+
+<Accordion title="Example" defaultOpen>
+You are querying Sleep Score grouped by every 1 day:
+
+```json
+{
+    "select": [
+        { "func": "newest", { "value_macro": "sleep_score" } }
+    ],
+    "group_by": [
+        { "date_trunc": { "value": 1, "unit": "day }, "arg": { "index": "sleep" } }
+    ]
+}
+```
+
+Assuming this timeline:
+
+* Day 1: The user connected Oura.
+* Day 5: The user connected Apple HealthKit.
+* Both Oura and HealthKit have been consistently sending sleep data every day since connected.
+
+#### If your team priority states that Apple HealthKit > Oura
+
+The query result would be:
+
+* Day 1-4: Sleep Score computed from Oura sleep data
+* Day 5-7: Sleep Score computed from Apple HealthKit sleep data
+
+### If your team priority states that Oura > Apple HealthKit
+
+The query result would be:
+
+* Day 1-7: Sleep Score computed from Oura sleep data
+
+<Info>
+Apple HealthKit data are ignored in this case, because Oura is available throughout all
+days and has higher provider priority.
+</Info>
+
+</Accordion>
+
+
+## Previewing the prioritization effect
+
+You can experiment and preview the effect of prioritization using the [Query API](/api-reference/horizon-ai/aggregation/using-query-api).
+
+By specifying a list of provider slugs in `config.provider_priority_overrides`, you instruct the query executor to treat these providers
+as the highest priority — above the team provider priority — specifically in this query invocation.
+
+
+## Managing Provider Priorities
+
+You can manage the provider priorities for each summary type through the **Data Priority** section of the [Vital Dashboard](https://app.tryvital.io/).
+
+<Note>A larger number indicates a higher priority.</Note>
+
+
+## Source Type Priorities
+
+We use pre-assigned, non-configurable Source Type priorities that follow the general expectation of data reliability.
+
+_(sorted from highest priority to lowest priority)_
+
+* `lab`
+* `automatic`
+* `watch`
+* `ring`
+* `chest_strap`
+* `scale`
+* `cuff`
+* `fingerprick`
+* `manual_scan`
+* `phone`
+* `app`
+* `multiple_sources`
+* `unknown`
