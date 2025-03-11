@@ -1,13 +1,13 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Vital",
+  "name": "Junction",
   "colors": {
-    "primary": "#5C978D",
-    "light": "#8FBDB5",
-    "dark": "#296F62"
+    "primary": "#3D1836",
+    "light": "#D8DFE6",
+    "dark": "#3D1836"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "navigation": {
     "versions": [
       {
