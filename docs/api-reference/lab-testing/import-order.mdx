@@ -23,7 +23,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.create_order(
+data = client.lab_tests.import_order(
     user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
     billing_type=Billing.CLIENT_BILL,
     order_set=OrderSetRequest(lab_test_ids=[]),
@@ -38,7 +38,7 @@ data = client.lab_tests.create_order(
         email="email@email.com"
     ),
     patient_address=PatientAddressCompatible(
-      receiver_name="john Doe",
+      receiver_name="John Doe",
       first_line="123 Main St.",
       second_line="Apt. 208",
       city="San Francisco",
@@ -48,7 +48,7 @@ data = client.lab_tests.create_order(
       phone_number="+1123456789"
     ),
     shipping_details=ShippingAddress(
-      receiver_name="john Doe",
+      receiver_name="John Doe",
       first_line="123 Main St.",
       second_line="Apt. 208",
       city="San Francisco",
@@ -63,7 +63,7 @@ data = client.lab_tests.create_order(
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { CreateOrderRequestCompatible } from '@tryvital/vital-node/api/resources/labTests';
+import { ImportOrderBody } from '@tryvital/vital-node/api/resources/labTests';
 import { Billing, Gender, LabTestCollectionMethod } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
@@ -71,7 +71,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: CreateOrderRequestCompatible = {
+const request: ImportOrderBody = {
     userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
     billingType: Billing.ClientBill,
     orderSet: {
@@ -92,7 +92,7 @@ const request: CreateOrderRequestCompatible = {
         email: "email@email.com"
     },
     patientAddress: {
-      receiverName: "john Doe",
+      receiverName: "John Doe",
       first_line: "123 Main St.",
       second_line: "Apt. 208",
       city: "San Francisco",
@@ -102,7 +102,7 @@ const request: CreateOrderRequestCompatible = {
       phoneNumber: "+1123456789"
     },
     shippingDetails: {
-      receiverName: "john Doe",
+      receiverName: "John Doe",
       first_line: "123 Main St.",
       second_line: "Apt. 208",
       city: "San Francisco",
@@ -114,7 +114,7 @@ const request: CreateOrderRequestCompatible = {
     sampleId: "1234567890",
 }
 
-const data = await client.labTests.createOrder(request)
+const data = await client.labTests.importOrder(request)
 ```
 
 ```java Java
