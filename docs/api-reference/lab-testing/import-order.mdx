@@ -16,7 +16,6 @@ from vital.types.order_set_request import OrderSetRequest
 from vital.types.patient_address_compatible import PatientAddressCompatible
 from vital.types.patient_details import PatientDetails
 from vital.types.physician_create_request import PhysicianCreateRequest
-from vital.types.shipping_address import ShippingAddress
 from datetime import datetime
 
 client = Vital(
@@ -39,16 +38,6 @@ data = client.lab_tests.import_order(
         email="email@email.com"
     ),
     patient_address=PatientAddressCompatible(
-      receiver_name="John Doe",
-      first_line="123 Main St.",
-      second_line="Apt. 208",
-      city="San Francisco",
-      state="CA",
-      zip="91189",
-      country="US",
-      phone_number="+1123456789"
-    ),
-    shipping_details=ShippingAddress(
       receiver_name="John Doe",
       first_line="123 Main St.",
       second_line="Apt. 208",
@@ -102,16 +91,6 @@ const request: ImportOrderBody = {
       country: "US",
       phoneNumber: "+1123456789"
     },
-    shippingDetails: {
-      receiverName: "John Doe",
-      first_line: "123 Main St.",
-      second_line: "Apt. 208",
-      city: "San Francisco",
-      state: "CA",
-      zip: "91189",
-      country: "US",
-      phoneNumber: "+1123456789"
-    },
     sampleId: "1234567890",
 }
 
@@ -123,7 +102,6 @@ import com.vital.api.Vital;
 import com.vital.api.core.Environment;
 import com.vital.api.types.PatientAddressCompatible;
 import com.vital.api.types.PatientDetails;
-import com.vital.api.types.ShippingAddress;
 import com.vital.api.types.LabTestCollectionMethod;
 import com.vital.api.types.ImportOrderBody;
 import com.vital.api.types.PhysicianCreateRequest;
@@ -153,17 +131,6 @@ PatientAddressCompatible address = PatientAddressCompatible
       .phoneNumber("+1123456789")
       .build();
 
-ShippingAddress address = ShippingAddress
-      .builder()
-      .receiver_name("John Doe")
-      .firstLine("123 Main St.")
-      .city("San Francisco")
-      .state("CA")
-      .zip("91189")
-      .country("US")
-      .phoneNumber("+1123456789")
-      .build();
-
 OrderSetRequest orderSet = OrderSetRequest
       .builder()
       .labTestIds([])
@@ -185,7 +152,6 @@ ImportOrderBody request = ImportOrderBody
       .physician(physician)
       .patientDetails(details)
       .patientAddress(address)
-      .shippingDetails(shipping_address)
       .sampleId("1234567890)
       .build();
 
@@ -226,17 +192,6 @@ address := &vital.PatientAddressCompatible{
    PhoneNumber:  vital.String("+1123456789"),
 }
 
-shipping_address := &vital.ShippingAddress{
-   ReceiverName: vital.String("john Doe"),
-   FirstLine:    "123 Main St.",
-   SecondLine:   vital.String("Apt. 208"),
-   City:         "San Francisco",
-   State:        "CA",
-   Zip:          "91189",
-   Country:      "US",
-   PhoneNumber:  vital.String("+1123456789"),
-}
-
 order_set = &vital.OrderSetRequest{
       LabTestIds: []string{}
 }
@@ -255,7 +210,6 @@ request := &vital.ImportOrderBody{
    Physician:        physician,
    PatientDetails:   details,
    PatientAddress:   address,
-   ShippingAddress:  shipping_address,
    SampleId:         vital.String("123456789),
 }
 
@@ -343,16 +297,7 @@ fmt.Printf("Received data %s\n", response)
         "health_insurance_id": null,
         "requisition_form_url": null,
         "priority": false,
-        "shipping_details": {
-            "receiver_name": "John Doe",
-            "first_line": "123 Main Street",
-            "second_line": null,
-            "city": "New York",
-            "state": "NY",
-            "zip": "12345",
-            "country": "US",
-            "phone_number": "+11231234123"
-        },
+        "shipping_details": null,
         "activate_by": null,
         "passthrough": null,
         "billing_type": "client_bill",
