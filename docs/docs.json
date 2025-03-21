@@ -395,6 +395,7 @@
                     "group": "Orders",
                     "pages": [
                       "api-reference/lab-testing/create-order",
+                      "api-reference/lab-testing/import-order",
                       "api-reference/lab-testing/get-orders",
                       "api-reference/lab-testing/get-order",
                       "api-reference/lab-testing/cancel-order",
@@ -1380,6 +1381,7 @@
                     "group": "Orders",
                     "pages": [
                       "api-reference/lab-testing/create-order",
+                      "api-reference/lab-testing/import-order",
                       "api-reference/lab-testing/get-orders",
                       "api-reference/lab-testing/get-order",
                       "api-reference/lab-testing/cancel-order",
