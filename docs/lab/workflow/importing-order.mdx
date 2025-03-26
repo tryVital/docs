@@ -1,0 +1,75 @@
+---
+title: "Importing an Order"
+version: beta
+---
+
+<Warning>
+  Importing orders is currently in closed beta.
+</Warning>
+
+If you want to track orders with Junction that weren’t originally placed with Junction, you can import an order.
+
+An imported order can be cancelled, receive results, and functions similarly to orders originally placed with Junction, but with one important exception: a requisition will not be created. This means you cannot use the [endpoint to retrieve the requisition](/api-reference/lab-testing/requisition-pdf) for an imported order since Junction does not have access to it.
+
+After an order is successfully imported, it will be in the `requisition_bypassed` state (for example, an imported testkit order would have a `received.testkit.requisition_bypassed` status). This status supports transitioning to the same states that `requisition_created` does.
+
+<Warning>
+  Note that, since import skips the regular order creation flow, no communications are sent to patients about the order being created, but communications are sent for subsequent events that might occur (order completion, for example).
+</Warning>
+
+### Example
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.billing import Billing
+from vital.types.gender import Gender
+from vital.types.lab_test_collection_method import LabTestCollectionMethod
+from vital.types.order_set_request import OrderSetRequest
+from vital.types.patient_address_compatible import PatientAddressCompatible
+from vital.types.patient_details import PatientDetails
+from vital.types.physician_create_request import PhysicianCreateRequest
+from datetime import datetime
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.import_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    billing_type=Billing.CLIENT_BILL,
+    order_set=OrderSetRequest(lab_test_ids=["0e18c2f8-0740-475d-8868-431f7e9c0cfd"]),
+    collection_method=LabTestCollectionMethod.WALK_IN_TEST,
+    physician=PhysicianCreateRequest(first_name="Jane", last_name="Doe", npi=""),
+    patient_details=PatientDetails(
+        first_name="John",
+        last_name="Doe",
+        dob=datetime.fromisoformat("2020-01-01"),
+        gender=Gender.MALE,
+        phone_number="+1123456789",
+        email="email@email.com"
+    ),
+    patient_address=PatientAddressCompatible(
+      receiver_name="John Doe",
+      first_line="123 Main St.",
+      second_line="Apt. 208",
+      city="San Francisco",
+      state="CA",
+      zip="91189",
+      country="US",
+      phone_number="+1123456789"
+    ),
+    sample_id="1234567890",
+)
+```
+
+This example assumes you provide your own physician. The physician must be provided if your team configuration is set up as delegated. The billing type provided must also be appropriate to your team configuration. These aspects will be validated when making the request.
+
+Since the request represents an existing order, we don’t perform strict address validation on the patient address, to make it easier to import orders exactly as they were placed in the original interface.
+
+<Warning>
+  The sample ID must uniquely identify the order. If you supply an ID that clashes with an existing order, that will result in a validation error.
+</Warning>
+
+The response object schema is the same as [creating an order](/api-reference/lab-testing/create-order).

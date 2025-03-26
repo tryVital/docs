@@ -1,0 +1,313 @@
+---
+title: "Import Order"
+openapi: "POST /v3/order/import"
+version: beta
+---
+
+Importing orders is currently in closed beta.
+
+<RequestExample>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+from vital.types.billing import Billing
+from vital.types.gender import Gender
+from vital.types.lab_test_collection_method import LabTestCollectionMethod
+from vital.types.order_set_request import OrderSetRequest
+from vital.types.patient_address_compatible import PatientAddressCompatible
+from vital.types.patient_details import PatientDetails
+from vital.types.physician_create_request import PhysicianCreateRequest
+from datetime import datetime
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.import_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    billing_type=Billing.CLIENT_BILL,
+    order_set=OrderSetRequest(lab_test_ids=[]),
+    collection_method=LabTestCollectionMethod.WALK_IN_TEST,
+    physician=PhysicianCreateRequest(first_name="Jane", last_name="Doe", npi=""),
+    patient_details=PatientDetails(
+        first_name="John",
+        last_name="Doe",
+        dob=datetime.fromisoformat("2020-01-01"),
+        gender=Gender.MALE,
+        phone_number="+1123456789",
+        email="email@email.com"
+    ),
+    patient_address=PatientAddressCompatible(
+      receiver_name="John Doe",
+      first_line="123 Main St.",
+      second_line="Apt. 208",
+      city="San Francisco",
+      state="CA",
+      zip="91189",
+      country="US",
+      phone_number="+1123456789"
+    ),
+    sample_id="1234567890",
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { ImportOrderBody } from '@tryvital/vital-node/api/resources/labTests';
+import { Billing, Gender, LabTestCollectionMethod } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: ImportOrderBody = {
+    userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    billingType: Billing.ClientBill,
+    orderSet: {
+      lab_test_ids=[],
+    },
+    collectionMethod: LabTestCollectionMethod.WalkInTest,
+    physician: {
+      firstName: "Jane",
+      lastName: "Doe",
+      npi: "",
+    },
+    patientDetails: {
+        firstName: "John",
+        lastName: "Doe",
+        dob: new Date("2020-01-01"),
+        gender: Gender.Male,
+        phoneNumber: "+1123456789",
+        email: "email@email.com"
+    },
+    patientAddress: {
+      receiverName: "John Doe",
+      first_line: "123 Main St.",
+      second_line: "Apt. 208",
+      city: "San Francisco",
+      state: "CA",
+      zip: "91189",
+      country: "US",
+      phoneNumber: "+1123456789"
+    },
+    sampleId: "1234567890",
+}
+
+const data = await client.labTests.importOrder(request)
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.types.PatientAddressCompatible;
+import com.vital.api.types.PatientDetails;
+import com.vital.api.types.LabTestCollectionMethod;
+import com.vital.api.types.ImportOrderBody;
+import com.vital.api.types.PhysicianCreateRequest;
+import com.vital.api.types.OrderSetRequest;
+
+Vital vital = Vital.builder()
+      .apiKey("YOUR_API_KEY")
+      .environment(Environment.SANDBOX)
+      .build();
+
+PatientDetails details = PatientDetails.builder()
+      .firstName("John")
+      .lastName("Doe")
+      .dob(OffsetDateTime.parse("2020-01-01"))
+      .gender(Gender.MALE)
+      .phoneNumber("+1123456789")
+      .email("email@email.com")
+      .build();
+
+PatientAddressCompatible address = PatientAddressCompatible
+      .builder()
+      .firstLine("123 Main St.")
+      .city("San Francisco")
+      .state("CA")
+      .zip("91189")
+      .country("US")
+      .phoneNumber("+1123456789")
+      .build();
+
+OrderSetRequest orderSet = OrderSetRequest
+      .builder()
+      .labTestIds([])
+      .build();
+
+PhysicianCreateRequest physician = PhysicianCreateRequest
+      .builder()
+      .firstName("Jane")
+      .lastName("Doe")
+      .npi("")
+      .build();
+
+ImportOrderBody request = ImportOrderBody
+      .builder()
+      .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
+      .billingType(Billing.CLIENT_BILL)
+      .orderSet(orderSet)
+      .collectionMethod(LabTestCollectionMethod.WALK_IN_TEST)
+      .physician(physician)
+      .patientDetails(details)
+      .patientAddress(address)
+      .sampleId("1234567890)
+      .build();
+
+var data = vital.labTests().importOrder(request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+details := &vital.PatientDetails{
+   FirstName:   "John",
+   LastName:    "Doe",
+   Dob:         time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
+   Gender:      vital.GenderMale,
+   PhoneNumber: "+1123456789",
+   Email:       "email@email.com",
+}
+
+address := &vital.PatientAddressCompatible{
+   ReceiverName: vital.String("john Doe"),
+   FirstLine:    "123 Main St.",
+   SecondLine:   vital.String("Apt. 208"),
+   City:         "San Francisco",
+   State:        "CA",
+   Zip:          "91189",
+   Country:      "US",
+   PhoneNumber:  vital.String("+1123456789"),
+}
+
+order_set = &vital.OrderSetRequest{
+      LabTestIds: []string{}
+}
+
+physician = &vital.PhysicianCreateRequest{
+      FirstName: vital.String("Jane"),
+      LastName:  vital.String("Doe),
+      Npi:       "",
+}
+
+request := &vital.ImportOrderBody{
+   UserId:           "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+   Billing:          vital.BillingClientBill,
+   OrderSet:         orderSet,
+   CollectionMethod: vital.LabTestCollectionMethodWalkInTest,
+   Physician:        physician,
+   PatientDetails:   details,
+   PatientAddress:   address,
+   SampleId:         vital.String("123456789),
+}
+
+response, err := client.LabTests.ImportOrder(context.TODO(), request)
+if err != nil {
+   return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+    "order": {
+        "user_id": "7ea94b27-a536-461f-ac4b-1c26c854d180",
+        "id": "d3ec7ac7-2584-4254-9709-fc61d80635c4",
+        "team_id": "59d4dfa1-e7c8-4d96-af15-74ca5ac5d189",
+        "patient_details": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "dob": "1990-01-01T00:00:00+00:00",
+            "gender": "male",
+            "phone_number": "+11231234123",
+            "email": "john@example.com"
+        },
+        "patient_address": {
+            "receiver_name": "John Doe",
+            "first_line": "123 Main Street",
+            "second_line": null,
+            "city": "New York",
+            "state": "NY",
+            "zip": "12345",
+            "country": "US",
+            "phone_number": "+11231234123"
+        },
+        "lab_test": {
+            "id": "d0b479ec-afcc-4763-985c-4e23f17149f5",
+            "slug": "59d4dfa1-testosterone",
+            "name": "Testosterone",
+            "sample_type": "serum",
+            "method": "at_home_phlebotomy",
+            "price": 0.0,
+            "is_active": true,
+            "status": "active",
+            "fasting": false,
+            "lab": null,
+            "markers": null,
+            "is_delegated": false,
+            "auto_generated": false
+        },
+        "details": {
+            "type": "at_home_phlebotomy",
+            "data": {
+                "id": "21cb5e3f-25e3-443d-9fee-272de1393310",
+                "appointment_id": null,
+                "created_at": "2025-03-20T13:07:32+00:00",
+                "updated_at": "2025-03-20T13:07:32+00:00"
+            }
+        },
+        "sample_id": "1234567890",
+        "notes": null,
+        "created_at": "2025-03-20T13:07:32+00:00",
+        "updated_at": "2025-03-20T13:07:32+00:00",
+        "events": [
+            {
+                "id": 74769,
+                "created_at": "2025-03-20T13:07:32+00:00",
+                "status": "received.at_home_phlebotomy.ordered"
+            },
+            {
+                "id": 74770,
+                "created_at": "2025-03-20T13:07:32+00:00",
+                "status": "received.at_home_phlebotomy.requisition_bypassed"
+            }
+        ],
+        "status": "received",
+        "physician": {
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "npi": "123"
+        },
+        "health_insurance_id": null,
+        "requisition_form_url": null,
+        "priority": false,
+        "shipping_details": null,
+        "activate_by": null,
+        "passthrough": null,
+        "billing_type": "client_bill",
+        "icd_codes": null
+    },
+    "status": "success",
+    "message": "Order created successfully"
+}
+```
+
+</ResponseExample>
