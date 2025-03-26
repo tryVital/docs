@@ -66,10 +66,10 @@ data = client.lab_tests.import_order(
 
 This example assumes you provide your own physician. The physician must be provided if your team configuration is set up as delegated. The billing type provided must also be appropriate to your team configuration. These aspects will be validated when making the request.
 
-Since the request represents an existing order, we don’t perform strict address validation on the patient address, to make it easier to import orders exactly as they were placed in the different interface originally.
+Since the request represents an existing order, we don’t perform strict address validation on the patient address, to make it easier to import orders exactly as they were placed in the original interface.
 
 <Warning>
   The sample ID must uniquely identify the order. If you supply an ID that clashes with an existing order, that will result in a validation error.
 </Warning>
 
-The response object schema is the same as [creating an order](/api-reference/lab_testing/create-order).
+The response object schema is the same as [creating an order](/api-reference/lab-testing/create-order).
