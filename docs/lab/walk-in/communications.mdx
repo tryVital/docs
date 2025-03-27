@@ -11,7 +11,9 @@ Customers have the following options when setting this up:
 
 Each option has a different set of content and status changes, depending on what triggered them.
 
-<Info>You can enable or disable SMS and Email communications individually through the [**Vital Dashboard**](http://app.tryvital.io/), under the Team Settings section.</Info>
+<Info>
+  You can enable or disable SMS and Email communications individually through the [**Vital Dashboard**](http://app.tryvital.io/), under the Team Settings section.
+</Info>
 
 ## Default Communications
 
@@ -19,27 +21,32 @@ Each option has a different set of content and status changes, depending on what
 
 A table of the **Order Status** and **default SMS** is provided bellow:
 
-| Order Status | Default Message |
-| --- | --- |
-| `ordered` | _"Hi, `{patient_first_name}`, your order for the `{team_name}` walk-in-test has been placed! We'll provide you with updates on the status of your order via text messages :)."_ |
-| `requisition_created` | _"Hey `{patient_first_name}`, it's time to visit your local `{lab_name}` center. Please check the email you just received for instructions."_ |
-| `appointment_scheduled` | _"Your appointment with the lab has been booked at {date} over at {address}!"_ <Note>This message is sent only for Quest orders and Quest appointments placed through Vital API.</Note> |
-| `appointment_cancelled` | _"Hey, your lab appointment at {date} for {team_name} has been cancelled."_ <Note>This message is sent only for Quest orders and Quest appointments placed through Vital API.</Note> |
-| `completed` | _"Your results have finished processing, your results should be ready soon."_ |
-| `cancelled` | _"Hey, your order for the `{team_name}` walk-in-test has been cancelled. If this is by accident please contact support."_ |
+| Order Status            | Default Message                                                                                                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ordered`               | _"Hi, _`{patient_first_name}`_, your order for the _`{team_name}`_walk-in-test has been placed\! We'll provide you with updates on the status of your order via text messages :)"_                 |
+| `requisition_created`   | _"Hey _`{patient_first_name}`_, it's time to visit your local _`{lab_name}`_center. Please check the email you just received for instructions._                                                    |
+| `appointment_scheduled` | _"Your appointment with the lab has been booked at {date} over at {address}\!" _  <Note>      This message is sent only for Quest orders and Quest appointments placed through Vital API.  </Note> |
+| `appointment_cancelled` | "Hey, your lab appointment at `{date}` for `{team_name}` has been cancelled.   <Note>      This message is sent only for Quest orders and Quest appointments placed through Vital API.  </Note>    |
+| `completed`             | _"Your results have finished processing, your results should be ready soon."_                                                                                                                      |
+| `cancelled`             | _"Hey, your order for the _`{team_name}`_walk-in-test has been cancelled. If this is by accident please contact support."_                                                                         |
 
-<Info>SMS Texts are customizable, and can be enabled or disabled individually.</Info>
+<Info>
+  SMS Texts are customizable and can be enabled or disabled individually.
+</Info>
 
 ### Emails
 
 For emails, the following table describes what information each email contains for each Order Statuses:
-| Order Status | Email Content Description |
-| --- | --- |
+
+| Order Status          | Email Content Description                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------ |
 | `requisition_created` | An email with confirmation of the partner Lab and additional instructions will be sent to the patient. |
 
-<Info>Emails can be customised and sent from your own domain.</Info>
+<Info>
+  Emails can be customised and sent from your own domain.
+</Info>
 
 ## Disable Communications
 
 In this case, no communications will be sent from Vital. You have the ability to produce completely customized communications
-using the [`Webhook events`](/lab/at-home-phlebotomy/webhooks) described previously.
+using the  described previously.
