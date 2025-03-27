@@ -6,7 +6,7 @@ title: "API"
 Testkit orders now support two new statuses representing problems in transit. Refer to the [lab test lifecycle documentation](/lab/workflow/lab-test-lifecycle).
 
 <Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-We’re introducing two new statuses for the `OrderLowLevelStatus` (`problem_in_transit_lab` and `problem_in_transit_customer`) enum and two for the `OrderStatus` (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`) enum—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
+We’re introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
 
 Here’s how to verify and ensure you benefit from future enhancements:
 
