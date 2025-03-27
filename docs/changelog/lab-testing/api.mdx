@@ -14,20 +14,20 @@ Here’s how to verify and ensure you benefit from future enhancements:
 
 ```python Python
 match status:
-		case OrderStatus.TESTKIT_ORDERED:
-				handle_ordered()
-	  case OrderStatus.TESTKIT_AWAITING_REGISTRATION:
-			  handle_awaiting_registration()
-		# other cases...
+    case OrderStatus.TESTKIT_ORDERED:
+        handle_ordered()
+    case OrderStatus.TESTKIT_AWAITING_REGISTRATION:
+        handle_awaiting_registration()
+        # other cases...
 ```
 
 2. Check unknown values in your code paths are handled gracefully—for example, by using default cases. Logging unknown values can help you stay informed.
 
 ```python Python
 match status:
-     # previous cases...
-     case unknown_status:
-		     logger.warning(f"Unknown status received: {repr(unknown_status)}")
+    # previous cases...
+    case unknown_status:
+        logger.warning(f"Unknown status received: {repr(unknown_status)}")
 ```
 
 3. Make sure you’re running the latest version of our SDK.
