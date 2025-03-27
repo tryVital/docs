@@ -24,12 +24,6 @@ What we offer:
 
 You can sign-up today to our sandbox environment. The [quickstart](/lab/overview/quickstart-api) guide will help you getting from zero to ordering tests in less than 30 minutes! Once the integration is ready, switching to production will just be a matter of switching API keys.
 
-<Warning>
-**Please note**: To ensure future compatibility, we ask that you avoid exhaustive matching on enum values such as an order’s status. We may introduce new statuses (and other enum values) over time, and code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
-
-To stay compatible and benefit from future enhancements, treat unknown values gracefully—for example, by using default cases or limiting checks to only the values your integration depends on.
-</Warning>
-
 ### Production launch
 
 As a first step, we need to define what type of testing you want to offer to your users. We will have an introduction call to go over the test, projected volumes, customizations for kits and other questions you might have. Once we have all this information, we will begin setting up the test kits for distribution. Once the integration is complete, you will have access to the dashboard to start ordering tests via our API.
