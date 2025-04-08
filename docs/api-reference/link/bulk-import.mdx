@@ -19,3 +19,18 @@ Note that these connections cannot be migrated:
 1. Any connection that is bound to an OAuth application credential not in your possession 
 
 2. Any connection that is not bound to the OAuth application credential set on your Vital Team.
+
+### Asynchronous execution
+
+The Bulk Import endpoint enqueues all connections you submitted to a persistent background operation. It then responds
+*202 Created* immediately afterwards.
+
+You can inspect the status of the resulting background operation through the [List Bulk Ops](/api-reference/link/list-bulk-ops) endpoint.
+
+Optionally, you may opt into the `wait_for_completion` mode, which would respond 200 OK only if the operation does complete within 20 seconds.
+Otherwise, the endpoint responds 202 Created.
+
+<Note>
+You can submit any number of — or even all — connections through the Bulk Import API within a short period of time. Enqueuing is fast and
+does not disrupt the progress of the background operation.
+</Note>
