@@ -363,10 +363,10 @@ In turn, background sync would not occur.
 | Sync is automatically... |           |
 | ------------------------ | --------- |
 | Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
-| Triggered by             | Two mechanisms: <ul><li>[Sync On App Launch](/wearables/guides/android-health-connect#sync-on-app-launch)</li><li>[Background Sync (Experimental)](/wearables/guides/android-health-connect#background-sync-experimental) if it is enabled.</li></ul> |
+| Triggered by             | Two mechanisms: <ul><li>[Sync On App Launch](/wearables/guides/android-health-connect#sync-on-app-launch)</li><li>[Background Sync](/wearables/guides/android-health-connect#background-sync) if it is enabled.</li></ul> |
 
 <Note>
-Sync On App Launch is an always-on behaviour. Background Sync (Experimental) is an **opt-in** behaviour.
+Sync On App Launch is an always-on behaviour. Background Sync is an **opt-in** behaviour.
 
 Please refer to the [Android Health Connect guide](/wearables/guides/android-health-connect) for the full context
 and required configuration of these two behaviours.
@@ -377,7 +377,7 @@ and required configuration of these two behaviours.
 Vital Health SDK schedules hourly background sync with both Apple HealthKit and Android Health Connect, provided that you have:
 
 1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instruction; and
-2. Configured [Health Connect Background Sync (Experimental)](/wearables/guides/android-health-connect#background-sync-experimental) and request user permissions (when necessary) as per instruction.
+2. Configured [Health Connect Background Sync](/wearables/guides/android-health-connect#background-sync) and request user permissions (when necessary) as per instruction.
 
 However, this schedule is only advisory. The OS has full discretion to defer the scheduled time based on runtime
 constraints like battery power, as well as platform background execution policies. For more detailed explanation, please refer to:
