@@ -1182,6 +1182,7 @@
                   {
                     "group": "Link Migration",
                     "pages": [
+                      "api-reference/link/list-bulk-ops",
                       "api-reference/link/bulk-import",
                       "api-reference/link/bulk-trigger-historical-pull",
                       "api-reference/link/bulk-pause",

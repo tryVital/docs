@@ -6,3 +6,45 @@ openapi: "POST /v2/link/bulk_trigger_historical_pull"
 import ConnectionMigration from '/snippets/connection-migration.mdx';
 
 <ConnectionMigration />
+
+### Asynchronous execution
+
+The Bulk Trigger Historical Pull endpoint enqueues all trigger requests you submitted to a persistent background operation. It then responds
+*202 Created* immediately afterwards.
+
+You can inspect the status of the resulting background operation through the [List Bulk Ops](/api-reference/link/list-bulk-ops) endpoint.
+
+Optionally, you may opt into the `wait_for_completion` mode, which would respond 200 OK only if the operation does complete within 20 seconds.
+Otherwise, the endpoint responds 202 Created.
+
+<Note>
+You can trigger historical pull on any number of — or even all — connections through the Bulk Trigger Historical Pull API within a short period
+of time. Enqueuing is fast and does not disrupt the progress of the background operation. 
+</Note>
+
+#### Managing provider API rate limits
+
+Junction transparently batches and throttles the trigger requests. This is to avoid exhausting the provider API rate limits of your Bring Your Own OAuth
+custom credentials.
+
+You can submit as many trigger requests as needed.
+
+
+Provider            | Historical Pull triggering Rate
+------------------- | -----------------------------------------------------
+Garmin              | 2 connections every 1 minute
+Fitbit, Polar       | 250 connections at a time; no time-based throttling
+Strava              | 1 connections every 15 minutes
+Oura                | 150 connections every 5 minutes
+All other providers | 2 connections every 1 minute
+
+
+#### Historical Pull Range
+
+Bulk Trigger Historical Pull respects any restricting [User Ingestion Bounds](/wearables/providers/data-ingestion-bounds) and/or any
+[Team Data Pull Preferences](/wearables/providers/introduction#customizing-historical-data-pull-range) you have specified.
+
+If you have specified a large number of days to pull, you should be aware that:
+
+1. The background operation will take longer time to run to completion.
+1. It may still cause temporary disruption to data polling and webhook processing, even after the triggering having been throttled.
