@@ -341,7 +341,11 @@
                       "api-reference/data/timeseries/igg",
                       "api-reference/data/timeseries/ige",
                       "api-reference/data/timeseries/respiratory-rate",
-                      "api-reference/data/timeseries/vo2-max"
+                      "api-reference/data/timeseries/vo2-max",
+                      "api-reference/data/timeseries/forced-expiratory-volume-1",
+                      "api-reference/data/timeseries/forced-vital-capacity",
+                      "api-reference/data/timeseries/peak-expiratory-flow-rate",
+                      "api-reference/data/timeseries/inhaler-usage"
                     ]
                   },
                   {
@@ -349,8 +353,12 @@
                     "pages": [
                       "api-reference/data/timeseries/body-fat",
                       "api-reference/data/timeseries/body-weight",
+                      "api-reference/data/timeseries/lean-body-mass",
+                      "api-reference/data/timeseries/body-mass-index",
+                      "api-reference/data/timeseries/waist-circumference",
                       "api-reference/data/timeseries/body-temperature",
-                      "api-reference/data/timeseries/body-temperature-delta"
+                      "api-reference/data/timeseries/body-temperature-delta",
+                      "api-reference/data/timeseries/basal-body-temperature"
                     ]
                   },
                   {
@@ -361,14 +369,23 @@
                       "api-reference/data/timeseries/distance",
                       "api-reference/data/timeseries/floors-climbed",
                       "api-reference/data/timeseries/steps",
-                      "api-reference/data/timeseries/workout-duration"
+                      "api-reference/data/timeseries/workout-duration",
+                      "api-reference/data/timeseries/wheelchair-push",
+                      "api-reference/data/timeseries/stand-hour",
+                      "api-reference/data/timeseries/stand-duration",
+                      "api-reference/data/timeseries/fall"
                     ]
                   },
                   {
                     "group": "Wellness Timeseries",
                     "pages": [
+                      "api-reference/data/timeseries/sleep-apnea-alert",
+                      "api-reference/data/timeseries/sleep-breathing-disturbance",
                       "api-reference/data/timeseries/mindfulness-minutes",
-                      "api-reference/data/timeseries/stress-level"
+                      "api-reference/data/timeseries/stress-level",
+                      "api-reference/data/timeseries/uv-exposure",
+                      "api-reference/data/timeseries/daylight-exposure",
+                      "api-reference/data/timeseries/handwashing"
                     ]
                   },
                   {
@@ -712,6 +729,38 @@
                       "event-catalog/daily.data.workout_duration.updated",
                       "event-catalog/historical.data.workout_duration.created"
                     ]
+                  },
+                  {
+                    "group": "Wheelchair Push",
+                    "pages": [
+                      "event-catalog/daily.data.wheelchair_push.created",
+                      "event-catalog/daily.data.wheelchair_push.updated",
+                      "event-catalog/historical.data.wheelchair_push.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Hour",
+                    "pages": [
+                      "event-catalog/daily.data.stand_hour.created",
+                      "event-catalog/daily.data.stand_hour.updated",
+                      "event-catalog/historical.data.stand_hour.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Duration",
+                    "pages": [
+                      "event-catalog/daily.data.stand_duration.created",
+                      "event-catalog/daily.data.stand_duration.updated",
+                      "event-catalog/historical.data.stand_duration.created"
+                    ]
+                  },
+                  {
+                    "group": "Fall",
+                    "pages": [
+                      "event-catalog/daily.data.fall.created",
+                      "event-catalog/daily.data.fall.updated",
+                      "event-catalog/historical.data.fall.created"
+                    ]
                   }
                 ]
               },
@@ -802,6 +851,38 @@
                       "event-catalog/daily.data.respiratory_rate.updated",
                       "event-catalog/historical.data.respiratory_rate.created"
                     ]
+                  },
+                  {
+                    "group": "Forced Expiratory Volume 1",
+                    "pages": [
+                      "event-catalog/daily.data.forced_expiratory_volume_1.created",
+                      "event-catalog/daily.data.forced_expiratory_volume_1.updated",
+                      "event-catalog/historical.data.forced_expiratory_volume_1.created"
+                    ]
+                  },
+                  {
+                    "group": "Forced Vital Capacity",
+                    "pages": [
+                      "event-catalog/daily.data.forced_vital_capacity.created",
+                      "event-catalog/daily.data.forced_vital_capacity.updated",
+                      "event-catalog/historical.data.forced_vital_capacity.created"
+                    ]
+                  },
+                  {
+                    "group": "Peak Expiratory Flow Rate",
+                    "pages": [
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.created",
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.updated",
+                      "event-catalog/historical.data.peak_expiratory_flow_rate.created"
+                    ]
+                  },
+                  {
+                    "group": "Inhaler Usage",
+                    "pages": [
+                      "event-catalog/daily.data.inhaler_usage.created",
+                      "event-catalog/daily.data.inhaler_usage.updated",
+                      "event-catalog/historical.data.inhaler_usage.created"
+                    ]
                   }
                 ]
               },
@@ -825,6 +906,30 @@
                     ]
                   },
                   {
+                    "group": "Body Mass Index",
+                    "pages": [
+                      "event-catalog/daily.data.body_mass_index.created",
+                      "event-catalog/daily.data.body_mass_index.updated",
+                      "event-catalog/historical.data.body_mass_index.created"
+                    ]
+                  },
+                  {
+                    "group": "Lean Body Mass",
+                    "pages": [
+                      "event-catalog/daily.data.lean_body_mass.created",
+                      "event-catalog/daily.data.lean_body_mass.updated",
+                      "event-catalog/historical.data.lean_body_mass.created"
+                    ]
+                  },
+                  {
+                    "group": "Waist Circumference",
+                    "pages": [
+                      "event-catalog/daily.data.waist_circumference.created",
+                      "event-catalog/daily.data.waist_circumference.updated",
+                      "event-catalog/historical.data.waist_circumference.created"
+                    ]
+                  },
+                  {
                     "group": "Body Temperature",
                     "pages": [
                       "event-catalog/daily.data.body_temperature.created",
@@ -838,6 +943,14 @@
                       "event-catalog/daily.data.body_temperature_delta.created",
                       "event-catalog/daily.data.body_temperature_delta.updated",
                       "event-catalog/historical.data.body_temperature_delta.created"
+                    ]
+                  },
+                  {
+                    "group": "Basal Body Temperature",
+                    "pages": [
+                      "event-catalog/daily.data.basal_body_temperature.created",
+                      "event-catalog/daily.data.basal_body_temperature.updated",
+                      "event-catalog/historical.data.basal_body_temperature.created"
                     ]
                   }
                 ]
@@ -888,6 +1001,22 @@
                 "group": "Wellness Timeseries",
                 "pages": [
                   {
+                    "group": "Sleep Apnea Alert",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_apnea_alert.created",
+                      "event-catalog/daily.data.sleep_apnea_alert.updated",
+                      "event-catalog/historical.data.sleep_apnea_alert.created"
+                    ]
+                  },
+                  {
+                    "group": "Sleep Breathing Disturbance",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_breathing_disturbance.created",
+                      "event-catalog/daily.data.sleep_breathing_disturbance.updated",
+                      "event-catalog/historical.data.sleep_breathing_disturbance.created"
+                    ]
+                  },
+                  {
                     "group": "Mindfulness Minutes",
                     "pages": [
                       "event-catalog/daily.data.mindfulness_minutes.created",
@@ -901,6 +1030,30 @@
                       "event-catalog/daily.data.stress_level.created",
                       "event-catalog/daily.data.stress_level.updated",
                       "event-catalog/historical.data.stress_level.created"
+                    ]
+                  },
+                  {
+                    "group": "UV Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.uv_exposure.created",
+                      "event-catalog/daily.data.uv_exposure.updated",
+                      "event-catalog/historical.data.uv_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Daylight Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.daylight_exposure.created",
+                      "event-catalog/daily.data.daylight_exposure.updated",
+                      "event-catalog/historical.data.daylight_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Handwashing",
+                    "pages": [
+                      "event-catalog/daily.data.handwashing.created",
+                      "event-catalog/daily.data.handwashing.updated",
+                      "event-catalog/historical.data.handwashing.created"
                     ]
                   }
                 ]
@@ -1278,7 +1431,11 @@
                       "api-reference/data/timeseries/igg",
                       "api-reference/data/timeseries/ige",
                       "api-reference/data/timeseries/respiratory-rate",
-                      "api-reference/data/timeseries/vo2-max"
+                      "api-reference/data/timeseries/vo2-max",
+                      "api-reference/data/timeseries/forced-expiratory-volume-1",
+                      "api-reference/data/timeseries/forced-vital-capacity",
+                      "api-reference/data/timeseries/peak-expiratory-flow-rate",
+                      "api-reference/data/timeseries/inhaler-usage"
                     ]
                   },
                   {
@@ -1286,8 +1443,12 @@
                     "pages": [
                       "api-reference/data/timeseries/body-fat",
                       "api-reference/data/timeseries/body-weight",
+                      "api-reference/data/timeseries/lean-body-mass",
+                      "api-reference/data/timeseries/body-mass-index",
+                      "api-reference/data/timeseries/waist-circumference",
+                      "api-reference/data/timeseries/body-temperature-delta",
                       "api-reference/data/timeseries/body-temperature",
-                      "api-reference/data/timeseries/body-temperature-delta"
+                      "api-reference/data/timeseries/basal-body-temperature"
                     ]
                   },
                   {
@@ -1298,14 +1459,23 @@
                       "api-reference/data/timeseries/distance",
                       "api-reference/data/timeseries/floors-climbed",
                       "api-reference/data/timeseries/steps",
-                      "api-reference/data/timeseries/workout-duration"
+                      "api-reference/data/timeseries/workout-duration",
+                      "api-reference/data/timeseries/wheelchair-push",
+                      "api-reference/data/timeseries/stand-hour",
+                      "api-reference/data/timeseries/stand-duration",
+                      "api-reference/data/timeseries/fall"
                     ]
                   },
                   {
                     "group": "Wellness Timeseries",
                     "pages": [
+                      "api-reference/data/timeseries/sleep-apnea-alert",
+                      "api-reference/data/timeseries/sleep-breathing-disturbance",
                       "api-reference/data/timeseries/mindfulness-minutes",
-                      "api-reference/data/timeseries/stress-level"
+                      "api-reference/data/timeseries/stress-level",
+                      "api-reference/data/timeseries/uv-exposure",
+                      "api-reference/data/timeseries/daylight-exposure",
+                      "api-reference/data/timeseries/handwashing"
                     ]
                   },
                   {
@@ -1700,6 +1870,38 @@
                       "event-catalog/daily.data.workout_duration.updated",
                       "event-catalog/historical.data.workout_duration.created"
                     ]
+                  },
+                  {
+                    "group": "Wheelchair Push",
+                    "pages": [
+                      "event-catalog/daily.data.wheelchair_push.created",
+                      "event-catalog/daily.data.wheelchair_push.updated",
+                      "event-catalog/historical.data.wheelchair_push.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Hour",
+                    "pages": [
+                      "event-catalog/daily.data.stand_hour.created",
+                      "event-catalog/daily.data.stand_hour.updated",
+                      "event-catalog/historical.data.stand_hour.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Duration",
+                    "pages": [
+                      "event-catalog/daily.data.stand_duration.created",
+                      "event-catalog/daily.data.stand_duration.updated",
+                      "event-catalog/historical.data.stand_duration.created"
+                    ]
+                  },
+                  {
+                    "group": "Fall",
+                    "pages": [
+                      "event-catalog/daily.data.fall.created",
+                      "event-catalog/daily.data.fall.updated",
+                      "event-catalog/historical.data.fall.created"
+                    ]
                   }
                 ]
               },
@@ -1790,6 +1992,38 @@
                       "event-catalog/daily.data.respiratory_rate.updated",
                       "event-catalog/historical.data.respiratory_rate.created"
                     ]
+                  },
+                  {
+                    "group": "Forced Expiratory Volume 1",
+                    "pages": [
+                      "event-catalog/daily.data.forced_expiratory_volume_1.created",
+                      "event-catalog/daily.data.forced_expiratory_volume_1.updated",
+                      "event-catalog/historical.data.forced_expiratory_volume_1.created"
+                    ]
+                  },
+                  {
+                    "group": "Forced Vital Capacity",
+                    "pages": [
+                      "event-catalog/daily.data.forced_vital_capacity.created",
+                      "event-catalog/daily.data.forced_vital_capacity.updated",
+                      "event-catalog/historical.data.forced_vital_capacity.created"
+                    ]
+                  },
+                  {
+                    "group": "Peak Expiratory Flow Rate",
+                    "pages": [
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.created",
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.updated",
+                      "event-catalog/historical.data.peak_expiratory_flow_rate.created"
+                    ]
+                  },
+                  {
+                    "group": "Inhaler Usage",
+                    "pages": [
+                      "event-catalog/daily.data.inhaler_usage.created",
+                      "event-catalog/daily.data.inhaler_usage.updated",
+                      "event-catalog/historical.data.inhaler_usage.created"
+                    ]
                   }
                 ]
               },
@@ -1813,6 +2047,30 @@
                     ]
                   },
                   {
+                    "group": "Body Mass Index",
+                    "pages": [
+                      "event-catalog/daily.data.body_mass_index.created",
+                      "event-catalog/daily.data.body_mass_index.updated",
+                      "event-catalog/historical.data.body_mass_index.created"
+                    ]
+                  },
+                  {
+                    "group": "Lean Body Mass",
+                    "pages": [
+                      "event-catalog/daily.data.lean_body_mass.created",
+                      "event-catalog/daily.data.lean_body_mass.updated",
+                      "event-catalog/historical.data.lean_body_mass.created"
+                    ]
+                  },
+                  {
+                    "group": "Waist Circumference",
+                    "pages": [
+                      "event-catalog/daily.data.waist_circumference.created",
+                      "event-catalog/daily.data.waist_circumference.updated",
+                      "event-catalog/historical.data.waist_circumference.created"
+                    ]
+                  },
+                  {
                     "group": "Body Temperature",
                     "pages": [
                       "event-catalog/daily.data.body_temperature.created",
@@ -1826,6 +2084,14 @@
                       "event-catalog/daily.data.body_temperature_delta.created",
                       "event-catalog/daily.data.body_temperature_delta.updated",
                       "event-catalog/historical.data.body_temperature_delta.created"
+                    ]
+                  },
+                  {
+                    "group": "Basal Body Temperature",
+                    "pages": [
+                      "event-catalog/daily.data.basal_body_temperature.created",
+                      "event-catalog/daily.data.basal_body_temperature.updated",
+                      "event-catalog/historical.data.basal_body_temperature.created"
                     ]
                   }
                 ]
@@ -1876,6 +2142,30 @@
                 "group": "Wellness Timeseries",
                 "pages": [
                   {
+                    "group": "Sleep Apnea Alert",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_apnea_alert.created",
+                      "event-catalog/daily.data.sleep_apnea_alert.updated",
+                      "event-catalog/historical.data.sleep_apnea_alert.created"
+                    ]
+                  },
+                  {
+                    "group": "Sleep Breathing Disturbance",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_breathing_disturbance.created",
+                      "event-catalog/daily.data.sleep_breathing_disturbance.updated",
+                      "event-catalog/historical.data.sleep_breathing_disturbance.created"
+                    ]
+                  },
+                  {
+                    "group": "Mindfulness Minutes",
+                    "pages": [
+                      "event-catalog/daily.data.mindfulness_minutes.created",
+                      "event-catalog/daily.data.mindfulness_minutes.updated",
+                      "event-catalog/historical.data.mindfulness_minutes.created"
+                    ]
+                  },
+                  {
                     "group": "Mindfulness Minutes",
                     "pages": [
                       "event-catalog/daily.data.mindfulness_minutes.created",
@@ -1889,6 +2179,30 @@
                       "event-catalog/daily.data.stress_level.created",
                       "event-catalog/daily.data.stress_level.updated",
                       "event-catalog/historical.data.stress_level.created"
+                    ]
+                  },
+                  {
+                    "group": "UV Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.uv_exposure.created",
+                      "event-catalog/daily.data.uv_exposure.updated",
+                      "event-catalog/historical.data.uv_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Daylight Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.daylight_exposure.created",
+                      "event-catalog/daily.data.daylight_exposure.updated",
+                      "event-catalog/historical.data.daylight_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Handwashing",
+                    "pages": [
+                      "event-catalog/daily.data.handwashing.created",
+                      "event-catalog/daily.data.handwashing.updated",
+                      "event-catalog/historical.data.handwashing.created"
                     ]
                   }
                 ]
