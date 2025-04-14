@@ -1557,6 +1557,7 @@
                       "api-reference/lab-testing/get-order",
                       "api-reference/lab-testing/cancel-order",
                       "api-reference/lab-testing/requisition-pdf",
+                      "api-reference/lab-testing/abn-pdf",
                       "api-reference/lab-testing/create-unregistered-order",
                       "api-reference/lab-testing/register-order",
                       "api-reference/lab-testing/labels-pdf",
