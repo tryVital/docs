@@ -1301,7 +1301,7 @@
                       "api-reference/user/get-users",
                       "api-reference/user/upsert-info",
                       "api-reference/user/get-info-latest",
-                      "api-reference/user/create-insurance",
+                      "api-reference/user/create-insurance-beta",
                       "api-reference/user/get-latest-insurance"
                     ]
                   },

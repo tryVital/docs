@@ -1,6 +1,12 @@
 ---
 openapi: "POST /v2/user/{user_id}/insurance"
+version: "beta"
 ---
+
+If insurance is covered by Medicare or Medicaid, we have closed beta support for infering the plan to use based on a patient's address. This endpoint supports `payor_code`s with values of `MEDFED` (Medicare) and
+`MAIDFED` (Medicaid) to do this.
+
+For example, supplying a `payor_code` of `MEDFED` for a patient that lives in Arizona will create insurance data using Arizona's Medicare plan payor code.
 
 <RequestExample>
 
