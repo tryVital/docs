@@ -12,6 +12,12 @@ Only commercial payors are supported and public insurance payors (medicare, medi
 
 ## Setting Insurance Data
 
+<Note>
+**Medicare and Medicaid location inference closed beta**
+
+Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
+</Note>
+
 To place an order for a `user` in Vital with commercial insurance, you must first provide Vital with insurance data.
 
 This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/create-insurance) endpoint, with the following payload:
@@ -21,12 +27,6 @@ Note that you can only set insurance data for users that already have patient in
 </Note>
 
 It is expected that insurance data will become outdated or change with time. It is the customer's responsability to update this data with Vital in order to minimise the risk of a denied claim.
-
-<Note>
-**Medicare and Medicaid location inference closed beta**
-
-Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
-</Note>
 
 ```json
 "insurance": {
