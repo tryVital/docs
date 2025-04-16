@@ -2,10 +2,22 @@
 title: 'Rate Limiting'
 ---
 
-Rate limit errors will be triggered when the rate limit for a particular endpoint has been exceeded. These default limits are the same for the Sandbox and Production environments. Please note that these rate limits are subject to change at any time.
+Junction does not impose a per-customer rate limit on server-to-server API calls at this time.
+
+However, you may occasionally encounter **429 Too Many Requests** or **503 Service Unavailable** from our infrastructure.
+You should be prepared to retry your API requests with a reasonable exponential backoff strategy.
+
+
+## Targeted rate limits
+
+You may encounter **429 Too Many Requests** in the these specific scenarios:
 
 | Endpoint                                    | Authentication Scheme | Rate Limit                  |
 | ------------------------------------------- | --------------------- | --------------------------- |
 | `POST /user/refresh/{user_id}`              | Vital API Key         | 8 per hour per user         |
-| All other endpoints                         | Vital API Key         | 2000 per minute per API Key |
-| All other endpoints                         | Vital Sign-In Token   | 250 per hour per user       |
+
+<Note>
+Junction may adjust rate limiting based on real-world usage patterns. We will give you sufficient notices
+if a new enforcement would impact your existing usage patterns.
+</Note>
+
