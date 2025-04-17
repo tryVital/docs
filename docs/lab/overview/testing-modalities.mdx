@@ -14,9 +14,8 @@ This involves sending a kit to a patient's home. They will then be able to colle
 
 At home testing kits are comprised of a number of components such as:
 
- <div className="flex flex-row">
-  <div>
-
+<div className="flex flex-row">
+<div>
 - Mailer Box
 - Blade Lancets
 - Plasters
@@ -27,10 +26,15 @@ At home testing kits are comprised of a number of components such as:
 - Collection Supplies
 - Instruction Booklet
 
-Additional components can be included in the test kit box. To fully customize the kit, just contact us support@tryvital.io.
+Additional components can be included in the test kit box. To fully customize the kit, just contact us [support@tryvital.io](mailto:support@tryvital.io).
 
-  </div>
-  <img src="/img/wyndly.png" className="w-1/2 h-1/2" />
+</div>
+
+<img
+  src="/img/wyndly.png"
+  className="w-1/2 h-1/2"
+/>
+
 </div>
 
 ## At-home phlebotomy
@@ -48,11 +52,10 @@ The flow for at-home phlebotomy orders is as follows:
 
 ## Walk-in tests
 
-In-lab draws involve the patient going to a lab location, either Quest or Labcorp, to carry out the test.
-To carry out this test you need a requisition form. Vital's API can generate this for you, if the patient meets certain conditions. Results are then retrieved via Vital's API.
+Walk-in tests require the patient to visit a lab location (often referred to as a Patient Service Center or PSC)—such as Quest, Labcorp, or BioReference—to have their sample collected. A requisition form is needed to perform the test, which Junction’s API generates if the patient meets the required conditions.
 
-The flow of an walk-in test is very similar to the at-home phlebotomy one. The only difference is that the patient does not book an appointment beforehand, but goes directly to the lab instead.
+This workflow closely mirrors the at-home phlebotomy flow, except that appointment scheduling is not required. With a "walk-in" test, a patient can simply _walk in_ to a PSC or they can schedule an appointment (Quest only).
 
 <Info>
-A patient might book an appointment with Labcorp or Quest for walk-in phlebotomy tests, instead of directly going to the lab. We don't support tracking such appointments through our API yet. But we might add this capability in the future!
+  Expanded support for on-site or in-clinic draws coming soon\!
 </Info>
