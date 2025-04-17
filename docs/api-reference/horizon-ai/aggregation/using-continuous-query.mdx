@@ -2,14 +2,28 @@
 title: Using Continuous Query
 ---
 
-You can subscribe to an [Aggregation Query](/api-reference/horizon-ai/aggregation/overview) by converting them
-into a **Continuous Query**.
+import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-A Continuous Query:
+<HorizonAIBeta />
 
-* runs automatically across all users in your Team; and
-* runs intelligently in the background, continuously monitoring for new data provider connections and user resource changes.
-* pushes any query result changes as _Data Events_ to [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
+You can create a **Continuous Query** to have your [Horizon AI Query](/api-reference/horizon-ai/aggregation/overview)
+automatically evaluated by Junction as needed, and receive any query result changes through [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
+
+<AccordionGroup>
+<Accordion title="Automatic Evaluation" icon="wand-sparkles" defaultOpen>
+Continuous Query runs automatically on all existing and new Users in your Team;
+</Accordion>
+<Accordion title="Continuous Change Monitoring" icon="camera-cctv" defaultOpen>
+Continuous Query is scheduled intelligently in response to any new data points or updates discovered through device data connections
+made through [Junction Link](/wearables/connecting-providers/introduction) and [Junction Mobile SDKs](/wearables/sdks/vital-health).
+</Accordion>
+<Accordion title="Result Pushing" icon="webhook" defaultOpen>
+Junction pushes any Continuous Query result table changes to your Webhook or ETL Pipeline destinations.
+</Accordion>
+<Accordion title="Result Pulling" icon="table" defaultOpen>
+The latest result table can be queried through [Junction API](/api-reference/horizon-ai/continuous-query/get-result-table) at any time.
+</Accordion>
+</AccordionGroup>
 
 ![A high-level illustration of the continuous query structure](/img/aggregation/continuous-query.png)
 
