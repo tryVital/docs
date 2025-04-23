@@ -45,6 +45,46 @@ restrictions are in place:
 Do reach out to us if your use case is hampered by these restrictions.
 </Note>
 
+## Subscribing to query result changes
+
+When a Continuous Query is re-evaluated and the result set has changed, Junction sends a [Result Table Changed](/event-catalog/continuous_query.result_table.changed)
+data event to your [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
+
+This data event includes only the delta (new rows or changed rows with respect to the [group keys](](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns))).
+To re-fetch the whole result set, use the [Get Result Table](/api-reference/horizon-ai/continuous-query/get-result-table) endpoint.
+
+```json
+{
+  "event_type": "continuous_query.result_table.changed",
+  "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
+  "client_user_id": "01HW3FSNVCHC3B2QB5N0ZAAAVG",
+  "team_id": "6b74423d-0504-4470-9afb-477252ccf67a",
+  "data": [
+    {
+      "data": {
+        "group_key.0": [
+          "2025-02-17T00:00:00"
+        ],
+        "mean.efficiency": [
+          98.22
+        ],
+        "mean.sleep_score": [
+          76.75
+        ],
+        "min.sleep_score": [
+          61
+        ],
+        "newest.chronotype": [
+          "third"
+        ]
+      },
+      "query_id": "b59425f8-eb5a-4c60-ae95-eda70179da04",
+      "query_slug": "sleep-analysis-v1"
+    }
+  ]
+}
+```
+
 ## Managing your Continuous Queries
 
 You can manage your Continuous Query using our [Org Management API](/api-reference/org-management):
