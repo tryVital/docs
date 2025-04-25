@@ -403,7 +403,8 @@
                   "api-reference/data/timeseries/forced-expiratory-volume-1",
                   "api-reference/data/timeseries/forced-vital-capacity",
                   "api-reference/data/timeseries/peak-expiratory-flow-rate",
-                  "api-reference/data/timeseries/inhaler-usage"
+                  "api-reference/data/timeseries/inhaler-usage",
+                  "api-reference/data/timeseries/heart-rate-recovery-one-minute"
                 ]
               },
               {
@@ -432,6 +433,13 @@
                   "api-reference/data/timeseries/stand-hour",
                   "api-reference/data/timeseries/stand-duration",
                   "api-reference/data/timeseries/fall"
+                ]
+              },
+              {
+                "group": "Workout Stream Timeseries",
+                "pages": [
+                  "api-reference/data/timeseries/workout-distance",
+                  "api-reference/data/timeseries/workout-swimming-stroke"
                 ]
               },
               {
@@ -849,6 +857,27 @@
             ]
           },
           {
+            "group": "Workout Stream Timeseries",
+            "pages": [
+              {
+                "group": "Workout Distance",
+                "pages": [
+                  "event-catalog/daily.data.workout_distance.created",
+                  "event-catalog/daily.data.workout_distance.updated",
+                  "event-catalog/historical.data.workout_distance.created"
+                ]
+              },
+              {
+                "group": "Workout Swimming Stroke",
+                "pages": [
+                  "event-catalog/daily.data.workout_swimming_stroke.created",
+                  "event-catalog/daily.data.workout_swimming_stroke.updated",
+                  "event-catalog/historical.data.workout_swimming_stroke.created"
+                ]
+              }
+            ]
+          },
+          {
             "group": "Vitals Timeseries",
             "pages": [
               {
@@ -966,6 +995,14 @@
                   "event-catalog/daily.data.inhaler_usage.created",
                   "event-catalog/daily.data.inhaler_usage.updated",
                   "event-catalog/historical.data.inhaler_usage.created"
+                ]
+              },
+              {
+                "group": "Heart Rate Recovery One Minute",
+                "pages": [
+                  "event-catalog/daily.data.heart_rate_recovery_one_minute.created",
+                  "event-catalog/daily.data.heart_rate_recovery_one_minute.updated",
+                  "event-catalog/historical.data.heart_rate_recovery_one_minute.created"
                 ]
               }
             ]
