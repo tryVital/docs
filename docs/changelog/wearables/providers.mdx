@@ -2,6 +2,32 @@
 title: "Provider and Resources"
 ---
 
+
+### Expanded Apple HealthKit data type coverage (April 2025)
+
+Junction iOS SDK 1.6.0 has expanded the HealthKit data type coverage:
+
+Type | Remarks | `VitalResource`
+---- | ---- | ----
+Workout Stream timeseries | Workout Distance — including cycling, swimming, rowing, cross country skiing, downhill snow sports, paddle sports, skating sports, walking, running and wheelchair.<br />Workout Swimming Stroke | As part of `Workout` 
+Timeseries | Heart Rate Recovery One Minute | `HeartRateRecoveryOneMinute`
+
+Workout Stream timeseries data always have [Workout ID](/wearables/providers/data-attributions#workout-id) and [Sport](/wearables/providers/data-attributions#sport) attributions.
+
+<Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
+For more information, check out:
+
+#### Data Events
+* the [Workout Distance data events](/event-catalog/daily.data.workout_distance.created) in the Event Catalog;
+* the [Workout Swimming Stroke data events](/event-catalog/daily.data.workout_swimming_stroke.created) in the Event Catalog;
+* the [Heart Rate Recovery One Minute data events](/event-catalog/daily.data.heart_rate_recovery_one_minute.created) in the Event Catalog;
+
+#### Data access API
+* the [Get Workout Distance](/api-reference/data/timeseries/workout-distance) endpoint documentation;
+* the [Get Workout Swimming Stroke](/api-reference/data/timeseries/workout-swimming-stroke) endpoint documentation; and
+* the [Get Heart Rate Recovery One Minute](/api-reference/data/timeseries/heart-rate-recovery-one-minute) endpoint documentation.
+</Accordion>
+
 ### Summary Ingestion Timestamps (April 2025)
 
 Activity, Body, Sleep, Sleep Cycle, Workout, Meal and Menstrual Cycle now expose ingestion timestamps:

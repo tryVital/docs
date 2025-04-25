@@ -67,3 +67,43 @@ The following provider integrations would tag data with App ID:
 | ---------------------- | ------- |
 | Apple HealthKit        | App Store Bundle ID, or Unique Device ID (`com.apple.health.{UUID}`) for first-party data |
 | Android Health Connect | Android Application Package Name |
+
+## Workout ID
+
+If a Workout ID is present, the data are associated with the referenced Junction [Workout](/api-reference/data/workouts/get-summary) summary.
+
+Workout ID is only available in the following Workout Stream timeseries resources (`workout_*`):
+
+Resource | Remarks
+-------- | -------
+`workout_distance`        | All data must have an associated Workout ID and Sport.
+`workout_swimming_stroke` | All data must have an associated Workout ID and Sport.
+
+### Supported providers
+
+The following provider integrations would tag data with Workout ID:
+
+| Provider               |
+| ---------------------- |
+| Apple HealthKit        |
+
+
+## Sport
+
+If a sport slug is present, the data are known to be measuring the referenced Sport type.
+
+Sport slug is only available in the following timeseries resources:
+
+Resource | Remarks
+-------- | -------
+`workout_distance`        | All data must have an associated Workout ID and Sport.
+`workout_swimming_stroke` | All data must have an associated Workout ID and Sport.
+`distance`                | All-day wheelchair distance data are tagged with `sport = wheelchair_push`. Otherwise, sport is unspecified.
+
+### Supported providers
+
+The following provider integrations would tag data with Sport:
+
+| Provider               |
+| ---------------------- |
+| Apple HealthKit        |
