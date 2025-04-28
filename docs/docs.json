@@ -231,6 +231,7 @@
                 "group": "Managing Continuous Query",
                 "pages": [
                   "api-reference/horizon-ai/continuous-query/create",
+                  "api-reference/horizon-ai/continuous-query/update",
                   "api-reference/horizon-ai/continuous-query/list"
                 ]
               },
@@ -557,6 +558,7 @@
                 "group": "Managing Continuous Query",
                 "pages": [
                   "api-reference/horizon-ai/continuous-query/create",
+                  "api-reference/horizon-ai/continuous-query/update",
                   "api-reference/horizon-ai/continuous-query/list"
                 ]
               },
