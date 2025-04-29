@@ -2,6 +2,64 @@
 title: "API"
 ---
 
+
+### Team Management Keys (May 2025)
+
+[Junction Management API](/api-details/junction-management-api) now supports Management Keys (previously _Org Keys_) that
+are scoped to one or more Teams.
+
+As a recap, there are now two types of Management Keys:
+
+Type                | Remarks
+------------------- | --------
+Org Management Key  | Full control of the organization — notably can create or delete Teams.
+Team Management Key | Scoped control over one or more Teams. But it cannot access Org-level resources or actions, e.g., creating or deleting Teams.
+
+<Accordion icon="key" iconType="duotone" title="Details" defaultOpen>
+
+All Management Keys — Org or Team — are accepted by the `X-Management-Key` header, as well as the deprecated `X-Vital-Org-Key` header.
+
+Selected customers can now manage Management Keys in the [Junction Dashboard](https://app.tryvital.io/) through:
+
+Type                | Remarks
+------------------- | --------
+Org Management Key  | The **Org Config** page; accessible via the top-left corner Dropdown Menu.
+Team Management Key | The **Team Config** page.
+
+Check out:
+* the [Create Management Key](/api-reference/org-management/management-keys/create-management-key) endpoint documentation;
+* the [List Management Keys](/api-reference/org-management/management-keys/list-management-keys) endpoint documentation; and
+* the [Delete Management Key](/api-reference/org-management/management-keys/delete-management-key) endpoint documentation.
+
+<Note>
+If you intend to create a Team Management Key that binds to 2 or more Teams, you must use the
+[Create Management Key](/api-reference/org-management/management-keys/create-management-key) API endpoint. Junction Dashboard does not
+support creating a key for more than one Team.
+</Note>
+
+<Note>
+Note that Management Keys cannot be used as Team API Keys to access the Junction API. However, you can
+[manage Team API Keys](/api-reference/org-management/team-api-keys/create-team-api-key) through a Management Key.
+</Note>
+
+<Info>
+[Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+</Accordion>
+
+### `X-Management-Key` header for Junction Management API (April 2025)
+
+[Junction Management API](/api-details/junction-management-api) now accepts Management Keys (previously _Org Keys_)
+in the `X-Management-Key` header, in addition to the `X-Vital-Org-Key` header.
+
+We would continue to support the `X-Vital-Org-Key` header. Though we recommend moving over to `X-Management-Key` to avoid
+confusion, especially if you do plan to adopt Team Management Keys.
+
+<Info>
+[Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
 ### Enhanced Historical Data Pull Status Tracking (May 2025)
 
 We've added a new "Retrying" state to the Historical Pull Status page and the historical introspection endpoint, helping you distinguish temporary issues from permanent failures.

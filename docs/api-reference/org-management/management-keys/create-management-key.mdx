@@ -1,0 +1,22 @@
+---
+openapi: post /v1/org/{org_id}/management_key
+title: Create Management Key
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.tryvital.io/management/v1/org/{org_id}/management_key \
+  --header 'Content-Type: application/json' \
+  --header 'X-Vital-Org-Key: <api-key>' \
+  --data '{
+  "label": "<string>",
+  "team_id": "3c90c3cc-0d44-4b50-8888-8dd25736052a"
+}'
+```
+</RequestExample>
