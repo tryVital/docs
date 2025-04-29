@@ -1,0 +1,145 @@
+---
+title: 'Update a Test'
+openapi: 'PATCH /v3/lab_tests/{lab_test_id}'
+---
+
+<RequestExample>
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_tests.update_lab_test(
+    lab_test_id="<lab_test_id>",
+    name="<name>",
+    active=<True>,
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import {  UpdateLabTestRequest } from '@tryvital/vital-node/api';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const request: UpdateLabTestRequest = {
+    name: '<name>',
+    active: <true>,
+}
+
+const data = await client.labTests.updateLabTest(labTestId, request);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+UpdateLabTestRequest request = UpdateLabTestRequest
+        .builder()
+        .name("<name>")
+        .active(<true>)
+        .build();
+
+var data = vital.labTests().updateLabTest(labTestId, request);
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+request := &vital.UpdateLabTestRequest{
+  Name:        "<name>",
+  Active:     <true>,
+}
+
+response, err := client.LabTests.UpdateLabTest(context.TODO(), labTestId, request)
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "5af405fc-fafb-49e8-b0bf-fe9d91df6a7d",
+  "slug": "a94e3005-new-test",
+  "name": "New test",
+  "sample_type": "serum",
+  "method": "at_home_phlebotomy",
+  "price": 0.0,
+  "is_active": true,
+  "status": "active",
+  "fasting": false,
+  "lab": {
+    "id": 26,
+    "slug": "quest",
+    "name": "Quest",
+    "first_line_address": "100 Tri State International #100",
+    "city": "Lincolnshire",
+    "zipcode": "60069",
+    "collection_methods": ["at_home_phlebotomy", "walk_in_test"],
+    "sample_types": ["serum", "saliva", "urine"]
+  },
+  "markers": [
+    {
+      "id": 6859,
+      "name": "17-Hydroxyprogesterone",
+      "slug": "17-hydroxyprogesterone",
+      "description": "17-Hydroxyprogesterone",
+      "lab_id": 26,
+      "provider_id": "17180",
+      "type": "biomarker",
+      "unit": null,
+      "price": "N/A",
+      "aoe": null,
+      "a_la_carte_enabled": true
+    },
+    {
+      "id": 8213,
+      "name": "17-Hydroxypregnenolone",
+      "slug": "17-hydroxypregnenolone",
+      "description": "17-Hydroxypregnenolone",
+      "lab_id": 26,
+      "provider_id": "8352",
+      "type": "biomarker",
+      "unit": null,
+      "price": "N/A",
+      "aoe": null,
+      "a_la_carte_enabled": true
+    }
+  ],
+  "is_delegated": false,
+  "auto_generated": false
+}
+```
+
+</ResponseExample>

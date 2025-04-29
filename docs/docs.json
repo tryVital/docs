@@ -79,9 +79,7 @@
               },
               {
                 "group": "Vital iOS App",
-                "pages": [
-                  "wearables/vital-app/introduction"
-                ]
+                "pages": ["wearables/vital-app/introduction"]
               },
               {
                 "group": "Providers",
@@ -223,9 +221,7 @@
               },
               {
                 "group": "Horizon AI Python SDK",
-                "pages": [
-                  "api-reference/horizon-ai/python-sdk/getting-started"
-                ]
+                "pages": ["api-reference/horizon-ai/python-sdk/getting-started"]
               },
               {
                 "group": "Managing Continuous Query",
@@ -243,9 +239,7 @@
               },
               {
                 "group": "Query API",
-                "pages": [
-                  "api-reference/horizon-ai/aggregation/query-one"
-                ]
+                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
               }
             ]
           }
@@ -276,9 +270,7 @@
               },
               {
                 "group": "Vital Mobile SDK Integration",
-                "pages": [
-                  "api-reference/user/create-sign-in-token"
-                ]
+                "pages": ["api-reference/user/create-sign-in-token"]
               },
               {
                 "group": "Device Connections",
@@ -333,15 +325,11 @@
               },
               {
                 "group": "Sleep Cycle",
-                "pages": [
-                  "api-reference/data/sleep-cycle/get-summary"
-                ]
+                "pages": ["api-reference/data/sleep-cycle/get-summary"]
               },
               {
                 "group": "Meal",
-                "pages": [
-                  "api-reference/data/meal/get-summary"
-                ]
+                "pages": ["api-reference/data/meal/get-summary"]
               },
               {
                 "group": "Workouts",
@@ -374,9 +362,7 @@
               },
               {
                 "group": "Menstrual Cycle",
-                "pages": [
-                  "api-reference/data/menstrual-cycle/get-summary"
-                ]
+                "pages": ["api-reference/data/menstrual-cycle/get-summary"]
               },
               {
                 "group": "Electrocardiogram",
@@ -457,9 +443,7 @@
               },
               {
                 "group": "Diary Timeseries",
-                "pages": [
-                  "api-reference/data/timeseries/note"
-                ]
+                "pages": ["api-reference/data/timeseries/note"]
               },
               {
                 "group": "Nutrition Timeseries",
@@ -529,6 +513,7 @@
                   "api-reference/lab-testing/biomarkers",
                   "api-reference/lab-testing/labs",
                   "api-reference/lab-testing/post-test",
+                  "api-reference/lab-testing/patch-lab-test",
                   "api-reference/lab-testing/lab-test-markers",
                   "api-reference/lab-testing/order-set-marker"
                 ]
@@ -570,9 +555,7 @@
               },
               {
                 "group": "Query API",
-                "pages": [
-                  "api-reference/horizon-ai/aggregation/query-one"
-                ]
+                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
               }
             ]
           },
@@ -671,15 +654,11 @@
               },
               {
                 "group": "Results",
-                "pages": [
-                  "event-catalog/labtest.result.critical"
-                ]
+                "pages": ["event-catalog/labtest.result.critical"]
               },
               {
                 "group": "Appointments",
-                "pages": [
-                  "event-catalog/labtest.appointment.updated"
-                ]
+                "pages": ["event-catalog/labtest.appointment.updated"]
               }
             ]
           },
@@ -1188,10 +1167,7 @@
         "groups": [
           {
             "group": "Core",
-            "pages": [
-              "changelog/core/api",
-              "changelog/core/dashboard"
-            ]
+            "pages": ["changelog/core/api", "changelog/core/dashboard"]
           },
           {
             "group": "Wearables",
@@ -1217,10 +1193,7 @@
     "dark": "/logo/dark.svg"
   },
   "api": {
-    "openapi": [
-      "swagger.json",
-      "org-management-api.json"
-    ],
+    "openapi": ["swagger.json", "org-management-api.json"],
     "mdx": {
       "server": [
         "https://api.tryvital.io",
