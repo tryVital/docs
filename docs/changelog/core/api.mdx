@@ -2,6 +2,59 @@
 title: "API"
 ---
 
+### Team-scoped Management Key (April 2025)
+
+You can now create Management Keys (previously _Org Keys_) that are scoped to specific Teams.
+
+As a recap, there are now two kinds of Management Keys:
+
+Key Role     | Remarks
+------------ | --------
+`org_admin`  | Full control of the organization.
+`team_admin` | Full control of one or more teams as authorized by an Org Admin.
+
+<Accordion icon="key" iconType="duotone" title="Details" defaultOpen>
+
+Keys of both roles are accepted by the `X-Management-Key`, as well as the deprecated `X-Vital-Org-Key` header.
+
+Check out:
+* the [Create Management Key](/api-reference/org-management/management-key/create-key) endpoint documentation;
+* the [List Management Keys](/api-reference/org-management/management-key/list-keys) endpoint documentation; and
+* the [Delete Management Key](/api-reference/org-management/management-key/delete-key) endpoint documentation.
+
+<Note>
+Note that Management Keys cannot be used as Team API Keys to access the Junction API. However, you can
+[manage Team API Keys](/api-reference/org-management/team-api-keys/create-team-api-key) through a Management Key.
+</Note>
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+</Accordion>
+
+### `X-Management-Key` header for Org Management API (April 2025)
+
+We have introduced the `X-Management-Key` header in the Org Management API to replace the `X-Vital-Org-Key` header.
+
+`X-Vital-Org-Key` would continue to work in the foreseeable future. However, please migrate to `X-Management-Key`
+at the earliest opportunity.
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
+### `X-Management-Key` header for Org Management API (April 2025)
+
+We have introduced the `X-Management-Key` header in the Org Management API to replace the `X-Vital-Org-Key` header.
+
+`X-Vital-Org-Key` would continue to work in the foreseeable future. However, please migrate to `X-Management-Key`
+at the earliest opportunity.
+
+<Info>
+Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+</Info>
+
 ### Prepare Team Custom Credentials endpoint (Aug 2024)
 
 The new [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials) endpoint
