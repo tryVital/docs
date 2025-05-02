@@ -1,0 +1,65 @@
+---
+title: "Junction API"
+---
+
+You use Junction API to:
+
+* manage users, demographics information and device connections in your Team with the [Core API](/api-reference/user/create-user);
+* pull ingested device data and inspect backfill progress through the [Data Access API](/api-reference/data/sleep/get-summary);
+* order lab tests, manage appointments and pull the results through the [Lab Testing API](/api-reference/lab-testing/create-order); and
+* aggregate ingested device data with the [Horizon AI Query API](/api-reference/horizon-ai/aggregation/query-one);
+
+<Info>
+For managing Team configuration and Org resources programmatically, see [Junction Management API](/api-details/junction-management-api).
+</Info>
+
+## Environments
+
+Junction provides two Sandbox environments and two Production environments today:
+
+| Environment      | Base URL                              | Team API Key Prefix    |
+| ---------------- | ------------------------------------- | ---------------------- |
+| 🇺🇸 Production US    | `https://api.tryvital.io/`            | `pk_us_*`
+| 🇪🇺 Production EU    | `https://api.eu.tryvital.io/`         | `pk_eu_*`
+| 🇺🇸 Sandbox US       | `https://api.sandbox.tryvital.io/`    | `sk_us_*`
+| 🇪🇺 Sandbox EU       | `https://api.sandbox.eu.tryvital.io/` | `sk_eu_*`
+
+Sandbox environments are functionally identical to Production environments, except that:
+
+1. Each Team can have only up to 50 Users in Sandbox;
+1. You can create [Synthetic Device connections](/wearables/providers/test_data) connections; and 
+1. You can [simulate and transition an order through its lifecycle](/lab/overview/sandbox). 
+
+
+## Authentication
+
+Junction API accepts **Team API Key**. You can provision a Team API Key through:
+
+1. the Team Config page in the [Junction Dashboard](https://app.tryvital.io); or
+2. the [Create Team API Key](api-reference/org-management/team-api-keys/create-team-api-key) endpoint of the
+   [Junction Management API](/api-details/junction-management-api).
+
+Your API requests should present the Team API Key under the `X-Vital-API-Key` header. For example:
+
+```bash cURL
+curl --request GET
+  --url 'https://api.tryvital.io/v2/providers'
+  --header 'X-Vital-API-Key: <YOUR-TEAM-API-KEY>'
+```
+
+<Note>
+A [Management Key](/api-details/junction-management-api) used by Junction Management API does not function as Team API Key.
+However, you can manage Team API Keys through a Management Key.
+</Note>
+
+
+## Junction Mobile SDKs
+
+[Junction Mobile SDKs](/wearables/sdks/) supports two authentication methods:
+
+Scheme | Authorization | Recommended use case
+------ | ------------- | ---------------------
+[Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) | User-scoped access    | Production mobile apps
+[Team API Keys](/wearables/sdks/authentication#vital-api-keys)      | Full Team data access | Proof-of-concept
+
+Refer to the [Mobile SDK Authentication](/wearables/sdks/authentication) documentation for more information.
