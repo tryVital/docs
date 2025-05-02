@@ -264,7 +264,7 @@
                   "api-reference/user/get-users",
                   "api-reference/user/upsert-info",
                   "api-reference/user/get-info-latest",
-                  "api-reference/user/create-insurance",
+                  "api-reference/user/create-insurance-beta",
                   "api-reference/user/get-latest-insurance"
                 ]
               },
@@ -467,6 +467,7 @@
                   "api-reference/lab-testing/get-order",
                   "api-reference/lab-testing/cancel-order",
                   "api-reference/lab-testing/requisition-pdf",
+                  "api-reference/lab-testing/abn-pdf",
                   "api-reference/lab-testing/labels-pdf",
                   "api-reference/lab-testing/create-unregistered-order",
                   "api-reference/lab-testing/register-order",
