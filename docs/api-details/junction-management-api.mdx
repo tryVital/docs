@@ -1,0 +1,49 @@
+---
+title: "Junction Management API"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+You use Junction Management API to:
+
+* manage Junction Org resources, such as [Teams](/api-reference/org-management/team/create-team) and [Members](/api-reference/org-management/member/list-members);
+* manage Team configurations across both Sandbox and Production environments, such as:
+   * [Team features and brand information](/api-reference/org-management/team/update-team);
+   * [Team ETL Pipelines](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines);
+   * [Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials); and
+   * [Team Continuous Query](/api-reference/horizon-ai/continuous-query/create).
+
+<Info>
+For device and lab testing access, see [Junction API](/api-details/junction-api).
+</Info>
+
+## Environments
+
+There is one production environment for Junction Management API:
+
+| Environment      | Base URL                              | Management Key Prefix    |
+| ---------------- | ------------------------------------- | ---------------------- |
+| 🤖 Production    | `https://api.tryvital.io/management/` | `mg_*`
+
+
+## Authentication
+
+Junction Management API accepts **Management Key**. Enterprise customers can request a Management Key
+through your Junction Customer Success manager.
+
+Your API requests should present the Management Key under the `X-Management-Key` header. For example:
+
+```bash cURL
+curl --request GET
+  --url "https://api.tryvital.io/management/v1/org/${ORG_ID}"
+  --header 'X-Management-Key: ${YOUR_MANAGEMENT_KEY}'
+```
+
+<Note>
+A [Team API Key](/api-details/junction-api#authentication) does not work with Junction Management API.
+
+Junction enforces the use of separate API credentials based on the principle of least privilege, especially
+considering the administrative power of Junction Management API.
+</Note>

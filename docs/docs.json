@@ -22,7 +22,6 @@
                 "pages": [
                   "home/welcome",
                   "home/quickstart",
-                  "home/environments",
                   "home/libraries",
                   "home/getting-support"
                 ]
@@ -30,8 +29,8 @@
               {
                 "group": "API",
                 "pages": [
-                  "api-details/authentication",
-                  "api-details/data_flow",
+                  "api-details/junction-api",
+                  "api-details/junction-management-api",
                   "api-details/rate_limiting",
                   "api-details/regions"
                 ]
@@ -561,7 +560,7 @@
             ]
           },
           {
-            "anchor": "Org Management",
+            "anchor": "Management",
             "icon": "building",
             "groups": [
               {
@@ -1325,6 +1324,10 @@
     {
       "source": "/wearables/connecting-providers/bring_your_own_oauth",
       "destination": "/wearables/connecting-providers/bring-your-own-oauth/overview"
+    },
+    {
+      "source": "/home/environments",
+      "destination": "/api-details/junction-api"
     }
   ]
 }
