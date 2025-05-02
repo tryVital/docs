@@ -1,6 +1,6 @@
 ---
-title: "Create a Test"
-openapi: "POST /v3/lab_tests"
+title: 'Create a Test'
+openapi: 'POST /v3/lab_tests'
 ---
 
 <RequestExample>
@@ -19,32 +19,35 @@ client = Vital(
 )
 
 data = client.lab_tests.create(
-    provider_ids=["000110"], 
-    name="<name>", 
-    method=LabTestCollectionMethod.TESTKIT, 
+    provider_ids=["000110"],
+    name="<name>",
+    method=LabTestCollectionMethod.TESTKIT,
     description="<description>"
 )
 ```
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import {  CreateLabTestRequest, LabTestCollectionMethod, LabTestSampleType } from '@tryvital/vital-node/api';
+import {
+  CreateLabTestRequest,
+  LabTestCollectionMethod,
+  LabTestSampleType,
+} from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+  apiKey: '<my_api_key>',
+  environment: VitalEnvironment.Sandbox,
 });
 
 const request: CreateLabTestRequest = {
-    providerIds: ["000110"],
-    name: '<name>',
-    method: LabTestCollectionMethod.Testkit,
-    description: '<description>',
-}
+  providerIds: ['000110'],
+  name: '<name>',
+  method: LabTestCollectionMethod.Testkit,
+  description: '<description>',
+};
 
 const data = await client.labTests.create(request);
 ```
-
 
 ```java Java
 import com.vital.api.Vital;
@@ -103,29 +106,42 @@ fmt.Printf("Received data %s\n", response)
 
 ```json Response
 {
-  "lab_test": {
-    "name": "Lipids Panel",
-    "description": "Cholesterol test",
-    "sample_type": "dried blood spot",
-    "method": "testkit",
-    "price": 10.0,
-    "is_active": false,
-    "fasting": false,
-    "lab": {
-      "slug": "USSL",
-      "name": "US Specialty Lab",
-      "first_line_address": "123 Main St",
-      "city": "New York",
-      "zipcode": "10001"
-    },
-    "markers": [
-      {
-        "name": "Thyroid Stimulating Hormone",
-        "slug": "tsh",
-        "description": ""
-      }
-    ]
-  }
+  "id": "2e82a1d4-e2e6-421c-9c54-2210d667ce48",
+  "slug": "a94e3005-labcorp-panel",
+  "name": "Labcorp panel",
+  "sample_type": "serum",
+  "method": "at_home_phlebotomy",
+  "price": 0.0,
+  "is_active": true,
+  "status": "active",
+  "fasting": false,
+  "lab": {
+    "id": 27,
+    "slug": "labcorp",
+    "name": "Labcorp",
+    "first_line_address": "labcorp address",
+    "city": "Lincolnshire",
+    "zipcode": "60069",
+    "collection_methods": ["at_home_phlebotomy", "walk_in_test"],
+    "sample_types": ["serum", "saliva", "urine"]
+  },
+  "markers": [
+    {
+      "id": 195,
+      "name": "Abnormal Bleeding Profile",
+      "slug": "abnormal-bleeding-profile",
+      "description": "Abnormal Bleeding Profile",
+      "lab_id": 27,
+      "provider_id": "116004",
+      "type": "biomarker",
+      "unit": null,
+      "price": "N/A",
+      "aoe": null,
+      "a_la_carte_enabled": true
+    }
+  ],
+  "is_delegated": false,
+  "auto_generated": false
 }
 ```
 

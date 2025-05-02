@@ -57,6 +57,74 @@ Each value is associated with a half-open time interval (`[start, end[`).
 | Wellness          | `mindfulness_minutes` |
 | Diary             | `note` |
 
+## Timeseries Data Sampling Rates
+
+Junction records and forwards timeseries data from the data provider, without any upsampling or downsampling applied.
+Even within the same data provider, these data may come from different devices or data sources with varying sampling rates.
+
+Because of this, you should not make assumptions of any particular timeseries resource having a fixed sampling rate. 
+
+For technical design and capacity planning purposes, you may model after the following three categories of timeseries resources:
+
+### Very High Frequency Timeseries
+
+Second-level peak sampling rate; typically 1000s to low 10000s samples per day.
+
+Peak rate                  | Example Scenario
+-------------------------- | ------------------------------
+1 sample every 3 seconds   | Apple Watch workouts
+1 sample every 15 seconds  | Garmin
+1 sample every 1-15 minute | Apple Watch, Fitbit
+
+
+Resources that fall into this category:
+
+Resource | Events | Notable Providers
+----------------- | ------------------------------ | --------------
+`heartrate`      | `daily.data.heartrate.*`      | Apple, Fitbit, Garmin
+`calories_active` | `daily.data.calories_active.*` | Apple, Fitbit, Garmin
+
+
+### High frequency Timeseries
+
+Minute-level peak sampling rate; typically 100s samples per day.
+
+Peak rate                   | Example Scenario
+--------------------------- | ---------------------------------------
+1 sample every 1 minute     | Fitbit Intraday timeseries data
+1 sample every 15 minutes   | Garmin all-day activity timeseries data ("epochs")
+
+
+Resources that fall into this category:
+
+Resource | Events | Notable Providers
+----------------- | --------------------------------- | --------------
+`steps`            | `daily.data.steps.*`             | Apple, Fitbit, Garmin
+`calories_basal`   | `daily.data.calories_basal.*`    | Apple
+`distance`         | `daily.data.distance.*`          | Apple, Fitbit, Garmin
+`glucose`          | `daily.data.glucose.*`           | LibreView, Dexcom
+`stress_level`     | `daily.data.stress_level.*`      | Garmin
+`hrv`              | `daily.data.hrv.*`               | Garmin, Fitbit
+`respiratory_rate` | `daily.data.respiratory_rate.*`  | Garmin, Fitbit
+`blood_oxygen`     | `daily.data.blood_oxygen.*`  | Fitbit
+`daylight_exposure`| `daily.data.daylight_exposure.*` | Apple
+`stand_duration`   | `daily.data.stand_duration.*`    | Apple
+
+
+### Sparse Timeseries
+
+<Info>
+All timeseries resources not specified as (Very) High Frequency fall into this category.
+</Info>
+
+Day-level peak sampling rate; typically no more than 5 per day.
+
+Peak rate                   | Example Scenario
+--------------------------- | ---------------------------------------
+1 sample every day          | Apple Watch wrist temperature delta
+1 sample every 15 minutes   | Garmin all-day activity timeseries data ("epochs")
+Unpredictable / Never       | Heart Rate Alerts, Sleep Apnea Alerts
+
 ## Summary types by providers
 
 <iframe

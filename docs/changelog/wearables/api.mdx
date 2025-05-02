@@ -2,6 +2,25 @@
 title: "API"
 ---
 
+### External User ID of User Connections (April 2025)
+
+We now expose the _External User ID_ of User Connections in the [Provider Connection Created](/event-catalog/provider.connection.created) event
+and [Get User Connections](/api-reference/user/get-users-connected-providers) endpoint.
+
+The External User ID is the unique user identifier supplied by the provider, e.g., the Fitbit User ID for Fitbit connections.
+
+Connection type               | Content
+----------------------------- | ---------
+OAuth Providers               | User unique identifier; provider-specific formats
+Password Providers            | Username
+Email Providers               | Email
+Junction Mobile SDK Providers | null (not available at this time)
+
+<Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
+Check out the [Provider Connection Created](/event-catalog/provider.connection.created) event and
+[Get User Connections](/api-reference/user/get-users-connected-providers) endpoint documentation.
+</Accordion>
+
 ### Link API Improvements (Jan 2025)
 
 We have increased Link Token expiry from 15 minutes to 60 minutes.
