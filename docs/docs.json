@@ -376,14 +376,11 @@
                   "api-reference/data/timeseries/afib-burden",
                   "api-reference/data/timeseries/blood-oxygen",
                   "api-reference/data/timeseries/blood-pressure",
-                  "api-reference/data/timeseries/cholesterol",
                   "api-reference/data/timeseries/glucose",
                   "api-reference/data/timeseries/heartrate",
                   "api-reference/data/timeseries/hrv",
                   "api-reference/data/timeseries/heart-rate-alert",
                   "api-reference/data/timeseries/insulin-injection",
-                  "api-reference/data/timeseries/igg",
-                  "api-reference/data/timeseries/ige",
                   "api-reference/data/timeseries/respiratory-rate",
                   "api-reference/data/timeseries/vo2-max",
                   "api-reference/data/timeseries/forced-expiratory-volume-1",
@@ -878,13 +875,6 @@
                 ]
               },
               {
-                "group": "Cholesterol",
-                "pages": [
-                  "event-catalog/daily.data.cholesterol.created",
-                  "event-catalog/daily.data.cholesterol.updated"
-                ]
-              },
-              {
                 "group": "Electrocardiogram Voltage",
                 "pages": [
                   "event-catalog/daily.data.electrocardiogram_voltage.created",
@@ -898,20 +888,6 @@
                   "event-catalog/daily.data.glucose.created",
                   "event-catalog/daily.data.glucose.updated",
                   "event-catalog/historical.data.glucose.created"
-                ]
-              },
-              {
-                "group": "IGE",
-                "pages": [
-                  "event-catalog/daily.data.ige.created",
-                  "event-catalog/daily.data.ige.updated"
-                ]
-              },
-              {
-                "group": "IGG",
-                "pages": [
-                  "event-catalog/daily.data.igg.created",
-                  "event-catalog/daily.data.igg.updated"
                 ]
               },
               {

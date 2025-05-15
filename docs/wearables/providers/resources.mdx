@@ -28,7 +28,7 @@ For example:
 | Granularity | Resources       |
 | ----------- | --------------- |
 | Daily       | `activity` |
-| Session     | `sleep`, `workouts`, `body`, `meal`, `menstrual_cycle`, `electrocardiogram`, `workout_stream` |
+| Session     | `sleep`, `sleep_cycle`, `workouts`, `body`, `meal`, `menstrual_cycle`, `electrocardiogram`, `workout_stream` |
 | Single      | `profile` |
 
 ### Discrete Timeseries types
@@ -41,7 +41,6 @@ Each value is associated with a single point in time.
 | Vitals            | `blood_oxygen`, `blood_pressure`, `glucose`, `heartrate`, `hrv`, `electrocardiogram_voltage` |
 | Wellness          | `stress_level` |
 | Body              | `fat`, `weight` |
-| Lab Testing       | `cholesterol`, `igg`, `ige` |
 
 ### Interval Timeseries types
 
@@ -49,12 +48,13 @@ Each value is associated with a half-open time interval (`[start, end[`).
 
 | Category          | Resources |
 | ----------------- | --------- |
-| Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps`, `workout_duration` |
-| Body              | `body_temperature`, `body_temperature_delta`, `insulin_injection` |
-| Vitals            | `afib_burden`, `heart_rate_alert` |
+| Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps`, `workout_duration`, `fall`, `wheelchair_push`, `stand_duration`, `stand_hour` |
+| Body              | `body_temperature`, `body_temperature_delta`, `insulin_injection`, `waist_circumference`, `body_mass_index`, `lean_body_mass`, `basal_body_temperature` |
+| Vitals            | `afib_burden`, `heart_rate_alert`, `forced_expiratory_volume_1`, `forced_vital_capacity`, `peak_expiratory_flow_rate`,  `inhaler_usage`, `heart_rate_recovery_one_minute` |
 | Cardiorespiratory | `vo2_max` |
 | Nutrition         | `carbohydrates`, `caffeine`, `water` |
-| Wellness          | `mindfulness_minutes` |
+| Wellness          | `mindfulness_minutes`, `sleep_apnea_alert`, `sleep_breathing_disturbance`, `uv_exposure`, `daylight_exposure`, `handwashing` |
+| Workout Stream    | `workout_distance`, `workout_swimming_stroke` |
 | Diary             | `note` |
 
 ## Timeseries Data Sampling Rates
@@ -132,7 +132,8 @@ Unpredictable / Never       | Heart Rate Alerts, Sleep Apnea Alerts
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="800"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
@@ -144,7 +145,8 @@ Unpredictable / Never       | Heart Rate Alerts, Sleep Apnea Alerts
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="800"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
@@ -277,7 +279,8 @@ Even if a field is available for a provider, it doesn't mean it's available. For
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="533"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
@@ -289,7 +292,8 @@ Even if a field is available for a provider, it doesn't mean it's available. For
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="533"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
@@ -301,19 +305,8 @@ Even if a field is available for a provider, it doesn't mean it's available. For
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="533"
->
-  {" "}
-</iframe>
-
-### Sleep Stream
-
-<iframe
-  src="https://airtable.com/embed/shrSXIIvttU9B9AcS?backgroundColor=gray&layout=card"
-  frameborder="0"
-  allowfullscreen="true"
-  width="100%"
-  height="533"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
@@ -325,15 +318,8 @@ Even if a field is available for a provider, it doesn't mean it's available. For
   frameborder="0"
   allowfullscreen="true"
   width="100%"
-  height="533"
+  height="1200"
+  loading="lazy"
 >
   {" "}
 </iframe>
-
-### Workout Stream
-
-Soon. Work in progress.
-
-### Profile
-
-Soon. Work in progress.
