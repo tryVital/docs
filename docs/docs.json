@@ -626,6 +626,14 @@
                 ]
               },
               {
+                "group": "Management Keys",
+                "pages": [
+                  "api-reference/org-management/management-keys/list-management-keys",
+                  "api-reference/org-management/management-keys/create-management-key",
+                  "api-reference/org-management/management-keys/delete-management-key"
+                ]
+              },
+              {
                 "group": "Org",
                 "pages": [
                   "api-reference/org-management/org/get-org",
