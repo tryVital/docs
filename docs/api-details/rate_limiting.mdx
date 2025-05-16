@@ -2,10 +2,16 @@
 title: 'Rate Limiting'
 ---
 
-Junction does not impose a per-customer rate limit on server-to-server API calls at this time.
+Junction does not impose a per-customer rate limit on server-to-server API calls at this time. We adjust the
+elastic capacity and overprovisioning rate of our API servers regularly, in response to your usage pattern changes
+and product launch plans.
 
-However, you may occasionally encounter **429 Too Many Requests** or **503 Service Unavailable** from our infrastructure.
-You should be prepared to retry your API requests with a reasonable exponential backoff strategy.
+However, when Junction API servers are under stress, there is a possibility in which our infrastructure may abort a number
+of your API requests with a **429 Too Many Requests** or **503 Service Unavailable** response.
+
+For idempotent API requests, consider retrying the API request at least once, upon receiving a 429 or 503 response. Optionally,
+if you are making the API request in an asynchronous job context, consider having more retry attempts with an
+expontential backoff strategy.
 
 
 ## Targeted rate limits
