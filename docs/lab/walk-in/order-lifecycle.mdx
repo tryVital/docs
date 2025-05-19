@@ -17,6 +17,7 @@ possible low-level status are:
 
 - `ordered`: Vital received the order, stored it into our system, and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
+- `requisition_bypassed`: An order requisition form wasn't created when the order was placed with us because it already existed.
 - `appointment_pending`: An appointment was placed in Vital's system for the order, but doesn't have a scheduled date.
 - `appointment_scheduled`: An appointment was scheduled or rescheduled for the order.
 - `appointment_cancelled`: The appointment was cancelled, by either the patient, Vital or you.
