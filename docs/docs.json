@@ -596,6 +596,20 @@
                 ]
               },
               {
+                "group": "Team Webhooks",
+                "pages": [
+                  "api-reference/org-management/team-webhook/list",
+                  "api-reference/org-management/team-webhook/get",
+                  "api-reference/org-management/team-webhook/create",
+                  "api-reference/org-management/team-webhook/patch",
+                  "api-reference/org-management/team-webhook/delete",
+                  "api-reference/org-management/team-webhook/get-headers",
+                  "api-reference/org-management/team-webhook/update-headers",
+                  "api-reference/org-management/team-webhook/get-secret",
+                  "api-reference/org-management/team-webhook/rotate-secret"
+                ]
+              },
+              {
                 "group": "Team ETL Pipeline",
                 "pages": [
                   "api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines",
