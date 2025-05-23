@@ -192,6 +192,16 @@
                   "lab/testkits/webhooks",
                   "lab/testkits/communications"
                 ]
+              },
+              {
+                "group": "On-site Collections",
+                "pages": [
+                  "lab/on-site-collection/overview",
+                  "lab/on-site-collection/order-lifecycle",
+                  "lab/on-site-collection/webhooks",
+                  "lab/on-site-collection/communications",
+                  "lab/on-site-collection/locations"
+                ]
               }
             ]
           },
