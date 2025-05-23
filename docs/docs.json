@@ -231,6 +231,12 @@
                 ]
               },
               {
+                "group": "Continuous Query Task History",
+                "pages": [
+                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                ]
+              },
+              {
                 "group": "Continuous Query Results",
                 "pages": [
                   "api-reference/horizon-ai/continuous-query/get-result-table"
@@ -542,6 +548,12 @@
                   "api-reference/horizon-ai/continuous-query/create",
                   "api-reference/horizon-ai/continuous-query/update",
                   "api-reference/horizon-ai/continuous-query/list"
+                ]
+              },
+              {
+                "group": "Continuous Query Task History",
+                "pages": [
+                  "api-reference/horizon-ai/continuous-query/get-task-history"
                 ]
               },
               {
