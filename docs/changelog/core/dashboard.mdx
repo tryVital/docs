@@ -4,129 +4,121 @@ title: "Dashboard"
 
 ### Introducing Panel Renaming & Archiving (May 2025)
 
-We’ve added more control to how you manage test panels:
+We’ve added more control to how you manage test panels.
 
-- Rename panel names directly in the Test Catalog
-- Archive outdated or unused panels to keep things clean
-- View archived panels using the "Status" filter and "unarchive" to make panels active again
+<Accordion title="Details" icon="magnifying-glass" iconType="regular">
+  Now you can skip the support email and work directly in the Test Catalog to:
 
-Existing orders tied to archived panels will remain active and processable.
+  - Rename panel names
+  - Archive outdated or unused panels to keep things clean
+  - View archived panels using the "Status" filter and "unarchive" to make panels active again
 
-[Full product guide →](https://support.tryvital.com/articles/1278554980-managing-lab-panels)
+  Existing orders tied to archived panels will remain active and processable.
+
+  [Full product guide →](https://support.tryvital.com/articles/1278554980-managing-lab-panels)
+</Accordion>
 
 
 ### Introducing Team Admin Roles (May 2025)
 
 Introducing **Team Admin** roles for the Junction Dashboard users. Choose between organization-wide and team-specific admin privileges when adding members.
 
-<Accordion icon="magnifying-glass" iconType="duotone" title="Details" defaultOpen>
-## What’s New
+<Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
+  ## What’s New
 
-- **Two Permission Levels** – When inviting new members to your organization, you can now choose between **Org Admin** and **Team Admin** roles.
-- **Team-Specific Access** – **Team Admins** can be granted access to specific teams by providing a list of team IDs during invitation or role modification.
+  - **Two Permission Levels** – When inviting new members to your organization, you can now choose between **Org Admin** and **Team Admin** roles.
+  - **Team-Specific Access** – **Team Admins** can be granted access to specific teams by providing a list of team IDs during invitation or role modification.
 
-## Role Capabilities
+  ## Role Capabilities
 
-### Org Admin
+  ### Org Admin
 
-- Full access to all organization resources and teams
-- Can view and edit roles of all organization members
-- Complete access to billing information and organization settings
+  - Full access to all organization resources and teams
+  - Can view and edit roles of all organization members
+  - Complete access to billing information and organization settings
 
-### Team Admin
+  ### Team Admin
 
-- Access limited to specifically assigned teams
-- Cannot view or edit roles of other organization members
-- No access to teams outside their allowed list
-- Cannot view or modify billing information or other organization-level settings
-
+  - Access limited to specifically assigned teams
+  - Cannot view or edit roles of other organization members
+  - No access to teams outside their allowed list
+  - Cannot view or modify billing information or other organization-level settings
 </Accordion>
-
 
 ### Improved Order Search experience (Aug 2024)
 
 We have improved the search and filtering capabilities in the Orders page, helping you quickly locate specific orders and information.
 
-<Accordion icon="magnifying-glass" iconType="duotone" title="Details" defaultOpen>
+<Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
+  #### Basic filters
 
-#### Basic filters
+  Order searching now supports these filtering criteria:
 
-Order searching now supports these filtering criteria: 
-
-- Patient or Recipient (in the case of at-home kits) — First or Last name
-- Patient Email
-- Patient Date of Birth
+  - Patient or Recipient (in the case of at-home kits) — First or Last name
+  - Patient Email
+  - Patient Date of Birth
     - in the YYYY-MM-DD format.
     - e.g., “1988” will filter for all patients born in 1988.
     - e.g., “1988-03” will filter for all patients born in March of 1988 and “1988-03-07” will filter for all patients born on March 7th, 1988.
-- User ID
-- Client User ID
-- Order ID
-- Order Status
+  - User ID
+  - Client User ID
+  - Order ID
+  - Order Status
 
-<Info>
-Only one Basic filter can be active at any given time. This is because Basic filters are
-mutually exclusive with each other.
-</Info>
+  <Info>
+    Only one Basic filter can be active at any given time. This is because Basic filters are
+    mutually exclusive with each other.
+  </Info>
+  ### Date filters
 
-### Date filters
+  On top of the basic filters, you can now filter by date range based on either:
 
-On top of the basic filters, you can now filter by date range based on either:
-
-- the Order Creation date 
+  - the Order Creation date
     - For scheduled tests, the order creation date is considered instead of the scheduled date.
-
-- the Order Last Updated date
+  - the Order Last Updated date
     - This allows you to filter orders based on the date at which the order status was last updated.
 
-Dates are currently filtered with respect to the UTC timezone.
+  Dates are currently filtered with respect to the UTC timezone.
 
-### Status filters
+  ### Status filters
 
-Filter based on the most recent status of the order. Note that some statuses are unique to a collection modality such as Mobile Phlebotomy or Self-Collected Test Kits.
-    
-<Info>
-You can apply multiple Status filters at the same time. These stack as a logical OR among themselves.
-</Info>
+  Filter based on the most recent status of the order. Note that some statuses are unique to a collection modality such as Mobile Phlebotomy or Self-Collected Test Kits.
 
-### Order Type filters
+  <Info>
+    You can apply multiple Status filters at the same time. These stack as a logical OR among themselves.
+  </Info>
+  ### Order Type filters
 
-Filter based on the order type: At-Home Phlebotomy, Walk-In Test, At-Home Test Kit.
+  Filter based on the order type: At-Home Phlebotomy, Walk-In Test, At-Home Test Kit.
 
-<Info>
-You can apply multiple Order Type filters at the same time. These stack as a logical OR among themselves.
-</Info>
+  <Info>
+    You can apply multiple Order Type filters at the same time. These stack as a logical OR among themselves.
+  </Info>
+  ### Activation Type filters
 
-### Activation Type filters
+  Filter for:
 
-Filter for:
-
-1. Scheduled Orders that would not begin execution until the specified target date; or
-2. Current Orders that have been executed and are being fulfilled.
-
+  1. Scheduled Orders that would not begin execution until the specified target date; or
+  2. Current Orders that have been executed and are being fulfilled.
 </Accordion>
-
 
 ### Improved User Search and Introspection experience (Jun 2024)
 
 The Users page in the Vital Dashboard is now a search-first experience with more filtering and sorting options
 available. You can now also click on specific users to inspect device connection status and the patient details.
 
-<Accordion icon="magnifying-glass" iconType="duotone" title="Details" defaultOpen>
+<Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
+  Find your user by typing their Client User ID or Vital User ID into the search bar. For lab testing users: Name, Email and Phone Number are also supported.
 
-Find your user by typing their Client User ID or Vital User ID into the search bar. For lab testing users: Name, Email and Phone Number are also supported.
+  Click on a user to reveal the new User Details page:
 
-Click on a user to reveal the new User Details page:
+  #### The General tab
 
+  Shows an overview of all patient details and user settings associated with the Vital User ID.
 
-#### The General tab
+  #### The Connections tab
 
-Shows an overview of all patient details and user settings associated with the Vital User ID.
+  Provides device connection availability and data ingestion insights of the Vital User.
 
-#### The Connections tab
-
-Provides device connection availability and data ingestion insights of the Vital User.
-
-You can also obtain this same information programmatically through the [Introspection API](/api-reference/introspection/user-resources).
-
+  You can also obtain this same information programmatically through the [Introspection API](/api-reference/introspection/user-resources).
 </Accordion>
