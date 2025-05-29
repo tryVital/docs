@@ -137,6 +137,7 @@
                   "lab/overview/testing-modalities",
                   "lab/overview/quickstart",
                   "lab/overview/physicians",
+                  "lab/overview/locations",
                   "lab/overview/insurance",
                   "lab/overview/sandbox"
                 ]
@@ -180,8 +181,7 @@
                   "lab/walk-in/overview",
                   "lab/walk-in/order-lifecycle",
                   "lab/walk-in/webhooks",
-                  "lab/walk-in/communications",
-                  "lab/walk-in/locations"
+                  "lab/walk-in/communications"
                 ]
               },
               {
@@ -199,8 +199,7 @@
                   "lab/on-site-collection/overview",
                   "lab/on-site-collection/order-lifecycle",
                   "lab/on-site-collection/webhooks",
-                  "lab/on-site-collection/communications",
-                  "lab/on-site-collection/locations"
+                  "lab/on-site-collection/communications"
                 ]
               }
             ]
@@ -1351,6 +1350,10 @@
     {
       "source": "/home/environments",
       "destination": "/api-details/junction-api"
+    },
+    {
+      "source": "/lab/walk-in/locations",
+      "destination": "/lab/overview/locations"
     }
   ]
 }
