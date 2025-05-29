@@ -38,6 +38,7 @@
               {
                 "group": "Webhooks & Events",
                 "pages": [
+                  "webhooks/retry-policy",
                   "webhooks/introduction",
                   "webhooks/event-structure",
                   "webhooks/debugging"
