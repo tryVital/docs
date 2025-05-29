@@ -478,7 +478,9 @@
                   "api-reference/lab-testing/create-unregistered-order",
                   "api-reference/lab-testing/register-order",
                   "api-reference/lab-testing/import-order",
-                  "api-reference/lab-testing/simulate-order"
+                  "api-reference/lab-testing/simulate-order",
+                  "api-reference/lab-testing/order-collection-instructions-pdf",
+                  "api-reference/lab-testing/update-order-draw-completed"
                 ]
               },
               {
@@ -522,7 +524,8 @@
                   "api-reference/lab-testing/post-test",
                   "api-reference/lab-testing/patch-lab-test",
                   "api-reference/lab-testing/lab-test-markers",
-                  "api-reference/lab-testing/order-set-marker"
+                  "api-reference/lab-testing/order-set-marker",
+                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
                 ]
               },
               {
