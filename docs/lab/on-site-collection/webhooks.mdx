@@ -11,13 +11,13 @@ described in detail in the following sections.
 ## Order webhook events
 
 Based on the status present in [`Order Lifecycle`](/lab/on-site-collection/order-lifecycle),
-Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
+Junction will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
 [`labtest.order.updated`](/event-catalog/labtest.order.updated).
 
 The `labtest.order.created` event is triggered when an order is created in the system,
 having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
 
-<Note>The `partial_results` status does not trigger a Webhook unless specifically requested from Vital.</Note>
+<Note>The `partial_results` status does not trigger a Webhook unless specifically requested from Junction.</Note>
 
 The webhook payload body will have the following information if the Order is in the `completed` status:
 
