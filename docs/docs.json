@@ -241,6 +241,12 @@
                 ]
               },
               {
+                "group": "Continuous Query Task History",
+                "pages": [
+                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                ]
+              },
+              {
                 "group": "Continuous Query Results",
                 "pages": [
                   "api-reference/horizon-ai/continuous-query/get-result-table"
@@ -558,6 +564,12 @@
                 ]
               },
               {
+                "group": "Continuous Query Task History",
+                "pages": [
+                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                ]
+              },
+              {
                 "group": "Continuous Query Results",
                 "pages": [
                   "api-reference/horizon-ai/continuous-query/get-result-table"
@@ -606,6 +618,20 @@
                   "api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences",
                   "api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences",
                   "api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences"
+                ]
+              },
+              {
+                "group": "Team Webhooks",
+                "pages": [
+                  "api-reference/org-management/team-webhook/list",
+                  "api-reference/org-management/team-webhook/get",
+                  "api-reference/org-management/team-webhook/create",
+                  "api-reference/org-management/team-webhook/patch",
+                  "api-reference/org-management/team-webhook/delete",
+                  "api-reference/org-management/team-webhook/get-headers",
+                  "api-reference/org-management/team-webhook/update-headers",
+                  "api-reference/org-management/team-webhook/get-secret",
+                  "api-reference/org-management/team-webhook/rotate-secret"
                 ]
               },
               {
