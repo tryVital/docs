@@ -1,0 +1,19 @@
+---
+title: "Get Collection Instructions PDF for Order"
+openapi: "GET /v3/order/{order_id}/collection_instruction_pdf"
+---
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/<order_id>/collection_instruction_pdf' \
+     --header 'accept: application/pdf' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+     --output file.pdf
+```
+
+</RequestExample>

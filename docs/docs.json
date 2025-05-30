@@ -138,6 +138,7 @@
                   "lab/overview/testing-modalities",
                   "lab/overview/quickstart",
                   "lab/overview/physicians",
+                  "lab/overview/locations",
                   "lab/overview/insurance",
                   "lab/overview/sandbox"
                 ]
@@ -181,8 +182,7 @@
                   "lab/walk-in/overview",
                   "lab/walk-in/order-lifecycle",
                   "lab/walk-in/webhooks",
-                  "lab/walk-in/communications",
-                  "lab/walk-in/locations"
+                  "lab/walk-in/communications"
                 ]
               },
               {
@@ -192,6 +192,15 @@
                   "lab/testkits/order-lifecycle",
                   "lab/testkits/webhooks",
                   "lab/testkits/communications"
+                ]
+              },
+              {
+                "group": "On-site Collections",
+                "pages": [
+                  "lab/on-site-collection/overview",
+                  "lab/on-site-collection/order-lifecycle",
+                  "lab/on-site-collection/webhooks",
+                  "lab/on-site-collection/communications"
                 ]
               }
             ]
@@ -475,7 +484,9 @@
                   "api-reference/lab-testing/create-unregistered-order",
                   "api-reference/lab-testing/register-order",
                   "api-reference/lab-testing/import-order",
-                  "api-reference/lab-testing/simulate-order"
+                  "api-reference/lab-testing/simulate-order",
+                  "api-reference/lab-testing/order-collection-instructions-pdf",
+                  "api-reference/lab-testing/update-order-draw-completed"
                 ]
               },
               {
@@ -519,7 +530,8 @@
                   "api-reference/lab-testing/post-test",
                   "api-reference/lab-testing/patch-lab-test",
                   "api-reference/lab-testing/lab-test-markers",
-                  "api-reference/lab-testing/order-set-marker"
+                  "api-reference/lab-testing/order-set-marker",
+                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
                 ]
               },
               {
@@ -1339,6 +1351,10 @@
     {
       "source": "/home/environments",
       "destination": "/api-details/junction-api"
+    },
+    {
+      "source": "/lab/walk-in/locations",
+      "destination": "/lab/overview/locations"
     }
   ]
 }
