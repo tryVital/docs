@@ -2,6 +2,34 @@
 title: "API"
 ---
 
+### Lab Test Result Interpretation Filtering (June 2025)
+
+You can now filter lab test orders by result interpretation using the new `interpretation` query parameter in the [GET /orders](/api-reference/lab/orders/get-orders) endpoint.
+
+<Accordion icon="filter" iconType="duotone" title="Details" defaultOpen>
+
+The new filtering capability allows you to query orders based on their clinical interpretation:
+
+**Query Parameter:**
+- **`interpretation`** - Filter by result interpretation of the lab test
+  - Type: `enum<string> | null`
+  - Available options: `normal`, `abnormal`, `critical`
+  - Note: This enum is non-exhaustive
+
+**Response Enhancement:**
+Order responses now include a new `interpretation` field providing the clinical assessment of the test results:
+
+- **`interpretation`** - Interpretation of the order result
+  - Type: `enum<string> | null` 
+  - Available options: `normal`, `abnormal`, `critical`
+  - Note: This enum is non-exhaustive
+
+This enhancement enables you to programmatically identify and prioritize critical lab results, improving clinical workflow efficiency and patient care monitoring.
+
+Check out the [GET /orders](/api-reference/lab/orders/get-orders) endpoint documentation.
+
+</Accordion>
+
 ### Webhook Management Endpoints (May 2025)
 
 You can now programmatically manage your webhooks via the [Webhooks API](/api-reference/org-management/team-webhook/list). The new endpoints allow you to:
@@ -11,7 +39,7 @@ You can now programmatically manage your webhooks via the [Webhooks API](/api-re
 - Update webhook **secrets**
 
 <Info>
-Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+  Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
 ### Team Management Keys (May 2025)
@@ -21,42 +49,39 @@ are scoped to one or more Teams.
 
 As a recap, there are now two types of Management Keys:
 
-Type                | Remarks
-------------------- | --------
-Org Management Key  | Full control of the organization — notably can create or delete Teams.
-Team Management Key | Scoped control over one or more Teams. But it cannot access Org-level resources or actions, e.g., creating or deleting Teams.
+| Type                | Remarks                                                                                                                       |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Org Management Key  | Full control of the organization — notably can create or delete Teams.                                                        |
+| Team Management Key | Scoped control over one or more Teams. But it cannot access Org-level resources or actions, e.g., creating or deleting Teams. |
 
-<Accordion icon="key" iconType="duotone" title="Details" defaultOpen>
+<Accordion title="Details" defaultOpen icon="key" iconType="duotone">
+  All Management Keys — Org or Team — are accepted by the `X-Management-Key` header, as well as the deprecated `X-Vital-Org-Key` header.
 
-All Management Keys — Org or Team — are accepted by the `X-Management-Key` header, as well as the deprecated `X-Vital-Org-Key` header.
+  Selected customers can now manage Management Keys in the [Junction Dashboard](https://app.tryvital.io/) through:
 
-Selected customers can now manage Management Keys in the [Junction Dashboard](https://app.tryvital.io/) through:
+  | Type                | Remarks                                                                    |
+  | ------------------- | -------------------------------------------------------------------------- |
+  | Org Management Key  | The **Org Config** page; accessible via the top-left corner Dropdown Menu. |
+  | Team Management Key | The **Team Config** page.                                                  |
 
-Type                | Remarks
-------------------- | --------
-Org Management Key  | The **Org Config** page; accessible via the top-left corner Dropdown Menu.
-Team Management Key | The **Team Config** page.
+  Check out:
 
-Check out:
-* the [Create Management Key](/api-reference/org-management/management-keys/create-management-key) endpoint documentation;
-* the [List Management Keys](/api-reference/org-management/management-keys/list-management-keys) endpoint documentation; and
-* the [Delete Management Key](/api-reference/org-management/management-keys/delete-management-key) endpoint documentation.
+  - the [Create Management Key](/api-reference/org-management/management-keys/create-management-key) endpoint documentation;
+  - the [List Management Keys](/api-reference/org-management/management-keys/list-management-keys) endpoint documentation; and
+  - the [Delete Management Key](/api-reference/org-management/management-keys/delete-management-key) endpoint documentation.
 
-<Note>
-If you intend to create a Team Management Key that binds to 2 or more Teams, you must use the
-[Create Management Key](/api-reference/org-management/management-keys/create-management-key) API endpoint. Junction Dashboard does not
-support creating a key for more than one Team.
-</Note>
-
-<Note>
-Note that Management Keys cannot be used as Team API Keys to access the Junction API. However, you can
-[manage Team API Keys](/api-reference/org-management/team-api-keys/create-team-api-key) through a Management Key.
-</Note>
-
-<Info>
-[Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
-</Info>
-
+  <Note>
+    If you intend to create a Team Management Key that binds to 2 or more Teams, you must use the
+    [Create Management Key](/api-reference/org-management/management-keys/create-management-key) API endpoint. Junction Dashboard does not
+    support creating a key for more than one Team.
+  </Note>
+  <Note>
+    Note that Management Keys cannot be used as Team API Keys to access the Junction API. However, you can
+    [manage Team API Keys](/api-reference/org-management/team-api-keys/create-team-api-key) through a Management Key.
+  </Note>
+  <Info>
+    [Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
+  </Info>
 </Accordion>
 
 ### `X-Management-Key` header for Junction Management API (April 2025)
@@ -68,7 +93,7 @@ We would continue to support the `X-Vital-Org-Key` header. Though we recommend m
 confusion, especially if you do plan to adopt Team Management Keys.
 
 <Info>
-[Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
+  [Junction Management API](/api-details/junction-management-api) is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
 ### Enhanced Historical Data Pull Status Tracking (May 2025)
@@ -77,7 +102,7 @@ We've added a new "Retrying" state to the Historical Pull Status page and the hi
 Additionally, failed historical pulls now include extra error information, making troubleshooting easier and more efficient.
 
 <Info>
-This applies to connections established after 9th May.
+  This applies to connections established after 9th May.
 </Info>
 
 ### Prepare Team Custom Credentials endpoint (Aug 2024)
@@ -90,9 +115,8 @@ Vital Team through the [Set Team Custom Credential](/api-reference/org-managemen
 endpoint.
 
 <Info>
-Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+  Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
-
 
 ### Azure Event Hub: Flexible routing (Aug 2024)
 
@@ -102,9 +126,8 @@ to route Vital data events to different Event Hubs based on their event type pre
 Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple-event-hubs) documentation.
 
 <Info>
-ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
+  ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
-
 
 ### Azure Event Hubs as ETL Pipeline destination (Jun 2024)
 
@@ -113,84 +136,80 @@ You can now receive [events](/webhooks/introduction) from Vital directly with yo
 Check out the [ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub) documentation.
 
 <Info>
-ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
+  ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
-
 
 ### Manage Team Brand Information (Apr 2024)
+
 You can now manage Brand Information of your Vital Teams through the Org Management API.
 
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Team Brand Information is used in:
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Team Brand Information is used in:
 
-1. the Vital-hosted [Link widget](/wearables/connecting-providers/introduction);
-2. all user communications [Vital Lab Testing](/lab/overview/introduction) sent on your behalf; and
-3. the Vital-hosted Appointment Booking page for [Vital Lab Testing](/lab/overview/introduction).
+  1. the Vital-hosted [Link widget](/wearables/connecting-providers/introduction);
+  2. all user communications [Vital Lab Testing](/lab/overview/introduction) sent on your behalf; and
+  3. the Vital-hosted Appointment Booking page for [Vital Lab Testing](/lab/overview/introduction).
 
-
-<Info>
-Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
-</Info>
-
-Check out the [Update Team](/api-reference/org-management/team/update-team) and 
-[Create Team](/api-reference/org-management/team/create-team) endpoint documentation.
-
+  <Info>
+    Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+  </Info>
+  Check out the [Update Team](/api-reference/org-management/team/update-team) and
+  [Create Team](/api-reference/org-management/team/create-team) endpoint documentation.
 </Accordion>
 
 ### Vital Orgs and Org Management API (Apr 2024)
+
 We have introduced Vital Org, a new level that groups all your Vital Teams. Your Vital Teams have been
 transparently grouped and migrated to the new structure.
 
-<Accordion icon="building" iconType="duotone" title="Details" defaultOpen>
-We introduced this to provide a unified billing and administrative experience for customers having these use cases:
+<Accordion title="Details" defaultOpen icon="building" iconType="duotone">
+  We introduced this to provide a unified billing and administrative experience for customers having these use cases:
 
-1. multi-region presence; or
-2. user organization with diverging team-level configurations.
+  1. multi-region presence; or
+  2. user organization with diverging team-level configurations.
 
+  We introduced the Org Management API because customers have asked for the programmatic access to
+  dyanmically create Vital Teams and manage different aspects of their Vital Teams.
 
-We introduced the Org Management API because customers have asked for the programmatic access to
-dyanmically create Vital Teams and manage different aspects of their Vital Teams.
-
-<Info>
-Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
-</Info>
-
-Check out the [Org Management API](/api-reference/org-management) documentation.
-
+  <Info>
+    Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
+  </Info>
+  Check out the [Org Management API](/api-reference/org-management) documentation.
 </Accordion>
 
 ### New webhook event top-level fields (Mar 2024)
 
 All events now include Team ID, User ID and Client User ID as top-level fields.
 
-<Accordion icon="message" iconType="duotone" title="Details" defaultOpen>
-We introduced this because this helps reduce a Vital User ID -> Client User ID database lookup on your end.
+<Accordion title="Details" defaultOpen icon="message" iconType="duotone">
+  We introduced this because this helps reduce a Vital User ID -\> Client User ID database lookup on your end.
 
-Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
+  Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
 
-#### Before
-```json Basic event structure
-{
-  "data": {
-    # ... event specific data
-  },
-  "event_type": "daily.data.glucose.created",
-}
-```
+  #### Before
 
-#### After
-```json Basic event structure
-{
-  "data": {
-    # ... event specific data
-  },
-  "event_type": "daily.data.glucose.created",
-  "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
-  "client_user_id": "01HW3FSNVCHC3B2QB5N0ZAAAVG",
-  "team_id": "6b74423d-0504-4470-9afb-477252ccf67a"
-}
-```
+  ```json Basic event structure
+  {
+    "data": {
+      # ... event specific data
+    },
+    "event_type": "daily.data.glucose.created",
+  }
+  ```
 
+  #### After
+
+  ```json Basic event structure
+  {
+    "data": {
+      # ... event specific data
+    },
+    "event_type": "daily.data.glucose.created",
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
+    "client_user_id": "01HW3FSNVCHC3B2QB5N0ZAAAVG",
+    "team_id": "6b74423d-0504-4470-9afb-477252ccf67a"
+  }
+  ```
 </Accordion>
 
 ### Improved error response for User creation conflicts (Mar 2024)
@@ -198,21 +217,20 @@ Check out the [Webhook Event Structure](/webhooks/event-structure) documentation
 The [Create User](/api-reference/user/create-user) endpoint has improved handling of
 conflicts in Client User ID.
 
-<Accordion icon="circle-exclamation" iconType="duotone" title="Details" defaultOpen>
-We introduced this because the user creation endpoint being idempotent can help
-simplify your application logic.
+<Accordion title="Details" defaultOpen icon="circle-exclamation" iconType="duotone">
+  We introduced this because the user creation endpoint being idempotent can help
+  simplify your application logic.
 
-When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request response
-now includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
+  When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request response
+  now includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
 
-Check out the [Create User](/api-reference/user/create-user) endpoint documentation.
+  Check out the [Create User](/api-reference/user/create-user) endpoint documentation.
 </Accordion>
-
 
 ### User Undo Deletion (Feb 2024)
 
 You can now undo user deletion that is still in the 7-day grace period.
 
-<Accordion icon="trash-undo" iconType="duotone" title="Details" defaultOpen>
-Check out the [User Undo Deletion](/api-reference/user/undo-delete-user) endpoint documentation.
+<Accordion title="Details" defaultOpen icon="trash-undo" iconType="duotone">
+  Check out the [User Undo Deletion](/api-reference/user/undo-delete-user) endpoint documentation.
 </Accordion>
