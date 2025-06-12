@@ -8,7 +8,15 @@ icon: table-columns
 Your Query Instruction can pull data from [Vital resources](/wearables/providers/resources)
 through table column expressions:
 
-**Summaries:**
+Each Table Column expression can select one column (a field) of the table (the Vital resource).
+You can use multiple Table Column expressions to select multiple columns in the same query.
+
+<Info>
+Cross-table query instruction is not supported — you cannot mix Table Column expressions from
+different tables in the same query instruction.
+</Info>
+
+#### Summaries:
 
 | Table                                 | Python DSL            | JSON DSL                    
 | ------------------------------------- | --------------------- | ----------------------------
@@ -18,40 +26,26 @@ through table column expressions:
 | Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }`
 | Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }`
 
-**Timeseries:**
+#### Timeseries:
 
 | Table                                   | Python DSL                                  | JSON DSL
 | ----------------------------------------| ------------------------------------------- | ----------------------------------------------------
-| Timeseries                              | `Timeseries.col(<resource>).field(<field>)` | `{ "timeseries": "<resource>", "field": "<field>" }`
+| Timeseries Resource fields              | `Timeseries.col("$1").field("$2")` | `{ "timeseries": "$1", "field": "$2"}`
 
 
-**Shared Source Attributes:**
+#### Source Columns:
 
-| Attribute                             | Python DSL                           | JSON DSL
-| ------------------------------------- | ------------------------------------ | -----------------------------------
-| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`
-| Source type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`
-| Source App ID (summaries only)        | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`
-| Workout ID <sup>[1]</sup>             | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}`
-| Sport <sup>[1]</sup>                  | `Source.col("source_sport")`         | `{ "source": "source_sport" }`
-
-Each Table Column expression can select one column (a field) of the table (the Vital resource).
-You can use multiple Table Column expressions to select multiple columns in the same query.
-
-<Info>
-<sup>[1]</sup>
-The `source_workout_id` and `source_sport` attributes are only available in the Workout summaries and a few timeseries resource eg. `workout_distance` or `workout_swimming_stroke`
-</Info>
-
-<Info>
-Cross-table query instruction is not supported — you cannot mix Table Column expressions from
-different tables in the same query instruction.
-</Info>
+| Column                                | Python DSL                           | JSON DSL                           | Remarks
+| ------------------------------------- | ------------------------------------ | -----------------------------------|-----------------------------
+| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  |
+| Source type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      |
+| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | available in summaries only
+| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}` | available in the Workout summaries and a few timeseries resource eg. `workout_distance` or `workout_swimming_stroke`
+| Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | available in the Workout summaries and a few timeseries resource eg. `workout_distance` or `workout_swimming_stroke`
 
 <Note>
-Column expressions for lab testing biomarkers are planned to be introduced in the future.
+Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab testing biomarkers are planned to be introduced in the future.
 </Note>
-
 
 ### Index Column expression
 

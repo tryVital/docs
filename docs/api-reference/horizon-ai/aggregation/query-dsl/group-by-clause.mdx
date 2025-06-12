@@ -128,9 +128,9 @@ va.select(...).group_by(
 ```
 </CodeGroup>
 
-## Group by any attribute from the table expression
+## Group by any column from the table expression
 
-Group the input rows based on a resource specific attribute or a shared source attribute.
+Group the input rows based on a resource specific column or a shared source column.
 This is similar to the generic `GROUP BY` clause in SQL.
 
 <AccordionGroup>
@@ -138,7 +138,8 @@ This is similar to the generic `GROUP BY` clause in SQL.
 
 | Argument                          | Remarks
 | --------------------------------- | ---------------
-| source / timeseries / \<summary\>   | The input table expression to group by.
+| timeseries / \<summary\>          | The data column to group by. This can be any of the [Timeseries Resource fields](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#timeseries%3A) or [Summaries](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#summaries%3A).
+| source                            | The source column to group by. This can be any of the [Source Columns](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-columns%3A)
 
 </Accordion>
 
