@@ -4,6 +4,124 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Introducing Universal Group By Support to Horizon AI Query (June 2025)
+
+<HorizonAIBeta />
+
+We have added the ability to **group the input rows by any attribute** in the Horizon AI Query DSL, including both summary and timeseries resources.
+This gives you more flexibility to analyze your health data across different dimensions — including source providers, data types, and custom attributes in the datasets.
+
+Check out the [Group BY](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+
+<Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
+
+### Example Queries
+
+<CodeGroup>
+```python Python DSL
+# Group Summary Data by Week, Provider and Source Type
+
+va.select(...).group_by(
+   va.date_trunc(va.Sleep.index(), 1, "week"),
+   va.Source.col("source_provider"),
+   va.Source.col("source_type"),
+)
+
+# Group Timeseries Data by Day, Provider and Source Type**
+
+va.select(...).group_by(
+   va.date_trunc(va.Timeseries.index(), 1, "day"),
+   va.Source.col("source_provider"),
+   va.Source.col("source_type"),
+)
+
+# Group Electrocardiogram Data by Hour and Lead Type
+
+va.select(...).group_by(
+   va.date_trunc(va.Timeseries.index(), 1, "hour"),
+   va.Timeseries.col("electorcardiogram_voltage").field("type"),
+)
+
+# Group Sleep Breathing Disturbance by Hour and Elevated vs. Not Elevated
+
+va.select(...).group_by(
+   va.date_trunc(va.Timeseries.index(), 1, "hour"),
+   va.Timeseries.col("sleep_breathing_disturbance").field("type"),
+)
+```
+```json JSON DSL
+# Group Summary Data by Week, Provider and Source Type
+
+{
+    "group_by": [
+        {
+            "date_trunc": {
+                "value": 1,
+                "unit": "week"
+            },
+            "arg": { "index": "sleep" }
+        },
+        { "source": "source_provider" },
+        { "source": "source_type" }
+    ]
+}
+
+# Group Timeseries Data by Day, Provider and Source Type**
+
+{
+    "group_by": [
+        {
+            "date_trunc": {
+                "value": 1,
+                "unit": "day"
+            },
+            "arg": { "index": "timeseries" }
+        },
+        { "source": "source_provider" },
+        { "source": "source_type" }
+    ]
+}
+
+# Group Electrocardiogram Data by Hour and Lead Type
+
+{
+    "group_by": [
+        {
+            "date_trunc": {
+                "value": 1,
+                "unit": "hour"
+            },
+            "arg": { "index": "timeseries" }
+        },
+        {
+            "timeseries": "electorcardiogram_voltage",
+            "field": "type"
+        },
+    ]
+}
+
+# Group Sleep Breathing Disturbance by Hour and Elevated vs. Not Elevated
+
+{
+    "group_by": [
+        {
+            "date_trunc": {
+                "value": 1,
+                "unit": "hour"
+            },
+            "arg": { "index": "timeseries" }
+        },
+        {
+            "timeseries": "sleep_breathing_disturbance",
+            "field": "type"
+        },
+    ]
+}
+```
+</CodeGroup>
+</Accordion>
+
+
 ### Introducing Timeseries Data Support to Continuous Query (June 2025)
 
 <HorizonAIBeta />
@@ -23,9 +141,8 @@ Moreover, offloading this concern to Junction would help simplify your data pipe
 
 **Example Select Expressions**
 
-Python DSL:
-
-```python
+<CodeGroup>
+```python Python DSL
 select(
     # Blood Pressure
     Timeseries.col("blood_pressure").field("systolic"),
@@ -49,9 +166,7 @@ select(
     Timeseries.col("workout_distance").field("workout_id"),
 )
 ```
-JSON DSL:
-
-```json
+```json JSON DSL:
 [
     # Blood Pressure
     {
@@ -115,7 +230,7 @@ JSON DSL:
     },
 ]
 ```
-
+</CodeGroup>
 </Accordion>
 
 ### External User ID of User Connections (April 2025)
