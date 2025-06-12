@@ -2,6 +2,122 @@
 title: "API"
 ---
 
+import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
+
+### Introducing Timeseries Data Support to Continuous Query (June 2025)
+
+<HorizonAIBeta />
+
+We have expanded Continuous Query to support **timeseries resources** in addition to the previously available summary resources.
+
+With a few simple configuration steps, Continuous Query enables you to extract aggregations of high‑volume timeseries data collected across all your active user device connections. 
+Moreover, offloading this concern to Junction would help simplify your data pipeline design, allowing your team to focus on extracting actionable signals for your end users and use cases.
+
+<Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
+
+**What's New**
+
+- You can now select timeseries resources in a Query:
+    * For each resource, you can select all of specific fields of interest.
+    * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
+
+**Example Select Expressions**
+
+Python DSL:
+
+```python
+select(
+    # Blood Pressure
+    Timeseries.col("blood_pressure").field("systolic"),
+    Timeseries.col("blood_pressure").field("diastolic"),
+    Timeseries.col("blood_pressure").field("timezone_offset"),
+
+    # Discrete Samples
+    Timeseries.col("heartrate").field("value"),
+    Timeseries.col("heartrate").field("timezone_offset"),
+
+    # Interval Samples
+    Timeseries.col("body_temperature_delta").field("value"),
+    Timeseries.col("body_temperature_delta").field("duration"),
+    Timeseries.col("body_temperature_delta").field("sensor_location"),
+    Timeseries.col("body_temperature_delta").field("timezone_offset"),
+
+    # Workout Interval Samples
+    Timeseries.col("workout_distance").field("value"),
+    Timeseries.col("workout_distance").field("duration"),
+    Timeseries.col("workout_distance").field("sport"),
+    Timeseries.col("workout_distance").field("workout_id"),
+)
+```
+JSON DSL:
+
+```json
+[
+    # Blood Pressure
+    {
+      "timeseries": "blood_pressure",
+      "field": "systolic"
+    },
+    {
+      "timeseries": "blood_pressure",
+      "field": "diastolic"
+    },
+    {
+      "timeseries": "blood_pressure",
+      "field": "timezone_offset"
+    },
+    # Discrete Samples
+    {
+      "timeseries": "heartrate",
+      "field": "value"
+    },
+    {
+      "timeseries": "heartrate",
+      "field": "timezone_offset"
+    },
+    {
+      "timeseries": "heartrate",
+      "field": "type"
+    },
+    # Interval Samples
+    {
+      "timeseries": "body_temperature_delta",
+      "field": "value"
+    },
+    {
+      "timeseries": "body_temperature_delta",
+      "field": "duration"
+    },
+    {
+      "timeseries": "body_temperature_delta",
+      "field": "sensor_location"
+    },
+    {
+      "timeseries": "body_temperature_delta",
+      "field": "timezone_offset"
+    },
+    # Workout Interval Samples
+    {
+      "timeseries": "workout_distance",
+      "field": "value"
+    },
+    {
+      "timeseries": "workout_distance",
+      "field": "duration"
+    },
+    {
+      "timeseries": "workout_distance",
+      "field": "sport"
+    },
+    {
+      "timeseries": "workout_distance",
+      "field": "workout_id"
+    },
+]
+```
+
+</Accordion>
+
 ### External User ID of User Connections (April 2025)
 
 We now expose the _External User ID_ of User Connections in the [Provider Connection Created](/event-catalog/provider.connection.created) event
