@@ -27,7 +27,7 @@ va.select(...).group_by(
    va.Source.col("source_type"),
 )
 
-# Group Timeseries Data by Day, Provider and Source Type**
+# Group Timeseries Data by Day, Provider and Source Type
 
 va.select(...).group_by(
    va.date_trunc(va.Timeseries.index(), 1, "day"),
@@ -39,7 +39,7 @@ va.select(...).group_by(
 
 va.select(...).group_by(
    va.date_trunc(va.Timeseries.index(), 1, "hour"),
-   va.Timeseries.col("electorcardiogram_voltage").field("type"),
+   va.Timeseries.col("electrocardiogram_voltage").field("type"),
 )
 
 # Group Sleep Breathing Disturbance by Hour and Elevated vs. Not Elevated
@@ -66,7 +66,7 @@ va.select(...).group_by(
     ]
 }
 
-# Group Timeseries Data by Day, Provider and Source Type**
+# Group Timeseries Data by Day, Provider and Source Type
 
 {
     "group_by": [
