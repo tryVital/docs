@@ -9,9 +9,9 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 <HorizonAIBeta />
 
 We have added the ability to **group the input rows by any attribute** in the Horizon AI Query DSL, including both summary and timeseries resources.
-This gives you more flexibility to analyze your health data across different dimensions — including source providers, data types, and custom attributes in the datasets.
+This gives you more flexibility to analyze your health data across different dimensions — including source providers, source types, and other columns in the datasets.
 
-Check out the [Group BY](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+Check out the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
@@ -35,7 +35,7 @@ va.select(...).group_by(
    va.Source.col("source_type"),
 )
 
-# Group Electrocardiogram Data by Hour and Lead Type
+# Group Electrocardiogram Voltage Data by Hour and Lead Type
 
 va.select(...).group_by(
    va.date_trunc(va.Timeseries.index(), 1, "hour"),
@@ -82,7 +82,7 @@ va.select(...).group_by(
     ]
 }
 
-# Group Electrocardiogram Data by Hour and Lead Type
+# Group Electrocardiogram Voltage Data by Hour and Lead Type
 
 {
     "group_by": [

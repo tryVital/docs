@@ -35,13 +35,13 @@ different tables in the same query instruction.
 
 #### Source Columns:
 
-| Column                                | Python DSL                           | JSON DSL                           | Remarks
+| Column                                | Python DSL                           | JSON DSL                           | Available in
 | ------------------------------------- | ------------------------------------ | -----------------------------------|-----------------------------
-| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  |
-| Source type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      |
-| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | available in summaries only
-| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}` | available in a few timeseries resource eg. `workout_distance` or `workout_swimming_stroke`
-| Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | available in a few timeseries resource eg. `workout_distance` or `workout_swimming_stroke`
+| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables
+| Source type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables
+| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables
+| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}` | Workout Stream timeseries only
+| Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only
 
 <Note>
 Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab testing biomarkers are planned to be introduced in the future.
