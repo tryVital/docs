@@ -3,10 +3,10 @@ title: Column expressions
 icon: table-columns
 ---
 
-### Table Column expression
+## Table Column expression
 
-Your Query Instruction can pull data from [Vital resources](/wearables/providers/resources)
-through table column expressions:
+Your Query Instruction can pull data from [Junction summary and timeseries resources](/wearables/providers/resources)
+through Table Column expressions.
 
 Each Table Column expression can select one column (a field) of the table (the Vital resource).
 You can use multiple Table Column expressions to select multiple columns in the same query.
@@ -16,7 +16,11 @@ Cross-table query instruction is not supported — you cannot mix Table Column e
 different tables in the same query instruction.
 </Info>
 
-#### Summaries:
+<Note>
+Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab testing biomarkers are planned to be introduced in the future.
+</Note>
+
+### Summaries
 
 | Table                                 | Python DSL            | JSON DSL                    
 | ------------------------------------- | --------------------- | ----------------------------
@@ -26,28 +30,34 @@ different tables in the same query instruction.
 | Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }`
 | Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }`
 
-#### Timeseries:
+### Timeseries
 
 | Table                                   | Python DSL                                  | JSON DSL
 | ----------------------------------------| ------------------------------------------- | ----------------------------------------------------
 | Timeseries Resource fields              | `Timeseries.col("$1").field("$2")`          | `{ "timeseries": "$1", "field": "$2"}`
 
 
-#### Source Columns:
+## Source Column expression
+
+You can use a Source Column expression to refer to Data Source fields common to Junction resources.
+
+Note that some Source Column expression may not be valid in the implicit query context. For example, `source_sport` is not a valid Source Column
+expression in a query that is selecting from the Sleep resource.
+
+<Note>
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+</Note>
 
 | Column                                | Python DSL                           | JSON DSL                           | Available in
 | ------------------------------------- | ------------------------------------ | -----------------------------------|-----------------------------
 | Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables
-| Source type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables
+| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables
 | Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables
 | Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}` | Workout Stream timeseries only
 | Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only
 
-<Note>
-Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab testing biomarkers are planned to be introduced in the future.
-</Note>
-
-### Index Column expression
+## Index Column expression
 
 Each Vital resource has a primary datetime index. Your Query Instruction can reference this datetime
 index using the special Index Column expression:
@@ -61,7 +71,7 @@ index using the special Index Column expression:
 
 
 
-### Group Key Column expression
+## Group Key Column expression
 
 
 When your Query Instruction uses [the `group_by` clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause), each expression

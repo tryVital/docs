@@ -4,6 +4,27 @@ icon: objects-column
 iconType: duotone
 ---
 
+## Overview
+
+You specify how Horizon AI Query should dissect the selected data through a Group By clause. The [Aggregate expressions](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#aggregate-a-table-column)
+you specify would then be applied to the resulting groups.
+
+Your Group By clause can contain one or more of the following expressions:
+
+* a [Date Truncate expression](#group-by-a-truncated-datetime)
+
+    * A synchronous [Query](/api-reference/horizon-ai/aggregation/using-query-api) can have at most one [Date Truncate expression](#group-by-a-truncated-datetime)
+    * A [Continuous Query](/api-reference/horizon-ai/aggregation/using-continuous-query) must have exactly one [Date Truncate expression](#group-by-a-truncated-datetime).
+
+* a [Date Part expression](#group-by-a-date-or-time-component)
+
+* a [Table Column expression](#group-by-a-table-column-expression)
+
+* a [Source Column expression](#group-by-a-source-column-expression)
+
+You can mix and match any expression types, and organize them in any order. [Group Key Column expression](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+tracks your declaration order.
+
 
 ## Group by a truncated datetime
 
@@ -128,18 +149,75 @@ va.select(...).group_by(
 ```
 </CodeGroup>
 
-## Group by any Table or Source Column expression
+## Group by a Table Column expression
 
-Group the input rows based on any Table or Source Column expression.
+Group the input rows based on a [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression).
 This is similar to the generic `GROUP BY` clause in SQL.
 
 <AccordionGroup>
 <Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
 
-| Argument                          | Remarks
-| --------------------------------- | ---------------
-| Table column expression           | This can be any of the [Timeseries Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#timeseries%3A) or [Summary Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#summaries%3A) columns.
-| Source column expression          | This can be any of the [Source Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-columns%3A)
+Any [Table Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression) — summary or timeseries.
+
+</Accordion>
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+`group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
+
+See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+</Accordion>
+</AccordionGroup>
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+# Group by calendar date and Stand Hour type (idle vs stand)
+
+va.select(
+    va.group_key("*"),
+    va.Timeseries.col("stand_hour").field("value").sum()
+).group_by(
+    va.date_trunc(va.Timeseries.index(), 1, "day"),
+    va.Timeseries.col("stand_hour").field("type")
+)
+```
+
+```python JSON DSL
+
+# Group by calendar date and Stand Hour type (idle vs stand)
+{
+    "group_by": [
+        {
+            "date_trunc": {
+                "value": 1,
+                "unit": "day"
+            },
+            "arg": { "index": "timeseries" }
+        },
+        {
+            "timeseries": "stand_hour",
+            "field": "type"
+        }
+    ]
+}
+```
+</CodeGroup>
+
+## Group by a Source Column expression
+
+Group the input rows based on a [Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression).
+This is similar to a generic `GROUP BY` clause in SQL.
+
+<Note>
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+</Note>
+
+<AccordionGroup>
+<Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+Any [Source Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression) valid in the query context.
 
 </Accordion>
 
@@ -161,17 +239,6 @@ va.select(...).group_by(
     va.Source.col("source_type")
 )
 
-# Group by the source provider, source type and type (idle vs stand)
-
-va.select(
-    va.group_key("*"),
-    va.Timeseries.col("stand_hour").field("value").sum()
-).group_by(
-    va.date_trunc(va.Timeseries.index(), 1, "day"),
-    va.Source.col("source_provider"),
-    va.Source.col("source_type"),
-    va.Timeseries.col("stand_hour").field("type")
-)
 ```
 
 ```python JSON DSL
@@ -187,25 +254,6 @@ va.select(
         },
         { "source": "source_provider" },
         { "source": "source_type" }
-    ]
-}
-
-# Group by the source provider, source type and type (idle vs stand)
-{
-    "group_by": [
-        {
-            "date_trunc": {
-                "value": 1,
-                "unit": "day"
-            },
-            "arg": { "index": "timeseries" }
-        },
-        { "source": "source_provider" },
-        { "source": "source_type" },
-        {
-            "timeseries": "stand_hour",
-            "field": "type"
-        }
     ]
 }
 ```

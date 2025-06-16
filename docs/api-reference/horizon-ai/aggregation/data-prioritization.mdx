@@ -6,14 +6,19 @@ title: Data Prioritization
 
 Data prioritization automatically kicks in whenever you use a [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause).
 
-Within each group outlined by your [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause), the query executor would:
+Within each group outlined by your [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause), the query executor would **implicitly**:
 
-* Sub-group the data further by their provider and their [Source Type](/wearables/providers/data-attributions);
-* Keep only data from the sub-group that has the highest source type priority, or the highest provider priority if multiple sub-group
-  exists for the same source type.
+* Sub-group the data further by their Provider and their [Source Type](/wearables/providers/data-attributions);
+* Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-group
+  exists for the same Source Type.
 
 <Note>
 Data prioritization works only in a [Group By](/api-reference/horizon-ai/query-dsl/group-by-clause) context.
+</Note>
+
+<Note>
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
 </Note>
 
 <Accordion title="Example" defaultOpen>
