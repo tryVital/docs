@@ -8,14 +8,23 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
 <HorizonAIBeta />
 
-We have added the ability to **group the input rows by any [Table or Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions)** in the Horizon AI Query DSL, applicable to both summary and timeseries resources.
-This gives you more flexibility to analyze your health data across different dimensions — including source providers, source types or any resource specific fields.
+Horizon AI Query can now group and aggregate the data by any [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression)
+and/or any [Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression).
 
-Check out the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+This gives you more options on how the data should be dissected — not just by calendar units, but now also by Data Source fields and categorical values from the
+data itself.
+
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
-### Example Queries
+Check out the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+
+<Note>
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+</Note>
+
+#### Example queries
 
 <CodeGroup>
 ```python Python DSL
@@ -128,18 +137,21 @@ va.select(...).group_by(
 
 We have expanded Continuous Query to support **timeseries resources** in addition to the previously available summary resources.
 
-With a few simple configuration steps, Continuous Query enables you to extract aggregations of high‑volume timeseries data collected across all your active user device connections. 
-Moreover, offloading this concern to Junction would help simplify your data pipeline design, allowing your team to focus on extracting actionable signals for your end users and use cases.
+With a few simple configuration steps, Continuous Query enables you to:
+
+1. Extract aggregations of high‑volume timeseries data collected across all your active user device connections; and
+
+2. Offload this concern to Junction, allowing you to simplify your data pipeline and focus on extracting actionable signals.
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
-**What's New**
+You can now select timeseries resources in a Query:
+  * For each resource, you can select all of specific fields of interest.
+  * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
 
-- You can now select timeseries resources in a Query:
-    * For each resource, you can select all of specific fields of interest.
-    * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
+Check out the [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) documentation.
 
-**Example Select Expressions**
+#### Examples of Timeseries Table Column expressions
 
 <CodeGroup>
 ```python Python DSL
