@@ -210,3 +210,4 @@ With the existance of various allowed combinations with the `order_set` field, t
 3. `cannot set both marker_ids and provider_ids in add_on`: Similarly, only one of the former fields can be provided.
 4. `cannot order lab_tests from multiple labs`: You can only order multiple lab tests from the same lab.
 5. `cannot order with lab tests with multiple collection methods`: You must supply a `collection_method` if ordering multiple lab tests with multiple collection methods.
+6. `Lab <lab name> does not allow gender <gender value>`: The associated lab restricts which patient genders it accepts. This restriction applies to the entire lab, not to individual lab tests.
