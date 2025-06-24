@@ -2,6 +2,48 @@
 title: "Dashboard"
 ---
 
+### Managing Org and Team Management Keys (June 2025)
+
+You can now provision and manage Management Keys through the Junction Dashboard:
+
+* Org Management Keys, through the new Org Config page.
+* Team Management Keys, through the Team Config page of a specific team.
+
+<AccordionGroup>
+<Accordion title="Team Management Keys" defaultOpen icon="key" iconType="duotone">
+
+  You can manage Team Management Keys also through the Management API — check out the
+  [Create Management Keys](/api-reference/org-management/management-keys/create-management-key) and
+  [List Management Keys](/api-reference/org-management/management-keys/list-management-keys) endpoint documentation.
+
+  You must be an Org Admin or using an Org Management Key to manage Team Management Keys. 
+</Accordion>
+<Accordion title="Org Management Keys" defaultOpen icon="key" iconType="duotone">
+
+  Only Org Admins can managed Org Management Keys, and it must be done through the Junction Dashboard.
+
+</Accordion>
+</AccordionGroup>
+
+
+### Managing Brand Information (June 2025)
+
+We have updated the **Branding and Communcations** tab (previously _White-Labelling_) in the Team Config page. You can now
+review and update your Team's brand information through this page.
+
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Team Brand Information is used in:
+
+  1. All patient communication [Junction Lab Testing](/lab/overview/introduction) sent on your behalf;
+  2. the Junction-hosted Appointment Booking page for [Junction Lab Testing](/lab/overview/introduction); and
+  3. the Junction-hosted [Link Widget](/wearables/connecting-providers/introduction);
+
+  You can also manage this information programmatically through the Management API — check out the
+  [Update Team](/api-reference/org-management/team/update-team) and [Create Team](/api-reference/org-management/team/create-team)
+  endpoint documentation.
+</Accordion>
+
+
 ### Introducing Team Admin Roles (May 2025)
 
 Introducing **Team Admin** roles for the Junction Dashboard users. Choose between organization-wide and team-specific admin privileges when adding members.
