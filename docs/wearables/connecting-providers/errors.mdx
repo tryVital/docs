@@ -64,9 +64,10 @@ This list is **non-exhaustive**. Your application logic must gracefully handle a
 | `invalid_token`              | The Link Token is invalid or malformed.        |
 | `token_expired`              | The Link Token has expired.                    |
 | `token_consumed`             | A successful connection establishment had consumed this Link Token. |
-| `provider_credential_error`  | OAuth: An error occurred during the provider authentication flow. Password & Email: The supplied user credential is invalid. |
-| `provider_api_error`         | The credential is valid, but an error occurred on an API call required by Vital to fully establish the connection. |
-| `unsupported_region`         | The region you specified is not supported. <Info>Freestyle Libre only.</Info> |
+| `provider_credential_error`  | <ul><li>OAuth: An error occurred during the provider authentication flow.</li><li>Password & Email: The supplied user credential is invalid.</li></ul> |
+| `provider_password_expired`  | The supplied password has expired due to the password rotation policy of the provider. The user must rotate their password directly with the provider before trying to connect again. <Info>Applicable only to the patient-based `abbott_libreview` integration.</Info> |
+| `provider_api_error`         | An unexpected error occurred when Junction Link attempts to connect to the provider API. |
+| `unsupported_region`         | The region you specified is not supported. <Info>Applicable only the practice-based `freestyle_libre` integration.</Info> |
 | `duplicate_connection`       | The provider credential has an existing connection to a different user in your team. <Info>Applicable only if you have opted in to the `reject_duplicate_connection` team setting.</Info> |
 | `required_scopes_not_granted`| User did not grant **all** required scopes, so Vital cannot establish the connection. |
 | `incorrect_mfa_code`         | The MFA code entered is incorrect.             |
