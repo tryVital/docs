@@ -4,6 +4,13 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Detecting password expiration in password-based connections (July 2025)
+
+The [Link Password Provider endpoint](/api-reference/link/link-password-provider), the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers)
+and the [Provider Connection Error events](/event-catalog/provider.connection.error) would now report password expiration using the `provider_password_expired` error type.
+
+This mainly affects [Abbott LibreView patient-based connections](/wearables/guides/abbott-libreview#abbott-libreview-for-patient-based-connections).
+
 ### Introducing Universal Group By Support to Horizon AI Query (June 2025)
 
 <HorizonAIBeta />

@@ -37,6 +37,13 @@ You can observe the error state through:
 1. the [Provider Connection Error](/event-catalog/provider.connection.error) event; and
 2. the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers).
 
+The following error types are relevant in this password rotation situation:
+
+| Error Type | Remarks |
+| ---------- | ------- |
+| `provider_credential_error` | The patient has changed their password. They need to re-connect with the new password via Junction Link. |
+| `provider_password_expired` | Login is blocked due to password expiration. Once the patient has changed their password, they need to re-connect with the new password via Junction Link.  |
+
 When you detect a disconnection, guide your user to:
 
 1. Sign into the LibreLink app or the LibreView web portal.
