@@ -24,7 +24,7 @@ Marker turnaround times are based on historical orders of each marker. If a mark
 
 ## Panel turnaround times
 
-Panels comprise of one or more markers, and the turnaround time for the panel is the largest turnaround time among its constituent markers. Just like in marker response bodies, lab test response bodies return the common and worst-case turnaround times (in days) for the panel. You can see this when [getting all available tests](https://docs.junction.com/api-reference/lab-testing/tests-paginated), for example. If any of the markers in the panel have null turnaround times, then the panel also has a null turnarount time.
+Panels comprise of one or more markers, and the turnaround time for the panel is the largest turnaround time among its constituent markers. Just like in marker response bodies, lab test response bodies return the common and worst-case turnaround times (in days) for the panel. You can see this when [getting all available tests](https://docs.junction.com/api-reference/lab-testing/tests-paginated), for example. If any of the markers in the panel have null turnaround times, then the panel also has a null turnaround time.
 
 ## Order turnaround times
 
@@ -33,4 +33,4 @@ An order's turnaround time is the same as its panel, so we don't repeat that inf
 1. Expected result by date
 2. Worst-case result by date
 
-These will be null unless the order's lab test has a non-null turnarount time _and_ the sample collection has already been performed. The time of sample collection is what we add to the panel turnaround times to determine the expected and worst-case result by dates. [Retrieving an order](https://docs.junction.com/api-reference/lab-testing/get-order) is an example of where this is included.
+These will be null unless the order's lab test has a non-null turnaround time _and_ the sample collection has already been performed. The time of sample collection is what we add to the panel turnaround times to determine the expected and worst-case result by dates. [Retrieving an order](https://docs.junction.com/api-reference/lab-testing/get-order) is an example of where this is included.
