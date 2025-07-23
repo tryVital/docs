@@ -57,10 +57,10 @@ If specific data regarding the PSC's is required, then you can also query the [`
 
 Vital allows booking of appointments directly with the Patient Service Centers for some labs. In order to book these appointments, you can use the [PSC Appointment API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability).
 
-Patient Service Centers have access to the booked appointment, and these can be cancelled/updated outside our system. When this happens, we do not have visibility.\
-\
-In order for the patient/customer to be able to track the appointment individually, we expose the `external_id` paramenter in the appointment endpoints/webhooks. This code is the unique identifier of the appointment at the provider, and should be made aware to the patient.\
-\
+Patient Service Centers have access to the booked appointment, and these can be cancelled/updated outside our system. When this happens, we do not have visibility.
+
+In order for the patient/customer to be able to track the appointment individually, we expose the `external_id` paramenter in the appointment endpoints/webhooks. This code is the unique identifier of the appointment at the provider, and should be made aware to the patient.
+
 We provide it to the patient via the SMS communications for the appointment.
 
 ## Appointment Availability
