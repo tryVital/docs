@@ -57,6 +57,12 @@ If specific data regarding the PSC's is required, then you can also query the [`
 
 Vital allows booking of appointments directly with the Patient Service Centers for some labs. In order to book these appointments, you can use the [PSC Appointment API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability).
 
+Patient Service Centers have access to the booked appointment, and these can be cancelled/updated outside our system. When this happens, we do not have visibility.\
+\
+In order for the patient/customer to be able to track the appointment individually, we expose the `external_id` paramenter in the appointment endpoints/webhooks. This code is the unique identifier of the appointment at the provider, and should be made aware to the patient.\
+\
+We provide it to the patient via the SMS communications for the appointment.
+
 ## Appointment Availability
 
 You can use the [availability API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) to obtain the available slots. You can feed in the `site_code` you obtain from the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly. If you provider a zip code, a max of 3 PSC locations will be displayed.
@@ -67,11 +73,3 @@ The overarching `timezone` key will always be `null` in this endpoint\`
 ## Booking
 
 You can [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling) or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Vital, as many times as you want.
-
-## Identifying appointments at the PSC
-
-Patient service centers have access to the booked appointment, and these can be cancelled/updated outside our system. When this happens, we do not have visibility.\
-\
-In order for the patient/customer to be able to track the appointment individually, we expose the `external_id` paramenter in the appointment endpoints/webhooks. This code is the unique identifier of the appointment at the provider, and should be made aware to the patient.\
-\
-We provide it to the patient via the SMS communications for the appointment.
