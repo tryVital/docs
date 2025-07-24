@@ -18,6 +18,10 @@ Furthermore, each operates on three distinct levels:
 2. Panels
 3. Orders
 
+<Note>
+Turnaround times are calculated from historical data. For some tests, we may not yet have enough data to make a determination on its turnaround time. We won't include turnaround times for these tests in our API responses.
+</Note>
+
 ## Marker turnaround times
 
 Marker turnaround times are based on historical orders of each marker. If a marker has been ordered enough such that we can make a statistically-viable determination on its average turnaround time, we will include these in payloads containing marker data. For example, the response body for [retrieving markers for a lab test](https://docs.junction.com/api-reference/lab-testing/lab-test-markers) includes the common and worst-case number of days to receive results for that marker after collection time. If we don't have enough data for that marker, those values will be null.
