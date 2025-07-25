@@ -217,3 +217,21 @@ You can manage your team's webhooks programmatically using our [Webhooks API](/a
 - **CRUD** (create/read/update/delete) your webhooks
 - Manage webhook **headers**
 - Update webhook **secrets**
+
+### Authenticating Webhooks
+
+You can verify the webhook signature. Each webhook request we send includes these three headers:
+
+- `svix-id`
+- `svix-timestamp`
+- `svix-signature`
+
+You’ll also need your webhook secret, which you can find in your Junction Dashboard > Webhooks > Endpoint tabs under "Signing Secret".
+
+**Option 1:** Use a Svix SDK
+
+If you’re using a compatible language, the easiest way is to utilize the official Svix SDKs, which handle signature verification for you.
+
+**Option 2:** Manual Verification
+
+If the Svix SDKs are not an option, you can manually verify them following the instructions here.
