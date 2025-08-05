@@ -9,7 +9,9 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 If you want to track orders with Junction that weren’t originally placed with Junction, you can import an order.
 
 <Warning>
-  It's crucial that imported orders are created with the correct sample ID. This is the **requisition number** or **control number** for Labcorp orders, or the **lab reference ID** for Quest orders. If in doubt, contact your Junction Customer Service Manager to confirm what should supply for the sample ID.
+  It's crucial that imported orders are created with the correct sample ID. This is the **requisition number** or **control number** for Labcorp orders, or the **lab reference ID** for Quest orders. If in doubt, contact your Junction Customer Service Manager to confirm what you should supply for the sample ID.
+
+  The sample ID must also uniquely identify the order. If you supply an ID that clashes with an existing order, that will result in a validation error.
 </Warning>
 
 An imported order can be cancelled, receive results, and functions similarly to orders originally placed with Junction, but with one important exception: a requisition will not be created. This means you cannot use the [endpoint to retrieve the requisition](/api-reference/lab-testing/requisition-pdf) for an imported order since Junction does not have access to it.
@@ -70,9 +72,5 @@ data = client.lab_tests.import_order(
 This example assumes you provide your own physician. The physician must be provided if your team configuration is set up as delegated. The billing type provided must also be appropriate to your team configuration. These aspects will be validated when making the request.
 
 Since the request represents an existing order, we don’t perform strict address validation on the patient address, to make it easier to import orders exactly as they were placed in the original interface.
-
-<Warning>
-  The sample ID must uniquely identify the order. If you supply an ID that clashes with an existing order, that will result in a validation error.
-</Warning>
 
 The response object schema is the same as [creating an order](/api-reference/lab-testing/create-order).
