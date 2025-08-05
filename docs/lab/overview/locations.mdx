@@ -17,11 +17,16 @@ The recommend high level flow for verifying PSC availability at Vital is:
     "labcorp": {
         "within_radius": 5, # number of PSC's within radius of provided zip code
         "radius": "25" # miles
+        "capabilities": ["stat"] # aggregate list of capabilities provided by PSCs within the radius
     }
   }
   ...
 }
 ```
+
+<Note>
+A **capability** is a specific service that a PSC provides, for example STAT testing.
+</Note>
 
 If specific data regarding the PSC's is required, then you can also query the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) for specific information on the PSC's within the radius of the provided zip code.
 
@@ -44,6 +49,7 @@ If specific data regarding the PSC's is required, then you can also query the [`
       },
       "distance": "25",
       "site_code": "ABC",
+      "capabilities": ["stat"]
     },
   ]
 }
