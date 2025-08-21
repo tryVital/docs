@@ -333,6 +333,13 @@
                 ]
               },
               {
+                "group": "Device",
+                "pages": [
+                  "api-reference/data/device/get-devices",
+                  "api-reference/data/device/get-device"
+                ]
+              },
+              {
                 "group": "Sleep",
                 "pages": [
                   "api-reference/data/sleep/get-summary",
