@@ -27,7 +27,7 @@ As an example, the status `collecting_sample.at_home_phlebotomy.appointment_sche
 The high-level statuses of an order, are represented by `order.status`:
 
 - `received`: we received the order, stored it into our system, and started processing it.
-- `collecting_sample`: these track collecting the sample from the patient. In the case of test-kits, these track the shipment of the kit. For at-home phlebotomy, these track the patient scheduling an appointment. Walk-in tests don't have this status because the patient can turn up at the lab anytime.
+- `collecting_sample`: these track collecting the sample from the patient. For test-kits, these track the shipment of the kit. For at-home phlebotomy and walk-in tests, these track appointment scheduling and management.
 - `sample_with_lab`: the lab received the sample and is currently analyzing it.
 - `completed`: the order is complete and the results are ready.
 - `cancelled`: the order has been cancelled, by you or the patient.
