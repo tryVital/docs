@@ -65,9 +65,9 @@ Device attribution is available when Junction can confidently identify the origi
 
 | Provider        | Coverage | Notes |
 | --------------- | -------- | ----- |
-| Withings        | All payloads except Body, Body Fat and Body Weight | Regardless of the number of registered devices |
-| Polar           | Workout and Sleep payloads | Regardless of the number of registered devices |
-| All other providers and resources| All payloads | When exactly one device is registered for the user-provider connection |
+| Withings        | All resources except Body, Body Fat and Body Weight | Regardless of the number of reported devices |
+| Polar           | Workout and Sleep resources | Regardless of the number of reported devices |
+| All other providers and resources| All resources | When exactly one device is reported for the user-provider connection |
 
 For connections with multiple devices where the provider doesn't embed device metadata, `source.device_id` remains `null` to avoid incorrect attribution.
 
