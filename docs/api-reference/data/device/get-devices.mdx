@@ -1,0 +1,75 @@
+---
+title: "Get User Devices"
+openapi: "GET /v2/user/{user_id}/device"
+---
+
+<RequestExample>
+
+```bash Shell
+curl --request GET \
+     --url {{BASE_URL}}/v2/user/{user_id}/device \
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.user.get_devices(
+    user_id="<user_id>"
+)
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.user.getDevices(
+    '<user_id>'
+);
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+                .apiKey("YOUR_API_KEY")
+                .environment(Environment.SANDBOX)
+                .build();
+
+var data = vital.user().getDevices("<user_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.User.GetDevices(context.TODO(), "user_id")
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>

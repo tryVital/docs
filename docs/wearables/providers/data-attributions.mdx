@@ -53,6 +53,44 @@ The following provider integrations would tag data with Source Type:
 <sup>[1]</sup> Only data from Apple Watch, iPhone and Apple Health app are tagged. Data from third-party apps
 (like the Oura iOS app) are tagged as `unknown` currently.
 
+## Device ID
+
+Device ID indicates the specific device that collected the data, when this information is available with certainty.
+
+For both summary and timeseries data types, it is available at `source.device_id`. When the originating device cannot be determined, this field is `null`.
+
+### Device Attribution Coverage
+
+Device attribution is available when Junction can confidently identify the originating device:
+
+| Provider        | Coverage | Notes |
+| --------------- | -------- | ----- |
+| Withings        | All resources except Body, Body Fat and Body Weight | Regardless of the number of reported devices |
+| Polar           | Workout and Sleep resources | Regardless of the number of reported devices |
+| All other providers and resources| All resources | When exactly one device is reported for the user-provider connection |
+
+For connections with multiple devices where the provider doesn't embed device metadata, `source.device_id` remains `null` to avoid incorrect attribution.
+
+### Supported providers
+
+The following provider integrations can provide Device ID attribution:
+
+| Provider               |
+| ---------------------- |
+| Withings               |
+| Polar                  |
+| Fitbit                 |
+| Oura                   |
+| Garmin                 |
+| Renpho                 |
+| Omron                  |
+| Peloton                |
+| Dexcom v3              |
+| EightSleep             |
+| Freestyle Libre / Abbott Libreview        |
+| Apple HealthKit        |
+| Android Health Connect |
+
 ## App ID
 
 App ID indicates the origin application of the data.

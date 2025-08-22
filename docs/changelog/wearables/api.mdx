@@ -4,6 +4,22 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Device metadata and source device tracking (August 2025)
+
+We have added device tracking with new API endpoints and enhanced data attribution.
+Eligible data resources now include `source.device_id` when the originating device can be determined, enabling better tracking and device-specific analytics.
+
+Check out the [Device ID attribution documentation](/wearables/providers/data-attributions#device-id) on what data resources are eligible for Device ID attributions in this initial release.
+
+<Accordion icon="devices" iconType="duotone" title="Details" defaultOpen>
+
+The new [Get User Devices](/api-reference/data/device/get-devices) and [Get Device Details](/api-reference/data/device/get-device) endpoints allow you to retrieve detailed device information for connected users.
+
+We've also added [Provider Device Created](/event-catalog/provider.device.created) and [Provider Device Updated](/event-catalog/provider.device.updated) webhook events to notify you when device information becomes available or changes.
+
+</Accordion>
+
+
 ### Detecting password expiration in password-based connections (July 2025)
 
 The [Link Password Provider endpoint](/api-reference/link/link-password-provider), the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers)
