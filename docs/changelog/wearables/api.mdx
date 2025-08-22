@@ -7,7 +7,7 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 ### Device metadata and source device tracking (August 2025)
 
 We have added device tracking with new API endpoints and enhanced data attribution.
-Data payloads now include source_device_id when the originating device can be determined, enabling better tracking and device-specific analytics.
+Data payloads now include `source.device_id` when the originating device can be determined, enabling better tracking and device-specific analytics.
 
 <Accordion icon="devices" iconType="duotone" title="Details" defaultOpen>
 
@@ -17,13 +17,8 @@ We've also added [Provider Device Created](/event-catalog/provider.device.create
 
 #### Enhanced Data Attribution
 
-Data payloads now include `source_device_id` whenever the originating device is known with certainty. This currently applies to:
+Check out the [Device ID attribution documentation](/wearables/providers/data-attributions#device-id) for detailed provider coverage and supported scenarios.
 
-- **Withings**: Device metadata embedded in payloads
-- **Polar**: Device metadata embedded in payloads
-- **Single-device connections**: For all other providers where exactly one device is registered
-
-This enables better data source tracking and device-specific analytics for your applications.
 </Accordion>
 
 
