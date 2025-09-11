@@ -78,6 +78,10 @@ Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.ap
     **At-Home Phlebotomy** status updates, together with the [Order Webhooks](#order-webhook-events).
 </Info>
 
+<Info>
+    If the ability to [schedule appointments before a requisition has been created](/lab/at-home-phlebotomy/order-appointment-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, and you intend to send patient communications for appointment updates, use the `labtest.appointment.updated` event. See more on communications for this feature [here](/lab/at-home-phlebotomy/communications#scheduling-appointments-before-a-requisition-has-been-created).
+</Info>
+
 The webhook payload body may have the following information if the appointment is in the `scheduled` status, after a **reschedule** has happened:
 
 ```json Phlebotomy Appointment Updated

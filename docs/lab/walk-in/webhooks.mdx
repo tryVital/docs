@@ -81,3 +81,69 @@ The webhook payload body will have the following information if the Order is in 
   ]
 }
 ```
+
+## Appointment webhook events
+
+Based on the status present in [`Order and Appointment Lifecycle - Appointment Lifecycle`](/lab/walk-in/order-lifecycle#appointment-lifecycle),
+Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
+
+<Info>
+    If the ability to [schedule appointments before a requisition has been created](/lab/walk-in/order-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, and you intend to send patient communications for appointment updates, use the `labtest.appointment.updated` event. See more on communications for this feature [here](/lab/walk-in/communications#scheduling-appointments-before-a-requisition-has-been-created).
+</Info>
+
+The webhook payload body may have the following information if the appointment is in the `scheduled` status, after a **reschedule** has happened:
+
+```json Phlebotomy Appointment Updated
+{
+  "event_type": "labtest.appointment.updated",
+  "data": {
+    "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
+    "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",
+    "order_id": "1ed9c8d7-e1b4-4d61-8123-0f99de5ae99a",
+    "address": {
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip_code": "91189",
+      "country": "United States"
+    },
+    "location": {
+      "lng": -122.4194155,
+      "lat": 37.7749295
+    },
+    "start_at": "2022-01-01T00:00:00",
+    "end_at": "2022-01-01T00:00:00",
+    "iana_timezone": "America/New_York",
+    "type": "patient_service_center",
+    "provider": "quest",
+    "status": "confirmed",
+    "event_status": "scheduled",
+    "provider_id": "123",
+    "can_reschedule": true,
+    "event_data": {
+      "origin": "patient",
+      "is_reschedule": true
+    },
+    "events": [
+      {
+        "created_at": "2022-01-01T00:00:00Z",
+        "data": null,
+        "status": "scheduled"
+      },
+      {
+        "created_at": "2022-01-01T00:00:00Z",
+        "data": {
+          "origin": "patient",
+          "is_reschedule": true
+        },
+        "status": "scheduled"
+      },
+    ]
+  }
+}
+```
+
+<br/>
+
+<Info>The `event_data` field contains relevant information regarding the current appointment status, and may be specific for each `provider`.</Info>
