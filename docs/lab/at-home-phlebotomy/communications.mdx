@@ -2,6 +2,8 @@
 title: "Communications"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
 Communication for patients is done via email or SMS, for At-Home Phlebotomy orders.
 Customers have the following options when setting this up:
 
@@ -17,7 +19,7 @@ Each option has a different set of content and status changes, depending on what
 
 ### SMS Messages
 
-A table of the **Order Status** and **default SMS** is provided bellow:
+A table of the **Order Status** and **default SMS** is provided below:
 
 | Order Status | Default Message |
 | --- | --- |
@@ -32,7 +34,8 @@ A table of the **Order Status** and **default SMS** is provided bellow:
 
 ### Emails
 
-For emails, the following table describes what information each email contains for each Order Statuses:
+For emails, the following table describes what information each email contains for each Order Status:
+
 | Order Status | Email Content Description |
 | --- | --- |
 | `requisition_created` | An email with the booking link for **Vital Booking Widget** will be sent to the patient. |
@@ -40,6 +43,33 @@ For emails, the following table describes what information each email contains f
 | `appointment_cancelled` | An email confirming the cancellation of the appointment is sent, providing the possibility of scheduling a new appointment. |
 
 <Info>Emails can be white labelled and sent from your own domain.</Info>
+
+
+## Scheduling Appointments Before A Requisition Has Been Created
+
+<FeatureBeta />
+
+If the ability to [`schedule appointments before a requisition has been created`](/lab/at-home-phlebotomy/order-appointment-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, all appointment-related messages
+will be triggered by the **appointment** status, not the **order** status. All non appointment-related messages will be triggered by the **order** status e.g.
+`requisition_created`, `draw_completed` etc. (see above section).
+
+### SMS Messages
+
+A table of the **Appointment Status** and **default SMS** is provided below:
+
+| Appointment Status | Default Message |
+| --- | --- |
+| `confirmed` | _"Your appointment with the phlebotomist has been booked at **date**! You can reschedule or cancel using the following link **booking_link**."_ |
+| `cancelled` | _"Hey, your at-home-phlebotomy appointment at **date** for the **team_name** has been cancelled. You can rebook using the following link **booking_link**."_ |
+
+### Emails
+
+For emails, the following table describes what information each email contains for each Appointment Status:
+
+| Appointment Status | Email Content Description |
+| --- | --- |
+| `confirmed` | An email confirming the appointment date and time will be sent to the patient, with the possibility of rescheduling or cancelling the appointment. |
+| `cancelled` | An email confirming the cancellation of the appointment is sent, providing the possibility of scheduling a new appointment. |
 
 
 ## Disable Communications

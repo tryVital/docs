@@ -2,6 +2,8 @@
 title: "Communications"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
 Communication for patients is done via email or SMS, for Walk-in orders.
 Customers have the following options when setting this up:
 
@@ -19,15 +21,16 @@ Each option has a different set of content and status changes, depending on what
 
 ### SMS Messages
 
-A table of the **Order Status** and **default SMS** is provided bellow:
+A table of the **Order Status** and **default SMS** is provided below:
 
 | Order Status            | Default Message                                                                                                                                                                              |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ordered`               | _``"Hi, {patient_first_name}, your order for the {team_name} walk-in-test has been placed! We'll provide you with updates on the status of your order via text messages :)."``_              |
 | `requisition_created`   | _``"Hey {patient_first_name}, it's time to visit your local {lab_name} center. Please check the email you just received for instructions."``_                                                |
-| `appointment_scheduled` | `"Your appointment with the lab has been booked at {date} over at {address}! Here's your appointment key: {appointment_key}` <Note>   This message is sent only for Quest orders and Quest appointments placed through Vital API. </Note>  |
+| `appointment_scheduled` | _``"Your appointment with the lab has been booked at {date} over at {address}! Here's your appointment key: {appointment_key}"``_ <Note>   This message is sent only for Quest orders and Quest appointments placed through Vital API. </Note>  |
 | `appointment_cancelled` | _``"Hey, your lab appointment at {date} for {team_name} has been cancelled."``_ <Note>   This message is sent only for Quest orders and Quest appointments placed through Vital API. </Note> |
-| `completed`             | _"Your results have finished processing, your results should be ready soon."_                                                                                                                |
+| `redraw_available`      | _``"Hi {patient_first_name}, your {team_name} results have come back with at least one missing biomarker. We recommend a redraw to complete your lab testing. We will send you an email shortly with more information."``_ |
+| `completed`             | _``"Your results have finished processing, your results should be ready soon."``_                                                                                                                |
 | `cancelled`             | _`"Hey, your order for the {team_name} walk-in-test has been cancelled. If this is by accident please contact support."`_                                                                    |
 
 <Info>
@@ -36,15 +39,38 @@ A table of the **Order Status** and **default SMS** is provided bellow:
 
 ### Emails
 
-For emails, the following table describes what information each email contains for each Order Statuses:
+For emails, the following table describes what information each email contains for each Order Status:
 
 | Order Status          | Email Content Description                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------ |
 | `requisition_created` | An email with confirmation of the partner Lab and additional instructions will be sent to the patient. |
+| `redraw_available`    | An email with confirmation of the partner Lab, missing biomarker(s) and redraw instructions will be sent to the patient. |
 
 <Info>
   Emails can be customised and sent from your own domain.
 </Info>
+
+## Scheduling Appointments Before A Requisition Has Been Created
+
+<FeatureBeta />
+
+If the ability to [`schedule appointments before a requisition has been created`](/lab/walk-in/order-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, all appointment-related messages
+will be triggered by the **appointment** status, not the **order** status. All non appointment-related messages will be triggered by the **order** status e.g.
+`requisition_created`, `completed` etc. (see above section).
+
+### SMS Messages
+
+A table of the **Appointment Status** and **default SMS** is provided below:
+
+| Appointment Status | Default Message |
+| --- | --- |
+| `confirmed` | _``"Your appointment with the lab has been booked at {date} over at {address}! Here's your appointment key: {appointment_key}"``_ <Note>   This message is sent only for Quest orders and Quest appointments placed through Vital API."``_ </Note> |
+| `cancelled` | _``"Hey, your lab appointment at {date} for {team_name} has been cancelled."``_ <Note>   This message is sent only for Quest orders and Quest appointments placed through Vital API. </Note> |
+
+### Emails
+
+No emails are sent for this feature.
+
 
 ## Disable Communications
 
