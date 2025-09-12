@@ -62,7 +62,7 @@ and returned when using the [GET Appointment endpoint](/api-reference/lab-testin
 
 <FeatureBeta />
 
-When this feature is enabled on your Team, you can create an Patient Service Center (PSC) appointment even before the requisition has been created for
+When this feature is enabled on your Team, you can create a Patient Service Center (PSC) appointment even before the requisition has been created for
 the corresponding Order (i.e., reaching the `requisition_created` status).
 
 This allows you to build an experience that can order the lab test _and_ book an appointment consecutively, without having to wait on the
@@ -78,7 +78,7 @@ asynchronous requisition creation process that may take an indeterminate amount 
 
   <Note>
   If the order requisition has been created on or before the time slot confirmation, the Appointment moves directly to the
-  `confirmed` status. The `reserved` status would be skipped.
+  `confirmed` status. The `reserved` status will be skipped.
   </Note>
   </Step>
 
@@ -89,25 +89,23 @@ asynchronous requisition creation process that may take an indeterminate amount 
   <Step title="Requisition has been created">
   The requisition has now been created.
 
-  For all PSC Appointments:
+  1. The Order will move through the `requisition_created`, `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
+  2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-  1. The Order would move through the `requisition_created`, `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
-  2. The Appointment would move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
-
-  You would receive three `labtest.order.updated` events, one each for the three Order status transition. You will also received
+  You will receive three `labtest.order.updated` events, one each for the three Order status transition. You will also received
   a `labtest.appointment.updated` event for the Appointment status transition.
   </Step>
 </Steps>
 
 
-## Cancelling an appointment
+## Cancelling An Appointment
 
 If an Appointment is cancelled **before** a requisition has been created:
 
-* The Appointment would move to the `cancelled` status; and
-* There is no change to the Order, which would remain in the `ordered` status.
+* The Appointment will move to the `cancelled` status; and
+* There is no change to the Order, which will remain in the `ordered` status.
 
 If an Appointment is cancelled **after** a requisition has been created:
 
-1. The Appointment would move to the `cancelled` status; and
-2. The Order would move from the `appointment_pending` or `appointment_scheduled` status to the `appointment_cancelled` status.
+1. The Appointment will move to the `cancelled` status; and
+2. The Order will move from the `appointment_pending` or `appointment_scheduled` status to the `appointment_cancelled` status.

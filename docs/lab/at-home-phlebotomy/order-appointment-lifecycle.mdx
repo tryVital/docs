@@ -77,7 +77,7 @@ asynchronous requisition creation process that may take an indeterminate amount 
   <Step title="Creating an appointment">
   You create an Appointment for an Order which does not yet have a requisition.
 
-  For an [Appointment Ready Tier](/lab/at-home-phlebotomy/service-tiers) service, the Appointment starts with the `reserved` status.
+  For an [Appointment Ready Tier](/lab/at-home-phlebotomy/service-tiers) service, the Appointment starts with the `pending` status and immediately moves to the `reserved` status.
 
   For an [Appointment Request Tier](/lab/at-home-phlebotomy/service-tiers) service, the Appointment starts with the `pending`
   status. Once the service has penciled in the time slot, the Appointment moves to the `reserved` status — if the order
@@ -99,29 +99,29 @@ asynchronous requisition creation process that may take an indeterminate amount 
 
   For all types of Appointments:
 
-  1. The Order would move through the `requisition_created` and `appointment_pending` Order statuses in quick succession.
+  1. The Order will move through the `requisition_created` and `appointment_pending` Order statuses in quick succession.
 
-  You would receive two `labtest.order.updated` events, one each for the two status transitions.
+  You will receive two `labtest.order.updated` events, one each for the two status transitions.
 
   For all [Appointment Ready Tier](/lab/at-home-phlebotomy/service-tiers) Appointments and all the penciled
   [Appointment Request Tier](/lab/at-home-phlebotomy/service-tiers) Appointments:
 
-  1. The Order would move further to the `appointment_scheduled` Order status in quick succession.
-  2. The Appointment would move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
+  1. The Order will move further to the `appointment_scheduled` Order status in quick succession.
+  2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-  You would additionally receive a `labtest.order.updated` event and a `labtest.appointment.updated` event for the status transition.
+  You will additionally receive a `labtest.order.updated` event and a `labtest.appointment.updated` event for the status transition.
   </Step>
 </Steps>
 
 
-## Cancelling an appointment
+## Cancelling An Appointment
 
 If an Appointment is cancelled **before** a requisition has been created:
 
-* The Appointment would move to the `cancelled` status; and
-* There is no change to the Order, which would remain in the `ordered` status.
+* The Appointment will move to the `cancelled` status; and
+* There is no change to the Order, which will remain in the `ordered` status.
 
 If an Appointment is cancelled **after** a requisition has been created:
 
-1. The Appointment would move to the `cancelled` status; and
-2. The Order would move from the `appointment_pending` or `appointment_scheduled` status to the `appointment_cancelled` status.
+1. The Appointment will move to the `cancelled` status; and
+2. The Order will move from the `appointment_pending` or `appointment_scheduled` status to the `appointment_cancelled` status.
