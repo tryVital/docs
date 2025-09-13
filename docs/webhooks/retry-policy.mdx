@@ -6,20 +6,25 @@ Junction attempts to deliver each webhook message based on a retry schedule with
 
 ## **The schedule**[**​**](https://docs.svix.com/retries#the-schedule)
 
-Each message is attempted based on the following schedule, where each period is started following the failure of the preceding attempt:
+## Delivery Schedule
 
-- Immediately
-- 5 seconds
-- 5 minutes
-- 30 minutes
-- 2 hours
-- 5 hours
-- 10 hours
-- 10 hours (in addition to the previous)
+Each message is retried according to the following fixed schedule after a failed attempt:
 
-If an endpoint is removed or disabled delivery attempts to the endpoint will be disabled as well.
+1. Immediately
+2. 5 seconds
+3. 5 minutes
+4. 30 minutes
+5. 2 hours
+6. 5 hours
+7. 10 hours
+8. After an additional 10 hours
 
-For example, an attempt that fails three times before eventually succeeding will be delivered roughly 35 minutes and 5 seconds following the first attempt.
+**Notes:**
+
+- Retries **always occur in the order listed above**, with each period starting only after the previous attempt fails.
+- If an endpoint is removed or disabled, further delivery attempts to that endpoint will be stopped.
+- Example: If a message fails three times before eventually succeeding, it will be delivered roughly **35 minutes and 5 seconds** after the initial attempt (Immediate + 5 seconds + 5 minutes + 30 minutes).
+
 
 ## **Indicating successful delivery**[**​**](https://docs.svix.com/retries#indicating-successful-delivery)
 
