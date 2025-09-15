@@ -8,12 +8,12 @@ Deregistration has well-defined behaviour only on [cloud-based providers](/weara
 </Note>
 
 <Warning>
-While you can call this endpoint against these [SDK-based providers](/wearables/providers/introduction#sdk-based-providers),
-Vital Mobile SDK would automatically "reconnect" on the next data sync attempt.
+If your Junction Health SDK uses [the default Auto Connect mode](/wearables/sdks/health/connection-policies#auto-connect-mode-default),
+deregistering an Apple HealthKit or a Health Connect connection has no effect.
 
-We do not have a "disconnect" mechanism for SDK-based providers at this time.
+For explicit connection and disconnection of Apple HealthKit and Health Connect connections, see the [the opt-in Explicit Connect mode](/wearables/sdks/health/connection-policies#auto-connect-mode-default).
 
-You can pause [Health SDK data sync](/wearables/sdks/vital-health#pausing-data-synchronization) client-side, or
+You can also pause [Health SDK data sync](/wearables/sdks/vital-health#pausing-data-synchronization) client-side, or
 [sign-out the user](/wearables/sdks/vital-core#reset-the-sdk-sign-out) from the SDK.
 </Warning>
 

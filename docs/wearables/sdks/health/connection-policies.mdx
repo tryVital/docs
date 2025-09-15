@@ -1,0 +1,71 @@
+---
+title: "Health SDK Connection Policy"
+sidebarTitle: "Connection Policies"
+---
+
+## Auto Connect mode (default)
+
+A connection is automatically created — or re-instated — when:
+
+* You [ask for health data permission](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) through the Health SDK; or
+
+* the Health SDK begins a data sync attempt for any resource.
+
+
+<Warning>
+In Auto Connect mode, any de-registration attempt through the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider)
+has no effect.
+
+The Auto Connect mode will eventually re-instate the connection, typically at the next data sync attempt.
+</Warning>
+
+<Info>
+Calling the Health SDK `connect()` or `disconnect()` methods in Auto Connect mode will throw an error.
+</Info>
+
+## Explicit Connect mode
+
+<Note>
+Explicit Connect mode is available on iOS SDK 1.8.0+, Android SDK 4.2.0+, React Native SDK 5.4.0+ and Flutter SDK 4.6.0+.
+</Note>
+
+A connection is created only when:
+
+* You call the Health SDK `connect()` method.
+
+A connection is destroyed only when:
+
+* You call the Health SDK `disconnect()` method; or
+
+* You use the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider) to de-register the HealthKit or Health
+  Connect connection remotely from your backend servers.
+
+
+<Info>
+`connect()` and `disconnect()` in Explicit Connect mode requires a call to Junction API over the Internet.
+
+If the Health SDK fails to confirm connection or disconnection with the Junction API, an error would be thrown.
+</Info>
+
+In the Explicit Connect mode:
+
+1. The Health SDK does not automatically create or re-instate a connection:
+
+    * Not when you [ask for health data permission](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) through the Health SDK;
+
+    * Not when it detects either any iOS resource which your app has asked permission for, or any Android resource which your
+  app has asked permission for; and
+
+    * Not at the beginning of any sync attempt.
+
+2. Your application logic has full control on when to connect and disconnect.
+
+3. You can stop data sync by de-registering HealthKit and Health Connect connection via the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider).
+
+
+## Pausing synchronization temporarily
+
+The Health SDK supports a device-side [Pause Synchronization](/wearables/sdks/vital-health#pausing-data-synchronization) toggle, which
+can suspend and resume data synchronization temporarily without disconnection or signing out.
+
+This toggle works in both the Auto Connect mode and the Explicit Connect mode.
