@@ -105,7 +105,13 @@
                   "wearables/sdks/installation",
                   "wearables/sdks/authentication",
                   "wearables/sdks/vital-core",
-                  "wearables/sdks/vital-health",
+                  {
+                    "group": "Health SDK",
+                    "pages": [
+                      "wearables/sdks/health/overview",
+                      "wearables/sdks/health/connection-policies"
+                    ]
+                  },
                   "wearables/sdks/vital-devices"
                 ]
               },
@@ -1363,6 +1369,10 @@
     {
       "source": "/lab/walk-in/locations",
       "destination": "/lab/overview/locations"
+    },
+    {
+      "source": "/wearables/sdks/vital-health",
+      "destination": "/wearables/sdks/health/overview"
     }
   ]
 }
