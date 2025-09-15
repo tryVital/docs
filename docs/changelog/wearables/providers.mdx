@@ -2,6 +2,37 @@
 title: "Provider and Resources"
 ---
 
+### Health SDK: Explicit Connect mode (Sep 2025)
+
+The Health SDK now supports an opt-in **[Explicit Connect mode](https://docs.junction.com/wearables/sdks/health/connection-policies#explicit-connect-mode)**, which enables your application to
+explicitly control the moment of Health Connect connection creation and disconnection.
+
+<Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
+The opt-in Explicit Connect mode also allows remote disconnection through the [Deregister Connection](https://docs.junction.com/api-reference/user/deregister-a-provider) endpoint, which was not supported in the default [Auto Connect](https://docs.junction.com/wearables/sdks/health/connection-policies#auto-connect-mode-default) mode.
+
+If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit and Health Connect
+connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
+mode more appealling.
+
+Check out the [Health SDK Connection Policies](/wearables/sdks/health/connection-policies) documentation for further details.
+
+<Note>
+This feature is available on iOS SDK 1.8.0+, Android SDK 4.2.0+, React Native SDK 5.4.0+ and Flutter SDK 4.6.0+.
+</Note>
+</Accordion>
+
+### Health Connect sync progress logs in Junction Dashboard (Sep 2025)
+
+Health Connect integrations using Android SDK 4.2.0 or above would now report client-side sync progress regularly to the Junction Dashboard.
+
+<Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
+Similar to the iOS SDK equivalent, this report would include metadata of any exception that had disrupted a sync attempt. We hope that this
+brings more visibility into Health Connect sync issues.
+
+<Note>
+This feature is available on Android SDK 4.2.0+, React Native SDK 5.4.0+ and Flutter SDK 4.6.0+.
+</Note>
+</Accordion>
 
 ### Expanded Apple HealthKit data type coverage (April 2025)
 
