@@ -8,14 +8,14 @@ sidebarTitle: "Overview"
 
 <Note>
   Make sure you have successfully integrated with a Vital Mobile SDK authentication scheme, before you proceed
-  to try out Vital Health SDK.
+  to try out Junction Health SDK.
 
   <Card title="Mobile SDK Authentication" icon="id-card" href="/wearables/sdks/authentication" horizontal>
     Learn how to authenticate your mobile app user with Vital Mobile SDK.
   </Card>
 </Note>
 
-This Vital Health SDK guidance page focuses on the inital setup and API usage of the Health SDK that is common to both
+This Junction Health SDK guidance page focuses on the inital setup and API usage of the Health SDK that is common to both
 the Apple HealthKit and Android Health Connect integration.
 
 Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
@@ -31,6 +31,18 @@ Please consult the following guides on requirements and restrictions of Apple He
 
 
 ## Initial Setup
+
+### Review the Connection Policy options
+
+Junction Health SDK has two Connection Policy options:
+
+* The default [Auto Connect](/wearables/sdks/health/connection-policies#auto-connect-mode-default) mode; and
+
+* The opt-in [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode) mode.
+
+If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit and Health Connect
+connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
+mode more appealling.
 
 ### iOS apps: Configure your App Delegate
 
@@ -50,11 +62,11 @@ You need not manual edit your AppDelegate in **Flutter** iOS projects.
 
 
 <Warning>
-You must configure your App Delegate as instructed if you use Vital Health SDK on iOS. Not doing so
+You must configure your App Delegate as instructed if you use Junction Health SDK on iOS. Not doing so
 may result in missing background delivery, or app process termination by the operating system.
 </Warning>
 
-In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation, it **must** call Vital Health SDK
+In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementation, it **must** call Junction Health SDK
 `automaticConfiguration()` synchronously before it returns.
 
 
@@ -103,10 +115,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 </Accordion>
 
-### Configure the Vital Health SDK
+### Configure the Junction Health SDK
 
-The Health SDK must be configured before use. The configuration is persistent, so
-you can do this only once, immediately after [a successful authentication with the Core SDK](/wearables/sdks/authentication).
+The Health SDK must be configured before use.
+
+The configuration is persistent, so you typically only need to do this a single time — immediately after
+[a successful authentication with the Core SDK](/wearables/sdks/authentication).
 
 
 <CodeGroup>
@@ -114,16 +128,32 @@ you can do this only once, immediately after [a successful authentication with t
 import VitalHealthKit
 
 VitalHealthKitClient.configure(
-  backgroundDeliveryEnabled: true
+  VitalHealthKitClient.Configuration(
+    backgroundDeliveryEnabled: true,
+
+    // Using Auto Connect mode (default)
+    connectionPolicy: .autoConnect
+
+    // Using Explicit Connect mode
+    connectionPolicy: .explicit
+  )
 )
 ```
 
 ```kotlin Native Android
 import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
+import io.tryvital.vitalhealthconnect.model.ConnectionPolicy
 
 val manager = VitalHealthConnectManager.configure(context)
 manager.configureHealthConnectClient(
-  syncNotificationBuilder = null
+  syncNotificationBuilder = null,
+
+  // Using Auto Connect mode (default)
+  connectionPolicy = ConnectionPolicy.AutoConnect
+
+  // Using Explicit Connect mode
+  connectionPolicy = ConnectionPolicy.Explicit
+
 )
 ```
 
@@ -132,6 +162,13 @@ import { VitalHealth, HealthConfig } from "@tryvital/vital-health-react-native";
 
 let config = new HealthConfig();
 config.iOSConfig.backgroundDeliveryEnabled = true;
+
+// Using Auto Connect mode (default)
+config.connectionPolicy = "autoConnect";
+
+// Using Explicit Connect mode
+config.connectionPolicy = "explicit";
+
 await VitalHealth.configure(config);
 ```
 
@@ -143,6 +180,12 @@ await vital_health.configure(
     iosConfig: vital_health.IosHealthConfig(
       backgroundDeliveryEnabled: true,
     ),
+
+    // Using Auto Connect mode (default)
+    connectionPolicy: vital_health.ConnectionPolicy.autoConnect,
+
+    // Using Explicit Connect mode
+    connectionPolicy: vital_health.ConnectionPolicy.explicit,
   ),
 );
 ```
@@ -295,10 +338,10 @@ await vital_health.hasAskedForPermission(vital_health.HealthResource.Activity);
 
 ### Check if a read permission was granted or denied (⚠️ Spoiler: You can't)
 
-Vital Health SDK allows you to [ask for permission](#ask-user-for-health-data-permissions) and
+Junction Health SDK allows you to [ask for permission](#ask-user-for-health-data-permissions) and
 [check if your app has asked for permission before](#check-if-your-app-has-asked-for-permissions-before).
 
-However, Vital Health SDK **cannot** tell you:
+However, Junction Health SDK **cannot** tell you:
 
 1. Whether or not a user has granted or denied a read permission after the [Ask for Permission](#ask-user-for-health-data-permissions) has concluded.
 1. The state of a read permission at any exact moment — granted or denied.
@@ -312,7 +355,7 @@ Quoting [Apple's own words](https://developer.apple.com/documentation/healthkit/
 >
 > [...]
 
-In other words, all third-party apps — including anyone using the Vital Health SDK — would:
+In other words, all third-party apps — including anyone using the Junction Health SDK — would:
 
 1. not be able to determine if a particular read permission has been granted or denied by the user;
 
@@ -336,7 +379,7 @@ permission grants and denials after the user has gone through the [Ask for Permi
 
 ## Automatic Data Sync
 
-Vital Health SDK automates data sync for you on both Android and iOS. Please first consult
+Junction Health SDK automates data sync for you on both Android and iOS. Please first consult
 the provider-specific guides for the requirements and setup instructions:
 
 * [Apple HealthKit guide](/wearables/guides/apple-healthkit)
@@ -374,7 +417,7 @@ and required configuration of these two behaviours.
 
 ### Background Sync Frequency
 
-Vital Health SDK schedules hourly background sync with both Apple HealthKit and Android Health Connect, provided that you have:
+Junction Health SDK schedules hourly background sync with both Apple HealthKit and Android Health Connect, provided that you have:
 
 1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instruction; and
 2. Configured [Health Connect Background Sync](/wearables/guides/android-health-connect#background-sync) and request user permissions (when necessary) as per instruction.
@@ -587,7 +630,7 @@ Stream<SyncStatus> status = vital_health.syncStatus;
 <AccordionGroup>
 
 <Accordion title="Sync Progress View on Native iOS" defaultOpen>
-Vital Health SDK for iOS includes a `ForEachVitalResource` — a pre-baked SwiftUI View providing a
+Junction Health SDK for iOS includes a `ForEachVitalResource` — a pre-baked SwiftUI View providing a
 live-updated sync progress feed of all the `VitalResource`s whose permissions have been asked for.
 
 You can use `ForEachVitalResource()` in any position which you would use `ForEach`. For example,
