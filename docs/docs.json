@@ -721,10 +721,12 @@
             ]
           },
           {
-            "group": "Provider",
+            "group": "Connection & Devices",
             "pages": [
               "event-catalog/provider.connection.created",
-              "event-catalog/provider.connection.error"
+              "event-catalog/provider.connection.error",
+              "event-catalog/provider.device.created",
+              "event-catalog/provider.device.updated"
             ]
           },
           {
