@@ -2,7 +2,17 @@
 title: "API"
 ---
 
-### Enhanced Lab Order Management with Result Interpretation Filtering (June 2025)
+### Idempotency of Ordering(Sep 2025)
+
+We’ve added idempotency behavior on the order endpoint, to prevent duplicate orders
+
+<Accordion title="Details" icon="magnifying-glass" iconType="regular">
+  Check out the [documentation](/lab/overview/idempotency).
+</Accordion>
+
+### \
+\
+Enhanced Lab Order Management with Result Interpretation Filtering (June 2025)
 
 We've enhanced the Orders page with new filtering and visualization capabilities for lab test result interpretations, making it easier to identify and prioritize critical patient results.
 
@@ -18,23 +28,24 @@ We've enhanced the Orders page with new filtering and visualization capabilities
   The new Interpretation filter allows you to quickly locate orders based on their clinical assessment:
 
   - **Normal** – Orders with results within normal reference ranges
-  - **Abnormal** – Orders with results outside normal ranges but not critically urgent  
+  - **Abnormal** – Orders with results outside normal ranges but not critically urgent
   - **Critical** – Orders with results requiring immediate clinical attention
 
   ## Visual Enhancements
 
   ### Orders Table
+
   - Critical value indicators help you quickly spot high-priority results that need immediate attention
   - Clear visual distinction between normal, abnormal, and critical interpretations
 
   ### Order Details View
+
   - Prominent badges display the interpretation status for easy identification
   - Critical results are highlighted with distinctive styling to ensure they don't go unnoticed
 
   <Info>
     You can combine the Interpretation filter with existing filters like Order Status, Date Range, and Order Type for more precise result filtering.
   </Info>
-
   This enhancement improves clinical workflow efficiency by enabling healthcare teams to quickly identify and prioritize orders requiring immediate attention.
 </Accordion>
 
@@ -55,90 +66,90 @@ We’ve added more control to how you manage test panels.
 </Accordion>
 
 ### Problem in Transit Order Statuses (Mar 2025)
+
 Testkit orders now support two new statuses representing problems in transit. Refer to the [lab test lifecycle documentation](/lab/workflow/lab-test-lifecycle).
 
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-We’re introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  We’re introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
 
-Here’s how to verify and ensure you benefit from future enhancements:
+  Here’s how to verify and ensure you benefit from future enhancements:
 
-1. Look for areas in your code where you take an action based on the values of a Junction-defined enum. For example, you might have Python code like this:
+  1. Look for areas in your code where you take an action based on the values of a Junction-defined enum. For example, you might have Python code like this:
 
-```python Python
-match status:
-    case OrderStatus.TESTKIT_ORDERED:
-        handle_ordered()
-    case OrderStatus.TESTKIT_AWAITING_REGISTRATION:
-        handle_awaiting_registration()
-        # other cases...
-```
+  ```python Python
+  match status:
+      case OrderStatus.TESTKIT_ORDERED:
+          handle_ordered()
+      case OrderStatus.TESTKIT_AWAITING_REGISTRATION:
+          handle_awaiting_registration()
+          # other cases...
+  ```
 
-2. Check unknown values in your code paths are handled gracefully—for example, by using default cases. Logging unknown values can help you stay informed.
+  2. Check unknown values in your code paths are handled gracefully—for example, by using default cases. Logging unknown values can help you stay informed.
 
-```python Python
-match status:
-    # previous cases...
-    case unknown_status:
-        logger.warning(f"Unknown status received: {repr(unknown_status)}")
-```
+  ```python Python
+  match status:
+      # previous cases...
+      case unknown_status:
+          logger.warning(f"Unknown status received: {repr(unknown_status)}")
+  ```
 
-3. Make sure you’re running the latest version of our SDK.
-
-4. You’re good to go. Once you’ve checked the code paths won’t break if Junction-defined enums start including new values, no further action is needed.
+  3. Make sure you’re running the latest version of our SDK.
+  4. You’re good to go. Once you’ve checked the code paths won’t break if Junction-defined enums start including new values, no further action is needed.
 </Accordion>
 
 ### Source Marker Identification for Results (Nov 2024)
+
 Results now feature the source, orderable marker from which they originated.
 Refer to the [documentation](/lab/results/result-formats)
 
-
-
 ### PSC Appointment Scheduling API (Oct 2024)
-Walk-in Phlebotomy orders now allow for appointment booking directly with Vital. 
+
+Walk-in Phlebotomy orders now allow for appointment booking directly with Vital.
 Refer to the [documentation](/lab/walk-in/order-lifecycle)
 
 ### Phlebotomy Availability API - Start Date Query (Sep 2024)
+
 You can now supply a `start_date` to the [Appointment Availability API](/api-reference/lab-testing/at-home-phlebotomy/appointment-availability).
 The API always responds with 14 days worth of slots.
 
-
 ### À La Carte Ordering (Sep 2024)
-Vital now supports ordering à-la-carte, as well as a revamped ordering flow.
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Check out the [Ordering](/lab/workflow/ordering) documentation.
 
+Vital now supports ordering à-la-carte, as well as a revamped ordering flow.
+
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Check out the [Ordering](/lab/workflow/ordering) documentation.
 </Accordion>
 
 ### Partial Results Webhook (Jul 2024)
-Vital now supports sending webhooks for partial results, on a team-by-team configuration.
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Check out the [Partial Results Notifications](/lab/workflow/partials) documentation.
 
+Vital now supports sending webhooks for partial results, on a team-by-team configuration.
+
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Check out the [Partial Results Notifications](/lab/workflow/partials) documentation.
 </Accordion>
 
 ### Patient Service Center (PSC) Availability API (Jul 2024)
+
 It is now possible to verify lab PSC availability in regards to a zip code, radius or order.
 
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Check out the [Patient Service Center](/lab/walk-in/locations) documentation.
-
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Check out the [Patient Service Center](/lab/walk-in/locations) documentation.
 </Accordion>
 
-
 ### Create Lab Tests With Provider IDs  (Jun 2024)
+
 It is now possible to create lab tests using the Laboratory's unique provider id.
 This allows payloads to be shared across sandbox and production.
 
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Check out the [Create a Lab Test](/lab/workflow/create-test) documentation.
-
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Check out the [Create a Lab Test](/lab/workflow/create-test) documentation.
 </Accordion>
 
 ### Ask on Order Entry (AOE)  (Jun 2024)
+
 You can now order panels with AOE requirements via the API.
 
-<Accordion icon="billboard" iconType="duotone" title="Details" defaultOpen>
-Check out the [AOE](/lab/workflow/aoe) documentation.
-
+<Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
+  Check out the [AOE](/lab/workflow/aoe) documentation.
 </Accordion>
-
