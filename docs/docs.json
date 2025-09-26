@@ -147,7 +147,8 @@
                   "lab/overview/locations",
                   "lab/overview/insurance",
                   "lab/overview/sandbox",
-                  "lab/overview/turnaround-times"
+                  "lab/overview/turnaround-times",
+                  "lab/overview/idempotency"
                 ]
               },
               {

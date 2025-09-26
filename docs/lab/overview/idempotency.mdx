@@ -5,8 +5,6 @@ description: "Idempotent behavior on the order flow"
 
 The API supports idempotency for safely retrying requests without accidentally performing the same operation twice. When creating and order via the [`POST /v3/order`](/api-reference/lab-testing/create-order), you can supply a `X-Idempotency-Key` header. Then, if a connection error occurs, you can safely repeat the request without risk of creating a second order.
 
-To perform an idempotent request, provide an additional IdempotencyKey element to the request options.
-
 This works by saving the resulting status code and body of the first request made for any given idempotency key, regardless of whether it succeeds or fails. Subsequent requests with the same key return the same result.
 
 A client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions.
