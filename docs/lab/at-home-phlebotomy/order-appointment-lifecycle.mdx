@@ -125,3 +125,15 @@ If an Appointment is cancelled **after** a requisition has been created:
 
 1. The Appointment will move to the `cancelled` status; and
 2. The Order will move from the `appointment_pending` or `appointment_scheduled` status to the `appointment_cancelled` status.
+
+### Auto-cancellation of appointments without requisition
+
+In cases where appointments can be scheduled before a requisition has been created, the appointment will be automatically cancelled by Junction if the following happens:
+
+1. More than 8 hours have passed since the order was created, and no requisition has been received.
+2. There is less than 2 hours until the appointment start time, and no requisition has been received.
+
+When booking an appointment with Getlabs, we strongly recommend that the appointment is booked at least 48 hours in advance to allow sufficient time for the requisition to be received and sent to the phlebotomist.
+Getlabs automatically reschedules appointments that do not have a requisition form around 24 hours before the appointment start time. They also inform the patient about the rescheduling, directly via SMS.
+Restricting the scheduling of appointments to at least 48 hours in advance allows Junction to handle the auto-cancellation of the appointment, which triggers an appointment cancelled webhook.
+You can then use this for patient communications, rather than relying on Getlabs to do so.
