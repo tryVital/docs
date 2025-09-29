@@ -27,7 +27,7 @@ There is one production environment for Junction Management API:
 
 | Environment      | Base URL                              | Management Key Prefix    |
 | ---------------- | ------------------------------------- | ---------------------- |
-| 🤖 Production    | `https://api.tryvital.io/management/` | `mg_*`
+| 🤖 Production    | `https://api.management.junction.com/` | `mg_*`
 
 
 ## Authentication
@@ -39,7 +39,7 @@ Your API requests should present the Management Key under the `X-Management-Key`
 
 ```bash cURL
 curl --request GET
-  --url "https://api.tryvital.io/management/v1/org/${ORG_ID}"
+  --url "https://api.management.junction.com/v1/org/${ORG_ID}"
   --header 'X-Management-Key: ${YOUR_MANAGEMENT_KEY}'
 ```
 

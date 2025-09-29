@@ -1235,10 +1235,10 @@
     "openapi": ["swagger.json", "org-management-api.json"],
     "mdx": {
       "server": [
-        "https://api.tryvital.io",
-        "https://api.sandbox.tryvital.io",
-        "https://api.eu.tryvital.io",
-        "https://api.sandbox.eu.tryvital.io"
+        "https://api.us.junction.com",
+        "https://api.sandbox.junction.com",
+        "https://api.eu.junction.com",
+        "https://api.sandbox.eu.junction.com"
       ],
       "auth": {
         "method": "key",
@@ -1261,7 +1261,7 @@
   },
   "footer": {
     "socials": {
-      "website": "https://tryvital.io",
+      "website": "https://www.junction.com/",
       "twitter": "https://twitter.com/tryVital",
       "linkedin": "https://www.linkedin.com/company/tryvital"
     }
