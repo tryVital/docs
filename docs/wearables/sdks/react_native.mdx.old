@@ -53,7 +53,7 @@ Use Vital Sign-In Token whenever possible.
 </Warning>
 
 
-You start by setting up the Core SDK. You need to configure it with your API key and the environment you want to use. You can find your API key in the Vital Dashboard. You can also enable logs by setting `logsEnabled` to true.
+You start by setting up the Core SDK. You need to configure it with your API key and the environment you want to use. You can find your API key in the Junction Dashboard. You can also enable logs by setting `logsEnabled` to true.
 You will need to chain the configuration according to the below order.
 
 ```js

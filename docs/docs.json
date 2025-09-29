@@ -1256,7 +1256,7 @@
     "primary": {
       "type": "button",
       "label": "Get API Keys",
-      "href": "https://app.tryvital.io/api/auth/signup"
+      "href": "https://app.junction.com/"
     }
   },
   "footer": {
