@@ -6,13 +6,13 @@ sidebarTitle: "Authentication"
 ## Vital Sign-In Token
 
 In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with Vital Mobile SDK
-as an individual user in your Team. The app installation would be granted only Vital API access
+as an individual user in your Team. The app installation would be granted only Junction API access
 scoped to that specific user.
 
-Instead of hardcoding a [Vital API Key](#vital-api-keys), your app would request your own backend to generate
+Instead of hardcoding a [Junction Team API Key](#vital-api-keys), your app would request your own backend to generate
 a **Vital Sign-In Token** for the user, through your own API authentication and authorization systems.
 
-In this model, your Vital API Keys are kept strictly as a server-side secret.
+In this model, your Junction Team API Keys are kept strictly as a server-side secret.
 
 <CardGroup cols={2}>
   <Card title="Persistence" icon="hand-wave">
@@ -97,7 +97,7 @@ Internally, the Vital Mobile SDK:
   an OAuth 2.0 access token and an OAuth 2.0 refresh token.
 2. discards the Vital Sign-In Token upon a successful exchange.
 3. stores these token secrets securely in the device persistent storage.
-4. calls the Vital API using the OAuth 2.0 access token.
+4. calls the Junction API using the OAuth 2.0 access token.
 5. transparently manages the OAuth 2.0 refresh token flow to keep the access token fresh and valid.
 
 This is why the documentation emphasizes the "sign in once" expectation. The SDK does not rely on
@@ -144,14 +144,14 @@ to exchange for the token secrets it needs.
 
     Among these API requests, one would be requesting your backend API to issue a Vital Sign-In Token for your authenticated user.
   </Step>
-  <Step title="Your backend service <-> Vital API">
+  <Step title="Your backend service <-> Junction API">
     ```mermaid
     sequenceDiagram
         actor Your Backend
-        actor Vital API
+        actor Junction API
         autonumber
-        Your Backend->>Vital API: Token Request via API Key
-        Vital API-->>Your Backend: Issued a Vital Sign-In Token
+        Your Backend->>Junction API: Token Request via API Key
+        Junction API-->>Your Backend: Issued a Vital Sign-In Token
     ```
 
     Your backend API receives and validates the token issuance request. Once validated, your backend service:
@@ -164,8 +164,8 @@ to exchange for the token secrets it needs.
       this Vital user.
 
     <Note>
-    Only this step would use a [Vital API Key](/api-details/authentication). Because this step happens in your
-    backend service, this enables you to keep the Vital API Key strictly as a server-side secret.
+    Only this step would use a [Junction Team API Key](/api-details/authentication). Because this step happens in your
+    backend service, this enables you to keep the Junction Team API Key strictly as a server-side secret.
     </Note>
 
     ```bash
@@ -275,7 +275,7 @@ to exchange for the token secrets it needs.
 </Steps>
 
 
-## Vital API Keys
+## Junction Team API Keys
 
 <Warning>
 API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
@@ -344,7 +344,7 @@ When running on iOS, the SDK must be **explicitly** configured before other SDK 
 Alternatively, follow the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#2-integrate-with-ios-system-callbacks)
 to enable SDK Automatic Configuration during app launch. This auto-configures the SDK using the last known configuration you supplied — including but
 not limited to the API Key, the environment and the target User ID. Not only is this a prerequisite to enable HealthKit Background Delivery, this
-allows you also to only call `configure(...)` and `setUserId(...)` once to "sign-in" the user persistently when using the Vital API Key scheme.
+allows you also to only call `configure(...)` and `setUserId(...)` once to "sign-in" the user persistently when using the Junction Team API Key scheme.
 </Info>
 
 ## Sign Out
@@ -381,20 +381,20 @@ This erases any persistent user session and configuration stored by the Vital Co
   ```
 </CodeGroup>
 
-## Migrate from Vital API Keys to Vital Sign-In Tokens
+## Migrate from Junction Team API Keys to Vital Sign-In Tokens
 
 <Warning>
 Always use [Vital Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
 </Warning>
 
-An existing app installation signed-in with Vital API Key + User ID can be seamlessly migrated to
+An existing app installation signed-in with Junction Team API Key + User ID can be seamlessly migrated to
 use Vital Sign-In Tokens.
 
 It is as simple as performing a one-off migration logic during app launch:
 
 <Steps>
   <Step title="Condition to migrate">
-    Check whether the Vital SDK status includes `useApiKey` (i.e., the user is signed in using Vital API Key).
+    Check whether the Vital SDK status includes `useApiKey` (i.e., the user is signed in using Junction Team API Key).
   </Step>
   <Step title="Obtain a Vital Sign-In Token">
     Similar to the new user sign-in flow, your app needs to obtain a Vital Sign-In Token through your backend service.

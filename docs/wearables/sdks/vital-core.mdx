@@ -12,9 +12,9 @@ schemes, and how to authenticate with the Vital Mobile SDK.
   Learn how to authenticate your mobile app user with Vital Mobile SDK.
 </Card>
 
-## Accessing Vital API
+## Accessing Junction API
 
-You can access Vital API through `VitalClient` with typed request methods and response models.
+You can access Junction API through `VitalClient` with typed request methods and response models.
 
 <CodeGroup>
 ```swift Native iOS
@@ -30,7 +30,7 @@ import 'package:vital_core/vital_core.dart' as vital_core;
 
 vital_core.VitalClient client;
 
-// For customers using Vital API Keys for early evaluation.
+// For customers using Junction Team API Keys for early evaluation.
 client = vital_core.VitalClient()
   ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'sk_eu_...');
 
@@ -46,9 +46,9 @@ final linkService = client.linkService;
 
 <Info>Typed API access is not yet available in React Native.</Info>
 
-## Generating Vital Link URL
+## Generating Junction Link URL
 
-You can obtain an URL to the Vital Link Widget through `VitalClient.linkWidgetUrl`. Note that the URL contains
+You can obtain an URL to the Junction Link Widget through `VitalClient.linkWidgetUrl`. Note that the URL contains
 a short-lived token with 10-minute expiry.
 
 For the `redirectUrl`, you should set it to a URL with a custom URL scheme which your app would register to handle.

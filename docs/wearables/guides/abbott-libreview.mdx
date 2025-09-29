@@ -25,7 +25,7 @@ With the `abbott_libreview` integration, users can connect their Abbott CGM devi
 with their LibreView patient account. Vital accesses the patient CGM data as their personal account.
 
 * You would not need to maintain any LibreView practices.
-* You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Vital Link. 
+* You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Junction Link. 
 
 
 #### ⚠️ Prepare for regular disconnection with `abbott_libreview`
@@ -48,7 +48,7 @@ When you detect a disconnection, guide your user to:
 
 1. Sign into the LibreLink app or the LibreView web portal.
 2. Update their account passwords.
-3. Use the Vital Link Widget or your custom widget to re-establish the `abbott_libreview` connection.
+3. Use the Junction Link Widget or your custom widget to re-establish the `abbott_libreview` connection.
 
 
 ## LibreView data use floating time basis
@@ -74,13 +74,13 @@ This data is available in the following types:
 
 ## Connecting a LibreView patient account (`abbott_libreview`)
 
-### Vital Link Widget
+### Junction Link Widget
 
-Abbott LibreView is automatically available as an option in the [Vital Link Widget](/wearables/connecting-providers/launching_link).
+Abbott LibreView is automatically available as an option in the [Junction Link Widget](/wearables/connecting-providers/launching_link).
 
-### Vital Link API (custom widget)
+### Junction Link API (custom widget)
 
-If you intend to build a [custom widget on top of the Vital Link API](/wearables/connecting-providers/custom_widget), Abbott LibreView is
+If you intend to build a [custom widget on top of the Junction Link API](/wearables/connecting-providers/custom_widget), Abbott LibreView is
 exposed as a **password provider**:
 
 <Steps>
@@ -220,7 +220,7 @@ Inform Vital support of the invitation, and wait for the support acknowledgement
 
 </Steps>
 
-Once the connection is established, Vital Link would recognize all patient emails having connected to your LibreView practice.
+Once the connection is established, Junction Link would recognize all patient emails having connected to your LibreView practice.
 These patients do not need to connect separately to the [Vital practices](#using-vital-practices).
 
 ### Using Vital Practices
@@ -239,15 +239,15 @@ Vital has two LibreView Practices that are available in all supported regions:
 
 You need to ask your user to add one of the above practices in their Libre App. Once that's done, data will start flowing.
 
-### Vital Link Widget
+### Junction Link Widget
 
 To connect your user to Vital via the Link Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
 
 <img src="/img/libre_connect.png" className="w-2/5 block mx-auto" />
 
-### Vital Link API (custom widget)
+### Junction Link API (custom widget)
 
-1. To connect to Freestyle Libre, you must create a Vital Link token.
+1. To connect to Freestyle Libre, you must create a Junction Link token.
 
 <CodeGroup>
 

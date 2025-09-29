@@ -13,10 +13,10 @@ You will receive a [Provider Connection Created event](/webhooks/introduction#co
 
 <Step title="The Historical Data Backfill stage">
 You would receive a [Historical Pull Completion event](/webhooks/introduction#historical-data-backfill-stage) **immediately** after the connection creation.
-However, if you query Vital API immediately, you would observe **no historical data**.
+However, if you query Junction API immediately, you would observe **no historical data**.
 
 <Warning>
-The Historical Pull Completion event for Garmin connections does not indicate availability of historical data through the Vital API.
+The Historical Pull Completion event for Garmin connections does not indicate availability of historical data through the Junction API.
 </Warning>
 
 </Step>
@@ -32,7 +32,7 @@ This behaviour is exclusive to Garmin, as a downstream effect of Garmin's unique
 
 ## Re-running the historical data backfill stage
 
-Normally, when a user with an existing connection re-authenticates with the provider through [Vital Link](https://docs.tryvital.io/wearables/connecting-providers/introduction), Vital re-runs
+Normally, when a user with an existing connection re-authenticates with the provider through [Junction Link](https://docs.tryvital.io/wearables/connecting-providers/introduction), Vital re-runs
 the [Historical Data Backfill stage](/webhooks/introduction#historical-data-backfill-stage) automatically.
 
 However, this **does not apply to Garmin** connections — you must first [deregister](/api-reference/user/deregister-a-provider) said users' existing Garmin connection for the re-run to take effect.
