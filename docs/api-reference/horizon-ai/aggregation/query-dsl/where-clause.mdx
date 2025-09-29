@@ -1,0 +1,104 @@
+---
+title: WHERE clause
+icon: filter
+iconType: duotone
+---
+
+## Overview
+
+Use the WHERE clause to filter summary or timeseries rows before Horizon AI Query evaluates aggregations or grouping. When a GROUP BY clause is present, the filter runs first so only matching rows contribute to each group.
+
+The WHERE clause evaluates SQL-style predicates against the same [column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) that are available in the `select` and `group_by` clauses.
+
+## Supported operators
+
+WHERE predicates support these operators:
+
+- Comparison: `>`, `>=`, `<`, `<=`, `=`, `!=`
+- Logical: `AND`, `OR`, `NOT`
+- Parentheses for explicit precedence
+- String literals enclosed in single quotes (for example, `'long_sleep'`)
+
+Comparison operands can reference table columns (for example, `stage_rem_second`) or Source columns (for example, `source_type`).
+
+<Note>
+Column identifiers follow the Continuous Query column names. See [Continuous Query column mappings](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#continuous-query-column-mappings) for a full list.
+</Note>
+
+## Filter rows before grouping
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Sleep.score().mean(),
+    va.Sleep.col("stage_asleep_second").sum(),
+).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "day"),
+    va.Sleep.col("state"),
+).where(
+    "type = 'long_sleep'"
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "value_macro": "sleep_score" } },
+    { "func": "sum", "arg": { "sleep": "stage_asleep_second" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "sleep" }
+    },
+    { "sleep": "state" }
+  ],
+  "where": "type = 'long_sleep'"
+}
+```
+</CodeGroup>
+
+## Combine multiple device sources
+
+Filter for specific provider and source type combinations with parentheses to manage precedence.
+
+```python
+va.select(
+    va.Sleep.score().mean(),
+).where(
+  "(source_type = 'watch' AND source_provider = 'apple_health_kit') OR (source_type = 'ring' AND source_provider = 'oura')"
+)
+```
+
+## Filter without grouping
+
+You can apply a WHERE clause to ungrouped queries to trim the dataset before computing aggregates.
+
+```python
+va.select(
+    va.Sleep.score().mean()
+).where("source_type = 'watch' AND source_provider = 'apple_health_kit'")
+```
+
+In the JSON DSL, supply the same predicate string via the top-level `where` property.
+
+```json
+{
+  "select": [
+    { "func": "mean", "arg": { "value_macro": "sleep_score" } }
+  ],
+  "where": "source_type = 'watch' AND source_provider = 'apple_health_kit'"
+}
+```
+
+## Evaluation order
+
+1. Apply the WHERE predicate to the incoming rows.
+2. Evaluate the GROUP BY clause (if provided) on the filtered rows.
+3. Calculate the aggregates in the SELECT clause.
+
+This order ensures filters never exclude rows after grouping has started, keeping results consistent with SQL semantics.

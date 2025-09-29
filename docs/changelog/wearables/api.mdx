@@ -4,6 +4,54 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Horizon AI Query WHERE clause (September 2025)
+
+Horizon AI Query and Continuous Query now accept a `where` clause so you can filter input rows before aggregation.
+
+<Accordion icon="filter" iconType="duotone" title="Details" defaultOpen>
+
+- Compose SQL-style predicates with `>`, `>=`, `<`, `<=`, `=`, `!=`, `NOT`, `AND`, `OR`, and parenthesis grouping.
+- Filters always run before `group_by` evaluation when both clauses are present.
+- DSL helpers expose `.where("…")` so you can keep filtering logic alongside your select and aggregation expressions.
+- Read more in the [WHERE clause documentation](/api-reference/horizon-ai/aggregation/query-dsl/where-clause).
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Sleep.score().mean(),
+    va.Sleep.col("stage_asleep_second").sum(),
+).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "day"),
+    va.Sleep.col("state"),
+).where(
+    "type = 'long_sleep'"
+)
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "group_key": "*" },
+        { "func": "mean", "arg": { "value_macro": "sleep_score" } },
+        { "func": "sum", "arg": { "sleep": "stage_asleep_second" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": { "value": 1, "unit": "day" },
+            "arg": { "index": "sleep" }
+        },
+        { "sleep": "state" }
+    ],
+    "where": "type = 'long_sleep'"
+}
+```
+</CodeGroup>
+
+</Accordion>
+
 ### Horizon AI Query sleep macros (September 2025)
 
 Horizon AI Query now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
