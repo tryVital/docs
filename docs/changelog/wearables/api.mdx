@@ -4,6 +4,41 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Continuous Query sleep macros (September 2025)
+
+Continuous Query now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
+
+<Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
+
+- `asleep_at` returns the sleep session's bedtime start adjusted by the recorded sleep latency.
+- `awake_at` returns the bedtime start plus the offset of the final non-awake sleep segment, helping you identify the exact moment of the user waking up.
+
+Use these macros in the `select` clause of Horizon AI queries to surface consistent bedtime and wake-up timestamps across providers.
+
+Syntax:
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Sleep.asleep_at(),
+    va.Sleep.awake_at()
+)
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "asleep_at" },
+        { "value_macro": "awake_at" }
+    ]
+}
+```
+</CodeGroup>
+
+</Accordion>
+
 ### Device metadata and source device tracking (August 2025)
 
 We have added device tracking with new API endpoints and enhanced data attribution.
