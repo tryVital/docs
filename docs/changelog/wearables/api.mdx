@@ -4,16 +4,16 @@ title: "API"
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-### Continuous Query sleep macros (September 2025)
+### Horizon AI Query sleep macros (September 2025)
 
-Continuous Query now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
+Horizon AI Query now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
-- `asleep_at` returns the sleep session's bedtime start adjusted by the recorded sleep latency.
-- `awake_at` returns the bedtime start plus the offset of the final non-awake sleep segment, helping you identify the exact moment of the user waking up.
+- `asleep_at` returns the first instance at which the user is considered to be asleep, i.e., session start + sleep latency.
+- `awake_at` returns the time at which the user has stopped sleeping, sans any brief awakening.
 
-Use these macros in the `select` clause of Horizon AI queries to surface consistent bedtime and wake-up timestamps across providers.
+Use these macros in the Select clause of Horizon AI queries to surface consistent bedtime and wake-up timestamps across providers.
 
 Syntax:
 
