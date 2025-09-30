@@ -233,6 +233,7 @@
                   "api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
                   "api-reference/horizon-ai/aggregation/query-dsl/select-clause",
                   "api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
+                  "api-reference/horizon-ai/aggregation/query-dsl/where-clause",
                   "api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis"
                 ]
               },
