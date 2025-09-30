@@ -8,27 +8,27 @@ import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 <LinkSDKProvider />
 
 
-The Vital Link flow starts when a user wants to connect a wearable device with Vital. An overview of the process can be found below.
+The Junction Link flow starts when a user wants to connect a wearable device with Vital. An overview of the process can be found below.
 
 <Steps>
 
 <Step title="Pre-requisites">
 Make sure that:
 
-1. You have your Vital API Key [dashboard](https://app.junction.com) ready to use.
+1. You have your Junction Team API Key [dashboard](https://app.junction.com) ready to use.
 
 2. You have created a Vital User that corresponds to a user in your domain. [See](/home/quickstart#3-creating-your-first-user) for an example.
 </Step>
 
 <Step title="Generate a Link Token">
-Call the [Generate a Link Token endpoint](/api-reference/link/generate-link-token) with the target User ID using your Vital API Key.
+Call the [Generate a Link Token endpoint](/api-reference/link/generate-link-token) with the target User ID using your Junction Team API Key.
 </Step>
 
 <Step title="Initiate the Link Flow">
 The API response provides a short-lived Link Token (`link_token`), as well as a Web URL (`link_web_url`).
 
-You can use the Web URL to launch the Vital Link Widget directly. Alternatively, you can use the Link Token
-in concert with the Vital Link API to [build your custom Link Widget experience](/wearables/connecting-providers/custom_widget).
+You can use the Web URL to launch the Junction Link Widget directly. Alternatively, you can use the Link Token
+in concert with the Junction Link API to [build your custom Link Widget experience](/wearables/connecting-providers/custom_widget).
 </Step>
 
 </Steps>

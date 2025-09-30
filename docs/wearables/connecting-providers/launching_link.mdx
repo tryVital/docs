@@ -9,10 +9,10 @@ import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 <Steps>
 
 <Step number="1" title="Your Backend">
-Create a Vital Link Token for a user using the [Create Link Token](/api-reference/link/generate-link-token) endpoint.
+Create a Junction Link Token for a user using the [Create Link Token](/api-reference/link/generate-link-token) endpoint.
 
 <Note>
-Vital Link Token expires 60 minutes after its creation.
+Junction Link Token expires 60 minutes after its creation.
 </Note>
 
 <br />
@@ -117,10 +117,10 @@ Use the Link Token to [launch the Link Widget](/wearables/vital-link/link_flow) 
 
 <Accordion title="Option 1: Opening the Link Widget by URL" icon="link" iconType="sharp-solid" defaultOpen>
 
-You can launch the Vital Link Widget using the Link Web URL (`link_web_url`) as provided by the
+You can launch the Junction Link Widget using the Link Web URL (`link_web_url`) as provided by the
 [Generate a Link Token endpoint](/api-reference/link/generate-link-token):
 
-* If you have created the Link Token for a specific OAuth provider, Vital Link will dispatch
+* If you have created the Link Token for a specific OAuth provider, Junction Link will dispatch
 the user automatically to the provider's sign-in page.
 
 * Otherwise, your user will be presented with a list of providers to connect to. You can
@@ -193,7 +193,7 @@ const App = props => {
       onClick={handleVitalOpen}
       disabled={isLoading || !ready}
     >
-      Open Vital Link
+      Open Junction Link
     </button>
   );
 };

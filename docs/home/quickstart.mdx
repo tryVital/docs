@@ -184,19 +184,19 @@ let user = try await VitalClient.shared.user.create(clientUserId)
 ## 4. Connecting a source
 
 A source, at Vital, is a medical device, wearable, or lab. It is a source of information for health data.
-To connect a source tap the connect button, this will launch the Vital Link Widget for that user.
+To connect a source tap the connect button, this will launch the Junction Link Widget for that user.
 
 Once you have entered your credentials and moved to the next screen, you have connected your first source!
 You can now make API calls to retrieve data for that Source.
 
 ### How it works
 
-As you might have noticed, you use both a server and a client-side component to access the Vital APIs.
+As you might have noticed, you use both a server and a client-side component to access the Junction APIs.
 A more detailed explanation on how linking works can be found in [link flow](/wearables/connecting-providers/link_flow)
 
 The first step is to create a new `link_token` by making a `/link/token` request and passing in the
 required configuration. This `link_token` is a short lived, one-time use token that authenticates your
-app with Vital Link, our frontend module.
+app with Junction Link, our frontend module.
 
 ```python Generating a Link Token
 # TEST BACKEND IMPLEMENTATION
@@ -397,10 +397,10 @@ We offer different SDKs so you can start building your app right away:
 
 |                                                                  |                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
-| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Vital API on your backend |
+| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Junction API on your backend |
 | [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
 | [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
-| [vital-ios](https://github.com/tryVital/vital-ios)               | Vital iOS Client                                     |
+| [vital-ios](https://github.com/tryVital/vital-ios)               | Junction iOS Client                                     |
 | Java                                                             | Soon to be added                                     |
 | Go                                                               | Soon to be added                                     |
 
@@ -416,13 +416,13 @@ Congratulations, you have completed the Vital Quickstart!
 There are a few directions you can go in now:
 
 <Card
-  title="Vital Link"
+  title="Junction Link"
   icon="link"
   iconType="regular"
   href="/wearables/vital-link/introduction"
 >
   A client-side component your users will interact with in order to link their
-  accounts with Vital. It allows you to access their accounts via the Vital API.
+  accounts with Vital. It allows you to access their accounts via the Junction API.
 </Card>
 
 <Card title="Vital SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/ios">
@@ -439,6 +439,6 @@ There are a few directions you can go in now:
   data from the various providers.
 </Card>
 
-- [Vital Link](/wearables/vital-link/introduction)
+- [Junction Link](/wearables/vital-link/introduction)
 - [Vital SDKs](/wearables/sdks/ios)
 - [Vital Webhooks](/webhooks/Introduction)

@@ -17,7 +17,7 @@ Each event is published with these [Azure EventData Properties](https://learn.mi
 | -------- | ---------------- | ----- |
 | Property | event-type       | Vital event type, e.g., `daily.data.activity.created` |
 | Property | user-id          | Vital User ID of the event subject |
-| Property | team-id          | Vital Team ID of the event subject |
+| Property | team-id          | Junction Team ID of the event subject |
 | Property | content-encoding | `gzip`: The blob is compressed by gzip. absent: The blob is uncompressed. |
 | Property | idempotency-key  | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
 | Partition Key | -           | Vital User ID |

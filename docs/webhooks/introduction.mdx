@@ -8,7 +8,7 @@ or your ETL destination as soon as they are discovered.
 
 ## Connection Created stage
 
-When a user successfully connects a provider through [Vital Link](/wearables/connecting-providers/introduction), Vital sends a
+When a user successfully connects a provider through [Junction Link](/wearables/connecting-providers/introduction), Vital sends a
 Provider Connection Created event to acknowledge it:
 
 <AccordionGroup>
@@ -48,7 +48,7 @@ Historical data are data that exist prior to the connection establishment. Becau
 
 <Note>
 You can inspect the status of historical data backfill jobs of each individual user through [Junction Dashboard](https://app.junction.com) or
-[Vital API](/api-reference/data/introspection/historical-pulls).
+[Junction API](/api-reference/data/introspection/historical-pulls).
 </Note>
 
 Once the historical data backfill job of a specific [resource](/wearables/providers/resources) has **fully** completed, Vital sends a **Historical Pull Completion** event for the resource:
@@ -104,7 +104,7 @@ Whenever new data or changes are discovered, Vital sends them out as **Data Even
 
 <Note>
 You can inspect the state of incremental data updates of each individual user through [Junction Dashboard](https://app.junction.com) or
-[Vital API](/api-reference/data/introspection/user-resources).
+[Junction API](/api-reference/data/introspection/user-resources).
 </Note>
 
 <AccordionGroup>
