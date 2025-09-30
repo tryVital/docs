@@ -2,12 +2,11 @@
 title: "Ask on Order Entry (AOE)"
 ---
 
-Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker, or the ethnicity of the patient.
+Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker or the patient's ethnicity.
 
 <Note>
-Questions that are related to fasting (e.g  code `FSTING`) do not need to be answered. Vital uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
+  Questions that are related to fasting (e.g, code `FSTING`) do not need to be answered. Vital uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
 </Note>
-
 
 There are 4 types of AOE:
 
@@ -16,7 +15,7 @@ There are 4 types of AOE:
 3. `numeric`
 4. `text`
 
-`choice` and `multiple_choice` have a set list of answers to pick from, while `numeric` and `text` don't and are free form responses.
+`choice` and `multiple_choice` have a set list of answers to pick from, while `numeric` and `text` don't, and are free-form responses.
 
 AOE questions can also be required or optional.
 
@@ -70,6 +69,10 @@ The `answers` list contains a list of possible answers in the case that `type` i
 `required` deems whether the questions MUST be answered in order for the order to be valid, otherwise a error will be shown `Missing required questions - "question"`.
 
 ## How to answer
+
+<Tip>
+  For more information, refer to our [Knowledge Base article](https://support.junction.com/articles/1804950149-understanding-ask-on-order-entry-aoe-questions).
+</Tip>
 
 Answering is done at order time, via the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint, in the field `aoe_answers`.
 
@@ -140,6 +143,7 @@ The `answer` field contains the actual answer to the question and it's value wil
 In this case, the `answer` should contain the `code` field in the list of `answers` provided, as shown [here](/lab/workflow/aoe#where-to-find-the-questions).
 
 e.g The question is as follows for marker of id `173`:
+
 ```json
 {
   "id": 173,
@@ -175,6 +179,7 @@ e.g The question is as follows for marker of id `173`:
 ```
 
 The answer is:
+
 ```json
 {
     "aoe_answers": [
@@ -192,10 +197,11 @@ The answer is:
 This case can encompass many responses, and depends on the question itself.
 
 <Note>
-In some instances, the `text` case contains a `constraint` field. This is a string tooltip indicator of the constraints applied by the lab on this particular question.
+  In some instances, the `text` case contains a `constraint` field. This is a string tooltip indicator of the constraints applied by the lab on this particular question.
 </Note>
 
 e.g The question is as follows for marker of id `173`:
+
 ```json
 {
   "id": 173,
@@ -215,6 +221,7 @@ e.g The question is as follows for marker of id `173`:
 ```
 
 The answer is:
+
 ```json
 {
     "aoe_answers": [
@@ -232,6 +239,7 @@ The answer is:
 In this case, the `answer` should be a numeric string representation of the actual value.
 
 e.g The question is as follows for marker of id `173`:
+
 ```json
 {
   "id": 173,
@@ -251,6 +259,7 @@ e.g The question is as follows for marker of id `173`:
 ```
 
 The answer is:
+
 ```json
 {
     "aoe_answers": [
