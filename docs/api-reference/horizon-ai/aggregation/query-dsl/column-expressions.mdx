@@ -30,6 +30,186 @@ Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab t
 | Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }`
 | Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }`
 
+### Column Mappings
+
+Map summary resource properties to their Continuous Query column equivalents.
+
+#### Sleep
+
+| Sleep field | Query Column |
+| --- | --- |
+| `calendar_date` | `index` |
+| `bedtime_start` | `session_start` |
+| `bedtime_stop` | `session_end` |
+| `type` | `type` |
+| `timezone_offset` | `time_zone` |
+| `duration` | `duration_second` |
+| `total` | `stage_asleep_second` |
+| `awake` | `stage_awake_second` |
+| `light` | `stage_light_second` |
+| `rem` | `stage_rem_second` |
+| `deep` | `stage_deep_second` |
+| - | `stage_unknown_second` |
+| `score` | `score` |
+| `hr_lowest` | `heart_rate_minimum` |
+| `hr_average` | `heart_rate_mean` |
+| - | `heart_rate_maximum` |
+| `hr_resting` | `heart_rate_resting` |
+| `efficiency` | `efficiency` |
+| `latency` | `latency_second` |
+| `temperature_delta` | `skin_temperature_delta` |
+| `skin_temperature` | `skin_temperature` |
+| `hr_dip` | `heart_rate_dip` |
+| `average_hrv` | `hrv_mean_rmssd` |
+| - | `hrv_mean_sdnn` |
+| `respiratory_rate` | `respiratory_rate` |
+| `state` | `state` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.device_id` | `source_device_id` |
+| `source.app_id` | `source_app_id` |
+
+#### Activity
+
+| Activity field | Query Column |
+| --- | --- |
+| `calendar_date` | `index` |
+| `calories_total` | `calories_total` |
+| `calories_active` | `calories_active` |
+| `steps` | `steps` |
+| `daily_movement` | `duration_active_second` |
+| `distance` | `distance_meter` |
+| `floors_climbed` | `floors_climbed` |
+| `time_zone` | `time_zone` |
+| `timezone_offset` | `time_zone_offset` |
+| `heart_rate.avg_bpm` | `heart_rate_mean` |
+| `heart_rate.min_bpm` | `heart_rate_minimum` |
+| `heart_rate.max_bpm` | `heart_rate_maximum` |
+| `heart_rate.resting_bpm` | `heart_rate_resting` |
+| `heart_rate.avg_walking_bpm` | `heart_rate_mean_walking` |
+| `wheelchair_use` | `wheelchair_use` |
+| `wheelchair_push` | `wheelchair_push` |
+| - | `intensity_sedentary_second` |
+| `low` | `intensity_low_second` |
+| `medium` | `intensity_medium_second` |
+| `high` | `intensity_high_second` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.device_id` | `source_device_id` |
+| `source.app_id` | `source_app_id` |
+
+#### Workout
+
+| Workout field | Query Column |
+| --- | --- |
+| `title` | `title` |
+| `timezone_offset` | `time_zone` |
+| `average_hr` | `heart_rate_mean` |
+| `max_hr` | `heart_rate_maximum` |
+| - | `heart_rate_minimum` |
+| `distance` | `distance_meter` |
+| `calendar_date` | - |
+| `time_start` | `session_start` |
+| `time_end` | `session_end` |
+| `calories` | `calories` |
+| `sport.name` | `sport_name` |
+| `sport.slug` | `sport_slug` |
+| `hr_zones` | `heart_rate_zone_1..6` |
+| `moving_time` | `duration_active_second` |
+| `total_elevation_gain` | `elevation_gain_meter` |
+| `elev_high` | `elevation_maximum_meter` |
+| `elev_low` | `elevation_minimum_meter` |
+| `average_speed` | `speed_mean` |
+| `max_speed` | `speed_maximum` |
+| `average_watts` | `power_mean` |
+| `device_watts` | `power_source` |
+| `max_watts` | `power_maximum` |
+| `weighted_average_watts` | `power_weighted_mean` |
+| `steps` | `steps` |
+| `map.polyline` | `map_polyline` |
+| `map.summary_polyline` | `map_summary_polyline` |
+| `provider_id` | `external_id` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.device_id` | `source_device_id` |
+| `source.app_id` | `source_app_id` |
+
+#### Body
+
+| Body field | Query Column |
+| --- | --- |
+| `calendar_date` | - |
+| `date` (deprecated) | - |
+| - | `measured_at` |
+| `weight` | `weight_kilogram` |
+| `fat` | `fat_mass_percentage` |
+| `water_percentage` | `water_percentage` |
+| `muscle_mass_percentage` | `muscle_mass_percentage` |
+| `visceral_fat_index` | `visceral_fat_index` |
+| `bone_mass_percentage` | `bone_mass_percentage` |
+| `body_mass_index` | `body_mass_index` |
+| `lean_body_mass_kilogram` | `lean_body_mass_kilogram` |
+| `waist_circumference_centimeter` | `waist_circumference_centimeter` |
+| - | `time_zone` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.device_id` | `source_device_id` |
+| `source.app_id` | `source_app_id` |
+
+#### Meal
+
+| Meal field | Query Column |
+| --- | --- |
+| `timestamp` | index |
+| `name` | `name` |
+| `energy.value` | `calories` |
+| `macros.carbs` | `carbohydrate_gram` |
+| `macros.protein` | `protein_gram` |
+| `macros.alcohol` | `alcohol_gram` |
+| `macros.water` | `water_gram` |
+| `macros.fibre` | `fibre_gram` |
+| `macros.sugar` | `sugar_gram` |
+| `macros.cholesterol` | `cholesterol_gram` |
+| `macros.fats.saturated` | `saturated_fat_gram` |
+| `macros.fats.monounsaturated` | `monounsaturated_fat_gram` |
+| `macros.fats.polyunsaturated` | `polyunsaturated_fat_gram` |
+| `macros.fats.omega3` | `omega3_fat_gram` |
+| `macros.fats.omega6` | `omega6_fat_gram` |
+| `macros.fats.total` | `total_fat_gram` |
+| `micros.minerals.sodium` | `sodium_milligram` |
+| `micros.minerals.potassium` | `potassium_milligram` |
+| `micros.minerals.calcium` | `calcium_milligram` |
+| `micros.minerals.phosphorus` | `phosphorus_milligram` |
+| `micros.minerals.magnesium` | `magnesium_milligram` |
+| `micros.minerals.iron` | `iron_milligram` |
+| `micros.minerals.zinc` | `zinc_milligram` |
+| `micros.minerals.fluoride` | `fluoride_milligram` |
+| `micros.minerals.chloride` | `chloride_milligram` |
+| `micros.vitamins.vitamin_a` | `vitamin_a_milligram` |
+| `micros.vitamins.vitamin_b1` | `vitamin_b1_milligram` |
+| `micros.vitamins.riboflavin` | `riboflavin_milligram` |
+| `micros.vitamins.niacin` | `niacin_milligram` |
+| `micros.vitamins.pantothenic_acid` | `pantothenic_acid_milligram` |
+| `micros.vitamins.vitamin_b6` | `vitamin_b6_milligram` |
+| `micros.vitamins.biotin` | `biotin_microgram` |
+| `micros.vitamins.vitamin_b12` | `vitamin_b12_microgram` |
+| `micros.vitamins.vitamin_c` | `vitamin_c_milligram` |
+| `micros.vitamins.vitamin_d` | `vitamin_d_microgram` |
+| `micros.vitamins.vitamin_e` | `vitamin_e_milligram` |
+| `micros.vitamins.vitamin_k` | `vitamin_k_microgram` |
+| `micros.vitamins.folic_acid` | `folic_acid_microgram` |
+| `micros.trace_elements.chromium` | `chromium_microgram` |
+| `micros.trace_elements.copper` | `copper_milligram` |
+| `micros.trace_elements.iodine` | `iodine_microgram` |
+| `micros.trace_elements.manganese` | `manganese_milligram` |
+| `micros.trace_elements.molybdenum` | `molybdenum_microgram` |
+| `micros.trace_elements.selenium` | `selenium_microgram` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.app_id` | `source_app_id` |
+| `source.device_id` | `source_device_id` |
+
+
 ### Timeseries
 
 | Table                                   | Python DSL                                  | JSON DSL

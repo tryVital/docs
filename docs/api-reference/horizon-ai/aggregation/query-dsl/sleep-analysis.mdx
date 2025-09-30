@@ -117,3 +117,34 @@ va.select(va.Sleep.score())
 ```
 </CodeGroup>
 
+## Awake At / Asleep At
+
+Pinpoint when a user first fell asleep and when they became fully awake during each sleep session.
+
+<Accordion title="Output column names" icon="line-columns" iconType="duotone" defaultOpen>
+`asleep_at`, `awake_at`
+</Accordion>
+
+The `asleep_at` macro returns the bedtime start adjusted by the recorded sleep latency, while `awake_at` returns the bedtime start plus the offset of the final non-awake sleep segment.
+
+### Get Asleep At and Awake At
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Sleep.asleep_at(),
+    va.Sleep.awake_at()
+)
+```
+
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "asleep_at" },
+        { "value_macro": "awake_at" }
+    ]
+}
+```
+</CodeGroup>
