@@ -2,80 +2,94 @@
 title: "Patient Service Centers and Appointments"
 ---
 
-# Finding nearest serviceable Patient Service Centers
+# Finding the Nearest Serviceable Patient Service Centers
 
 Verifying if a particular zip code is serviceable is an important step, as not all labs have patient service centers within a state or within a reasonable distance.
 
-The recommend high level flow for verifying PSC availability at Vital is:
+The recommended high-level flow for verifying PSC availability at Vital is:
 
-- Fetch PSC location data via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint, the response payload should look like this:
+1. Fetch PSC location data via the `GET /v3/order/area/info` endpoint, the response payload should look like this:
 
-```json
-{
-  "zip_code": "85004",
-  "central_labs": {
-    "labcorp": {
-        "within_radius": 5, # number of PSC's within radius of provided zip code
-        "radius": "25", # miles
-        "capabilities": ["stat"] # aggregate list of capabilities provided by PSCs within the radius
-    }
-  }
-  ...
-}
-```
+   ```json
+   {
+     "zip_code": "85004",
+     "central_labs": {
+       "labcorp": {
+           "within_radius": 5, # the number of PSC's within radius of provided zip code
+           "radius": "25", # miles
+           "capabilities": ["stat", "appointment_scheduling_with_lab"] # aggregate list of capabilities provided by PSCs within the radius
+       }
+     }
+     ...
+   }
+   ```
+2. Then you can query the `GET /v3/order/psc/info` endpoint for specific information on the PSCs within the radius of the provided zip code, which will look like this:
+
+   ```json
+   {
+     "lab_id": 27,
+     "slug": "labcorp",
+     "patient_service_centers": [
+       {
+         "metadata": {
+           "name": "LABCORP",
+           "state": "AZ",
+           "city": "Phoenix",
+           "zip_code": "85006",
+           "first_line": "1300 N 12th St",
+           "second_line": "Ste 300",
+           "phone_number": "480-878-3988",
+           "fax_number": "844-346-5903",
+           "hours": null
+         },
+         "distance": "25",
+         "site_code": "ABC",
+         "capabilities": ["stat", "appointment_scheduling_with_lab"]
+       },
+     ]
+   }
+   ```
 
 <Note>
-A **capability** is a specific service that a PSC provides, for example STAT testing.
+  A **capability** is a specific service that a PSC provides, for example, STAT testing or appointment scheduling.
 </Note>
 
-If specific data regarding the PSC's is required, then you can also query the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) for specific information on the PSC's within the radius of the provided zip code.
-
-```json
-{
-  "lab_id": 27,
-  "slug": "labcorp",
-  "patient_service_centers": [
-    {
-      "metadata": {
-        "name": "LABCORP",
-        "state": "AZ",
-        "city": "Phoenix",
-        "zip_code": "85006",
-        "first_line": "1300 N 12th St",
-        "second_line": "Ste 300",
-        "phone_number": "480-878-3988",
-        "fax_number": "844-346-5903",
-        "hours": null
-      },
-      "distance": "25",
-      "site_code": "ABC",
-      "capabilities": ["stat"]
-    },
-  ]
-}
-```
 
 # Booking appointments at Patient Service Centers
 
-<Note>
+<Warning>
   Currently only available for Quest
-</Note>
+</Warning>
 
-Vital allows booking of appointments directly with the Patient Service Centers for some labs. In order to book these appointments, you can use the [PSC Appointment API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability).
+## **Appointment Scheduling Capability**
 
-Patient Service Centers have access to the booked appointment, and these can be cancelled/updated outside our system. When this happens, we do not have visibility.
+The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET /v3/order/area/info` or `GET /v3/order/psc/info` endpoints as:
 
-In order for the patient/customer to be able to track the appointment individually, we expose the `external_id` paramenter in the appointment endpoints/webhooks. This code is the unique identifier of the appointment at the provider, and should be made aware to the patient.
-
-We provide it to the patient via the SMS communications for the appointment.
+- `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction’s API.
+- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone.
+  - ⚠️ This capability indicates that scheduling appointments is _not_ available through Junction’s API.
+- If neither of these capabilities is present, it indicates that the PSC either does not allow scheduling appointments or that we do not have visibility into whether they do.
 
 ## Appointment Availability
 
-You can use the [availability API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) to obtain the available slots. You can feed in the `site_code` you obtain from the [`GET /v3/order/psc/info`](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly. If you provider a zip code, a max of 3 PSC locations will be displayed.
+Use the [availability API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) to obtain the available slots. You can provide the `site_code` you obtain from the `GET /v3/order/psc/info` endpoint, or supply a zip code directly. 
 
-Note that since this endpoint can return availability for multiple PSC's, there may be multiple timezones. The individual start and end times are in UTC, and each location has it's own `iana_timezone` key which should be used to convert these start and end dates to the correct timezone.
-The overarching `timezone` key will always be `null` in this endpoint\`
+- If you provide a zip code, a maximum of 3 PSC locations will be displayed.
+
+Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data. 
+
+- ⚠️ The individual start and end times are in UTC, and each location has its own `iana_timezone` key, which should be used to convert these start and end dates to the correct time zone.
+- The overarching `timezone` key will always be `null` in this endpoint.
 
 ## Booking
 
-You can [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling) or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Vital, as many times as you want.
+<Warning>
+  Patient Service Centers have access to the booked appointment, which can be canceled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
+</Warning>
+
+In order to book these appointments, you can use the [PSC Appointment API](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability). You can [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Junction as many times as you want.
+
+To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks. 
+
+- This code is the unique identifier for the appointment at the provider and should be made available to the patient.
+- We provide it to the patient via [SMS communications](/lab/walk-in/communications) for the appointment.
