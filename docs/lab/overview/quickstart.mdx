@@ -15,6 +15,10 @@ In the following, replace `{{BASE_URL}}` with your team's [environment URL](/hom
 
 In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the userId on our side, which you'll be able to use for future requests.
 
+<Note>
+When providing patient names in subsequent API calls, ensure they conform to our [name validation requirements](/lab/workflow/order-requirements#patient-name-validation) for security and data consistency.
+</Note>
+
 You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
 
 <CodeGroup>
@@ -213,7 +217,7 @@ You can then use the test `id` when creating an order.
 
 ### (3) Placing an order
 
-Ordering a test for your user is as simple as making an API call:
+Ordering a test for your user is as simple as making an API call. Ensure all patient name fields (`first_name`, `last_name`, `receiver_name`) follow our [name validation requirements](/lab/workflow/order-requirements#patient-name-validation):
 
 <CodeGroup>
 

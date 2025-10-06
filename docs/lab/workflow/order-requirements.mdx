@@ -15,6 +15,69 @@ When you order a lab test through our API, you may have to collect consents from
 As mentioned [in the introduction](/lab/overview/introduction#features), you don't need to have your own Physician to place orders with Vital. When you [order a test](/lab/overview/quickstart#3-placing-an-order), you can pass an optional `physician` argument.
 If provided, the order will use your physician. If not, your order will go through with Vital's physician network. For more information, please check [our lab testing page](https://tryvital.io/labs) and [book an introductory call with us](https://cal.com/team/vital/discovery-call).
 
+### Patient Name Validation
+
+Patient names in the Vital API must conform to a specific regex pattern due to lab restrictions. This validation applies to all name fields including `first_name`, `last_name`, and `receiver_name`.
+
+#### Validation Pattern
+
+```
+^([a-zA-Z0-9]{1})([a-zA-Z0-9-.,']*(\s[a-zA-Z0-9-.,']+)*[a-zA-Z0-9-.,']?)$
+```
+
+#### Pattern Breakdown
+
+- `^([a-zA-Z0-9]{1})` - Must start with exactly one alphanumeric character (letter or number)
+- `([a-zA-Z0-9-.,']*` - Followed by zero or more alphanumeric characters, hyphens, periods, commas, or apostrophes
+- `(\s[a-zA-Z0-9-.,']+)*` - Zero or more groups of: space followed by one or more valid characters
+- `[a-zA-Z0-9-.,']?)$` - Optionally ends with a valid character (not space)
+
+#### Validation Rules
+
+**Allowed Characters:**
+- Letters (a-z, A-Z)
+- Numbers (0-9)
+- Hyphens (-)
+- Periods (.)
+- Commas (,)
+- Apostrophes (')
+- Spaces (only between words)
+
+**Requirements:**
+- Must start with an alphanumeric character (not space, hyphen, or punctuation)
+- Spaces are only allowed between words
+- Cannot start or end with a space
+- Cannot have consecutive spaces
+
+#### Valid Examples
+
+```
+John
+Mary-Jane
+O'Connor
+Dr. Smith
+Jean-Pierre
+```
+
+#### Invalid Examples
+
+```
+ John          // Starts with space
+John           // Ends with space
+-John          // Starts with hyphen
+John@Smith     // Contains @ symbol
+José           // Contains accented character (í)
+María          // Contains accented character (í)
+François       // Contains accented character (ç)
+```
+
+#### Error Message
+
+When validation fails, the API returns:
+
+"The field must start with a letter (a-z or A-Z or 0-9) and can only contain -,. special characters, but cannot start with a space or hyphen."
+
+
 ### Minors
 
 Ordering for minors (under 18 years old) requires a specific configuration, which you can request with your Junction Customer Success Manager.
