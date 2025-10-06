@@ -3,9 +3,10 @@ title: "Register Testkit Order"
 openapi: "POST /v3/order/testkit/register"
 ---
 
-import PatientNameValidation from '/snippets/patient-name-validation.mdx';
+<Note>
+Patient name fields (`first_name`, `last_name`) must follow specific validation rules due to lab restrictions. See [Patient Name Validation](/lab/workflow/order-requirements#patient-name-validation) for complete details.
+</Note>
 
-<PatientNameValidation />
 
 <RequestExample>
 
