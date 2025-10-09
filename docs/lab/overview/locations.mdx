@@ -93,3 +93,11 @@ To allow the patient to track their appointment individually, we expose the `ext
 
 - This code is the unique identifier for the appointment at the provider and should be made available to the patient.
 - We provide it to the patient via [SMS communications](/lab/walk-in/communications) for the appointment.
+
+### External ID Format
+
+The `external_id` field contains the provider's unique appointment identifier:
+
+| Provider | Format | Example | Description |
+|----------|--------|---------|-------------|
+| Quest | 6-letter code | `ABCDEF` | Used by Quest to identify appointments in their system |
