@@ -2,6 +2,11 @@
 openapi: "POST /v2/user/{user_id}/insurance"
 ---
 
+<Note>
+Patient name fields (`first_name`, `last_name`) must follow specific validation rules due to lab restrictions. See [Patient Name Validation](/lab/workflow/order-requirements#patient-name-validation) for complete details.
+</Note>
+
+
 <RequestExample>
 
 ```bash cURL
