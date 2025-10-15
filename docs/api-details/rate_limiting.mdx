@@ -9,9 +9,9 @@ and product launch plans.
 However, when Junction API servers are under stress, there is a possibility in which our infrastructure may abort a number
 of your API requests with a **429 Too Many Requests** or **503 Service Unavailable** response.
 
-For idempotent API requests, consider retrying the API request at least once, upon receiving a 429 or 503 response. Optionally,
+For idempotent API requests, consider retrying the API request at least once upon receiving a 429 or 503 response. Optionally,
 if you are making the API request in an asynchronous job context, consider having more retry attempts with an
-expontential backoff strategy.
+exponential backoff strategy.
 
 
 ## Targeted rate limits

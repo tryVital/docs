@@ -1,123 +1,186 @@
 ---
 title: "Quickstart"
-description: "A quick introduction to building with Vital"
+description: "Get started with Junction in under 30 minutes. Learn how to create users, connect devices, and retrieve health data."
 ---
 
-## 1. API keys
-
-Let's test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
-You can get API keys by signing up in the [Dashboard](https://app.junction.com).
-Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
-the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
-
-To create a team and get your API keys, you first need to sign up for a Vital account in the [Dashboard](https://app.junction.com).
-
-Once registered, you can create a team by hovering over your username at the bottom of the Dashboard sidebar.
-A team is associated with a region (either `EU` or `US`), the region dictates where data is stored.
-You can learn more at [regions](/api-details/regions).
-
-To create your API keys, go to the configuration section of the Dashboard.
-For each region, you'll have access to two environments Sandbox and Production.
-We'll start in the Sandbox environment, so create a new Sandbox API key.
+This quickstart guide walks you through the essential steps to integrate Junction into your application. By the end, you'll have a working app that creates users, connects wearable devices, and fetches health data.
 
 <Note>
-  If you get stuck at any point in the Quickstart, help is just a click away!
-  Join our Slack channel or send us a message to
-  [support@tryvital.io](mailto:support@tryvital.io)
+Need help? Join our Slack channel or email [support@junction.com](mailto:support@junction.com) for assistance.
 </Note>
 
-| Environment  |                                             |                         |
-| ------------ | ------------------------------------------- | ----------------------- |
-| `sandbox`    | Testing, Connect up to 10 live users        | api.sandbox.tryvital.io |
-| `production` | Live environment to use with real customers | api.tryvital.io         |
+## Prerequisites
 
-## 2. Running Quickstart locally
+Before you begin, ensure you have:
+- A Junction account ([Sign up here](https://app.junction.com))
+- Node.js 14+ and Python 3+ installed
+- Basic familiarity with REST APIs
 
-Once you have your API keys, it's time to run the Vital Quickstart locally!
-The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
-customizing the `.env` file with your own Vital `API_KEY` and finally, building and running the app.
+## Get your API keys
 
-```bash 1. Clone quickstart and run locally
-# Note: If on Windows, run
-# git clone -c core.symlinks=true https://github.com/tryVital/quickstart
-# instead to ensure correct symlink behavior
+<Steps>
+<Step title="Create a Junction account">
+Sign up for a Junction account in the [Dashboard](https://app.junction.com).
+</Step>
+
+<Step title="Create a team">
+Create a team by hovering over your username at the bottom of the Dashboard sidebar.
+
+<Info>
+Teams are **regional resources**. Choose either `US` or `EU` based on your data residency requirements. This cannot be changed later. Learn more about [regions](/api-details/regions).
+</Info>
+</Step>
+
+<Step title="Generate API keys">
+Navigate to the configuration section of the Dashboard. For each region, you'll have access to two environments:
+
+| Environment  | Description                                 | Base URL                    |
+| ------------ | ------------------------------------------- | --------------------------- |
+| `sandbox`    | Testing environment (up to 50 users)        | api.sandbox.us.junction.com |
+| `production` | Live environment for real customers         | api.us.junction.com         |
+
+Create a new **Sandbox API key** to get started.
+
+<Warning>
+Store your API key securely. Never commit API keys to version control or expose them in client-side code.
+</Warning>
+</Step>
+</Steps>
+
+## Run the Quickstart app
+
+<Steps>
+<Step title="Clone the repository">
+Clone the [Quickstart repository](https://github.com/tryVital/quickstart) to your local machine.
+
+<Tabs>
+<Tab title="macOS/Linux">
+```bash
 git clone https://github.com/tryVital/quickstart.git
+cd quickstart
+```
+</Tab>
 
-# Create .env, then fill
-# out VITAL_API_KEY, VITAL_REGION (eu, us) and VITAL_ENV in .env
-touch .env
+<Tab title="Windows">
+```bash
+# Use symlinks for correct behavior on Windows
+git clone -c core.symlinks=true https://github.com/tryVital/quickstart.git
+cd quickstart
+```
+</Tab>
+</Tabs>
 
-# Note: must use python 3
-# For virtualenv users:
-# virtualenv venv
-# source venv/bin/activate
+</Step>
+
+<Step title="Configure environment variables">
+Create a `.env` file in the root directory with your API credentials:
+
+```bash .env
+VITAL_API_KEY=your_sandbox_api_key_here
+VITAL_REGION=us  # or 'eu'
+VITAL_ENV=sandbox
+```
+
+<Tip>
+You can copy `.env.example` as a starting point if it exists in the repository.
+</Tip>
+</Step>
+
+<Step title="Install and run the backend">
+Set up the Python backend server:
+
+```bash
+# Install dependencies using Poetry
 poetry install
 
-# Start the backend app
+# Start the backend server
 cd backend/python
 source ./start.sh
 ```
 
-Open a new shell and start the frontend app. Your app will be running at `http://localhost:3000`.
+<Check>
+The backend server should now be running on `http://localhost:8000`
+</Check>
+</Step>
 
-```bash 2. Run quickstart frontend
-# Install dependencies
+<Step title="Install and run the frontend">
+Open a new terminal window and set up the frontend:
+
+```bash
+# Navigate to frontend directory
 cd quickstart/frontend
 npm install
 
-# Open .env.local, then fill
-# out NEXT_PUBLIC_VITAL_API_KEY, NEXT_PUBLIC_VITAL_ENV and NEXT_PUBLIC_VITAL_REGION
+# Configure frontend environment
+# Edit .env.local with the following:
+# NEXT_PUBLIC_VITAL_API_KEY=your_api_key
+# NEXT_PUBLIC_VITAL_ENV=sandbox
+# NEXT_PUBLIC_VITAL_REGION=us
 
-# Start the frontend app
+# Start the frontend
 npm run dev
-
-# Go to http://localhost:3000
 ```
 
-## 3. Creating your first User
+<Check>
+Visit `http://localhost:3000` to see your running application.
+</Check>
+</Step>
+</Steps>
 
-When retrieving data or connecting devices, Vital will require a `user_id` as input.
-A `user_id` is a unique representation that we hold for a user. It allows you to fetch data for that user.
-To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
-to store the Vital `user_id` in your db against the user row.
+## Create your first user
+
+Users are the core entity in Junction. Each user represents an individual whose health data you want to access.
+
+### Understanding user IDs
+
+<Info>
+Junction uses two ID types:
+- **`client_user_id`**: Your internal user identifier
+- **`user_id`**: Junction's unique identifier (returned after creation)
+
+Store the `user_id` in your database for future API calls.
+</Info>
 
 <Warning>
-
-Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
-
+Never use personally identifiable information (PII) like email addresses or phone numbers as the `client_user_id`. Use a UUID or internal database ID instead.
 </Warning>
 
-Enter a new `client_user_id` and tap Create:
+### Create a user via the UI
 
-<img src="/img/quickstart.jpg" alt="quickstart" />{" "}
+<Frame>
+<img src="/img/quickstart.jpg" alt="Junction Quickstart interface showing user creation form with client_user_id input field" />
+</Frame>
 
-This can also be achieved via the API as follows.
+Enter a unique `client_user_id` and click **Create** to generate a new user.
+
+### Create a user via API
 
 <CodeGroup>
 
-```bash Creating a Vital user (bash)
+```bash cURL
 curl --request POST \
-     --url {{BASE_URL}}/v2/user/ \
-     --header 'Accept: application/json' \
-     --header 'Content-Type: application/json' \
-     --header 'x-vital-api-key: <YOUR_API_KEY>' \
-     --data '{"client_user_id":"<YOUR_CLIENT_USER_ID>"}'
+  --url https://api.sandbox.us.junction.com/v2/user/ \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'x-vital-api-key: YOUR_API_KEY' \
+  --data '{
+    "client_user_id": "user_12345"
+  }'
 ```
 
-```js Node
+```javascript Node.js
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { UserCreateBody } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+  apiKey: process.env.VITAL_API_KEY,
+  environment: VitalEnvironment.Sandbox,
 });
 
-const request: UserCreateBody = {
-    clientUserId: "<client_user_id>"
-}
+const user = await client.user.create({
+  clientUserId: "user_12345"
+});
 
-const data = await client.user.create(request)
+console.log(`Created user: ${user.user_id}`);
 ```
 
 ```python Python
@@ -125,11 +188,12 @@ from vital.client import Vital
 from vital.environment import VitalEnvironment
 
 client = Vital(
-  api_key="YOUR_API_KEY",
+  api_key=os.environ["VITAL_API_KEY"],
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.create(client_user_id="<client_user_id>")
+user = client.user.create(client_user_id="user_12345")
+print(f"Created user: {user.user_id}")
 ```
 
 ```java Java
@@ -138,21 +202,23 @@ import com.vital.api.core.Environment;
 import com.vital.api.resources.user.requests.UserCreateBody;
 
 Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+  .apiKey(System.getenv("VITAL_API_KEY"))
+  .environment(Environment.SANDBOX)
+  .build();
 
-UserCreateBody request = UserCreateBody
-     .builder()
-     .clientUserId("<client_user_id>")
-     .build();
+UserCreateBody request = UserCreateBody.builder()
+  .clientUserId("user_12345")
+  .build();
 
-var data = vital.user().create(request);
+var user = vital.user().create(request);
+System.out.println("Created user: " + user.getUserId());
 ```
 
 ```go Go
 import (
   "context"
+  "fmt"
+  "os"
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
@@ -160,101 +226,90 @@ import (
 )
 
 client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithApiKey(os.Getenv("VITAL_API_KEY")),
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-request := &vital.UserCreateBody{
-     ClientUserId: "<client_user_id>",
-}
-
-response, err := client.User.Create(context.TODO(), request)
+user, err := client.User.Create(context.TODO(), &vital.UserCreateBody{
+  ClientUserId: "user_12345",
+})
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n", response)
+fmt.Printf("Created user: %s\n", user.UserId)
 ```
 
 ```swift Swift
-let user = try await VitalClient.shared.user.create(clientUserId)
+let user = try await VitalClient.shared.user.create("user_12345")
+print("Created user: \(user.userId)")
 ```
 
 </CodeGroup>
 
-## 4. Connecting a source
+## Connect a wearable device
 
-A source, at Vital, is a medical device, wearable, or lab. It is a source of information for health data.
-To connect a source tap the connect button, this will launch the Junction Link Widget for that user.
+Junction Link enables your users to securely connect their wearable devices and health apps. The connection process uses a two-step authentication flow:
 
-Once you have entered your credentials and moved to the next screen, you have connected your first source!
-You can now make API calls to retrieve data for that Source.
+1. **Backend**: Generate a short-lived `link_token`
+2. **Frontend**: Use the token to launch Junction Link Widget
 
-### How it works
+### Generate a link token
 
-As you might have noticed, you use both a server and a client-side component to access the Junction APIs.
-A more detailed explanation on how linking works can be found in [link flow](/wearables/connecting-providers/link_flow)
+<Info>
+Link tokens are single-use and expire after a short period. Generate a new token for each connection attempt.
+</Info>
 
-The first step is to create a new `link_token` by making a `/link/token` request and passing in the
-required configuration. This `link_token` is a short lived, one-time use token that authenticates your
-app with Junction Link, our frontend module.
+<CodeGroup>
 
-```python Generating a Link Token
-# TEST BACKEND IMPLEMENTATION
+```python Backend (Python)
 from vital.client import Vital
 from vital.environment import VitalEnvironment
-from vital.client import Vital
-from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
 
 client = Vital(
-  api_key=<YOUR_API_KEY>,
-  environment=VitalEnvironment.SANDBOX,
-  timeout=30
+  api_key=os.environ["VITAL_API_KEY"],
+  environment=VitalEnvironment.SANDBOX
 )
 
-app = FastAPI()
-
-app.add_middleware(  # type: ignore
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.get("/token/{user_key}")
-def get_token(user_key: str):
-    return client.link.token(user_id=user_key)
-
-
+# Generate link token for a specific user
+link_token = client.link.token(user_id=user.user_id)
+return link_token
 ```
 
-Once you have a `link_token`, you can use it to initialize `Link`. `Link` is a drop-in client-side
-module available for web, iOS, and Android that handles the authentication process.
-The Quickstart uses `Link` on the web, which is a pure JavaScript integration that you trigger via your own client-side code.
+```javascript Backend (Node.js)
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
-```javascript Generating a Link Token
-import { Button } from "@chakra-ui/react";
-import { useState, useCallback } from "react";
+const client = new VitalClient({
+  apiKey: process.env.VITAL_API_KEY,
+  environment: VitalEnvironment.Sandbox,
+});
+
+// Generate link token for a specific user
+const linkToken = await client.link.token(userId);
+return linkToken;
+```
+
+</CodeGroup>
+
+### Launch Junction Link Widget
+
+Use the React SDK to integrate Junction Link into your frontend:
+
+```javascript React
+import { useCallback } from "react";
 import { useVitalLink } from "@tryvital/vital-link";
 
-export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
-  const [isLoading, setLoading] = useState(false);
-
+export function ConnectDeviceButton({ userId }) {
   const onSuccess = useCallback((metadata) => {
-    // Device is now connected.
-    console.log("onSuccess", metadata);
+    console.log("Device connected:", metadata);
+    // Refresh your UI or trigger data sync
   }, []);
 
   const onExit = useCallback((metadata) => {
-    // User has quit the link flow.
-    console.log("onExit", metadata);
+    console.log("User exited:", metadata);
   }, []);
 
-  const onError = useCallback((metadata) => {
-    // Error encountered in connecting device.
-    console.log("onError", metadata);
+  const onError = useCallback((error) => {
+    console.error("Connection error:", error);
   }, []);
 
   const config = {
@@ -265,180 +320,244 @@ export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
     region: "us",
   };
 
-  const { open, ready, error } = useVitalLink(config);
+  const { open, ready } = useVitalLink(config);
 
-  const handleVitalOpen = async () => {
-    setLoading(true);
-    const token = await getTokenFromBackend(userID);
-    open(token.link_token);
-    setLoading(false);
+  const handleConnect = async () => {
+    // Fetch link token from your backend
+    const response = await fetch(`/api/link-token/${userId}`);
+    const { link_token } = await response.json();
+
+    // Open Junction Link Widget
+    open(link_token);
   };
 
   return (
-    <Button
-      bg="blue.400"
-      color="white"
-      fontSize={"12px"}
-      px={2}
-      py={0}
-      onClick={handleVitalOpen}
-      isLoading={isLoading || !ready}
-      isDisabled={userID ? false : true}
+    <button
+      onClick={handleConnect}
+      disabled={!ready || !userId}
     >
-      Connect
-    </Button>
+      Connect Device
+    </button>
   );
-};
+}
 ```
 
-This is what your users see to connect their medical device or wearables:
+<Frame caption="Junction Link Widget showing available wearable providers">
+<img
+  src="/img/link_specific.png"
+  alt="Junction Link interface displaying a grid of wearable device providers including Fitbit, Garmin, Oura, Apple Health, and others with their respective logos and connection buttons"
+/>
+</Frame>
 
-<img src="/img/link_specific.png" width="75%" alt="Link specific" />
+## Fetch health data
 
-## 5. Making your first API request
+Once a device is connected, you can retrieve health data through the Junction API. Let's fetch sleep data as an example.
 
-We can now explore what happens when
-you press the analyze button in the Quickstart to make an API call.
-As an example, we'll look at the Quickstart's call to `/summary/sleep`, which retrieves sleep
-summary data for a user. The request is simple and requires the Vital
-`user_id`, `start_date` and `end_date`.
-
-**Getting user sleep data**
+### Get sleep summary data
 
 <CodeGroup>
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.sandbox.us.junction.com/v2/summary/sleep/USER_ID?start_date=2024-01-01&end_date=2024-01-31' \
+  --header 'Accept: application/json' \
+  --header 'x-vital-api-key: YOUR_API_KEY'
+```
 
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
+from datetime import date, timedelta
 
 client = Vital(
-  api_key="YOUR_API_KEY",
+  api_key=os.environ["VITAL_API_KEY"],
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.sleep.get(
-  user_id="<user_id>", 
-  start_date="2021-01-01", 
-  end_date="2021-01-02"
+# Fetch last 30 days of sleep data
+end_date = date.today()
+start_date = end_date - timedelta(days=30)
+
+sleep_data = client.sleep.get(
+  user_id=user.user_id,
+  start_date=start_date.isoformat(),
+  end_date=end_date.isoformat()
 )
+
+for sleep in sleep_data:
+  print(f"Date: {sleep.date}")
+  print(f"Duration: {sleep.duration_seconds / 3600:.1f} hours")
+  print(f"Deep sleep: {sleep.deep_sleep_seconds / 3600:.1f} hours")
 ```
 
-```javascript Node
+```javascript Node.js
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { SleepGetRequest } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+  apiKey: process.env.VITAL_API_KEY,
+  environment: VitalEnvironment.Sandbox,
 });
 
-const request: SleepGetRequest = {
-    startDate: '2021-01-01',
-    endDate: '2021-01-02',
-}
+// Fetch last 30 days of sleep data
+const endDate = new Date().toISOString().split('T')[0];
+const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  .toISOString().split('T')[0];
 
-const data = await client.sleep.get('user_id', request)
+const sleepData = await client.sleep.get(userId, {
+  startDate,
+  endDate,
+});
+
+sleepData.forEach(sleep => {
+  console.log(`Date: ${sleep.date}`);
+  console.log(`Duration: ${(sleep.duration_seconds / 3600).toFixed(1)} hours`);
+});
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
 import com.vital.api.resources.sleep.requests.SleepGetRequest;
+import java.time.LocalDate;
 
 Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+  .apiKey(System.getenv("VITAL_API_KEY"))
+  .environment(Environment.SANDBOX)
+  .build();
 
-SleepGetRequest request = SleepGetRequest
-        .builder()
-        .startDate("2021-01-01")
-        .endDate("2021-01-02")
-        .build();
+LocalDate endDate = LocalDate.now();
+LocalDate startDate = endDate.minusDays(30);
 
-var data = vital.sleep().get("<user_id>", request);
+SleepGetRequest request = SleepGetRequest.builder()
+  .startDate(startDate.toString())
+  .endDate(endDate.toString())
+  .build();
+
+var sleepData = vital.sleep().get(userId, request);
 ```
 
 ```go Go
 import (
   "context"
+  "time"
 
   vital "github.com/tryVital/vital-go"
   vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
 )
 
-EndDate := "2021-01-02"
-request := &vital.SleepGetRequest{
-  StartDate: "2021-01-01",
-  EndDate:   &EndDate,
-}
+// Calculate date range
+endDate := time.Now().Format("2006-01-02")
+startDate := time.Now().AddDate(0, 0, -30).Format("2006-01-02")
 
-response, err := client.Sleep.Get(
-  context.TODO(), 
-  "<user_id>", 
-  request
+sleepData, err := client.Sleep.Get(
+  context.TODO(),
+  userId,
+  &vital.SleepGetRequest{
+    StartDate: startDate,
+    EndDate:   &endDate,
+  },
 )
-if err != nil {
-  return err
-}
-fmt.Printf("Received data %s\n", response)
 ```
 
 ```swift Swift
-let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, endDate)
+let endDate = Date()
+let startDate = Calendar.current.date(byAdding: .day, value: -30, to: endDate)!
+
+let sleepData = try await VitalClient.shared.summary.sleep(
+  userId,
+  startDate,
+  endDate
+)
 ```
 
 </CodeGroup>
 
-## 6. SDK's and Libraries
+<Tip>
+For real-time data updates, configure [webhooks](/webhooks/introduction) to receive push notifications when new health data becomes available.
+</Tip>
 
-We offer different SDKs so you can start building your app right away:
+## Available SDKs and libraries
 
-|                                                                  |                                                      |
-| ---------------------------------------------------------------- | ---------------------------------------------------- |
-| [vital-python](https://pypi.org/project/vital)                   | Python library for calling Junction API on your backend |
-| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
-| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
-| [vital-ios](https://github.com/tryVital/vital-ios)               | Junction iOS Client                                     |
-| Java                                                             | Soon to be added                                     |
-| Go                                                               | Soon to be added                                     |
+Junction provides official SDKs for popular programming languages and frameworks:
 
-You can also download our [API collection](https://www.postman.com/collections/35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533) or by installing postman first and clicking on the below button.
+<CardGroup cols={2}>
+<Card title="Python SDK" icon="python" href="https://pypi.org/project/vital">
+  Full-featured Python client for Junction API
+</Card>
+
+<Card title="Node.js SDK" icon="node-js" href="https://www.npmjs.com/package/@tryvital/vital-node">
+  TypeScript-ready Node.js client library
+</Card>
+
+<Card title="Junction Link (React)" icon="react" href="https://www.npmjs.com/package/@tryvital/vital-link">
+  React components for device connection flow
+</Card>
+
+<Card title="iOS SDK" icon="apple" href="https://github.com/tryVital/vital-ios">
+  Native Swift SDK for iOS applications
+</Card>
+
+<Card title="Android SDK" icon="android" href="https://github.com/tryVital/vital-android">
+  Native Kotlin SDK for Android apps
+</Card>
+
+<Card title="Java SDK" icon="java" href="https://github.com/tryVital/vital-java">
+  Java client for Junction API integration
+</Card>
+
+<Card title="Go SDK" icon="golang" href="https://github.com/tryVital/vital-go">
+  Go client library with full type safety
+</Card>
+
+<Card title="Flutter SDK" icon="mobile" href="https://github.com/tryVital/vital-flutter">
+  Cross-platform SDK for Flutter apps
+</Card>
+</CardGroup>
+
+### Postman collection
+
+Test Junction APIs directly in Postman with our official collection:
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533%26entityType%3Dcollection%26workspaceId%3Ddd82502b-0c9d-4fe4-9760-73a54bc2b8bf)
 
+## Next steps
 
-## Next Steps
+<Check>
+Congratulations! You've successfully integrated Junction into your application.
+</Check>
 
-Congratulations, you have completed the Vital Quickstart!
+Continue your integration journey with these resources:
 
-There are a few directions you can go in now:
-
+<CardGroup cols={2}>
 <Card
   title="Junction Link"
   icon="link"
-  iconType="regular"
-  href="/wearables/vital-link/introduction"
+  href="/wearables/connecting-providers/introduction"
 >
-  A client-side component your users will interact with in order to link their
-  accounts with Vital. It allows you to access their accounts via the Junction API.
-</Card>
-
-<Card title="Vital SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/ios">
-  Native toolkits to integrate Vital into iOS, Android, and Flutter
+  Deep dive into device connection flows, authentication types, and customization options
 </Card>
 
 <Card
-  title="Vital Webhooks"
-  icon="circle-nodes"
-  iconType="regular"
-  href="/webhooks/introduction"
+  title="Mobile SDKs"
+  icon="mobile-screen"
+  href="/wearables/sdks/installation"
 >
-  Webhooks are a way to receive data from Vital. We frequently poll to receive
-  data from the various providers.
+  Integrate Apple HealthKit and Android Health Connect with native mobile SDKs
 </Card>
 
-- [Junction Link](/wearables/vital-link/introduction)
-- [Vital SDKs](/wearables/sdks/ios)
-- [Vital Webhooks](/webhooks/Introduction)
+<Card
+  title="Webhooks & Events"
+  icon="webhook"
+  href="/webhooks/introduction"
+>
+  Receive real-time notifications when new health data is available
+</Card>
+
+<Card
+  title="API Reference"
+  icon="code"
+  href="/api-reference/user/create-user"
+>
+  Explore the complete Junction API documentation with detailed examples
+</Card>
+</CardGroup>

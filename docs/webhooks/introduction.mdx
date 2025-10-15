@@ -2,13 +2,13 @@
 title: "Introduction"
 ---
 
-With Webhooks and [ETL Pipelines](/webhooks/etl-pipelines/overview), Vital pushes any new data or updates to your endpoint
+With Webhooks and [ETL Pipelines](/webhooks/etl-pipelines/overview), Junction pushes any new data or updates to your endpoint
 or your ETL destination as soon as they are discovered.
 
 
 ## Connection Created stage
 
-When a user successfully connects a provider through [Junction Link](/wearables/connecting-providers/introduction), Vital sends a
+When a user successfully connects a provider through [Junction Link](/wearables/connecting-providers/introduction), Junction sends a
 Provider Connection Created event to acknowledge it:
 
 <AccordionGroup>
@@ -41,7 +41,7 @@ Check out the [Provider Connection Created event](/event-catalog/provider.connec
 
 ## Historical Data Backfill stage
 
-Vital also schedules jobs to backfill _historical_ data upon connection establishment.
+Junction also schedules jobs to backfill _historical_ data upon connection establishment.
 
 Historical data are data that exist prior to the connection establishment. Because this can [amount to months of data](/wearables/providers/introduction#historical-data-pull-range)
 — and might potentially run into temporary provider-side API rate limits — these backfill jobs may take minutes to hours to complete.
@@ -51,7 +51,7 @@ You can inspect the status of historical data backfill jobs of each individual u
 [Junction API](/api-reference/data/introspection/historical-pulls).
 </Note>
 
-Once the historical data backfill job of a specific [resource](/wearables/providers/resources) has **fully** completed, Vital sends a **Historical Pull Completion** event for the resource:
+Once the historical data backfill job of a specific [resource](/wearables/providers/resources) has **fully** completed, Junction sends a **Historical Pull Completion** event for the resource:
 
 <AccordionGroup>
 
@@ -63,10 +63,10 @@ Once the historical data backfill job of a specific [resource](/wearables/provid
 
 This event is a data-less notification.
 
-Use the [Vital Data Access API](/api-reference/data/sleep/get-summary) to fetch the resource you are interested in.
+Use the [Junction Data Access API](/api-reference/data/sleep/get-summary) to fetch the resource you are interested in.
 
 Constrain your API call using the information in the Historical Pull Completion event. For example, the event includes the
-[provider](/wearables/providers/introduction) slug as well as full datetime range which Vital has looked through.
+[provider](/wearables/providers/introduction) slug as well as full datetime range which Junction has looked through.
 
 </Accordion>
 
@@ -89,18 +89,18 @@ Check out the [Historical Workout Data Pull Completion event](/event-catalog/his
 </AccordionGroup>
 
 <Note>
-[ETL Pipelines](/webhooks/etl-pipelines/overview) can opt-in to receive historical data as _Vital Data Events_
+[ETL Pipelines](/webhooks/etl-pipelines/overview) can opt-in to receive historical data as _Junction Data Events_
 (as outlined below in the [Incremental Data stage](#incremental-data-stage) section).
 
 
-Note that Vital would still send the Historical Pull Completion event to signal the completion of the historical data backfill stage.
+Note that Junction would still send the Historical Pull Completion event to signal the completion of the historical data backfill stage.
 </Note>
 
 ## Incremental Data stage
 
-Once the historical data backfill stage completes, Vital [monitors for new data and changes](/wearables/providers/introduction#data-frequency).
+Once the historical data backfill stage completes, Junction [monitors for new data and changes](/wearables/providers/introduction#data-frequency).
 
-Whenever new data or changes are discovered, Vital sends them out as **Data Events** as soon as possible:
+Whenever new data or changes are discovered, Junction sends them out as **Data Events** as soon as possible:
 
 <Note>
 You can inspect the state of incremental data updates of each individual user through [Junction Dashboard](https://app.junction.com) or
@@ -123,9 +123,9 @@ Treat the `daily.data` prefix as a misnomer for _Incremental Data_. It **does no
 
 <Accordion title="Usage" defaultOpen>
 
-Vital sends out _Data Events_ as soon as we discover new or updated entries as reported by a provider. This also implies:
+Junction sends out _Data Events_ as soon as we discover new or updated entries as reported by a provider. This also implies:
 
-1. Vital does not prioritize or aggregate Data Events across providers:
+1. Junction does not prioritize or aggregate Data Events across providers:
 
     * You may receive multiple events of the same type from a single provider, because the provider supports multiple
       sources, devices or apps (e.g., iPhone sleeps and Apple Watch sleeps from Apple HealthKit);
@@ -138,14 +138,14 @@ Vital sends out _Data Events_ as soon as we discover new or updated entries as r
     * Some may be sent multiple times at irregular times;
     * Some may appear to be sent on a regular schedule throughout the day.
 
-Your system typically would ingest relevant Vital Data Events into a database.
+Your system typically would ingest relevant Junction Data Events into a database.
 
 You can query the database with any business rules and query constraints suitable to your product experience. This may include
 your own data prioritization rules based on, e.g., [Source Type](/wearables/providers/data-attributions#source-type).
 
 
 <Note>
-Vital also offers the [Horizon AI Aggregation API](/api-reference/horizon-ai/aggregation/overview) for your data aggregation
+Junction also offers the [Horizon AI Aggregation API](/api-reference/horizon-ai/aggregation/overview) for your data aggregation
 and consolidation needs.
 </Note>
 
@@ -184,7 +184,7 @@ Check out the [Workout Created event](/event-catalog/daily.data.workouts.created
 </AccordionGroup>
 
 
-## Deep Dive into Vital Webhooks
+## Deep Dive into Junction Webhooks
 
 <div
   style={{

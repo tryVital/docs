@@ -111,7 +111,7 @@ Some BYOO providers do not have a developer program with open sign-up.
 
 ## Data Frequency
 
-Whenever Vital detects that new data is available, [data events](/event-catalog) are always sent to your configured endpoints, regardless of the provider being push-based or polling-based.
+Whenever Junction detects that new data is available, [data events](/event-catalog) are always sent to your configured endpoints, regardless of the provider being push-based or polling-based.
 
 ### Cloud Based Providers
 
@@ -119,11 +119,11 @@ Cloud Based Providers can be divided in two main categories:
 
 - Push-based
 
-  - When a cloud-based provider supports a push notify mechanism (typically webhooks), Vital would prefer to use it to drive data fetches. In other words, as soon as the provider notifies Vital of new data through the said mechanism, Vital fetches the latest data.
+  - When a cloud-based provider supports a push notify mechanism (typically webhooks), Junction would prefer to use it to drive data fetches. In other words, as soon as the provider notifies Junction of new data through the said mechanism, Junction fetches the latest data.
 
 - Polling-based
 
-  - For providers and/or resources without any push notify mechanism, Vital polls these resources at a regular schedule, typically every 15 minutes or so.
+  - For providers and/or resources without any push notify mechanism, Junction polls these resources at a regular schedule, typically every 15 minutes or so.
 
 | Provider                                                        | Description |
 | --------------------------------------------------------------- | ----------- |
@@ -165,7 +165,7 @@ For more information on Apple HealthKit and Android Health Connect, please refer
 
 ## Historical Data Pull Range
 
-Vital fetches the historical data immediately when the connection is established. The pull range
+Junction fetches the historical data immediately when the connection is established. The pull range
 can be estimated by `[now - days_to_pull, now]`. 
 
 <HistoricalPullLimitTable />
@@ -182,6 +182,6 @@ You can specify a number of days to backfill that uniformly applies to all resou
 the number of days to backfill for specific resources.
 
 <Info>
-The Team Data Pull Preferences you specified is _advisory_. There are scenarios in which Vital systems
+The Team Data Pull Preferences you specified is _advisory_. There are scenarios in which Junction systems
 may not adhere strictly to your stated preferences.
 </Info>
