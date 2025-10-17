@@ -38,25 +38,17 @@ issue, enabling a quicker investigation turnaround.
 
 ### A Junction API endpoint
 
-When you encounter an unexpected response from the Junction API, please provide
-the `traceparent` header value from the HTTP response you received if possible. This
-helps us narrow down the context surrounding your issue.
+If your system has distributed tracing configured that are compliant with W3C Trace Context  (e.g., OpenTelemetry tracing),
+you can provide us the Trace ID of the operation **in your system**.
 
-A `traceparent` response header looks like this:
+A Trace ID looks like this: `0af7651916cd43dd8448eb211c80319c`.
 
-```
-traceparent: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01
-```
+This helps us locate the concerned API request and related contexts.
 
-It contains a trace ID that links back to the original API request:
-
-* If you make the API request without a `traceparent` header, Vital's infrastructure
-  assigns a unique trace ID to it on entry.
-
-* If your API request is instrumented using OpenTelemetry, W3C Trace Context or other
-  interoperable tools, these tools would inject a `traceparent` header automatically.
-  Vital's infrastructure would adopt the trace ID from your API request.
-
+<Note>
+This works only if your distributed tracing setup would propagate Trace Context to your outbound HTTP requests — more
+specifically injecting the standards-based `traceparent` header into the requests.
+</Note>
 
 ### A wearables provider connection
 
