@@ -1,6 +1,6 @@
 ---
-openapi: "GET /v2/user/{user_id}/info/latest"
-title: Get User Demographics
+title: Create Portal URL
+openapi: "POST /v2/user/{user_id}/create_portal_url"
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
@@ -9,15 +9,16 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <RequestExample>
 
-```bash cURL
-curl --request GET \
-     --url {{BASE_URL}}/v2/user/{user_id}/info/latest \
+```cURL
+curl --request POST \
+     --url {{BASE_URL}}/v2/user/{{USER_ID}}/create_portal_url \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>' \
      --header 'Content-Type: application/json' \
+     --data '{"context":"launch"}'
 ```
 
-```javascript Node
+```python Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
@@ -25,35 +26,43 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.user.get_latest_user_info(
+const data = await client.user.createPortalUrl(
     '<user_id>'
 );
 ```
 
-```python Python
+```javascript Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
+from vital.user import CreateUserPortalUrlBodyContext
 
 client = Vital(
   api_key="YOUR_API_KEY",
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.get_latest_user_info(
-    user_id="<user_id>"
-)
+data = client.user.create_portal_url(
+    user_id="<user_id>",
+    context=CreateUserPortalUrlBodyContext.LAUNCH,
+);
 ```
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
+import com.vital.api.resources.user.requests.CreateUserPortalUrlBody;
+import com.vital.api.resources.user.types.CreateUserPortalUrlBodyContext;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.user().getLatestUserInfo("<user_id>");
+CreateUserPortalUrlBody body = CreateUserPortalUrlBody.builder()
+  .context(CreateUserPortalUrlBodyContext.LAUNCH)
+  .build();
+
+var data = vital.user().createPortalUrl("<user_id>", body);
 ```
 
 ```go Go
@@ -70,7 +79,11 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.User.GetLatestUserInfo(context.TODO(), "<user_id>")
+body := &vital.CreateUserPortalUrlBody{
+  Context: vital.CreateUserPortalUrlBodyContextLaunch,
+}
+
+response, err := client.User.CreatePortalUrl(context.TODO(), "<user_id>", body)
 if err != nil {
   return err
 }
@@ -78,25 +91,3 @@ fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>
-
-<ResponseExample>
-
-```json Response
-{
-  "first_name": "John",
-  "last_name": "Doe", 
-  "email": "john@email.com", 
-  "phone_number":"+1123123123",
-  "gender": "Male", 
-  "dob": "1999-01-01", 
-  "address": {
-	  "first_line": "Some Street", 
-	  "second_line": null,
-    "zip_code": "85004",
-    "state": "AZ",
-    "city": "Phoenix",
-  }
-}
-```
-
-</ResponseExample>

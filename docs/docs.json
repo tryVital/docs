@@ -293,6 +293,10 @@
                 ]
               },
               {
+                "group": "User Portal",
+                "pages": ["api-reference/user/create-portal-url"]
+              },
+              {
                 "group": "Vital Mobile SDK Integration",
                 "pages": ["api-reference/user/create-sign-in-token"]
               },
