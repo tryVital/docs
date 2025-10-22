@@ -27,8 +27,8 @@ jobs:
       - name: Download swagger and push it
         run: |
           echo "$GITHUB_WORKSPACE"
-          wget https://api.tryvital.io/openapi.json -O ./docs/swagger.json
-          wget https://api.tryvital.io/management/openapi.json -O ./docs/org-management-api.json
+          wget https://api.us.junction.com/openapi.json -O ./docs/swagger.json
+          wget https://api.management.junction.com/openapi.json -O ./docs/org-management-api.json
           git config user.name Vital
           git config user.email developers@tryvital.io
           git add .
