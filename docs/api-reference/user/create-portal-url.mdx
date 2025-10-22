@@ -7,6 +7,17 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
+Create a URL to Junction User Portal pre-authorized to a particular User.
+
+Junction User Portal requires demographics having been specified for the User:
+
+* Use the [Get User Demographics](/api-reference/user/get-info-latest) endpoint to review currently set demographics;
+* Use the [Update User Demographics](/api-reference/user/upsert-info) endpoint to update the user's demographics.
+
+<Note>
+If you attempt to create a Portal URL for a user without demographics, you will get a **422 Unprocessable Entity** response.
+</Note>
+
 <RequestExample>
 
 ```cURL
