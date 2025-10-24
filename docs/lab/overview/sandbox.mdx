@@ -30,8 +30,7 @@ The generated results will cycle through all possible [result types](/lab/result
   Note that generated values might not match the expected unit.
 </Warning>
 
-As for the PDF results, these are not generated, and Vital returns an example PDF that does not reflect the ordered test.\
-\
+As for the PDF results, these are not generated, and Vital returns an example PDF that does not reflect the ordered test.
 
 ## Customizing the Response
 
@@ -51,20 +50,20 @@ There are three avenues of customization currently:
 
 2. Result Types
 
-  This field controls what result types will be generated. Ommiting it will means the result will cycle through all of them.
+This field controls what result types will be generated. Ommiting it will means the result will cycle through all of them.
 
-  ```json
+```json
 {
-    "result_types": ["numeric", "comment"]
+  "result_types": ["numeric", "comment"]
 }
-  ```
+```
 
 3. Missing Results
 
-  Supplying this field will generate missing biomarkers in the result.
+Supplying this field will generate missing biomarkers in the result.
 
-  ```json
+```json
 {
-    "has_mising_results": true
+  "has_mising_results": true
 }
-  ```
+```
