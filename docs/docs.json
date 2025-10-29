@@ -7,6 +7,13 @@
     "light": "#D8DFE6",
     "dark": "#3D1836"
   },
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "Junction Documentation"
+    }
+  },
   "favicon": "/favicon.png",
   "navigation": {
     "tabs": [
