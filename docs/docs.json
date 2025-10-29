@@ -196,7 +196,7 @@
                 ]
               },
               {
-                "group": "At-Home Testkits",
+                "group": "At-Home Test Kits",
                 "pages": [
                   "lab/testkits/overview",
                   "lab/testkits/order-lifecycle",
@@ -299,7 +299,7 @@
                 "pages": ["api-reference/user/create-portal-url"]
               },
               {
-                "group": "Vital Mobile SDK Integration",
+                "group": "Junction Mobile SDK Integration",
                 "pages": ["api-reference/user/create-sign-in-token"]
               },
               {
@@ -1272,7 +1272,7 @@
     "socials": {
       "website": "https://www.junction.com/",
       "twitter": "https://twitter.com/tryVital",
-      "linkedin": "https://www.linkedin.com/company/tryvital"
+      "linkedin": "https://www.linkedin.com/company/junctionapi"
     }
   },
   "integrations": {
