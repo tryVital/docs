@@ -86,6 +86,8 @@
                 "pages": [
                   "wearables/providers/introduction",
                   "wearables/providers/resources",
+                  "wearables/providers/update-frequency",
+                  "wearables/providers/historical-data-pull-range",
                   "wearables/providers/test_data"
                 ]
               },

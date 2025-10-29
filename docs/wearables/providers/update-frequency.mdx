@@ -1,0 +1,62 @@
+---
+title: "Update Frequency"
+---
+
+Whenever Junction detects that new data is available, [data events](/event-catalog) are always sent to your configured endpoints,
+regardless of the provider being push-based or polling-based.
+
+## Cloud Based Providers
+
+
+| Primary Model  | Providers |
+| --------------------------------------------------------------- | ----------- |
+| Hybrid  | [Fitbit](https://www.fitbit.com/global/uk/home), [Withings](https://www.withings.com), [Oura](https://ouraring.com)
+| Push    | [Garmin](https://www.garmin.com), [Strava](https://www.strava.com), [WHOOP](https://www.whoop.com), [Cronometer](https://www.cronometer.com) |
+| Polling | [Wahoo](https://wahoofitness.com), [LibreView](https://www.libreview.com/), [Google Fit](https://www.google.com/fit/), [Peloton](https://www.onepeloton.com), [Zwift](https://zwift.com), [EightSleep](https://www.eightsleep.com), [Hammerhead](https://www.hammerhead.io), [Dexcom](https://www.dexcom.com) |
+
+Cloud Based Providers can operate in the following three models:
+
+<AccordionGroup>
+<Accordion title="Push" defaultOpen>
+In the Push model, the data provider proactively notifies Junction of any resource changes.
+
+Junction goes and fetches the notified resources, compare it against what we have already ingested, and send out the differences
+(new or updated entities) to your Webhook endpoints or ETL Pipeline destinations.
+
+While resources using the Push model typically has lower latency than polling, data providers may impose throttling, debouncing
+or batching semantics on these push notifications to Junction on their end.
+</Accordion>
+<Accordion title="Polling" defaultOpen>
+Junction schedules a recurring job to query the data provider API resources:
+
+* For most resources, the schedule is every 15 minutes or so.
+* Some resources may use a sparser schedule due to data provider rate limits.
+
+Junction then compare the reported data against what we have already ingested, and send out the differences
+(new or updated entities) to your Webhook endpoints or ETL Pipeline destinations.
+</Accordion>
+<Accordion title="Hybrid" defaultOpen>
+Some data providers support the Push model only on a subset of API resources.
+
+Junction prefers to use the Push model whenever available, but otherwise falls back to the Polling model.
+</Accordion>
+</AccordionGroup>
+
+## SDK Based Providers
+
+SDK Based Providers are all push-based, where data are pushed from the Junction SDK embedded inside your Android or iOS app.
+
+| Provider                                                               | Description                                     |
+| ---------------------------------------------------------------------- | ----------------------------------------------- |
+| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | <ul><li>Auto sync on app launch and in foreground</li><li>Hourly Background Sync, subject to OS throttling</li></ul> |
+| [Android Health Connect](https://developer.android.com/health-connect) | <ul><li>Sync On App Launch</li><li>Opt-in Hourly Background Sync, subject to OS throttling</li></ul> |
+| [Omron](https://www.omron-healthcare.com)                              | Manual Post                                     |
+| [Contour](https://www.diabetes.ascensia.com)                           | Manual Post                                     |
+| [Accu-Chek](https://www.accu-chek.com)                                 | Manual Post                                     |
+
+For more information on Apple HealthKit and Android Health Connect, please refer to the specific guides:
+
+* [Vital Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync)
+* [Apple HealthKit: Sync Frequency](/wearables/guides/apple-healthkit#sync-frequency)
+* [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
+
