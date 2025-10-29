@@ -2,45 +2,80 @@
 title: "Testing in Sandbox"
 ---
 
-In order for Customers to be able to simulate the ordering process in the sandbox environment, Vital provides both simulated results and a way to transition an order through it's [lifecycle](/lab/workflow/lab-test-lifecycle).
+To enable Customers to simulate the ordering process in the sandbox environment, Junction provides simulated results and a way to transition an order through its [lifecycle](/lab/workflow/lab-test-lifecycle).
 
 ## Creating Lab Tests
 
-Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 3 modalities.
+Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 4 collection modalities:
 
-However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Vital generates results based on the associated markers. More on this on the [results section](/lab/overview/sandbox#results).
+- **Test Kit**: At-home collection using shipped test kits
+- **Walk-in Test**: Patient visits a Patient Service Center (PSC) location
+- **At-Home Phlebotomy**: A Mobile phlebotomist visits the patient's location
+- **On-Site Collection**: Collection at the customer's facility
+
+However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Junction generates results based on the associated markers. More on this in the [results section](/lab/overview/sandbox#results).
 
 ## Lifecycle
 
-When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard, or through the [API](/api-reference/lab-testing/simulate-order).
+When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard or through the [API](/api-reference/lab-testing/simulate-order).
 
-Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails and SMS's.
+Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails, and SMS's.
+
+## Collection Method Restrictions
+
+### At-Home Phlebotomy
 
 <Warning>
-  When testing the At-Home Phlebotomy, there is only one specific address which is allowed, this address is `West Lincoln Street, Phoenix, AZ 85004, USA`.
+  When testing At-Home Phlebotomy appointments, there are only two specific zip codes allowed:
+
+  - **85004** (Phoenix, AZ) - Uses GetLabs provider 
+    - And only one specific address: `West Lincoln Street, Phoenix, AZ 85004, USA`
+  - **54650** - Uses PhlebFinders provider
 </Warning>
+
+### Quest PSC Appointments
+
+In the sandbox, Quest appointment slots are generated automatically with these patterns:
+
+**Availability:**
+
+- Same day: Next hour until 5 PM EST (if before 4 PM)
+- Future days: 7 AM - 12 PM EST
+- 20-minute intervals for all slots
+
+<Warning>
+  **Timezone:** All sandbox appointments use `America/New_York` timezone regardless of location (production uses actual PSC timezones).
+</Warning>
+
+We have a feature request in our backlog to support more representative sandbox appointment slots, including handling time zones specific to locations. We don't have a timeline for this right now, but if you'd like to be notified when it is implemented, please contact our support team.
 
 ## Results
 
-In order to allow Customers to test, Vital generate's fake results for each lab test, based on the [expected markers](/lab/results/result-formats#expected-results).
+To allow Customers to test, Junction generates fake results for each lab test based on the [expected markers](/lab/results/result-formats#expected-results).
 
-The generated results will cycle through all possible [result types](/lab/results/result-formats#resulttype).
+The generated JSON results will cycle through all possible [result types](/lab/results/result-formats#resulttype):
+
+- `numeric`: Numerical values with reference ranges
+- `comment`: Textual commentary results
+- `range`: Range-based results (e.g., "\<50")
 
 <Warning>
-  Note that generated values might not match the expected unit.
-</Warning>
+  **Important Notes:**
 
-As for the PDF results, these are not generated, and Vital returns an example PDF that does not reflect the ordered test.
+  - Generated values might not match the expected unit
+  - **PDF results **are not dynamically generated - Junction returns an example PDF that does not reflect the ordered test
+  - Account numbers for shipping labels return a hardcoded value `1234567890` in sandbox
+</Warning>
 
 ## Customizing the Response
 
-You can customize the end response of the results via the body of the [Simulate Order](https://docs.junction.com/api-reference/lab-testing/simulate-order) endpoint.
+You can customize the end response of the results via the body of the [Simulate Order](/api-reference/lab-testing/simulate-order) endpoint.
 
 There are three avenues of customization currently:
 
-1. Interpretation
+### 1. Interpretation
 
-   Supplying the `interpretation` field will set the status of the result to the supplied value. If you set it to critical, then the critical result workflow will be triggered.
+Supplying the `interpretation` field will set the result's status to the supplied value. If you set it to critical, then the critical result workflow will be triggered.
 
 ```json
 {
@@ -48,9 +83,15 @@ There are three avenues of customization currently:
 }
 ```
 
-2. Result Types
+Available interpretations:
 
-This field controls what result types will be generated. Ommiting it will means the result will cycle through all of them.
+- `normal`: Standard normal results (default)
+- `abnormal`: Results outside normal ranges
+- `critical`: Triggers critical result notifications and workflows
+
+### 2. Result Types
+
+This field controls what result types will be generated. Omitting it will cycle through all available types.
 
 ```json
 {
@@ -58,12 +99,40 @@ This field controls what result types will be generated. Ommiting it will means 
 }
 ```
 
-3. Missing Results
+Available result types:
 
-Supplying this field will generate missing biomarkers in the result.
+- `numeric`: Numerical results with reference ranges
+- `comment`: Text-based results and observations
+- `range`: Range-based results
+
+### 3. Missing Results
+
+Supplying this field will generate missing biomarkers in the result to simulate incomplete lab processing.
 
 ```json
 {
-  "has_mising_results": true
+  "has_missing_results": true
 }
 ```
+
+This simulates scenarios where some biomarkers fail processing or are unavailable, which is common in real-world lab operations.
+
+## Environment-Specific Behavior
+
+### Sandbox vs Production Differences
+
+| Feature              | Sandbox                                      | Production                                |
+| -------------------- | -------------------------------------------- | ----------------------------------------- |
+| Order Progression    | Manual trigger required                      | Automatic, based on lab processing times. |
+| PDF Results          | Static example PDF                           | Dynamic lab-generated PDFs                |
+| Account Numbers      | Hardcoded `1234567890`                       | Real lab account numbers                  |
+| Phlebotomy Locations | Restricted to specific zip codes             | Full coverage area                        |
+| Quest PSC Slots      | Mock slots, `America/New_York` timezone only | Real Quest API integration                |
+| Appointment Times    | Restricted availability (see above)          | Based on actual PSC availability          |
+
+### Testing Recommendations
+
+1. **Use Custom Lab Tests**: Create tests with your specific biomarkers for realistic result simulation
+2. **Test All Collection Methods**: Verify each modality works with your integration
+3. **Test Error Scenarios**: Use missing results and different interpretations
+5. **Test Appointment Workflows**: Book, reschedule, and cancel appointments to verify full flow
