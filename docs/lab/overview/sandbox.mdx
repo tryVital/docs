@@ -28,7 +28,7 @@ Initiating the simulation process will progress the order through the expected s
 <Warning>
   When testing At-Home Phlebotomy appointments, there are only two specific zip codes allowed:
 
-  - **85004** (Phoenix, AZ) - Uses GetLabs provider 
+  - **85004** (Phoenix, AZ) - Uses GetLabs provider
     - And only one specific address: `West Lincoln Street, Phoenix, AZ 85004, USA`
   - **54650** - Uses PhlebFinders provider
 </Warning>
@@ -63,7 +63,7 @@ The generated JSON results will cycle through all possible [result types](/lab/r
   **Important Notes:**
 
   - Generated values might not match the expected unit
-  - **PDF results **are not dynamically generated - Junction returns an example PDF that does not reflect the ordered test
+  - **PDF results are not dynamically generated** - Junction returns an example PDF that does not reflect the ordered test
   - Account numbers for shipping labels return a hardcoded value `1234567890` in sandbox
 </Warning>
 
@@ -130,7 +130,7 @@ This simulates scenarios where some biomarkers fail processing or are unavailabl
 | Quest PSC Slots      | Mock slots, `America/New_York` timezone only | Real Quest API integration                |
 | Appointment Times    | Restricted availability (see above)          | Based on actual PSC availability          |
 
-### Testing Recommendations
+## Testing Recommendations
 
 1. **Use Custom Lab Tests**: Create tests with your specific biomarkers for realistic result simulation
 2. **Test All Collection Methods**: Verify each modality works with your integration
