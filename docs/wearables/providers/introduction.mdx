@@ -1,5 +1,5 @@
 ---
-title: "Supported providers"
+title: "Supported Providers"
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
@@ -11,57 +11,54 @@ We currently Support over 300+ devices, a full list can be seen below.
 
 ## Cloud Based Providers
 
-<Note>
-  Some OAuth providers are unavailable unless you can <b>[Bring Your Own OAuth (BYOO)](/wearables/connecting-providers/bring_your_own_oauth)</b>.
-  You will have to apply directly to the provider for an OAuth application, and
-  provide Vital your assigned credentials once the application is accepted.
-</Note>
-
-
-### Generally Available
-
-| Provider (Slug)                                                          | Description                                                   | Availability                                                                         | Remarks |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
-| [Beurer](https://www.beurer.com/web/gb/)         <br />`beurer_api`      | Beurer Blood Pressure monitors                                | All Junction Teams                                                                      | Password Auth |
-| [Dexcom (G6 And Older)](https://www.dexcom.com)  <br />`dexcom`          | Dexcom CGM Glucose monitors                                   | All Junction Teams                                                                      | Password Auth<br />[↗️ Guide](/wearables/guides/dexcom) |
-| [8Sleep](https://www.eightsleep.com)             <br />`eight_sleep`     | Smart Mattress                                                | All Junction Teams                                                                      | Password Auth |
-| [Abbott LibreView](https://www.libreview.com/)   <br />`abbott_libreview`| Abbott CGM Glucose monitor                                    | All Junction Teams                                                                      | Password Auth<br />[↗️ Guide](/wearables/guides/abbott-libreview) |
-| [Freestyle Libre](https://www.libreview.com/)    <br />`freestyle_libre` | Abbott CGM Glucose monitor                                    | All Junction Teams                                                                      | LibreView Practice<br />[↗️ Guide](/wearables/guides/abbott-libreview) |
-| [Fitbit](https://www.fitbit.com/global/uk/home)  <br />`fitbit`          | Activity Trackers (all devices)                               | All Junction Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/fitbit) |
-| [Garmin](https://www.garmin.com)                 <br />`garmin`          | Fitness watches (all devices)                                 | All Junction Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/garmin) |
-| [Hammerhead](https://www.hammerhead.io)          <br />`hammerhead`      | Cycling computers                                             | All Junction Teams                                                                      | Password Auth |
-| [Oura](https://ouraring.com)                     <br />`oura`            | Smart Sleep tracking ring                                     | All Junction Teams                                                                      | OAuth |
-| [Peloton](https://www.onepeloton.com)            <br />`peloton`         | Popular Indoor Exercise bike                                  | All Junction Teams                                                                      | Password Auth |
-| [Strava](https://www.strava.com)                 <br />`strava`          | Running & Cycling Social Network                              | All Junction Teams                                                                      | OAuth |
-| [Wahoo](https://wahoofitness.com)                <br />`wahoo`           | Cycling Equipment                                             | All Junction Teams                                                                      | OAuth |
-| [Withings](https://www.withings.com)             <br />`withings`        | Fitness scales, watches and health monitors                   | All Junction Teams                                                                      | OAuth |
-| [Zwift](https://zwift.com)                       <br />`zwift`           | Virtual cycling and running                                   | All Junction Teams                                                                      | Password Auth |
-| [Polar](https://www.polar.com/accesslink-api/)   <br />`polar`           | Finnish sports tech pioneer                                   | All Junction Teams                                                                      | OAuth<br />[↗️ Guide](/wearables/guides/polar) |
-| [Cronometer](https://www.cronometer.com)         <br />`cronometer`      | Nutrition data                                                | All Junction Teams                                                                      | OAuth |
-| [Ultrahuman](https://www.cronometer.com)         <br />`ultrahuman`      | Real-time nutrition and fitness tracking                      | 🧪 **Open Beta**<br />All Junction Teams                                                       | OAuth |
-
-### BYOO-only
+### OAuth Providers
 
 <BYOO />
 
-<Warning>
-Some BYOO providers do not have a developer program with open sign-up.
-</Warning>
+These data provider connections would use **Junction-branded** OAuth application by default.
 
-| Provider (Slug)                                                          | Description                                                   | Availability                                                                         | Remarks |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
-| [Dexcom](https://www.dexcom.com)                 <br />`dexcom_v3`       | Dexcom CGM Glucose monitors                                   | ⚠️ [BYOO only](/wearables/connecting-providers/bring_your_own_oauth)                  | Password Auth<br />[↗️ Guide](/wearables/guides/dexcom_v3) |
-| [WHOOP](https://www.whoop.com)                   <br />`whoop_v2`        | Your Personal Digital Fitness and Health Coach                | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth<br />[↗️ Guide](/wearables/guides/whoop) |
-| [MyFitnessPal API](https://www.myfitnesspalapi.com) <br />`my_fitness_pal_v2` | Nutrition data                                           | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth |
-| [MapMyFitness](https://developer.mapmyfitness.com)         <br />`map_my_fitness`  | Technology for all atheletes                        | ⚠️  [BYOO](/wearables/connecting-providers/bring_your_own_oauth) only                 | OAuth |
+Optionally, you can _Bring Your Own OAuth_ — existing or newly applied API applications — to your Junction Team:
 
+1. The data provider OAuth authentication flow would use your branding; and
+2. Connections of your own OAuth application would be rate limited by the data provider independently from Junction's default application.
+
+
+| Provider (Slug)                                                                                                    | Junction default app | Developer Program for BYOO  | Remarks |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ------------------------ | ------- |
+| [Fitbit](https://www.fitbit.com/global/uk/home)  <br />`fitbit`<br />Activity Trackers (all devices)<br /><br />[↗️ Fitbit Guide](/wearables/guides/fitbit)                 | 🟢<br />Enabled      | 🟢<br />Self Sign-Up       | You can [create your own Fitbit API Application](https://dev.fitbit.com/build/reference/web-api/developer-guide/getting-started/). Note that for access to Intraday (timeseries) data, you must [submit an application to Fitbit](https://dev.fitbit.com/build/reference/web-api/intraday/).  |
+| [Garmin](https://www.garmin.com)                 <br />`garmin`<br />Fitness watches (all devices)<br /><br />[↗️ Garmin Guide](/wearables/guides/garmin)                   | 🟢<br />Enabled      | ⚠️<br />Application required  | You must [apply for Garmin Developer Program](https://developer.garmin.com/gc-developer-program/program-faq/). |
+| [Strava](https://www.strava.com)                 <br />`strava`<br />Running & Cycling Social Network                                                                      | 🟡<br />Congested    | ⚠️<br />Application required  | You can self-create a Strava API Application for testing. To connect more than 1 athelete, you must [submit your app to Strava for review](https://developers.strava.com/docs/getting-started/). |
+| [Oura](https://ouraring.com)                     <br />`oura`<br />Smart Sleep tracking ring                                                                               | 🟢<br />Enabled       | ⚠️<br />Application required  | You can self-create an Oura API Application for testing. To connect more than 10 Oura users, you must [submit your app to Oura for review](https://cloud.ouraring.com/docs/). |
+| [Wahoo](https://wahoofitness.com)                <br />`wahoo`<br />Cycling Equipment                                                                                      | 🟢<br />Enabled       | ⚠️<br />Application required  | You must [apply for Wahoo Cloud API access](https://developers.wahooligan.com/cloud). |
+| [Withings](https://www.withings.com)             <br />`withings`<br />Fitness scales, watches and health monitors                                                          | 🟡<br />Congested   | 🟢<br />Self Sign-Up          | You can [create your own Withings API Application](https://developer.withings.com/developer-guide/v3/withings-solutions/withings-api-plans).  |
+| [Polar](https://www.polar.com/accesslink-api/)   <br />`polar`<br />Finnish sports tech pioneer<br /><br />[↗️ Polar Guide](/wearables/guides/polar)                        | 🟢<br />Enabled      | 🟢<br />Self Sign-Up          | You can [create your own Polar API Application](https://www.polar.com/accesslink-api/#introduction). |
+| [Cronometer](https://www.cronometer.com)         <br />`cronometer`<br />Nutrition data                                                                                     | 🟢<br />Enabled      | ⚠️<br />Application required  | You must [apply to be a Cronometer API partner](https://cronometer.com/about/). |
+| [Ultrahuman](https://www.ultrahuman.com)         <br />`ultrahuman`<br />Real-time nutrition and fitness tracking                                                          | 🟢<br />Enabled       | ⚠️<br />Application required  | You must [apply to be a Ultrahuman API partner](https://blog.ultrahuman.com/blog/accessing-the-ultrahuman-partnership-api/). |
+| [Dexcom](https://www.dexcom.com)                 <br />`dexcom_v3`<br />Dexcom CGM Glucose monitors<br /><br />[↗️ Dexcom Guide](/wearables/guides/dexcom_v3)               | ➖<br />Unavailable | ⚠️<br />Application required  | You can self-create a Dexcom Sandbox API Application for testing. To connect Dexcom production users, you must [apply for the Dexcom Digital Health Partner status](https://developer.dexcom.com/docs/dexcom/scopes-access). |
+| [WHOOP](https://www.whoop.com)                   <br />`whoop_v2`<br />Your Personal Digital Fitness and Health Coach<br /><br />[↗️ WHOOP Guide](/wearables/guides/whoop)  | ➖<br />Unavailable | ⚠️<br />Application required  | You can self-create a Whoop API Application for testing. To connect more than 10 WHOOP members, you must [submit your app to WHOOP for review](https://developer.whoop.com/docs/developing/app-approval). |
+| [MyFitnessPal API](https://www.myfitnesspalapi.com) <br />`my_fitness_pal_v2`<br />Nutrition data                                                                           | ➖<br />Unavailable | ➖<br />Application closed    | N/A |
+| [MapMyFitness](https://developer.mapmyfitness.com)         <br />`map_my_fitness`<br />Technology for all atheletes                                                         | ➖<br />Unavailable | ➖<br />Application closed    | N/A |
+
+
+### Non-OAuth Providers
+
+| Provider (Slug)                                                          | Description                                                   | Remarks |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------- | ------- |
+| [Beurer](https://www.beurer.com/web/gb/)         <br />`beurer_api`      | Beurer Blood Pressure monitors                                | Password Auth |
+| [Dexcom (G6 And Older)](https://www.dexcom.com)  <br />`dexcom`<br /><br />[↗️ Dexcom Guide](/wearables/guides/dexcom)          | Dexcom CGM Glucose monitors        | Password Auth |
+| [8Sleep](https://www.eightsleep.com)             <br />`eight_sleep`     | Smart Mattress                                                | Password Auth |
+| [Abbott LibreView](https://www.libreview.com/)   <br />`abbott_libreview`<br /><br />[↗️ LibreView Guide](/wearables/guides/abbott-libreview)| Abbott CGM Glucose monitor                                    | Password Auth |
+| [Freestyle Libre](https://www.libreview.com/)    <br />`freestyle_libre`<br /><br />[↗️ LibreView Guide](/wearables/guides/abbott-libreview) | Abbott CGM Glucose monitor                                    | Practice-based Connections |
+| [Hammerhead](https://www.hammerhead.io)          <br />`hammerhead`      | Cycling computers                                             | Password Auth |
+| [Peloton](https://www.onepeloton.com)            <br />`peloton`         | Popular Indoor Exercise bike                                  | Password Auth |
+| [Zwift](https://zwift.com)                       <br />`zwift`           | Virtual cycling and running                                   | Password Auth |
 
 
 ### Deprecated providers
 
 | Provider (Slug)                                                             | Status                                                                                        | Availability | Remarks |
 | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------ | ------- |
-| [Google Fit](https://www.google.com/fit/)           <br /> `google_fit`     | Google will shut down Google Fit on June 30, 2025. Android Health Connect is the successor.   | All Junction Teams | OAuth<br />[↗️ Guide](/wearables/guides/google_fit) |
+| [Google Fit](https://www.google.com/fit/)           <br /> `google_fit`     | Google will shut down Google Fit sometime in 2026. Android Health Connect is the successor.   | All Junction Teams | OAuth<br />[↗️ Guide](/wearables/guides/google_fit) |
 | [MyFitnessPal](https://www.myfitnesspal.com)     <br />`my_fitness_pal`     | Deprecated                                                                                    | All Junction Teams | MyFitnessPal Diary Share Key<br />[↗️ Guide](/wearables/guides/my_fitness_pal) |
 
 
@@ -108,80 +105,3 @@ Some BYOO providers do not have a developer program with open sign-up.
 >
   {" "}
 </iframe>
-
-## Data Frequency
-
-Whenever Vital detects that new data is available, [data events](/event-catalog) are always sent to your configured endpoints, regardless of the provider being push-based or polling-based.
-
-### Cloud Based Providers
-
-Cloud Based Providers can be divided in two main categories:
-
-- Push-based
-
-  - When a cloud-based provider supports a push notify mechanism (typically webhooks), Vital would prefer to use it to drive data fetches. In other words, as soon as the provider notifies Vital of new data through the said mechanism, Vital fetches the latest data.
-
-- Polling-based
-
-  - For providers and/or resources without any push notify mechanism, Vital polls these resources at a regular schedule, typically every 15 minutes or so.
-
-| Provider                                                        | Description |
-| --------------------------------------------------------------- | ----------- |
-| [Fitbit](https://www.fitbit.com/global/uk/home)                 | Push        |
-| [Garmin](https://www.garmin.com)                                | Push        |
-| [Strava](https://www.strava.com)                                | Push        |
-| [Wahoo](https://wahoofitness.com)                               | Push        |
-| [Withings](https://www.withings.com)                            | Push        |
-| [Freestyle](https://www.freestylelibre.co.uk/libre/)(API + SDK) | Polling     |
-| [Google Fit](https://www.google.com/fit/)                       | Polling     |
-| [Oura](https://ouraring.com)                                    | Polling     |
-| [Peloton](https://www.onepeloton.com)                           | Polling     |
-| [WHOOP](https://www.whoop.com)                                  | Push        |
-| [Zwift](https://zwift.com)                                      | Polling     |
-| [8Sleep](https://www.eightsleep.com)                            | Polling     |
-| [Hammerhead](https://www.hammerhead.io)                         | Polling     |
-| [Dexcom](https://www.dexcom.com)                                | Polling     |
-| [MyFitnessPal](https://www.myfitnesspal.com)                    | Polling     |
-| [Cronometer](https://www.cronometer.com)                        | Push        |
-
-### SDK Based Providers
-
-SDK Based Providers are all push-based, where data are pushed from the Vital SDK embedded inside your Android or iOS app.
-
-| Provider                                                               | Description                                     |
-| ---------------------------------------------------------------------- | ----------------------------------------------- |
-| [Apple HealthKit](https://www.apple.com/uk/ios/health/)                | <ul><li>Auto sync on app launch and in foreground</li><li>Hourly Background Sync, subject to OS throttling</li></ul> |
-| [Android Health Connect](https://developer.android.com/health-connect) | <ul><li>Sync On App Launch</li><li>Opt-in Hourly Background Sync, subject to OS throttling</li></ul> |
-| [Omron](https://www.omron-healthcare.com)                              | Manual Post                                     |
-| [Contour](https://www.diabetes.ascensia.com)                           | Manual Post                                     |
-| [Accu-Chek](https://www.accu-chek.com)                                 | Manual Post                                     |
-
-For more information on Apple HealthKit and Android Health Connect, please refer to the specific guides:
-
-* [Vital Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync)
-* [Apple HealthKit: Sync Frequency](/wearables/guides/apple-healthkit#sync-frequency)
-* [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
-
-
-## Historical Data Pull Range
-
-Vital fetches the historical data immediately when the connection is established. The pull range
-can be estimated by `[now - days_to_pull, now]`. 
-
-<HistoricalPullLimitTable />
-
-
-### Customizing historical data pull range
-
-<OrgManagementAPI />
-
-You can configure the historical pull range using the [Team Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences)
-feature of the Org Management API.
-
-You can specify a number of days to backfill that uniformly applies to all resources of a provider, as well as overriding the
-the number of days to backfill for specific resources.
-
-<Info>
-The Team Data Pull Preferences you specified is _advisory_. There are scenarios in which Vital systems
-may not adhere strictly to your stated preferences.
-</Info>
