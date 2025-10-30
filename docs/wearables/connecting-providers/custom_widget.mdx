@@ -6,19 +6,18 @@ import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 
 <LinkSDKProvider />
 
-You may want to have your own custom Link widget to match your app's UI. This is useful for customers who don't want to use Vital link but still want to use the Junction API.
-It's worthwhile ensuring that you have read the [Auth Types](/docs/auth-types) documentation before proceeding. A full code example in React Native can be seen [here](https://github.com/tryVital/vital-connect-rn).
+You may want to have your own custom Link widget to match your app's UI. This is useful for customers who don't want to use Vital link but still want to use the Junction API. It's worthwhile ensuring that you have read the [Auth Types](/docs/auth-types) documentation before proceeding. A full code example in React Native can be seen [here](https://github.com/tryVital/vital-connect-rn).
 
 An overview of the process is as follows:
 
-1. Get a list of all available providers ["/v2/providers"](/docs/api-reference/providers)
+1. Get a list of all available providers ["/v2/providers"](/api-reference/providers)
 2. Build your UI using this list of providers
-3. When selecting a provider, generate a link token for that provider ["/v2/link/token"](/docs/api-reference/link/generate-link-token)
+3. When selecting a provider, generate a link token for that provider ["/v2/link/token"](/api-reference/link/generate-link-token)
 4. Use the link token to generate an oauth link, or authorize an email, or email and password.
 
 ## 1. List of all available providers
 
-The first step to creating a custom widget is to make a call to the [providers endpoint](/docs/api-reference/providers). This will return a list of all available providers. You can then use this list to build your UI.
+The first step to creating a custom widget is to make a call to the [providers endpoint](/api-reference/providers). This will return a list of all available providers. You can then use this list to build your UI.
 
 <CodeGroup>
 
@@ -49,6 +48,7 @@ const allProviders = await client.providers.getAll();
 // ]
 ```
 
+
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
@@ -73,6 +73,7 @@ all_providers = client.providers.get_all()
 # ]
 ```
 
+
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
@@ -87,6 +88,7 @@ Vital vital = Vital.builder()
 
 var all_providers = vital.providers().getAll()
 ```
+
 
 ```go Go
 import (
@@ -128,7 +130,7 @@ Once you have a list of all available providers, you can build your UI. You can 
 
 ## 3. Generate a link token
 
-Once a user has selected a provider, you can generate a link token. This link token is used to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/docs/api-reference/link#link-token-exchange).
+Once a user has selected a provider, you can generate a link token. This link token is used to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/api-reference/link/generate-link-token).
 
 <CodeGroup>
 
@@ -151,6 +153,7 @@ const request: LinkTokenExchange = {
 const tokenResponse = await client.link.token(request);
 ```
 
+
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
@@ -162,8 +165,8 @@ client = Vital(
 )
 
 token_response = client.link.token(user_id="<user_id>")
-
 ```
+
 
 ```java Java
 import com.vital.api.Vital;
@@ -183,8 +186,8 @@ LinkTokenExchange request = LinkTokenExchange
         .build();
 
 var token_response = vital.link().token(request);
-
 ```
+
 
 ```go Go
 import (
@@ -214,7 +217,7 @@ fmt.Printf("Received data %s\n", response)
 
 ## 4. Link the user to the provider
 
-Once you have a link token, you can use it to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/docs/api-reference/link#link-token-exchange).
+Once you have a link token, you can use it to generate an oauth link, or authorize an email, or email and password.
 
 ### Connect an oauth provider
 
@@ -245,6 +248,7 @@ const auth = await client.link.generateOauthLink(
 )
 ```
 
+
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
@@ -262,6 +266,7 @@ oauth = client.link.generate_oauth_link(
   vital_link_token=token_response.link_token,
 )
 ```
+
 
 ```java Java
 import com.vital.api.Vital;
@@ -289,6 +294,7 @@ LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
 
 var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
 ```
+
 
 ```go Go
 import (
@@ -344,6 +350,7 @@ const request: IndividualProviderData = {
 const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
 ```
 
+
 ```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
@@ -360,6 +367,7 @@ data = client.link.connect_password_provider(
   password="<password>"
 )
 ```
+
 
 ```java Java
 import com.vital.api.Vital;
@@ -380,6 +388,7 @@ IndividualProviderData request = IndividualProviderData
 
 var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
 ```
+
 
 ```go Go
 import (
@@ -652,5 +661,4 @@ export const LinkDeviceScreen = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
 ```
