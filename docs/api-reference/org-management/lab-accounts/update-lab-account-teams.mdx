@@ -1,0 +1,19 @@
+---
+openapi: patch /v1/org/{org_id}/lab_account/{env}/{region}/{account_id}
+title: "Update Lab Account Teams"
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<OrgManagementAPI />
+<FeatureBeta />
+
+<RequestExample>
+```bash cURL
+curl --request PATCH \
+  --url https://api.management.junction.com/v1/org/{org_id}/lab_account/{env}/{region}/{account_id} \
+  --header 'X-Vital-Org-Key: <api-key>'
+  --data '{ "team_id_allowlist": "<team-id>" }'
+```
+</RequestExample>
