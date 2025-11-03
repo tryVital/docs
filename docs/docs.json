@@ -150,7 +150,8 @@
                   "lab/overview/insurance",
                   "lab/overview/sandbox",
                   "lab/overview/turnaround-times",
-                  "lab/overview/idempotency"
+                  "lab/overview/idempotency",
+                  "lab/overview/lab-accounts"
                 ]
               },
               {
@@ -700,6 +701,13 @@
                 "pages": [
                   "api-reference/org-management/org/get-org",
                   "api-reference/org-management/org/update-org"
+                ]
+              },
+              {
+                "group": "Lab Accounts",
+                "pages": [
+                  "api-reference/org-management/lab-accounts/get-lab-accounts",
+                  "api-reference/org-management/lab-accounts/update-lab-account-teams"
                 ]
               }
             ]
