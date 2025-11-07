@@ -4,7 +4,7 @@ title: Examples
 
 A couple of examples to get you started with Continuous Query:
 
-## Daily Sleep Analysis
+## Daily Main Sleep Session Analysis
 
 <CodeGroup>
 ```python Python DSL
@@ -15,14 +15,16 @@ va.select(
     va.Sleep.col("efficiency").mean(),
     va.Sleep.score().mean(),
     va.Sleep.chronotype().newest()
+).where(
+    "type = 'long_sleep'"
 ).group_by(
     va.date_trunc(va.Sleep.index(), 1, "day")
-).split_by_source(enabled=False)
-.finalize()
+).finalize()
 ```
 
 ```python JSON DSL
 {
+  "where": "type = 'long_sleep'",
   "select": [
     {
       "group_key": "*"
@@ -58,8 +60,7 @@ va.select(
         "index": "sleep"
       }
     }
-  ],
-  "split_by_source": false
+  ]
 }
 ```
 </CodeGroup>
@@ -78,8 +79,7 @@ va.select(
     va.Activity.col("duration_active_seconds").mean()
 ).group_by(
     va.date_trunc(va.Activity.index(), 1, "week")
-).split_by_source(enabled=False)
-.finalize()
+).finalize()
 ```
 
 ```python JSON DSL
@@ -108,7 +108,7 @@ va.select(
     },
     {
       "arg": {
-        "activity": "duration_active_seconds"
+        "activity": "duration_active_second"
       },
       "func": "mean"
     },
@@ -123,8 +123,240 @@ va.select(
         "index": "activity"
       }
     }
+  ]
+}
+```
+</CodeGroup>
+
+## First Glucose Measurement Of The Day Grouped By Source Type and Provider
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Timeseries.col("glucose").field("value").oldest()
+).group_by(
+    va.date_trunc(va.Timeseries.index(), 1, "day"),
+    va.Source.col("source_provider"),
+    va.Source.col("source_type")
+).finalize()
+```
+
+```python JSON DSL
+{
+  "select": [
+      {
+        "group_key": "*"
+      },
+      {
+        "arg": {
+          "field": "value",
+          "timeseries": "glucose"
+        },
+        "func": "oldest"
+      }
+    ],
+    "group_by": [
+      {
+        "arg": {
+          "index": "timeseries"
+        },
+        "date_trunc": {"unit": "day", "value": 1}
+      },
+      {"source": "source_provider"},
+      {"source": "source_type"}
+    ]
+}
+```
+</CodeGroup>
+
+## Daily Aggregations Of Select Timeseries Datapoints Grouped By Source Type and Provider
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Timeseries.col("glucose").field("value").mean(),
+    va.Timeseries.col("heartrate").field("value").mean(),
+    va.Timeseries.col("steps").field("value").sum(),
+    va.Timeseries.col("hrv").field("value").mean(),
+    va.Timeseries.col("calories_active").field("value").sum(),
+    va.Timeseries.col("body_temperature").field("value").max(),
+).group_by(
+    va.date_trunc(va.Timeseries.index(), 1, "day"),
+    va.Source.col("source_provider"),
+    va.Source.col("source_type"),
+).finalize()
+```
+
+```python JSON DSL
+{
+  "select": [
+      {
+        "group_key": "*"
+      },
+      {
+        "arg": {
+          "timeseries": "glucose",
+          "field": "value"
+        },
+        "func": "mean"
+      },
+      {
+        "arg": {
+          "timeseries": "heartrate",
+          "field": "value"
+        },
+        "func": "mean"
+      },
+      {
+        "arg": {
+          "timeseries": "steps",
+          "field": "value"
+        },
+        "func": "sum"
+      },
+      {
+        "arg": {
+          "timeseries": "hrv",
+          "field": "value"
+        },
+        "func": "mean"
+      },
+      {
+      "arg": {
+        "timeseries": "calories_active",
+        "field": "value"
+        },
+        "func": "sum"
+      },
+      {
+      "arg": {
+        "timeseries": "body_temperature",
+        "field": "value"
+        },
+        "func": "max"
+      }
+    ],
+    "group_by": [
+      {
+        "arg": {
+          "index": "timeseries"
+        },
+        "date_trunc": {"unit": "day", "value": 1}
+      },
+      {"source": "source_provider"},
+      {"source": "source_type"}
+    ]
+}
+```
+</CodeGroup>
+
+## Weekly Insights Into Workout Statistics
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Workout.col("calories").max(),
+    va.Workout.col("calories").min(),
+    va.Workout.col("heart_rate_zone_1").mean(),
+    va.Workout.col("heart_rate_zone_2").mean(),
+    va.Workout.col("heart_rate_zone_3").mean(),
+    va.Workout.col("heart_rate_zone_4").mean(),
+    va.Workout.col("heart_rate_zone_5").mean(),
+    va.Workout.col("heart_rate_zone_6").mean(),
+    va.Workout.col("distance_meter").max(),
+    va.Workout.col("duration_active_second").mean()
+).group_by(
+    va.date_trunc(va.Workout.index(), 1, "week")
+).finalize()
+```
+
+```python JSON dsl
+{
+  "select": [
+    {
+      "group_key": "*"
+    },
+    {
+      "arg": {
+        "workout": "calories"
+      },
+      "func": "max"
+    },
+    {
+      "arg": {
+        "workout": "calories"
+      },
+      "func": "min"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_1"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_2"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_3"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_4"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_5"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "heart_rate_zone_6"
+      },
+      "func": "mean"
+    },
+    {
+      "arg": {
+        "workout": "distance_meter"
+      },
+      "func": "max"
+    },
+    {
+      "arg": {
+        "workout": "duration_active_second"
+      },
+      "func": "mean"
+    }
   ],
-  "split_by_source": false
+  "group_by": [
+    {
+      "date_trunc": {
+        "value": 1,
+        "unit": "week"
+      },
+      "arg": {
+        "index": "workout"
+      }
+    }
+  ]
 }
 ```
 </CodeGroup>
