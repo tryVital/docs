@@ -192,6 +192,7 @@
                 "pages": [
                   "lab/walk-in/overview",
                   "lab/walk-in/order-lifecycle",
+                  "lab/walk-in/quest-appt-handling",
                   "lab/walk-in/webhooks",
                   "lab/walk-in/communications"
                 ]
