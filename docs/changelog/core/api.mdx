@@ -2,6 +2,10 @@
 title: "API"
 ---
 
+### Error for closed beta endpoint calls is now JSON (Nov 2025)
+
+Previously, if you tried to access an endpoint in closed beta and for which your team was not enabled, it would return a plain text error body. It now returns a JSON error body to align with the rest of our API.
+
 ### Lab Test Result Interpretation Filtering (June 2025)
 
 You can now filter lab test orders by result interpretation using the new `interpretation` query parameter in the [GET /orders](/api-reference/lab/orders/get-orders) endpoint.
