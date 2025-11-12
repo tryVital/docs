@@ -4,7 +4,7 @@ title: Examples
 
 A couple of examples to get you started with Continuous Query:
 
-## Daily Main Sleep Session Analysis
+## Daily Sleep Analysis
 
 <CodeGroup>
 ```python Python DSL
@@ -172,7 +172,7 @@ va.select(
 ```
 </CodeGroup>
 
-## Daily Aggregations Of Select Timeseries Datapoints Grouped By Source Type and Provider
+## Daily Summaries of Metabolic Biomarkers Grouped By Source Type and Provider
 
 <CodeGroup>
 ```python Python DSL
@@ -185,6 +185,8 @@ va.select(
     va.Timeseries.col("steps").field("value").sum(),
     va.Timeseries.col("hrv").field("value").mean(),
     va.Timeseries.col("calories_active").field("value").sum(),
+    va.Timeseries.col("body_temperature").field("value").mean(),
+    va.Timeseries.col("body_temperature").field("value").min(),
     va.Timeseries.col("body_temperature").field("value").max(),
 ).group_by(
     va.date_trunc(va.Timeseries.index(), 1, "day"),
@@ -256,7 +258,7 @@ va.select(
 ```
 </CodeGroup>
 
-## Weekly Insights Into Workout Statistics
+## Weekly Exercise Summary
 
 <CodeGroup>
 ```python Python DSL
