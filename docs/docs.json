@@ -166,7 +166,8 @@
                   "lab/workflow/order-registrable-testkit",
                   "lab/workflow/importing-order",
                   "lab/workflow/aoe",
-                  "lab/workflow/partials"
+                  "lab/workflow/partials",
+                  "lab/workflow/redraws"
                 ]
               },
               {

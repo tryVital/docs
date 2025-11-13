@@ -1,0 +1,17 @@
+---
+title: "Redraws"
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+A patient may be eligible for a redraw if their order has missing results due to a lab error. 
+In these cases, rather than transitioning the [high-level status](/lab/workflow/lab-test-lifecycle) of the order to `completed`, the order status is set to `redraw_available`. 
+A `labtest.order.updated` [webhook](/lab/walk-in/webhooks) will also be triggered with the `redraw_available` order event.
+
+A patient can only get one redraw per order. The order status will transition to `completed` once the results of the redraw have been received.
+
+<Warning>
+Please note that this feature is only available for walk-in tests with Labcorp, Quest and BioReference.
+</Warning>
