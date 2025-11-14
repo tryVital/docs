@@ -111,6 +111,10 @@ Interpretation is a string value that can be one of the following:
 
 #### Standardisation - LOINC
 
+<Warning>
+LOINC codes may be missing in some results due to: our LOINC compendium still being expanded and updated, labs providing data in formats our system doesn't recognize, or labs not including LOINC codes in their data. We're actively working to improve both our LOINC compendium completeness and our ability to interpret data variations, but missing LOINCs can still occur from time to time. Integrations should be built to handle cases where LOINC codes may be null or undefined.
+</Warning>
+
 It's possible to test the same biomarkers across different laboratories. For these to match, we use the [LOINC](https://loinc.org/) standard.
 
 In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard. Customers should use this standard, so it's possible to match results across different laboratories.
@@ -124,7 +128,6 @@ An example:
 | USSL | hdl | 2085-9 | cholesterol-in-hdl-mass-vol |
 
 As you can see, the same biomarker `HDL Cholesterol` can have different slugs across different laboratories. However it's represented by the same LOINC value.
-
 
 #### Expected Results
 
