@@ -7,7 +7,7 @@ import BYOO from '/snippets/byoo.mdx';
 
 <BYOO />
 
-Vital supports bringing your own OAuth application credentials, so that your user would see the OAuth consent flow
+Junction supports bringing your own OAuth application credentials, so that your user would see the OAuth consent flow
 in your own brand when they connect to cloud-based OAuth providers.
 
 This provides a more cohesive experience for your users as it gives a truly whitelabelled experience for your application/mobile application.
@@ -111,7 +111,7 @@ The following providers are not immediately active. You need to take a couple of
 [Fitbit](https://www.fitbit.com/global/uk/home) (`fitbit`)
 
 1. You must press the "Verify" button on all the Webhook Subscribers in the Fitbit Developer Portal.
-2. Once the buttons are gone and replaced by (usually zeroed) delivery statistics, it implies that Fitbit has completed the verification challenge with Vital.
+2. Once the buttons are gone and replaced by (usually zeroed) delivery statistics, it implies that Fitbit has completed the verification challenge with Junction.
 
 </Accordion>
 </AccordionGroup>
@@ -119,22 +119,17 @@ The following providers are not immediately active. You need to take a couple of
 </Step>
 </Steps>
 
-### Through Vital Support
+### Through the Dashboard
 
-To setup custom OAuth application credentials, you need to do the following:
+To setup custom OAuth application credentials via the Dashboard, you need to do the following:
 
 1. Create a developer account with the cloud-based OAuth providers.
 2. Generate a OAuth application credentials from your developer account. You can do this by going to the providers developer accounts page and creating a new application.
-3. Email Support@tryvital.io or message us on Slack with the following information:
-   - The provider you want to customize
-   - The client ID and client secret for the provider
-      - Use tools like [Doppler Secret Share](https://share.doppler.com) or [1Password](https://1password.com) to protect your credentials.
-   - The redirect URI for the provider
-   - The name of your team
-   - The logo for your team
-4. We will then setup the custom credentials for you and let you know when it's ready to go.
+3. Navigate to **Custom Credentials** under **Config** on the left sidebar in the Junction Dashboard.
+4. Find the provider you want to configure and click the **Setup** button.
+5. In the input form that appears, enter your **OAuth Client ID** and **OAuth Client Secret**.
 
 <Note>
-Some Oauth providers are unavailable unless you can <b>Bring Your Own OAuth (BYOO)</b> — you will have to apply directly
-to the provider for an OAuth application, and provide Vital your assigned credentials once the application is accepted.
+Some OAuth providers are unavailable unless you can <b>Bring Your Own OAuth (BYOO)</b> — you will have to apply directly
+to the provider for an OAuth application, and provide Junction your assigned credentials once the application is accepted.
 </Note>
