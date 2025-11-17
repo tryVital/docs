@@ -26,6 +26,7 @@ possible low-level status are:
 - `appointment_cancelled`: The appointment was cancelled, by either the patient, Vital or you.
 - `partial_results`: The laboratory has started making partial results available.
 - `completed`: The laboratory processed the blood sample and final results are available.
+- `sample_error`: The collected sample was unprocessable by the lab.
 - `cancelled`: The order was cancelled by either the patient, Vital or you.
 
 The Finite State Machine that defines the possible transitions for the low-level statuses described above is illustrated
