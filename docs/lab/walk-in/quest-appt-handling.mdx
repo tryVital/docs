@@ -65,7 +65,7 @@ _The user should select a different time slot_
 | Status | Error Message                                                               | When It Occurs                           | User Action                            |
 | ------ | --------------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------- |
 | 400    | `"This appointment slot is no longer available. Please select a new time."` | Requested time is in the past            | Select a future time slot              |
-| 404    | Quest-specific error messages                                               | Slot already taken or no longer exists   | Select a different time slot           |
+| 400 or 404 | Quest-specific error messages                                               | Slot already taken or no longer exists   | Select a different time slot           |
 | 404    | `"No slots found for zip code"`                                             | No locations/slots in the area           | Try a different location or date range |
 | 404    | `"No slots found. Not all PSCs support scheduling..."`                      | All locations lack scheduling capability | Use different locations                |
 
