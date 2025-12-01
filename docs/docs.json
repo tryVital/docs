@@ -569,6 +569,13 @@
                 ]
               },
               {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
+                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
+                ]
+              },
+              {
                 "group": "Health Insurance",
                 "pages": [
                   "api-reference/lab-testing/insurance/search-diagnosis",

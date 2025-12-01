@@ -1,0 +1,145 @@
+---
+title: "Get Lab Report Parser Job"
+openapi: "GET /lab_report/v1/parser/job/{job_id}"
+---
+
+Retrieve the status and results of a lab report parsing job. When the job status is `completed`, the `data` field will contain the extracted lab results with LOINC matches.
+
+**Job Status Values:**
+- `upload_pending` - Job created, waiting for file upload
+- `started` - File uploaded, parsing in progress
+- `completed` - Parsing complete, results available in `data`
+- `failed` - Parsing failed
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/lab_report/v1/parser/job/<job_id>' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+data = client.lab_report.parser_get_job(job_id="<job_id>")
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.labReport.parserGetJob("<job_id>");
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labReport().parserGetJob("<job_id>");
+```
+
+```go Go
+import (
+  "context"
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabReport.ParserGetJob(context.TODO(), "<job_id>")
+if err != nil {
+    return err
+}
+fmt.Printf("Status: %s\n", response.Status)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "job_id": "550e8400-e29b-41d4-a716-446655440000",
+  "status": "completed",
+  "data": {
+    "metadata": {
+      "patient_first_name": "John",
+      "patient_last_name": "Doe",
+      "dob": "1990-05-15",
+      "lab_name": "Quest Diagnostics",
+      "date_reported": "2024-01-15",
+      "date_collected": "2024-01-14",
+      "specimen_number": "SP123456"
+    },
+    "results": [
+      {
+        "test_name": "Glucose",
+        "value": "95",
+        "type": "numeric",
+        "units": "mg/dL",
+        "min_reference_range": 70,
+        "max_reference_range": 100,
+        "interpretation": "normal",
+        "is_above_max_range": false,
+        "is_below_min_range": false,
+        "loinc_matches": [
+          {
+            "loinc_code": "2345-7",
+            "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
+            "display_name": "Glucose [Mass/volume] in Serum or Plasma",
+            "aliases": ["Blood Sugar", "Fasting Glucose"],
+            "confidence_score": 0.95
+          }
+        ]
+      },
+      {
+        "test_name": "Hemoglobin A1c",
+        "value": "5.4",
+        "type": "numeric",
+        "units": "%",
+        "min_reference_range": 4.0,
+        "max_reference_range": 5.6,
+        "interpretation": "normal",
+        "is_above_max_range": false,
+        "is_below_min_range": false,
+        "loinc_matches": [
+          {
+            "loinc_code": "4548-4",
+            "loinc_name": "Hemoglobin A1c/Hemoglobin.total in Blood",
+            "display_name": "Hemoglobin A1c/Hemoglobin.total in Blood",
+            "aliases": ["HbA1c", "Glycated Hemoglobin"],
+            "confidence_score": 0.98
+          }
+        ]
+      }
+    ]
+  },
+  "needs_human_review": false,
+  "is_reviewed": false
+}
+```
+
+</ResponseExample>
+
