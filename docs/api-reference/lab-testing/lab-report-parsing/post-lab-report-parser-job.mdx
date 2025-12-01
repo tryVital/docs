@@ -1,0 +1,102 @@
+---
+title: "Create Lab Report Parser Job"
+openapi: "POST /lab_report/v1/parser/job"
+---
+
+Upload a lab report file (PDF, JPEG, or PNG) to create a parsing job. The job will extract lab results and match them to LOINC codes.
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+     --url '{{BASE_URL}}/lab_report/v1/parser/job' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'Content-Type: multipart/form-data' \
+     --form 'file=@/path/to/lab_report.pdf' \
+     --form 'needs_human_review=false'
+```
+
+```python Python
+from vital.client import Vital
+from vital.environment import VitalEnvironment
+
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
+)
+
+with open("lab_report.pdf", "rb") as f:
+    data = client.lab_report.parser_create_job(
+        file=f,
+        needs_human_review=False
+    )
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import * as fs from 'fs';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const file = fs.createReadStream("lab_report.pdf");
+const data = await client.labReport.parserCreateJob(file, { needsHumanReview: false });
+```
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import java.io.File;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+File file = new File("lab_report.pdf");
+var data = vital.labReport().parserCreateJob(file);
+```
+
+```go Go
+import (
+  "context"
+  "os"
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+file, _ := os.Open("lab_report.pdf")
+defer file.Close()
+
+response, err := client.LabReport.ParserCreateJob(context.TODO(), file, nil)
+if err != nil {
+    return err
+}
+fmt.Printf("Job ID: %s\n", response.JobId)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "job_id": "550e8400-e29b-41d4-a716-446655440000",
+  "status": "started",
+  "data": null,
+  "needs_human_review": false,
+  "is_reviewed": false
+}
+```
+
+</ResponseExample>
+
