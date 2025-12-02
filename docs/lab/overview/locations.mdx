@@ -55,20 +55,26 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 </Note>
 
 
-# Booking appointments at Patient Service Centers
+# Booking appointments at Patient Service Centers 
 
 <Warning>
-  Currently only available for Quest
+  Currently only available for Quest lab locations. 
 </Warning>
 
 ## **Appointment Scheduling Capability**
 
+
+
 The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoints as:
 
 - `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction’s API.
-- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone.
-  - ⚠️ This capability indicates that scheduling appointments is _not_ available through Junction’s API.
-- If neither of these capabilities is present, it indicates that the PSC either does not allow scheduling appointments or that we do not have visibility into whether they do.
+- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction’s API.
+
+If neither scheduling capability is present, that means the PSC either does not offer appointment scheduling, or its scheduling availability is unknown.
+
+<Warning>
+  At this time, Arizona Quest lab locations cannot be scheduled through Junction's API. These labs are operated by Sonora Quest, and their scheduling service does not currently support third-party API scheduling.
+</Warning>
 
 ## Appointment Availability
 
