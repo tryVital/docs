@@ -12,6 +12,9 @@ Vital supports two ways to connect to LibreView for Abbott CGMs:
 | `abbott_libreview` | Connect via LibreView patient account in any region. | 
 | `freestyle_libre`  | Connect via regional LibreView practices (Vital-managed, or custom practices). |
 
+
+<Warning> The abbott_libreview provider is no longer supported for new connections. This change applies to organizations that do not already have at least one active abbott_libreview connection. Existing abbott_libreview connections will continue to sync as normal. </Warning>
+
 ### `freestyle_libre` for practice-based connections
 
 With the `freestyle_libre` integration, users have to share/connect their LibreView patient account
@@ -93,6 +96,8 @@ exposed as a **password provider**:
 
   <Note>
   You need not specify any region in your request. Vital will match the correct LibreView region transparently.
+  
+  **Important:** Abbott LibreView linking can take longer than other providers. We recommend configuring an extended client-side timeout (up to 60 seconds) when making this Link request. If your timeout is shorter, linking may fail even when credentials are valid.
   </Note>
 
   </Step>
