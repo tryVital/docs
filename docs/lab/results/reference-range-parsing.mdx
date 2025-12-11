@@ -1,0 +1,215 @@
+---
+title: "Reference Range"
+---
+<Note>
+The Junction API already returns the `interpretation` field (e.g., "normal", "abnormal", "critical") in the [`BiomarkerResult`](/lab/results/result-formats#biomarkerresult) object. This documentation is intended for teams that want to build their own interpretation logic and need to parse the `reference_range` field along with `min_range_value` and `max_range_value` to determine whether results are within normal limits.
+</Note>
+
+The `reference_range` field in Order results contains a string representation of the normal range for a lab test result. This field is critical for determining whether a result is within normal limits, but it requires parsing to understand the inclusivity/exclusivity of boundary values.
+
+
+## Why Parsing is Needed
+
+The `min_range_value` and `max_range_value` fields contain the boundary numbers from the lab, but they **do not indicate whether those boundaries are inclusive or exclusive**. This information is only available in the `reference_range` string, which requires parsing to determine the correct comparison operator.
+
+### Example
+
+For a result with:
+- `reference_range`: `"<5.7"`
+- `max_range_value`: `5.7`
+- `min_range_value`: None
+- `result`: `"5.7"`
+
+Without knowing the inclusivity, you cannot determine if `5.7` is normal or abnormal. The boundary value `5.7` is the same whether the range is `<=5.7` (inclusive, normal) or `<5.7` (exclusive, abnormal). You must parse the `reference_range` string to know which operator to use.
+
+## Reference Range Formats
+
+The `reference_range` field can appear in several formats:
+
+### 1. Comparison Operators
+
+Single-bound comparisons using standard operators:
+
+- `<5` - Less than 5 (exclusive upper bound)
+- `<=10.5` - Less than or equal to 10.5 (inclusive upper bound)
+- `>3` - Greater than 3 (exclusive lower bound)
+- `>=7.25` - Greater than or equal to 7.25 (inclusive lower bound)
+
+### 2. Range Notation
+
+Two-bound ranges using hyphen notation:
+
+- `1-10` - Between 1 and 10 (both inclusive)
+- `3.5-7.8` - Between 3.5 and 7.8 (both inclusive)
+
+**Note:** Range notation (with hyphen) typically indicates both bounds are inclusive.
+
+### 3. Alternative Comparison Syntax
+
+Some labs use alternative syntax:
+
+- `< OR = 9.9` - Less than or equal to 9.9 (inclusive upper bound)
+- `> OR = 2` - Greater than or equal to 2 (inclusive lower bound)
+
+These are case-insensitive (`< or = 9.9` is equivalent).
+
+## Parsing Strategy
+
+Parse the `reference_range` string to extract:
+- Lower bound value (if present)
+- Upper bound value (if present)
+- Whether each bound is inclusive or exclusive
+
+The parsed information, combined with `min_range_value` and `max_range_value`, determines the correct comparison operators for evaluating whether results are within the normal range.
+
+## Example Implementation
+
+Here's an example implementation showing how to parse the `reference_range` field:
+
+<Note>
+This example uses Python's `re` module for regular expression matching.
+</Note>
+
+```python
+import re
+
+def parse_reference_range(reference_range_string):
+    # Pattern 1: Handle comparison operators: <5, <=10.5, >3, >=7.25
+    comparison_match = re.match(r"([<>]=?)(\d+(\.\d+)?)", reference_range_string)
+    if comparison_match:
+        comparison_operator, boundary_value, _ = comparison_match.groups()
+        boundary_value_float = float(boundary_value)
+        
+        if comparison_operator in ["<", "<="]:
+            # Upper bound: < or <=
+            return {
+                "lower_bound": None,
+                "upper_bound": boundary_value_float,
+                "lower_included": False,
+                "upper_included": comparison_operator == "<=",  # <= is inclusive, < is exclusive
+            }
+        else:  # > or >=
+            # Lower bound: > or >=
+            return {
+                "lower_bound": boundary_value_float,
+                "upper_bound": None,
+                "lower_included": comparison_operator == ">=",  # >= is inclusive, > is exclusive
+                "upper_included": False,
+            }
+    
+    # Pattern 2: Handle range notation: 1-10, 3.5-7.8
+    range_match = re.match(r"(\d+(\.\d+)?)-(\d+(\.\d+)?)", reference_range_string)
+    if range_match:
+        lower_bound_str, _, upper_bound_str, _ = range_match.groups()
+        return {
+            "lower_bound": float(lower_bound_str),
+            "upper_bound": float(upper_bound_str),
+            "lower_included": True,  # Range notation is always inclusive on both sides
+            "upper_included": True,
+        }
+    
+    # Pattern 3: Handle alternative comparison syntax: < OR = 9.9, > OR = 2
+    alternative_match = re.match(r"([<>]) OR = (\d+(\.\d+)?)", reference_range_string, re.IGNORECASE)
+    if alternative_match:
+        comparison_operator, boundary_value, _ = alternative_match.groups()
+        boundary_value_float = float(boundary_value)
+        
+        if comparison_operator == "<":
+            # < OR = means <= (inclusive upper bound)
+            return {
+                "lower_bound": None,
+                "upper_bound": boundary_value_float,
+                "lower_included": False,
+                "upper_included": True,
+            }
+        else:  # >
+            # > OR = means >= (inclusive lower bound)
+            return {
+                "lower_bound": boundary_value_float,
+                "upper_bound": None,
+                "lower_included": True,
+                "upper_included": False,
+            }
+    
+    # If no pattern matches, return empty bounds
+    return {
+        "lower_bound": None,
+        "upper_bound": None,
+        "lower_included": False,
+        "upper_included": False,
+    }
+```
+
+<Warning>
+This code should be used as a starting point and not directly used in production. It demonstrates parsing logic for the formats shown in this documentation, but may not handle all edge cases or variations that labs might use. For example, it does not cover signed ranges (e.g., `-5.0 - +2.0`) or other format variations. You should thoroughly test and extend this implementation based on your specific needs.
+</Warning>
+
+## Parsing Examples
+
+Here are examples of what the above parsing function returns for different `reference_range` formats:
+
+### Example 1: Exclusive Upper Bound
+
+```python
+reference_range_string = "<5.7"
+parsed = parse_reference_range(reference_range_string)
+# Returns: {
+#     "lower_bound": None,
+#     "upper_bound": 5.7,
+#     "lower_included": False,
+#     "upper_included": False  # < means exclusive
+# }
+```
+
+### Example 2: Inclusive Upper Bound
+
+```python
+reference_range_string = "<=5.7"
+parsed = parse_reference_range(reference_range_string)
+# Returns: {
+#     "lower_bound": None,
+#     "upper_bound": 5.7,
+#     "lower_included": False,
+#     "upper_included": True  # <= means inclusive
+# }
+```
+
+### Example 3: Range with Both Bounds
+
+```python
+reference_range_string = "2.6-24.9"
+parsed = parse_reference_range(reference_range_string)
+# Returns: {
+#     "lower_bound": 2.6,
+#     "upper_bound": 24.9,
+#     "lower_included": True,  # Range notation is inclusive
+#     "upper_included": True
+# }
+```
+
+### Example 4: Lower Bound Only
+
+```python
+reference_range_string = ">3.0"
+parsed = parse_reference_range(reference_range_string)
+# Returns: {
+#     "lower_bound": 3.0,
+#     "upper_bound": None,
+#     "lower_included": False,  # > means exclusive
+#     "upper_included": False
+# }
+```
+
+### Example 5: Alternative Syntax
+
+```python
+reference_range_string = "< OR = 9.9"
+parsed = parse_reference_range(reference_range_string)
+# Returns: {
+#     "lower_bound": None,
+#     "upper_bound": 9.9,
+#     "lower_included": False,
+#     "upper_included": True  # < OR = means <= (inclusive)
+# }
+```
+
