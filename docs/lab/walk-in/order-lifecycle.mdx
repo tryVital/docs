@@ -117,3 +117,45 @@ In cases where appointments can be scheduled before a requisition has been creat
 
 1. More than 8 hours have passed since the order was created, and no requisition has been received.
 2. There is less than 2 hours until the appointment start time, and no requisition has been received.
+
+
+## Arizona Schedulling
+
+<FeatureBeta />
+
+When this feature is enabled on your Team, you can book appointments with Quest in Arizona (Sonora Quest)
+
+### API Journey
+
+<Steps>
+  <Step title="Creating an appointment">
+  You create an Appointment for an Order to a Arizona PSC.
+
+  The Appointment starts with the `reserved` status.
+  </Step>
+
+  <Step title="Waiting for Appointment Confirmation">
+  The appointment is being created asynchronously.
+  </Step>
+
+  <Step title="Appointment has been created">
+  The appointment has now been created.
+
+  1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
+  2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
+
+  You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also received
+  a `labtest.appointment.updated` event for the Appointment status transition.
+  </Step>
+</Steps>
+
+### Appointment Booking Failure
+
+If an we are unable to book the Appointment asynchronously, then:
+
+* The Appointment will move to the `cancelled` status; and
+* There is no change to the Order, which will remain in it's last status.
+
+### Cancellation and Reschedulling
+
+Cancellation and reschedulling for Arizona should be done directly by the patient, via the email they receive from Sonora Quest. It is not possible to cancel/reschedule via Junction.
