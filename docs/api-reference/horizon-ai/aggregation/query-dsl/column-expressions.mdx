@@ -29,6 +29,7 @@ Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab t
 | Sleep summary<br/>`sleep`             | `Sleep.col("$1")`     | `{ "sleep": "$1" }`
 | Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }`
 | Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }`
+| Profile<br/>`profile`                    | `Profile.col("$1")`   | `{ "profile": "$1" }`
 
 ### Column Mappings
 
@@ -209,6 +210,22 @@ Map summary resource properties to their Continuous Query column equivalents.
 | `source.app_id` | `source_app_id` |
 | `source.device_id` | `source_device_id` |
 
+#### Profile
+
+| Profile field | Query Column |
+| --- | --- |
+| `sex` | `sex` |
+| `gender` | `gender` |
+| `height` | `height_centimeter` |
+| `wheelchair_use` | `wheelchair_use` |
+| `birth_date` | `birth_date` |
+| `created_at` | `created_at` |
+| `updated_at` | `updated_at` |
+| `source.slug` | `source_provider` |
+| `source.type` | `source_type` |
+| `source.app_id` | `source_app_id` |
+| `source.device_id` | `source_device_id` |
+
 
 ### Timeseries
 
@@ -248,6 +265,7 @@ index using the special Index Column expression:
 | Body summary<br/>`body`              | Measurement datetime   | `Body.index()`      | `{ "index": "body" }`
 | Sleep summary<br/>`sleep`            | Session end datetime   | `Sleep.index()`     | `{ "index": "sleep" }`
 | Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }`
+| Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }`
 
 
 
