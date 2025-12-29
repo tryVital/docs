@@ -3,6 +3,10 @@ title: "Get Lab Report Parser Job"
 openapi: "GET /lab_report/v1/parser/job/{job_id}"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
 Retrieve the status and results of a lab report parsing job. When the job status is `completed`, the `data` field will contain the extracted lab results with LOINC matches.
 
 **Job Status Values:**
