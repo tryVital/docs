@@ -98,6 +98,12 @@ Results can fall into one of the following categories:
 
     Note that you will also find the `Positive` value in the `notes` field.
 
+4. `ResultType.CODED_VALUE` - A coded value result using enum constants, e.g. `DETECTED`, `HEAD_AND_NECK`
+
+    In this case, the `result` field will be an enum constant name, and the `value` field will be `-1`.
+
+    This type is used for specialized tests like the Galleri multi-cancer early detection test. See the [Galleri Results](/lab/results/galleri-results) documentation for detailed information.
+
 <Warning>The `value` field in deprecated and will eventually be removed.</Warning>
 
 #### Interpretation

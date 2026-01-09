@@ -1,0 +1,314 @@
+---
+title: "Galleri Multi-Cancer Early Detection Results (GRAIL)"
+---
+
+## Overview
+
+The Galleri test (by GRAIL) is a multi-cancer early detection blood test available exclusively through the Quest lab provider. Unlike standard lab biomarkers that return numeric values with reference ranges, Galleri results use coded values (enums) to indicate cancer detection status, predicted cancer signal origin, and anatomical subcategories.
+
+## Result Structure Comparison
+
+### Standard Numeric Biomarker Result
+
+Typical lab results for biomarkers like cholesterol follow this structure:
+
+```json
+{
+  "name": "Total Cholesterol",
+  "slug": "total-cholesterol",
+  "type": "numeric",
+  "result": "195",
+  "value": 195,
+  "unit": "mg/dL",
+  "reference_range": "< 200",
+  "min_range_value": null,
+  "max_range_value": 200,
+  "is_above_max_range": false,
+  "is_below_min_range": false,
+  "interpretation": "normal",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": "2093-3",
+  "loinc_slug": "cholesterol-total-serum-plasma",
+  "provider_id": "001347",
+  "notes": null,
+  "source_sample_id": "12345678"
+}
+```
+
+Notice the `type` is `"numeric"`, the `result` contains a numeric string, `value` contains the actual number, and `unit` specifies the measurement unit.
+
+### Galleri Result - No Cancer Signal Detected
+
+When no cancer signal is detected, you receive a single result:
+
+```json
+{
+  "name": "Galleri Multi-Cancer Early Detection",
+  "slug": "galleri-cancer-signal",
+  "type": "coded_value",
+  "result": "NOT_DETECTED",
+  "value": -1,
+  "unit": null,
+  "reference_range": null,
+  "min_range_value": null,
+  "max_range_value": null,
+  "is_above_max_range": null,
+  "is_below_min_range": null,
+  "interpretation": "normal",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": null,
+  "loinc_slug": null,
+  "provider_id": "86038987",
+  "notes": null,
+  "source_sample_id": "12345678"
+}
+```
+
+### Galleri Results - Cancer Signal Detected
+
+When a cancer signal is detected, you receive **multiple related biomarker results** that provide detailed information about the detection:
+
+#### 1. Cancer Signal Detection
+
+```json
+{
+  "name": "Galleri Cancer Signal",
+  "slug": "galleri-cancer-signal",
+  "type": "coded_value",
+  "result": "DETECTED",
+  "value": -1,
+  "unit": null,
+  "reference_range": null,
+  "min_range_value": null,
+  "max_range_value": null,
+  "is_above_max_range": null,
+  "is_below_min_range": null,
+  "interpretation": "critical",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": null,
+  "loinc_slug": null,
+  "provider_id": "86038987",
+  "notes": null,
+  "source_sample_id": "12345678"
+}
+```
+
+#### 2. Cancer Signal Origin
+
+```json
+{
+  "name": "Galleri Cancer Signal Origin",
+  "slug": "galleri-cancer-origin",
+  "type": "coded_value",
+  "result": "HEAD_AND_NECK",
+  "value": -1,
+  "unit": null,
+  "reference_range": null,
+  "min_range_value": null,
+  "max_range_value": null,
+  "is_above_max_range": null,
+  "is_below_min_range": null,
+  "interpretation": "critical",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": null,
+  "loinc_slug": null,
+  "provider_id": "86038987_1",
+  "notes": null,
+  "source_sample_id": "12345678"
+}
+```
+
+#### 3. Cancer Signal Subcategory
+
+```json
+{
+  "name": "Galleri Cancer Signal Subcategory",
+  "slug": "galleri-cancer-subcategory",
+  "type": "coded_value",
+  "result": "OROPHARYNX_HYPOPHARYNX_NASOPHARYNX_LARYNX_LIP_AND_ORAL_CAVITY_INCLUDING_ORAL_TONGUE_NASAL_CAVITY_PARANASAL_SINUSES_MAJOR_SALIVARY_GLANDS",
+  "value": -1,
+  "unit": null,
+  "reference_range": null,
+  "min_range_value": null,
+  "max_range_value": null,
+  "is_above_max_range": null,
+  "is_below_min_range": null,
+  "interpretation": "critical",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": null,
+  "loinc_slug": null,
+  "provider_id": "86038987_2",
+  "notes": null,
+  "source_sample_id": "12345678"
+}
+```
+
+#### 4. Additional Information (Comment)
+
+```json
+{
+  "name": "Galleri Additional Information",
+  "slug": "galleri-comment-1",
+  "type": "comment",
+  "result": "Squamous Cell Signal of Head and Neck, Lung, and Esophagus",
+  "value": -1,
+  "unit": null,
+  "reference_range": null,
+  "min_range_value": null,
+  "max_range_value": null,
+  "is_above_max_range": null,
+  "is_below_min_range": null,
+  "interpretation": "critical",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "loinc": null,
+  "loinc_slug": null,
+  "provider_id": "86038987_3",
+  "notes": "Squamous Cell Signal of Head and Neck, Lung, and Esophagus",
+  "source_sample_id": "12345678"
+}
+```
+
+## Key Differences from Standard Biomarkers
+
+Understanding these differences is crucial for proper integration:
+
+### Result Type
+
+- **Standard biomarkers**: `type` is `"numeric"` or `"range"`
+- **Galleri results**: `type` is `"coded_value"` or `"comment"`
+
+### Result Field
+
+- **Standard biomarkers**: Contains numeric values as strings (e.g., `"195"`, `"<1.2"`)
+- **Galleri results**: Contains enum constant names in uppercase with underscores (e.g., `"DETECTED"`, `"HEAD_AND_NECK"`)
+
+### Value Field
+
+- **Standard biomarkers**: Contains actual numeric value (e.g., `195`)
+- **Galleri results**: Always `-1` (placeholder value; actual information is in the `result` field)
+
+<Warning>
+The `value` field is deprecated and will eventually be removed. For Galleri results, always use the `result` field to extract meaningful information.
+</Warning>
+
+### Unit Field
+
+- **Standard biomarkers**: Contains measurement units (e.g., `"mg/dL"`, `"mmol/L"`)
+- **Galleri results**: Always `null`
+
+### Interpretation Field
+
+- **Standard biomarkers**: Can be `"normal"`, `"abnormal"`, or `"critical"` based on reference ranges
+- **Galleri results**: `"normal"` when not detected, `"critical"` when cancer signal detected
+
+### Result Multiplicity
+
+- **Standard biomarkers**: Typically one result per biomarker tested
+- **Galleri positive results**: Multiple related results (signal + origin + subcategory + comments)
+
+### Provider ID Pattern
+
+Galleri results use a consistent `provider_id` pattern to distinguish between the different related results:
+
+- `"86038987"` - Base cancer signal detection result
+- `"86038987_1"` - Cancer signal origin
+- `"86038987_2"` - Cancer signal subcategory
+- `"86038987_3"` - Additional information/comments
+
+## Enum Value Reference
+
+### Galleri Cancer Signal
+
+**Description**: Indicates whether a cancer signal was detected in the Galleri test.
+
+**Field**: `BiomarkerResult.result` when `type` is `"coded_value"` and `provider_id` is `"86038987"`
+
+**Possible Values**:
+
+```
+DETECTED
+NOT_DETECTED
+```
+
+### Galleri Cancer Origin
+
+**Description**: When a cancer signal is detected, indicates the predicted tissue of origin for the cancer signal. This represents the general anatomical location or cell lineage where the cancer may have originated.
+
+**Field**: `BiomarkerResult.result` when `type` is `"coded_value"` and `provider_id` is `"86038987_1"`
+
+**Possible Values** (21 total):
+
+```
+ANUS
+BLADDER_UROTHELIAL_TRACT
+BREAST
+CERVIX
+COLON_RECTUM
+HEAD_AND_NECK
+KIDNEY
+LIVER_BILE_DUCT
+LUNG
+NEUROENDOCRINE_CELLS_OF_LUNG_OR_OTHER_ORGANS
+LYMPHOID_LINEAGE
+MELANOCYTIC_LINEAGE
+MYELOID_LINEAGE
+OVARY
+PANCREAS_GALLBLADDER
+PLASMA_CELL_LINEAGE
+PROSTATE
+BONE_AND_SOFT_TISSUE
+THYROID_GLAND
+STOMACH_ESOPHAGUS
+UTERUS
+```
+
+### Galleri Cancer Subcategory
+
+**Description**: Provides a more specific anatomical classification of the predicted cancer signal origin, with additional detail about the specific organs or tissue types involved.
+
+**Field**: `BiomarkerResult.result` when `type` is `"coded_value"` and `provider_id` is `"86038987_2"`
+
+**Possible Values** (21 total):
+
+```
+ANUS
+BLADDER_RENAL_PELVIS_URETER_URETHRA
+BREAST
+CERVIX
+COLON_RECTUM_APPENDIX
+OROPHARYNX_HYPOPHARYNX_NASOPHARYNX_LARYNX_LIP_AND_ORAL_CAVITY_INCLUDING_ORAL_TONGUE_NASAL_CAVITY_PARANASAL_SINUSES_MAJOR_SALIVARY_GLANDS
+KIDNEY
+LIVER_INTRAHEPATIC_BILE_DUCT
+LUNG_BRONCHUS
+NEUROENDOCRINE_CELLS_OF_LUNG_OR_OTHER_ORGANS
+LYMPHOID_LINEAGE
+MELANOCYTIC_LINEAGE
+MYELOID_LINEAGE
+OVARY_FALLOPIAN_TUBE_PRIMARY_PERITONEUM
+PANCREAS_EXTRAHEPATIC_BILE_DUCT_GALLBLADDER
+PLASMA_CELL_LINEAGE
+PROSTATE
+SKELETAL_MUSCLE_AND_OTHER_CONNECTIVE_TISSUE_VASCULAR_TISSUE_BONE_AND_CARTILAGE
+THYROID_GLAND
+STOMACH_ESOPHAGUS
+UTERUS
+```
+
+## Integration Tips
+
+### Identifying Galleri Results
+
+Galleri results can be identified in the API response by:
+
+1. The `type` field will be `"coded_value"` or `"comment"`
+2. The `provider_id` will start with `"86038987"`
+3. The slug values will be: `"galleri-cancer-signal"`, `"galleri-cancer-origin"`, or `"galleri-cancer-subcategory"`
+
+### Handling Multiple Related Results
+
+When a cancer signal is detected, you will receive multiple related biomarker results that should be grouped and displayed together. The `provider_id` field distinguishes between them:
+
+- `"86038987"` - The main cancer signal detection result
+- `"86038987_1"` - The predicted origin of the cancer signal
+- `"86038987_2"` - The specific subcategory with detailed anatomical information
+- `"86038987_3"`, `"86038987_4"`, etc. - Additional information and comments
