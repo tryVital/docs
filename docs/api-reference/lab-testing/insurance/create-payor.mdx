@@ -1,0 +1,11 @@
+---
+title: "Create Payor"
+openapi: "POST /v3/payor"
+---
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+Create a new payor.
+
+Allows the creation of new payors that don't already exist in Junction's system. Created payors are tied to the team that created them, so they will only be returned as search results when [searched](search-payor-get) by that same team.
