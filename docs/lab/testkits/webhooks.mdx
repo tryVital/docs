@@ -82,7 +82,24 @@ The webhook payload body will have the following information if the Order is in 
       "status":"received",
       "team_id":"f07f59d2-2903-4bcd-a2ac-3e87fa47c4bc",
       "updated_at":"2023-09-01T18:02:41.210495+00:00",
-      "user_id":"f6cdf185-6815-4b2b-9482-798b75168689"
+      "user_id":"f6cdf185-6815-4b2b-9482-798b75168689",
+      "origin": "initial",
+      "parent_id": null,
+      "order_transaction": {
+         "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+         "status": "active",
+         "orders": [
+            {
+               "id": "e1c380c1-7df4-487f-869e-f1be0193ca25",
+               "created_at": "2023-09-01T18:02:41.210495+00:00",
+               "updated_at": "2023-09-01T18:02:41.210495+00:00",
+               "status": "received",
+               "status_created_at": "2023-09-01T18:05:12.618156+00:00",
+               "origin": "initial",
+               "parent_id": null
+            }
+         ]
+      },
    },
    "event_type":"labtest.order.updated"
 }

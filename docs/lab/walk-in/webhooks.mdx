@@ -78,7 +78,24 @@ The webhook payload body will have the following information if the Order is in 
       "created_at": "2022-01-04T00:00:00Z",
       "status": "completed.walk_in_test.completed"
     }
-  ]
+  ],
+  "origin": "initial",
+  "parent_id": null,
+  "order_transaction": {
+    "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+    "status": "completed",
+    "orders": [
+      {
+        "id": "84d96c03-6b1c-4226-ad8f-ef44a6bc08af",
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2022-01-04T00:00:00Z",
+        "status": "completed",
+        "status_created_at": "2022-01-04T00:00:00Z",
+        "origin": "initial",
+        "parent_id": null
+      }
+    ]
+  }
 }
 ```
 
@@ -100,6 +117,7 @@ The webhook payload body may have the following information if the appointment i
     "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
     "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",
     "order_id": "1ed9c8d7-e1b4-4d61-8123-0f99de5ae99a",
+    "order_transaction_id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",
