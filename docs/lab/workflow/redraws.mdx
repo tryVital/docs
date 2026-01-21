@@ -67,3 +67,8 @@ Responses for the following endpoints also include order transaction details:
   - When processing order webhooks, if an initial order is in a `redraw_available` state, check the order transaction details in the payload to retrieve the order ID for the new redraw order
   - Monitor webhooks for the redraw order to get the latest updates
   - Once the redraw order is completed, use the order transaction endpoint to retrieve combined results
+
+
+## Integrating with Order Transactions
+
+We recommend that you store both the `order_id` and `transaction_id` when placing an order in Junction. This way, if you receive a webhook for an order that you have not seen in your system, you will be able to reference it to it's parent via the `transaction_id`. From there, you can always use the `transaction_id` directly to obtain results, ensuring you always get the complete set of results for a particular order transaction.
