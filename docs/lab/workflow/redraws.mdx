@@ -23,7 +23,7 @@ An order transaction is created whenever a new `initial` order is created and a 
 - Order transactions have a `status` field, which can either be `active`, `completed` or `cancelled`
   - `active` - one or more orders belonging to the order transaction is in progress
   - `completed` - all expected lab work for this transaction is completed and no further updates are expected
-  - `cancelled` - all orders belonging to the order transaction have been cancelled
+  - `cancelled` - the initial order has been cancelled (and there's no redraw order), or the redraw order has been cancelled
 
 - An order can only ever belong to one order transaction
 
@@ -71,4 +71,5 @@ Responses for the following endpoints also include order transaction details:
 
 ## Integrating with Order Transactions
 
-We recommend that you store both the `order_id` and `transaction_id` when placing an order in Junction. This way, if you receive a webhook for an order that you have not seen in your system, you will be able to reference it to it's parent via the `transaction_id`. From there, you can always use the `transaction_id` directly to obtain results, ensuring you always get the complete set of results for a particular order transaction.
+We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction. This way, if you receive a webhook for an order that you have not seen in your system, you will be able to link it to its parent via the `order_transaction_id`. 
+From there, you can always use the `order_transaction_id` directly to obtain results, ensuring you always get the complete set of results for a particular order transaction.
