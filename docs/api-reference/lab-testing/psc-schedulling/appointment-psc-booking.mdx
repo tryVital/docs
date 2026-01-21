@@ -5,47 +5,9 @@ title: "Book PSC Appointment"
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
-
-### Idempotency Key
-
-<FeatureBeta />
-
-When submitting a booking request, you can optionally specify an Idempotency Key. Requests sharing the same
-Idempotency Key within a 14-day retention window would replay the initial request's response.
-
-Note that the response is frozen once emitted. For example, assuming an initially pending appointment that
-transitions to the confirmed status later on using Async Confirmation, the response with Idempotency Key will
-continue to return the appointment at its initial pending status.
-
-
-### Async Confirmation
-
-<FeatureBeta />
-
-Junction by default responds 500 Internal Server Error when the PSC Appointment Provider fails
-to acknowledge the booking request.
-
-With Async Confirmation, Junction synchronously waits for the provider to acknowledge the booking request,
-up to the Sync Confirmation timeout (`sync_confirmation_timeout_millisecond`).
-
-* If an acknowledgement is received before the timeout, Junction creates a _reserved or
-  confirmed_ appointment immediately, and return it in the API endpoint response.
-
-* If an acknowledgement has not yet been received upon the timeout, Junction creates a placeholder **pending**
-  appointment, and return it in the API endpoint response.
-
-If a pending appointment is created, Junction would continue to retry the booking request with the PSC
-Appointment Provider in background, up to the Async Confirmation Timeout (`async_confirmation_timeout_millisecond`).
-
-* If an acknowledgement is received before the timeout, the appointment transitions to either the _reserved or
-  confirmed_ status.
-
-* If the failure to acknowledge persists upon the timeout, the pending appointment transitions to the
-  cancelled status.
-
-You will receive the `labtest.appontment.updated` event for the initial appointment creation, as well as all
-the state transitions as outlined above.
-
+<Tip>
+This endpoint supports optional `idempotency_key` and Async Confirmation features. These features are currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#beta-features) for more info.
+</Tip>
 
 <RequestExample>
 ```bash cURL

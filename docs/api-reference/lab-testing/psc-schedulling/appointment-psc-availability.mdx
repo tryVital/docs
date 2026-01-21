@@ -5,22 +5,9 @@ title: "PSC Appointment Availability"
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
-
-### Availability Cache
-
-<FeatureBeta />
-
-Junction keeps a fast Availability Cache next 21 days of availability information for all locations. Each
-location is refreshed every 5 minutes on average.
-
-When you specify the Allow Stale option, your request would be fulfilled directly by the Availability Cache, provided that:
-
-1. All locations you requested have a cache hit; and
-2. The cached information is reasonably fresh (i.e., less than 15 minutes stale).
-
-When a request cannot be fulfilled by the Availability Cache, it would be routed to the PSC
-Appointment Provider directly.
-
+<Tip>
+Use the `allow_stale` parameter for faster responses via the Availability Cache. This feature is currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#availability-cache) for more info.
+</Tip>
 
 <RequestExample>
 
