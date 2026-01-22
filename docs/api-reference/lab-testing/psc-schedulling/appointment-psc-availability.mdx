@@ -3,6 +3,12 @@ openapi: "POST /v3/order/psc/appointment/availability"
 title: "PSC Appointment Availability"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<Tip>
+Use the `allow_stale` parameter for faster responses via the Availability Cache. This feature is currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#availability-cache) for more info.
+</Tip>
+
 <RequestExample>
 
 ```bash cURL

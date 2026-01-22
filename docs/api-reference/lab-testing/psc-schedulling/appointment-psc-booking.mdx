@@ -3,6 +3,12 @@ openapi: "POST /v3/order/{order_id}/psc/appointment/book"
 title: "Book PSC Appointment"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<Tip>
+This endpoint supports optional `idempotency_key` and Async Confirmation features. These features are currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#beta-features) for more info.
+</Tip>
+
 <RequestExample>
 ```bash cURL
 curl --request POST \

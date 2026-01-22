@@ -1,20 +1,24 @@
 ---
-title: "Quest PSC Appt Error Handling"
-description: "This guide covers all possible error scenarios when booking, rescheduling, or canceling appointments at Quest Patient Service Centers (PSCs) and how to handle them in your application."
+title: "PSC Scheduling API: Errors and Features"
+description: "Error handling and optional features for scheduling appointments at Patient Service Centers (PSCs)."
 ---
 
 ## API Endpoints
 
 All endpoints require authentication and are prefixed with `/v3/order`:
 
-- `POST /v3/order/psc/appointment/availability` - Get available time slots
-- `POST /v3/order/{order_id}/psc/appointment/book` - Book an appointment
-- `PATCH /v3/order/{order_id}/psc/appointment/reschedule` - Reschedule an appointment
-- `PATCH /v3/order/{order_id}/psc/appointment/cancel` - Cancel an appointment
-- `GET /v3/order/{order_id}/psc/appointment` - Get appointment details
-- `GET /v3/order/psc/appointment/cancellation-reasons` - Get cancellation reasons
+- [`POST /v3/order/psc/appointment/availability`](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) - Get available time slots
+- [`POST /v3/order/{order_id}/psc/appointment/book`](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) - Book an appointment
+- [`PATCH /v3/order/{order_id}/psc/appointment/reschedule`](/api-reference/lab-testing/psc-schedulling/appointment-psc-reschedule) - Reschedule an appointment
+- [`PATCH /v3/order/{order_id}/psc/appointment/cancel`](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancel) - Cancel an appointment
+- [`GET /v3/order/{order_id}/psc/appointment`](/api-reference/lab-testing/psc-schedulling/appointment-psc-get) - Get appointment details
+- [`GET /v3/order/psc/appointment/cancellation-reasons`](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons) - Get cancellation reasons
 
-## Environment Differences
+---
+
+## Error Handling
+
+### Environment Differences
 
 ⚠️ **Important**: Currently, error behavior differs between sandbox and production environments:
 
@@ -25,9 +29,9 @@ All endpoints require authentication and are prefixed with `/v3/order`:
 
 **Recommendation**: For now, handle both 400 and 404 responses as potential slot-unavailability scenarios.
 
-## Frequently Asked Questions
+### Frequently Asked Questions
 
-### Q: Do I need to parse error messages to distinguish between different 400 errors?
+#### Q: Do I need to parse error messages to distinguish between different 400 errors?
 
 **Yes.** Since multiple error types return 400 status codes, you must examine the error message content to determine the appropriate handling:
 
@@ -36,29 +40,11 @@ All endpoints require authentication and are prefixed with `/v3/order`:
 - **Missing parameters**: `"radius must be provided when using zip_code"` → Fix request
 - **Order state issues**: `"Order is not in a state that allows booking..."` → Contact support
 
-**Example of message-based routing:**
+HTTP status codes alone are insufficient because our API uses 400 for multiple distinct error categories that require different user experiences.
 
-```javascript
-if (error.status === 400) {
-  if (error.message.includes("no longer available")) {
-    // Time in past - show slot picker
-    return { action: 'SELECT_NEW_SLOT' };
-  } else if (error.message.includes("Invalid booking key")) {
-    // Bad booking key - refresh availability 
-    return { action: 'REFRESH_AVAILABILITY' };
-  } else if (error.message.includes("not in a state")) {
-    // Order workflow issue - contact support
-    return { action: 'CONTACT_SUPPORT' };
-  }
-  // ... handle other 400 scenarios
-}
-```
+### Error Categories
 
-**Why this is necessary:** HTTP status codes alone are insufficient because our API uses 400 for multiple distinct error categories that require different user experiences.
-
-## Error Categories & Handling
-
-### Slot Unavailability Errors
+#### Slot Unavailability Errors
 
 _The user should select a different time slot_
 
@@ -69,20 +55,7 @@ _The user should select a different time slot_
 | 404        | `"No slots found for zip code"`                                             | No locations/slots in the area           | Try a different location or date range |
 | 404        | `"No slots found. Not all PSCs support scheduling..."`                      | All locations lack scheduling capability | Use different locations                |
 
-**Implementation Example:**
-
-```javascript
-if (error.status === 404 || 
-    error.message?.includes("no longer available") || 
-    error.message?.includes("No slots found")) {
-  showMessage("This time slot is no longer available. Please select a different time.");
-  redirectToSlotSelection();
-}
-```
-
----
-
-### Input Validation Errors
+#### Input Validation Errors
 
 _Fix the request parameters_
 
@@ -98,22 +71,7 @@ _Fix the request parameters_
 | 404    | `"This order doesn't exist."`                                 | Invalid order ID                      | Verify order ID is correct                      |
 | 404    | `"This order is not a walk-in phlebotomy order."`             | Wrong order type                      | Use the correct order type                      |
 
-**Implementation Example:**
-
-```javascript
-if (error.status === 400 && 
-    (error.message?.includes("Invalid booking key") || 
-     error.message?.includes("not found") ||
-     error.message?.includes("must be provided"))) {
-  showMessage("Please check your request and try again.");
-  // Log error for debugging
-  console.error("Input validation error:", error.message);
-}
-```
-
----
-
-### Order State Errors
+#### Order State Errors
 
 _Order workflow or business logic issues_
 
@@ -127,21 +85,7 @@ _Order workflow or business logic issues_
 | 400    | `"This order does not have a requisition..."`           | Missing requisition for appointment  | Wait or contact support                 |
 | 400    | `"This lab is not supported."`                          | Order not for Quest lab              | Use a supported lab                     |
 
-**Implementation Example:**
-
-```javascript
-if (error.status === 400 && 
-    (error.message?.includes("not in a state") || 
-     error.message?.includes("sample ID") ||
-     error.message?.includes("requisition"))) {
-  showMessage("There's an issue with your order. Please contact support.");
-  enableContactSupport();
-}
-```
-
----
-
-### Appointment Management Errors
+#### Appointment Management Errors
 
 _Appointment-specific business rules_
 
@@ -153,24 +97,7 @@ _Appointment-specific business rules_
 | 400    | `"This appointment has already been cancelled."`      | Cancelling already cancelled appointment    | No action needed                  |
 | 404    | `"Appointment not found."`                            | Appointment doesn't exist                   | Verify appointment exists         |
 
-**Implementation Example:**
-
-```javascript
-if (error.status === 400 && 
-    error.message?.includes("appointment")) {
-  if (error.message.includes("cannot be rescheduled")) {
-    showMessage("This appointment cannot be rescheduled. You can cancel and book a new one.");
-    showCancelAndRebookOption();
-  } else if (error.message.includes("already been cancelled")) {
-    showMessage("This appointment has already been cancelled.");
-    hideAppointmentActions();
-  }
-}
-```
-
----
-
-### Authorization Errors
+#### Authorization Errors
 
 _Access control issues_
 
@@ -179,9 +106,7 @@ _Access control issues_
 | 401    | Authentication error | Invalid or expired token            | Re-authenticate |
 | 403    | `"Action forbidden"` | User lacks permission for the order | Contact support |
 
----
-
-### Service Availability Errors
+#### Service Availability Errors
 
 _System configuration or availability_
 
@@ -189,129 +114,21 @@ _System configuration or availability_
 | ------ | ----------------------- | ----------------------- | ---------------------------- |
 | 503    | `"Feature not enabled"` | PSC scheduling disabled | Contact support or try later |
 
----
+### Testing Error Scenarios
 
-## Comprehensive Error Handling Implementation
-
-```javascript
-function handleQuestPSCError(error) {
-  const status = error.status || error.response?.status;
-  const message = error.message || error.detail || error.response?.data?.detail || '';
-
-  // Slot unavailability - suggest new slot
-  if (status === 404 || 
-      message.includes("no longer available") || 
-      message.includes("No slots found")) {
-    return {
-      category: 'SLOT_UNAVAILABLE',
-      userMessage: 'This time slot is no longer available. Please select a different time.',
-      action: 'SELECT_NEW_SLOT',
-      retry: false
-    };
-  }
-
-  // Input validation errors - fix request
-  if (status === 400 && (
-      message.includes("Invalid booking key") ||
-      message.includes("not found") ||
-      message.includes("must be provided") ||
-      message.includes("must be less than") ||
-      message.includes("greater or equal"))) {
-    return {
-      category: 'INPUT_VALIDATION',
-      userMessage: 'Please check your request and try again.',
-      action: 'FIX_REQUEST',
-      retry: true
-    };
-  }
-
-  // Order state errors - contact support
-  if (status === 400 && (
-      message.includes("not in a state") ||
-      message.includes("sample ID") ||
-      message.includes("requisition") ||
-      message.includes("not a walkin"))) {
-    return {
-      category: 'ORDER_STATE',
-      userMessage: 'There\'s an issue with your order. Please contact support.',
-      action: 'CONTACT_SUPPORT',
-      retry: false
-    };
-  }
-
-  // Appointment management errors
-  if (status === 400 && message.includes("appointment")) {
-    if (message.includes("cannot be rescheduled")) {
-      return {
-        category: 'APPOINTMENT_RULE',
-        userMessage: 'This appointment cannot be rescheduled. You can cancel and book a new one.',
-        action: 'CANCEL_AND_REBOOK',
-        retry: false
-      };
-    } else if (message.includes("already been cancelled")) {
-      return {
-        category: 'APPOINTMENT_STATE',
-        userMessage: 'This appointment has already been cancelled.',
-        action: 'NO_ACTION',
-        retry: false
-      };
-    }
-  }
-
-  // Authorization errors
-  if (status === 401 || status === 403) {
-    return {
-      category: 'AUTHORIZATION',
-      userMessage: 'You don\'t have permission to perform this action.',
-      action: 'REAUTH_OR_CONTACT_SUPPORT',
-      retry: false
-    };
-  }
-
-  // Service unavailable
-  if (status === 503) {
-    return {
-      category: 'SERVICE_UNAVAILABLE',
-      userMessage: 'This feature is temporarily unavailable. Please try again later.',
-      action: 'TRY_LATER',
-      retry: true
-    };
-  }
-
-  // Default fallback
-  return {
-    category: 'UNKNOWN',
-    userMessage: 'An unexpected error occurred. Please contact support.',
-    action: 'CONTACT_SUPPORT',
-    retry: false
-  };
-}
-```
-
-## Testing Error Scenarios
-
-### Sandbox Testing
+#### Sandbox Testing
 
 - Most validation errors can be tested in sandbox
 - Slot conflicts cannot be reliably tested (mock client always succeeds)
 - Use invalid parameters to test input validation
 
-### Production Testing
+#### Production Testing
 
 - Test with caution using real appointments
 - Slot conflicts will return actual 404 errors from Quest
 - Time-based errors can be tested with past dates
 
-## Best Practices
-
-1. **Always check error messages**, not just status codes
-2. **Handle both 400 and 404** for slot unavailability due to environment differences
-3. **Provide specific user guidance** based on error category
-4. **Log errors with context** for debugging
-5. **Implement retry logic** only for appropriate error types
-6. **Test error handling** in both sandbox and production environments
-
-## Quest API Limitations
+### Quest API Limitations
 
 - **Timeout**: 15 seconds read timeout, 5 seconds connection timeout
 - **Slot availability**: Real-time, can change between availability check and booking
@@ -320,4 +137,65 @@ function handleQuestPSCError(error) {
 
 ---
 
-_For technical support or questions about this integration, contact your Junction support team._
+## Beta Features
+
+<Card horizontal icon="person-digging" color="#57164A">
+These features are in **closed beta**.
+
+Interested in these features? Get in touch with your Customer Success Manager.
+</Card>
+
+### Availability Cache
+
+Junction maintains a fast Availability Cache containing the next 21 days of availability for all locations. Each location is refreshed every 5 minutes on average.
+
+When you set the `allow_stale` parameter on the [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint, your request is fulfilled directly from the Availability Cache, provided that:
+
+1. All requested locations have a cache hit; and
+2. The cached information is reasonably fresh (less than 15 minutes old).
+
+When a request cannot be fulfilled by the Availability Cache, it is routed directly to the PSC Appointment Provider.
+
+#### When to use
+
+Use `allow_stale` when you need fast response times and can tolerate slightly stale availability data—for example, when displaying initial availability options to a user before they select a specific slot.
+
+
+### Idempotency Key
+
+You can optionally include an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same idempotency key within a 14-day retention window will return the original request's response.
+
+Note that the response is frozen at the time it is first emitted. For example, if a pending appointment later transitions to confirmed via Async Confirmation, requests with that idempotency key will still return the appointment in its original pending status.
+
+#### When to use
+
+Use an Idempotency Key to safely retry booking requests without the risk of creating duplicate appointments.
+
+### Async Confirmation
+
+When calling the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint, Junction by default returns a 500 Internal Server Error if the PSC Appointment Provider fails to acknowledge the booking request.
+
+With Async Confirmation enabled, Junction waits synchronously for the provider to acknowledge the booking request, up to `sync_confirmation_timeout_millisecond` (default: 2.5s, range: 1–10s).
+
+* If an acknowledgement is received before the timeout, Junction creates a _reserved_ or _confirmed_ appointment immediately and returns it in the response.
+
+* If no acknowledgement is received before the timeout, Junction creates a placeholder **pending** appointment and returns it in the response.
+
+#### Background retries
+
+If a pending appointment is created, Junction continues to retry the booking request with the PSC Appointment Provider in the background, up to `async_confirmation_timeout_millisecond` (default: 15min, range: 1min–48hr).
+
+* If an acknowledgement is received before the timeout, the appointment transitions to _reserved_ or _confirmed_ status.
+
+* If the provider still fails to acknowledge after the timeout, the pending appointment transitions to _cancelled_ status.
+
+#### Webhooks
+
+You will receive the `labtest.appointment.updated` event for the initial appointment creation, as well as for all state transitions described above.
+
+#### When to use
+
+Use Async Confirmation when you want to provide a consistently responsive booking experience.
+
+When the PSC Appointment Provider is under stress, Async Confirmation allows you to show a pending appointment to the end patient, and
+manages all the logistics to retrying the booking requests with the provider.
