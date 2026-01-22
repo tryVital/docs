@@ -163,13 +163,18 @@ Use `allow_stale` when you need fast response times and can tolerate slightly st
 
 ### Idempotency Key
 
-You can optionally include an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same idempotency key within a 14-day retention window will return the original request's response.
+Consider specifying an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the
+[Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same
+idempotency key within a 14-day retention window will return the original request's response.
 
 Note that the response is frozen at the time it is first emitted. For example, if a pending appointment later transitions to confirmed via Async Confirmation, requests with that idempotency key will still return the appointment in its original pending status.
 
 #### When to use
 
-Use an Idempotency Key to safely retry booking requests without the risk of creating duplicate appointments.
+When a booking request fails on your side (API consumer side), it could be a transient connection issue or a Junction request queueing issue.
+Your request might have still reached the Junction API server and might have been processed.
+
+Using an Idempotency Key allows your system to safely retry booking requests, without the risk of double booking appointments.
 
 ### Async Confirmation
 
