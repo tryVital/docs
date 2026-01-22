@@ -163,14 +163,13 @@ Use `allow_stale` when you need fast response times and can tolerate slightly st
 
 ### Idempotency Key
 
-You can optionally include an `idempotency_key` when submitting a booking request to the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same idempotency key within a 14-day retention window will return the original request's response.
+You can optionally include an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same idempotency key within a 14-day retention window will return the original request's response.
 
 Note that the response is frozen at the time it is first emitted. For example, if a pending appointment later transitions to confirmed via Async Confirmation, requests with that idempotency key will still return the appointment in its original pending status.
 
 #### When to use
 
-Use idempotency keys to safely retry booking requests without risk of creating duplicate appointments—for example, when network issues cause uncertainty about whether a request succeeded.
-
+Use an Idempotency Key to safely retry booking requests without the risk of creating duplicate appointments.
 
 ### Async Confirmation
 
@@ -196,6 +195,7 @@ You will receive the `labtest.appointment.updated` event for the initial appoint
 
 #### When to use
 
-Use Async Confirmation when you want to provide a responsive user experience even when the PSC Appointment Provider is slow to respond. This allows you to show users a pending appointment immediately rather than waiting for a potentially slow provider response or showing an error.
+Use Async Confirmation when you want to provide a consistently responsive booking experience.
 
----
+When the PSC Appointment Provider is under stress, Async Confirmation allows you to show a pending appointment to the end patient, and
+manages all the logistics to retrying the booking requests with the provider.
