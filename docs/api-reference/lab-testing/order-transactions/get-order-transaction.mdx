@@ -1,0 +1,86 @@
+---
+openapi: "GET /v3/order_transaction/{transaction_id}"
+---
+
+<RequestExample>
+
+```python Python
+from vital import Client
+
+client = Client(
+  api_key=<API_KEY>,
+  environment="sandbox",
+  region="us"
+)
+
+data = client.LabTests.get_transaction(transaction_id='<transaction_id>');
+```
+
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
+});
+
+const data = await client.labTests.get_transaction("<transaction_id>");
+```
+
+
+```java Java
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
+
+var data = vital.labTests().get_transaction("<transaction_id>");
+```
+
+```go Go
+import (
+  "context"
+
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
+  "github.com/tryVital/vital-go/option"
+)
+
+client := vitalclient.NewClient(
+  option.WithApiKey("<YOUR_API_KEY>"),
+  option.WithBaseURL(vital.Environments.Sandbox),
+)
+
+response, err := client.LabTests.GetTransaction(context.TODO(), "<transaction_id>")
+if err != nil {
+  return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+  "team_id": "cbb64555-af07-46c1-be09-ef89308e9b60",
+  "status": "active",
+  "orders": [
+    {
+      "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+      "created_at": "2020-01-01T00:00:00Z",
+      "updated_at": "2020-01-01T00:00:00Z",
+      "low_level_status": "transit_customer",
+      "low_level_status_created_at": "2022-01-03T00:00:00Z",
+      "origin": "initial"
+    }
+  ]
+}
+```
+
+</ResponseExample>
