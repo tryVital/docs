@@ -1,13 +1,13 @@
 ---
-title: "Get Results"
-openapi: "GET /v3/order/{order_id}/result"
+title: "Get Order Transaction Results"
+openapi: "GET /v3/order_transaction/{transaction_id}/result"
 ---
 
 <RequestExample>
 
 ```bash cURL
 curl --request GET \
-     --url '{{BASE_URL}}/v3/order/<order_id>/result' \
+     --url '{{BASE_URL}}/v3/order_transaction/<transaction_id>/result' \
      --header 'accept: application/json' \
      --header 'x-vital-api-key: {YOUR_KEY}'
 ```
@@ -22,7 +22,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get_result_raw(order_id="<order_id>")
+data = client.lab_tests.get_transaction_result(transaction_id="<transaction_id>")
 ```
 
 
@@ -34,7 +34,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getResultRaw("<order_id>");
+const data = await client.labTests.getTransactionResult("<transaction_id>");
 ```
 
 
@@ -47,7 +47,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getResultRaw("<order_id>");
+var data = vital.labTests().getTransactionResult("<transaction_id>");
 ```
 
 
@@ -65,7 +65,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetResultRaw(context.TODO(), "<order_id>")
+response, err := client.LabTests.GetTransactionResult(context.TODO(), "<transaction_id>")
 if err != nil {
     return err
 }
@@ -127,10 +127,18 @@ fmt.Printf("Received data %s\n", response)
       {
         "id": "84d96c03-6b1c-4226-ad8f-ef44a6bc08af",
         "created_at": "2020-01-01T00:00:00Z",
-        "updated_at": "2022-02-04T00:00:00Z",
-        "low_level_status": "completed",
-        "low_level_status_created_at": "2022-02-04T00:00:00Z",
+        "updated_at": "2022-01-04T00:00:00Z",
+        "low_level_status": "redraw_available",
+        "low_level_status_created_at": "2022-01-04T00:00:00Z",
         "origin": "initial"
+      },
+      {
+        "id": "15db29d7-ffeb-4540-9513-3c38f26b87aa",
+        "created_at": "2020-01-10T00:00:00Z",
+        "updated_at": "2022-01-14T00:00:00Z",
+        "low_level_status": "completed",
+        "low_level_status_created_at": "2022-01-14T00:00:00Z",
+        "origin": "redraw"
       }
     ]
   }
