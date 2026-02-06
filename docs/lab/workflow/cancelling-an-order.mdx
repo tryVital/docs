@@ -41,12 +41,12 @@ Orders **cannot** be cancelled once they reach these states:
     - `collecting_sample.walk_in_test.appointment_scheduled`
     - `collecting_sample.walk_in_test.appointment_cancelled`
     - `collecting_sample.walk_in_test.appointment_pending`
-    - `collecting_sample.walk_in_test.redraw_available`
 
     **❌ Cannot cancel once collection begins:**
     - `cancelled.walk_in_test.cancelled` - Already cancelled
     - `completed.walk_in_test.completed` - Order completed
     - `sample_with_lab.walk_in_test.partial_results` - Has partial results
+    - `collecting_sample.walk_in_test.redraw_available` - Order marked as final but has missing results
     - `failed.walk_in_test.sample_error` - Sample error occurred
 
     <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
