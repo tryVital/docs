@@ -68,14 +68,14 @@ The result set is N aggregated values where N is the number of groups.
 
 | Aggregate function         | Python DSL      | JSON DSL
 | -------------------------- | --------------- | -----------------------------------------
-| Minimum                    | `$EXPR.min()`    | `{ "aggregate": "min", "arg": $EXPR }`
-| Maximum                    | `$EXPR.max()`    | `{ "aggregate": "max", "arg": $EXPR }`
-| Mean                       | `$EXPR.mean()`   | `{ "aggregate": "mean", "arg": $EXPR }`
-| Median                     | `$EXPR.median()` | `{ "aggregate": "median", "arg": $EXPR }`
-| Standard Deviation         | `$EXPR.stddev()` | `{ "aggregate": "stddev", "arg": $EXPR }`
-| Count                      | `$EXPR.count()`  | `{ "aggregate": "count", "arg": $EXPR }`
-| Oldest Value               | `$EXPR.oldest()` | `{ "aggregate": "oldest", "arg": $EXPR }`
-| Newest Value               | `$EXPR.newest()` | `{ "aggregate": "newest", "arg": $EXPR }`
+| Minimum                    | `$EXPR.min()`    | `{ "func": "min", "arg": $EXPR }`
+| Maximum                    | `$EXPR.max()`    | `{ "func": "max", "arg": $EXPR }`
+| Mean                       | `$EXPR.mean()`   | `{ "func": "mean", "arg": $EXPR }`
+| Median                     | `$EXPR.median()` | `{ "func": "median", "arg": $EXPR }`
+| Standard Deviation         | `$EXPR.stddev()` | `{ "func": "stddev", "arg": $EXPR }`
+| Count                      | `$EXPR.count()`  | `{ "func": "count", "arg": $EXPR }`
+| Oldest Value               | `$EXPR.oldest()` | `{ "func": "oldest", "arg": $EXPR }`
+| Newest Value               | `$EXPR.newest()` | `{ "func": "newest", "arg": $EXPR }`
 
 </Accordion>
 
@@ -83,7 +83,7 @@ The result set is N aggregated values where N is the number of groups.
 
 | Aggregate function         | Python DSL      | JSON DSL                                  
 | -------------------------- | --------------- | -----------------------------------------
-| Sum                        | `$EXPR.sum()`    | `{ "aggregate": "sum", "arg": $EXPR }`
+| Sum                        | `$EXPR.sum()`    | `{ "func": "sum", "arg": $EXPR }`
 
 </Accordion>
 
@@ -106,7 +106,7 @@ va.select(
 {
     "select": [
         {
-            "aggregate": "newest",
+            "func": "newest",
             "arg": { "sleep": "stage_asleep_second" }
         }
     ]
@@ -179,4 +179,3 @@ va.select(va.group_key(2))
 }
 ```
 </CodeGroup>
-
