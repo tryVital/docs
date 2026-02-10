@@ -29,8 +29,8 @@ va.select(va.Sleep.chronotype())
 | ------- | ------- | ------- |
 | **Chronotype** | The chronotype of the sleep session, categorized as `lark`, `third`, or `owl`. | `chronotype` |
 | **Sleep Score** | A score from 0 to 100 computed using the Vital Horizon AI Sleep Score model. | `sleep_score` |
-| **Asleep At** | The timestamp when the user first fell asleep. | `asleep_at` |
-| **Awake At** | The timestamp when the user became fully awake. | `awake_at` |
+| **Asleep At** | Computed time of user falling asleep based on sleep session start time and latency. | `asleep_at` |
+| **Awake At** | Computed time the user woke up (may differ from session end time). | `awake_at` |
 
 You can combine multiple sleep macros in a single query and mix them with standard aggregations or other select expressions.
 
@@ -58,6 +58,12 @@ You can combine multiple sleep macros in a single query and mix them with standa
 ## Chronotype
 
 Determine the chronotype of each sleep session.
+
+Chronotype categories are based on the sleep midpoint time:
+
+- **lark** if midpoint ≥ 17:00 or ≤ 03:30
+- **third** if midpoint ≤ 06:00
+- **owl** otherwise
 
 ### Get last chronotype of the week
 <CodeGroup>
