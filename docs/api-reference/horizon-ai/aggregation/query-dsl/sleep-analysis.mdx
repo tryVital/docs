@@ -1,17 +1,63 @@
 ---
-title: Sleep Analysis
+title: Sleep Macros
 description: Value macro expressions for Sleep Analysis
 icon: moon
 ---
 
+Macros are precomputed fields available in the Vital Aggregation DSL. Use them anywhere you would use a regular column expression.
+Reference a macro with the `value_macro` expression:
+
+<CodeGroup>
+```python JSON DSL
+{
+    "select": [
+        { "value_macro": "chronotype" }
+    ]
+}
+```
+
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.Sleep.chronotype())
+```
+</CodeGroup>
+
+### Available Sleep Macros
+
+| <span style={{ whiteSpace: "nowrap" }}>Macro Name</span> | Description | <span style={{ whiteSpace: "nowrap" }}>Output Column Name</span> |
+| ------- | ------- | ------- |
+| **Chronotype** | The chronotype of the sleep session, categorized as `lark`, `third`, or `owl`. | `chronotype` |
+| **Sleep Score** | A score from 0 to 100 computed using the Vital Horizon AI Sleep Score model. | `sleep_score` |
+| **Asleep At** | The timestamp when the user first fell asleep. | `asleep_at` |
+| **Awake At** | The timestamp when the user became fully awake. | `awake_at` |
+
+You can combine multiple sleep macros in a single query and mix them with standard aggregations or other select expressions.
+
+### Example query
+
+```json
+{
+    "select": [
+        { "group_key": "*" },
+        { "func": "mean", "arg": { "value_macro": "sleep_score" } },
+        { "func": "mean", "arg": { "sleep": "efficiency" } },
+        { "func": "newest", "arg": { "value_macro": "chronotype" } },
+        { "func": "newest", "arg": { "value_macro": "asleep_at" } },
+        { "func": "newest", "arg": { "value_macro": "awake_at" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": { "value": 1, "unit": "week" },
+            "arg": { "index": "sleep" }
+        }
+    ]
+}
+```
 
 ## Chronotype
 
 Determine the chronotype of each sleep session.
-
-<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-`chronotype`
-</Accordion>
 
 ### Get last chronotype of the week
 <CodeGroup>
@@ -42,33 +88,10 @@ va.select(
 ```
 </CodeGroup>
 
-### Get chronotype
-<CodeGroup>
-```python Python DSL
-import vitalx.aggregation as va
-
-va.select(va.Sleep.chronotype())
-```
-
-```python JSON DSL
-{
-    "select": [
-        { "value_macro": "chronotype" }
-    ]
-}
-```
-</CodeGroup>
-
-
 
 ## Sleep Score
 
 Calculate a Sleep Score (0 to 100) for each sleep session.
-
-<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-`sleep_score`
-</Accordion>
-
 
 ### Get mean sleep score of the week
 <CodeGroup>
@@ -99,51 +122,39 @@ va.select(
 ```
 </CodeGroup>
 
-### Get sleep score
-
-<CodeGroup>
-```python Python DSL
-import vitalx.aggregation as va
-
-va.select(va.Sleep.score())
-```
-
-```python JSON DSL
-{
-    "select": [
-        { "value_macro": "sleep_score" }
-    ]
-}
-```
-</CodeGroup>
-
 ## Awake At / Asleep At
 
 Pinpoint when a user first fell asleep and when they became fully awake during each sleep session.
 
-<Accordion title="Output column names" icon="line-columns" iconType="duotone" defaultOpen>
-`asleep_at`, `awake_at`
-</Accordion>
-
 The `asleep_at` macro returns the bedtime start adjusted by the recorded sleep latency, while `awake_at` returns the bedtime start plus the offset of the final non-awake sleep segment.
 
-### Get Asleep At and Awake At
+### Get mean asleep at and awake at of the week
 
 <CodeGroup>
 ```python Python DSL
 import vitalx.aggregation as va
 
 va.select(
-    va.Sleep.asleep_at(),
-    va.Sleep.awake_at()
+    va.Sleep.asleep_at().mean(),
+    va.Sleep.awake_at().mean()
+).group_by(
+    date_trunc(Sleep.index(), 1, "week")
 )
 ```
 
 ```python JSON DSL
 {
     "select": [
-        { "value_macro": "asleep_at" },
-        { "value_macro": "awake_at" }
+        { "func": "mean", "arg": { "value_macro": "asleep_at" } },
+        { "func": "mean", "arg": { "value_macro": "awake_at" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": {
+                "unit": "week",
+                "value": 1
+            }
+        }
     ]
 }
 ```
