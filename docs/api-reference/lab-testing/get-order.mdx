@@ -131,7 +131,22 @@ fmt.Printf("Received data %s\n", response)
       "created_at": "2022-01-03T00:00:00Z",
       "status": "collecting_sample.testkit.transit_customer"
     }
-  ]
+  ],
+  "origin": "initial",
+  "order_transaction": {
+    "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+    "status": "active",
+    "orders": [
+      {
+        "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+        "created_at": "2020-01-01T00:00:00Z",
+        "updated_at": "2020-01-01T00:00:00Z",
+        "low_level_status": "transit_customer",
+        "low_level_status_created_at": "2022-01-03T00:00:00Z",
+        "origin": "initial"
+      }
+    ]
+  }
 }
 ```
 

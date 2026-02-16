@@ -6,12 +6,70 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-A patient may be eligible for a redraw if their order has missing results due to a lab error. 
-In these cases, rather than transitioning the [high-level status](/lab/workflow/lab-test-lifecycle) of the order to `completed`, the order status is set to `redraw_available`. 
-A `labtest.order.updated` [webhook](/lab/walk-in/webhooks) will also be triggered with the `redraw_available` order event.
-
-A patient can only get one redraw per order. The order status will transition to `completed` once the results of the redraw have been received.
-
 <Warning>
 Please note that this feature is only available for walk-in tests with Labcorp, Quest and BioReference.
 </Warning>
+
+A patient may be eligible for a redraw if their order has missing results due to a lab error. 
+To get a redraw, the patient will need to go back to the PSC with a new requisition form, listing only the missing biomarkers that need to be retested. 
+To facilitate this flow, Junction uses the concept of **order transactions** to group related orders together and provide unified results.
+An order transaction represents a single testing journey, which will include one initial order and at most, one redraw order.
+
+
+## Order Transactions and Initial Orders
+
+An order transaction is created whenever a new `initial` order is created and a link is established between the two entities. 
+- `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.
+- Order transactions have a `status` field, which can either be `active`, `completed` or `cancelled`
+  - `active` - one or more orders belonging to the order transaction is in progress
+  - `completed` - all expected lab work for this transaction is completed and no further updates are expected
+  - `cancelled` - the initial order has been cancelled (and there's no redraw order), or both the initial and redraw orders have been cancelled
+
+- An order can only ever belong to one order transaction
+
+## Order Transactions and Redraw Orders
+
+If an `initial` order is eligible for a redraw, rather than transitioning the [low-level status](/lab/workflow/lab-test-lifecycle) of the order to `completed`, the order status is set to `redraw_available`.
+- At this point, a new order is created, with `origin` set to `redraw` and it is linked to the same order transaction as the `initial` order
+
+### Webhooks
+
+- A `labtest.order.updated` [webhook](/lab/walk-in/webhooks) will be sent for the `initial` order when it transitions to the `redraw_available` status
+- Additionally, `labtest.order.created` and `labtest.order.updated` [webhooks](/lab/walk-in/webhooks) will be sent for the `redraw` order, when it is created and transitions to the `requisition_created` status upon the requisition being processed
+- The `labtest.order.created` and `labtest.order.updated` webhook payloads will include origin and order transaction details (including a list of orders that belong to the transaction, ordered by ascending date of order creation) - see the example payload on the [webhooks](/lab/walk-in/webhooks) page for more details
+- Ordering of webhooks delivery is not guaranteed and should not be relied upon
+
+### Monitoring updates and completion
+
+- The results for the `initial` order will be available via the [results API](/lab/results/result-formats) when the `redraw_available` event is received. **No further updates for this order should be expected.**
+- The `redraw` order will move through the usual [order lifecycle](/lab/walk-in/order-lifecycle) and will emit its own webhooks so that updates can be tracked.
+- A patient can only go through one redraw per order transaction. This means that a `redraw` order will never transition to a `redraw_available` state.
+- When results for the `redraw` order have been received and processed, the `redraw` order status will transition to `completed`, regardless of whether there are still missing results. The order transaction status will also be marked as `completed`.
+
+## API Endpoints
+
+The following endpoints are available to retrieve order transaction information and combined results for all orders within a transaction:
+
+- `GET /v3/order_transaction/{order_transaction_id}` - Get an order transaction's details and list of orders
+- `GET /v3/order_transaction/{order_transaction_id}/result` - Get combined results for an order transaction in JSON format
+- `GET /v3/order_transaction/{order_transaction_id}/result/pdf` - Get combined results for an order transaction in PDF format
+
+Responses for the following endpoints also include order transaction details:
+
+- `GET /v3/orders` - Get a list of filtered orders (including the ability to filter by order transaction ID)
+- `GET /v3/order/{order_id}` - Get an individual order
+- `GET /v3/order/{order_id}/result` - Get an individual order's results
+
+## Key things to note
+
+- The order transaction should be used as the primary way to reason about all related orders. A workflow for monitoring redraws could be as follows:
+  - Save the order transaction ID associated with an order at the point of its creation
+  - When processing order webhooks, if an initial order is in a `redraw_available` state, check the order transaction details in the payload to retrieve the order ID for the new redraw order
+  - Monitor webhooks for the redraw order to get the latest updates
+  - Once the redraw order is completed, use the order transaction endpoint to retrieve combined results
+
+
+## Integrating with Order Transactions
+
+We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction. This way, if you receive a webhook for an order that you have not seen in your system, you will be able to link it to the initial order via the `order_transaction_id`. 
+From there, you can always use the `order_transaction_id` directly to obtain results, ensuring you always get the complete set of results for a particular order transaction.

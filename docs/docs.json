@@ -517,6 +517,12 @@
                 ]
               },
               {
+                "group": "Order Transactions",
+                "pages": [
+                  "api-reference/lab-testing/order-transactions/get-order-transaction"
+                ]
+              },
+              {
                 "group": "Area Info",
                 "pages": [
                   "api-reference/lab-testing/area-info",
@@ -567,7 +573,9 @@
                 "pages": [
                   "api-reference/lab-testing/results/get-results",
                   "api-reference/lab-testing/results/get-results-pdf",
-                  "api-reference/lab-testing/results/get-results-metadata"
+                  "api-reference/lab-testing/results/get-results-metadata",
+                  "api-reference/lab-testing/results/get-order-transaction-results",
+                  "api-reference/lab-testing/results/get-order-transaction-results-pdf"
                 ]
               },
               {
