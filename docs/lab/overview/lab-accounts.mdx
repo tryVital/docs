@@ -1,10 +1,6 @@
 ---
 title: "Lab Accounts"
 ---
-import FeatureBeta from '/snippets/feature-beta.mdx';
-
-<FeatureBeta />
-
 Lab accounts encapsulate the information needed to place orders and receive results for a particular lab. They are tied to Orgs and can be dynamically linked to as many Teams within the Org as desired.
 
 When an active lab account is linked to a Team, that Team can place orders using that lab account. A Team can have multiple lab accounts linked, even for a single lab, but an individual order must be placed with a single lab account. The [Create Order](/api-reference/lab-testing/create-order) endpoint accepts a `lab_account_id` to specify the lab account.
