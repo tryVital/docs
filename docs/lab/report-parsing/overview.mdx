@@ -2,7 +2,7 @@
 title: "Lab Report Parsing"
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
+import FeatureBeta from "/snippets/feature-beta.mdx";
 
 <FeatureBeta />
 
@@ -50,17 +50,17 @@ with open("lab_report.pdf", "rb") as f:
         needs_human_review=False
     )
 
-print(f"Job ID: {job.job_id}")
+print(f"Job ID: {job.id}")
 print(f"Status: {job.status}")
 ```
 
 ### Supported File Formats
 
-| Format | Extension | Max Size |
-|--------|-----------|----------|
-| PDF    | `.pdf`    | 10 MB    |
-| JPEG   | `.jpg`, `.jpeg` | 10 MB |
-| PNG    | `.png`    | 10 MB    |
+| Format | Extension       | Max Size |
+| ------ | --------------- | -------- |
+| PDF    | `.pdf`          | 10 MB    |
+| JPEG   | `.jpg`, `.jpeg` | 10 MB    |
+| PNG    | `.png`          | 10 MB    |
 
 ### Human Review
 
@@ -74,13 +74,13 @@ This is not enabled by default, and you need to contact support to enable it.
 
 ## Job Statuses
 
-| Status | Description |
-|--------|-------------|
-| `started` | Job created and queued for processing |
-| `processing` | Extraction in progress |
-| `pending_review` | Awaiting human review (if requested) |
-| `completed` | Results ready |
-| `failed` | Processing failed |
+| Status           | Description                           |
+| ---------------- | ------------------------------------- |
+| `started`        | Job created and queued for processing |
+| `processing`     | Extraction in progress                |
+| `pending_review` | Awaiting human review (if requested)  |
+| `completed`      | Results ready                         |
+| `failed`         | Processing failed                     |
 
 ## Retrieving Results
 
@@ -108,16 +108,17 @@ Each extracted biomarker includes:
 - **interpretation** – `normal`, `abnormal`, or `critical`
 
 <Info>
-LOINC matching enables you to compare results across different labs and integrate with other health systems using standardized identifiers.
+  LOINC matching enables you to compare results across different labs and
+  integrate with other health systems using standardized identifiers.
 </Info>
 
 ## Webhooks
 
 Subscribe to parsing job events to avoid polling:
 
-| Event | Trigger |
-|-------|---------|
-| `lab_report.parsing_job.created` | New parsing job submitted |
+| Event                            | Trigger                                      |
+| -------------------------------- | -------------------------------------------- |
+| `lab_report.parsing_job.created` | New parsing job submitted                    |
 | `lab_report.parsing_job.updated` | Job status changed (completed, failed, etc.) |
 
 Example webhook payload:
@@ -126,10 +127,45 @@ Example webhook payload:
 {
   "event_type": "lab_report.parsing_job.updated",
   "data": {
-    "job_id": "550e8400-e29b-41d4-a716-446655440000",
+    "id": "8eb0217f-4683-4a3c-adca-faf95ac65739",
     "status": "completed",
-    "needs_human_review": false,
-    "is_reviewed": false
+    "failure_reason": None,
+    "data": {
+        "metadata": {
+            "patient_first_name": "Jane",
+            "patient_last_name": "Doe",
+            "dob": "1990-01-01",
+            "lab_name": "Acme Labs",
+            "date_reported": "2025-01-01",
+            "date_collected": "2024-12-30",
+            "specimen_number": "ABC123",
+        },
+        "results": [
+            {
+                "test_name": "Glucose",
+                "value": "90",
+                "type": "numeric",
+                "units": "mg/dL",
+                "max_reference_range": 99,
+                "min_reference_range": 70,
+                "source_panel_name": "CMP",
+                "loinc_matches": [
+                    {
+                        "loinc_code": "2345-7",
+                        "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
+                        "display_name": "Glucose",
+                        "aliases": [],
+                        "confidence_score": 0.99,
+                    }
+                ],
+                "interpretation": "normal",
+                "is_above_max_range": False,
+                "is_below_min_range": False,
+            }
+        ],
+    },
+    "needs_human_review": False,
+    "is_reviewed": False
   }
 }
 ```
@@ -143,10 +179,10 @@ Allow patients to upload lab reports from other providers:
 ```python
 def handle_patient_upload(file, patient_id):
     job = client.lab_report.parser_create_job(file=file)
-    
+
     # Store job_id linked to patient for later retrieval
-    store_pending_job(patient_id, job.job_id)
-    
+    store_pending_job(patient_id, job.id)
+
     return {"message": "Processing your lab report..."}
 ```
 
@@ -163,7 +199,7 @@ for filename in os.listdir("historical_reports/"):
             file=f,
             needs_human_review=True  # Verify historical data
         )
-        print(f"Created job {job.job_id} for {filename}")
+        print(f"Created job {job.id} for {filename}")
 ```
 
 ## API Reference
