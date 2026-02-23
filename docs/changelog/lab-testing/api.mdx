@@ -2,6 +2,45 @@
 title: "API"
 ---
 
+### Lab Report Parsing API (Feb 2026)
+
+Introducing the Lab Report Parsing API – extract structured biomarker data from lab report files and match results to standardized LOINC codes.
+
+<Accordion title="Details" defaultOpen icon="file-medical" iconType="duotone">
+  ## Overview
+
+  The Lab Report Parsing API enables you to digitize lab results from any source. Upload a PDF, JPEG, or PNG lab report, and Junction extracts structured data with LOINC standardization.
+
+  ## New Endpoints
+
+  - **POST /lab_report/v1/parser/job** – Upload a lab report to create a parsing job
+  - **GET /lab_report/v1/parser/job/{job_id}** – Retrieve job status and extracted results
+
+  ## Key Features
+
+  - **Multi-format support** – Parse PDF, JPEG, and PNG lab reports up to 10 MB
+  - **LOINC matching** – Extracted biomarkers are matched to standardized LOINC codes for cross-lab comparability
+  - **Human review option** – Flag jobs for manual verification before completion
+  - **Structured output** – Get biomarker name, value, unit, reference range, and interpretation
+
+  ## Webhook Events
+
+  - **lab_report.parsing_job.created** – Triggered when a new parsing job is submitted
+  - **lab_report.parsing_job.updated** – Triggered when a parsing job status changes (completed, failed, pending review)
+
+  ## Use Cases
+
+  - **Patient uploads** – Allow patients to submit lab reports from other providers
+  - **Historical data import** – Digitize paper records and legacy PDFs
+  - **Multi-source aggregation** – Combine results from various labs using LOINC standardization
+
+  <Info>
+    This feature is currently in beta. Contact your account manager to enable it.
+  </Info>
+
+  Check out the [Lab Report Parsing documentation](/lab/report-parsing/overview) to get started.
+</Accordion>
+
 ### Idempotency of Ordering (Sep 2025)
 
 We’ve added idempotency behavior on the order endpoint, to prevent duplicate orders

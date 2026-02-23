@@ -217,6 +217,12 @@
                   "lab/on-site-collection/webhooks",
                   "lab/on-site-collection/communications"
                 ]
+              },
+              {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "lab/report-parsing/overview"
+                ]
               }
             ]
           },
@@ -754,6 +760,13 @@
               {
                 "group": "Appointments",
                 "pages": ["event-catalog/labtest.appointment.updated"]
+              },
+              {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "event-catalog/lab_report.parsing_job.created",
+                  "event-catalog/lab_report.parsing_job.updated"
+                ]
               }
             ]
           },
