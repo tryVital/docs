@@ -529,6 +529,12 @@
                 ]
               },
               {
+                "group": "Lab Accounts",
+                "pages": [
+                  "api-reference/lab-testing/lab_accounts"
+                ]
+              },
+              {
                 "group": "Area Info",
                 "pages": [
                   "api-reference/lab-testing/area-info",
