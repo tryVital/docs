@@ -505,6 +505,12 @@
             "icon": "flask",
             "groups": [
               {
+                "group": "Lab Accounts",
+                "pages": [
+                  "api-reference/lab-testing/lab_accounts"
+                ]
+              },
+              {
                 "group": "Orders",
                 "pages": [
                   "api-reference/lab-testing/create-order",
