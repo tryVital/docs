@@ -9,7 +9,7 @@ When an active lab account is linked to a Team, that Team can place orders using
   If `lab_account_id` is not provided when placing an order, we will try to determine an appropriate lab account based on available information, but if we cannot unambigously find one lab account that should be used, we might not be able to place the order. We recommend including the `lab_account_id` when possible.
 </Warning>
 
-Lab accounts for an Org can be viewed using the [Get Lab Accounts (Org-level)](/api-reference/org-management/lab-accounts/get-lab-accounts) endpoint. Teams can fetch their available lab accounts using [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts). The teams linked to a given lab account can be updated using the [Update Lab Account Teams](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint.
+Lab accounts for an Org can be viewed using the [Get Lab Accounts (Org-level)](/api-reference/org-management/lab-accounts/get-lab-accounts) endpoint. Teams can fetch their available lab accounts using [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts). Team linkage is managed only through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint.
 
 ## Which endpoint should I use?
 
@@ -25,6 +25,7 @@ Use both endpoints for different jobs. They are complementary, not interchangeab
 Recommendation:
 - Use the team-level endpoint when operating within one team context.
 - Use the org-level endpoint when you need cross-team, org-level management views.
+- There is no team-level endpoint for updating lab account team linkage.
 
 Practical examples:
 - **Org-level endpoint:** An operations admin audits all lab accounts in the Org and confirms which teams are linked to each account.
