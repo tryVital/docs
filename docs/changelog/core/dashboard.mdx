@@ -2,6 +2,23 @@
 title: "Dashboard"
 ---
 
+### Lab Account Selection in Order Flow (Feb 2026)
+
+The order creation flow now includes a lab account selection step. When your team has multiple lab accounts, a new screen lets you choose which account to use before selecting panels. 
+Each account card shows the lab name, provider account ID, geographic coverage, and supported billing types.
+
+<Accordion title="Details" defaultOpen icon="building" iconType="duotone">
+  ## Order Flow Changes
+
+  - **Lab account selection screen** – Appears after patient selection when your team has 2+ customer lab accounts. If only one account exists, it is auto-selected.
+  - **Filtered panels and markers** – After selecting a lab account, only panels and markers available under that lab are shown.
+  - **Review screen** – The selected lab account is displayed on the order review screen with a dropdown to change it. Switching to a different lab resets the order set and AoE answers; switching within the same lab preserves them.
+
+  <Info>
+    Lab account selection is available in production environments when the feature is enabled for your team.
+  </Info>
+</Accordion>
+
 ### Managing Org and Team Management Keys (June 2025)
 
 You can now provision and manage Management Keys through the Junction Dashboard:
