@@ -144,6 +144,7 @@
                 "pages": [
                   "lab/overview/introduction",
                   "lab/overview/testing-modalities",
+                  "lab/overview/compendium-search",
                   "lab/overview/quickstart",
                   "lab/overview/physicians",
                   "lab/overview/locations",
@@ -603,6 +604,13 @@
                   "api-reference/lab-testing/insurance/search-diagnosis",
                   "api-reference/lab-testing/insurance/search-payor-get",
                   "api-reference/lab-testing/insurance/create-payor"
+                ]
+              },
+              {
+                "group": "Compendium",
+                "pages": [
+                  "api-reference/lab-testing/compendium/search",
+                  "api-reference/lab-testing/compendium/convert"
                 ]
               }
             ]

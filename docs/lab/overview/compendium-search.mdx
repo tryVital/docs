@@ -1,0 +1,198 @@
+---
+title: "Compendium Search"
+---
+
+`POST /v3/compendium/search` searches the compendium in two modes:
+- `canonical`: find and rank canonical tests only.
+- `crosswalk`: select one canonical test, then map it into per-lab candidates.
+
+
+## Request body
+
+```json
+{
+  "mode": "canonical | crosswalk",
+  "query": "string (optional in crosswalk, required in canonical)",
+  "loinc_set_hash": "string (crosswalk only)",
+  "labs": ["labcorp", "quest", "bioreference", "sonora_quest"],
+  "include_related": true,
+  "limit": 3
+}
+```
+
+### Validation rules
+
+#### Canonical mode
+- `query` is required and must be non-empty.
+- `loinc_set_hash` is not allowed.
+- `limit` must be `1..10`.
+
+#### Crosswalk mode
+- Exactly one of `query` or `loinc_set_hash` is required.
+- `limit` must be `1..20`.
+- `include_related` controls whether related canonical candidates are returned.
+
+If validation fails, the API returns HTTP `422`.
+
+## Search modes
+
+### 1) `canonical`
+
+Purpose: return ranked canonical tests only.
+
+Behavior:
+- Returns:
+  - `selected_canonical`: top candidate (or `null`).
+  - `canonical_candidates`: ranked list (up to `limit`).
+- `per_lab` and `related` are empty in this mode.
+
+### 2) `crosswalk`
+
+Purpose: choose one canonical test and expand it across labs.
+
+Entry points:
+- By text query: pick best canonical from query.
+- By `loinc_set_hash`: load canonical directly by hash.
+
+Behavior:
+- If no canonical is found, response has:
+  - `selected_canonical = null`
+  - `canonical_candidates = []`
+  - no per-lab candidates.
+- If canonical is found, returns:
+  - one `selected_canonical` and same item in `canonical_candidates`
+  - `per_lab`: candidates grouped by lab slug
+  - `related`: related canonical tests (if `include_related=true`)
+
+## Canonical tests
+
+"Canonical tests" are normalized, cross-lab test concepts.
+
+They are used to:
+- normalize query intent (`display_name`, `aliases`, `loinc_codes`, etc.)
+- create one canonical anchor (`selected_canonical`)
+- crosswalk into concrete provider/lab tests (`per_lab`)
+
+Canonical ranking combines match quality and popularity score. The selected labs filter which per-lab candidates are returned in crosswalk mode.
+
+## Output schema
+
+```json
+{
+  "mode": "canonical | crosswalk",
+  "selected_canonical": {
+    "loinc_set_hash": "string",
+    "display_name": "string",
+    "aliases": ["string"],
+    "loinc_codes": ["string"],
+    "provider_ids": ["string"],
+    "loinc_components": ["string"],
+    "loinc_groups": ["string"],
+    "popularity_score": 0.0,
+    "confidence": 0.0
+  },
+  "canonical_candidates": [
+    {
+      "loinc_set_hash": "string",
+      "display_name": "string",
+      "aliases": ["string"],
+      "loinc_codes": ["string"],
+      "provider_ids": ["string"],
+      "loinc_components": ["string"],
+      "loinc_groups": ["string"],
+      "popularity_score": 0.0,
+      "confidence": 0.0
+    }
+  ],
+  "per_lab": {
+    "quest": [
+      {
+        "marker_id": 0,
+        "lab_id": 7,
+        "lab_slug": "quest",
+        "name": "string",
+        "result_names": ["string"],
+        "provider_id": "string",
+        "loinc_set_hash": "string",
+        "loinc_codes": ["string"],
+        "loinc_components": ["string"],
+        "loinc_groups": ["string"],
+        "relation": "exact | subset | superset | overlap | suggested",
+        "confidence": 0.0,
+        "reason_codes": ["EXACT_LOINC_SET | SUBSET | SUPERSET | OVERLAP | NAME_MATCH | SYNONYM_MATCH"],
+        "marker_popularity_score": 0.0
+      }
+    ]
+  },
+  "related": [
+    {
+      "canonical": {
+        "loinc_set_hash": "string",
+        "display_name": "string",
+        "aliases": ["string"],
+        "loinc_codes": ["string"],
+        "provider_ids": ["string"],
+        "loinc_components": ["string"],
+        "loinc_groups": ["string"],
+        "popularity_score": 0.0,
+        "confidence": 0.0
+      },
+      "relation": "exact | subset | superset | overlap | suggested",
+      "confidence": 0.0,
+      "reason_codes": ["EXACT_LOINC_SET | SUBSET | SUPERSET | OVERLAP | NAME_MATCH | SYNONYM_MATCH"]
+    }
+  ]
+}
+```
+
+Notes:
+- `confidence` is model/service-generated and relative to result quality.
+- Omitting `labs` defaults to all supported labs (`labcorp`, `quest`, `bioreference`, `sonora_quest`).
+
+## Example requests
+
+### Canonical mode
+
+```bash
+curl -X POST "$BASE_URL/v3/compendium/search" \
+  -H "Content-Type: application/json" \
+  -H "x-vital-api-key: $API_KEY" \
+  -d '{
+    "mode": "canonical",
+    "query": "hemoglobin a1c",
+    "labs": ["quest", "labcorp"],
+    "limit": 5
+  }'
+```
+
+### Crosswalk mode by query
+
+```bash
+curl -X POST "$BASE_URL/v3/compendium/search" \
+  -H "Content-Type: application/json" \
+  -H "x-vital-api-key: $API_KEY" \
+  -d '{
+    "mode": "crosswalk",
+    "query": "comprehensive metabolic panel",
+    "labs": ["quest", "bioreference"],
+    "include_related": true,
+    "limit": 3
+  }'
+```
+
+### Crosswalk mode by canonical hash
+
+```bash
+curl -X POST "$BASE_URL/v3/compendium/search" \
+  -H "Content-Type: application/json" \
+  -H "x-vital-api-key: $API_KEY" \
+  -d '{
+    "mode": "crosswalk",
+    "loinc_set_hash": "f0a1b2c3d4",
+    "labs": ["labcorp", "quest"],
+    "include_related": false,
+    "limit": 3
+  }'
+```
+
+For endpoint schema and try-it behavior, see the API reference page: [Compendium Search](/api-reference/lab-testing/compendium/search).
