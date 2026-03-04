@@ -41,6 +41,30 @@ Introducing the Lab Report Parsing API – extract structured biomarker data fro
   Check out the [Lab Report Parsing documentation](/lab/report-parsing/overview) to get started.
 </Accordion>
 
+### Lab Account Selection in Ordering Flow (Feb 2026)
+
+You can now scope orders to a specific lab account during creation. 
+A new team-level lab accounts endpoint lets you list available accounts, 
+and a new `lab_account_id` parameter on the order creation endpoint lets you specify which account to use.
+
+<Accordion title="Details" defaultOpen icon="building" iconType="duotone">
+  ## New Endpoint
+
+  - **GET /v3/lab_test/lab_account** – List lab accounts accessible to your team. Supports optional `lab_account_id` and `status` query parameters.
+
+  ## Updated Endpoints
+
+  - **POST /v3/order/create** – New optional `lab_account_id` parameter to specify which lab account to use. If omitted, the backend resolves the appropriate account automatically.
+  - **POST /v3/order/import** – Now accepts lab accounts in `PENDING` status, enabling order imports while accounts are still being set up.
+  - **GET /v3/lab_tests/markers** – New optional `lab_slug` query parameter to filter markers by lab. When a lab account is selected, you can use this to retrieve only the markers available under that lab.
+
+  ## Behavior
+
+  - When `lab_account_id` is provided, available panels and markers are filtered to those supported by the selected account's lab.
+  - When recreating an order with `update_reason=INCORRECT_LAB`, the backend now resolves a fresh lab account rather than carrying forward the incorrect one.
+</Accordion>
+
+
 ### Idempotency of Ordering (Sep 2025)
 
 We’ve added idempotency behavior on the order endpoint, to prevent duplicate orders
