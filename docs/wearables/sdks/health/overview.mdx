@@ -7,11 +7,11 @@ sidebarTitle: "Overview"
 ## Overview
 
 <Note>
-  Make sure you have successfully integrated with a Vital Mobile SDK authentication scheme, before you proceed
+  Make sure you have successfully integrated with a Junction Mobile SDK authentication scheme, before you proceed
   to try out Junction Health SDK.
 
   <Card title="Mobile SDK Authentication" icon="id-card" href="/wearables/sdks/authentication" horizontal>
-    Learn how to authenticate your mobile app user with Vital Mobile SDK.
+    Learn how to authenticate your mobile app user with Junction Mobile SDK.
   </Card>
 </Note>
 
@@ -21,11 +21,11 @@ the Apple HealthKit and Android Health Connect integration.
 Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
 
 <Card title="Apple HealthKit" icon="apple" href="/wearables/guides/apple-healthkit" horizontal>
-  Learn how to integrate with Apple HealthKit through Vital Mobile SDKs, available in
+  Learn how to integrate with Apple HealthKit through Junction Mobile SDKs, available in
   Native iOS, React Native and Flutter.
 </Card>
 <Card title="Android Health Connect" icon="android" href="/wearables/guides/android-health-connect" horizontal>
-  Learn how to integrate with Android Health Connect through Vital Mobile SDKs, available in
+  Learn how to integrate with Android Health Connect through Junction Mobile SDKs, available in
   Native Android, React Native and Flutter.
 </Card>
 
@@ -56,7 +56,7 @@ This section does not apply to:
 * ❌ Fluter iOS apps (using Junction Flutter SDK 4.3.8 or later).
 
 <Note>
-Vital **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
+Junction **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
 You need not manual edit your AppDelegate in **Flutter** iOS projects.
 </Note>
 
@@ -72,7 +72,7 @@ In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementa
 
 <Accordion title="Details" icon="apple" defaultOpen>
 
-Vital needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
+Junction needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
 require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
 [[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
 
@@ -287,7 +287,7 @@ to provide a way for users to review their permission grants or denials, you can
 [inform them of the system app location where they can do so](#check-if-a-read-permission-was-granted-or-denied-spoiler-you-cant).
 
 <Warning>
-The health data read permission prompted is managed by the operating system. Vital cannot customize or
+The health data read permission prompted is managed by the operating system. Junction cannot customize or
 alter its behaviour.
 </Warning>
 
@@ -439,7 +439,7 @@ apps initiating an Apple Watch workout session that would be live synced with yo
 
 ### Pausing Data Synchronization
 
-You can pause and unpause data sync at any time, without having to sign-out the user from the Vital Mobile SDK.
+You can pause and unpause data sync at any time, without having to sign-out the user from the Junction Mobile SDK.
 Note that pausing data sync does not reset the incremental sync progress and does not trigger a historical stage
 upon unpause. It only "freezes" the sync progress.
 

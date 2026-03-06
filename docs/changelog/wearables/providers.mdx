@@ -181,7 +181,7 @@ for more information.
 
 ### Electrocardiogram, Heart Rate Alert and AFib Burden (Dec 2024)
 
-Vital now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
+Junction now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
 
 Resource                                                | Apple HealthKit <sup>[3]</sup> | Fitbit | Withings | Kardia
 ------------------------------------------------------- | --------------- | ------ | -------- | -------
@@ -244,8 +244,8 @@ New Sleep summaries now have a new _Sleep Type_ field.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
-Vital maps the Sleep Type from the source provider whenever possible. If this is unavailable at source,
-Vital infers the Sleep Type based on the sleep session duration.
+Junction maps the Sleep Type from the source provider whenever possible. If this is unavailable at source,
+Junction infers the Sleep Type based on the sleep session duration.
 
 Sleep Type         | Description
 ------------------ | -----------------
@@ -261,7 +261,7 @@ in the Event Catalog for more information.
 
 ### Apple HealthKit data sync improvements (Aug 2024)
 
-An overhauled Apple HealthKit sync engine is now available across all Vital Mobile SDK platforms.
+An overhauled Apple HealthKit sync engine is now available across all Junction Mobile SDK platforms.
 The changes bring historical data sync incrementality, prioritization, network resiliency and reduced resource usage.
 
 <Accordion icon="apple" iconType="duotone" title="Details" defaultOpen>
@@ -298,7 +298,7 @@ Menstrual cycle tracking data can now be collected through the Apple HealthKit a
 Health Connect integrations.
 
 <Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
-Ask for data permission on the `MenstrualCycle` resource from the user through the Vital Health SDK.
+Ask for data permission on the `MenstrualCycle` resource from the user through the Junction Health SDK.
 
 Check out the [Get Menstrual Cycles](/api-reference/menstrual-cycle/get-summary) endpoint and
 the [Menstrual Cycle data events](/event-catalog/daily.data.menstrual_cycle.created) in the Event Catalog
@@ -318,13 +318,13 @@ the [Workout Created](/event-catalog/daily.data.workouts.created) event for more
 
 ### New Abbott LibreView integration (May 2024)
 
-Vital has introduced an new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
+Junction has introduced an new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
 accepting LibreView patient account credentials.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
 This is an alternative option to our practice-based Freestyle Libre provider (`freestyle_libre`).
 
-With `abbott_libreview`, Vital uses the provided LibreView patient account credentials to connect directly
+With `abbott_libreview`, Junction uses the provided LibreView patient account credentials to connect directly
 to LibreView. There is no involvement of a LibreView practice in this integration.
 
 Note that both practice-based and patient-based connections would continue to be supported in parallel. The
@@ -360,10 +360,10 @@ Check out the [Freestyle Libre](/wearables/guides/freestyle#custom-practice-ente
 
 
 ### Health Connect Background Sync (Mar 2024)
-Vital Mobile SDK now includes an experimental Background Sync feature for Android Health Connect.
+Junction Mobile SDK now includes an experimental Background Sync feature for Android Health Connect.
 
 <Accordion icon="robot" iconType="duotone" title="Details" defaultOpen>
-The feature is available through the following Vital Mobile SDK releases:
+The feature is available through the following Junction Mobile SDK releases:
 | Platform       | Version |
 | -------------- | ------- |
 | Native Android | 2.0.0+  |
@@ -372,7 +372,7 @@ The feature is available through the following Vital Mobile SDK releases:
 
 Check out the following documentation for information, integration guidance as well as caveats
 of the experimental Background Sync :
-* [Vital Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync) for a general overview
+* [Junction Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync) for a general overview
 * [Android Health Connect integration guide](/wearables/guides/android-health-connect#background-sync-experimental), which includes guidance on the experimental Background Sync feature.
 </Accordion>
 

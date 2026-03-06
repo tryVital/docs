@@ -15,31 +15,31 @@ Each event is published with these [Azure EventData Properties](https://learn.mi
 
 | Type     | Key              | Value |
 | -------- | ---------------- | ----- |
-| Property | event-type       | Vital event type, e.g., `daily.data.activity.created` |
-| Property | user-id          | Vital User ID of the event subject |
+| Property | event-type       | Junction event type, e.g., `daily.data.activity.created` |
+| Property | user-id          | Junction User ID of the event subject |
 | Property | team-id          | Junction Team ID of the event subject |
 | Property | content-encoding | `gzip`: The blob is compressed by gzip. absent: The blob is uncompressed. |
 | Property | idempotency-key  | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
-| Partition Key | -           | Vital User ID |
+| Partition Key | -           | Junction User ID |
 | Data     | -                | The JSON blob. This may or may not be compressed — see `content-encoding`. |
 
 <Info>
 By default, payload smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
 decompression of the event payload blob is necessary.
 
-To force Vital to always compress the payload, set `compression: always` on your
+To force Junction to always compress the payload, set `compression: always` on your
 [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
 </Info>
 
 <Info>
-At this time, Vital publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Junction publishes exclusively JSON blobs (`blob_type == json`).
 
 Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
 </Info>
 
 ## Broker authentication
 
-Vital connects to your Azure Event Hub namespace through a connection URL you supplied in your
+Junction connects to your Azure Event Hub namespace through a connection URL you supplied in your
 [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration:
 
 * It must embed a Event Hub Shared Access Signature (SAS); and
@@ -77,7 +77,7 @@ You can [configure your Azure Event Hub destination](https://docs.tryvital.io/ap
 to route certain events to designated Event Hubs that are _not_ the default Event Hub.
 
 You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`) . For every outbound event, 
-Vital sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
+Junction sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
 
 ```json Example
 "azure_amqp": {
@@ -111,7 +111,7 @@ You can [configure your Azure Event Hub destination](https://docs.tryvital.io/ap
 to route certain events to an Azure Blob Storage container. This is useful if you have enabled the Provider Raw Data firehose, which may
 publish raw data events beyond the 1 MiB size limit of Azure Event Hub.
 
-Vital writes each matched event as a Block Blob. The blob name follows the standard format of:
+Junction writes each matched event as a Block Blob. The blob name follows the standard format of:
 
 ```
 # uncompressed

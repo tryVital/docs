@@ -1,5 +1,5 @@
 ---
-title: "Vital Devices SDK"
+title: "Junction Devices SDK"
 sidebarTitle: "Devices SDK"
 ---
 
@@ -33,7 +33,7 @@ Flutter and React Native app projects.
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
   ```
 
-  You will have to request the appropriate permissions at in your app before you can call the Vital Devices SDK.
+  You will have to request the appropriate permissions at in your app before you can call the Junction Devices SDK.
   </Accordion>
 </AccordionGroup>
 
@@ -250,15 +250,15 @@ let result = await devicesManager.readLibre1("reading", "errored", "completed")
 1. the sensor information; and
 2. a list of glucose samples.
 
-## Upload device samples to Vital
+## Upload device samples to Junction
 
 <Note>
 This automatic behaviour is available since Junction iOS 1.0.0, Junction Android 3.0.0, Junction Flutter SDK 4.0.0
 and Junction React Native 4.0.0.
 </Note>
 
-Vital Devices SDK automatically uploads any blood pressure and glucose samples discovered during
-the read operation, provided that the Vital Core SDK [has a signed-in user](/wearables/sdks/vital-core#core-sdk-status).
+Junction Devices SDK automatically uploads any blood pressure and glucose samples discovered during
+the read operation, provided that the Junction Core SDK [has a signed-in user](/wearables/sdks/vital-core#core-sdk-status).
 
 The SDK does not currently buffer samples that fail to upload. You might want to ensure that the
 device has Internet connectivity before initiating the read operation.

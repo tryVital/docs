@@ -1,16 +1,16 @@
 ---
 title: "Quickstart"
-description: "A quick introduction to building with Vital"
+description: "A quick introduction to building with Junction"
 ---
 
 ## 1. API keys
 
-Let's test out running Vital locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
+Let's test out running Junction locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
 You can get API keys by signing up in the [Dashboard](https://app.junction.com).
 Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
 the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
 
-To create a team and get your API keys, you first need to sign up for a Vital account in the [Dashboard](https://app.junction.com).
+To create a team and get your API keys, you first need to sign up for a Junction account in the [Dashboard](https://app.junction.com).
 
 Once registered, you can create a team by hovering over your username at the bottom of the Dashboard sidebar.
 A team is associated with a region (either `EU` or `US`), the region dictates where data is stored.
@@ -23,7 +23,7 @@ We'll start in the Sandbox environment, so create a new Sandbox API key.
 <Note>
   If you get stuck at any point in the Quickstart, help is just a click away!
   Join our Slack channel or send us a message to
-  [support@tryvital.io](mailto:support@tryvital.io)
+  [support@junction.com](mailto:support@junction.com)
 </Note>
 
 | Environment  |                                             |                         |
@@ -33,9 +33,9 @@ We'll start in the Sandbox environment, so create a new Sandbox API key.
 
 ## 2. Running Quickstart locally
 
-Once you have your API keys, it's time to run the Vital Quickstart locally!
+Once you have your API keys, it's time to run the Junction Quickstart locally!
 The instructions below will guide you through the process of cloning the [Quickstart repository](https://github.com/tryVital/quickstart),
-customizing the `.env` file with your own Vital `API_KEY` and finally, building and running the app.
+customizing the `.env` file with your own Junction `API_KEY` and finally, building and running the app.
 
 ```bash 1. Clone quickstart and run locally
 # Note: If on Windows, run
@@ -76,10 +76,10 @@ npm run dev
 
 ## 3. Creating your first User
 
-When retrieving data or connecting devices, Vital will require a `user_id` as input.
+When retrieving data or connecting devices, Junction will require a `user_id` as input.
 A `user_id` is a unique representation that we hold for a user. It allows you to fetch data for that user.
 To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
-to store the Vital `user_id` in your db against the user row.
+to store the Junction `user_id` in your db against the user row.
 
 <Warning>
 
@@ -95,7 +95,7 @@ This can also be achieved via the API as follows.
 
 <CodeGroup>
 
-```bash Creating a Vital user (bash)
+```bash Creating a Junction user (bash)
 curl --request POST \
      --url {{BASE_URL}}/v2/user/ \
      --header 'Accept: application/json' \
@@ -183,7 +183,7 @@ let user = try await VitalClient.shared.user.create(clientUserId)
 
 ## 4. Connecting a source
 
-A source, at Vital, is a medical device, wearable, or lab. It is a source of information for health data.
+A source, at Junction, is a medical device, wearable, or lab. It is a source of information for health data.
 To connect a source tap the connect button, this will launch the Junction Link Widget for that user.
 
 Once you have entered your credentials and moved to the next screen, you have connected your first source!
@@ -300,7 +300,7 @@ This is what your users see to connect their medical device or wearables:
 We can now explore what happens when
 you press the analyze button in the Quickstart to make an API call.
 As an example, we'll look at the Quickstart's call to `/summary/sleep`, which retrieves sleep
-summary data for a user. The request is simple and requires the Vital
+summary data for a user. The request is simple and requires the Junction
 `user_id`, `start_date` and `end_date`.
 
 **Getting user sleep data**
@@ -399,7 +399,7 @@ We offer different SDKs so you can start building your app right away:
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
 | [vital-python](https://pypi.org/project/vital)                   | Python library for calling Junction API on your backend |
 | [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
-| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Vital Node Client                                    |
+| [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Junction Node Client                                    |
 | [vital-ios](https://github.com/tryVital/vital-ios)               | Junction iOS Client                                     |
 | Java                                                             | Soon to be added                                     |
 | Go                                                               | Soon to be added                                     |
@@ -411,7 +411,7 @@ You can also download our [API collection](https://www.postman.com/collections/3
 
 ## Next Steps
 
-Congratulations, you have completed the Vital Quickstart!
+Congratulations, you have completed the Junction Quickstart!
 
 There are a few directions you can go in now:
 
@@ -422,23 +422,23 @@ There are a few directions you can go in now:
   href="/wearables/vital-link/introduction"
 >
   A client-side component your users will interact with in order to link their
-  accounts with Vital. It allows you to access their accounts via the Junction API.
+  accounts with Junction. It allows you to access their accounts via the Junction API.
 </Card>
 
-<Card title="Vital SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/ios">
-  Native toolkits to integrate Vital into iOS, Android, and Flutter
+<Card title="Junction SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/ios">
+  Native toolkits to integrate Junction into iOS, Android, and Flutter
 </Card>
 
 <Card
-  title="Vital Webhooks"
+  title="Junction Webhooks"
   icon="circle-nodes"
   iconType="regular"
   href="/webhooks/introduction"
 >
-  Webhooks are a way to receive data from Vital. We frequently poll to receive
+  Webhooks are a way to receive data from Junction. We frequently poll to receive
   data from the various providers.
 </Card>
 
 - [Junction Link](/wearables/vital-link/introduction)
-- [Vital SDKs](/wearables/sdks/ios)
-- [Vital Webhooks](/webhooks/Introduction)
+- [Junction SDKs](/wearables/sdks/ios)
+- [Junction Webhooks](/webhooks/Introduction)

@@ -159,7 +159,7 @@ endpoint.
 ### Azure Event Hub: Flexible routing (Aug 2024)
 
 You can now configure your [Azure Event Hub destination in ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub)
-to route Vital data events to different Event Hubs based on their event type prefix.
+to route Junction data events to different Event Hubs based on their event type prefix.
 
 Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple-event-hubs) documentation.
 
@@ -169,7 +169,7 @@ Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple
 
 ### Azure Event Hubs as ETL Pipeline destination (Jun 2024)
 
-You can now receive [events](/webhooks/introduction) from Vital directly with your Azure Event Hubs.
+You can now receive [events](/webhooks/introduction) from Junction directly with your Azure Event Hubs.
 
 Check out the [ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub) documentation.
 
@@ -184,9 +184,9 @@ You can now manage Brand Information of your Junction Teams through the Org Mana
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Team Brand Information is used in:
 
-  1. the Vital-hosted [Link widget](/wearables/connecting-providers/introduction);
-  2. all user communications [Vital Lab Testing](/lab/overview/introduction) sent on your behalf; and
-  3. the Vital-hosted Appointment Booking page for [Vital Lab Testing](/lab/overview/introduction).
+  1. the Junction-hosted [Link widget](/wearables/connecting-providers/introduction);
+  2. all user communications [Junction Lab Testing](/lab/overview/introduction) sent on your behalf; and
+  3. the Junction-hosted Appointment Booking page for [Junction Lab Testing](/lab/overview/introduction).
 
   <Info>
     Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
@@ -220,7 +220,7 @@ transparently grouped and migrated to the new structure.
 All events now include Team ID, User ID and Client User ID as top-level fields.
 
 <Accordion title="Details" defaultOpen icon="message" iconType="duotone">
-  We introduced this because this helps reduce a Vital User ID -\> Client User ID database lookup on your end.
+  We introduced this because this helps reduce a Junction User ID -\> Client User ID database lookup on your end.
 
   Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
 
@@ -260,7 +260,7 @@ conflicts in Client User ID.
   simplify your application logic.
 
   When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request response
-  now includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
+  now includes the Junction User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
 
   Check out the [Create User](/api-reference/user/create-user) endpoint documentation.
 </Accordion>

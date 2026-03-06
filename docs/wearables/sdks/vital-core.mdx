@@ -1,15 +1,15 @@
 ---
-title: "Vital Core SDK"
+title: "Junction Core SDK"
 sidebarTitle: "Core SDK"
 ---
 
 ## Overview
 
 Check out the [SDK Authentication guide](/wearables/sdks/authentication) on the available SDK authentication
-schemes, and how to authenticate with the Vital Mobile SDK.
+schemes, and how to authenticate with the Junction Mobile SDK.
 
 <Card title="Mobile SDK Authentication" icon="id-card" href="/wearables/sdks/authentication" horizontal>
-  Learn how to authenticate your mobile app user with Vital Mobile SDK.
+  Learn how to authenticate your mobile app user with Junction Mobile SDK.
 </Card>
 
 ## Accessing Junction API
@@ -34,7 +34,7 @@ vital_core.VitalClient client;
 client = vital_core.VitalClient()
   ..init(region: Region.eu, environment: Environment.sandbox, apiKey: 'sk_eu_...');
 
-// For customers using the Vital Sign-In Tokens scheme
+// For customers using the Junction Sign-In Tokens scheme
 client = vital_core.VitalClient.forSignedInUser(environment: Environment.sandbox, region: Region.eu);
 
 // e.g. Link Service
@@ -67,7 +67,7 @@ Uri widgetUrl = await client.linkWidgetUrl(redirectUrl: "x-vital-app://");
 ## Core SDK Status
 
 You can inspect the status of the Core SDK for troubleshooting, as well as for your own business logic.
-For example, you may reconcile your user session and the Vital SDK sign-in based on the Core SDK status.
+For example, you may reconcile your user session and the Junction SDK sign-in based on the Core SDK status.
 
 The SDK normally reports one of the following status combinations:
 
@@ -75,8 +75,8 @@ The SDK normally reports one of the following status combinations:
 | ----                                        | ----                | ---- |
 | _Empty_                                     | N/A                 | The SDK has neither been configured nor an active sign-in. |
 | `Configured`                                | API Key             | The SDK has been configured, but does not have an active sign-in. |
-| `Configured`, `SignedIn` & `UseApiKey`      | API Key             | The active sign-in was done by setting an API Key and a target Vital User ID. |
-| `Configured`, `SignedIn` & `UseSignInToken` | Vital Sign-In Token | The active sign-in was done by consuming a Vital Sign-In Token. |
+| `Configured`, `SignedIn` & `UseApiKey`      | API Key             | The active sign-in was done by setting an API Key and a target Junction User ID. |
+| `Configured`, `SignedIn` & `UseSignInToken` | Junction Sign-In Token | The active sign-in was done by consuming a Junction Sign-In Token. |
 
 ### Get the current status
 <CodeGroup>
@@ -156,9 +156,9 @@ The SDK normally reports one of the following status combinations:
   ```
 </CodeGroup>
 
-## Get Current Vital User ID
+## Get Current Junction User ID
 
-Aside from the Core SDK Status, you can also query the Vital User ID of the signed-in user:
+Aside from the Core SDK Status, you can also query the Junction User ID of the signed-in user:
 
 <CodeGroup>
   ```swift Native iOS
@@ -197,11 +197,11 @@ Refer to [the Sign Out section in the SDK Authentication guide](/wearables/sdks/
 
 ## Verbose Logging to Console/Logcat
 
-You can enable verbose logging to have a deeper look into how Vital Mobile SDK is reacting to your calls, as well as
+You can enable verbose logging to have a deeper look into how Junction Mobile SDK is reacting to your calls, as well as
 all the automatic behaviours that the SDK is performing in background.
 
 To avoid any missing log entry, you should enable verbose logging as early as possible — preferably before any usage of
-any Vital Mobile SDKs.
+any Junction Mobile SDKs.
 
 <Note>
 On Android, verbose logging is enabled by default when running as a debuggable build
