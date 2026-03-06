@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "palm",
   "name": "Junction",
   "colors": {
     "primary": "#3D1836",
@@ -11,7 +11,8 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Core Platform",
+        "icon": "users",
         "anchors": [
           {
             "anchor": "Home",
@@ -30,7 +31,6 @@
                 "group": "API",
                 "pages": [
                   "api-details/junction-api",
-                  "api-details/junction-management-api",
                   "api-details/rate_limiting",
                   "api-details/regions"
                 ]
@@ -56,89 +56,41 @@
             ]
           },
           {
-            "anchor": "Wearables",
-            "icon": "watch-fitness",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
-                "group": "Connecting Providers",
+                "group": "User Management",
                 "pages": [
-                  "wearables/connecting-providers/introduction",
-                  "wearables/connecting-providers/link_flow",
-                  "wearables/connecting-providers/launching_link",
-                  "wearables/connecting-providers/auth_types",
-                  "wearables/connecting-providers/errors",
-                  "wearables/connecting-providers/custom_widget"
+                  "api-reference/user/create-user",
+                  "api-reference/user/get-user",
+                  "api-reference/user/resolve-user",
+                  "api-reference/user/patch-user",
+                  "api-reference/user/delete-user",
+                  "api-reference/user/undo-delete-user",
+                  "api-reference/user/get-users",
+                  "api-reference/user/upsert-info",
+                  "api-reference/user/get-info-latest",
+                  "api-reference/user/create-insurance-beta",
+                  "api-reference/user/get-latest-insurance"
                 ]
               },
               {
-                "group": "Bring Your Own OAuth",
+                "group": "User Portal",
                 "pages": [
-                  "wearables/connecting-providers/bring-your-own-oauth/overview",
-                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
-                ]
-              },
-              {
-                "group": "Vital iOS App",
-                "pages": [
-                  "wearables/vital-app/introduction"
-                ]
-              },
-              {
-                "group": "Providers",
-                "pages": [
-                  "wearables/providers/introduction",
-                  "wearables/providers/resources",
-                  "wearables/providers/update-frequency",
-                  "wearables/providers/historical-data-pull-range",
-                  "wearables/providers/test_data"
-                ]
-              },
-              {
-                "group": "Data",
-                "pages": [
-                  "wearables/providers/data-primary-key",
-                  "wearables/providers/timestamps-and-time-zones",
-                  "wearables/providers/data-attributions",
-                  "wearables/providers/data-ingestion-bounds",
-                  "wearables/providers/heart-rate-zones"
-                ]
-              },
-              {
-                "group": "Mobile SDKs",
-                "pages": [
-                  "wearables/sdks/installation",
-                  "wearables/sdks/authentication",
-                  "wearables/sdks/vital-core",
-                  {
-                    "group": "Health SDK",
-                    "pages": [
-                      "wearables/sdks/health/overview",
-                      "wearables/sdks/health/connection-policies"
-                    ]
-                  },
-                  "wearables/sdks/vital-devices"
-                ]
-              },
-              {
-                "group": "Guides",
-                "pages": [
-                  "wearables/guides/abbott-libreview",
-                  "wearables/guides/apple-healthkit",
-                  "wearables/guides/android-health-connect",
-                  "wearables/guides/dexcom_v3",
-                  "wearables/guides/dexcom",
-                  "wearables/guides/fitbit",
-                  "wearables/guides/garmin",
-                  "wearables/guides/google_fit",
-                  "wearables/guides/omron",
-                  "wearables/guides/polar",
-                  "wearables/guides/whoop"
+                  "api-reference/user/create-portal-url"
                 ]
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Lab Testing",
+        "icon": "flask",
+        "anchors": [
           {
-            "anchor": "Lab Testing",
+            "anchor": "Product Guides",
             "icon": "flask",
             "groups": [
               {
@@ -230,33 +182,115 @@
             ]
           },
           {
-            "anchor": "Junction Sense",
-            "icon": "robot",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
-                "group": "Junction Sense",
+                "group": "Orders",
                 "pages": [
-                  "sense/overview",
-                  "sense/using-continuous-query",
-                  "sense/using-query-api",
-                  "sense/data-prioritization",
-                  "sense/examples"
+                  "api-reference/lab-testing/create-order",
+                  "api-reference/lab-testing/get-orders",
+                  "api-reference/lab-testing/get-order",
+                  "api-reference/lab-testing/cancel-order",
+                  "api-reference/lab-testing/requisition-pdf",
+                  "api-reference/lab-testing/abn-pdf",
+                  "api-reference/lab-testing/labels-pdf",
+                  "api-reference/lab-testing/create-unregistered-order",
+                  "api-reference/lab-testing/register-order",
+                  "api-reference/lab-testing/import-order",
+                  "api-reference/lab-testing/simulate-order",
+                  "api-reference/lab-testing/order-collection-instructions-pdf",
+                  "api-reference/lab-testing/update-order-draw-completed"
                 ]
               },
               {
-                "group": "Query DSL",
+                "group": "Order Transactions",
                 "pages": [
-                  "sense/query-dsl/column-expressions",
-                  "sense/query-dsl/select-clause",
-                  "sense/query-dsl/group-by-clause",
-                  "sense/query-dsl/where-clause",
-                  "sense/query-dsl/sleep-analysis"
+                  "api-reference/lab-testing/order-transactions/get-order-transaction"
                 ]
               },
               {
-                "group": "Python SDK",
+                "group": "Lab Accounts",
                 "pages": [
-                  "sense/python-sdk/getting-started"
+                  "api-reference/lab-testing/lab_accounts"
+                ]
+              },
+              {
+                "group": "Area Info",
+                "pages": [
+                  "api-reference/lab-testing/area-info",
+                  "api-reference/lab-testing/psc-info",
+                  "api-reference/lab-testing/order-psc-info"
+                ]
+              },
+              {
+                "group": "At-home Phlebotomy",
+                "pages": [
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
+                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
+                ]
+              },
+              {
+                "group": "Patient Service Center (PSC)",
+                "pages": [
+                  "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
+                  "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
+                  "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
+                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
+                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
+                  "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
+                ]
+              },
+              {
+                "group": "Tests",
+                "pages": [
+                  "api-reference/lab-testing/tests",
+                  "api-reference/lab-testing/tests-paginated",
+                  "api-reference/lab-testing/get-lab-test",
+                  "api-reference/lab-testing/biomarkers",
+                  "api-reference/lab-testing/labs",
+                  "api-reference/lab-testing/post-test",
+                  "api-reference/lab-testing/patch-lab-test",
+                  "api-reference/lab-testing/lab-test-markers",
+                  "api-reference/lab-testing/order-set-marker",
+                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
+                ]
+              },
+              {
+                "group": "Results",
+                "pages": [
+                  "api-reference/lab-testing/results/get-results",
+                  "api-reference/lab-testing/results/get-results-pdf",
+                  "api-reference/lab-testing/results/get-results-metadata",
+                  "api-reference/lab-testing/results/get-order-transaction-results",
+                  "api-reference/lab-testing/results/get-order-transaction-results-pdf"
+                ]
+              },
+              {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
+                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
+                ]
+              },
+              {
+                "group": "Health Insurance",
+                "pages": [
+                  "api-reference/lab-testing/insurance/search-diagnosis",
+                  "api-reference/lab-testing/insurance/search-payor-get",
+                  "api-reference/lab-testing/insurance/create-payor"
+                ]
+              },
+              {
+                "group": "Compendium",
+                "pages": [
+                  "api-reference/lab-testing/compendium/search",
+                  "api-reference/lab-testing/compendium/convert"
                 ]
               }
             ]
@@ -264,34 +298,95 @@
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Devices",
+        "icon": "watch-fitness",
         "anchors": [
           {
-            "anchor": "Core",
-            "icon": "square-code",
+            "anchor": "Product Guides",
+            "icon": "watch-fitness",
             "groups": [
               {
-                "group": "User Management",
+                "group": "Connecting Providers",
                 "pages": [
-                  "api-reference/user/create-user",
-                  "api-reference/user/get-user",
-                  "api-reference/user/resolve-user",
-                  "api-reference/user/patch-user",
-                  "api-reference/user/delete-user",
-                  "api-reference/user/undo-delete-user",
-                  "api-reference/user/get-users",
-                  "api-reference/user/upsert-info",
-                  "api-reference/user/get-info-latest",
-                  "api-reference/user/create-insurance-beta",
-                  "api-reference/user/get-latest-insurance"
+                  "wearables/connecting-providers/introduction",
+                  "wearables/connecting-providers/link_flow",
+                  "wearables/connecting-providers/launching_link",
+                  "wearables/connecting-providers/auth_types",
+                  "wearables/connecting-providers/errors",
+                  "wearables/connecting-providers/custom_widget"
                 ]
               },
               {
-                "group": "User Portal",
+                "group": "Bring Your Own OAuth",
                 "pages": [
-                  "api-reference/user/create-portal-url"
+                  "wearables/connecting-providers/bring-your-own-oauth/overview",
+                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
                 ]
               },
+              {
+                "group": "Vital iOS App",
+                "pages": [
+                  "wearables/vital-app/introduction"
+                ]
+              },
+              {
+                "group": "Providers",
+                "pages": [
+                  "wearables/providers/introduction",
+                  "wearables/providers/resources",
+                  "wearables/providers/update-frequency",
+                  "wearables/providers/historical-data-pull-range",
+                  "wearables/providers/test_data"
+                ]
+              },
+              {
+                "group": "Data",
+                "pages": [
+                  "wearables/providers/data-primary-key",
+                  "wearables/providers/timestamps-and-time-zones",
+                  "wearables/providers/data-attributions",
+                  "wearables/providers/data-ingestion-bounds",
+                  "wearables/providers/heart-rate-zones"
+                ]
+              },
+              {
+                "group": "Mobile SDKs",
+                "pages": [
+                  "wearables/sdks/installation",
+                  "wearables/sdks/authentication",
+                  "wearables/sdks/vital-core",
+                  {
+                    "group": "Health SDK",
+                    "pages": [
+                      "wearables/sdks/health/overview",
+                      "wearables/sdks/health/connection-policies"
+                    ]
+                  },
+                  "wearables/sdks/vital-devices"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "wearables/guides/abbott-libreview",
+                  "wearables/guides/apple-healthkit",
+                  "wearables/guides/android-health-connect",
+                  "wearables/guides/dexcom_v3",
+                  "wearables/guides/dexcom",
+                  "wearables/guides/fitbit",
+                  "wearables/guides/garmin",
+                  "wearables/guides/google_fit",
+                  "wearables/guides/omron",
+                  "wearables/guides/polar",
+                  "wearables/guides/whoop"
+                ]
+              }
+            ]
+          },
+          {
+            "anchor": "API Reference",
+            "icon": "square-code",
+            "groups": [
               {
                 "group": "Junction Mobile SDK Integration",
                 "pages": [
@@ -328,13 +423,7 @@
                   "api-reference/link/bulk-pause",
                   "api-reference/link/bulk-export"
                 ]
-              }
-            ]
-          },
-          {
-            "anchor": "Data Access",
-            "icon": "magnifying-glass",
-            "groups": [
+              },
               {
                 "group": "Debugging",
                 "pages": [
@@ -492,124 +581,48 @@
                 ]
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "Junction Sense",
+        "icon": "sensor",
+        "anchors": [
           {
-            "anchor": "Lab Testing",
-            "icon": "flask",
+            "anchor": "Product Guides",
+            "icon": "robot",
             "groups": [
               {
-                "group": "Orders",
+                "group": "Junction Sense",
                 "pages": [
-                  "api-reference/lab-testing/create-order",
-                  "api-reference/lab-testing/get-orders",
-                  "api-reference/lab-testing/get-order",
-                  "api-reference/lab-testing/cancel-order",
-                  "api-reference/lab-testing/requisition-pdf",
-                  "api-reference/lab-testing/abn-pdf",
-                  "api-reference/lab-testing/labels-pdf",
-                  "api-reference/lab-testing/create-unregistered-order",
-                  "api-reference/lab-testing/register-order",
-                  "api-reference/lab-testing/import-order",
-                  "api-reference/lab-testing/simulate-order",
-                  "api-reference/lab-testing/order-collection-instructions-pdf",
-                  "api-reference/lab-testing/update-order-draw-completed"
+                  "sense/overview",
+                  "sense/using-continuous-query",
+                  "sense/using-query-api",
+                  "sense/data-prioritization",
+                  "sense/examples"
                 ]
               },
               {
-                "group": "Order Transactions",
+                "group": "Query DSL",
                 "pages": [
-                  "api-reference/lab-testing/order-transactions/get-order-transaction"
+                  "sense/query-dsl/column-expressions",
+                  "sense/query-dsl/select-clause",
+                  "sense/query-dsl/group-by-clause",
+                  "sense/query-dsl/where-clause",
+                  "sense/query-dsl/sleep-analysis"
                 ]
               },
               {
-                "group": "Lab Accounts",
+                "group": "Python SDK",
                 "pages": [
-                  "api-reference/lab-testing/lab_accounts"
-                ]
-              },
-              {
-                "group": "Area Info",
-                "pages": [
-                  "api-reference/lab-testing/area-info",
-                  "api-reference/lab-testing/psc-info",
-                  "api-reference/lab-testing/order-psc-info"
-                ]
-              },
-              {
-                "group": "At-home Phlebotomy",
-                "pages": [
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
-                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
-                ]
-              },
-              {
-                "group": "Patient Service Center (PSC)",
-                "pages": [
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
-                  "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
-                ]
-              },
-              {
-                "group": "Tests",
-                "pages": [
-                  "api-reference/lab-testing/tests",
-                  "api-reference/lab-testing/tests-paginated",
-                  "api-reference/lab-testing/get-lab-test",
-                  "api-reference/lab-testing/biomarkers",
-                  "api-reference/lab-testing/labs",
-                  "api-reference/lab-testing/post-test",
-                  "api-reference/lab-testing/patch-lab-test",
-                  "api-reference/lab-testing/lab-test-markers",
-                  "api-reference/lab-testing/order-set-marker",
-                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
-                ]
-              },
-              {
-                "group": "Results",
-                "pages": [
-                  "api-reference/lab-testing/results/get-results",
-                  "api-reference/lab-testing/results/get-results-pdf",
-                  "api-reference/lab-testing/results/get-results-metadata",
-                  "api-reference/lab-testing/results/get-order-transaction-results",
-                  "api-reference/lab-testing/results/get-order-transaction-results-pdf"
-                ]
-              },
-              {
-                "group": "Lab Report Parsing",
-                "pages": [
-                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
-                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
-                ]
-              },
-              {
-                "group": "Health Insurance",
-                "pages": [
-                  "api-reference/lab-testing/insurance/search-diagnosis",
-                  "api-reference/lab-testing/insurance/search-payor-get",
-                  "api-reference/lab-testing/insurance/create-payor"
-                ]
-              },
-              {
-                "group": "Compendium",
-                "pages": [
-                  "api-reference/lab-testing/compendium/search",
-                  "api-reference/lab-testing/compendium/convert"
+                  "sense/python-sdk/getting-started"
                 ]
               }
             ]
           },
           {
-            "anchor": "Junction Sense",
-            "icon": "robot",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
                 "group": "Junction API",
@@ -628,11 +641,23 @@
                 ]
               }
             ]
-          },
+          }
+        ] 
+      },
+      {
+        "tab": "Management API",
+        "icon": "gear",
+        "anchors": [
           {
-            "anchor": "Management",
-            "icon": "building",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "api-details/junction-management-api"
+                ]
+              },
               {
                 "group": "Team",
                 "pages": [
@@ -740,6 +765,7 @@
       },
       {
         "tab": "Event Catalog",
+        "icon": "envelope",
         "groups": [
           {
             "group": "Lab Tests",
@@ -1255,6 +1281,7 @@
       },
       {
         "tab": "Changelog",
+        "icon": "book",
         "groups": [
           {
             "group": "Core",
