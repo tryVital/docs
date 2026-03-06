@@ -408,11 +408,11 @@ Check out the [Historical Pull Introspection](/api-reference/introspection/histo
 </Accordion>
 
 ### Team Scope Requirements (Apr 2024)
-You can now tailor what scopes Vital would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
+You can now tailor what scopes Junction would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
 This applies when your user connects to an [OAuth provider](/wearables/connecting-providers/auth_types) which supports scopes.
 
 <Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
-Vital ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
+Junction ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
 
 The scopes specified as `user_may_grant` would be requested alongside the `user_must_grant` scopes. However, unlike `user_must_grant`, they do not prevent the connection from being established.
 
@@ -431,7 +431,7 @@ You can now configure your Junction Team through the [Org Management API](/api-r
 to reject duplicate wearable connections.
 
 <Accordion icon="person-military-pointing" iconType="duotone" title="Details" defaultOpen>
-When the `reject_duplicate_connection` setting is enabled on the Team, Vital checks whether or
+When the `reject_duplicate_connection` setting is enabled on the Team, Junction checks whether or
 not the provider-reported user ID is already connected to an existing User in your Team.
 
 If it does, the Link API would report the [`duplicate_connection` error](/wearables/connecting-providers/errors).
@@ -500,8 +500,8 @@ Check out the [Provider Connection Created](/event-catalog/provider.connection.c
 You can now set a Fallback Birth Date on a user.
 
 <Accordion icon="cake-candles" iconType="duotone" title="Details" defaultOpen>
-Vital can use this to compute a more accurate workout Heart Rate Zones, when the provider
-exposes neither heart rate zones nor user age to Vital.
+Junction can use this to compute a more accurate workout Heart Rate Zones, when the provider
+exposes neither heart rate zones nor user age to Junction.
 
 Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-birth-date) documentation.
 </Accordion>
@@ -543,16 +543,16 @@ Check out the [User Resources Introspection](/api-reference/introspection/user-r
 </Accordion>
 
 
-### Vital Sign-In Token for Mobile SDKs (Nov 2023)
+### Junction Sign-In Token for Mobile SDKs (Nov 2023)
 
-Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
+Junction Sign-In Token is a new, user-scoped Authentication scheme for Junction Mobile SDKs.
 
 <Accordion icon="id-badge" iconType="duotone" title="Details" defaultOpen>
 It grants only user-scoped access to your mobile app sign-ins. This allows you to keep your Junction Team API Keys
 as server-side secrets.
 
 We encourage all customers using Junction Team API Keys in their production mobile apps to
-migrate to the Vital Sign-In Token scheme.
+migrate to the Junction Sign-In Token scheme.
 
 Check out the [SDK Authentication](/wearables/sdks/authentication#vital-sign-in-token) guide on how to migrate to
 this scheme. Check out the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint documentation

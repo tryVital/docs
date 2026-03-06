@@ -2,7 +2,7 @@
 title: "Critical Results"
 ---
 
-When our Lab partners return results to Vital, they may return specific interpretations for each Marker:
+When our Lab partners return results to Junction, they may return specific interpretations for each Marker:
 
 - `normal`, the marker value is inside the lab reference range.
 - `abnormal`, the marker value is outside the lab reference range.
@@ -59,7 +59,7 @@ These values are returned in an `interpretation` field for results, both in each
 
 Besides the `interpretation` field, there is also the `status` field, which can assume the values of `final` or `partial`, as the critical results are notified as soon as they're available, not all tests are guaranteed to have been processed by the lab.
 
-For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Vital assigned physician. They act as the ordering physician when placing the order. After the call is made, and Vital has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
+For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Junction assigned physician. They act as the ordering physician when placing the order. After the call is made, and Junction has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
 ```json Critical Results Webhook Payload
 {
   "data": {

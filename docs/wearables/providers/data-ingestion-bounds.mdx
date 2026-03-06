@@ -4,12 +4,12 @@ title: "Data Ingestion Bounds"
 
 ## Overview
 
-By default, Vital:
+By default, Junction:
 
 * pulls historical data as far back as indicated by the [pull preferences](/wearables/providers/introduction#customizing-historical-data-pull-range)
   you specified (if any), or the [default historical pull range](/wearables/providers/introduction#historical-data-pull-range).
 
-* accepts **all** new and changed data discovered through polling, incoming provider webhooks and Vital Mobile SDK integrations.
+* accepts **all** new and changed data discovered through polling, incoming provider webhooks and Junction Mobile SDK integrations.
 
 If you need to impose a date bounds on the data being collected, you can set **data ingestion bounds** on a per-user basis:
 
@@ -50,7 +50,7 @@ You can specify the user data ingestion bounds (`ingestion_start` and `ingestion
 
 You can change the ingestion bounds at any time.
 
-However, do note that it has no retrospective effect on data already ingested — Vital does not delete collected data
+However, do note that it has no retrospective effect on data already ingested — Junction does not delete collected data
 in response to ingestion bound changes.
 
 As long as the connection has not been marked as _paused_, you can change the ingestion end date to extend the ingestion

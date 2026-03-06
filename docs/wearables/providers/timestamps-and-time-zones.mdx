@@ -4,7 +4,7 @@ title: "Timestamps and Time Zones"
 
 ## Timestamps
 
-All Vital data timestamps are ISO 8601 formatted as follows:
+All Junction data timestamps are ISO 8601 formatted as follows:
 
 | Providers       | Time Basis        | Pattern                                     |
 | --------------- | ----------------  | ------------------------------------------- |
@@ -15,15 +15,15 @@ All Vital data timestamps are ISO 8601 formatted as follows:
 <sup>[1]</sup>
 `freestyle_libre` specific:
 Some older teams may see floating time data (Freestyle Libre) without the `+00:00` TZ specifier,
-as part of an earlier iteration of the feature. Contact Vital support if you wish to disable this
-behaviour, or if you intend to adopt the Vital backend SDKs.
+as part of an earlier iteration of the feature. Contact Junction support if you wish to disable this
+behaviour, or if you intend to adopt the Junction backend SDKs.
 </Info>
 <Info>
 <sup>[2]</sup> [Floating time](https://www.w3.org/International/wiki/FloatingTime) is not affixed to any time zone.
 This is not the same as time relative to a local time zone, i.e., a known UTC offset or geographical location.
 </Info>
 <Warning>
-<sup>[3]</sup> Vital sends timestamps in floating time with `+00:00` for OpenAPI 3.x interoperability. OAS 3
+<sup>[3]</sup> Junction sends timestamps in floating time with `+00:00` for OpenAPI 3.x interoperability. OAS 3
 requires all timestamps to be [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339), which in turn requires
 TZ specifier to be mandatory.
 
@@ -34,7 +34,7 @@ the date and time components as local date-time in the desired time zone. Do not
 
 ## Time Zones
 
-Vital formats time zones in data as a _nullable_ integer offset to UTC:
+Junction formats time zones in data as a _nullable_ integer offset to UTC:
 
 * A positive offset indicates east of UTC.
 * A negative offset indicates west of UTC.
@@ -78,7 +78,7 @@ Each provider has their own affinity of time zone information:
 
 <Info>
 On-device data often do not capture the time zone at recording time.
-Vital SDK uses the device's current time zone as the fallback of closest approximation.
+Junction SDK uses the device's current time zone as the fallback of closest approximation.
 </Info>
 
 | Provider                                                                                             | Activity Summary (Daily) | Session Summary        | Timeseries Samples     |
@@ -159,10 +159,10 @@ point to be in `2023/09/27 07:48 AM ET`. We then finally convert this to UTC, re
 
 ## User Fallback Time Zone
 
-Some providers neither expose nor even capture time zone information at source. So Vital can only request data and interpret them strictly in UTC.
+Some providers neither expose nor even capture time zone information at source. So Junction can only request data and interpret them strictly in UTC.
 
 If you prefer the data to be contextualize to the geographical location of a user, a Fallback Time Zone (denoted by an [IANA tz database identifier](https://data.iana.org/time-zones/tz-link.html))
-can be specified on a per-user basis. Once specified, Vital would use the time zone to pull data and interpret timestamps from any time zone unware providers from that point onwards. 
+can be specified on a per-user basis. Once specified, Junction would use the time zone to pull data and interpret timestamps from any time zone unware providers from that point onwards. 
 
 You can specify the Fallback Time Zone when:
 

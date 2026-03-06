@@ -5,7 +5,7 @@ title: "Ask on Order Entry (AOE)"
 Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker or the patient's ethnicity.
 
 <Note>
-  Questions that are related to fasting (e.g, code `FSTING`) do not need to be answered. Vital uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
+  Questions that are related to fasting (e.g, code `FSTING`) do not need to be answered. Junction uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
 </Note>
 
 There are 4 types of AOE:
@@ -92,7 +92,7 @@ This field has the following format:
 
 You will populate this list with the answers to the questions defined in the `marker` object, as explained [above](/lab/workflow/aoe#where-to-find-the-questions).
 
-The `marker_id` refers to the Vital [marker id](/api-reference/lab-testing/biomarkers), and the `question_id` to the id of the question being answered.
+The `marker_id` refers to the Junction [marker id](/api-reference/lab-testing/biomarkers), and the `question_id` to the id of the question being answered.
 
 For example, marker `Leader, Blood (Adult)`, has the following data:
 

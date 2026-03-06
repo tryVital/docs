@@ -3,14 +3,14 @@ title: "Mobile SDK Authentication"
 sidebarTitle: "Authentication"
 ---
 
-## Vital Sign-In Token
+## Junction Sign-In Token
 
-In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with Vital Mobile SDK
+In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with Junction Mobile SDK
 as an individual user in your Team. The app installation would be granted only Junction API access
 scoped to that specific user.
 
 Instead of hardcoding a [Junction Team API Key](#vital-api-keys), your app would request your own backend to generate
-a **Vital Sign-In Token** for the user, through your own API authentication and authorization systems.
+a **Junction Sign-In Token** for the user, through your own API authentication and authorization systems.
 
 In this model, your Junction Team API Keys are kept strictly as a server-side secret.
 
@@ -30,49 +30,49 @@ In this model, your Junction Team API Keys are kept strictly as a server-side se
 <Accordion title="Sign in once" icon="right-to-bracket" iconType="sharp-solid" defaultOpen>
 
 In typical circumstances, within each app installation, you would sign in your authenticated user only once
-with the Vital Mobile SDK. You would do so as part of your app's user lifecycle.
+with the Junction Mobile SDK. You would do so as part of your app's user lifecycle.
 
 There are some known circumstances where you would have to sign in the user again:
 
 * You have signed out your user in response to your app's user lifecycle changes; or
-* The Vital SDK sign-in state is out of sync with your app's user lifecycle; or
-* The SDK automatically signed out, because it had detected the deletion of the Vital User.
+* The Junction SDK sign-in state is out of sync with your app's user lifecycle; or
+* The SDK automatically signed out, because it had detected the deletion of the Junction User.
 
 <Note>
-It is unnecessary to request and sign-in with the Vital Sign-In Token every time your app launches.
+It is unnecessary to request and sign-in with the Junction Sign-In Token every time your app launches.
 </Note>
 
 </Accordion>
 
 <Accordion title="Integrating into your app's user lifecycle" icon="arrows-spin" iconType="sharp-solid" defaultOpen>
 
-You should sign-in and sign-out of the Vital Mobile SDK as an integral part of your app's user lifecycle:
+You should sign-in and sign-out of the Junction Mobile SDK as an integral part of your app's user lifecycle:
 
-1. When the user signs in to your app, you would request the Vital Sign-In Token from your backend, and then sign in with the Vital Mobile SDK.
+1. When the user signs in to your app, you would request the Junction Sign-In Token from your backend, and then sign in with the Junction Mobile SDK.
 
-2. When the user signs out from your app, you would also sign out from the Vital Mobile SDK.
+2. When the user signs out from your app, you would also sign out from the Junction Mobile SDK.
 
-Vital Mobile SDK persists the signed-in Vital User — as well as any settings and sync state — across app relaunches and device reboot. 
+Junction Mobile SDK persists the signed-in Junction User — as well as any settings and sync state — across app relaunches and device reboot. 
 
 </Accordion>
 
 <Accordion title="A recommendation to perform regular reconciliation" icon="merge" iconType="sharp-solid" defaultOpen>
 
-We recommend regularly reconciling the state of the Vital Mobile SDK and your app's user lifecycle. This is because:
+We recommend regularly reconciling the state of the Junction Mobile SDK and your app's user lifecycle. This is because:
 
 1. The SDK sign-in process involves remote API calls, which can fail due to Internet connectivity;
 
-2. Unknown edge cases in your integration of Vital Core SDK into your app's user lifecycle may result in
+2. Unknown edge cases in your integration of Junction Core SDK into your app's user lifecycle may result in
    the state being out of sync; and
 
-3. If you are integrating Vital Mobile SDK into an existing production app, this reconciliation can serve
+3. If you are integrating Junction Mobile SDK into an existing production app, this reconciliation can serve
    as a one-off migration for app installations upgrading from an older version of your app.
 
 You can achieve this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) API in three steps:
 
 1. Query the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) Status and the Current User ID; 
 2. Compare these against your app's user state; and
-3. Only if a discrepancy is detected, perform a Vital SDK sign-in or sign-out in accordance to the discrepancy.
+3. Only if a discrepancy is detected, perform a Junction SDK sign-in or sign-out in accordance to the discrepancy.
 
 You would typically schedule this as an asynchronous task that spawns when your application process launches.
 
@@ -85,23 +85,23 @@ Do not sign in and sign out every time your application process launches.
 
 <Accordion title="Technical details" icon="circle-info" iconType="sharp-solid" defaultOpen>
 
-**Vital Sign-In Token** is a short-lived bearer token issued for a specific Vital User.
-Vital Mobile SDK uses it to sign in with Vital's Identity Provider as the Vital User represented by the
+**Junction Sign-In Token** is a short-lived bearer token issued for a specific Junction User.
+Junction Mobile SDK uses it to sign in with Junction's Identity Provider as the Junction User represented by the
 token.
 
-Each app installation can only have one active signed-in Vital User.
+Each app installation can only have one active signed-in Junction User.
 
-Internally, the Vital Mobile SDK:
+Internally, the Junction Mobile SDK:
 
-1. **exchanges** the short-lived Vital Sign-In Token for a permanent sign-in, which is in the form of
+1. **exchanges** the short-lived Junction Sign-In Token for a permanent sign-in, which is in the form of
   an OAuth 2.0 access token and an OAuth 2.0 refresh token.
-2. discards the Vital Sign-In Token upon a successful exchange.
+2. discards the Junction Sign-In Token upon a successful exchange.
 3. stores these token secrets securely in the device persistent storage.
 4. calls the Junction API using the OAuth 2.0 access token.
 5. transparently manages the OAuth 2.0 refresh token flow to keep the access token fresh and valid.
 
 This is why the documentation emphasizes the "sign in once" expectation. The SDK does not rely on
-the Vital Sign-In Token for day-to-day operation and API calls. It only needs this artifact once upfront
+the Junction Sign-In Token for day-to-day operation and API calls. It only needs this artifact once upfront
 to exchange for the token secrets it needs.
 
 </Accordion>
@@ -133,7 +133,7 @@ to exchange for the token secrets it needs.
         autonumber
         Your App->>Your Backend: Request the user profile
         Your Backend-->>Your App: User profile
-        Your App->>Your Backend: Request a Vital Sign-In Token for the user
+        Your App->>Your Backend: Request a Junction Sign-In Token for the user
     ```
 
     Once your user has successfully authenticated, your app is issued with token secrets for accessing your backend API.
@@ -142,7 +142,7 @@ to exchange for the token secrets it needs.
     It then makes some API requests to your backend API, in order to gather all information required to setup your app
     into an authenticated state.
 
-    Among these API requests, one would be requesting your backend API to issue a Vital Sign-In Token for your authenticated user.
+    Among these API requests, one would be requesting your backend API to issue a Junction Sign-In Token for your authenticated user.
   </Step>
   <Step title="Your backend service <-> Junction API">
     ```mermaid
@@ -151,17 +151,17 @@ to exchange for the token secrets it needs.
         actor Junction API
         autonumber
         Your Backend->>Junction API: Token Request via API Key
-        Junction API-->>Your Backend: Issued a Vital Sign-In Token
+        Junction API-->>Your Backend: Issued a Junction Sign-In Token
     ```
 
     Your backend API receives and validates the token issuance request. Once validated, your backend service:
     
-    * Look up the Vital User associated with this authenticated user;
+    * Look up the Junction User associated with this authenticated user;
 
-    * If one does not yet exist, call the [Create User](/api-reference/user/create-user) endpoint to create a Vital User; and
+    * If one does not yet exist, call the [Create User](/api-reference/user/create-user) endpoint to create a Junction User; and
 
-    * Call the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint to obtain a Vital Sign-In Token for
-      this Vital user.
+    * Call the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint to obtain a Junction Sign-In Token for
+      this Junction user.
 
     <Note>
     Only this step would use a [Junction Team API Key](/api-details/authentication). Because this step happens in your
@@ -174,7 +174,7 @@ to exchange for the token secrets it needs.
       --header 'X-Vital-API-Key: <YOUR-API-KEY>'
     ```
 
-    Your backend API then responds to your app with the obtained Vital Sign-In Token:
+    Your backend API then responds to your app with the obtained Junction Sign-In Token:
 
     ```json
     {
@@ -187,17 +187,17 @@ to exchange for the token secrets it needs.
     ```mermaid
     sequenceDiagram
         participant Your App
-        participant Vital Mobile SDK
+        participant Junction Mobile SDK
         actor Your Backend
         autonumber
-        Your Backend-->>Your App: The Vital Sign-In Token
-        Your App->>Vital Mobile SDK: Sign in with Vital Sign-In Token
+        Your Backend-->>Your App: The Junction Sign-In Token
+        Your App->>Junction Mobile SDK: Sign in with Junction Sign-In Token
     ```
 
-    Your app receives a response from your backend API, which includes the Vital Sign-In Token for the authenticated
+    Your app receives a response from your backend API, which includes the Junction Sign-In Token for the authenticated
     user.
     
-    Your app then calls the Vital Mobile SDK `signIn` method with the Vital Sign-In Token:
+    Your app then calls the Junction Mobile SDK `signIn` method with the Junction Sign-In Token:
 
     <CodeGroup>
       ```swift Native iOS
@@ -208,9 +208,9 @@ to exchange for the token secrets it needs.
       do {
         try await VitalClient.signIn(withRawToken: response.signInToken)
 
-        print("Signed in with Vital successfully")
+        print("Signed in with Junction successfully")
       } catch let error {
-        print("Error signing in with Vital", error)
+        print("Error signing in with Junction", error)
       }
       ```
 
@@ -225,9 +225,9 @@ to exchange for the token secrets it needs.
       try {
         VitalClient.signIn(applicationContext, response.signInToken)
 
-        Log.i("vital_sdk", "Signed in with Vital successfully")
+        Log.i("vital_sdk", "Signed in with Junction successfully")
       } catch (e: Throwable) {
-        Log.e("vital_sdk", "Error signing in with Vital", e)
+        Log.e("vital_sdk", "Error signing in with Junction", e)
       }
       ```
 
@@ -239,9 +239,9 @@ to exchange for the token secrets it needs.
       do {
         await VitalCore.signIn(response.signInToken)
 
-        console.log("Signed in with Vital successfully")
+        console.log("Signed in with Junction successfully")
       } catch let error {
-        console.error("Error signing in with Vital", error)
+        console.error("Error signing in with Junction", error)
       }
       ```
 
@@ -253,24 +253,24 @@ to exchange for the token secrets it needs.
       try {
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Vital successfully")
+        Fimble.i("Signed in with Junction successfully")
       } catch (error) {
-        Fimble.e("Error signing in with Vital", error)
+        Fimble.e("Error signing in with Junction", error)
       }
       ```
     </CodeGroup>
     <br />
     <Warning>
-    `signIn()` throws an error when you have already signed in with the Vital SDK.
+    `signIn()` throws an error when you have already signed in with the Junction SDK.
 
     You can [inspect the Core SDK status](/wearables/sdks/vital-core#core-sdk-status) at any time for troubleshooting. You can
-    also rely on the Core SDK status to reconcile differences between your own user session state and Vital SDK sign-in.
+    also rely on the Core SDK status to reconcile differences between your own user session state and Junction SDK sign-in.
     </Warning>
 
   </Step>
   <Step title="Voila!">
-    The Vital Mobile SDK is now signed-in with the Vital User associated with your authenticated user.
-    You can now proceed to use all the Vital SDK features.
+    The Junction Mobile SDK is now signed-in with the Junction User associated with your authenticated user.
+    You can now proceed to use all the Junction SDK features.
   </Step>
 </Steps>
 
@@ -281,10 +281,10 @@ to exchange for the token secrets it needs.
 API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
 API Key support is intended only for customer early evaluation in Sandbox.
 
-Use [Vital Sign-In Token](#vital-sign-in-token) whenever possible.
+Use [Junction Sign-In Token](#vital-sign-in-token) whenever possible.
 </Warning>
 
-Vital Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
+Junction Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
 
 <CodeGroup>
   ```swift Native iOS
@@ -349,8 +349,8 @@ allows you also to only call `configure(...)` and `setUserId(...)` once to "sign
 
 ## Sign Out
 
-Regardless of the authentication scheme you used, you can sign out with the Vital SDK using `signOut()`.
-This erases any persistent user session and configuration stored by the Vital Core and Health SDKs.
+Regardless of the authentication scheme you used, you can sign out with the Junction SDK using `signOut()`.
+This erases any persistent user session and configuration stored by the Junction Core and Health SDKs.
 
 <CodeGroup>
   ```swift Native iOS
@@ -381,30 +381,30 @@ This erases any persistent user session and configuration stored by the Vital Co
   ```
 </CodeGroup>
 
-## Migrate from Junction Team API Keys to Vital Sign-In Tokens
+## Migrate from Junction Team API Keys to Junction Sign-In Tokens
 
 <Warning>
-Always use [Vital Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
+Always use [Junction Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
 </Warning>
 
 An existing app installation signed-in with Junction Team API Key + User ID can be seamlessly migrated to
-use Vital Sign-In Tokens.
+use Junction Sign-In Tokens.
 
 It is as simple as performing a one-off migration logic during app launch:
 
 <Steps>
   <Step title="Condition to migrate">
-    Check whether the Vital SDK status includes `useApiKey` (i.e., the user is signed in using Junction Team API Key).
+    Check whether the Junction SDK status includes `useApiKey` (i.e., the user is signed in using Junction Team API Key).
   </Step>
-  <Step title="Obtain a Vital Sign-In Token">
-    Similar to the new user sign-in flow, your app needs to obtain a Vital Sign-In Token through your backend service.
+  <Step title="Obtain a Junction Sign-In Token">
+    Similar to the new user sign-in flow, your app needs to obtain a Junction Sign-In Token through your backend service.
   </Step>
   <Step title="Sign-in with the token">
-    Your app can simply sign-in with the Vital Sign-In Token.
+    Your app can simply sign-in with the Junction Sign-In Token.
     
     Note that it is **unnecessary to reset** the SDK beforehand — the SDK `signIn` method would automatically migrate, as
-    long as the supplied Sign-In Token is compatible with the existing API Key sign-in (i.e., having the same Vital user ID,
-    same Vital environment, and same Vital region).
+    long as the supplied Sign-In Token is compatible with the existing API Key sign-in (i.e., having the same Junction user ID,
+    same Junction environment, and same Junction region).
   </Step>
 </Steps>
 
@@ -419,9 +419,9 @@ It is as simple as performing a one-off migration logic during app launch:
       try await VitalClient.signIn(withToken: response.signInToken)
     }
 
-      print("Signed in with Vital successfully")
+      print("Signed in with Junction successfully")
     } catch let error {
-      print("Error signing in with Vital", error)
+      print("Error signing in with Junction", error)
     }
   }
   ```
@@ -440,9 +440,9 @@ It is as simple as performing a one-off migration logic during app launch:
         val response = callBackend(...)
         VitalClient.signIn(applicationContext, response.signInToken)
 
-        Log.i("vital_sdk", "Signed in with Vital successfully")
+        Log.i("vital_sdk", "Signed in with Junction successfully")
     } catch (e: Throwable) {
-        Log.e("vital_sdk", "Error signing in with Vital", e)
+        Log.e("vital_sdk", "Error signing in with Junction", e)
     }
   }
   ```
@@ -457,9 +457,9 @@ It is as simple as performing a one-off migration logic during app launch:
         const response = await callBackend(...);
         await VitalCore.signIn(response.signInToken);
 
-        console.log("Signed in with Vital successfully");
+        console.log("Signed in with Junction successfully");
     } catch let error {
-        console.error("Error signing in with Vital", error);
+        console.error("Error signing in with Junction", error);
     }
   }
   ```
@@ -474,9 +474,9 @@ It is as simple as performing a one-off migration logic during app launch:
         MyAPIResponse response = await callBackend(...);
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Vital successfully")
+        Fimble.i("Signed in with Junction successfully")
     } catch (error) {
-        Fimble.e("Error signing in with Vital", error)
+        Fimble.e("Error signing in with Junction", error)
     }
   }
   ```

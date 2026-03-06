@@ -18,14 +18,14 @@ Stop processing the `historical.timeseries.hypnogram.created`, `daily.timeseries
 
 <Warning>The stated removals in this section will happen on or after **31 July 2024**.</Warning>
 
-Vital has redefined what _Source_ and _Provider_ means across our API and event schemas:
+Junction has redefined what _Source_ and _Provider_ means across our API and event schemas:
 
 <Accordion title="The new definitions of Provider and Source">
 
 | Entity   | Definition               |
 | -------- | ------------------------ |
 | Source   | The source context of a specific summary or a specific timeseries value group. | 
-| Provider | A wearable data provider (an app, a platform, a service, or Vital Mobile SDKs). |
+| Provider | A wearable data provider (an app, a platform, a service, or Junction Mobile SDKs). |
 
 A _Source_ context comprises of:
 * the Provider (slug only)
@@ -39,14 +39,14 @@ A _Provider_ object is a short description of a wearable data provider. It compr
 
 </Accordion>
 
-To migrate to the new definitions, Vital is announcing the following deprecations:
+To migrate to the new definitions, Junction is announcing the following deprecations:
 
 <Steps>
   <Step title="All Data Dvents (daily.data.*)" stepNumber="1" titleSize="p">
     Inside the Source context located at `$.data.source`, the `name`, `logo`, and `slug` fields are
     now deprecated.
 
-    Vital no longer embeds these _Provider_ object fields in every data event, except for the provider
+    Junction no longer embeds these _Provider_ object fields in every data event, except for the provider
     slug.
 
     Using the [Steps data event](/event-catalog/daily.data.steps.created) as an illustration, originally
@@ -67,7 +67,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     ```
 
     As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this steps timeseries
-    value group. So Vital has introduced a few new _Source_ context fields:
+    value group. So Junction has introduced a few new _Source_ context fields:
 
     ```json daily.data.steps.created (Current)
     {
@@ -90,7 +90,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     }
     ```
 
-    Once the deprecation cycle ends, Vital will remove the deprecated fields:
+    Once the deprecation cycle ends, Junction will remove the deprecated fields:
 
     ```json daily.data.steps.created (Future)
     {
@@ -132,7 +132,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     Similar to changes to the Data Events, the `name`, `logo`, and `slug` sub-fields under the `source` field
     in each and every summary are now deprecated.
 
-    Vital no longer embeds these _Provider_ object fields in every summary, except for the provider
+    Junction no longer embeds these _Provider_ object fields in every summary, except for the provider
     slug.
 
     Using the [Get Profile endpoint](/api-reference/profile/get-summary) as an illustration, originally
@@ -152,7 +152,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     ```
 
     As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this Profile
-    summary. So Vital has introduced a few new _Source_ context fields:
+    summary. So Junction has introduced a few new _Source_ context fields:
 
     ```json Profile (Current)
     {
@@ -174,7 +174,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     }
     ```
 
-    Once the deprecation cycle ends, Vital will remove the deprecated fields:
+    Once the deprecation cycle ends, Junction will remove the deprecated fields:
 
     ```json Profile (Future)
     {
@@ -207,7 +207,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     * Provider Connection Created: `provider.connection.created`.
     </Note>
 
-    Vital has renamed the `source` field in this event to `provider`, aligning with the redefinition of _Source_
+    Junction has renamed the `source` field in this event to `provider`, aligning with the redefinition of _Source_
     and _Provider_.
 
     To illustrate the change, originally the `source` field describes the wearable data provider:
@@ -226,7 +226,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     }
     ```
 
-    As part of this redefinition, `source` is no longer applicable here. Vital has introduced an identical
+    As part of this redefinition, `source` is no longer applicable here. Junction has introduced an identical
     `provider` field as its replacement.
 
     ```json provider.connection.created (Current)
@@ -252,7 +252,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
     }
     ```
 
-    Once the deprecation cycle ends, Vital will remove the deprecated `source` field:
+    Once the deprecation cycle ends, Junction will remove the deprecated `source` field:
 
     ```json provider.connection.created (Future)
     {
@@ -283,7 +283,7 @@ To migrate to the new definitions, Vital is announcing the following deprecation
 
 We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
 
-For each resource, Vital now signals one Historical Pull Completed event, only after we have finished fetching
+For each resource, Junction now signals one Historical Pull Completed event, only after we have finished fetching
 all data chunks. This means `is_final` no longer has a meaning, since the event itself is *final*.
 
 <Card title="Recommended Action" icon="lightbulb-exclamation-on">

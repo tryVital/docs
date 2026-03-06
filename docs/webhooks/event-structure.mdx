@@ -11,8 +11,8 @@ All our webhook events have the following standard structure:
 * A top-level `data` field containing the event-specific payload.
 * A set of top-level fields describing the event subject:
   * `team_id`: Your Junction Team ID.
-  * `user_id` and `client_user_id`: The unique Vital User ID.
-  * `client_user_id`: Your application user reference you declared for [the Vital User](/api-reference/user/create-user).
+  * `user_id` and `client_user_id`: The unique Junction User ID.
+  * `client_user_id`: Your application user reference you declared for [the Junction User](/api-reference/user/create-user).
 
 Schemas and examples are available through [the Event Catalog tab in the Webhooks section of our Web app](https://app.junction.com).
 
@@ -52,10 +52,10 @@ Wearable data events have the following extended standard structure:
 
 * An `event_type` field for differentiating the payload contained in the data field.
 * A `data` field, which comprises of:
-   * The UUID of the Vital user for which this event is intended — note that this is not the `client_user_id` of the Vital user. (JSON path: `$.data.user_id`)
+   * The UUID of the Junction user for which this event is intended — note that this is not the `client_user_id` of the Junction user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
       * `name`: The human-readable name of the source
-      * `slug`: The stable identifier Vital assigned to the source — see [Supported providers](/wearables/providers/introduction) for the complete list.
+      * `slug`: The stable identifier Junction assigned to the source — see [Supported providers](/wearables/providers/introduction) for the complete list.
       * `logo`: The URL to an icon representing the source.
    * Any number of event-specific fields.
 
@@ -82,7 +82,7 @@ Wearable data events have the following extended standard structure:
 
 ### Summary types
 
-Each time a [summary object](/wearables/providers/resources) is created or updated, Vital emits a data event for the occurrence.
+Each time a [summary object](/wearables/providers/resources) is created or updated, Junction emits a data event for the occurrence.
 The object is made available directly at the top-level `data` field (JSON path: `$.data`), alongside the standard fields listed above.
 
 <Note>
@@ -145,7 +145,7 @@ The object is made available directly at the top-level `data` field (JSON path: 
 
 ### Timeseries types (except for Workout Streams)
 
-Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Vital emits a data event for the batch of samples.
+Each time a batch of [timeseries samples](/wearables/providers/resources) has been created or updated, Junction emits a data event for the batch of samples.
 The samples are made available under an inner `data` field under the top-level `data` field (JSON path: `$.data.data`).
 
 <Note>

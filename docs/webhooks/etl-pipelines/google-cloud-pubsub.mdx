@@ -15,11 +15,11 @@ Each event is published with these Cloud Pub/Sub message attributes:
 
 | Type | Key | Value |
 | --- | --- | --- |
-| Attribute | `event-type` | Vital event type, e.g., `daily.data.activity.created` |
+| Attribute | `event-type` | Junction event type, e.g., `daily.data.activity.created` |
 | Attribute | `blob-type` | `json` : UTF8 JSON document |
 | Attribute | `blob-codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
 | Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
-| Ordering Key | - | Vital User ID (If you have enabled Event Ordering) |
+| Ordering Key | - | Junction User ID (If you have enabled Event Ordering) |
 
 <Info>
 Payload smaller than 1KiB would not be compressed. You must check `blob_codec` to identify if decompression of
@@ -27,16 +27,16 @@ the message payload blob is necessary.
 </Info>
 
 <Info>
-At this time, Vital publishes exclusively JSON blobs (`blob-type == json`).
+At this time, Junction publishes exclusively JSON blobs (`blob-type == json`).
 
 Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob-type` and `blob-codec`.
 </Info>
 
 ## Pub/Sub event ordering
 
-If you wish to receive event for each Vital user in their publication order, Vital supports Pub/Sub Event Ordering, and uses the Vital User ID as the event ordering key. 
+If you wish to receive event for each Junction user in their publication order, Junction supports Pub/Sub Event Ordering, and uses the Junction User ID as the event ordering key. 
 
-Vital publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
+Junction publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
 
 <Warning>
 Pub/Sub Exactly Once Delivery is **discouraged** to be used together with Event Ordering. Our own trial suggested that the combination would struggle to move high volume of events.

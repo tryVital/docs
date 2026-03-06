@@ -2,7 +2,7 @@
 title: "Result Formats"
 ---
 
-Vital's API returns results in two different formats.
+Junction's API returns results in two different formats.
 
 - `PDF`
 - `JSON`
@@ -41,7 +41,7 @@ The `status` field can be one of the following:
 
 1. `ResultStatus.PARTIAL` - The results are partial.
     Labs can return results before all biomarkers are available.
-    Vital makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
+    Junction makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
 
     This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.update` event.
 
@@ -236,7 +236,7 @@ In order to obtain this data, you can use the following endpoints:
 
 As mentioned above, a marker can be composed of one or more results. This means that if you order a `Lipid Panel`, there will be no `Lipid Panel` result returned, but instead a series of markers that originate from the `Lipid Panel`.
 
-Vital identifies the source marker via the `source_markers` field.
+Junction identifies the source marker via the `source_markers` field.
 
 ```json
     {
@@ -267,13 +267,13 @@ Vital identifies the source marker via the `source_markers` field.
     },
 ```
 
-When Vital cannot identify the source, then this field will be `null`, indicating that this is an unsolicited result.
+When Junction cannot identify the source, then this field will be `null`, indicating that this is an unsolicited result.
 There may also be more than one `source` marker, if there are two or more ordered markers that contain the same underlying result, using the same testing method.
 
 
 #### Missing Results
 
-At times labs will commit mistakes, and expected results will be missing. Vital identifies these and parses them into a separate structure, named `missing_results`.
+At times labs will commit mistakes, and expected results will be missing. Junction identifies these and parses them into a separate structure, named `missing_results`.
 
 This data has the following format:
 
@@ -288,7 +288,7 @@ provider_id: str | None = None
 source_markers: List[ParentBiomarkerData] | None = None
 ```
 
-`inferred_failure_type` is the Vital assigned error type.
+`inferred_failure_type` is the Junction assigned error type.
 The error type is inferred from the comments received from the lab. They are to help assess possibly root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve more granular understanding of failure modes.
 
 1. `quantity_not_sufficient_failure`
@@ -317,7 +317,7 @@ The error type is inferred from the comments received from the lab. They are to 
 
 7. `unknown_failure`
 
-   This is a failure mode that could not be properly attributed to any specific failure mode. Potentially the results were simply left out and Vital was not provided any additional information.
+   This is a failure mode that could not be properly attributed to any specific failure mode. Potentially the results were simply left out and Junction was not provided any additional information.
 
 8. `patient_condition_failure`
 

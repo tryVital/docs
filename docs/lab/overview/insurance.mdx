@@ -6,7 +6,7 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-Vital supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
+Junction supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
 
 
 ## Setting Insurance Data
@@ -22,7 +22,7 @@ For example, supplying a `payor_code` of `MEDFED` for a patient that lives in Ar
 Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
 </Note>
 
-To place an order for a `user` in Vital with commercial insurance, you must first provide Vital with insurance data.
+To place an order for a `user` in Junction with commercial insurance, you must first provide Junction with insurance data.
 
 This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/create-insurance) endpoint, with the following payload:
 
@@ -30,7 +30,7 @@ This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/creat
 Note that you can only set insurance data for users that already have patient information set, either via an order or via the [`PATCH /v2/user/{user_id}/info`](/api-reference/user/upsert-info).
 </Note>
 
-It is expected that insurance data will become outdated or change with time. It is the customer's responsability to update this data with Vital in order to minimise the risk of a denied claim.
+It is expected that insurance data will become outdated or change with time. It is the customer's responsability to update this data with Junction in order to minimise the risk of a denied claim.
 
 ```json
 "insurance": {
@@ -83,7 +83,7 @@ The `guarantor` is an optional field, that must be provided when the relationshi
 
 ### Payor Code
 
-The `payor code` is a lab specific identifier for an insurance company. Vital has abstracted this away into our own Vital payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
+The `payor code` is a lab specific identifier for an insurance company. Junction has abstracted this away into our own Junction payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
 
 To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
 
@@ -127,7 +127,7 @@ In order to trigger the commercial insurance flow, you must supply the following
 
 ### Billing type
 
-By default, Vital orders are Client Bill. In order to trigger the insurance flow, you must supply the `billing_type` field, with `commercial_insurance`.
+By default, Junction orders are Client Bill. In order to trigger the insurance flow, you must supply the `billing_type` field, with `commercial_insurance`.
 
 ### Diagnosis Codes
 

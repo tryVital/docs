@@ -4,7 +4,7 @@ title: "Ordering a Registrable Testkit"
 
 Under the [standard Testkit ordering flow](/api-reference/lab-testing/create-order), you place a Testkit order for a specific patient. This resulting Testkit is bound to that patient, and the Testkit cannot be passed on to someone else.
 
-With Registrable Testkits, Vital offers a different option — Testkits not bound to any specific patient can be ordered to a specific household address. The patient registration process is deferred until an actual patient intends to use the Testkit.
+With Registrable Testkits, Junction offers a different option — Testkits not bound to any specific patient can be ordered to a specific household address. The patient registration process is deferred until an actual patient intends to use the Testkit.
 
 <Warning>
   Note that this only applies to Testkits, not Walk-in Phlebotomy or At-home Phlebotomy.
@@ -48,9 +48,9 @@ The `testkit` is now ordered, and will be sent to the specified address. Once de
 
 Once the `testkit` is with it's intended patient, it should be registered (step 2).
 
-In order to register, Vital requires a `sample_id`, which is found within the `testkit` itself. This is an unique identifier. 
-Vital also requires the patient details and address.
-Besides this, if using Vital's physician network, then supplying the consents field is required. If providing your own physician, then the physician information is required.
+In order to register, Junction requires a `sample_id`, which is found within the `testkit` itself. This is an unique identifier. 
+Junction also requires the patient details and address.
+Besides this, if using Junction's physician network, then supplying the consents field is required. If providing your own physician, then the physician information is required.
 
 For this example, we will assume the use of your own physician.
 
