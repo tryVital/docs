@@ -79,7 +79,9 @@
               },
               {
                 "group": "Vital iOS App",
-                "pages": ["wearables/vital-app/introduction"]
+                "pages": [
+                  "wearables/vital-app/introduction"
+                ]
               },
               {
                 "group": "Providers",
@@ -228,56 +230,34 @@
             ]
           },
           {
-            "anchor": "Horizon AI",
+            "anchor": "Junction Sense",
             "icon": "robot",
             "groups": [
               {
-                "group": "Horizon AI Query",
+                "group": "Junction Sense",
                 "pages": [
-                  "api-reference/horizon-ai/aggregation/overview",
-                  "api-reference/horizon-ai/aggregation/using-continuous-query",
-                  "api-reference/horizon-ai/aggregation/using-query-api",
-                  "api-reference/horizon-ai/aggregation/data-prioritization",
-                  "api-reference/horizon-ai/aggregation/examples"
+                  "sense/query/overview",
+                  "sense/query/using-continuous-query",
+                  "sense/query/using-query-api",
+                  "sense/query/data-prioritization",
+                  "sense/query/examples"
                 ]
               },
               {
-                "group": "Horizon AI Query DSL",
+                "group": "Query DSL",
                 "pages": [
-                  "api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
-                  "api-reference/horizon-ai/aggregation/query-dsl/select-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/where-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis"
+                  "sense/query/query-dsl/column-expressions",
+                  "sense/query/query-dsl/select-clause",
+                  "sense/query/query-dsl/group-by-clause",
+                  "sense/query/query-dsl/where-clause",
+                  "sense/query/query-dsl/sleep-analysis"
                 ]
               },
               {
-                "group": "Horizon AI Python SDK",
-                "pages": ["api-reference/horizon-ai/python-sdk/getting-started"]
-              },
-              {
-                "group": "Managing Continuous Query",
+                "group": "Python SDK",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/create",
-                  "api-reference/horizon-ai/continuous-query/update",
-                  "api-reference/horizon-ai/continuous-query/list"
+                  "sense/python-sdk/getting-started"
                 ]
-              },
-              {
-                "group": "Continuous Query Task History",
-                "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-task-history"
-                ]
-              },
-              {
-                "group": "Continuous Query Results",
-                "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-result-table"
-                ]
-              },
-              {
-                "group": "Query API",
-                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
               }
             ]
           }
@@ -308,11 +288,15 @@
               },
               {
                 "group": "User Portal",
-                "pages": ["api-reference/user/create-portal-url"]
+                "pages": [
+                  "api-reference/user/create-portal-url"
+                ]
               },
               {
-                "group": "Vital Mobile SDK Integration",
-                "pages": ["api-reference/user/create-sign-in-token"]
+                "group": "Junction Mobile SDK Integration",
+                "pages": [
+                  "api-reference/user/create-sign-in-token"
+                ]
               },
               {
                 "group": "Device Connections",
@@ -374,11 +358,15 @@
               },
               {
                 "group": "Sleep Cycle",
-                "pages": ["api-reference/data/sleep-cycle/get-summary"]
+                "pages": [
+                  "api-reference/data/sleep-cycle/get-summary"
+                ]
               },
               {
                 "group": "Meal",
-                "pages": ["api-reference/data/meal/get-summary"]
+                "pages": [
+                  "api-reference/data/meal/get-summary"
+                ]
               },
               {
                 "group": "Workouts",
@@ -411,7 +399,9 @@
               },
               {
                 "group": "Menstrual Cycle",
-                "pages": ["api-reference/data/menstrual-cycle/get-summary"]
+                "pages": [
+                  "api-reference/data/menstrual-cycle/get-summary"
+                ]
               },
               {
                 "group": "Electrocardiogram",
@@ -489,7 +479,9 @@
               },
               {
                 "group": "Diary Timeseries",
-                "pages": ["api-reference/data/timeseries/note"]
+                "pages": [
+                  "api-reference/data/timeseries/note"
+                ]
               },
               {
                 "group": "Nutrition Timeseries",
@@ -616,32 +608,24 @@
             ]
           },
           {
-            "anchor": "Horizon AI",
+            "anchor": "Junction Sense",
             "icon": "robot",
             "groups": [
               {
-                "group": "Managing Continuous Query",
+                "group": "Junction API",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/create",
-                  "api-reference/horizon-ai/continuous-query/update",
-                  "api-reference/horizon-ai/continuous-query/list"
+                  "api-reference/sense/query-one",
+                  "api-reference/sense/continuous-query/get-task-history",
+                  "api-reference/sense/continuous-query/get-result-table"
                 ]
               },
               {
-                "group": "Continuous Query Task History",
+                "group": "Junction Management API",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                  "api-reference/sense/continuous-query/create",
+                  "api-reference/sense/continuous-query/update",
+                  "api-reference/sense/continuous-query/list"
                 ]
-              },
-              {
-                "group": "Continuous Query Results",
-                "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-result-table"
-                ]
-              },
-              {
-                "group": "Query API",
-                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
               }
             ]
           },
@@ -769,11 +753,15 @@
               },
               {
                 "group": "Results",
-                "pages": ["event-catalog/labtest.result.critical"]
+                "pages": [
+                  "event-catalog/labtest.result.critical"
+                ]
               },
               {
                 "group": "Appointments",
-                "pages": ["event-catalog/labtest.appointment.updated"]
+                "pages": [
+                  "event-catalog/labtest.appointment.updated"
+                ]
               },
               {
                 "group": "Lab Report Parsing",
@@ -1270,7 +1258,10 @@
         "groups": [
           {
             "group": "Core",
-            "pages": ["changelog/core/api", "changelog/core/dashboard"]
+            "pages": [
+              "changelog/core/api",
+              "changelog/core/dashboard"
+            ]
           },
           {
             "group": "Wearables",
@@ -1296,7 +1287,10 @@
     "dark": "/logo/dark.svg"
   },
   "api": {
-    "openapi": ["swagger.json", "org-management-api.json"],
+    "openapi": [
+      "swagger.json",
+      "org-management-api.json"
+    ],
     "mdx": {
       "server": [
         "https://api.us.junction.com",
@@ -1439,6 +1433,74 @@
     {
       "source": "/wearables/sdks/vital-health",
       "destination": "/wearables/sdks/health/overview"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/overview",
+      "destination": "/sense/query/overview"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/using-continuous-query",
+      "destination": "/sense/query/using-continuous-query"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/using-query-api",
+      "destination": "/sense/query/using-query-api"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/data-prioritization",
+      "destination": "/sense/query/data-prioritization"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/examples",
+      "destination": "/sense/query/examples"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
+      "destination": "/sense/query/query-dsl/column-expressions"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/select-clause",
+      "destination": "/sense/query/query-dsl/select-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
+      "destination": "/sense/query/query-dsl/group-by-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/where-clause",
+      "destination": "/sense/query/query-dsl/where-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis",
+      "destination": "/sense/query/query-dsl/sleep-analysis"
+    },
+    {
+      "source": "/api-reference/horizon-ai/python-sdk/getting-started",
+      "destination": "/sense/python-sdk/getting-started"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/create",
+      "destination": "/api-reference/sense/continuous-query/create"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/update",
+      "destination": "/api-reference/sense/continuous-query/update"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/list",
+      "destination": "/api-reference/sense/continuous-query/list"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/get-task-history",
+      "destination": "/api-reference/sense/continuous-query/get-task-history"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/get-result-table",
+      "destination": "/api-reference/sense/continuous-query/get-result-table"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-one",
+      "destination": "/api-reference/sense/query-one"
     }
   ]
 }
