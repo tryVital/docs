@@ -1499,7 +1499,7 @@
       "destination": "/api-reference/sense/continuous-query/get-result-table"
     },
     {
-      "source": "/api-reference/sense/query-one",
+      "source": "/api-reference/horizon-ai/aggregation/query-one",
       "destination": "/api-reference/sense/query-one"
     }
   ]
