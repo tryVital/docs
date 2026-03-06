@@ -12,7 +12,7 @@ Junction Sense now accepts a `where` clause so you can filter input rows before 
 
 - Compose SQL-style predicates with `>`, `>=`, `<`, `<=`, `=`, `!=`, `NOT`, `AND`, `OR`, and parenthesis grouping.
 - Filters always run before `group_by` evaluation when both clauses are present.
-- Check out the [WHERE clause](/api-reference/horizon-ai/aggregation/query-dsl/where-clause) documentation for more details.
+- Check out the [WHERE clause](/sense/query-dsl/where-clause) documentation for more details.
 
 <CodeGroup>
 ```python Python DSL
@@ -54,7 +54,7 @@ va.select(
 ### Junction Sense sleep macros (September 2025)
 
 Junction Sense now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
-Check out [Sleep Analysis](/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis) for more details.
+Check out [Sleep Analysis](/sense/query-dsl/sleep-analysis) for more details.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
@@ -114,8 +114,8 @@ This mainly affects [Abbott LibreView patient-based connections](/wearables/guid
 
 <HorizonAIBeta />
 
-Junction Sense can now group and aggregate the data by any [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression)
-and/or any [Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression).
+Junction Sense can now group and aggregate the data by any [Table Column expression](/sense/query-dsl/column-expressions#table-column-expression)
+and/or any [Source Column expression](/sense/query-dsl/column-expressions#source-column-expression).
 
 This gives you more options on how the data should be dissected — not just by calendar units, but now also by Data Source fields and categorical values from the
 data itself.
@@ -123,11 +123,11 @@ data itself.
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
-Check out the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+Check out the [Group By clause](/sense/query-dsl/group-by-clause) documentation.
 
 <Note>
-If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/sense/data-prioritization) behaviour would be disabled.
 </Note>
 
 #### Example queries
@@ -255,7 +255,7 @@ You can now select timeseries resources in a Query:
   * For each resource, you can select all of specific fields of interest.
   * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
 
-Check out the [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) documentation.
+Check out the [Table Column expression](/sense/query-dsl/column-expressions) documentation.
 
 #### Examples of Timeseries Table Column expressions
 

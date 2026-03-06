@@ -6,15 +6,15 @@ iconType: duotone
 
 ## Overview
 
-You specify how a Junction Sense should dissect the selected data through a Group By clause. The [Aggregate expressions](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#aggregate-a-table-column)
+You specify how a Junction Sense should dissect the selected data through a Group By clause. The [Aggregate expressions](/sense/query-dsl/select-clause#aggregate-a-table-column)
 you specify would then be applied to the resulting groups.
 
 Your Group By clause can contain one or more of the following expressions:
 
 * a [Date Truncate expression](#group-by-a-truncated-datetime)
 
-    * A synchronous [Query](/api-reference/horizon-ai/aggregation/using-query-api) can have at most one [Date Truncate expression](#group-by-a-truncated-datetime)
-    * A [Continuous Query](/api-reference/horizon-ai/aggregation/using-continuous-query) must have exactly one [Date Truncate expression](#group-by-a-truncated-datetime).
+    * A synchronous [Query](/sense/using-query-api) can have at most one [Date Truncate expression](#group-by-a-truncated-datetime)
+    * A [Continuous Query](/sense/using-continuous-query) must have exactly one [Date Truncate expression](#group-by-a-truncated-datetime).
 
 * a [Date Part expression](#group-by-a-date-or-time-component)
 
@@ -22,7 +22,7 @@ Your Group By clause can contain one or more of the following expressions:
 
 * a [Source Column expression](#group-by-a-source-column-expression)
 
-You can mix and match any expression types, and organize them in any order. [Group Key Column expression](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+You can mix and match any expression types, and organize them in any order. [Group Key Column expression](/sense/query-dsl/select-clause#select-the-group-key-columns)
 tracks your declaration order.
 
 
@@ -37,14 +37,14 @@ This is similar to the `DATE_TRUNC` function in SQL.
 | Argument         | Remarks 
 | ---------------- | ---------------
 | date_trunc       | The date or time period to truncate the input datetime to.
-| arg              | The input expression — only an [Index Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#index-column-expression) is accepted.
+| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted.
 
 </Accordion>
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 `group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
 
-See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+See also: [Select the group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns)
 </Accordion>
 </AccordionGroup>
 
@@ -100,14 +100,14 @@ This is similar to the `DATE_PART` function in SQL.
 | Argument         | Remarks 
 | ---------------- | ---------------
 | date_part        | The date or time unit to extract.
-| arg              | The input expression — only an [Index Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#index-column-expression) is accepted.
+| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted.
 
 </Accordion>
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 `group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
 
-See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+See also: [Select the group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns)
 </Accordion>
 </AccordionGroup>
 
@@ -151,20 +151,20 @@ va.select(...).group_by(
 
 ## Group by a Table Column expression
 
-Group the input rows based on a [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression).
+Group the input rows based on a [Table Column expression](/sense/query-dsl/column-expressions#table-column-expression).
 This is similar to the generic `GROUP BY` clause in SQL.
 
 <AccordionGroup>
 <Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
 
-Any [Table Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression) — summary or timeseries.
+Any [Table Column expressions](/sense/query-dsl/column-expressions#table-column-expression) — summary or timeseries.
 
 </Accordion>
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 `group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
 
-See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+See also: [Select the group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns)
 </Accordion>
 </AccordionGroup>
 
@@ -206,25 +206,25 @@ va.select(
 
 ## Group by a Source Column expression
 
-Group the input rows based on a [Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression).
+Group the input rows based on a [Source Column expression](/sense/query-dsl/column-expressions#source-column-expression).
 This is similar to a generic `GROUP BY` clause in SQL.
 
 <Note>
-If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/sense/data-prioritization) behaviour would be disabled.
 </Note>
 
 <AccordionGroup>
 <Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
 
-Any [Source Column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression) valid in the query context.
+Any [Source Column expressions](/sense/query-dsl/column-expressions#source-column-expression) valid in the query context.
 
 </Accordion>
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 `group_key.$OFFSET` if this is the N-th expression in the `group_by` clause.
 
-See also: [Select the group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns)
+See also: [Select the group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns)
 </Accordion>
 </AccordionGroup>
 

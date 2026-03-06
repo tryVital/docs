@@ -5,7 +5,7 @@ icon: hand-pointer
 
 ## Select a table column
 
-Select a specific table column using a [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions).
+Select a specific table column using a [Table Column expression](/sense/query-dsl/column-expressions).
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 The name of column being selected.
@@ -32,7 +32,7 @@ va.select(va.Sleep.col("efficiency"))
 
 Perform data analysis with in-built algorithms using value macro expressions:
 
-* [Sleep Analysis](/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis) value macro expressions
+* [Sleep Analysis](/sense/query-dsl/sleep-analysis) value macro expressions
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 The name of the value macro, e.g., `sleep_score` for the Chronotype value macro.
@@ -57,7 +57,7 @@ va.select(va.Sleep.chronotype())
 
 ## Aggregate a table column
 
-Aggregate a [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) with respect to the `group_by` clause.
+Aggregate a [Table Column expression](/sense/query-dsl/column-expressions) with respect to the `group_by` clause.
 
 The specified aggregate function is applied to each and every group created by the `group_by` clause.
 The result set is N aggregated values where N is the number of groups.
@@ -118,7 +118,7 @@ va.select(
 
 ## Select the Index Column
 
-Select the primary datetime index of the table using the [Index Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#index-column-expression).
+Select the primary datetime index of the table using the [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression).
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
 `timestamp` (constant).
@@ -143,7 +143,7 @@ va.select(va.Sleep.col("efficiency"))
 
 ## Select the Group Key Columns
 
-Select the [Group Key Columns](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#group-key-column-expression) associated
+Select the [Group Key Columns](/sense/query-dsl/column-expressions#group-key-column-expression) associated
 with the `group_by` clause.
 
 You can select one specific group key column by offset, or select all group key columns with a `*` wildcard.

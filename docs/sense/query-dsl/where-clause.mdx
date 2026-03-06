@@ -8,7 +8,7 @@ iconType: duotone
 
 Use the WHERE clause to filter summary or timeseries rows before Junction Sense evaluates aggregations or grouping. When a GROUP BY clause is present, the filter runs first so only matching rows contribute to each group.
 
-The WHERE clause evaluates SQL-style predicates against the same [column expressions](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) that are available in the `select` and `group_by` clauses.
+The WHERE clause evaluates SQL-style predicates against the same [column expressions](/sense/query-dsl/column-expressions) that are available in the `select` and `group_by` clauses.
 
 ## Supported operators
 
@@ -22,7 +22,7 @@ WHERE predicates support these operators:
 Comparison operands can reference table columns (for example, `stage_rem_second`) or Source columns (for example, `source_type`).
 
 <Note>
-Column identifiers follow the Continuous Query column names. See [Column Mappings](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#column-mappings) for a full list.
+Column identifiers follow the Continuous Query column names. See [Column Mappings](/sense/query-dsl/column-expressions#column-mappings) for a full list.
 </Note>
 
 ## Filter rows before grouping
