@@ -1532,6 +1532,10 @@
       "destination": "/sense/query-dsl/sleep-analysis"
     },
     {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/sleep-snapshot-scores",
+      "destination": "/sense/query-dsl/sleep-snapshot-scores"
+    },
+    {
       "source": "/api-reference/horizon-ai/python-sdk/getting-started",
       "destination": "/sense/python-sdk/getting-started"
     },
