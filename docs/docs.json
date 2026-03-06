@@ -236,21 +236,21 @@
               {
                 "group": "Junction Sense",
                 "pages": [
-                  "sense/query/overview",
-                  "sense/query/using-continuous-query",
-                  "sense/query/using-query-api",
-                  "sense/query/data-prioritization",
-                  "sense/query/examples"
+                  "sense/overview",
+                  "sense/using-continuous-query",
+                  "sense/using-query-api",
+                  "sense/data-prioritization",
+                  "sense/examples"
                 ]
               },
               {
                 "group": "Query DSL",
                 "pages": [
-                  "sense/query/query-dsl/column-expressions",
-                  "sense/query/query-dsl/select-clause",
-                  "sense/query/query-dsl/group-by-clause",
-                  "sense/query/query-dsl/where-clause",
-                  "sense/query/query-dsl/sleep-analysis"
+                  "sense/query-dsl/column-expressions",
+                  "sense/query-dsl/select-clause",
+                  "sense/query-dsl/group-by-clause",
+                  "sense/query-dsl/where-clause",
+                  "sense/query-dsl/sleep-analysis"
                 ]
               },
               {
@@ -1436,43 +1436,43 @@
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/overview",
-      "destination": "/sense/query/overview"
+      "destination": "/sense/overview"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/using-continuous-query",
-      "destination": "/sense/query/using-continuous-query"
+      "destination": "/sense/using-continuous-query"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/using-query-api",
-      "destination": "/sense/query/using-query-api"
+      "destination": "/sense/using-query-api"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/data-prioritization",
-      "destination": "/sense/query/data-prioritization"
+      "destination": "/sense/data-prioritization"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/examples",
-      "destination": "/sense/query/examples"
+      "destination": "/sense/examples"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
-      "destination": "/sense/query/query-dsl/column-expressions"
+      "destination": "/sense/query-dsl/column-expressions"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/query-dsl/select-clause",
-      "destination": "/sense/query/query-dsl/select-clause"
+      "destination": "/sense/query-dsl/select-clause"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
-      "destination": "/sense/query/query-dsl/group-by-clause"
+      "destination": "/sense/query-dsl/group-by-clause"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/query-dsl/where-clause",
-      "destination": "/sense/query/query-dsl/where-clause"
+      "destination": "/sense/query-dsl/where-clause"
     },
     {
       "source": "/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis",
-      "destination": "/sense/query/query-dsl/sleep-analysis"
+      "destination": "/sense/query-dsl/sleep-analysis"
     },
     {
       "source": "/api-reference/horizon-ai/python-sdk/getting-started",
@@ -1499,7 +1499,7 @@
       "destination": "/api-reference/sense/continuous-query/get-result-table"
     },
     {
-      "source": "/api-reference/horizon-ai/aggregation/query-one",
+      "source": "/api-reference/sense/query-one",
       "destination": "/api-reference/sense/query-one"
     }
   ]

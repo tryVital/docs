@@ -242,8 +242,8 @@ Note that some Source Column expression may not be valid in the implicit query c
 expression in a query that is selecting from the Sleep resource.
 
 <Note>
-If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/sense/data-prioritization) behaviour would be disabled.
 </Note>
 
 | Column                                | Python DSL                           | JSON DSL                           | Available in
@@ -272,7 +272,7 @@ index using the special Index Column expression:
 ## Group Key Column expression
 
 
-When your Query Instruction uses [the `group_by` clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause), each expression
+When your Query Instruction uses [the `group_by` clause](/sense/query-dsl/group-by-clause), each expression
 in the `group_by` clause creates a temporary Group Key Column (`group_key.$OFFSET`). These temporary columns are then used to
 facilitate the data grouping and aggregation as specified by your Query Instruction.
 

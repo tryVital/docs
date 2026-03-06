@@ -6,7 +6,7 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
 <HorizonAIBeta />
 
-You can create a **Continuous Query** to have your Junction Sense [Query](/api-reference/horizon-ai/aggregation/overview)
+You can create a **Continuous Query** to have your Junction Sense [Query](/sense/overview)
 automatically evaluated by Junction as needed, and receive any query result changes through [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
 
 <AccordionGroup>
@@ -21,7 +21,7 @@ made through [Junction Link](/wearables/connecting-providers/introduction) and [
 Junction pushes any Continuous Query result table changes to your Webhook or ETL Pipeline destinations.
 </Accordion>
 <Accordion title="Result Pulling" icon="table" defaultOpen>
-The latest result table can be queried through [Junction API](/api-reference/horizon-ai/continuous-query/get-result-table) at any time.
+The latest result table can be queried through [Junction API](/api-reference/sense/continuous-query/get-result-table) at any time.
 </Accordion>
 </AccordionGroup>
 
@@ -35,11 +35,11 @@ With Continuous Query, you can focus on adding value to your product with the ag
 
 ## Continuous Query requirements
 
-While Continuous Query uses the same [Query DSL](/api-reference/horizon-ai/aggregation/query-dsl/) as the Query API, some
+While Continuous Query uses the same [Query DSL](/sense/query-dsl/) as the Query API, some
 restrictions are in place:
 
-* The query must [group by a truncated datetime](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause#group-by-a-truncated-datetime).
-* The query must [select all group key columns](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns).
+* The query must [group by a truncated datetime](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime).
+* The query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
 
 <Note>
 Do reach out to us if your use case is hampered by these restrictions.
@@ -50,8 +50,8 @@ Do reach out to us if your use case is hampered by these restrictions.
 When a Continuous Query is re-evaluated and the result set has changed, Junction sends a [Result Table Changed](/event-catalog/continuous_query.result_table.changed)
 data event to your [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
 
-This data event includes only the delta (new rows or changed rows with respect to the [group keys](](/api-reference/horizon-ai/aggregation/query-dsl/select-clause#select-the-group-key-columns))).
-To re-fetch the whole result set, use the [Get Result Table](/api-reference/horizon-ai/continuous-query/get-result-table) endpoint.
+This data event includes only the delta (new rows or changed rows with respect to the [group keys](](/sense/query-dsl/select-clause#select-the-group-key-columns))).
+To re-fetch the whole result set, use the [Get Result Table](/api-reference/sense/continuous-query/get-result-table) endpoint.
 
 ```json
 {
@@ -89,8 +89,8 @@ To re-fetch the whole result set, use the [Get Result Table](/api-reference/hori
 
 You can manage your Continuous Query using our [Org Management API](/api-reference/org-management):
 
-- [Create Continuous Query Endpoint](/api-reference/horizon-ai/continuous-query/create)
-- [List Continuous Queries Endpoint](/api-reference/horizon-ai/continuous-query/list)
+- [Create Continuous Query Endpoint](/api-reference/sense/continuous-query/create)
+- [List Continuous Queries Endpoint](/api-reference/sense/continuous-query/list)
 
 You can also manage them through the _Continuous Query_ section of the Junction Dashboard:
 
