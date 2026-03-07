@@ -1,32 +1,46 @@
 ---
-title: "Welcome to our Docs"
+title: "Junction"
 sidebarTitle: "Welcome"
 mode: wide
-description: "Here you'll find guides, resources, and references to build using Junction's APIs and SDKs."
+description: "Integrate 300+ wearables, streamline lab operations, and build your own lab testing experience spanning all 50 states – with a single API."
 ---
 
-<CardGroup cols={2}>
+<CardGroup cols={3}>
   <Card
     title="Lab Testing"
     icon="flask"
     color="#BF40BF"
     href="/lab/overview/introduction"
+    cta="Learn more"
   >
     Access a nationwide lab network. In-person, at-home, or hybrid methods to maximize completion rates.
+  </Card>
+  <Card
+    title="Junction Sense"
+    icon="sensor"
+    color="#E28413"
+    href="/sense/overview"
+    cta="Learn more"
+  >
+    Automatically transforms raw activity and biometric data from 300+ connected devices into structured, aggregated datasets that update as new data arrives.
   </Card>
   <Card
     title="Device Data Providers"
     icon="gears"
     color="#0285c7"
     href="/wearables/providers/introduction"
+    cta="Learn more"
   >
     Connect to 300+ devices, and receive data in Junction standardized schemas.
   </Card>
+</CardGroup>
+<CardGroup cols={2}>
   <Card
     title="Junction API"
     icon="seedling"
     color="#16a34a"
     href="/api-details/junction-api"
+    cta="Learn more"
   >
     User management, Device connection and data access, Lab Testing orders and results, Junction Sense Query and Data.
   </Card>
@@ -35,6 +49,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="building"
     color="#16a34a"
     href="/api-details/junction-management-api"
+    cta="Learn more"
   >
     Programmatically manage all Junction regional and global resources in your organization, including Junction Sense Continuous Queries.
   </Card>
@@ -43,7 +58,7 @@ description: "Here you'll find guides, resources, and references to build using 
 ## Popular Topics
 
 <CardGroup cols={1}>
-  <Card title="Quickstart" icon="bolt" color="#FDD023" href="/home/quickstart" horizontal>
+  <Card title="Quickstart" icon="bolt" color="#FDD023" href="/home/quickstart" horizontal arrow>
     The Quickstart walk-through gives you an overview of how to integrate with
     Junction. By the end of this guide, you'll have a working app with both
     backend and frontend.
@@ -53,6 +68,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="apple"
     href="/wearables/guides/apple-healthkit"
     horizontal
+    arrow
   >
     Learn how to integrate with Apple HealthKit through Junction Mobile SDKs,
     available in Native iOS, React Native and Flutter.
@@ -62,6 +78,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="android"
     href="/wearables/guides/android-health-connect"
     horizontal
+    arrow
   >
     Learn how to integrate with Android Health Connect through Junction Mobile
     SDKs, available in Native Android, React Native and Flutter.
@@ -71,6 +88,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="link"
     href="/wearables/connecting-providers/introduction"
     horizontal
+    arrow
   >
     Junction Link enables your users to connect their account with with their
     wearable data providers. Learn how to integrate the Link Widget for a
@@ -81,6 +99,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="link"
     href="/wearables/connecting-providers/custom_widget"
     horizontal
+    arrow
   >
     Learn how to use the Junction Link API to build your own Link Widget.
   </Card>
@@ -89,6 +108,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="clock"
     href="/wearables/providers/timestamps-and-time-zones"
     horizontal
+    arrow
   >
     Learn about timestamp and time zone handling of wearable device data.
   </Card>
@@ -97,6 +117,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="radar"
     href="/webhooks/introduction"
     horizontal
+    arrow
   >
     Junction can push wearable device data as webhook events to you as soon as
     they are discovered. Learn about the delivery stages, event structure as
@@ -107,6 +128,7 @@ description: "Here you'll find guides, resources, and references to build using 
     icon="parachute-box"
     href="/wearables/providers/test_data"
     horizontal
+    arrow
   >
     Learn how to use Demo Connections — which emit synthetic data mimicking
     selected providers — as an alternative way to test your Junction
