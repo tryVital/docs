@@ -2,40 +2,6 @@
 title: "API"
 ---
 
-### Session Continuation & Management Identity (Feb 2026)
-
-You can now maintain long-lived dashboard sessions without re-authentication. After completing the Authorization Code flow, a refresh token and CSRF token are issued alongside the access token, enabling transparent session renewal.
-
-<Accordion title="Details" defaultOpen icon="key" iconType="duotone">
-  ## New Grant Type
-
-  A new `urn:junction:api-auth:session-continuation` grant type on the **POST /api/identity/v1/token** endpoint allows clients to refresh an expired access token using the stored refresh token and CSRF token.
-
-  ```
-  POST /api/identity/v1/token
-  Content-Type: application/x-www-form-urlencoded
-
-  grant_type=urn:junction:api-auth:session-continuation&csrf_token=<csrf_token>
-  ```
-
-  ## Token Response Changes
-
-  The Authorization Code Grant response now includes two additional fields:
-
-  - **`refresh_token`** – Long-lived encrypted token (180-day lifespan), delivered as an HTTP-Only cookie.
-  - **`csrf_token`** – Base64url-encoded token used to authorize session continuation requests. Store this client-side (e.g. `localStorage`).
-
-  ## Session Lifecycle
-
-  - Access tokens expire after 2 hours.
-  - Refresh tokens are valid for 180 days and are stored as secure, HTTP-Only cookies.
-  - Clients call the session continuation grant with the CSRF token to obtain a fresh access token without user interaction.
-
-  ## Management Identity
-
-  Management identities are now supported in the org management project, enabling programmatic access to org-level resources using management identity tokens.
-</Accordion>
-
 ### Error for closed beta endpoint calls is now JSON (Nov 2025)
 
 Previously, if you tried to access an endpoint in closed beta and for which your team was not enabled, it would return a plain text error body. It now returns a JSON error body to align with the rest of our API.
