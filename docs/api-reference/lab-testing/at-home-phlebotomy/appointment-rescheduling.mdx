@@ -12,7 +12,8 @@ curl --request PATCH \
      --header 'x-vital-api-key: {YOUR_KEY}' \
      --data '
 {
-    "booking_key": "bar456"
+    "booking_key": "bar456",
+    "appointment_notes": "Updated: need morning appointment"
 }
 '
 ```
@@ -116,7 +117,8 @@ fmt.Printf("Received data %s\n", response)
     "provider": "getlabs",
     "status": "pending",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
-    "can_reschedule": true
+    "can_reschedule": true,
+    "appointment_notes": "Updated: need morning appointment"
 }
 ```
 </ResponseExample>
