@@ -3,6 +3,26 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Access Notes & Appointment Notes for At-Home Phlebotomy (Mar 2026)
+
+You can now provide instructions for phlebotomists through two new optional fields on at-home phlebotomy appointments.
+
+<Accordion title="Details" defaultOpen icon="notes" iconType="duotone">
+  ## New Fields
+
+  - **`access_notes`** (on patient address) – Set at order creation. Provides location access instructions such as gate codes, parking details, or entrance directions. Automatically forwarded to the phlebotomy provider on every booking and reschedule.
+  - **`appointment_notes`** (on appointment) – Set at booking, request, or reschedule time. Provides per-appointment special instructions such as "Please bring photo ID" or "Patient prefers left arm". Can be updated on each reschedule.
+
+  ## Updated Endpoints
+
+  - **POST /v3/order** – `patient_address` now accepts an optional `access_notes` field.
+  - **POST /v3/order/{order_id}/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/{order_id}/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
+  - **PATCH /v3/order/{order_id}/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
+
+  Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#access-notes-and-appointment-notes) for details.
+</Accordion>
+
 ### Custom Comments on Requisitions (Mar 2026)
 
 You can now add clinical comments during order creation that are forwarded to the lab requisition. Comments can also be configured as defaults on a per-lab-account basis.
