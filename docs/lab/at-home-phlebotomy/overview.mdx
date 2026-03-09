@@ -21,6 +21,12 @@ To achieve this, a high-level overview of the process is defined as:
 - Junction exposes the results via API as soon as they are available, both as PDF and structured data via API.
 
 
+## Access Notes
+
+When creating an order, you can optionally include `access_notes` in the patient address. These are free-text instructions for the phlebotomist on how to reach the patient's location — for example, gate codes, parking instructions, or entrance details.
+
+Access notes are automatically forwarded to the phlebotomy provider when an appointment is booked or rescheduled, and are included in the appointment response.
+
 ## Constraints
 
 - Phlebotomy appointments are not supported for patients under 18 years of age.
