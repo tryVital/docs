@@ -10,7 +10,8 @@ curl --request POST \
      --header 'x-vital-api-key: {YOUR_KEY}' \
      --data '
 {
-    "booking_key": "foo123"
+    "booking_key": "foo123",
+    "appointment_notes": "Please bring photo ID"
 }
 '
 ```
@@ -113,7 +114,8 @@ fmt.Printf("Received data %s\n", response)
     "provider": "getlabs",
     "status": "pending",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
-    "can_reschedule":true
+    "can_reschedule":true,
+    "appointment_notes": "Please bring photo ID"
 }
 ```
 </ResponseExample>

@@ -20,11 +20,17 @@ To achieve this, a high-level overview of the process is defined as:
 - Junction exposes the results via API as soon as they are available, both on PDF and structured data via API.
 
 
-## Access Notes
+## Access Notes and Appointment Notes
 
-When creating an order, you can optionally include `access_notes` in the patient address. These are free-text instructions for the phlebotomist on how to reach the patient's location — for example, gate codes, parking instructions, or entrance details.
+There are two ways to provide instructions for the phlebotomist:
 
-Access notes are automatically forwarded to the phlebotomy provider when an appointment is booked or rescheduled, and are included in the appointment response.
+### Access Notes
+
+Set `access_notes` on the patient address when creating an order. These describe how to physically reach the patient's location — gate codes, parking instructions, entrance details, etc. Access notes are automatically forwarded to the phlebotomy provider on every booking and reschedule.
+
+### Appointment Notes
+
+Set `appointment_notes` in the booking, request, or reschedule request body. These are per-appointment special instructions — for example, "Please bring photo ID" or "Patient prefers left arm". Appointment notes can be changed on each reschedule and are stored on the appointment itself.
 
 ## Constraints
 
