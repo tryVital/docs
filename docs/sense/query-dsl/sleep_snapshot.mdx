@@ -1,0 +1,137 @@
+---
+title: SleepSnapshot Scores
+description: Daily sleep-derived scores from the sleep_snapshot query table
+icon: bed
+---
+
+## Overview
+
+`sleep_snapshot` gives you a daily view of how sleep translates into recovery, stress, and strain, so you can track readiness trends without building custom scoring pipelines.
+
+Each row represents one calendar day and includes:
+
+- `sleep_score`
+- `recovery_score` and `recovery_zone`
+- `stress_score`
+- `strain_score` and `strain_zone`
+- `chronotype`
+
+Horizon AI computes these scores for you, so queries return ready-to-use daily insights.
+
+## What you can do
+
+- Pull one scored row per day for charting or downstream analytics.
+- Apply `WHERE` filters on scored columns (for example, high strain days).
+- Group and aggregate scores like any other table.
+
+<Note>
+`SleepSnapshot.index()` is a synonym of `SleepSnapshot.col("date")`.
+</Note>
+
+## Available columns
+
+| Column | Description |
+| --- | --- |
+| `date` | Daily index (`YYYY-MM-DD`). |
+| `chronotype` | Daily chronotype category. |
+| `sleep_score` | Daily sleep score (0-100). |
+| `recovery_score` | Daily recovery score (0-100). |
+| `recovery_zone` | Recovery zone (`Red`, `Amber`, `Green`). |
+| `stress_score` | Daily stress score (0-100). |
+| `strain_score` | Daily strain score (0-21). |
+| `strain_zone` | Strain zone (`Low`, `Moderate`, `High`, `Very High`). |
+
+## Example: Select daily scores
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.SleepSnapshot.col("date"),
+    va.SleepSnapshot.col("sleep_score"),
+    va.SleepSnapshot.col("recovery_score"),
+    va.SleepSnapshot.col("stress_score"),
+    va.SleepSnapshot.col("strain_score"),
+    va.SleepSnapshot.col("recovery_zone"),
+    va.SleepSnapshot.col("strain_zone"),
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "sleep_snapshot": "date" },
+    { "sleep_snapshot": "sleep_score" },
+    { "sleep_snapshot": "recovery_score" },
+    { "sleep_snapshot": "stress_score" },
+    { "sleep_snapshot": "strain_score" },
+    { "sleep_snapshot": "recovery_zone" },
+    { "sleep_snapshot": "strain_zone" }
+  ]
+}
+```
+</CodeGroup>
+
+## Example: Weekly aggregates
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.SleepSnapshot.col("recovery_score").mean(),
+    va.SleepSnapshot.col("stress_score").mean(),
+    va.SleepSnapshot.col("strain_score").max(),
+).group_by(
+    va.date_trunc(va.SleepSnapshot.index(), 1, "week")
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "sleep_snapshot": "recovery_score" } },
+    { "func": "mean", "arg": { "sleep_snapshot": "stress_score" } },
+    { "func": "max", "arg": { "sleep_snapshot": "strain_score" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "week" },
+      "arg": { "index": "sleep_snapshot" }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+## Example: Filter for high-strain days
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.SleepSnapshot.col("date"),
+    va.SleepSnapshot.col("strain_score"),
+    va.SleepSnapshot.col("strain_zone"),
+    va.SleepSnapshot.col("recovery_score"),
+).where(
+    "strain_score >= 14"
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "sleep_snapshot": "date" },
+    { "sleep_snapshot": "strain_score" },
+    { "sleep_snapshot": "strain_zone" },
+    { "sleep_snapshot": "recovery_score" }
+  ],
+  "where": "strain_score >= 14"
+}
+```
+</CodeGroup>
