@@ -41,7 +41,8 @@ data = client.lab_tests.create_order(
       state="CA",
       zip="91189",
       country="US",
-      phone_number="+1123456789"
+      phone_number="+1123456789",
+      access_notes="Gate code #1234, use side entrance"
     ),
 )
 ```
@@ -75,7 +76,8 @@ const request: CreateOrderRequestCompatible = {
       state: "CA",
       zip: "91189",
       country: "US",
-      phoneNumber: "+1123456789"
+      phoneNumber: "+1123456789",
+      accessNotes: "Gate code #1234, use side entrance"
     },
 }
 
@@ -192,7 +194,8 @@ fmt.Printf("Received data %s\n", response)
          "state": "CA",
          "zip": "91189",
          "country": "United States",
-         "phone_number": "+1123456789"
+         "phone_number": "+1123456789",
+         "access_notes": "Gate code #1234, use side entrance"
       },
       "priority": false,
       "health_insurance_id": "33ec11aa-d8bf-4f46-950d-c9171be3c22f",

@@ -16,9 +16,10 @@ curl --request POST \
         "second_line": "14",
         "city": "Phoenix",
         "state": "AZ",
-        "zip_code": "85004",
-    }
-    "provider": "phlebfinders"
+        "zip_code": "85004"
+    },
+    "provider": "phlebfinders",
+    "appointment_notes": "Please bring photo ID"
 }
 '
 ```
@@ -144,7 +145,8 @@ fmt.Printf("Received data %s\n", response)
         "city": "Phoenix",
         "state": "AZ",
         "zip_code": "85004",
-        "unit": "14"
+        "unit": "14",
+        "access_notes": "Gate code #1234, use side entrance"
     },
     "location": {
         "lng": -112.0772235,
@@ -154,7 +156,8 @@ fmt.Printf("Received data %s\n", response)
     "provider": "phlebfinders",
     "status": "pending",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
-    "can_reschedule":false
+    "can_reschedule":false,
+    "appointment_notes": "Please bring photo ID"
 }
 ```
 </ResponseExample>
