@@ -1142,7 +1142,8 @@
                   "sense/query-dsl/select-clause",
                   "sense/query-dsl/group-by-clause",
                   "sense/query-dsl/where-clause",
-                  "sense/query-dsl/sleep-analysis"
+                  "sense/query-dsl/sleep-analysis",
+                  "sense/query-dsl/readiness-scores"
                 ]
               },
               {
@@ -1364,6 +1365,7 @@
   "navbar": {
     "links": [
       {
+        "label": "GitHub",
         "type": "github",
         "href": "https://github.com/tryVital"
       }

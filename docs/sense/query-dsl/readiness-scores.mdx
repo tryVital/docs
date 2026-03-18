@@ -1,0 +1,191 @@
+---
+title: Readiness Scores
+description: Daily recovery, stress, and strain scores
+icon: bed
+---
+
+## Overview
+
+Readiness Scores give you a daily signal for how prepared a user is to take on load, based on their recent sleep and overnight physiology. This helps you track recovery trends, identify rising stress or strain, and understand whether sleep patterns are supporting day-to-day performance.
+
+The `derived_readiness` table returns one row per user and calendar day with:
+
+- `sleep_score`
+- `recovery_score` and `recovery_zone`
+- `stress_score`
+- `strain_score` and `strain_zone`
+- `chronotype`
+
+Junction Sense computes these metrics for you, so you can query readiness directly without building custom scoring pipelines.
+
+## What you can do
+
+- Pull one scored row per day for charting or downstream analytics.
+- Filter for specific cohorts (for example, low recovery or high strain days).
+- Group and aggregate scores like any other table.
+
+<Note>
+`DerivedReadiness.index()` is a synonym of `DerivedReadiness.col("date")`.
+</Note>
+
+## How calculations work
+
+Readiness Scores are computed from each user's daily **long sleep** session using:
+
+- sleep duration
+- resting heart rate during sleep
+- HRV during sleep
+- Junction sleep score
+
+### Baseline and warm-up
+
+- Recovery and stress are personalized against a rolling baseline from prior nights.
+- Baseline window is 21 days, with a minimum of 7 prior observations.
+- Before enough history exists, `recovery_score`, `stress_score`, and `strain_score` can be `null`.
+
+### Recovery score (0-100)
+
+Recovery combines three signals:
+
+- HRV relative to personal baseline (higher is better)
+- resting heart rate relative to baseline (lower is better)
+- sleep duration relative to an 8-hour target
+
+The combined signal is mapped to a `0-100` scale with a logistic curve.  
+Higher `recovery_score` means better readiness.
+
+### Stress score (0-100)
+
+Stress is the inverse of recovery:
+
+- `stress_score = 100 - recovery_score`
+
+Higher `stress_score` means greater physiological stress burden.
+
+### Strain score (0-21)
+
+Strain combines:
+
+- **recovery load** (how far recovery is below a neutral threshold), and
+- **sleep load** (sleep debt relative to 8 hours).
+
+These are combined and exponentially scaled to a `0-21` score.  
+Higher `strain_score` means greater expected load/strain.
+
+### Missing-data behavior
+
+- Missing HRV or resting heart rate: `recovery_score` and `stress_score` are `null`.
+- Missing sleep duration: `strain_score` is `null`.
+- `sleep_score` is returned when available.
+
+<Note>
+This section describes the current Readiness model. If you need deeper methodology details for your use case, contact the Junction team.
+</Note>
+
+## Available columns and meanings
+
+| Column | Meaning |
+| --- | --- |
+| `date` | Daily index (`YYYY-MM-DD`). |
+| `chronotype` | Daily chronotype category from sleep timing patterns. |
+| `sleep_score` | Sleep quality score (`0-100`), where higher is better sleep quality. |
+| `recovery_score` | Readiness score (`0-100`), where higher means better recovery readiness. |
+| `recovery_zone` | Recovery band: `Red` (`0-33`, low), `Amber` (`34-66`, moderate), `Green` (`67-100`, high). |
+| `stress_score` | Stress score (`0-100`), where higher means higher physiological stress load. |
+| `strain_score` | Daily strain (`0-21`), where higher means greater combined sleep/recovery load. |
+| `strain_zone` | Strain band: `Low` (`0-6`), `Moderate` (`7-13`), `High` (`14-17`), `Very High` (`18-21`). |
+
+## Example: Select daily scores
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.DerivedReadiness.col("date"),
+    va.DerivedReadiness.col("sleep_score"),
+    va.DerivedReadiness.col("recovery_score"),
+    va.DerivedReadiness.col("stress_score"),
+    va.DerivedReadiness.col("strain_score"),
+    va.DerivedReadiness.col("recovery_zone"),
+    va.DerivedReadiness.col("strain_zone"),
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "derived_readiness": "date" },
+    { "derived_readiness": "sleep_score" },
+    { "derived_readiness": "recovery_score" },
+    { "derived_readiness": "stress_score" },
+    { "derived_readiness": "strain_score" },
+    { "derived_readiness": "recovery_zone" },
+    { "derived_readiness": "strain_zone" }
+  ]
+}
+```
+</CodeGroup>
+
+## Example: Weekly aggregates
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.DerivedReadiness.col("recovery_score").mean(),
+    va.DerivedReadiness.col("stress_score").mean(),
+    va.DerivedReadiness.col("strain_score").max(),
+).group_by(
+    va.date_trunc(va.DerivedReadiness.index(), 1, "week")
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "derived_readiness": "recovery_score" } },
+    { "func": "mean", "arg": { "derived_readiness": "stress_score" } },
+    { "func": "max", "arg": { "derived_readiness": "strain_score" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "week" },
+      "arg": { "index": "derived_readiness" }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+## Example: Filter for high-strain days
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.DerivedReadiness.col("date"),
+    va.DerivedReadiness.col("strain_score"),
+    va.DerivedReadiness.col("strain_zone"),
+    va.DerivedReadiness.col("recovery_score"),
+).where(
+    "strain_score >= 14"
+)
+```
+
+```python JSON DSL
+{
+  "select": [
+    { "derived_readiness": "date" },
+    { "derived_readiness": "strain_score" },
+    { "derived_readiness": "strain_zone" },
+    { "derived_readiness": "recovery_score" }
+  ],
+  "where": "strain_score >= 14"
+}
+```
+</CodeGroup>
