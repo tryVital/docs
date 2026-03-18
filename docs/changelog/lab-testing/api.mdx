@@ -2,6 +2,25 @@
 title: "API"
 ---
 
+### Custom Comments on Requisitions (Mar 2026)
+
+You can now add clinical comments during order creation that are forwarded to the lab requisition. Comments can also be configured as defaults on a per-lab-account basis.
+
+<Accordion title="Details" defaultOpen icon="comment-medical" iconType="duotone">
+  ## How It Works
+
+  - **Order-level comments** – Provide free-text clinical context (up to 1,000 characters) when creating an order through the Dashboard or the API.
+  - **Lab-account defaults** – Configure default clinical notes on a lab account. These are automatically included on every order placed under that account.
+  - **Merging behavior** – When both order-level and lab-account-level comments are present, they are concatenated on the requisition.
+
+  ## Supported Labs
+
+  - Quest
+  - Sonora Quest
+  - Labcorp
+  - BioReference
+</Accordion>
+
 ### Lab Report Parsing API (Feb 2026)
 
 Introducing the Lab Report Parsing API – extract structured biomarker data from lab report files and match results to standardized LOINC codes.
