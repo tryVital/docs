@@ -1,0 +1,230 @@
+---
+title: "Continuous Query Overview"
+---
+
+[Continuous Query](https://docs.junction.com/api-reference/horizon-ai/aggregation/using-continuous-query) automatically transforms raw activity and biometric data from 300\+ connected devices into structured, aggregated datasets that update as new data arrives. Instead of building complex data pipelines or repeatedly polling APIs, you define your query once and Junction handles the rest—from data ingestion and aggregation to intelligent scheduling and delivery.
+
+## How It Works
+
+Continuous Query runs your Junction Sense Queries automatically across all users in your team. When new data arrives from connected devices—whether via cloud providers or [mobile SDKs](https://docs.junction.com/wearables/sdks/vital-health)—Junction intelligently schedules query re-evaluation and pushes any changes to your configured destinations.
+
+### Key Capabilities
+
+<Columns cols={2}>
+  <Column>
+    <Card title="Automatic Evaluation" icon="bolt-auto">
+      Queries run automatically on all existing and new users in your team, eliminating manual execution
+    </Card>
+
+    <Card title="Push Delivery" icon="box-check">
+      Result changes are pushed to your webhook or ETL pipeline destinations—no polling required
+    </Card>
+  </Column>
+  <Column>
+    <Card title="Intelligent Scheduling" icon="timer">
+      Junction monitors data connections and schedules queries in response to new data points or updates
+    </Card>
+
+    <Card title="Pull Access" icon="arrow-down-to-bracket">
+      Query the latest result table through the [API](https://docs.junction.com/api-reference/horizon-ai/continuous-query/get-result-table) anytime                                                     
+    </Card>
+  </Column>
+</Columns>
+
+## Common Use Cases
+
+<Accordion title="Health Monitoring & Reporting">
+  Track key health metrics over time to power patient dashboards, clinical insights, or wellness reports.
+
+  **Example: Daily Sleep Analysis**
+
+  - Analyze sleep efficiency, scores, and chronotype for primary sleep sessions
+  - Filter for long sleep periods to focus on nighttime rest
+  - Monitor quality trends across consecutive nights
+  - [View example →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples#daily-main-sleep-session-analysis)
+
+  **Example: Weekly Activity Summaries**
+
+  - Calculate average resting heart rate and active duration
+  - Track maximum daily calorie burn and minimum step counts
+  - Group activity data by week for trend analysis
+  - [View example →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples#weekly-insights-into-users-activity)
+</Accordion>
+
+<Accordion title="Continuous Glucose Monitoring">
+  Support diabetes management and metabolic health tracking with automated CGM data aggregation.
+
+  **Example: First Glucose Reading of Each Day**
+
+  - Capture fasting glucose values (first measurement per day)
+  - Group by data source and provider for device comparison
+  - Track morning glucose patterns over time
+  - [View example →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples#first-glucose-measurement-of-the-day-grouped-by-source-type-and-provider)
+
+  **Example: Daily Summaries of Metabolites**
+
+  - Calculate mean glucose levels throughout the day
+  - Combine with heart rate, HRV, and temperature data
+  - Analyze multi-metric patterns by device source
+  - [View example →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples#daily-aggregations-of-select-timeseries-datapoints-grouped-by-source-type-and-provider)
+</Accordion>
+
+<Accordion title="Fitness & Performance Tracking">
+  Power adaptive training programs with continuously updated workout and activity metrics.
+
+  **Example: Weekly Workout Statistics**
+
+  - Track calorie expenditure ranges (min/max) across workouts
+  - Monitor heart rate zone distribution for training intensity
+  - Aggregate distance and active duration metrics
+  - [View example →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples#weekly-insights-into-workout-statistics)
+
+  **Use case highlights:**
+
+  - Real-time metric tracking for goal progress
+  - Device-specific analysis to handle data from multiple sources
+  - Webhook integration for triggering adaptive training plans
+  - Historical trend data for personalized coaching
+</Accordion>
+
+<Accordion title="Longitudinal Research Studies">
+  Support research protocols requiring consistent, automated data collection across participants.
+
+  **Use case highlights:**
+
+  - Automatic data aggregation for all enrolled participants
+  - Consistent time-window grouping (daily, weekly, monthly)
+  - Event notifications when new data becomes available
+  - Result tables compatible with research analysis tools
+  - Source-level granularity for data quality assessment
+</Accordion>
+
+<Accordion title="Population Health Analytics">
+  Analyze health trends across user populations for public health initiatives or employer wellness programs.
+
+  **Use case highlights:**
+
+  - Scalable aggregation across thousands of users
+  - Standardized metrics despite diverse device ecosystems
+  - Automated daily/weekly rollups for reporting dashboards
+  - ETL pipeline integration for data warehouses
+</Accordion>
+
+## Supported Data Sources
+
+Continuous Query works with the following health data resources:
+
+- **Activity** - Steps, calories, distance, active duration, resting heart rate
+- **Sleep** - Duration, stages, efficiency, scores, heart rate during sleep, sleep type filtering
+- **Workout** - Exercise sessions, heart rate zones, distance, duration, calories
+- **Body** - Weight, BMI, body fat percentage, temperature
+- **Meal** - Nutritional intake, macros, timing
+- **Time Series** - Continuous measurements including heart rate, glucose, HRV, steps, body temperature
+
+Each query focuses on a single data resource, ensuring clean schemas and optimal performance. For multi-resource analysis, create separate queries and join results in your application layer.
+
+[View complete data resource documentation →](https://docs.junction.com/wearables/providers/resources)
+
+## Query Capabilities
+
+### Time-Based Aggregation
+
+Group data by day, week, month, or other time periods to create time-series datasets:
+
+- Daily summaries for dashboards and trend visualization
+- Weekly rollups for progress tracking
+- Monthly aggregations for longitudinal analysis
+
+### Flexible Metrics
+
+Calculate meaningful insights using built-in [aggregation functions](https://docs.junction.com/api-reference/horizon-ai/aggregation/query-dsl/select-clause#aggregate-a-table-column):
+
+- **Mean/Average** - Average sleep efficiency, resting heart rate, glucose levels
+- **Sum** - Total steps, cumulative calories
+- **Min/Max** - Lowest/highest values in a period
+- **Standard Deviation** - Variability in metrics
+- **Newest/Oldest** - Most recent or first value (useful for fasting glucose, chronotype)
+
+### Multi-Dimensional Grouping
+
+Organize data across multiple dimensions for richer analysis:
+
+- Time periods (day, week, month)
+- Data sources (provider, device type)
+- Custom fields (workout type, sleep type)
+
+[View complete grouping reference →](https://docs.junction.com/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression)
+
+### Source Prioritization
+
+When users connect multiple devices, Junction's source prioritization ensures data quality:
+
+- Configure team-level provider priorities
+- Override priorities at the query level for experiments
+- Optionally split results by data source for comparative analysis
+
+### Filtering & Refinement
+
+Use WHERE clauses to focus on specific data subsets:
+
+- Filter for main sleep sessions (`type = 'long_sleep'`)
+- Target specific workout types or activity levels
+- Isolate data from particular device sources
+
+## Getting Started
+
+**Step 1: Define Your Query**
+
+Use the [Query DSL](https://docs.junction.com/api-reference/horizon-ai/aggregation/query-dsl/) to specify what data to aggregate, how to group it, and which metrics to calculate
+
+**Step 2: Validate the Query**
+
+Use the Junction Dashboard Query Editor to preview and validate the result table schema and catch any issues before creation
+
+**Step 3: Deploy Query**
+
+Deploy your query using the [create endpoint](https://docs.junction.com/api-reference/horizon-ai/continuous-query/create) or by saving your query in the Junction Dashboard
+
+**Step 4: Configure Delivery**
+
+Set up webhooks or ETL pipelines to receive result updates automatically
+
+[Jump to Getting Started Guide →](https://docs.junction.com/api-reference/horizon-ai/aggregation/using-continuous-query)
+
+## Query API vs. Continuous Query
+
+Both use the same Query DSL, making it easy to prototype with Query API and deploy to production with Continuous Query.
+
+[Compare in detail →](https://docs.junction.com/api-reference/horizon-ai/aggregation/overview#query-api-and-continuous-query)
+
+| _Feature_ | _Query API_ | _Continuous Query_ |
+| :-- | :-- | :-- |
+| **Execution** | On-demand, single request | Automatic, continuous evaluation |
+| **Scope** | Single user, point-in-time | All team users, ongoing |
+| **Delivery** | Synchronous API response | Webhooks, ETL pipelines, API pull |
+| **Best For** | Experimentation, ad-hoc analysis | Production workflows, monitoring |
+| **Use When** | Testing queries, exploring data | Building features, generating reports |
+
+## What's Next?
+
+[Manage Queries Using Junction Dashboard](/sense/managing-queries)
+
+**View Example Queries**
+
+- Copy-paste examples for sleep, activity, glucose, and workout queries
+- [Browse examples →](https://docs.junction.com/api-reference/horizon-ai/aggregation/examples)
+
+**Getting Started Guide**
+
+- Step-by-step tutorial to create your first Junction Sense query
+- [Get started →](https://docs.junction.com/api-reference/horizon-ai/continuous-query/getting-started)
+
+**Query DSL Reference**
+
+- Complete reference for building queries with available functions and constraints
+- [Read documentation →](https://docs.junction.com/api-reference/horizon-ai/aggregation/query-dsl/)
+
+**API Endpoints**
+
+- Create, manage, and retrieve results from your Continuous Queries
+- [View API reference →](https://docs.junction.com/api-reference/horizon-ai/continuous-query/create)
