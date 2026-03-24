@@ -104,7 +104,7 @@ exposed as a **password provider**:
 
   <Step number="3" title="Handle the multi-factor authentication request">
   The [Link Password Provider](/api-reference/link/link-password-provider) endpoint responds with `state: "pending_provider_mfa"`,
-  alongside the MFA method being used, as well as a MFA hint.
+  alongside the MFA method being used, as well as an MFA hint.
 
   This means the user must complete multi-factor authentication before Junction can establish the connection. You should prompt the user
   to input the verification code they received out-of-band.
