@@ -4,7 +4,7 @@ description: "Use value macro expressions for sleep analysis in Junction Sense q
 icon: moon
 ---
 
-Macros are precomputed fields available in the Vital Aggregation DSL. Use them anywhere you would use a regular column expression.
+Macros are precomputed fields available in the Junction Sense DSL. Use them anywhere you would use a regular column expression.
 Reference a macro with the `value_macro` expression:
 
 <CodeGroup>
@@ -73,7 +73,7 @@ import vitalx.aggregation as va
 va.select(
     va.Sleep.chronotype().latest()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 
@@ -107,7 +107,7 @@ import vitalx.aggregation as va
 va.select(
     va.Sleep.score().mean()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 
@@ -144,7 +144,7 @@ va.select(
     va.Sleep.asleep_at().mean(),
     va.Sleep.awake_at().mean()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 

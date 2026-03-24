@@ -27,7 +27,7 @@ Each message is retried according to the following fixed schedule after a failed
 
 ## Indicating successful delivery
 
-The way to indicate that a webhook has been processed is by returning a `2xx` (status code `200-299`) response to the webhook message within a reasonable time-frame (15s). Any other status code, including `3xx` redirects are treated as failures.
+The way to indicate that a webhook has been processed is by returning a `2xx` (status code `200-299`) response to the webhook message within a reasonable time-frame (15s). Any other status code, including `3xx` redirects, are treated as failures.
 
 ## Failed delivery handling
 
