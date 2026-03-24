@@ -9,7 +9,7 @@ In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with 
 as an individual user in your Team. The app installation would be granted only Junction API access
 scoped to that specific user.
 
-Instead of hardcoding a [Junction Team API Key](#vital-api-keys), your app would request your own backend to generate
+Instead of hardcoding a [Junction Team API Key](#junction-team-api-keys), your app would request your own backend to generate
 a **Junction Sign-In Token** for the user, through your own API authentication and authorization systems.
 
 In this model, your Junction Team API Keys are kept strictly as a server-side secret.
@@ -164,7 +164,7 @@ to exchange for the token secrets it needs.
       this Junction user.
 
     <Note>
-    Only this step would use a [Junction Team API Key](/api-details/authentication). Because this step happens in your
+    Only this step would use a [Junction Team API Key](/api-details/junction-api#authentication). Because this step happens in your
     backend service, this enables you to keep the Junction Team API Key strictly as a server-side secret.
     </Note>
 
