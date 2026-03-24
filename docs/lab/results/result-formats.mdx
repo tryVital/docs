@@ -104,7 +104,7 @@ Results can fall into one of the following categories:
 
     This type is used for specialized tests like the Galleri multi-cancer early detection test. See the [Galleri Results](/lab/results/galleri-results) documentation for detailed information.
 
-<Warning>The `value` field in deprecated and will eventually be removed.</Warning>
+<Warning>The `value` field is deprecated and will eventually be removed.</Warning>
 
 #### Interpretation
 
@@ -230,7 +230,7 @@ In order to obtain this data, you can use the following endpoints:
 
 2. [GET /v3/lab_tests/\{id\}/markers](/api-reference/lab-testing/lab-test-markers)
 
-    This allows you to see all markers associated with a lab test and it's expected results.
+    This allows you to see all markers associated with a lab test and its expected results.
 
 #### Source Markers
 
@@ -293,7 +293,7 @@ The error type is inferred from the comments received from the lab. They are to 
 
 1. `quantity_not_sufficient_failure`
 
-   The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being to unable to collect the proper volume of blood from the sample, or the phlebotomist not collecting all of the sample they were meant to collect.
+   The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being unable to collect the proper volume of blood from the sample, or the phlebotomist not collecting all of the sample they were meant to collect.
 
 2. `collection_process_failure`
    
