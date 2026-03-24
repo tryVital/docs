@@ -297,11 +297,11 @@ alter its behaviour.
 You can check if your app has already asked the user _at least once_ before, for permissions on a specific `VitalResource`.
 
 Because [Ask for Permission](#ask-user-for-health-data-permissions) are gracefully ignored by the operating system beyond
-the first time, checking before asking can help you skip the parts of your UX journey that only makes sense to users
+the first time, checking before asking can help you skip the parts of your UX journey that only make sense to users
 going through [Ask for Permission](#ask-user-for-health-data-permissions) for the first time.
 
 The only exception to this behaviour is when a `VitalResource` pulls a new data type introduced in a new OS release.
-In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in a OS permission
+In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in an OS permission
 prompt that asks for permissions on _specifically_ those new data types.
 
 If you wish
