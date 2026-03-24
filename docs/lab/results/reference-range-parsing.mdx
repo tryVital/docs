@@ -1,5 +1,6 @@
 ---
 title: "Reference Range"
+description: "Parse the reference_range string field in lab results to determine boundary inclusivity and build custom result interpretation logic."
 ---
 <Note>
 The Junction API already returns the `interpretation` field (e.g., "normal", "abnormal", "critical") in the [`BiomarkerResult`](/lab/results/result-formats#biomarkerresult) object. This documentation is intended for teams that want to build their own interpretation logic and need to parse the `reference_range` field along with `min_range_value` and `max_range_value` to determine whether results are within normal limits.
