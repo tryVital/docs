@@ -87,7 +87,7 @@ and a new `lab_account_id` parameter on the order creation endpoint lets you spe
 
 ### Idempotency of Ordering (Sep 2025)
 
-We’ve added idempotency behavior on the order endpoint, to prevent duplicate orders
+We've added idempotency behavior on the order endpoint, to prevent duplicate orders
 
 <Accordion title="Details" icon="magnifying-glass" iconType="regular">
   Check out the [documentation](/lab/overview/idempotency).
@@ -132,7 +132,7 @@ We've enhanced the Orders page with new filtering and visualization capabilities
 
 ### Introducing Panel Renaming & Archiving (May 2025)
 
-We’ve added more control to how you manage test panels.
+We've added more control to how you manage test panels.
 
 <Accordion title="Details" icon="magnifying-glass" iconType="regular">
   Now you can skip the support email and work directly in the Test Catalog to:
@@ -151,9 +151,9 @@ We’ve added more control to how you manage test panels.
 Testkit orders now support two new statuses representing problems in transit. Refer to the [lab test lifecycle documentation](/lab/workflow/lab-test-lifecycle).
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
-  We’re introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
+  We're introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
 
-  Here’s how to verify and ensure you benefit from future enhancements:
+  Here's how to verify and ensure you benefit from future enhancements:
 
   1. Look for areas in your code where you take an action based on the values of a Junction-defined enum. For example, you might have Python code like this:
 
@@ -175,8 +175,8 @@ Testkit orders now support two new statuses representing problems in transit. Re
           logger.warning(f"Unknown status received: {repr(unknown_status)}")
   ```
 
-  3. Make sure you’re running the latest version of our SDK.
-  4. You’re good to go. Once you’ve checked the code paths won’t break if Junction-defined enums start including new values, no further action is needed.
+  3. Make sure you're running the latest version of our SDK.
+  4. You're good to go. Once you've checked the code paths won't break if Junction-defined enums start including new values, no further action is needed.
 </Accordion>
 
 ### Source Marker Identification for Results (Nov 2024)
@@ -218,7 +218,7 @@ It is now possible to verify lab PSC availability in regards to a zip code, radi
   Check out the [Patient Service Center](/lab/walk-in/locations) documentation.
 </Accordion>
 
-### Create Lab Tests With Provider IDs  (Jun 2024)
+### Create Lab Tests With Provider IDs (Jun 2024)
 
 It is now possible to create lab tests using the Laboratory's unique provider id.
 This allows payloads to be shared across sandbox and production.
@@ -227,7 +227,7 @@ This allows payloads to be shared across sandbox and production.
   Check out the [Create a Lab Test](/lab/workflow/create-test) documentation.
 </Accordion>
 
-### Ask on Order Entry (AOE)  (Jun 2024)
+### Ask on Order Entry (AOE) (Jun 2024)
 
 You can now order panels with AOE requirements via the API.
 

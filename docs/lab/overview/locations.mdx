@@ -68,8 +68,8 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 
 The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoints as:
 
-- `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction’s API.
-- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction’s API.
+- `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction's API.
+- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction's API.
 
 If neither scheduling capability is present, that means the PSC either does not offer appointment scheduling, or its scheduling availability is unknown.
 
