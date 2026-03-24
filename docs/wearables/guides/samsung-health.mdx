@@ -1,0 +1,600 @@
+---
+title: "Samsung Health"
+---
+
+Samsung Health is an SDK-based provider. Your Android consumer app would embed the Junction Mobile SDKs on a supported
+stack. Data are then pulled from the Samsung Health data store on the user's Android device.
+
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Junction Health SDK](/wearables/sdks/vital-health) guides for SDK installation
+instructions and general API usage. This guide contains information on the behaviour and required configuration
+specific to the Samsung Health integration.
+
+<Card title="Mobile SDK Installation" icon="helmet-safety" href="/wearables/sdks/installation" horizontal>
+Learn about the minimum runtime and build-time requirements of Junction Mobile SDKs, and how to add them into
+your project through your package dependency manager.
+</Card>
+
+<Card title="Junction Health SDK" icon="heart" iconType="solid" href="/wearables/sdks/vital-health" horizontal>
+Learn about the initial setup required by Junction Health SDK, and the API exposed by Junction Health SDK
+for managing and inspecting health data permissions and automatic data sync.
+</Card>
+
+## Getting Started
+
+To enable this integration, you would need to integrate [Junction Core SDK](/wearables/sdks/vital-core) and
+[Junction Health SDK](/wearables/sdks/vital-health) into your Native Android or React Native mobile app.
+
+<Steps>
+
+<Step title="Add Junction SDKs as dependencies">
+Review the [installation requirements and package installation instructions](/wearables/sdks/installation).
+</Step>
+
+<Step title="Samsung Developer Program enrollment and project setup">
+Before you can build against Samsung Health, you need a Samsung account, Samsung Developer Program enrollment, and the
+Samsung Health Data SDK AAR. Follow the [Samsung Health project setup](#samsung-health-project-setup) section below.
+</Step>
+
+<Step title="Integrate with Junction Mobile SDK Authentication">
+Follow the [SDK Authentication](/wearables/sdks/authentication) guidance to integrate your app with the authentication
+mechanism of Junction Core SDK.
+</Step>
+
+<Step title="Configure Health SDK and ask user for read permissions">
+Follow the [Junction Health SDK](/wearables/sdks/vital-health) guidance to
+[configure the Health SDK](/wearables/sdks/vital-health#sdk-configuration) and to
+[ask for health data read permissions](/wearables/sdks/vital-health#ask-user-for-health-data-permissions) from your user.
+
+<Note>
+Health data sync is activated only on `VitalResource`s which you have asked permissions from your user for. If you
+did not ask for permissions, data sync would not occur.
+
+Samsung Health is read-only through Junction Health SDK. Do not request write permissions or use the write APIs with
+`samsung_health`.
+</Note>
+</Step>
+
+<Step title="[Optional] Customize the Foreground Service notification">
+Follow the [Running as Foreground Service](#running-as-foreground-service) guidance below to
+customize the Foreground Service notification which may be shown by the Android OS during
+any prolonged health data sync attempts.
+</Step>
+
+<Step title="[Optional] Configure Background Sync">
+Follow the [Background Sync](#background-sync) guidance below to
+configure regular background sync.
+</Step>
+
+</Steps>
+
+## Samsung Health constraints
+
+### Testing internally
+
+❌ You cannot test the integration in an Android emulator, since Samsung Health is not available for emulators.
+
+✅ You can test the integration on an Android device you control through the [Samsung Health Developer Mode](https://developer.samsung.com/health/data/guide/developer-mode.html).
+
+
+### Going Production
+
+Before shipping Samsung Health support to production, you must have obtained for partnership approval through
+the [Samsung Health development process](https://developer.samsung.com/health/android/data/guide/process.html).
+
+
+The permission request flow will abort for your app, until:
+
+1. Your partnership request has been approved by Samsung; AND
+2. Their developer support team has added your app signing key signature to the allowlist.
+
+Check the Android app logs and see if you encounter this exception:
+
+```
+java.lang.IllegalStateException: Could not get policy for {PACKAGE_NAME}
+```
+
+If you do, that means your app signing key has yet to be included in the allowlist. You should get in touch with
+[Samsung Developer Support](https://developer.samsung.com/dashboard/business) through your Samsung business account.
+
+
+## Samsung Health project setup
+
+Samsung distributes the Samsung Health Data SDK as an AAR, and the partnership and support flows are hosted on
+Samsung Developer.
+
+Before integrating Samsung Health:
+
+1. Create a Samsung account and sign in on Samsung Developer Dashboard.
+2. Enroll in the Samsung Developer Program and review Samsung Health's current onboarding and partnership requirements.
+3. Download the Samsung Health Data SDK AAR from the official [Samsung Health Data SDK page](https://developer.samsung.com/health/data).
+4. Add the downloaded AAR to your repository, for example at `android/vendor/samsung-health-data-api-1.0.0.aar`.
+
+Then point your app project at the downloaded AAR using one of the setups below.
+
+<Tabs>
+<Tab title="Native Android / Bare RN">
+
+For Native Android and bare React Native host apps, configure the Android root project so the Vital Samsung Health
+integration can resolve the downloaded AAR.
+
+Add the AAR path to your Android root `gradle.properties`:
+
+```properties android/gradle.properties
+samsungHealthAarPath=vendor/samsung-health-data-api-1.0.0.aar
+```
+
+Apply the Samsung Health settings plugin in your Android root `settings.gradle`:
+
+```groovy android/settings.gradle
+pluginManagement {
+  repositories {
+    gradlePluginPortal()
+    google()
+    mavenCentral()
+  }
+}
+
+plugins {
+  id 'io.tryvital.shealth-settings-plugin' version '5.0.0'
+}
+```
+
+Apply the Samsung Health project plugin in your Android root `build.gradle`:
+
+```groovy android/build.gradle
+plugins {
+  id 'io.tryvital.shealth-project-plugin' version '5.0.0' apply false
+}
+
+apply plugin: 'io.tryvital.shealth-project-plugin'
+```
+
+<Note>
+Use the same plugin version as your `io.tryvital:vital-samsung-health` dependency. The `samsungHealthAarPath`
+value is resolved relative to the Android root project.
+</Note>
+
+</Tab>
+
+<Tab title="Expo / React Native">
+
+Use the bundled Expo config plugin and point `samsungHealth.aarPath` at the downloaded AAR:
+
+```json app.json/app.config.js
+{
+  "expo": {
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "minSdkVersion": 29
+          }
+        }
+      ],
+      "@tryvital/vital-core-react-native",
+      [
+        "@tryvital/vital-health-react-native",
+        {
+          "samsungHealth": {
+            "aarPath": "../vendor/samsung-health-data-api-1.0.0.aar"
+          }
+        }
+      ]
+    ]
+  }
+}
+```
+
+<Note>
+After making changes to the Expo config plugin settings, re-run Expo Prebuild so the native Android project is
+re-generated with the new Samsung Health configuration.
+</Note>
+
+</Tab>
+</Tabs>
+
+## Prepare your app architecture
+
+<Warning>Non-compliance with the guidelines below may result in Samsung Health permission flow failing to launch on specific Android OS versions.</Warning>
+
+<Tabs>
+<Tab title="Native Android">
+
+When requesting permission using the `ActivityResultContract` created by Junction Health `createPermissionRequestContract()`, you must launch
+the contract using AndroidX Activity Result API.
+
+</Tab>
+
+<Tab title="React Native">
+
+The `MainActivity` of your Android host app project must be augmented with either of the two options below:
+
+1. Subclassing `VitalHealthReactActivity` provided by the Junction Health SDK `com.vitalhealthreactnative` package, instead of the default `ReactActivity`.
+
+2. Overriding `onRequestPermissionsResult(...)` so as to manually propagate permission request results to the Junction Health SDK.
+
+```kotlin
+// MainActivity in your host app project
+open class MainActivity: ReactActivity() {
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+    // Propagate permission flow results to Junction Health SDK.
+    VitalHealthReactNativeModule.onRequestPermissionsResult(
+      this.reactInstanceManager,
+      requestCode,
+      permissions,
+      grantResults
+    )
+  }
+}
+```
+
+The guidance above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
+which breaks the AndroidX Activity Result API required by Junction Health SDK on Android.
+
+</Tab>
+</Tabs>
+
+## Synchronization
+
+### Sync On App Launch
+
+When your app resumes from background (i.e., having no Activity), Junction Health SDK triggers a data sync on all the resources
+to which the user has granted read permission.
+
+The SDK imposes a **2-minute** throttle on automatic data sync. This is to prevent rapid app switching from causing an
+excessive amount of data sync work being scheduled.
+
+<Info>
+Junction Health SDK relies on the [AndroidX ProcessLifecycleOwner](https://developer.android.com/reference/androidx/lifecycle/ProcessLifecycleOwner)
+to get notified of your app's resumption.
+</Info>
+
+### Running as Foreground Service
+
+<Info>You cannot opt-out of this behaviour.</Info>
+
+Samsung Health uses the same Android sync execution model as Health Connect. Junction Health SDK runs all its data sync workers
+inside a Foreground Service so longer-running sync work can continue when the user switches away from your app.
+
+Android requires every Foreground Service to [be associated with a user-visible notification](https://developer.android.com/develop/background-work/services/foreground-services#user-dismiss-notification).
+The OS typically grants a grace period of about 10 seconds before making the user aware of this notification. In other words,
+if the data sync worker completes within the grace period, no notification would be posted.
+
+You can customize it through two ways:
+
+<Tabs>
+<Tab title="Native Android">
+
+Register your custom `SyncNotificationBuilder` as soon as your app process is created. One way to ensure this is through the AndroidX Startup
+library. You can define an `Initializer` of your own that depends on the SDK `VitalSamsungHealthInitializer`.
+
+#### An example App Startup Initializer implementation
+
+```kotlin
+package com.example.app
+
+import android.content.Context
+import androidx.startup.Initializer
+import io.tryvital.vitalsamsunghealth.VitalSamsungHealthInitializer
+import io.tryvital.vitalsamsunghealth.VitalSamsungHealthManager
+
+class ExampleSyncNotificationBuilderInitializer: Initializer<Unit> {
+    override fun create(context: Context) {
+        VitalSamsungHealthManager.setSyncNotificationBuilder(ExampleSyncNotificationBuilder)
+    }
+
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf(
+        VitalSamsungHealthInitializer::class.java,
+    )
+}
+```
+
+#### An example `SyncNotificationBuilder` implementation
+
+```kotlin
+package io.tryvital.sample
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import androidx.core.app.NotificationCompat
+import io.tryvital.vitalhealthcore.model.VitalResource
+import io.tryvital.vitalsamsunghealth.SyncNotificationBuilder
+
+object ExampleSyncNotificationBuilder: SyncNotificationBuilder {
+    override fun build(context: Context, resources: Set<VitalResource>): Notification {
+        return NotificationCompat.Builder(context, createChannel(context))
+            .setContentTitle("Example Sync")
+            .setContentText("Syncing your data")
+            .setOngoing(true)
+            .setSmallIcon(android.R.drawable.ic_popup_sync)
+            .build()
+    }
+
+    fun createChannel(context: Context): String {
+        val importance = NotificationManager.IMPORTANCE_MIN
+        val mChannel = NotificationChannel("ExampleSyncNotification", "Example Sync", importance)
+        mChannel.description = "Notifies when Example is syncing your data"
+        val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
+        return mChannel.id
+    }
+}
+```
+
+</Tab>
+
+<Tab title="React Native">
+
+Register your custom copies through `VitalHealth.setSyncNotificationContent` as early as possible in
+your React Native root component.
+
+```typescript
+import {
+  AndroidHealthProvider,
+  VitalHealth,
+} from '@tryvital/vital-health-react-native';
+
+const provider = AndroidHealthProvider.SamsungHealth;
+
+await VitalHealth.setSyncNotificationContent(
+  {
+    notificationTitle: 'Example Sync',
+    notificationContent: 'Syncing your data',
+    channelName: 'Example Sync',
+    channelDescription: 'Notifies when Example is syncing your data',
+  },
+  provider
+);
+```
+
+</Tab>
+</Tabs>
+
+## Background Sync
+
+Junction Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
+experience with Samsung Health, identical to Android Health Connect, similar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
+
+### Sync Frequency
+
+The [Sync On App Launch](#sync-on-app-launch) behaviour is always-on.
+
+When Background Sync is enabled, the SDK additionally schedules hourly sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
+
+The OS has full discretion on whether to honour or defer the time as scheduled by the Junction Health SDK. This includes the policies
+of the base Android OS, as well as any vendor-specific OS augmentation.
+
+For example, the device may enter [Doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) during device inactivity. Doze mode
+would batch and defer most Exact Alarms and other background work to run at a lower frequency.
+
+<Info>
+Not to be confused with Alarm Clock apps, **Exact Alarm** is the technical name of an Android framework for scheduling
+app wake-ups in background at certain wall clock time. It is the Junction Health SDK being silently "alarmed" in background.
+
+Your user **will not be alarmed hourly** as a result of enabling Background Sync.
+
+However, if the data sync took longer than 10 seconds, the OS might nudge them of this occurrence with a user-visible notification.
+The notification content is configurable by you — see the ["Running as Foreground Service"](#running-as-foreground-service) section for more details.
+</Info>
+
+### Runtime Permission Request
+
+Since Android 12 (API Level 31), scheduling Exact Alarm (`SCHEDULE_EXACT_ALARM`) requires a runtime permission request from the user.
+More specifically:
+
+1. The user must go through an interactive flow to grant the _"Alarms & Reminders"_ permission.
+   * This flow is also reachable through the _"Alarms & Reminders"_ section in Android Settings.
+2. The user may refuse to grant the _"Alarms & Reminders"_ permission.
+3. The user may revoke the _"Alarms & Reminders"_ permission through Android Settings at any time.
+
+Since Android 13 (API Level 33), a new mutually exclusive `USE_EXACT_ALARM` permission was introduced. This permits your app to
+schedule Exact Alarms without interactive permission requests.
+
+<Warning>
+
+`USE_EXACT_ALARM` attracts scrutiny during Google Play Store review. Per the Google Play [Exact alarm permission policy](https://support.google.com/googleplay/android-developer/answer/9888170?hl=en-GB):
+
+> USE_EXACT_ALARM is a restricted permission and apps must only declare this permission if their core functionality supports
+> the need for an exact alarm. Apps that request this restricted permission are subject to review, and those that do not meet
+> the acceptable use case criteria will be disallowed from publishing on Google Play.
+>
+> _(excerpted on 20 March 2024)_
+
+If you choose to incorporate `USE_EXACT_ALARM`, you should prepare to justify to Google Play Store:
+
+1. Why hourly background sync is quintessential to your product experience; and
+2. Why the interactive permission request required by `SCHEDULE_EXACT_ALARM` is non-optimal to your product experience.
+
+</Warning>
+
+Here is a matrix summarizing the Exact Alarm permission request requirements:
+
+| Android OS           | API Level | Requirements |
+| -------------------- | --------- | ---------------- |
+| Android 11 or below  | &lt;=30   | No interactive permission request. |
+| Android 12           | 31, 32    | `SCHEDULE_EXACT_ALARM`: Requires a runtime permission request. Revokable. |
+| Android 13 and above | &gt;=33   | App must declare either:<ul><li>`SCHEDULE_EXACT_ALARM`: Requires runtime permission request. Revokable.</li><li>`USE_EXACT_ALARM`: No interactive permission request.</li></ul> |
+
+### Updating your AndroidManifest.xml
+
+<Note>
+Samsung Health does not use the `android.permission.health.*` manifest declarations required by Health Connect.
+For Junction Health SDK, the manual manifest change required for Samsung Health Background Sync is the Exact Alarm
+permission choice below.
+</Note>
+
+Your app's AndroidManifest.xml must include the following `uses-permission` claims:
+
+<Tabs>
+    <Tab title="The SCHEDULE_EXACT_ALARM route">
+    <Note>
+    Make sure you read and understand [Runtime Permission Request](#runtime-permission-request) before moving forward.
+    This option is mutually exclusive with `USE_EXACT_ALARM` in the second tab.
+    </Note>
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest ...>
+
+        <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    </manifest>
+    ```
+    </Tab>
+    <Tab title="The USE_EXACT_ALARM route">
+    <Warning>
+    Make sure you read and understand [Runtime Permission Request](#runtime-permission-request) before moving forward,
+    especially the Google Play Store review policy surrounding the `USE_EXACT_ALARM` permission.
+    This option is mutually exclusive with `SCHEDULE_EXACT_ALARM` in the first tab.
+    </Warning>
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <manifest ...>
+
+        <uses-permission android:name="android.permission.USE_EXACT_ALARM" android:minSdkVersion="33" />
+
+        <!-- Fallback to SCHEDULE_EXACT_ALARM on API Level 31-32 -->
+        <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+
+    </manifest>
+    ```
+    </Tab>
+</Tabs>
+
+### Enabling Background Sync
+
+<Tabs>
+    <Tab title="Native Android">
+    You can enable Background Sync through `enableBackgroundSyncContract()` (an AndroidX `ActivityResultContract`).
+
+    If the runtime [requires an interactive permission request](#runtime-permission-request), this contract will launch
+    an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
+    or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
+    the contract returns `false`.
+
+    Otherwise, the contract returns `true` synchronously when no user interaction is required.
+
+    You can also inspect if Background Sync has been enabled through the `isBackgroundSyncEnabled` property.
+
+    <CodeGroup>
+    ```kotlin Android Compose
+    import androidx.activity.compose.rememberLauncherForActivityResult
+    import androidx.compose.material3.*
+    import io.tryvital.vitalsamsunghealth.VitalSamsungHealthManager
+
+    val manager: VitalSamsungHealthManager = ...
+
+    val permissionsLauncher = rememberLauncherForActivityResult(
+        manager.enableBackgroundSyncContract()
+    ) { success ->
+        Log.i("VitalBackgroundSync", "Enabled? $success")
+
+        val enabled = manager.isBackgroundSyncEnabled
+        Log.i("VitalBackgroundSync", "Enabled? $enabled")
+    }
+
+    Button(onClick = { permissionsLauncher.launch(Unit) }) {
+        Text("Enable Background Sync")
+    }
+    ```
+
+    ```kotlin AndroidX Activity Result API
+    import androidx.activity.ComponentActivity
+    import io.tryvital.vitalsamsunghealth.VitalSamsungHealthManager
+
+    val activity: ComponentActivity = ...
+    val manager: VitalSamsungHealthManager = ...
+    val contract = manager.enableBackgroundSyncContract()
+
+    activity.registerForActivityResult(contract) { success ->
+        Log.i("VitalBackgroundSync", "Enabled? $success")
+
+        val enabled = manager.isBackgroundSyncEnabled
+        Log.i("VitalBackgroundSync", "Enabled? $enabled")
+    }
+    ```
+    </CodeGroup>
+    </Tab>
+
+    <Tab title="React Native">
+    You can enable Background Sync through `enableBackgroundSync(provider)`.
+
+    If the runtime [requires an interactive permission request](#runtime-permission-request),
+    `enableBackgroundSync(provider)` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
+    The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
+
+    You can also inspect if Background Sync has been enabled through `isBackgroundSyncEnabledForProvider(provider)`.
+
+    ```typescript
+    import {
+      AndroidHealthProvider,
+      VitalHealth,
+    } from '@tryvital/vital-health-react-native';
+
+    const provider = AndroidHealthProvider.SamsungHealth;
+
+    const success = await VitalHealth.enableBackgroundSync(provider);
+    console.log('background sync enabled?', success);
+
+    const enabled = await VitalHealth.isBackgroundSyncEnabledForProvider(provider);
+    console.log('background sync enabled?', enabled);
+    ```
+    </Tab>
+</Tabs>
+
+### Disabling Background Sync
+
+<Tabs>
+    <Tab title="Native Android">
+    You can disable Background Sync through the `disableBackgroundSync()` method.
+
+    You can also inspect if Background Sync has been disabled through the `isBackgroundSyncEnabled` property.
+
+    ```kotlin
+    import io.tryvital.vitalsamsunghealth.VitalSamsungHealthManager
+    import io.tryvital.vitalsamsunghealth.disableBackgroundSync
+    import io.tryvital.vitalsamsunghealth.isBackgroundSyncEnabled
+
+    val manager: VitalSamsungHealthManager = ...
+    manager.disableBackgroundSync()
+
+    val enabled = manager.isBackgroundSyncEnabled
+    Log.i("VitalBackgroundSync", "Enabled? $enabled")
+    ```
+    </Tab>
+
+    <Tab title="React Native">
+    You can disable Background Sync through the `disableBackgroundSync(provider)` method.
+
+    You can also inspect if Background Sync has been disabled through `isBackgroundSyncEnabledForProvider(provider)`.
+
+    ```typescript
+    import {
+      AndroidHealthProvider,
+      VitalHealth,
+    } from '@tryvital/vital-health-react-native';
+
+    const provider = AndroidHealthProvider.SamsungHealth;
+
+    await VitalHealth.disableBackgroundSync(provider);
+
+    const enabled = await VitalHealth.isBackgroundSyncEnabledForProvider(provider);
+    console.log('background sync enabled?', enabled);
+    ```
+    </Tab>
+</Tabs>
+
+### Miscellaneous
+
+When you `signOut()` a user, Junction SDK will automatically disable Background Sync.

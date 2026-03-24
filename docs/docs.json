@@ -414,6 +414,7 @@
                   "wearables/guides/abbott-libreview",
                   "wearables/guides/apple-healthkit",
                   "wearables/guides/android-health-connect",
+                  "wearables/guides/samsung-health",
                   "wearables/guides/dexcom_v3",
                   "wearables/guides/dexcom",
                   "wearables/guides/fitbit",
@@ -1424,6 +1425,10 @@
     {
       "source": "/wearables/guides/apple_health_kit",
       "destination": "/wearables/guides/apple-healthkit"
+    },
+    {
+      "source": "/wearables/guides/samsung_health",
+      "destination": "/wearables/guides/samsung-health"
     },
     {
       "source": "/wearables/guides/freestyle",

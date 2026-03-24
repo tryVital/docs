@@ -3,6 +3,24 @@ title: "Provider and Resources"
 description: "Changelog of wearable provider updates including Health SDK Explicit Connect mode, sync progress logs, and provider-specific improvements."
 ---
 
+### Samsung Health via Junction Health SDK (March 2026)
+
+Junction Health SDK now supports Samsung Health as an SDK-based connection on Android phones.
+
+<Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
+Samsung Health uses the same Sync On App Launch and opt-in Background Sync model as Health Connect.
+
+On Expo and React Native, the Health SDK now accepts an optional `provider` argument throughout the entire API surface. Health Connect remains
+the default provider, so you must pass `"samsung_health"` explicitly to target Samsung Health.
+
+Check out the [Samsung Health guide](/wearables/guides/samsung-health) for the Samsung Health setup requirements and details. Check out
+the [Junction Health SDK overview](/wearables/sdks/health/overview) for documentation on the shared API surface.
+
+<Note>
+This feature is available on Android SDK 5.0.0+ and React Native SDK 6.0.0+.
+</Note>
+</Accordion>
+
 ### Health SDK: Explicit Connect mode (Sep 2025)
 
 The Health SDK now supports an opt-in **[Explicit Connect mode](https://docs.junction.com/wearables/sdks/health/connection-policies#explicit-connect-mode)**, which enables your application to
