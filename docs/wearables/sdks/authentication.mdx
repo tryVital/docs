@@ -10,7 +10,7 @@ In the _Junction Sign-In Token_ scheme, each mobile app installation signs in wi
 as an individual user in your Team. The app installation would be granted only Junction API access
 scoped to that specific user.
 
-Instead of hardcoding a [Junction Team API Key](#vital-api-keys), your app would request your own backend to generate
+Instead of hardcoding a [Junction Team API Key](#junction-team-api-keys), your app would request your own backend to generate
 a **Junction Sign-In Token** for the user, through your own API authentication and authorization systems.
 
 In this model, your Junction Team API Keys are kept strictly as a server-side secret.
@@ -282,7 +282,7 @@ to exchange for the token secrets it needs.
 API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
 API Key support is intended only for customer early evaluation in Sandbox.
 
-Use [Junction Sign-In Token](#vital-sign-in-token) whenever possible.
+Use [Junction Sign-In Token](#junction-sign-in-token) whenever possible.
 </Warning>
 
 Junction Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
@@ -385,7 +385,7 @@ This erases any persistent user session and configuration stored by the Junction
 ## Migrate from Junction Team API Keys to Junction Sign-In Tokens
 
 <Warning>
-Always use [Junction Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
+Always use [Junction Sign-In Token](#junction-sign-in-token) for your production mobile apps.
 </Warning>
 
 An existing app installation signed-in with Junction Team API Key + User ID can be seamlessly migrated to
@@ -418,8 +418,6 @@ It is as simple as performing a one-off migration logic during app launch:
     do {
       let response = await callBackend(...)
       try await VitalClient.signIn(withToken: response.signInToken)
-    }
-
       print("Signed in with Junction successfully")
     } catch let error {
       print("Error signing in with Junction", error)
