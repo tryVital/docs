@@ -42,7 +42,7 @@ in the following diagram.
 
 ## Appointment Lifecycle
 
-The appointment lifecycle is separate from the order lifecyle, and it corresponds to a single appointment.
+The appointment lifecycle is separate from the order lifecycle, and it corresponds to a single appointment.
 The possible status are defined as follows:
 
 - `pending`: An appointment was placed in the system, and is pending updates from the phlebotomy service.
@@ -93,7 +93,7 @@ asynchronous requisition creation process that may take an indeterminate amount 
   1. The Order will move through the `requisition_created`, `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
   2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-  You will receive three `labtest.order.updated` events, one each for the three Order status transition. You will also received
+  You will receive three `labtest.order.updated` events, one each for the three Order status transition. You will also receive
   a `labtest.appointment.updated` event for the Appointment status transition.
   </Step>
 </Steps>
@@ -144,18 +144,18 @@ When this feature is enabled on your Team, you can book appointments with Quest 
   1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
   2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-  You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also received
+  You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also receive
   a `labtest.appointment.updated` event for the Appointment status transition.
   </Step>
 </Steps>
 
 ### Appointment Booking Failure
 
-If an we are unable to book the Appointment asynchronously, then:
+If we are unable to book the Appointment asynchronously, then:
 
 * The Appointment will move to the `cancelled` status; and
-* There is no change to the Order, which will remain in it's last status.
+* There is no change to the Order, which will remain in its last status.
 
-### Cancellation and Reschedulling
+### Cancellation and Rescheduling
 
-Cancellation and reschedulling for Arizona should be done directly by the patient, via the email they receive from Sonora Quest. It is not possible to cancel/reschedule via Junction.
+Cancellation and rescheduling for Arizona should be done directly by the patient, via the email they receive from Sonora Quest. It is not possible to cancel/reschedule via Junction.

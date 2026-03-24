@@ -17,7 +17,7 @@ A team is associated with a region (either `EU` or `US`), the region dictates wh
 You can learn more at [regions](/api-details/regions).
 
 To create your API keys, go to the configuration section of the Dashboard.
-For each region, you'll have access to two environments Sandbox and Production.
+For each region, you'll have access to two environments: Sandbox and Production.
 We'll start in the Sandbox environment, so create a new Sandbox API key.
 
 <Note>
@@ -78,7 +78,7 @@ npm run dev
 
 When retrieving data or connecting devices, Junction will require a `user_id` as input.
 A `user_id` is a unique representation that we hold for a user. It allows you to fetch data for that user.
-To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
+To create a user, you need to pass a unique id (`client_user_id`). This represents the user in your system. Our recommendation is
 to store the Junction `user_id` in your db against the user row.
 
 <Warning>
@@ -202,7 +202,6 @@ app with Junction Link, our frontend module.
 # TEST BACKEND IMPLEMENTATION
 from vital.client import Vital
 from vital.environment import VitalEnvironment
-from vital.client import Vital
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -391,7 +390,7 @@ let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, en
 
 </CodeGroup>
 
-## 6. SDK's and Libraries
+## 6. SDKs and Libraries
 
 We offer different SDKs so you can start building your app right away:
 
