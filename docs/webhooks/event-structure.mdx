@@ -52,7 +52,7 @@ Schemas and examples are available through [the Event Catalog tab in the Webhook
 Wearable data events have the following extended standard structure:
 
 * An `event_type` field for differentiating the payload contained in the data field.
-* A `data` field, which comprises of:
+* A `data` field, which comprises:
    * The UUID of the Junction user for which this event is intended — note that this is not the `client_user_id` of the Junction user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
       * `name`: The human-readable name of the source
