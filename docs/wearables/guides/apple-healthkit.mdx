@@ -31,7 +31,7 @@ While the SDK schedules hourly data sync with Apple HealthKit, iOS has full disc
 based on factors like CPU usage, battery usage, connectivity, and Low Power Mode.
 
 In other words, the Junction SDK — or any third-party HealthKit apps — cannot guarantee the sync to happen on a strict
-schedule. The hourly schedule is advisory and non-binding from the persective of iOS. The actual delivery frequency
+schedule. The hourly schedule is advisory and non-binding from the perspective of iOS. The actual delivery frequency
 can therefore fluctuate from hourly, to once a day, or when certain opportunity arises (e.g., when Sleep Mode ends,
 or when the phone starts charging).
 
@@ -125,7 +125,7 @@ If you request write permissions, you must also specify:
 You are all set!
 
 Note that there is no need to call `syncData()` manually at all. Once you have asked the user for permission on 
-resources, sync would automatically starts every app launch, as well as whenever your app is woken up by Apple HealthKit to
+resources, sync would automatically start every app launch, as well as whenever your app is woken up by Apple HealthKit to
 respond to newly available data.
 
 <Note>

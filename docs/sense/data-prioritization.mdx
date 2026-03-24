@@ -9,8 +9,8 @@ Data prioritization automatically kicks in whenever you use a [Group By clause](
 Within each group outlined by your [Group By clause](/sense/query-dsl/group-by-clause), the query executor would **implicitly**:
 
 * Sub-group the data further by their Provider and their [Source Type](/wearables/providers/data-attributions);
-* Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-group
-  exists for the same Source Type.
+* Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-groups
+  exist for the same Source Type.
 
 <Note>
 Data prioritization works only in a [Group By](/sense/query-dsl/group-by-clause) context.
