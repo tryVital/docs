@@ -1,6 +1,6 @@
 ---
 title: "Ordering Idempotency"
-description: "Idempotent behavior on the order flow"
+description: "Use the X-Idempotency-Key header to safely retry order creation requests without creating duplicate lab test orders."
 ---
 
 The API supports idempotency for safely retrying requests without accidentally performing the same operation twice. When creating an order via the [POST /v3/order,](/api-reference/lab-testing/create-order) you can supply a `X-Idempotency-Key` header. Then, if a connection error occurs, you can safely repeat the request without risk of creating a second order.
