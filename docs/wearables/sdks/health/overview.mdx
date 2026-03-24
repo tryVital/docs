@@ -16,7 +16,7 @@ sidebarTitle: "Overview"
   </Card>
 </Note>
 
-This Junction Health SDK guidance page focuses on the inital setup and API usage of the Health SDK that is common to both
+This Junction Health SDK guidance page focuses on the initial setup and API usage of the Health SDK that is common to both
 the Apple HealthKit and Android Health Connect integration.
 
 Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
@@ -43,7 +43,7 @@ Junction Health SDK has two Connection Policy options:
 
 If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit and Health Connect
 connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
-mode more appealling.
+mode more appealing.
 
 ### iOS apps: Configure your App Delegate
 
@@ -54,11 +54,11 @@ This section applies to:
 
 This section does not apply to:
 
-* ❌ Fluter iOS apps (using Junction Flutter SDK 4.3.8 or later).
+* ❌ Flutter iOS apps (using Junction Flutter SDK 4.3.8 or later).
 
 <Note>
 Junction **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
-You need not manual edit your AppDelegate in **Flutter** iOS projects.
+You need not manually edit your AppDelegate in **Flutter** iOS projects.
 </Note>
 
 
@@ -431,7 +431,7 @@ constraints like battery power, as well as platform background execution policie
 
 In other words, your product experience should not assume near real-time availability of wearable data, since the norm
 is a variable delay ranging from an hour to a day. Longer delay is also possible due to the lack of Internet
-connectivity, e.g.,  a long-haul flight, or an off-the-grid trip.
+connectivity, e.g., a long-haul flight, or an off-the-grid trip.
 
 The only possible exception is when your product experience does involve
 **active usage** of your consumer app with an active Internet connection. For example, iOS 17+ supports third-party

@@ -161,7 +161,7 @@ Summary resources can be fetched from our `/summary/<resource>/<user_id>` API, w
 
 </Tip>
 
-For example, `Workouts` is made up of fields specific to an workout, like calories, distance and duration. When you make a request to `/summary/workouts/<user_id>` you get the following fields:
+For example, `Workouts` is made up of fields specific to a workout, like calories, distance and duration. When you make a request to `/summary/workouts/<user_id>` you get the following fields:
 
 ```json
 {
@@ -212,7 +212,7 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
 }
 ```
 
-`Heartrate` on the other hand, is a timeseries resources. You can fetch it via `timeseries/<user_id>/heartrate` and looks like this:
+`Heartrate` on the other hand, is a timeseries resource. You can fetch it via `timeseries/<user_id>/heartrate` and looks like this:
 
 ```json
 [
@@ -259,11 +259,11 @@ Different providers (e.g. Garmin), have different resources available. As an exa
 
 ## Fields by Provider
 
-Resources alone are not the whole story. Depending on the provider, a field might not be available. For example both Garmin and Strava provide `Workouts`, yet the former doesn't have `ele_high` nor `ele_low`.
+Resources alone are not the whole story. Depending on the provider, a field might not be available. For example both Garmin and Strava provide `Workouts`, yet the former doesn't have `elev_high` nor `elev_low`.
 
 <Note>
 
-Providers mark with `*` means that Junction calculates the field's value. In some cases, they might came as `null`, since we weren't able to make the calculation.
+Providers marked with `*` means that Junction calculates the field's value. In some cases, they might come as `null`, since we weren't able to make the calculation.
 
 </Note>
 

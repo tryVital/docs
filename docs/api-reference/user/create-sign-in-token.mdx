@@ -22,7 +22,7 @@ curl --request POST \
      --header 'Content-Type: application/json' \
 ```
 
-```python Python
+```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
@@ -35,7 +35,7 @@ const data = await client.user.get_user_sign_in_token(
 );
 ```
 
-```javascript Node
+```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 
