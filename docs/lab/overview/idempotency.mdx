@@ -9,6 +9,6 @@ This works by saving the resulting status code and body of the first request mad
 
 A client generates an idempotency key, which is a unique key that the server uses to recognize subsequent retries of the same request. How you create unique keys is up to you, but we suggest using V4 UUIDs, or another random string with enough entropy to avoid collisions.
 
-You can remove keys from the system automatically after they’re at least 24 hours old. We generate a new request if a key is reused after the original is pruned.
+You can remove keys from the system automatically after they're at least 24 hours old. We generate a new request if a key is reused after the original is pruned.
 
-We save results only after the execution of an endpoint begins. If incoming parameters fail validation, or the request conflicts with another request that’s executing concurrently, we don’t save the idempotent result because the API endpoint does not initiate the execution. You can retry these requests.
+We save results only after the execution of an endpoint begins. If incoming parameters fail validation, or the request conflicts with another request that's executing concurrently, we don't save the idempotent result because the API endpoint does not initiate the execution. You can retry these requests.
