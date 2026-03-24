@@ -76,7 +76,7 @@ It is expected that insurance data will become outdated or change with time. It 
 
 First, let's understand the `relationship`, `insured` and `guarantor` fields.
 
-`insured` refers to the insured person, and must always be provided. The `relationship` field, is the relationship between the patient and the holder of the insurance.
+`insured` refers to the insured person, and must always be provided. The `relationship` field is the relationship between the patient and the holder of the insurance.
 For example, if the insured person and the insurance holder are the same, then the relationship is `Self`.
 
 The `guarantor` is an optional field, that must be provided when the relationship is **NOT** `Self`. The guarantor is the financially responsible party. If provided when the relationship is `Self`, we will store it, but it may not be propagated to all lab partners, as not all partners accept a guarantor in this situation.

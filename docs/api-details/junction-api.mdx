@@ -6,7 +6,7 @@ description: "Overview of the Junction API including production and sandbox envi
 You use Junction API to:
 
 * manage users and demographics information in your Team with the [Core API](/api-reference/user/create-user);
-* manages user connections, pull ingested device data, inspect connection backfill statuses through the [Devices API](/wearables/connecting-providers/introduction);
+* manage user connections, pull ingested device data, inspect connection backfill statuses through the [Devices API](/wearables/connecting-providers/introduction);
 * order lab tests, manage appointments and pull the results through the [Lab Testing API](/lab/overview/introduction); and
 * aggregate ingested device data with the [Junction Sense API](/sense/overview);
 
@@ -32,7 +32,7 @@ If you are using a `*.tryvital.io` Base URL, they are still supported alongside 
 Sandbox environments are functionally identical to Production environments, except that:
 
 1. Each Team can have only up to 50 Users in Sandbox;
-1. You can create [Synthetic Device connections](/wearables/providers/test_data) connections; and 
+1. You can create [Synthetic Device connections](/wearables/providers/test_data); and 
 1. You can [simulate and transition an order through its lifecycle](/lab/overview/sandbox). 
 
 
@@ -41,7 +41,7 @@ Sandbox environments are functionally identical to Production environments, exce
 Junction API accepts **Team API Key**. You can provision a Team API Key through:
 
 1. the Team Config page in the [Junction Dashboard](https://app.junction.com); or
-2. the [Create Team API Key](api-reference/org-management/team-api-keys/create-team-api-key) endpoint of the
+2. the [Create Team API Key](/api-reference/org-management/team-api-keys/create-team-api-key) endpoint of the
    [Junction Management API](/api-details/junction-management-api).
 
 Your API requests should present the Team API Key under the `X-Vital-API-Key` header. For example:

@@ -77,7 +77,7 @@ va.select(
     va.Activity.col("heart_rate_resting").mean(),
     va.Activity.col("calories_total").max(),
     va.Activity.col("steps").min(),
-    va.Activity.col("duration_active_seconds").mean()
+    va.Activity.col("duration_active_second").mean()
 ).group_by(
     va.date_trunc(va.Activity.index(), 1, "week")
 ).finalize()
