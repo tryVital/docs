@@ -250,7 +250,7 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 While Workout Streams are classified as a timeseries type, it contains a huge amount of timeseries data
 which cannot be delivered by our webhook message transport.
 
-So events for Webhook Streams are shallow, with only some minimal metadata about the workout. Successful
+So events for Workout Streams are shallow, with only some minimal metadata about the workout. Successful
 reception of the event indicates that the data are available to be read via our REST API,
 e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
 

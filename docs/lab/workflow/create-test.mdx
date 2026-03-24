@@ -6,7 +6,7 @@ description: "Create custom lab tests by selecting biomarker IDs and collection 
 Junction provides a way to create your own lab tests. Lab tests are a collection or pre-set of orderable markers. These are made up of:
 
 1. One or more marker IDs or Provider IDs.
-3. The collection method: `testkit`, `walk_in_test`, `at_home_phlebotomy`, or `on_site_collection`.
+2. The collection method: `testkit`, `walk_in_test`, `at_home_phlebotomy`, or `on_site_collection`.
 
 Once a Lab Test is created and approved, you can use it when making a order.
 
@@ -63,13 +63,13 @@ client = Client(api_key, "sandbox")
 data = client.LabTests.create_test(
   name="Example test",
   description="Example test",
-  method="at_home_phlebomoty",
+  method="at_home_phlebotomy",
   provider_ids=["006056", "070085"] # or use the marker ids e.g marker_ids=[1, 2],
 )
 ```
 
 <Note>
-It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared accross environments. Not all labs provide these, so in their absence, use the marker id.
+It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared across environments. Not all labs provide these, so in their absence, use the marker id.
 </Note>
 
 Once your lab test creation is successful you will receive the following response:
@@ -80,7 +80,7 @@ Once your lab test creation is successful you will receive the following respons
     "name": "Example test",
     "description": "Example test",
     "sample_type": "serum",
-    "method": "at_home_phlebomoty",
+    "method": "at_home_phlebotomy",
     "price": 10,
     "is_active": false,
     "lab": {

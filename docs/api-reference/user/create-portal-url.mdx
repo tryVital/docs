@@ -30,7 +30,7 @@ curl --request POST \
      --data '{"context":"launch"}'
 ```
 
-```python Node
+```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
@@ -43,7 +43,7 @@ const data = await client.user.createPortalUrl(
 );
 ```
 
-```javascript Python
+```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 from vital.user import CreateUserPortalUrlBodyContext

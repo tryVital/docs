@@ -125,7 +125,7 @@ exposed as a **password provider**:
 
 ### Adding users to a Practice
 
-When integrating with Junction, you have two options: use Junction's practice, or yours. We call the latter a custom practice. Depending on the approach, you need to instruct your user's to connect their Libre account to a practice.
+When integrating with Junction, you have two options: use Junction's practice, or yours. We call the latter a custom practice. Depending on the approach, you need to instruct your users to connect their Libre account to a practice.
 
 This allows Junction to start pulling data from their account. This is done through the Libre app:
 
@@ -262,7 +262,7 @@ token_response = client.link.token(user_id="<user_id>")
 
 ```javascript Node
 const request: LinkTokenExchange = {
-    userId: "<user_id>
+    userId: "<user_id>"
 }
 const data = await client.link.token(request)
 ```
@@ -278,14 +278,14 @@ var tokenResponse = vital.link().token(request);
 
 ```go Go
 request := &vital.LinkTokenExchange{
-     UserId:   "<user_id>
+     UserId:   "<user_id>"
 }
 
 tokenResponse, err := client.Link.Token(context.TODO(), request)
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n response)
+fmt.Printf("Received data %s\n", response)
 ```
 
 </CodeGroup>
@@ -298,9 +298,9 @@ fmt.Printf("Received data %s\n response)
 
 ```python Python
 linkResponse = client.link.connect_email_auth_provider(
-  provider="freestyle_libre
-  email="<email>
-  vital_link_token=token_response.link_token
+  provider="freestyle_libre",
+  email="<email>",
+  vital_link_token=token_response.link_token,
 )
 ```
 
@@ -311,7 +311,7 @@ const linkRequest: EmailProviderAuthLink = {
 }
 
 const connectEmailResponse = await client.link.connectEmailAuthProvider(
-    "freestyle_libre
+    "freestyle_libre",
     linkRequest
 )
 ```
@@ -323,20 +323,20 @@ EmailProviderAuthLink request = EmailProviderAuthLink
         .email("<email>")
         .build();
 
-var data = vital.link().connectEmailAuthProvider("<provider request);
+var data = vital.link().connectEmailAuthProvider("<provider>", request);
 ```
 
 ```go Go
 emailAuthRequest := &vital.EmailProviderAuthLink{
   VitalLinkToken: tokenResponse.LinkToken,
-  Email:          "<email>
+  Email:          "<email>",
 }
 
-emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre emailAuthRequest)
+emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre", emailAuthRequest)
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n emailAuth)
+fmt.Printf("Received data %s\n", emailAuth)
 ```
 
 </CodeGroup>

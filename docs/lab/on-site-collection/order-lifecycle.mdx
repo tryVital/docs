@@ -25,9 +25,9 @@ possible low-level status are:
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
 - `requisition_bypassed`: An order requisition form wasn't created when the order was placed with us because it already existed.
-- `draw_completed`: The phlebotomy was completed and the blood was drawn successfuly.
+- `draw_completed`: The phlebotomy was completed and the blood was drawn successfully.
 - `partial_results`: The laboratory has started making partial results available.
 - `completed`: The laboratory processed the blood sample and final results are available.
 - `cancelled`: The order was cancelled by either the patient, Junction or you.
 
-This closely models that of walk-in tests. Refer to that [order lifecycle](/lab/walk-in/order-lifecycle#order-lifecycle) for a diagramatic explanation.
+This closely models that of walk-in tests. Refer to that [order lifecycle](/lab/walk-in/order-lifecycle#order-lifecycle) for a diagrammatic explanation.

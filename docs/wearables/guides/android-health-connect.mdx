@@ -117,7 +117,7 @@ Here is a minimum declaration example:
 
 Your app manifest (`AndroidManifest.xml`) must declare all the read or write permissions for all the data types you intend to sync.
 
-For example, if you intend to sync Blood Pressure records and Blood Glucose reocrds, your app manifest must contain the following
+For example, if you intend to sync Blood Pressure records and Blood Glucose records, your app manifest must contain the following
 `<uses-permission>` declarations:
 
 ```xml
@@ -158,7 +158,7 @@ into your AndroidManifest.xml. You need not modify your app's Manifest to enable
 
 <Info>
 Junction Health SDK can run work inside the [AndroidX WorkManager](https://developer.android.com/develop/background-work/background-tasks/persistent/how-to/long-running#declare-foreground-service-types-manifest)
-foregorund service, as well as our own `SyncOnExactAlarmService`. The merged AndroidManifest.xml of your app
+foreground service, as well as our own `SyncOnExactAlarmService`. The merged AndroidManifest.xml of your app
 would include both of them.
 </Info>
 
@@ -207,7 +207,7 @@ open class MainActivity: ReactActivity() {
 }
 ```
 
-The argumentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
+The augmentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
 which breaks the AndroidX Activity Result API required by Android Health Connect.
 
 </Tab>
@@ -367,7 +367,7 @@ vital_health.setSyncNotificationContent(vital_health.SyncNotificationContent(
 ## Background Sync
 
 Junction Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
-experience with Android Health Connect, siimlar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
+experience with Android Health Connect, similar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
 
 
 ### Sync Frequency

@@ -7,7 +7,7 @@ Lab accounts encapsulate the information needed to place orders and receive resu
 When an active lab account is linked to a Team, that Team can place orders using that lab account. A Team can have multiple lab accounts linked, even for a single lab, but an individual order must be placed with a single lab account. The [Create Order](/api-reference/lab-testing/create-order) endpoint accepts a `lab_account_id` to specify the lab account.
 
 <Warning>
-  If `lab_account_id` is not provided when placing an order, we will try to determine an appropriate lab account based on available information, but if we cannot unambigously find one lab account that should be used, we might not be able to place the order. We recommend including the `lab_account_id` when possible.
+  If `lab_account_id` is not provided when placing an order, we will try to determine an appropriate lab account based on available information, but if we cannot unambiguously find one lab account that should be used, we might not be able to place the order. We recommend including the `lab_account_id` when possible.
 </Warning>
 
 Lab accounts for an Org can be viewed using the [Get Lab Accounts (Org-level)](/api-reference/org-management/lab-accounts/get-lab-accounts) endpoint. Teams can fetch their available lab accounts using [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts). Team linkage is managed only through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint.
