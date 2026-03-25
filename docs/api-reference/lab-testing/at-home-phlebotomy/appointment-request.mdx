@@ -18,8 +18,8 @@ curl --request POST \
         "second_line": "14",
         "city": "Phoenix",
         "state": "AZ",
-        "zip_code": "85004",
-    }
+        "zip_code": "85004"
+    },
     "provider": "phlebfinders"
 }
 '
@@ -86,7 +86,7 @@ Vital vital = Vital.builder()
 
 UsAddress address = UsAddress
     .builder()
-    .firstLine("<first_line")
+    .firstLine("<first_line>")
     .city("<city>")
     .state("<state>")
     .zipCode("<zip_code>")

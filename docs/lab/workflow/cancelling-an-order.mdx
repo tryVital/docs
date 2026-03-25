@@ -158,7 +158,7 @@ const request: AppointmentCancelRequest = {
     cancellationReasonId: "<reason_id>",
 }
 
-const data = await client.labTests.cancelPhlabotomyAppointment("<order_id>", request);
+const data = await client.labTests.cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 ```java Java
@@ -176,7 +176,7 @@ AppointmentCancelRequest request = AppointmentCancelRequest
         .cancellationReasonId("<reason_id>")
         .build();
 
-var data = vital.labTests().cancelPhlabotomyAppointment("<order_id>", request);
+var data = vital.labTests().cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 ```go Go
@@ -197,7 +197,7 @@ request := &vital.AppointmentCancelRequest{
     CancellationReasonId: "<cancellation_reason_id>",
 }
 
-response, err := client.LabTests.CancelPhlabotomyAppointment(context.TODO(), "<order_id>", request)
+response, err := client.LabTests.CancelPhlebotomyAppointment(context.TODO(), "<order_id>", request)
 if err != nil {
     return err
 }
