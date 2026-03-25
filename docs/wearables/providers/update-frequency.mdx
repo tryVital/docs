@@ -24,7 +24,7 @@ In the Push model, the data provider proactively notifies Junction of any resour
 Junction goes and fetches the notified resources, compares it against what we have already ingested, and sends out the differences
 (new or updated entities) to your Webhook endpoints or ETL Pipeline destinations.
 
-While resources using the Push model typically has lower latency than polling, data providers may impose throttling, debouncing
+While resources using the Push model typically have lower latency than polling, data providers may impose throttling, debouncing
 or batching semantics on these push notifications to Junction on their end.
 </Accordion>
 <Accordion title="Polling" defaultOpen>
