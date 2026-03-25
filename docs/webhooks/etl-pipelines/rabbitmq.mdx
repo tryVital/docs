@@ -22,7 +22,7 @@ Each event is published with these RabbitMQ message custom headers:
 | Data | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
 
 <Info>
-Payload smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
+Payloads smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
 decompression of the message payload blob is necessary.
 </Info>
 
