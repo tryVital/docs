@@ -152,7 +152,7 @@ We've also added [Provider Device Created](/event-catalog/provider.device.create
 ### Detecting password expiration in password-based connections (July 2025)
 
 The [Link Password Provider endpoint](/api-reference/link/link-password-provider), the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers)
-and the [Provider Connection Error events](/event-catalog/provider.connection.error) would now report password expiration using the `provider_password_expired` error type.
+and the [Provider Connection Error events](/event-catalog/provider.connection.error) now report password expiration using the `provider_password_expired` error type.
 
 This mainly affects [Abbott LibreView patient-based connections](/wearables/guides/abbott-libreview#abbott-libreview-for-patient-based-connections).
 
@@ -299,7 +299,7 @@ With a few simple configuration steps, Continuous Query enables you to:
 
 You can now select timeseries resources in a Query:
   * For each resource, you can select all specific fields of interest.
-  * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
+  * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval, or blood pressure).
 
 Check out the [Table Column expression](/sense/query-dsl/column-expressions) documentation.
 
