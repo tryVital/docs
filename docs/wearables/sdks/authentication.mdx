@@ -254,9 +254,9 @@ to exchange for the token secrets it needs.
       try {
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Junction successfully")
+        Fimber.i("Signed in with Junction successfully")
       } catch (error) {
-        Fimble.e("Error signing in with Junction", error)
+        Fimber.e("Error signing in with Junction", error)
       }
       ```
     </CodeGroup>
@@ -473,9 +473,9 @@ It is as simple as performing a one-off migration logic during app launch:
         MyAPIResponse response = await callBackend(...);
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Junction successfully")
+        Fimber.i("Signed in with Junction successfully")
     } catch (error) {
-        Fimble.e("Error signing in with Junction", error)
+        Fimber.e("Error signing in with Junction", error)
     }
   }
   ```
