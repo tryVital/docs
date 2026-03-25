@@ -475,7 +475,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="Native Android">
     You can enable Background Sync through `enableBackgroundSyncContract()` (an AndroidX `ActivityResultContract`).
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12), this contract will launch
+    If the runtime [requires an interactive permission request](#runtime-permission-request), this contract will launch
     an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
     or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
     the contract returns `false`.
@@ -530,7 +530,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="React Native">
     You can enable Background Sync through `enableBackgroundSync()`.
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    If the runtime [requires an interactive permission request](#runtime-permission-request),
     `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
     The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
     For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
@@ -557,7 +557,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="Flutter">
     You can enable Background Sync through `enableBackgroundSync()`.
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    If the runtime [requires an interactive permission request](#runtime-permission-request),
     `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
     The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
     For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.

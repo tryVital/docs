@@ -39,8 +39,8 @@ through your Junction Customer Success manager.
 Your API requests should present the Management Key under the `X-Management-Key` header. For example:
 
 ```bash cURL
-curl --request GET
-  --url "https://api.management.junction.com/v1/org/${ORG_ID}"
+curl --request GET \
+  --url "https://api.management.junction.com/v1/org/${ORG_ID}" \
   --header 'X-Management-Key: ${YOUR_MANAGEMENT_KEY}'
 ```
 
