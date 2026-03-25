@@ -58,7 +58,7 @@ Vital vital = Vital.builder()
 
 AppointmentCancelRequest request = AppointmentCancelRequest
         .builder()
-        .cancellationReasonId("<reason_id")
+        .cancellationReasonId("<reason_id>")
         .build();
 
 var data = vital.labTests().cancelPhlabotomyAppointment("<order_id>", request);
