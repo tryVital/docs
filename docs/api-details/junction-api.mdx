@@ -47,8 +47,8 @@ Junction API accepts **Team API Key**. You can provision a Team API Key through:
 Your API requests should present the Team API Key under the `X-Vital-API-Key` header. For example:
 
 ```bash cURL
-curl --request GET
-  --url 'https://api.tryvital.io/v2/providers'
+curl --request GET \
+  --url 'https://api.tryvital.io/v2/providers' \
   --header 'X-Vital-API-Key: <YOUR-TEAM-API-KEY>'
 ```
 

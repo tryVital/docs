@@ -19,7 +19,7 @@ If you want to query all placed orders, you may use [Get Orders endpoint](/api-r
 - If `current` is provided, orders with a `null` `activate_by` date or with `activate_by` set before the current date are returned.
 - If `scheduled` is provided, orders with an `activate_by` date greater than the current date are returned.
 
-Placing a scheduled order for 6 of January of 2025 would look like this:
+Placing a scheduled order for January 6, 2025 would look like this:
 
 ```json Placing a Scheduled Order request
 {
