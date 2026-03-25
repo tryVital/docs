@@ -237,11 +237,11 @@ to exchange for the token secrets it needs.
 
       const response: MyAPIResponse
 
-      do {
+      try {
         await VitalCore.signIn(response.signInToken)
 
         console.log("Signed in with Junction successfully")
-      } catch let error {
+      } catch (error) {
         console.error("Error signing in with Junction", error)
       }
       ```
@@ -452,12 +452,12 @@ It is as simple as performing a one-off migration logic during app launch:
   const status = await VitalCore.status();
 
   if (status.includes("useApiKey")) {
-    do {
+    try {
         const response = await callBackend(...);
         await VitalCore.signIn(response.signInToken);
 
         console.log("Signed in with Junction successfully");
-    } catch let error {
+    } catch (error) {
         console.error("Error signing in with Junction", error);
     }
   }
@@ -480,4 +480,3 @@ It is as simple as performing a one-off migration logic during app launch:
   }
   ```
 </CodeGroup>
-		
