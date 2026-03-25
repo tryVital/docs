@@ -14,7 +14,7 @@ curl --request POST \
      --header 'x-vital-link-token: <VITAL-LINK-TOKEN>' \
      --data '
 {
-     "email": "test@email.com"
+     "email": "test@email.com",
      "region": "us"
 }
 '
@@ -88,7 +88,7 @@ EmailProviderAuthLink request = EmailProviderAuthLink
         .email("<email>")
         .build();
 
-var data = vital.link().connectEmailAuthProvider("<provider", request);
+var data = vital.link().connectEmailAuthProvider("<provider>", request);
 ```
 
 ```go Go
