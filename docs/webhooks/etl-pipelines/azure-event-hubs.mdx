@@ -153,7 +153,7 @@ You can do so by declaring an Event Hub Matcher that targets a Blob Storage cont
 ```
 
 <Warning>
-Some polling-based providers can write 96 writes per day per user on certain event types, e.g., `daily.data.activity.*` and
+Some polling-based providers can produce 96 writes per day per user on certain event types, e.g., `daily.data.activity.*` and
 `raw.fitbit.daily_activity_summary`. Azure Blob Storage typically charges based on volume and classes of operations, in addition
 to the retention cost.
 </Warning>

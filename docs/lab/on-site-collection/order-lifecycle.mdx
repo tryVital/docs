@@ -11,7 +11,7 @@ The **On-site Collection** orders are composed of one lifecycle, the **Order** l
 ## Order Lifecycle
 
 As discussed in [`Lab Test Lifecycle - Statuses`](/lab/workflow/lab-test-lifecycle#statuses),
-each lab testing modality has the following format
+each lab testing modality has the following format:
 
 ```[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]```
 
@@ -19,8 +19,8 @@ For on-site collections, this will look like:
 
 ```[HIGH-LEVEL STATUS].on_site_collection.[LOW-LEVEL STATUS]```
 
-For each modality, there can be multiple **low-level status**, for **On-site Collection** the
-possible low-level status are:
+For each modality, there can be multiple **low-level statuses**, for **On-site Collection** the
+possible low-level statuses are:
 
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
