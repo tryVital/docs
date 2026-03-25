@@ -89,7 +89,7 @@ fmt.Printf("Received data %s\n", response)
 ```bash cURL
 curl --request POST \
      --url https://api.tryvital.io/v3/order/testkit/ \
-     --header 'Accept: application/json'
+     --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>' \
      --data '
 {
@@ -115,7 +115,7 @@ curl --request POST \
 <ResponseExample>
 
 ```json Response
-
+{
 "order": {
     "id": "96edc6ef-3b2c-412b-b9e5-96f361f93aec",
     "team_id": "b080b20c-e162-4cf1-9c7d-8faee72ee08e",
@@ -144,7 +144,7 @@ curl --request POST \
       "method": "testkit"
     },
     "sample_id": "123456789",
-    "health_insurace_id": "7695cc28-f9e5-400d-95d2-ec7d9ec580df",
+    "health_insurance_id": "7695cc28-f9e5-400d-95d2-ec7d9ec580df",
     "notes": "This is a note",
     "created_at": "2020-01-01T00:00:00Z",
     "updated_at": "2020-01-01T00:00:00Z",
