@@ -27,7 +27,8 @@ Calling the Health SDK `connect()` or `disconnect()` methods in Auto Connect mod
 ## Explicit Connect mode
 
 <Note>
-Explicit Connect mode is available on iOS SDK 1.8.0+, Android SDK 4.2.0+, React Native SDK 5.4.0+ and Flutter SDK 4.6.0+.
+Explicit Connect mode is available on iOS SDK 1.8.0+, Android Health SDK 4.2.0+,
+React Native SDK 5.4.0+ and Flutter SDK 4.6.0+.
 </Note>
 
 A connection is created only when:
@@ -38,8 +39,8 @@ A connection is destroyed only when:
 
 * You call the Health SDK `disconnect()` method; or
 
-* You use the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider) to de-register the HealthKit or Health
-  Connect connection remotely from your backend servers.
+* You use the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider) to de-register the HealthKit,
+  Health Connect or Samsung Health connection remotely from your backend servers.
 
 <Info>
 `connect()` and `disconnect()` in Explicit Connect mode requires a call to Junction API over the Internet.
@@ -60,7 +61,7 @@ In the Explicit Connect mode:
 
 2. Your application logic has full control on when to connect and disconnect.
 
-3. You can stop data sync by de-registering HealthKit and Health Connect connection via the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider).
+3. You can stop data sync by de-registering HealthKit, Health Connect or Samsung Health connection via the [Deregister Connection endpoint](/api-reference/user/deregister-a-provider).
 
 
 ## Pausing synchronization temporarily
