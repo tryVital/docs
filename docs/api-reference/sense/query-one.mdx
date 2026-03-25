@@ -1,6 +1,6 @@
 ---
 title: Query a single user
-description: "post aggregate user query via the Junction API. Requires authentication with your team API key."
+description: "Post aggregate user query via the Junction API. Requires authentication with your team API key."
 openapi: post /aggregate/v1/user/{user_id}/query
 ---
 
@@ -17,12 +17,14 @@ in the declaration order of the query instructions.
 ```json
 {
     "results": [
-        "table": {
-            "index": [...],
-            "min": [...],
-            "max": [...],
-            "mean": [...],
-            "newest": [...]
+        {
+            "table": {
+                "index": [...],
+                "min": [...],
+                "max": [...],
+                "mean": [...],
+                "newest": [...]
+            }
         }
     ]
 }
