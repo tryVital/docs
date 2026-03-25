@@ -44,12 +44,12 @@ The `status` field can be one of the following:
     Labs can return results before all biomarkers are available.
     Junction makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
 
-    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.update` event.
+    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.order.updated` event.
 
-    This is done due to the possibility of [critical values](/lab/workflow/lab-test-lifecycle#critical-results) in the results.
+    This is done due to the possibility of [critical values](/lab/results/critical-results) in the results.
 
 2. `ResultStatus.FINAL` - The results are complete.
-    This means that all biomarkers are available, and the results are final. You will receive a `labtest.update` webhook notification for this event.
+    This means that all biomarkers are available, and the results are final. You will receive a `labtest.order.updated` webhook notification for this event.
 
 ### BiomarkerResult
 
@@ -114,7 +114,7 @@ Interpretation is a string value that can be one of the following:
 1. `Interpretation.NORMAL` - The result is within normal parameters.
 2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
 3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
-    In this case, refer to the [critical values](/lab/workflow/lab-test-lifecycle#critical-results) section.
+    In this case, refer to the [critical values](/lab/results/critical-results) section.
 
 
 #### Standardisation - LOINC
