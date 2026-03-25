@@ -166,6 +166,7 @@
                 "pages": [
                   "lab/testkits/overview",
                   "lab/testkits/order-lifecycle",
+                  "lab/testkits/status-details",
                   "lab/testkits/webhooks",
                   "lab/testkits/communications"
                 ]
