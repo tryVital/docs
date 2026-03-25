@@ -6,7 +6,7 @@ description: "Handle Ask on Order Entry (AOE) questions required for certain bio
 Some biomarkers require answers to clinical questions, this is referred to as AOE. These can be as simple as the volume of a particular marker or the patient's ethnicity.
 
 <Note>
-  Questions that are related to fasting (e.g, code `FSTING`) do not need to be answered. Junction uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
+  Questions that are related to fasting (e.g., code `FSTING`) do not need to be answered. Junction uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
 </Note>
 
 There are 4 types of AOE:
@@ -142,7 +142,7 @@ The `answer` field contains the actual answer to the question and its value will
 
 In this case, the `answer` should contain the `code` field in the list of `answers` provided, as shown [here](/lab/workflow/aoe#where-to-find-the-questions).
 
-e.g The question is as follows for marker of id `173`:
+E.g. the question is as follows for marker of id `173`:
 
 ```json
 {
@@ -200,7 +200,7 @@ This case can encompass many responses, and depends on the question itself.
   In some instances, the `text` case contains a `constraint` field. This is a string tooltip indicator of the constraints applied by the lab on this particular question.
 </Note>
 
-e.g The question is as follows for marker of id `173`:
+E.g. the question is as follows for marker of id `173`:
 
 ```json
 {
@@ -238,7 +238,7 @@ The answer is:
 
 In this case, the `answer` should be a numeric string representation of the actual value.
 
-e.g The question is as follows for marker of id `173`:
+E.g. the question is as follows for marker of id `173`:
 
 ```json
 {
