@@ -34,7 +34,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getOrderRequistionPdf("<order_id>");
+const data = await client.labTests.getOrderRequisitionPdf("<order_id>");
 ```
 
 
@@ -47,7 +47,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getOrderRequistionPdf("<order_id>");
+var data = vital.labTests().getOrderRequisitionPdf("<order_id>");
 ```
 
 ```go Go
@@ -64,7 +64,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetOrderRequistionPdf(context.TODO(), "<order_id>")
+response, err := client.LabTests.GetOrderRequisitionPdf(context.TODO(), "<order_id>")
 if err != nil {
   return err
 }
