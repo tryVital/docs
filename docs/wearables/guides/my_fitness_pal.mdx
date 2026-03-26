@@ -96,6 +96,6 @@ const user = await client.Link.connectProvider(
 
 On successful connection, you will receive:
 
-- [Connection create](/webhooks/introduction#connection-created-stage) webhook.
+- [Connection created](/webhooks/introduction#connection-created-stage) webhook.
 - [Historical Meal](/webhooks/introduction#historical-data-backfill-stage) webhook, implying that the last _2 weeks_ of data are fetched successfully.
 - [Daily webhooks](/webhooks/introduction#incremental-data-stage) `daily.data.meal.created` and `daily.data.meal.updated` are issued, as new or more up-to-date data becomes available.
