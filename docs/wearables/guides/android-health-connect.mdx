@@ -207,7 +207,7 @@ open class MainActivity: ReactActivity() {
 }
 ```
 
-The augmentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
+The augmentation above is a workaround to React Native internals' AndroidX-incompatible handling of permission request result callbacks,
 which breaks the AndroidX Activity Result API required by Android Health Connect.
 
 </Tab>
@@ -388,7 +388,7 @@ app wake-ups in background at certain wall clock time. It is the Junction Health
 
 Your user **will not be alarmed hourly** as a result of enabling Background Sync.
 
-However, if the data sync took longer than 10 seconds, the OS might nudge them of this occurrence with a user-visible notification.
+However, if the data sync took longer than 10 seconds, the OS might notify them of this occurrence with a user-visible notification.
 The notification content is configurable by you — see the ["Running as Foreground Service"](#running-as-foreground-service) section for more details.
 </Info>
 
