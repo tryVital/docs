@@ -23,15 +23,15 @@ Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle and lab t
 
 ### Summaries
 
-| Table                                 | Python DSL            | JSON DSL                    
-| ------------------------------------- | --------------------- | ----------------------------
-| Activity daily summary<br/>`activity` | `Activity.col("$1")`  | `{ "activity": "$1" }`
-| Body summary<br/>`body`               | `Body.col("$1")`      | `{ "body": "$1" }`
-| Sleep summary<br/>`sleep`             | `Sleep.col("$1")`     | `{ "sleep": "$1" }`
-| Readiness scores<br/>`derived_readiness` | `DerivedReadiness.col("$1")` | `{ "derived_readiness": "$1" }`
-| Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }`
-| Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }`
-| Profile<br/>`profile`                    | `Profile.col("$1")`   | `{ "profile": "$1" }`
+| Table                                 | Python DSL            | JSON DSL |
+| ------------------------------------- | --------------------- | ---------------------------- |
+| Activity daily summary<br/>`activity` | `Activity.col("$1")`  | `{ "activity": "$1" }` |
+| Body summary<br/>`body`               | `Body.col("$1")`      | `{ "body": "$1" }` |
+| Sleep summary<br/>`sleep`             | `Sleep.col("$1")`     | `{ "sleep": "$1" }` |
+| Readiness scores<br/>`derived_readiness` | `DerivedReadiness.col("$1")` | `{ "derived_readiness": "$1" }` |
+| Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }` |
+| Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }` |
+| Profile<br/>`profile`                    | `Profile.col("$1")`   | `{ "profile": "$1" }` |
 
 ### Column Mappings
 
@@ -231,9 +231,9 @@ Map summary resource properties to their Continuous Query column equivalents.
 
 ### Timeseries
 
-| Table                                   | Python DSL                                  | JSON DSL
-| ----------------------------------------| ------------------------------------------- | ----------------------------------------------------
-| Timeseries Resource fields              | `Timeseries.col("$1").field("$2")`          | `{ "timeseries": "$1", "field": "$2" }`
+| Table                                   | Python DSL                                  | JSON DSL |
+| ----------------------------------------| ------------------------------------------- | ---------------------------------------------------- |
+| Timeseries Resource fields              | `Timeseries.col("$1").field("$2")`          | `{ "timeseries": "$1", "field": "$2" }` |
 
 
 ## Source Column expression
@@ -248,27 +248,27 @@ If both the _Provider_ and _Source Type_ Source Columns are present in the [Grou
 the implicit [Data Prioritization](/sense/data-prioritization) behavior would be disabled.
 </Note>
 
-| Column                                | Python DSL                           | JSON DSL                           | Available in
-| ------------------------------------- | ------------------------------------ | -----------------------------------|-----------------------------
-| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables
-| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables
-| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables
-| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id" }` | Workout Stream timeseries only
-| Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only
+| Column                                | Python DSL                           | JSON DSL                           | Available in |
+| ------------------------------------- | ------------------------------------ | -----------------------------------|----------------------------- |
+| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables |
+| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables |
+| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables |
+| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id" }` | Workout Stream timeseries only |
+| Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only |
 
 ## Index Column expression
 
 Each Vital resource has a primary datetime index. Your Query Instruction can reference this datetime
 index using the special Index Column expression:
 
-| Table                                | Index                  | Python DSL          | JSON DSL                    
-| ------------------------------------ | ---------------------- | ------------------- | ----------------------------
-| Activity daily summary<br/>`activity`| Calendar date          | `Activity.index()`  | `{ "index": "activity" }`
-| Body summary<br/>`body`              | Measurement datetime   | `Body.index()`      | `{ "index": "body" }`
-| Sleep summary<br/>`sleep`            | Session end datetime   | `Sleep.index()`     | `{ "index": "sleep" }`
-| Readiness scores<br/>`derived_readiness` | Calendar date       | `DerivedReadiness.index()` | `{ "index": "derived_readiness" }`
-| Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }`
-| Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }`
+| Table                                | Index                  | Python DSL          | JSON DSL |
+| ------------------------------------ | ---------------------- | ------------------- | ---------------------------- |
+| Activity daily summary<br/>`activity`| Calendar date          | `Activity.index()`  | `{ "index": "activity" }` |
+| Body summary<br/>`body`              | Measurement datetime   | `Body.index()`      | `{ "index": "body" }` |
+| Sleep summary<br/>`sleep`            | Session end datetime   | `Sleep.index()`     | `{ "index": "sleep" }` |
+| Readiness scores<br/>`derived_readiness` | Calendar date       | `DerivedReadiness.index()` | `{ "index": "derived_readiness" }` |
+| Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }` |
+| Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }` |
 
 
 
@@ -281,7 +281,7 @@ facilitate the data grouping and aggregation as specified by your Query Instruct
 
 You can refer to these columns using the special Group Key Column expression:
 
-| Group Key Columns | Python DSL       | JSON DSL 
-| ----------------- | ---------------- | -----------------------
-| All               | `group_key("*")` | `{ "group_key": "*" }`
-| The `$N`-th key   | `group_key($N)`  | `{ "group_key": $N }`
+| Group Key Columns | Python DSL       | JSON DSL |
+| ----------------- | ---------------- | ----------------------- |
+| All               | `group_key("*")` | `{ "group_key": "*" }` |
+| The `$N`-th key   | `group_key($N)`  | `{ "group_key": $N }` |
