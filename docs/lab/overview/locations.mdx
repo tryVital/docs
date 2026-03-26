@@ -56,10 +56,10 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 </Note>
 
 
-# Booking appointments at Patient Service Centers 
+# Booking appointments at Patient Service Centers
 
 <Warning>
-  Currently only available for Quest lab locations. 
+  Currently only available for Quest lab locations.
 </Warning>
 
 ## **Appointment Scheduling Capability**
@@ -83,7 +83,7 @@ Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-sch
 
 - If you provide a zip code, a maximum of 3 PSC locations will be displayed.
 
-Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data. 
+Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data.
 
 - ⚠️ The individual start and end times are in UTC, and each location has its own `iana_timezone` key, which should be used to convert these start and end dates to the correct time zone.
 - The overarching `timezone` key will always be `null` in this endpoint.
