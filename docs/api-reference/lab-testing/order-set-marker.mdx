@@ -10,8 +10,8 @@ openapi: "POST /v3/lab_tests/list_order_set_markers"
 curl --request POST \
      --url '{{BASE_URL}}/v3/lab_tests/list_order_set_markers' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
-     --d '
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     -d '
      {
         "lab_test_ids": ["id"],
         "add_on": {
@@ -33,7 +33,7 @@ client = Vital(
 data = client.lab_tests.get_markers_for_order_set(OrderSetRequest(
     lab_test_ids=["id"],
     add_on=AddOnOrder(
-        provider_ids=["123]
+        provider_ids=["123"]
     )
 ));
 ```
