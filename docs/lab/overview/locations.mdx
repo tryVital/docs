@@ -79,7 +79,7 @@ If neither scheduling capability is present, that means the PSC either does not 
 
 ## Appointment Availability
 
-Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
+Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
 
 - If you provide a zip code, a maximum of 3 PSC locations will be displayed.
 
@@ -94,7 +94,7 @@ Note that since this endpoint can return availability for multiple PSCs, there m
   Patient Service Centers have access to the booked appointment, which can be canceled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
 </Warning>
 
-In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Junction as many times as you want.
+In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) with Junction as many times as you want.
 
 To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks.
 
