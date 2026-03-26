@@ -161,7 +161,7 @@ ImportOrderBody request = ImportOrderBody
       .physician(physician)
       .patientDetails(details)
       .patientAddress(address)
-      .sampleId("1234567890)
+      .sampleId("1234567890")
       .build();
 
 var data = vital.labTests().importOrder(request);
@@ -207,7 +207,7 @@ order_set = &vital.OrderSetRequest{
 
 physician = &vital.PhysicianCreateRequest{
       FirstName: vital.String("Jane"),
-      LastName:  vital.String("Doe),
+      LastName:  vital.String("Doe"),
       Npi:       "",
 }
 
@@ -219,7 +219,7 @@ request := &vital.ImportOrderBody{
    Physician:        physician,
    PatientDetails:   details,
    PatientAddress:   address,
-   SampleId:         vital.String("123456789),
+   SampleId:         vital.String("123456789"),
 }
 
 response, err := client.LabTests.ImportOrder(context.TODO(), request)
