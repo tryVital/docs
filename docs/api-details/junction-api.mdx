@@ -20,10 +20,10 @@ Junction provides two Sandbox environments and two Production environments today
 
 | Environment      | Base URL                                  | Team API Key Prefix    |
 | ---------------- | ----------------------------------------- | ---------------------- |
-| 🇺🇸 Production US    | `https://api.us.junction.com/`         | `pk_us_*`
-| 🇪🇺 Production EU    | `https://api.eu.junction.com/`         | `pk_eu_*`
-| 🇺🇸 Sandbox US       | `https://api.sandbox.us.junction.com/` | `sk_us_*`
-| 🇪🇺 Sandbox EU       | `https://api.sandbox.eu.junction.com/` | `sk_eu_*`
+| 🇺🇸 Production US    | `https://api.us.junction.com/`         | `pk_us_*`              |
+| 🇪🇺 Production EU    | `https://api.eu.junction.com/`         | `pk_eu_*`              |
+| 🇺🇸 Sandbox US       | `https://api.sandbox.us.junction.com/` | `sk_us_*`              |
+| 🇪🇺 Sandbox EU       | `https://api.sandbox.eu.junction.com/` | `sk_eu_*`              |
 
 <Note>
 If you are using a `*.tryvital.io` Base URL, they are still supported alongside `*.junction.com`.
@@ -62,9 +62,9 @@ However, you can manage Team API Keys through a Management Key.
 
 [Junction Mobile SDKs](/wearables/sdks/) support two authentication methods:
 
-Scheme | Authorization | Recommended use case
------- | ------------- | ---------------------
-[Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) | User-scoped access    | Production mobile apps
-[Team API Keys](/wearables/sdks/authentication#vital-api-keys)      | Full Team data access | Proof-of-concept
+| Scheme | Authorization | Recommended use case |
+| ------ | ------------- | --------------------- |
+| [Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) | User-scoped access | Production mobile apps |
+| [Team API Keys](/wearables/sdks/authentication#vital-api-keys) | Full Team data access | Proof-of-concept |
 
 Refer to the [Mobile SDK Authentication](/wearables/sdks/authentication) documentation for more information.
