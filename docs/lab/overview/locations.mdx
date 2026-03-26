@@ -66,7 +66,7 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 
 
 
-The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoints as:
+The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoints as:
 
 - `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction's API.
 - `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction's API.
@@ -79,7 +79,7 @@ If neither scheduling capability is present, that means the PSC either does not 
 
 ## Appointment Availability
 
-Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
+Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
 
 - If you provide a zip code, a maximum of 3 PSC locations will be displayed.
 
