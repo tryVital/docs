@@ -233,7 +233,7 @@ Map summary resource properties to their Continuous Query column equivalents.
 
 | Table                                   | Python DSL                                  | JSON DSL
 | ----------------------------------------| ------------------------------------------- | ----------------------------------------------------
-| Timeseries Resource fields              | `Timeseries.col("$1").field("$2")`          | `{ "timeseries": "$1", "field": "$2"}`
+| Timeseries Resource fields              | `Timeseries.col("$1").field("$2")`          | `{ "timeseries": "$1", "field": "$2" }`
 
 
 ## Source Column expression
@@ -253,7 +253,7 @@ the implicit [Data Prioritization](/sense/data-prioritization) behavior would be
 | Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables
 | Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables
 | Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables
-| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id"}` | Workout Stream timeseries only
+| Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id" }` | Workout Stream timeseries only
 | Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only
 
 ## Index Column expression
