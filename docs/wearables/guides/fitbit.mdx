@@ -30,7 +30,7 @@ Since Junction uses [UTC time basis](/wearables/providers/timestamps-and-time-zo
 time basis to the UTC time basis, before we can ingest the data and forward it onwards to you. To facilitate this
 conversion, we must make an educated guess on the user's time zone.
 
-Junction makes the best time zone guess in the following precedences:
+Junction makes the best time zone guess in the following precedence:
 
 <Steps>
     <Step number="1" title="Fitbit Profile">
@@ -47,7 +47,7 @@ Junction makes the best time zone guess in the following precedences:
     </Step>
 
     <Step number="4" title="Naively assuming UTC">
-    If none of above is available, Junction assumes naively that everything happens in UTC (+00:00).
+    If none of the above is available, Junction assumes naively that everything happens in UTC (+00:00).
 
     <Note>This is usually incorrect, except for users living in an all-year UTC (+00:00) region.</Note>
     </Step>
