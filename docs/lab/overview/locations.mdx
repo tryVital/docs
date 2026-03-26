@@ -24,7 +24,7 @@ The recommended high-level flow for verifying PSC availability at Junction is:
      ...
    }
    ```
-2. Then you can query the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint for specific information on the PSCs within the radius of the provided zip code, which will look like this:
+2. Then you can query the `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoint for specific information on the PSCs within the radius of the provided zip code, which will look like this:
 
    ```json
    {
@@ -96,7 +96,7 @@ Note that since this endpoint can return availability for multiple PSCs, there m
 
 In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Junction as many times as you want.
 
-To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks. 
+To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks.
 
 - This code is the unique identifier for the appointment at the provider and should be made available to the patient.
 - We provide it to the patient via [SMS communications](/lab/walk-in/communications) for the appointment.
