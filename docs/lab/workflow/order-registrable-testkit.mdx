@@ -15,7 +15,7 @@ This involves two steps:
   1. Ordering the Testkit.
   2. Registering a patient.
 
-After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
+After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However, it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
 
 After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `received.testkit.testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
 
