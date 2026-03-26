@@ -25,7 +25,7 @@ As an example, the status `collecting_sample.at_home_phlebotomy.appointment_sche
 
 ### High-level statuses
 
-The high-level statuses of an order, are represented by `order.status`:
+The high-level statuses of an order are represented by `order.status`:
 
 - `received`: we received the order, stored it into our system, and started processing it.
 - `collecting_sample`: these track collecting the sample from the patient. For test-kits, these track the shipment of the kit. For at-home phlebotomy and walk-in tests, these track appointment scheduling and management.
@@ -56,7 +56,7 @@ Modality specific sub-statuses are encapsulated in the `order.events` list. Thes
                 "created_at": "2022-01-01T00:00:00Z",
                 "status": "collecting_sample.testkit.transit_customer"
             },
-    ],
+        ],
 }
 ```
 

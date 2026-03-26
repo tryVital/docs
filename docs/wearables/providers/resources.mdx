@@ -51,7 +51,7 @@ Each value is associated with a half-open time interval (`[start, end[`).
 | ----------------- | --------- |
 | Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps`, `workout_duration`, `fall`, `wheelchair_push`, `stand_duration`, `stand_hour` |
 | Body              | `body_temperature`, `body_temperature_delta`, `insulin_injection`, `waist_circumference`, `body_mass_index`, `lean_body_mass`, `basal_body_temperature` |
-| Vitals            | `afib_burden`, `heart_rate_alert`, `forced_expiratory_volume_1`, `forced_vital_capacity`, `peak_expiratory_flow_rate`,  `inhaler_usage`, `heart_rate_recovery_one_minute` |
+| Vitals            | `afib_burden`, `heart_rate_alert`, `forced_expiratory_volume_1`, `forced_vital_capacity`, `peak_expiratory_flow_rate`, `inhaler_usage`, `heart_rate_recovery_one_minute` |
 | Cardiorespiratory | `vo2_max` |
 | Nutrition         | `carbohydrates`, `caffeine`, `water` |
 | Wellness          | `mindfulness_minutes`, `sleep_apnea_alert`, `sleep_breathing_disturbance`, `uv_exposure`, `daylight_exposure`, `handwashing` |
@@ -86,7 +86,7 @@ Resource | Events | Notable Providers
 `calories_active` | `daily.data.calories_active.*` | Apple, Fitbit, Garmin
 
 
-### High frequency Timeseries
+### High Frequency Timeseries
 
 Minute-level peak sampling rate; typically 100s samples per day.
 
@@ -270,7 +270,7 @@ Providers marked with `*` mean that Junction calculates the field's value. In so
 
 <Warning>
 
-Even if a field is listed for a provider, it doesn't mean it will always contain data. For example, Fitbit is capable of generating HRV data. However HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
+Even if a field is listed for a provider, it doesn't mean it will always contain data. For example, Fitbit is capable of generating HRV data. However, HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
 
 </Warning>
 
