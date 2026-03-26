@@ -34,7 +34,7 @@ We also return the parsed results in JSON format, so you can use them to generat
 
 These results are returned in a structured format, which you can find [here](/api-reference/results/get-results).
 
-<Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`</Warning>
+<Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`.</Warning>
 
 ### Result Status
 
@@ -117,12 +117,12 @@ Interpretation is a string value that can be one of the following:
     In this case, refer to the [critical values](/lab/results/critical-results) section.
 
 
-#### Standardisation - LOINC
+#### Standardization - LOINC
 
 It's possible to test the same biomarkers across different laboratories. For these to match, we use the [LOINC](https://loinc.org/) standard.
 
 In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard. Customers should use this standard, so it's possible to match results across different laboratories.
-You can expect that the `slug` field is what the laboratory returns to us - and the `loinc_slug` is the standardised version.
+You can expect that the `slug` field is what the laboratory returns to us - and the `loinc_slug` is the standardized version.
 
 An example:
 
