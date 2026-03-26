@@ -4,7 +4,7 @@ description: "Create or submit user undo delete via the Junction API. Requires a
 openapi: "POST /v2/user/undo_delete"
 ---
 
-You can undo any [user deletion](/api-reference/user/delete-user) that is still in their 7-day
+You can undo any [user deletion](/api-reference/user/delete-user) that is still in its 7-day
 grace period.
 
 <Note>
@@ -18,14 +18,14 @@ the same `client_user_id`.
 <RequestExample>
 
 ```bash cURL
-curl --request DELETE \
+curl --request POST \
      --url {{BASE_URL}}/v2/user/undo_delete \
      --header 'x-vital-api-key: <API_KEY>' \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --data '
 {
-     "client_user_id": "8DS6YRVBCSQQ4S0",
+     "client_user_id": "8DS6YRVBCSQQ4S0"
 }
 '
 ```
