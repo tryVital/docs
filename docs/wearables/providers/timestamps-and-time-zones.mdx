@@ -26,7 +26,7 @@ This is not the same as time relative to a local time zone, i.e., a known UTC of
 <Warning>
 <sup>[3]</sup> Junction sends timestamps in floating time with `+00:00` for OpenAPI 3.x interoperability. OAS 3
 requires all timestamps to be [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339), which in turn requires
-TZ specifier to be mandatory.
+the TZ specifier to be mandatory.
 
 When processing data from Freestyle Libre, you should [**reinterpret literally**](#data-point-in-floating-time-freestyle-libre)
 the date and time components as local date-time in the desired time zone. Do not convert from UTC/Zulu.
