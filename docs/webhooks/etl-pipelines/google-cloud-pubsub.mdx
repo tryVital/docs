@@ -10,7 +10,7 @@ import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
 ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
-# Event Structure
+## Event Structure
 
 Each event is published with these Cloud Pub/Sub message attributes:
 
@@ -23,7 +23,7 @@ Each event is published with these Cloud Pub/Sub message attributes:
 | Ordering Key | - | Junction User ID (If you have enabled Event Ordering) |
 
 <Info>
-Payloads smaller than 1KiB would not be compressed. You must check `blob_codec` to identify if decompression of
+Payloads smaller than 1KiB would not be compressed. You must check `blob-codec` to identify if decompression of
 the message payload blob is necessary.
 </Info>
 
