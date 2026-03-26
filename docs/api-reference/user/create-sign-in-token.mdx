@@ -14,7 +14,7 @@ Your mobile app only needs to sign-in once with the Vital Mobile SDK. A signed-i
 
 <RequestExample>
 
-```cURL
+```bash cURL
 curl --request POST \
      --url {{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token \
      --header 'Accept: application/json' \
@@ -30,7 +30,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.user.get_user_sign_in_token(
+const data = await client.user.getUserSignInToken(
     '<user_id>'
 );
 ```
@@ -44,9 +44,9 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.getUserSignInToken(
+data = client.user.get_user_sign_in_token(
     user_id="<user_id>"
-);
+)
 ```
 
 ```java Java
