@@ -5,7 +5,7 @@ description: "Understand Fitbit-specific integration details including always-ac
 
 ## Webhooks
 
-There is one caveat with Fitbit's webhooks. Namely, Fitbit computes the basal metabolic rate (BMR) server-side. This is a fairly static value because it depends on data such as height, weight, gender, age, etc. The fact this is computed value server-side is important to keep in mind, because it means you will always receive `daily.data.activity.updated` webhooks even if you are not wearing the device.
+There is one caveat with Fitbit's webhooks. Namely, Fitbit computes the basal metabolic rate (BMR) server-side. This is a fairly static value because it depends on data such as height, weight, gender, age, etc. The fact this is a computed value server-side is important to keep in mind, because it means you will always receive `daily.data.activity.updated` webhooks even if you are not wearing the device.
 
 This can be confusing at times, as someone who is not aware of this might wonder why they are getting only this one webhook and not the others.
 
@@ -49,7 +49,7 @@ Junction makes the best time zone guess in the following precedences:
     <Step number="4" title="Naively assuming UTC">
     If none of above is available, Junction assumes naively that everything happens in UTC (+00:00).
 
-    <Note>This is usually incorrect, except for users living an all-year UTC (+00:00) region.</Note>
+    <Note>This is usually incorrect, except for users living in an all-year UTC (+00:00) region.</Note>
     </Step>
 </Steps>
 
