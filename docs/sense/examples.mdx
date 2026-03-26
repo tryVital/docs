@@ -112,7 +112,7 @@ va.select(
         "activity": "duration_active_second"
       },
       "func": "mean"
-    },
+    }
   ],
   "group_by": [
     {
@@ -231,16 +231,30 @@ va.select(
         "func": "mean"
       },
       {
-      "arg": {
-        "timeseries": "calories_active",
-        "field": "value"
+        "arg": {
+          "timeseries": "calories_active",
+          "field": "value"
         },
         "func": "sum"
       },
       {
-      "arg": {
-        "timeseries": "body_temperature",
-        "field": "value"
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
+        },
+        "func": "mean"
+      },
+      {
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
+        },
+        "func": "min"
+      },
+      {
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
         },
         "func": "max"
       }
