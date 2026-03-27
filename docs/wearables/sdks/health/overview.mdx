@@ -353,7 +353,7 @@ to provide a way for users to review their permission grants or denials, you can
 
 <Warning>
 The health data read permission prompt is managed by the operating system. Junction cannot customize or
-alter its behaviour.
+alter its behavior.
 </Warning>
 
 ### Check if your app has asked for permissions before
@@ -364,7 +364,7 @@ Because [Ask for Permission](#ask-user-for-health-data-permissions) is gracefull
 the first time, checking before asking can help you skip the parts of your UX journey that only make sense to users
 going through [Ask for Permission](#ask-user-for-health-data-permissions) for the first time.
 
-The only exception to this behaviour is when a `VitalResource` pulls a new data type introduced in a new OS release.
+The only exception to this behavior is when a `VitalResource` pulls a new data type introduced in a new OS release.
 In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in an OS permission
 prompt that asks for permissions on _specifically_ those new data types.
 
@@ -466,10 +466,10 @@ the provider-specific guides for the requirements and setup instructions:
 | Sync is automatically... |           |
 | ------------------------ | --------- |
 | Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
-| Triggered by             | Two behaviours: <ul><li>Foreground: Apple HealthKit immediately delivers buffered and new changes.</li><li>Background: Hourly batch delivery of changes, subject to OS throttling.</li></ul> |
+| Triggered by             | Two behaviors: <ul><li>Foreground: Apple HealthKit immediately delivers buffered and new changes.</li><li>Background: Hourly batch delivery of changes, subject to OS throttling.</li></ul> |
 
 <Note>
-HealthKit change notification is an always-on behaviour.
+HealthKit change notification is an always-on behavior.
 
 If you did not configure [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit)
 as instructed, your app will not receive any HealthKit change notification while it is in background.
@@ -484,11 +484,11 @@ In turn, background sync would not occur.
 | Triggered by             | Two mechanisms: <ul><li>Sync On App Launch</li><li>Background Sync if it is enabled.</li></ul> |
 
 <Note>
-Sync On App Launch is an always-on behaviour. Background Sync is an **opt-in** behaviour.
+Sync On App Launch is an always-on behavior. Background Sync is an **opt-in** behavior.
 
 Please refer to the [Android Health Connect guide](/wearables/guides/android-health-connect) or
 the [Samsung Health guide](/wearables/guides/samsung-health) for the full context and required configuration
-of these two behaviours.
+of these two behaviors.
 </Note>
 
 ### Background Sync Frequency

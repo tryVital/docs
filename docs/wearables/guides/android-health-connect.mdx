@@ -7,7 +7,7 @@ Android Health Connect is an SDK-based provider. Your Android consumer app would
 stack. Data are then pulled from the Health Connect data store on the user's Android device.
 
 Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Junction Health SDK](/wearables/sdks/health/overview) guides for SDK installation
-instructions and general API usage. This guide contains information on the behaviour and required configuration
+instructions and general API usage. This guide contains information on the behavior and required configuration
 specific to the Android Health Connect integration.
 
 <Card title="Mobile SDK Installation" icon="helmet-safety" href="/wearables/sdks/installation" horizontal>
@@ -238,7 +238,7 @@ to get notified of your app's resumption.
 
 ### Running as Foreground Service
 
-<Info>You cannot opt-out of this behaviour.</Info>
+<Info>You cannot opt-out of this behavior.</Info>
 
 Junction Health SDK runs all its data sync workers inside a Foreground Service. Running as a foreground service helps in two ways:
 
@@ -372,11 +372,11 @@ experience with Android Health Connect, similar to [Background Delivery for Appl
 
 ### Sync Frequency
 
-The [Sync On App Launch](#sync-on-app-launch) behaviour is always-on.
+The [Sync On App Launch](#sync-on-app-launch) behavior is always-on.
 
 When Background Sync is enabled, the SDK additionally schedules hourly sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
 
-The OS has full discretion on whether to honour or defer the time as scheduled by the Junction Health SDK. This includes the policies
+The OS has full discretion on whether to honor or defer the time as scheduled by the Junction Health SDK. This includes the policies
 of the base Android OS, as well as any vendor-specific OS augmentation.
 
 For example, the device may enter [Doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) during device inactivity. Doze mode
