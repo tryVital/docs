@@ -1,6 +1,6 @@
 ---
 title: Create Portal URL
-description: "Create or submit user create portal url via the Junction API. Requires authentication with your team API key."
+description: "Create a Portal URL for a user via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/user/{user_id}/create_portal_url"
 ---
 
@@ -21,7 +21,7 @@ If you attempt to create a Portal URL for a user without demographics, you will 
 
 <RequestExample>
 
-```cURL
+```bash cURL
 curl --request POST \
      --url {{BASE_URL}}/v2/user/{{USER_ID}}/create_portal_url \
      --header 'Accept: application/json' \
