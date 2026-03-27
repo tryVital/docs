@@ -290,7 +290,7 @@ The changes bring historical data sync incrementality, prioritization, network r
     * This enables the SDK to make constant forward progress, especially when you have specified a very large historical pull stage (60-365 days)
       through the [Team Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences) API.
 
-2. The SDK now prioritises syncing of summary types over timeseries data.
+2. The SDK now prioritizes syncing of summary types over timeseries data.
 
     * During the historical pull stage, all timeseries resources would be suppressed until all the summary types have been successfully uploaded.
 
