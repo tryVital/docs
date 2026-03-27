@@ -7,12 +7,12 @@ description: "Error handling and optional features for scheduling appointments a
 
 All endpoints require authentication and are prefixed with `/v3/order`:
 
-- [`POST /v3/order/psc/appointment/availability`](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) - Get available time slots
-- [`POST /v3/order/{order_id}/psc/appointment/book`](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) - Book an appointment
-- [`PATCH /v3/order/{order_id}/psc/appointment/reschedule`](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling) - Reschedule an appointment
-- [`PATCH /v3/order/{order_id}/psc/appointment/cancel`](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) - Cancel an appointment
-- [`GET /v3/order/{order_id}/psc/appointment`](/api-reference/lab-testing/psc-schedulling/get-psc-appointment) - Get appointment details
-- [`GET /v3/order/psc/appointment/cancellation-reasons`](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons) - Get cancellation reasons
+- [`POST /v3/order/psc/appointment/availability`](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) - Get available time slots
+- [`POST /v3/order/{order_id}/psc/appointment/book`](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) - Book an appointment
+- [`PATCH /v3/order/{order_id}/psc/appointment/reschedule`](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling) - Reschedule an appointment
+- [`PATCH /v3/order/{order_id}/psc/appointment/cancel`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) - Cancel an appointment
+- [`GET /v3/order/{order_id}/psc/appointment`](/api-reference/lab-testing/psc-scheduling/get-psc-appointment) - Get appointment details
+- [`GET /v3/order/psc/appointment/cancellation-reasons`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons) - Get cancellation reasons
 
 ---
 
@@ -149,7 +149,7 @@ Interested in these features? Get in touch with your Customer Success Manager.
 
 Junction maintains a fast Availability Cache containing the next 21 days of availability for all locations. Each location is refreshed every 5 minutes on average.
 
-When you set the `allow_stale` parameter on the [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint, your request is fulfilled directly from the Availability Cache, provided that:
+When you set the `allow_stale` parameter on the [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint, your request is fulfilled directly from the Availability Cache, provided that:
 
 1. All requested locations have a cache hit; and
 2. The cached information is reasonably fresh (less than 15 minutes old).
@@ -164,7 +164,7 @@ Use `allow_stale` when you need fast response times and can tolerate slightly st
 ### Idempotency Key
 
 Consider specifying an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the
-[Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint. Requests with the same
+[Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) endpoint. Requests with the same
 idempotency key within a 14-day retention window will return the original request's response.
 
 Note that the response is frozen at the time it is first emitted. For example, if a pending appointment later transitions to confirmed via Async Confirmation, requests with that idempotency key will still return the appointment in its original pending status.
@@ -178,7 +178,7 @@ Using an Idempotency Key allows your system to safely retry booking requests, wi
 
 ### Async Confirmation
 
-When calling the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking) endpoint, Junction by default returns a 500 Internal Server Error if the PSC Appointment Provider fails to acknowledge the booking request.
+When calling the [Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) endpoint, Junction by default returns a 500 Internal Server Error if the PSC Appointment Provider fails to acknowledge the booking request.
 
 With Async Confirmation enabled, Junction waits synchronously for the provider to acknowledge the booking request, up to `sync_confirmation_timeout_millisecond` (default: 2.5s, range: 1–10s).
 

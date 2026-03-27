@@ -50,7 +50,7 @@ Orders **cannot** be cancelled once they reach these states:
     - `collecting_sample.walk_in_test.redraw_available` - Order marked as final but has missing results
     - `failed.walk_in_test.sample_error` - Sample error occurred
 
-    <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
+    <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
   </Tab>
 
   <Tab title="At-Home Phlebotomy">
@@ -116,7 +116,7 @@ Orders **cannot** be cancelled once they reach these states:
 If you need to cancel only the appointment (without cancelling the entire order), use the appropriate endpoint for your collection method:
 
 - **At-home phlebotomy**: [Appointment Cancellation endpoint](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
-- **Walk-in tests (PSC)**: [PSC Appointment Cancellation endpoint](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling)
+- **Walk-in tests (PSC)**: [PSC Appointment Cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 
 #### At-Home Phlebotomy Appointment Cancellation
 
@@ -487,7 +487,7 @@ Look for these indicators in the response:
 - [Order Lifecycle Overview](/lab/workflow/lab-test-lifecycle)
 - [API Reference: Cancel Order](/api-reference/lab-testing/cancel-order)
 - [API Reference: Cancel At-Home Appointment](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
-- [API Reference: Cancel PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling)
+- [API Reference: Cancel PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 - [Webhooks for Order Events](/lab/testkits/webhooks)
 
 ---
