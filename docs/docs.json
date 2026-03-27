@@ -120,6 +120,7 @@
                 "pages": [
                   "lab/workflow/ordering",
                   "lab/workflow/lab-test-lifecycle",
+                  "lab/workflow/order-transactions",
                   "lab/workflow/order-requirements",
                   "lab/workflow/scheduled-orders",
                   "lab/workflow/cancelling-an-order",
