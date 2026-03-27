@@ -5,7 +5,7 @@ description: "Understand the namespaced status system for lab test orders with h
 
 ## Introduction
 
-We encapsulate our lab test modalities in the `order` object. This is the main object you will interact with, as it contains all the information related to that lab test. An order has a high-level status which represents where the order is throughout its lifecycle, e.g. received/delivered/completed/cancelled etc.
+We encapsulate our lab test modalities in the `order` object. This is the main object you will interact with, as it contains all the information related to that lab test. An order has a high-level status which represents where the order is throughout its lifecycle, e.g. received/delivered/completed/cancelled, etc.
 
 The high-level status is the same across test modalities. On top of that, each modality has its own sub-statuses to represent lifecycle stages specific to that modality. For example, test-kits involve shipping of the box, so we have a whole set of statuses to track the shipment.
 
