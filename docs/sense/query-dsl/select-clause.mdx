@@ -19,7 +19,7 @@ import vitalx.aggregation as va
 va.select(va.Sleep.col("efficiency"))
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "sleep": "efficiency" }
@@ -46,7 +46,7 @@ import vitalx.aggregation as va
 va.select(va.Sleep.chronotype())
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "value_macro": "chronotype" }
@@ -103,7 +103,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         {
@@ -132,7 +132,7 @@ import vitalx.aggregation as va
 va.select(va.Sleep.col("efficiency"))
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "sleep": "efficiency" }
@@ -164,7 +164,7 @@ va.select(va.group_key("*"))
 va.select(va.group_key(2))
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 # Select all group key columns
 {
     "select": [
