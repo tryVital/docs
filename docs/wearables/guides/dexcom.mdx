@@ -52,7 +52,7 @@ To connect your device with the *widget*, follow the link wizard and enter your 
 
 ## Junction Link
 
-You can also connect a Dexcom user to Junction using Junction client. For additional information, please consult the API reference.
+You can also connect a Dexcom user to Junction using the Junction client. For additional information, please consult the API reference.
 
 <CodeGroup>
 
@@ -75,4 +75,4 @@ await client.Link.password_provider(
 
 On successful connection, you will receive a [Connection created](/webhooks/introduction#connection-created-stage) webhook. [Daily webhooks](/webhooks/introduction#incremental-data-stage) `daily.data.glucose.created` and `daily.data.glucose.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
 
-For this provider however, Junction will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no [Historical webhooks](/webhooks/introduction#historical-data-backfill-stage) issued. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.
+For this provider, however, Junction will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no [Historical webhooks](/webhooks/introduction#historical-data-backfill-stage) issued. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.
