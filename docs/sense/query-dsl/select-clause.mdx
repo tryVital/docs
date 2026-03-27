@@ -129,13 +129,13 @@ Select the primary datetime index of the table using the [Index Column expressio
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.Sleep.col("efficiency"))
+va.select(va.Sleep.index())
 ```
 
 ```python JSON DSL
 {
     "select": [
-        { "sleep": "efficiency" }
+        { "index": "sleep" }
     ]
 }
 ```

@@ -245,12 +245,12 @@
               {
                 "group": "Patient Service Center (PSC)",
                 "pages": [
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
-                  "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-availability",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-booking",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons",
+                  "api-reference/lab-testing/psc-scheduling/get-psc-appointment"
                 ]
               },
               {
