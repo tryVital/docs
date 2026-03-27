@@ -91,7 +91,7 @@ Note that since this endpoint can return availability for multiple PSCs, there m
 ## Booking
 
 <Warning>
-  Patient Service Centers have access to the booked appointment, which can be canceled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
+  Patient Service Centers have access to the booked appointment, which can be cancelled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
 </Warning>
 
 In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) with Junction as many times as you want.
