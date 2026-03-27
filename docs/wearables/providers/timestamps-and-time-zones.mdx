@@ -46,7 +46,7 @@ Each provider has their own affinity of time zone information:
 | Affinity                    | Time Basis    | Time Zone |
 | --------------------------- | ------------- | --------- |
 | ✅                          | UTC           | The data comes with time zone information. |
-| User Fallback, or UTC       | UTC           | We assume the data were captured in the [User Fallback Time Zone](#user-fallback-time-zone). We fallback to UTC if the former is not set. |
+| User Fallback, or UTC       | UTC           | We assume the data were captured in the [User Fallback Time Zone](#user-fallback-time-zone). We fall back to UTC if the former is not set. |
 | User Fallback, or Absent    | UTC           | We assume the data were captured in the [User Fallback Time Zone](#user-fallback-time-zone). Mark as no time zone (`null`) if the former is not set. |
 | Inferred, or Absent         | UTC           | We infer the time zone from the data. Mark as no time zone (`null`) if the inference fails. |
 | Absent                      | UTC           | We do not know the exact time zone the recording took place in. Mark as no time zone (`null`). |
