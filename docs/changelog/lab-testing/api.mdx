@@ -3,6 +3,12 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Status details for order events and top-level `last_event` field (Mar 2026)
+
+Each order event in API responses and webhook bodies now has a nullable `status_detail` field. If populated, it will contain more granular information about the status.
+
+The latest event for an order is now available on the order body. It holds the same data as the last item in the `events` list.
+
 ### Access Notes & Appointment Notes for At-Home Phlebotomy (Mar 2026)
 
 You can now provide instructions for phlebotomists through two new optional fields on at-home phlebotomy appointments.
