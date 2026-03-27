@@ -62,11 +62,11 @@ make sure you have updated the minimum iOS deployment target in:
 
 ## Set up package dependencies
 
-## iOS
+### iOS
 
 Junction Mobile SDKs are available through both Swift Package Manager and CocoaPods.
 
-### Swift Package Manager
+#### Swift Package Manager
 
 Add the vital-ios package (`https://github.com/tryVital/vital-ios`) as a dependency of your project.
 
@@ -83,7 +83,7 @@ Link `VitalHealthKit` and `VitalDevices` as appropriate. Note that `VitalCore` i
   {" "}
 </iframe>
 
-### CocoaPods
+#### CocoaPods
 
 Add the following declarations to your app target in your Podfile:
 
@@ -93,7 +93,7 @@ pod 'VitalDevices'
 pod 'VitalHealthKit'
 ```
 
-## Android
+### Android
 
 Make sure Maven Central is included in the list of repositories in your `build.gradle`.
 
@@ -120,11 +120,11 @@ Samsung Health also requires the downloaded Samsung Health Data SDK AAR to be wi
 [Samsung Health guide](/wearables/guides/samsung-health#samsung-health-project-setup) for more details.
 </Note>
 
-## React Native
+### React Native
 
-### Expo projects
+#### Expo projects
 
-#### Installation
+##### Installation
 
 <Info>
 Only [Expo Prebuild](https://docs.expo.dev/guides/adopting-prebuild/) is supported.
@@ -152,7 +152,7 @@ After installing the Junction React Native SDK packages, add the bundled Junctio
 ```
 
 
-#### Android specific configuration
+##### Android specific configuration
 
 In your Expo app configuration file (`app.json` or `app.config.js`), use the `expo-build-properties` config plugin to customize the minimum, target and compile Android SDK version:
 
@@ -183,7 +183,7 @@ Refer to [Project Requirements > Android](#android) for the constraints on these
 
 Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.dev/workflow/customizing/) guide.
 
-#### Customizations
+##### Customizations
 
 You can customize the integration by passing additional properties to the Expo config plugin:
 
@@ -216,7 +216,7 @@ After making changes to your Config Plugin settings, you must re-run Expo Prebui
 </Info>
 
 
-### Bare React Native projects
+#### Bare React Native projects
 Install Junction SDK packages through NPM or Yarn:
 ```commandline
 npm install @tryvital/vital-core-react-native
@@ -240,7 +240,7 @@ pod update VitalCore VitalDevices VitalHealthKit VitalLogging --repo-update
 ```
 </Info>
 
-## Flutter
+### Flutter
 
 Add Junction SDK packages to your `pubspec.yaml`:
 
