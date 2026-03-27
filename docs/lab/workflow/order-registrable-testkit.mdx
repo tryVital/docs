@@ -15,13 +15,13 @@ This involves two steps:
   1. Ordering the Testkit.
   2. Registering a patient.
 
-After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However it is stuck on the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
+After step 1, the order is sent to the requested address and generates all the same webhooks as a regular order would. However, it is stuck in the `received.testkit.awaiting_registration` state, meaning that no requisition form is generated for this order, and no results can be obtained until step 2 is done.
 
 After step 2, the order flow resumes as normal, the patient sends the `testkit` to the lab, the order is progressed to the `received.testkit.testkit_registered` state and, again, all the same webhooks as in the regular order flow are dispatched.
 
 ### Example
 
-To make an order, make a request to our [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), to fulfil step 1.
+To make an order, make a request to our [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), to fulfill step 1.
 
 ```python Python
 from vital import Client
@@ -55,7 +55,7 @@ Besides this, if using Junction's physician network, then supplying the consents
 
 For this example, we will assume the use of your own physician.
 
-To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), to fulfil step 2.
+To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), to fulfill step 2.
 
 ```python Python
 client = Client(api_key, "sandbox")
