@@ -74,7 +74,7 @@ The SDK normally reports one of the following status combinations:
 
 | Combinations                                | Auth Scheme         | Remarks |
 | ----                                        | ----                | ---- |
-| _Empty_                                     | N/A                 | The SDK has neither been configured nor an active sign-in. |
+| _Empty_                                     | N/A                 | The SDK has neither been configured nor signed in. |
 | `Configured`                                | API Key             | The SDK has been configured, but does not have an active sign-in. |
 | `Configured`, `SignedIn` & `UseApiKey`      | API Key             | The active sign-in was done by setting an API Key and a target Junction User ID. |
 | `Configured`, `SignedIn` & `UseSignInToken` | Junction Sign-In Token | The active sign-in was done by consuming a Junction Sign-In Token. |
@@ -199,7 +199,7 @@ Refer to [the Sign Out section in the SDK Authentication guide](/wearables/sdks/
 ## Verbose Logging to Console/Logcat
 
 You can enable verbose logging to have a deeper look into how Junction Mobile SDK is reacting to your calls, as well as
-all the automatic behaviors that the SDK is performing in background.
+all the automatic behaviors that the SDK is performing in the background.
 
 To avoid any missing log entry, you should enable verbose logging as early as possible — preferably before any usage of
 any Junction Mobile SDKs.

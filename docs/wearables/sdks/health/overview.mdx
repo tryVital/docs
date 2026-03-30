@@ -344,7 +344,7 @@ await vital_health.askForPermission(readResources, []);
 </CodeGroup>
 
 Regardless of whether the user has granted or denied the permissions, any subsequent re-request would
-be non-interactive and returns instantly. This is because the operating system only prompts the end user
+be non-interactive and return instantly. This is because the operating system only prompts the end user
 once for each resource type.
 
 If you wish
@@ -472,7 +472,7 @@ the provider-specific guides for the requirements and setup instructions:
 HealthKit change notification is an always-on behavior.
 
 If you did not configure [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit)
-as instructed, your app will not receive any HealthKit change notification while it is in background.
+as instructed, your app will not receive any HealthKit change notification while it is in the background.
 In turn, background sync would not occur.
 </Note>
 
