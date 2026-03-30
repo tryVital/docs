@@ -9,6 +9,10 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 This endpoint supports optional `idempotency_key` and Async Confirmation features. These features are currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#beta-features) for more info.
 </Tip>
 
+<Note>
+`booking_key` values do not place a hold on Quest PSC capacity. Availability can change between the availability and booking calls, including because the same slot was booked outside Junction. Use `X-Idempotency-Key` only to safely retry the same booking request when that feature is enabled for your team; it does not reserve a slot.
+</Note>
+
 <RequestExample>
 ```bash cURL
 curl --request POST \
