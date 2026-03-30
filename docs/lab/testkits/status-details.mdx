@@ -21,19 +21,17 @@ These status details apply after the lab has received the sample but cannot proc
 |---|---|---|---|
 | **Missing date of collection** | Lab received the sample but the collection date is absent. | Temporary | Programmatic (lab notification) |
 | **Missing documentation / ID form** | Lab received the sample but required paperwork is missing. | Temporary | Programmatic (lab notification) |
-| **Demographic mismatch (name)** | Name on the specimen does not match the order. Requires patient confirmation. | Temporary | Programmatic (lab notification) |
-| **Demographic mismatch (DOB)** | Date of birth on the specimen does not match the order. Requires patient confirmation. | Temporary | Programmatic (lab notification) |
+| **Demographic mismatch** | Name or date of birth on the specimen does not match the order. Requires patient confirmation. | Temporary | Programmatic (lab notification) |
 | **NIS (Not In System)** | Lab cannot match the specimen to a known order. Requires ops investigation. May be recoverable. | Temporary | Programmatic (lab notification) |
 
 ### API field values — Lab Processing
 
 | Problem | `status` | `status_detail` |
 |---|---|---|
-| Missing date of collection | `LAB_PROCESSING_BLOCKED` | `DATE_OF_COLLECTION_UNSPECIFIED` |
-| Missing documentation / ID form | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_UNSPECIFIED` |
-| Demographic mismatch (name) | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_MISMATCH` |
-| Demographic mismatch (DOB) | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_MISMATCH` |
-| NIS (Not In System) | `LAB_PROCESSING_BLOCKED` | — |
+| Missing date of collection | `lab_processing_blocked` | `date_of_collection_unspecified` |
+| Missing documentation / ID form | `lab_processing_blocked` | `demographic_information_unspecified` |
+| Demographic mismatch | `lab_processing_blocked` | `demographic_information_mismatch` |
+| NIS (Not In System) | `lab_processing_blocked` | — |
 
 ---
 
@@ -54,9 +52,9 @@ These status details indicate the collected sample could not be processed by the
 
 | Problem | `status` | `status_detail` |
 |---|---|---|
-| QNS (Quantity Not Sufficient) | `SAMPLE_ERROR` | `QUANTITY_NOT_SUFFICIENT` |
-| Contaminated specimen | `SAMPLE_ERROR` | `SAMPLE_CONTAMINATED` |
-| Specimen too old / stability exceeded | `SAMPLE_ERROR` | `SAMPLE_STABILITY_EXCEEDED` |
-| Specimen mislabeled | `SAMPLE_ERROR` | — |
-| Specimen lost by lab | `SAMPLE_ERROR` | `SPECIMEN_LOST` |
-| Partial results | `SAMPLE_ERROR` | — |
+| QNS (Quantity Not Sufficient) | `sample_error` | `quantity_not_sufficient` |
+| Contaminated specimen | `sample_error` | `sample_contaminated` |
+| Specimen too old / stability exceeded | `sample_error` | `sample_stability_exceeded` |
+| Specimen mislabeled | `sample_error` | — |
+| Specimen lost by lab | `sample_error` | `specimen_lost` |
+| Partial results | `sample_error` | — |
