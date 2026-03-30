@@ -1,24 +1,25 @@
 ---
 title: "Privacy"
+description: "Learn about Junction privacy practices including data encryption at rest and in transit, and how users can deregister devices and delete their data."
 ---
 
-Privacy is at the heart of everything we do at Vital. We are committed to protecting your privacy and your data and have built our service with those values in mind.
+Privacy is at the heart of everything we do at Junction. We are committed to protecting your privacy and your data and have built our service with those values in mind.
 
-To do this we've taken a number of precautions:
+To do this, we've taken a number of precautions:
 
-1. Users can deregister their device's and delete their data from Vital.
-2. We encrypt all data at REST and in transit. Furthermore, we encrypt the data prior to storing it it in our database. To do this we use **[Evervault](https://evervault.com)**.
+1. Users can deregister their devices and delete their data from Junction.
+2. We encrypt all data at rest and in transit. Furthermore, we encrypt the data prior to storing it in our database. To do this we use **[Evervault](https://evervault.com)**.
 
-## How this works?
+## How does this work?
 
 ### Storing Data
 
-When we pull data from various wearable provider's this data goes through the Evervault encryption proxy - which encrypts the data before we store it.
+When we pull data from various wearable providers, this data goes through the Evervault encryption proxy - which encrypts the data before we store it.
 
-<img src="/img/storing.png" alt="storing" />{" "}
+<img src="/img/storing.png" alt="storing" />
 
 ### Retrieving Data
 
 When you request data from the Junction API, it is decrypted via the Evervault encryption proxy before being returned.
 
-<img src="/img/retreiving.png" alt="retreiving" />
+<img src="/img/retrieving.png" alt="retrieving" />

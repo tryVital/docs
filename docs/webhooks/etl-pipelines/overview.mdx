@@ -1,5 +1,6 @@
 ---
 title: "ETL Pipelines"
+description: "Use ETL Pipelines to stream Junction events to supported destinations over authenticated TLS as a scalable alternative to webhooks."
 sidebarTitle: "Overview"
 ---
 
@@ -9,7 +10,7 @@ import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
 ETL Pipelines integration is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
-With ETL Pipelines, Vital streams all [Vital events](/webhooks/event-structure) continuously to a supported destination
+With ETL Pipelines, Junction streams all [Junction events](/webhooks/event-structure) continuously to a supported destination
 over direct authenticated TLS connections. Compared to [Webhooks](/webhooks/introduction), this simplifies your operational
 complexity by removing the need to operate public unauthenticated HTTPS endpoints for receiving incoming Webhooks.
 
@@ -47,17 +48,17 @@ Check out our [Event Catalog](/event-catalog).
 
 ### Data compression
 
-Vital does not compress payload blobs that are smaller than 1 KiB. Please refer to the destination-specific
+Junction does not compress payload blobs that are smaller than 1 KiB. Please refer to the destination-specific
 documentation below on how to detect a compressed blob versus an uncompressed blob.
 
 ### Static outbound IPs
 
-Vital establish connections to your ETL Pipeline destination through a static pool of IPs. Contact Vital support to
+Junction establishes connections to your ETL Pipeline destination through a static pool of IPs. Contact Junction support to
 obtain the up-to-date static IP list.
 
 ### Double writing for migration
 
-To ensure smooth switchover from Webhooks to your new ETL Pipelines destination, Vital supports double writing events
+To ensure smooth switchover from Webhooks to your new ETL Pipelines destination, Junction supports double writing events
 to the combination of:
 
 * all your Webhook endpoints; and
@@ -73,7 +74,7 @@ guarantee as the _preferred_ one.
 
 ### Pushed Historical Data
 
-When you use ETL Pipelines, Vital can _push_ all the historical data as `daily.data.*` data events to your ETL Pipelines
+When you use ETL Pipelines, Junction can _push_ all the historical data as `daily.data.*` data events to your ETL Pipelines
 destination.
 The data-less `historical.data.*.created` event would still be emitted to denote the completion of historical pull.
 
@@ -81,7 +82,7 @@ The data-less `historical.data.*.created` event would still be emitted to denote
 ## Configuring ETL Pipelines
 
 You can change the ETL Pipelines configuration on your Teams at any time through the
-[Set Team ETL Pipelines](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoint
+[Set Team ETL Pipelines](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoint
 of the Org Management API.
 
 Your new configuration is typically active as soon as the endpoint has acknowledged your request.
@@ -89,5 +90,5 @@ Your new configuration is typically active as soon as the endpoint has acknowled
 Refer to the destination-specific documentation for configuration examples.
 
 <Info>
-Feel free to reach out Vital support if you need assisted setup, or if you need a Junction Management Key to access the Org Management API.
+Feel free to reach out to Junction support if you need assisted setup, or if you need a Junction Management Key to access the Org Management API.
 </Info>

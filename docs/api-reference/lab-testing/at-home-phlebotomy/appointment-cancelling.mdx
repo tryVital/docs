@@ -1,4 +1,6 @@
 ---
+title: "Cancel appointment"
+description: "Cancel an order phlebotomy appointment via the Junction API. Requires authentication with your team API key."
 openapi: "PATCH /v3/order/{order_id}/phlebotomy/appointment/cancel"
 ---
 
@@ -40,7 +42,7 @@ const request: AppointmentCancelRequest = {
     cancellationReasonId: "<reason_id>",
 }
 
-const data = await client.labTests.cancelPhlabotomyAppointment("<order_id>", request);
+const data = await client.labTests.cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 
@@ -56,10 +58,10 @@ Vital vital = Vital.builder()
 
 AppointmentCancelRequest request = AppointmentCancelRequest
         .builder()
-        .cancellationReasonId("<reason_id")
+        .cancellationReasonId("<reason_id>")
         .build();
 
-var data = vital.labTests().cancelPhlabotomyAppointment("<order_id>", request);
+var data = vital.labTests().cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 ```go Go
@@ -80,7 +82,7 @@ request := &vital.AppointmentCancelRequest{
     CancellationReasonId: "<cancellation_reason_id>",
 }
 
-response, err := client.LabTests.CancelPhlabotomyAppointment(context.TODO(), "<order_id>", request)
+response, err := client.LabTests.CancelPhlebotomyAppointment(context.TODO(), "<order_id>", request)
 if err != nil {
     return err
 }

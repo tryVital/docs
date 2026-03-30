@@ -1,5 +1,6 @@
 ---
 title: "Get Requisition Form PDF"
+description: "Retrieve order requisition pdf via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v3/order/{order_id}/requisition/pdf"
 ---
 
@@ -9,7 +10,7 @@ openapi: "GET /v3/order/{order_id}/requisition/pdf"
 curl --request GET \
      --url '{{BASE_URL}}/v3/order/<order_id>/requisition/pdf' \
      --header 'accept: application/pdf' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: {YOUR_KEY}' \
      --output file.pdf
 ```
 
@@ -33,7 +34,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getOrderRequistionPdf("<order_id>");
+const data = await client.labTests.getOrderRequisitionPdf("<order_id>");
 ```
 
 
@@ -46,7 +47,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getOrderRequistionPdf("<order_id>");
+var data = vital.labTests().getOrderRequisitionPdf("<order_id>");
 ```
 
 ```go Go
@@ -63,7 +64,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetOrderRequistionPdf(context.TODO(), "<order_id>")
+response, err := client.LabTests.GetOrderRequisitionPdf(context.TODO(), "<order_id>")
 if err != nil {
   return err
 }

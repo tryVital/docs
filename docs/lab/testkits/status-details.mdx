@@ -1,0 +1,62 @@
+---
+title: "Testkit Status Details"
+description: "Reference for testkit order status details, including lab processing blocks and sample errors returned by the API."
+---
+
+## Overview
+
+When a testkit order enters a problem or blocked state, the API surfaces additional detail beyond the order event status. This page describes the named status details and what they mean.
+
+<Warning>
+**Please note**: To ensure future compatibility, avoid exhaustive matching on status detail values. New values may be introduced over time. Handle unknown values gracefully using a default case.
+</Warning>
+
+---
+
+## Lab Processing
+
+These status details apply after the lab has received the sample but cannot proceed with processing. Most are recoverable if the missing information is provided before the specimen expires.
+
+| Status Detail | Description | Permanence | Detection |
+|---|---|---|---|
+| **Missing date of collection** | Lab received the sample but the collection date is absent. | Temporary | Programmatic (lab notification) |
+| **Missing documentation / ID form** | Lab received the sample but required paperwork is missing. | Temporary | Programmatic (lab notification) |
+| **Demographic mismatch (name)** | Name on the specimen does not match the order. Requires patient confirmation. | Temporary | Programmatic (lab notification) |
+| **Demographic mismatch (DOB)** | Date of birth on the specimen does not match the order. Requires patient confirmation. | Temporary | Programmatic (lab notification) |
+| **NIS (Not In System)** | Lab cannot match the specimen to a known order. Requires ops investigation. May be recoverable. | Temporary | Programmatic (lab notification) |
+
+### API field values — Lab Processing
+
+| Problem | `status` | `status_detail` |
+|---|---|---|
+| Missing date of collection | `LAB_PROCESSING_BLOCKED` | `DATE_OF_COLLECTION_UNSPECIFIED` |
+| Missing documentation / ID form | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_UNSPECIFIED` |
+| Demographic mismatch (name) | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_MISMATCH` |
+| Demographic mismatch (DOB) | `LAB_PROCESSING_BLOCKED` | `DEMOGRAPHIC_INFORMATION_MISMATCH` |
+| NIS (Not In System) | `LAB_PROCESSING_BLOCKED` | — |
+
+---
+
+## Sample Errors
+
+These status details indicate the collected sample could not be processed by the lab. All are final — a new kit and recollection are required.
+
+| Status Detail | Description | Detection |
+|---|---|---|
+| **QNS (Quantity Not Sufficient)** | Insufficient blood volume was collected. | Programmatic (lab notification) |
+| **Contaminated specimen** | Sample was contaminated during collection or transit. | Programmatic (lab notification) |
+| **Specimen too old / stability exceeded** | Too much time elapsed between collection and processing — sample has degraded. | Programmatic (lab notification) |
+| **Specimen mislabeled** | Identification discrepancy between the specimen and the requisition. Results are discarded. | Programmatic (lab notification) |
+| **Specimen lost by lab** | Lab reports the specimen was lost after receipt. | Programmatic (lab notification) |
+| **Partial results** | Lab could only process a subset of ordered tests. Remaining tests may require recollection. | Programmatic (lab notification) |
+
+### API field values — Sample Errors
+
+| Problem | `status` | `status_detail` |
+|---|---|---|
+| QNS (Quantity Not Sufficient) | `SAMPLE_ERROR` | `QUANTITY_NOT_SUFFICIENT` |
+| Contaminated specimen | `SAMPLE_ERROR` | `SAMPLE_CONTAMINATED` |
+| Specimen too old / stability exceeded | `SAMPLE_ERROR` | `SAMPLE_STABILITY_EXCEEDED` |
+| Specimen mislabeled | `SAMPLE_ERROR` | — |
+| Specimen lost by lab | `SAMPLE_ERROR` | `SPECIMEN_LOST` |
+| Partial results | `SAMPLE_ERROR` | — |

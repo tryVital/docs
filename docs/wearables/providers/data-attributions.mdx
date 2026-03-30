@@ -1,5 +1,6 @@
 ---
 title: "Data Attributions"
+description: "Understand the Source Type taxonomy that identifies how wearable data was collected, such as from a watch, phone, ring, or companion app."
 ---
 
 ## Source Type
@@ -16,7 +17,7 @@ For timeseries data types:
 
 | Source Type        | Description  |
 | ------------------ | ------------ |
-| `unknown`          | The default value. Vital does not know how the provider collects this data. |
+| `unknown`          | The default value. Junction does not know how the provider collects this data. |
 | `app`              | The user manually enters this data through an app.   |
 | `multiple_sources` | This data is derived from multiple sources. |
 
@@ -67,7 +68,7 @@ Device attribution is available when Junction can confidently identify the origi
 | --------------- | -------- | ----- |
 | Withings        | All resources except Body, Body Fat and Body Weight | Regardless of the number of reported devices |
 | Polar           | Workout and Sleep resources | Regardless of the number of reported devices |
-| All other providers and resources| All resources | When exactly one device is reported for the user-provider connection |
+| All other providers and resources | All resources | When exactly one device is reported for the user-provider connection |
 
 For connections with multiple devices where the provider doesn't embed device metadata, `source.device_id` remains `null` to avoid incorrect attribution.
 
@@ -87,7 +88,7 @@ The following provider integrations can provide Device ID attribution:
 | Peloton                |
 | Dexcom v3              |
 | EightSleep             |
-| Freestyle Libre / Abbott Libreview        |
+| Freestyle Libre / Abbott LibreView        |
 | Apple HealthKit        |
 | Android Health Connect |
 

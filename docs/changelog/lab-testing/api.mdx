@@ -1,6 +1,46 @@
 ---
 title: "API"
+description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
+
+### Access Notes & Appointment Notes for At-Home Phlebotomy (Mar 2026)
+
+You can now provide instructions for phlebotomists through two new optional fields on at-home phlebotomy appointments.
+
+<Accordion title="Details" defaultOpen icon="notes" iconType="duotone">
+  ## New Fields
+
+  - **`access_notes`** (on patient address) – Set at order creation. Provides location access instructions such as gate codes, parking details, or entrance directions. Automatically forwarded to the phlebotomy provider on every booking and reschedule.
+  - **`appointment_notes`** (on appointment) – Set at booking, request, or reschedule time. Provides per-appointment special instructions such as "Please bring photo ID" or "Patient prefers left arm". Can be updated on each reschedule.
+
+  ## Updated Endpoints
+
+  - **POST /v3/order** – `patient_address` now accepts an optional `access_notes` field.
+  - **POST /v3/order/{order_id}/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/{order_id}/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
+  - **PATCH /v3/order/{order_id}/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
+
+  Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#access-notes-and-appointment-notes) for details.
+</Accordion>
+
+### Custom Comments on Requisitions (Mar 2026)
+
+You can now add clinical comments during order creation that are forwarded to the lab requisition. Comments can also be configured as defaults on a per-lab-account basis.
+
+<Accordion title="Details" defaultOpen icon="comment-medical" iconType="duotone">
+  ## How It Works
+
+  - **Order-level comments** – Provide free-text clinical context (up to 1,000 characters) when creating an order through the Dashboard or the API.
+  - **Lab-account defaults** – Configure default clinical notes on a lab account. These are automatically included on every order placed under that account.
+  - **Merging behavior** – When both order-level and lab-account-level comments are present, they are concatenated on the requisition.
+
+  ## Supported Labs
+
+  - Quest
+  - Sonora Quest
+  - Labcorp
+  - BioReference
+</Accordion>
 
 ### Lab Report Parsing API (Feb 2026)
 
@@ -43,8 +83,8 @@ Introducing the Lab Report Parsing API – extract structured biomarker data fro
 
 ### Lab Account Selection in Ordering Flow (Feb 2026)
 
-You can now scope orders to a specific lab account during creation. 
-A new team-level lab accounts endpoint lets you list available accounts, 
+You can now scope orders to a specific lab account during creation.
+A new team-level lab accounts endpoint lets you list available accounts,
 and a new `lab_account_id` parameter on the order creation endpoint lets you specify which account to use.
 
 <Accordion title="Details" defaultOpen icon="building" iconType="duotone">
@@ -67,7 +107,7 @@ and a new `lab_account_id` parameter on the order creation endpoint lets you spe
 
 ### Idempotency of Ordering (Sep 2025)
 
-We’ve added idempotency behavior on the order endpoint, to prevent duplicate orders
+We've added idempotency behavior on the order endpoint, to prevent duplicate orders.
 
 <Accordion title="Details" icon="magnifying-glass" iconType="regular">
   Check out the [documentation](/lab/overview/idempotency).
@@ -107,17 +147,18 @@ We've enhanced the Orders page with new filtering and visualization capabilities
   <Info>
     You can combine the Interpretation filter with existing filters like Order Status, Date Range, and Order Type for more precise result filtering.
   </Info>
+
   This enhancement improves clinical workflow efficiency by enabling healthcare teams to quickly identify and prioritize orders requiring immediate attention.
 </Accordion>
 
 ### Introducing Panel Renaming & Archiving (May 2025)
 
-We’ve added more control to how you manage test panels.
+We've added more control to how you manage test panels.
 
 <Accordion title="Details" icon="magnifying-glass" iconType="regular">
   Now you can skip the support email and work directly in the Test Catalog to:
 
-  - Rename panel names
+  - Rename panels
   - Archive outdated or unused panels to keep things clean
   - View archived panels using the "Status" filter and "unarchive" to make panels active again
 
@@ -131,9 +172,9 @@ We’ve added more control to how you manage test panels.
 Testkit orders now support two new statuses representing problems in transit. Refer to the [lab test lifecycle documentation](/lab/workflow/lab-test-lifecycle).
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
-  We’re introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
+  We're introducing two new statuses for the `OrderLowLevelStatus` enum (`problem_in_transit_lab` and `problem_in_transit_customer`) and two for the `OrderStatus` enum (`collecting_sample.testkit.problem_in_transit_customer` and `collecting_sample.testkit.problem_in_transit_lab`)—and we may make further changes in the future. To ensure future compatibility, we ask that you avoid exhaustive matching on enum values. Code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
 
-  Here’s how to verify and ensure you benefit from future enhancements:
+  Here's how to verify and ensure you benefit from future enhancements:
 
   1. Look for areas in your code where you take an action based on the values of a Junction-defined enum. For example, you might have Python code like this:
 
@@ -155,28 +196,28 @@ Testkit orders now support two new statuses representing problems in transit. Re
           logger.warning(f"Unknown status received: {repr(unknown_status)}")
   ```
 
-  3. Make sure you’re running the latest version of our SDK.
-  4. You’re good to go. Once you’ve checked the code paths won’t break if Junction-defined enums start including new values, no further action is needed.
+  3. Make sure you're running the latest version of our SDK.
+  4. You're good to go. Once you've checked the code paths won't break if Junction-defined enums start including new values, no further action is needed.
 </Accordion>
 
 ### Source Marker Identification for Results (Nov 2024)
 
 Results now feature the source, orderable marker from which they originated.
-Refer to the [documentation](/lab/results/result-formats)
+Refer to the [documentation](/lab/results/result-formats).
 
 ### PSC Appointment Scheduling API (Oct 2024)
 
-Walk-in Phlebotomy orders now allow for appointment booking directly with Vital.
-Refer to the [documentation](/lab/walk-in/order-lifecycle)
+Walk-in Phlebotomy orders now allow for appointment booking directly with Junction.
+Refer to the [documentation](/lab/walk-in/order-lifecycle).
 
 ### Phlebotomy Availability API - Start Date Query (Sep 2024)
 
 You can now supply a `start_date` to the [Appointment Availability API](/api-reference/lab-testing/at-home-phlebotomy/appointment-availability).
-The API always responds with 14 days worth of slots.
+The API always responds with 14 days' worth of slots.
 
 ### À La Carte Ordering (Sep 2024)
 
-Vital now supports ordering à-la-carte, as well as a revamped ordering flow.
+Junction now supports ordering à-la-carte, as well as a revamped ordering flow.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Check out the [Ordering](/lab/workflow/ordering) documentation.
@@ -184,7 +225,7 @@ Vital now supports ordering à-la-carte, as well as a revamped ordering flow.
 
 ### Partial Results Webhook (Jul 2024)
 
-Vital now supports sending webhooks for partial results, on a team-by-team configuration.
+Junction now supports sending webhooks for partial results, on a team-by-team configuration.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Check out the [Partial Results Notifications](/lab/workflow/partials) documentation.
@@ -192,22 +233,22 @@ Vital now supports sending webhooks for partial results, on a team-by-team confi
 
 ### Patient Service Center (PSC) Availability API (Jul 2024)
 
-It is now possible to verify lab PSC availability in regards to a zip code, radius or order.
+It is now possible to verify lab PSC availability in regard to a zip code, radius or order.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
-  Check out the [Patient Service Center](/lab/walk-in/locations) documentation.
+  Check out the [Patient Service Center](/lab/overview/locations) documentation.
 </Accordion>
 
-### Create Lab Tests With Provider IDs  (Jun 2024)
+### Create Lab Tests With Provider IDs (Jun 2024)
 
-It is now possible to create lab tests using the Laboratory's unique provider id.
+It is now possible to create lab tests using the Laboratory's unique provider ID.
 This allows payloads to be shared across sandbox and production.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Check out the [Create a Lab Test](/lab/workflow/create-test) documentation.
 </Accordion>
 
-### Ask on Order Entry (AOE)  (Jun 2024)
+### Ask on Order Entry (AOE) (Jun 2024)
 
 You can now order panels with AOE requirements via the API.
 

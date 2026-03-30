@@ -1,6 +1,26 @@
 ---
 title: "Dashboard"
+description: "Changelog of Junction Dashboard updates including compendium search, lab account selection, and patient demographics improvements."
 ---
+
+### Cross-Compendium Marker Search (Mar 2026)
+
+The Dashboard now includes a cross-compendium search tool that lets you search for markers across multiple labs and convert lab tests from one provider to another.
+
+<Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
+  ## Search
+
+  - **Cross-lab search** – Search for markers across Quest, Labcorp, BioReference, and Sonora Quest from a single interface.
+  - **CPT code filtering** – Narrow results by entering one or more CPT codes.
+  - **Related markers** – View alternative canonical test candidates and related markers across labs.
+  - **Match confidence** – Each result shows how it relates to your query (exact match, subset, superset, or overlap) along with a confidence score.
+
+  ## Convert
+
+  - **Lab test conversion** – Convert an existing lab test or a list of provider IDs from one lab to another.
+  - **Candidate selection** – Review and select from ranked conversion candidates before creating a new panel.
+  - **Direct panel creation** – Create a new lab test panel directly from your search or conversion results.
+</Accordion>
 
 ### Lab Account Selection in Order Flow (Feb 2026)
 
@@ -37,7 +57,7 @@ You can now provision and manage Management Keys through the Junction Dashboard:
 </Accordion>
 <Accordion title="Org Management Keys" defaultOpen icon="key" iconType="duotone">
 
-  Only Org Admins can managed Org Management Keys, and it must be done through the Junction Dashboard.
+  Only Org Admins can manage Org Management Keys, and it must be done through the Junction Dashboard.
 
 </Accordion>
 </AccordionGroup>
@@ -45,13 +65,13 @@ You can now provision and manage Management Keys through the Junction Dashboard:
 
 ### Managing Brand Information (June 2025)
 
-We have updated the **Branding and Communcations** tab (previously _White-Labelling_) in the Team Config page. You can now
+We have updated the **Branding and Communications** tab (previously _White-Labelling_) in the Team Config page. You can now
 review and update your Team's brand information through this page.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Team Brand Information is used in:
 
-  1. All patient communication [Junction Lab Testing](/lab/overview/introduction) sent on your behalf;
+  1. All patient communication in [Junction Lab Testing](/lab/overview/introduction) sent on your behalf;
   2. the Junction-hosted Appointment Booking page for [Junction Lab Testing](/lab/overview/introduction); and
   3. the Junction-hosted [Link Widget](/wearables/connecting-providers/introduction);
 
@@ -66,7 +86,7 @@ review and update your Team's brand information through this page.
 Introducing **Team Admin** roles for the Junction Dashboard users. Choose between organization-wide and team-specific admin privileges when adding members.
 
 <Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
-  ## What’s New
+  ## What's New
 
   - **Two Permission Levels** – When inviting new members to your organization, you can now choose between **Org Admin** and **Team Admin** roles.
   - **Team-Specific Access** – **Team Admins** can be granted access to specific teams by providing a list of team IDs during invitation or role modification.
@@ -100,8 +120,8 @@ We have improved the search and filtering capabilities in the Orders page, helpi
   - Patient Email
   - Patient Date of Birth
     - in the YYYY-MM-DD format.
-    - e.g., “1988” will filter for all patients born in 1988.
-    - e.g., “1988-03” will filter for all patients born in March of 1988 and “1988-03-07” will filter for all patients born on March 7th, 1988.
+    - e.g., "1988" will filter for all patients born in 1988.
+    - e.g., "1988-03" will filter for all patients born in March of 1988 and "1988-03-07" will filter for all patients born on March 7th, 1988.
   - User ID
   - Client User ID
   - Order ID
@@ -150,17 +170,17 @@ The Users page in the Junction Dashboard is now a search-first experience with m
 available. You can now also click on specific users to inspect device connection status and the patient details.
 
 <Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
-  Find your user by typing their Client User ID or Vital User ID into the search bar. For lab testing users: Name, Email and Phone Number are also supported.
+  Find your user by typing their Client User ID or Junction User ID into the search bar. For lab testing users: Name, Email and Phone Number are also supported.
 
   Click on a user to reveal the new User Details page:
 
   #### The General tab
 
-  Shows an overview of all patient details and user settings associated with the Vital User ID.
+  Shows an overview of all patient details and user settings associated with the Junction User ID.
 
   #### The Connections tab
 
-  Provides device connection availability and data ingestion insights of the Vital User.
+  Provides device connection availability and data ingestion insights of the Junction User.
 
-  You can also obtain this same information programmatically through the [Introspection API](/api-reference/introspection/user-resources).
+  You can also obtain this same information programmatically through the [Introspection API](/api-reference/data/introspection/user-resources).
 </Accordion>

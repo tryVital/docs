@@ -1,5 +1,6 @@
 ---
 title: "Deprecations"
+description: "Deprecated features in the Junction Lab Testing API, including the lab_test_id field replaced by order_set in order creation."
 ---
 
 ### `lab_test_id` in the [POST /v3/order](/api-reference/lab-testing/create-order) endpoint.
@@ -32,10 +33,10 @@ title: "Deprecations"
 
 ### `value` field in the `results` object
 
-We are removing the `value` field from the [results object](/api-reference/results/get-results), as it does not accuratly capture all possible result values. In turn, we've introduced the `result` field.
+We are removing the `value` field from the [results object](/api-reference/lab-testing/results/get-results), as it does not accurately capture all possible result values. In turn, we've introduced the `result` field.
 
 <Card title="Recommended Action">
-Parse the `result` field in accordance to the `result_type` field. [More information here.](/lab/results/result-formats#resulttype)
+Parse the `result` field in accordance with the `result_type` field. [More information here](/lab/results/result-formats#resulttype).
 </Card>
 
 

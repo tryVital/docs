@@ -1,10 +1,12 @@
 ---
+title: "Create user"
+description: "Create or submit user via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/user"
 ---
 
 <Note>
 When the supplied `client_user_id` conflicts with an existing user, the 400 Bad Request error response
-includes the Vital User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
+includes the Junction User ID (`user_id`) and the creation date (`created_on`) of the conflicting user.
 </Note>
 
 <RequestExample>

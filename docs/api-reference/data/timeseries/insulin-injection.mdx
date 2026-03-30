@@ -1,5 +1,6 @@
 ---
 title: "Insulin Injection"
+description: "Retrieve grouped timeseries data for insulin injection tracking from connected health devices."
 openapi: "GET /v2/timeseries/{user_id}/insulin_injection/grouped"
 ---
 
@@ -113,11 +114,14 @@ fmt.Printf("Received data %s\n", response)
       {
         "data": [
           {
-            "end": "2023-02-13T14:30:52+00:00",
+            "bolus_purpose": "correction",
+            "delivery_form": "extended",
+            "delivery_mode": "bolus",
+            "end": "2023-02-13T14:57:24+00:00",
             "start": "2023-02-13T14:30:52+00:00",
-            "type": "long_acting",
+            "type": "rapid_acting",
             "unit": "unit",
-            "value": 60
+            "value": 2.5
           }
         ],
         "source": {

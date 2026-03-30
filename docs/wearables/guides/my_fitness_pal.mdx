@@ -1,14 +1,15 @@
 ---
 title: "MyFitnessPal"
+description: "Connect MyFitnessPal accounts to Junction by configuring diary sharing with the required locked with key privacy setting."
 ---
 
-## Connecting MyFitnessPal to Vital
+## Connecting MyFitnessPal to Junction
 
-You can now link MyFitnessPal accounts to Vital! You can do this with Junction Link Widget or programatically like other [password](/api-reference/link/link-password-provider) providers.
+You can now link MyFitnessPal accounts to Junction! You can do this with the Junction Link Widget or programmatically like other [password](/api-reference/link/link-password-provider) providers.
 
 ## Before Connecting
 
-You can share your MyFitnessPal diary with Vital by locking your diary with a key.
+You can share your MyFitnessPal diary with Junction by locking your diary with a key.
 - Go to [your diary settings](https://www.myfitnesspal.com/account/diary-settings) and click **locked with key**.<br/>
   On mobile, head to *MyFitnessPal > More > Settings > Diary Settings > Diary Sharing*.
 <Tabs>
@@ -41,11 +42,11 @@ You can share your MyFitnessPal diary with Vital by locking your diary with a ke
 
 - Pick a key of your choice and save your changes.
 
-You can now use the key and your MyFitnessPal username when linking with Vital via the widget or programatically.
+You can now use the key and your MyFitnessPal username when linking with Junction via the widget or programmatically.
 
-## Vital Widget
+## Junction Widget
 
-To connect your device with the _widget_, follow the link wizard ensuring and enter your username and key.
+To connect your device with the _widget_, follow the link wizard and enter your username and key.
 
 <CardGroup>
 	<Frame type="glass">
@@ -56,7 +57,7 @@ To connect your device with the _widget_, follow the link wizard ensuring and en
 	</Frame>
 </CardGroup>
 
-Please note when linking programatically that the **password** required in the payload 
+Please note when linking programmatically that the **password** required in the payload 
 is the **locked key** you set in your [diary settings](https://www.myfitnesspal.com/account/diary-settings).
 
 <CodeGroup>
@@ -95,6 +96,6 @@ const user = await client.Link.connectProvider(
 
 On successful connection, you will receive:
 
-- [Connection create](/webhooks/introduction#connection-created) wehbook.
-- [Historical Meal](/webhooks/introduction#historical-data-flow) webhook, implying that the last _2 weeks_ of data are fetched successfully.
-- [Daily webhooks](/webhooks/introduction#daily-data-flow) `data.daily.meal.created` and `data.daily.meal.updated` are issued, as new or more up-to-date data becomes available.
+- [Connection created](/webhooks/introduction#connection-created-stage) webhook.
+- [Historical Meal](/webhooks/introduction#historical-data-backfill-stage) webhook, implying that the last _2 weeks_ of data are fetched successfully.
+- [Daily webhooks](/webhooks/introduction#incremental-data-stage) `daily.data.meal.created` and `daily.data.meal.updated` are issued, as new or more up-to-date data becomes available.

@@ -1,16 +1,16 @@
 ---
 title: "Abbott LibreView"
-description: "For Abbott CGMs, e.g. Freestyle Libre."
+description: "Connect Abbott continuous glucose monitors like Freestyle Libre to Junction through the LibreView cloud platform integration."
 ---
 
 ## Overview
 
-Vital supports two ways to connect to LibreView for Abbott CGMs:
+Junction supports two ways to connect to LibreView for Abbott CGMs:
 
 | Provider Slug      | Remarks                   |
-| ------------------ | ------------------------- | 
-| `abbott_libreview` | Connect via LibreView patient account in any region. | 
-| `freestyle_libre`  | Connect via regional LibreView practices (Vital-managed, or custom practices). |
+| ------------------ | ------------------------- |
+| `abbott_libreview` | Connect via LibreView patient account in any region. |
+| `freestyle_libre`  | Connect via regional LibreView practices (Junction-managed, or custom practices). |
 
 
 <Warning> The abbott_libreview provider is no longer supported for new connections. This change applies to organizations that do not already have at least one active abbott_libreview connection. Existing abbott_libreview connections will continue to sync as normal. </Warning>
@@ -18,14 +18,14 @@ Vital supports two ways to connect to LibreView for Abbott CGMs:
 ### `freestyle_libre` for practice-based connections
 
 With the `freestyle_libre` integration, users have to share/connect their LibreView patient account
-with either Vital's LibreView practice, or a custom practice of yours.
+with either Junction's LibreView practice, or a custom practice of yours.
 
-Vital accesses the patient CGM data as a member of the LibreView practice.
+Junction accesses the patient CGM data as a member of the LibreView practice.
 
 ### `abbott_libreview` for patient-based connections
 
 With the `abbott_libreview` integration, users can connect their Abbott CGM devices simply by signing in
-with their LibreView patient account. Vital accesses the patient CGM data as their personal account.
+with their LibreView patient account. Junction accesses the patient CGM data as their personal account.
 
 * You would not need to maintain any LibreView practices.
 * You would not need to instruct your users to connect their account to a LibreView practice, before they can attempt to connect via Junction Link. 
@@ -50,13 +50,13 @@ The following error types are relevant in this password rotation situation:
 When you detect a disconnection, guide your user to:
 
 1. Sign into the LibreLink app or the LibreView web portal.
-2. Update their account passwords.
+2. Update their account password.
 3. Use the Junction Link Widget or your custom widget to re-establish the `abbott_libreview` connection.
 
 
-## LibreView data use floating time basis
+## LibreView data uses a floating time basis
 
-All LibreView (Freestyle Libre) data are in **floating time basis**.
+All LibreView (Freestyle Libre) data are on a **floating time basis**.
 
 Please go through the [Timestamps and Time Zones](/wearables/providers/timestamps-and-time-zones) guide to understand the
 implications, as well as how to properly handle floating time data.
@@ -95,7 +95,7 @@ exposed as a **password provider**:
   Submit the username and password of the LibreView patient account to the [Link Password Provider](/api-reference/link/link-password-provider) endpoint.
 
   <Note>
-  You need not specify any region in your request. Vital will match the correct LibreView region transparently.
+  You need not specify any region in your request. Junction will match the correct LibreView region transparently.
   
   **Important:** Abbott LibreView linking can take longer than other providers. We recommend configuring an extended client-side timeout (up to 60 seconds) when making this Link request. If your timeout is shorter, linking may fail even when credentials are valid.
   </Note>
@@ -104,9 +104,9 @@ exposed as a **password provider**:
 
   <Step number="3" title="Handle the multi-factor authentication request">
   The [Link Password Provider](/api-reference/link/link-password-provider) endpoint responds with `state: "pending_provider_mfa"`,
-  alongside the MFA method being used, as well as a MFA hint.
+  alongside the MFA method being used, as well as an MFA hint.
 
-  This means the user must complete multi-factor authentication before Vital can establish the connection. You should prompt the user
+  This means the user must complete multi-factor authentication before Junction can establish the connection. You should prompt the user
   to input the verification code they received out-of-band.
   </Step>
 
@@ -125,15 +125,15 @@ exposed as a **password provider**:
 
 ### Adding users to a Practice
 
-When integrating with Vital, you have two options: use Vital's practice, or yours. We call the latter a custom practice. Depending on the approach, you need to instruct your user's to connect their Libre account to a practice.
+When integrating with Junction, you have two options: use Junction's practice, or yours. We call the latter a custom practice. Depending on the approach, you need to instruct your users to connect their Libre account to a practice.
 
-This allows Vital to start pulling data from their account. This is done through the Libre app:
+This allows Junction to start pulling data from their account. This is done through the Libre app:
 
 <img src="/img/connect_libreview.png" className="w-2/5 block mx-auto" />
 
 ### Supported Regions
 
-#### 🇺🇸 Vital US region
+#### 🇺🇸 Junction US region
 
 
 | Region Code | Region |
@@ -149,7 +149,7 @@ This allows Vital to start pulling data from their account. This is done through
 
 _(\*) Default if region is unspecified._
 
-#### 🇪🇺 Vital EU region
+#### 🇪🇺 Junction EU region
 
 | Region Code | Region |
 | ----------- | ------ |
@@ -206,36 +206,36 @@ _(\*) Default if region is unspecified._
 ### Bring Your Own Practice
 
 <Info>
-`freestyle_libre` custom practice connections is available for [the Scale plan](https://tryvital.io/pricing).
+`freestyle_libre` custom practice connections are available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
 <Steps>
 
-<Step title="Obtain the Vital practice email address">
-Get in touch with [Vital Support](/home/getting-support) to request the region-specific Vital practice email address.
+<Step title="Obtain the Junction practice email address">
+Get in touch with [Junction Support](/home/getting-support) to request the region-specific Junction practice email address.
 </Step>
 
-<Step title="Invite the Vital practice">
-Invite the Vital practice email address to join your LibreView practice as a **Care Team Admin**.
+<Step title="Invite the Junction practice">
+Invite the Junction practice email address to join your LibreView practice as a **Care Team Admin**.
 </Step>
 
-<Step title="Confirm with Vital support">
-Inform Vital support of the invitation, and wait for the support acknowledgement of successful practice connection.
+<Step title="Confirm with Junction support">
+Inform Junction support of the invitation, and wait for the support acknowledgment of successful practice connection.
 </Step>
 
 </Steps>
 
 Once the connection is established, Junction Link would recognize all patient emails having connected to your LibreView practice.
-These patients do not need to connect separately to the [Vital practices](#using-vital-practices).
+These patients do not need to connect separately to the [Junction practices](#using-junction-practices).
 
-### Using Vital Practices
+### Using Junction Practices
 
 <Info>
-  You can use a Vital practice to test the integration with Freestyle Libre.
+  You can use a Junction practice to test the integration with Freestyle Libre.
   This modality is available to all subscriptions.
 </Info>
 
-Vital has two LibreView Practices that are available in all supported regions:
+Junction has two LibreView Practices that are available in all supported regions:
 
 | Environment | Practice Name    |
 | ----------- | ---------------- |
@@ -246,7 +246,7 @@ You need to ask your user to add one of the above practices in their Libre App. 
 
 ### Junction Link Widget
 
-To connect your user to Vital via the Link Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
+To connect your user to Junction via the Link Widget you can follow the guide [here](/wearables/connecting-providers/launching_link).
 
 <img src="/img/libre_connect.png" className="w-2/5 block mx-auto" />
 
@@ -262,7 +262,7 @@ token_response = client.link.token(user_id="<user_id>")
 
 ```javascript Node
 const request: LinkTokenExchange = {
-    userId: "<user_id>
+    userId: "<user_id>"
 }
 const data = await client.link.token(request)
 ```
@@ -278,14 +278,14 @@ var tokenResponse = vital.link().token(request);
 
 ```go Go
 request := &vital.LinkTokenExchange{
-     UserId:   "<user_id>
+     UserId:   "<user_id>"
 }
 
 tokenResponse, err := client.Link.Token(context.TODO(), request)
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n response)
+fmt.Printf("Received data %s\n", response)
 ```
 
 </CodeGroup>
@@ -298,9 +298,9 @@ fmt.Printf("Received data %s\n response)
 
 ```python Python
 linkResponse = client.link.connect_email_auth_provider(
-  provider="freestyle_libre
-  email="<email>
-  vital_link_token=token_response.link_token
+  provider="freestyle_libre",
+  email="<email>",
+  vital_link_token=token_response.link_token,
 )
 ```
 
@@ -311,7 +311,7 @@ const linkRequest: EmailProviderAuthLink = {
 }
 
 const connectEmailResponse = await client.link.connectEmailAuthProvider(
-    "freestyle_libre
+    "freestyle_libre",
     linkRequest
 )
 ```
@@ -323,22 +323,22 @@ EmailProviderAuthLink request = EmailProviderAuthLink
         .email("<email>")
         .build();
 
-var data = vital.link().connectEmailAuthProvider("<provider request);
+var data = vital.link().connectEmailAuthProvider("<provider>", request);
 ```
 
 ```go Go
 emailAuthRequest := &vital.EmailProviderAuthLink{
   VitalLinkToken: tokenResponse.LinkToken,
-  Email:          "<email>
+  Email:          "<email>",
 }
 
-emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre emailAuthRequest)
+emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre", emailAuthRequest)
 if err != nil {
   return err
 }
-fmt.Printf("Received data %s\n emailAuth)
+fmt.Printf("Received data %s\n", emailAuth)
 ```
 
 </CodeGroup>
 
-Once this is complete we will start syncing data from their [Libre account](/api-details/data_flow).
+Once this is complete we will start syncing data from their [Libre account](/webhooks/introduction).

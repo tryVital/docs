@@ -1,8 +1,9 @@
 ---
 title: "Critical Results"
+description: "Understand how Junction categorizes lab result markers as normal, abnormal, or critical, and receive webhook alerts for critical findings."
 ---
 
-When our Lab partners return results to Vital, they may return specific interpretations for each Marker:
+When our Lab partners return results to Junction, they may return specific interpretations for each Marker:
 
 - `normal`, the marker value is inside the lab reference range.
 - `abnormal`, the marker value is outside the lab reference range.
@@ -10,7 +11,7 @@ When our Lab partners return results to Vital, they may return specific interpre
 
 These values are returned in an `interpretation` field for results, both in each individual marker and the overall results object:
 
-```json Resuls Object
+```json Results Object
 {
   "metadata": {
     "age": 19,
@@ -57,9 +58,9 @@ These values are returned in an `interpretation` field for results, both in each
 }
 ```
 
-Besides the `interpretation` field, there is also the `status` field, which can assume the values of `final` or `partial`, as the critical results are notified as soon as they're available, not all tests are guaranteed to have been processed by the lab.
+Besides the `interpretation` field, there is also the `status` field, which can assume the values of `final` or `partial`, as the critical results are notified as soon as they're available; not all tests are guaranteed to have been processed by the lab.
 
-For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Vital assigned physician. They act as the ordering physician when placing the order. After the call is made, and Vital has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
+For critical results, the laboratory will contact a physician, so they can provide further information to the patient. The physician called is the Junction-assigned physician. They act as the ordering physician when placing the order. After the call is made, and Junction has received the results from the laboratory, a `labtest.result.critical` event is sent. The webhook payload contains the following information:
 ```json Critical Results Webhook Payload
 {
   "data": {
@@ -80,9 +81,9 @@ After you receive the webhook, you can use the [`GET /order/{order_id}/result`](
 
 You can test the webhook event by using the [Junction Dashboard](https://app.junction.com) Webhooks section,
 where you can register an endpoint and subscribe to the `labtest.result.critical` event.
-The following images show what the screen should look like after you have an endpoint registered
+The following image shows what the screen should look like after you have an endpoint registered
 and have selected the `Testing` section inside the endpoint configurations.
 
 <img src="/img/critical-event-testing.png" width="100%" />
 
-You can then click the `Send Example` button and should receive a HTTP call in the registered url.
+You can then click the `Send Example` button and should receive an HTTP call in the registered URL.

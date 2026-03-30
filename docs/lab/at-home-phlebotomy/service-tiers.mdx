@@ -1,11 +1,12 @@
 ---
 title: "Phlebotomy Service Tiers"
+description: "Compare the two phlebotomy service tiers: Appointment Ready for synchronous scheduling and Appointment Request for asynchronous assignment."
 ---
 
-Vital offers multiple Tiers of phlebotomy services, with different coverage capabilities:
+Junction offers multiple Tiers of phlebotomy services, with different coverage capabilities:
 
-- **Appointment Ready:** An appointment is booked in Vital using the patient’s address and the  appointment’s date time. The scheduling is completely synchronous and fully controlled by Vital's customers through our API.
-- **Appointment Request:** An appointment is requested through Vital system using the patient’s address. A phlebotomist will eventually assign themselves to the appointment and define the appointment’s date time with the patient.
+- **Appointment Ready:** An appointment is booked in Junction using the patient's address and the appointment's date and time. The scheduling is completely synchronous and fully controlled by Junction's customers through our API.
+- **Appointment Request:** An appointment is requested through the Junction system using the patient's address. A phlebotomist will eventually assign themselves to the appointment and define the appointment's date and time with the patient.
 
 The following Providers are available for each Tier:
 
@@ -24,7 +25,7 @@ The following Providers are available for each Tier:
 
 <br />
 
-The recommend high level flow for selecting an appointment at Vital is:
+The recommended high-level flow for selecting an appointment at Junction is:
 
 - Place an At-Home Phlebotomy order with the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint.
 - Wait for the `Requisition Ready` status updates through our Webhooks.
@@ -35,21 +36,21 @@ The recommend high level flow for selecting an appointment at Vital is:
   "zip_code": "85004",
   "phlebotomy": {
     "is_served": true,
-		"providers": [
-    {
-      "name": "getlabs",
-      "tier": ["appointment-ready"]
-    },
-    {
-      "name": "phlebfinders",
-      "tier": ["appointment-request"]
-    }
+    "providers": [
+      {
+        "name": "getlabs",
+        "tier": ["appointment-ready"]
+      },
+      {
+        "name": "phlebfinders",
+        "tier": ["appointment-request"]
+      }
     ]
   }
 }
 ```
 
-- Select the Provider that best fit your needs.
+- Select the Provider that best fits your needs.
     - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/book`](/api-reference/lab-testing-at-home-phlebotomy/appointment-booking) endpoint, an `appointment-ready` provider is chosen on your behalf.
-    - if you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/request`](/api-reference/lab-testing-at-home-phlebotomy/appointment-request) endpoint, you must select a provider that offers an `appointment-request` tier.
+    - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/request`](/api-reference/lab-testing-at-home-phlebotomy/appointment-request) endpoint, you must select a provider that offers an `appointment-request` tier.
 - Wait for the `Appointment Webhooks` and `Order Webhooks` described in the [Webhooks](/lab/at-home-phlebotomy/webhooks) section.

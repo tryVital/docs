@@ -1,5 +1,6 @@
 ---
 title: "Installation"
+description: "Install Junction Mobile SDKs on iOS and Android with platform-specific requirements, minimum OS versions, and dependency configuration."
 ---
 
 ## Project requirements
@@ -9,7 +10,7 @@ title: "Installation"
 
 | Parameter | Requirement |
 | --------- | ----------- |
-| Minimum deployment target | iOS 14.0 |
+| Minimum deployment target | iOS 15.1 |
 
 <Note>
 If you are integrating on React Native or Flutter, or integrating on Native iOS via CocoaPods,
@@ -23,18 +24,18 @@ make sure you have updated the minimum iOS deployment target in:
 -platform :ios, min_ios_version_supported
 
 # Set minimum deployment target to be iOS 14.0.
-+platform :ios, '14.0'
++platform :ios, '15.1'
 ```
 </Note>
 
 ### Android
-<Info>Applies also to Flutter and React Native projects.</Info>
+<Info>Applies also to Flutter, React Native and Expo projects.</Info>
 
 | Parameter | Requirement |
 | --------- | ----------- |
-| Minimum SDK Level | 26 |
+| Minimum SDK Level | 26 (Health Connect), 29 (Samsung Health) |
 | Compile SDK Level | 36 |
-| Kotlin compiler version | 1.8.22 or above |
+| Kotlin compiler version | 2.1.20 or above |
 | Android Gradle Plugin version | 8.9.1 or above |
 | Gradle version | 8.11.1 or above |
 
@@ -46,19 +47,26 @@ make sure you have updated the minimum iOS deployment target in:
 
 ### React Native
 
+#### Expo
+
+| Parameter | Requirement |
+| --------- | ----------- |
+| Expo | 53 or above |
+
+#### Bare React Native projects
 | Parameter | Requirement |
 | --------- | ----------- |
 | React Native Core | 0.72.0 or above |
-| Node.js | 18.0 or above |
+| Node.js | 20.0 or above |
 
 
-## Setup package dependencies
+## Set up package dependencies
 
-## iOS
+### iOS
 
-Vital Mobile SDKs are available through both Swift Package Manager and CocoaPods.
+Junction Mobile SDKs are available through both Swift Package Manager and CocoaPods.
 
-### Swift Package Manager
+#### Swift Package Manager
 
 Add the vital-ios package (`https://github.com/tryVital/vital-ios`) as a dependency of your project.
 
@@ -75,7 +83,7 @@ Link `VitalHealthKit` and `VitalDevices` as appropriate. Note that `VitalCore` i
   {" "}
 </iframe>
 
-### CocoaPods
+#### CocoaPods
 
 Add the following declarations to your app target in your Podfile:
 
@@ -85,7 +93,7 @@ pod 'VitalDevices'
 pod 'VitalHealthKit'
 ```
 
-## Android
+### Android
 
 Make sure Maven Central is included in the list of repositories in your `build.gradle`.
 
@@ -102,12 +110,114 @@ def vital_version = '3.2.1'
 
 implementation 'io.tryvital:vital-client:$vital_version'
 implementation 'io.tryvital:vital-health-connect:$vital_version'
+implementation 'io.tryvital:vital-samsung-health:$vital_version'
 implementation 'io.tryvital:vital-devices:$vital_version'
 ```
 
-## React Native
+<Note>
+Samsung Health also requires the downloaded Samsung Health Data SDK AAR to be wired into your Android root project via
+`samsungHealthAarPath` (Native Android / bare React Native) or `samsungHealth.aarPath` (Expo config plugin). Check out the
+[Samsung Health guide](/wearables/guides/samsung-health#samsung-health-project-setup) for more details.
+</Note>
 
-Install Vital SDK packages through NPM or Yarn:
+### React Native
+
+#### Expo projects
+
+##### Installation
+
+<Info>
+Only [Expo Prebuild](https://docs.expo.dev/guides/adopting-prebuild/) is supported.
+Expo Go is incompatible, since it supports neither native library binaries, nor [Expo Config Plugin](https://docs.expo.io/guides/config-plugins/).
+</Info>
+
+First install the package with [`npx expo install`](https://docs.expo.dev/more/expo-cli/#installation).
+
+```sh
+npx expo install @tryvital/vital-core-react-native
+npx expo install @tryvital/vital-health-react-native
+```
+
+After installing the Junction React Native SDK packages, add the bundled Junction Expo Config Plugins to the [`plugins`](https://docs.expo.io/versions/latest/config/app/#plugins) array of your Expo app configuration file (`app.json` or `app.config.js`):
+
+```json app.json/app.config.js
+{
+  "expo": {
+    "plugins": [
+      "@tryvital/vital-core-react-native",
+      "@tryvital/vital-health-react-native"
+    ]
+  }
+}
+```
+
+
+##### Android specific configuration
+
+In your Expo app configuration file (`app.json` or `app.config.js`), use the `expo-build-properties` config plugin to customize the minimum, target and compile Android SDK version:
+
+```json app.json/app.config.js
+{
+  "expo": {
+    // ...
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 26
+          }
+        }
+      ],
+      // ...
+    ]
+  }
+}
+```
+
+<Note>
+Refer to [Project Requirements > Android](#android) for the constraints on these SDK version levers.
+</Note>
+
+Next, rebuild your app as described in the ["Adding custom native code"](https://docs.expo.dev/workflow/customizing/) guide.
+
+##### Customizations
+
+You can customize the integration by passing additional properties to the Expo config plugin:
+
+| Key | Value |
+| ---- | ----- |
+| `healthSharePermission` (_string_) | Sets the iOS `NSHealthShareUsageDescription` permission message to the `Info.plist`. Defaults to `Allow $(PRODUCT_NAME) to check health info` |
+| `samsungHealth.aarPath` (_string_) | Path to the downloaded Samsung Health Data SDK AAR. Required when enabling Samsung Health on Android through Expo. |
+
+```json app.json/app.config.js
+{
+  "expo": {
+    "plugins": [
+      "@tryvital/vital-core-react-native",
+      [
+        "@tryvital/vital-health-react-native",
+        {
+          "healthSharePermission": "Custom health share permission",
+          "samsungHealth": {
+            "aarPath": "../vendor/samsung-health-data-api-1.0.0.aar"
+          }
+        }
+      ]
+    ]
+  }
+}
+```
+
+<Info>
+After making changes to your Config Plugin settings, you must re-run Expo Prebuild to re-generate your iOS and Android projects.
+</Info>
+
+
+#### Bare React Native projects
+Install Junction SDK packages through NPM or Yarn:
 ```commandline
 npm install @tryvital/vital-core-react-native
 npm install @tryvital/vital-health-react-native
@@ -126,13 +236,13 @@ This usually happens after you have bumped the React Native SDK package versions
 
 Use `pod update` to resolve the conflict:
 ```commandline
-pod update VitalCore VitalDevices VitalHealthKit --repo-update
+pod update VitalCore VitalDevices VitalHealthKit VitalLogging --repo-update
 ```
 </Info>
 
-## Flutter
+### Flutter
 
-Add Vital SDK packages to your `pubspec.yaml`:
+Add Junction SDK packages to your `pubspec.yaml`:
 
 ```yaml
 dependencies:

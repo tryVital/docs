@@ -1,19 +1,20 @@
 ---
 title: "Deregister Connection"
+description: "Remove user via the Junction API. Requires authentication with your team API key."
 openapi: "DELETE /v2/user/{user_id}/{provider}"
 ---
 
 <Note>
-Deregistration has well-defined behaviour only on [cloud-based providers](/wearables/providers/introduction#cloud-based-providers).
+Deregistration has well-defined behavior only on [cloud-based providers](/wearables/providers/introduction#cloud-based-providers).
 </Note>
 
 <Warning>
 If your Junction Health SDK uses [the default Auto Connect mode](/wearables/sdks/health/connection-policies#auto-connect-mode-default),
-deregistering an Apple HealthKit or a Health Connect connection has no effect.
+deregistering an Apple HealthKit, Health Connect or Samsung Health connection has no effect.
 
-For explicit connection and disconnection of Apple HealthKit and Health Connect connections, see the [the opt-in Explicit Connect mode](/wearables/sdks/health/connection-policies#auto-connect-mode-default).
+For explicit connection and disconnection of Apple HealthKit, Health Connect and Samsung Health connections, see the [opt-in Explicit Connect mode](/wearables/sdks/health/connection-policies#explicit-connect-mode).
 
-You can also pause [Health SDK data sync](/wearables/sdks/vital-health#pausing-data-synchronization) client-side, or
+You can also pause [Health SDK data sync](/wearables/sdks/health/overview#pausing-data-synchronization) client-side, or
 [sign-out the user](/wearables/sdks/vital-core#reset-the-sdk-sign-out) from the SDK.
 </Warning>
 

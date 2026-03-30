@@ -1,18 +1,37 @@
 ---
-title: "Provider and Resources"
+title: "Providers and Resources"
+description: "Changelog of wearable provider updates including Health SDK Explicit Connect mode, sync progress logs, and provider-specific improvements."
 ---
+
+### Samsung Health via Junction Health SDK (March 2026)
+
+Junction Health SDK now supports Samsung Health as an SDK-based connection on Android phones.
+
+<Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
+Samsung Health uses the same Sync On App Launch and opt-in Background Sync model as Health Connect.
+
+On Expo and React Native, the Health SDK now accepts an optional `provider` argument throughout the entire API surface. Health Connect remains
+the default provider, so you must pass `"samsung_health"` explicitly to target Samsung Health.
+
+Check out the [Samsung Health guide](/wearables/guides/samsung-health) for the Samsung Health setup requirements and details. Check out
+the [Junction Health SDK overview](/wearables/sdks/health/overview) for documentation on the shared API surface.
+
+<Note>
+This feature is available on Android SDK 5.0.0+ and React Native SDK 6.0.0+.
+</Note>
+</Accordion>
 
 ### Health SDK: Explicit Connect mode (Sep 2025)
 
-The Health SDK now supports an opt-in **[Explicit Connect mode](https://docs.junction.com/wearables/sdks/health/connection-policies#explicit-connect-mode)**, which enables your application to
+The Health SDK now supports an opt-in **[Explicit Connect mode](/wearables/sdks/health/connection-policies#explicit-connect-mode)**, which enables your application to
 explicitly control the moment of Health Connect connection creation and disconnection.
 
 <Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
-The opt-in Explicit Connect mode also allows remote disconnection through the [Deregister Connection](https://docs.junction.com/api-reference/user/deregister-a-provider) endpoint, which was not supported in the default [Auto Connect](https://docs.junction.com/wearables/sdks/health/connection-policies#auto-connect-mode-default) mode.
+The opt-in Explicit Connect mode also allows remote disconnection through the [Deregister Connection](/api-reference/user/deregister-a-provider) endpoint, which was not supported in the default [Auto Connect](/wearables/sdks/health/connection-policies#auto-connect-mode-default) mode.
 
 If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit and Health Connect
 connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
-mode more appealling.
+mode more appealing.
 
 Check out the [Health SDK Connection Policies](/wearables/sdks/health/connection-policies) documentation for further details.
 
@@ -23,10 +42,10 @@ This feature is available on iOS SDK 1.8.0+, Android SDK 4.2.0+, React Native SD
 
 ### Health Connect sync progress logs in Junction Dashboard (Sep 2025)
 
-Health Connect integrations using Android SDK 4.2.0 or above would now report client-side sync progress regularly to the Junction Dashboard.
+Health Connect integrations using Android SDK 4.2.0 or above now report client-side sync progress regularly to the Junction Dashboard.
 
 <Accordion icon="heart" iconType="duotone" title="Details" defaultOpen>
-Similar to the iOS SDK equivalent, this report would include metadata of any exception that had disrupted a sync attempt. We hope that this
+Similar to the iOS SDK equivalent, this report includes metadata of any exception that had disrupted a sync attempt. We hope that this
 brings more visibility into Health Connect sync issues.
 
 <Note>
@@ -157,8 +176,8 @@ For more information, check out:
 
 ### Improved LibreView practice connection process (Jan 2025)
 
-You can now connect LibreView patients in to [46 regions in the EU environment](/wearables/guides/abbott-libreview#vital-eu-region)
-and [8 regions in the US environment](/wearables/guides/abbott-libreview#vital-us-region).
+You can now connect LibreView patients in [46 regions in the EU environment](/wearables/guides/abbott-libreview#-junction-eu-region)
+and [8 regions in the US environment](/wearables/guides/abbott-libreview#-junction-us-region).
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 Previously, the Link API and Link Widget listed only the regions to which our practice account was registered. However, these
@@ -181,7 +200,7 @@ for more information.
 
 ### Electrocardiogram, Heart Rate Alert and AFib Burden (Dec 2024)
 
-Vital now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
+Junction now supports collecting Electrocardiogram (ECG) data and a couple of related data points from a set of providers:
 
 Resource                                                | Apple HealthKit <sup>[3]</sup> | Fitbit | Withings | Kardia
 ------------------------------------------------------- | --------------- | ------ | -------- | -------
@@ -201,7 +220,7 @@ AFib Burden<br />`afib_burden`                          | ✅              | -  
 For more information, check out:
 * the [Get Electrocardiogram](/api-reference/data/electrocardiogram/get-summary) endpoint documentation;
 * the [Get Electrocardiogram Voltage](/api-reference/data/timeseries/electrocardiogram-voltage) endpoint documentation;
-* the [Get Heart Rate Alert](/api-reference/data/timeseries/heart-rate-alert) endpoint documentation; and
+* the [Get Heart Rate Alert](/api-reference/data/timeseries/heart-rate-alert) endpoint documentation;
 * the [Get AFib Burden](/api-reference/data/timeseries/afib-burden) endpoint documentation;
 * the [Electrocardiogram data events](/event-catalog/daily.data.electrocardiogram.created) in the Event Catalog;
 * the [Electrocardiogram Voltage data events](/event-catalog/daily.data.electrocardiogram_voltage.created) in the Event Catalog;
@@ -214,7 +233,7 @@ For more information, check out:
 ### Sleep Cycle Summary Type (Nov 2024)
 
 We are introducing a new Sleep Cycle summary type (`sleep_cycle`) which captures the detailed hypnogram of a sleep session.
-The existing hyponogram timeseries type is deprecated in favour of this new summary type.
+The existing hypnogram timeseries type is deprecated in favor of this new summary type.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 Check out the [Get Sleep Cycle](/api-reference/data/sleep-cycle/get-summary) endpoint and
@@ -229,23 +248,23 @@ The Body Summary model now includes 4 new fields:
  * `water_percentage` - The percentage of water in the body.
  * `muscle_mass_percentage` - The percentage of muscle mass in the body.
  * `visceral_fat_index` - Provider's score of visceral fat levels.
- * `bone_mass_percentage` -  The percentage of bone mass in the body.
+ * `bone_mass_percentage` - The percentage of bone mass in the body.
 
-At the time of writing all four are only available from the Withings provider.
+At the time of writing, all four are only available from the Withings provider.
 
 <Accordion icon="chart-scatter" iconType="duotone" title="Details" defaultOpen>
-Check out the [Get Body Summary](/api-reference/body/get-summary) endpoint and
+Check out the [Get Body Summary](/api-reference/data/body/get-summary) endpoint and
 the [Body Created](/event-catalog/daily.data.body.created) event for more information.
 </Accordion>
 
 ### Sleep Type (Nov 2024)
 
-New Sleep summaries now have a new _Sleep Type_ field.
+Sleep summaries now have a new _Sleep Type_ field.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
-Vital maps the Sleep Type from the source provider whenever possible. If this is unavailable at source,
-Vital infers the Sleep Type based on the sleep session duration.
+Junction maps the Sleep Type from the source provider whenever possible. If this is unavailable at source,
+Junction infers the Sleep Type based on the sleep session duration.
 
 Sleep Type         | Description
 ------------------ | -----------------
@@ -261,7 +280,7 @@ in the Event Catalog for more information.
 
 ### Apple HealthKit data sync improvements (Aug 2024)
 
-An overhauled Apple HealthKit sync engine is now available across all Vital Mobile SDK platforms.
+An overhauled Apple HealthKit sync engine is now available across all Junction Mobile SDK platforms.
 The changes bring historical data sync incrementality, prioritization, network resiliency and reduced resource usage.
 
 <Accordion icon="apple" iconType="duotone" title="Details" defaultOpen>
@@ -271,7 +290,7 @@ The changes bring historical data sync incrementality, prioritization, network r
     * This enables the SDK to make constant forward progress, especially when you have specified a very large historical pull stage (60-365 days)
       through the [Team Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences) API.
 
-2. The SDK now prioritises syncing of summary types over timeseries data.
+2. The SDK now prioritizes syncing of summary types over timeseries data.
 
     * During the historical pull stage, all timeseries resources would be suppressed until all the summary types have been successfully uploaded.
 
@@ -281,7 +300,7 @@ The changes bring historical data sync incrementality, prioritization, network r
 
     * This would provide the SDK an additional opportunity to complete any resource sync that is not able to complete during normal HealthKit background delivery.
 
-    * Please refer to the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#1-setup-app-entitlements) on how to update your iOS App Target configuration in Xcode.
+    * Please refer to the [Apple HealthKit guide](/wearables/guides/apple-healthkit#1-setup-app-entitlements) on how to update your iOS App Target configuration in Xcode.
 
 | Platform       | Release Note |
 | -------------- | ------------ |
@@ -298,9 +317,9 @@ Menstrual cycle tracking data can now be collected through the Apple HealthKit a
 Health Connect integrations.
 
 <Accordion icon="venus" iconType="duotone" title="Details" defaultOpen>
-Ask for data permission on the `MenstrualCycle` resource from the user through the Vital Health SDK.
+Ask for data permission on the `MenstrualCycle` resource from the user through the Junction Health SDK.
 
-Check out the [Get Menstrual Cycles](/api-reference/menstrual-cycle/get-summary) endpoint and
+Check out the [Get Menstrual Cycles](/api-reference/data/menstrual-cycle/get-summary) endpoint and
 the [Menstrual Cycle data events](/event-catalog/daily.data.menstrual_cycle.created) in the Event Catalog
 for more information.
 </Accordion>
@@ -311,20 +330,20 @@ for more information.
 Workouts now include the total steps count during the session (if available).
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
-Check out the [Get Workouts](/api-reference/workouts/get-summary) endpoint and
+Check out the [Get Workouts](/api-reference/data/workouts/get-summary) endpoint and
 the [Workout Created](/event-catalog/daily.data.workouts.created) event for more information.
 </Accordion>
 
 
 ### New Abbott LibreView integration (May 2024)
 
-Vital has introduced an new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
+Junction has introduced a new Abbott LibreView provider (`abbott_libreview`). It uses password authentication,
 accepting LibreView patient account credentials.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
 This is an alternative option to our practice-based Freestyle Libre provider (`freestyle_libre`).
 
-With `abbott_libreview`, Vital uses the provided LibreView patient account credentials to connect directly
+With `abbott_libreview`, Junction uses the provided LibreView patient account credentials to connect directly
 to LibreView. There is no involvement of a LibreView practice in this integration.
 
 Note that both practice-based and patient-based connections would continue to be supported in parallel. The
@@ -339,15 +358,15 @@ Check out the [Abbott LibreView / Freestyle Libre](/wearables/guides/abbott-libr
 The Fitbit profile scope and Oura email scope are no longer required for establishing connections.
 
 For Fitbit specifically, please be aware of the [updated Fitbit Time Zone resolution precedences](/wearables/guides/fitbit#time-zone-resolution). When
-your user refuses to grant both the activity and the profile scope, Fitbit data are more likely be timestamped incorrectly in UTC time basis
+your user refuses to grant both the activity and the profile scope, Fitbit data are more likely to be timestamped incorrectly in UTC time basis
 due to inaccurate or unavailable time zone information.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
 We have now updated our Fitbit and Oura integrations not to depend on these scopes to be **minimally functional**.
 
 If you are interested in requiring your users to grant certain scopes when connecting an OAuth provider, check out the
-[Team Scope Requirements](/changelog/wearables/api#team-scope-requirements-apr-24) changelog entry and
-the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requirements/get-team-scope-requirements) endpoint for more information.
+[Team Scope Requirements](/changelog/wearables/api#team-scope-requirements-apr-2024) changelog entry and
+the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements) endpoint for more information.
 </Accordion>
 
 
@@ -355,15 +374,15 @@ the [Set Team Scope Requirements](/api-reference/org-management/team-scope-requi
 Our Freestyle Libre integration now supports the LibreView India region.
 
 <Accordion icon="tag" iconType="duotone" title="Details" defaultOpen>
-Check out the [Freestyle Libre](/wearables/guides/freestyle#custom-practice-enterprise-only) documentation for more information.
+Check out the [Abbott LibreView](/wearables/guides/abbott-libreview#bring-your-own-practice) documentation for more information.
 </Accordion>
 
 
 ### Health Connect Background Sync (Mar 2024)
-Vital Mobile SDK now includes an experimental Background Sync feature for Android Health Connect.
+Junction Mobile SDK now includes an experimental Background Sync feature for Android Health Connect.
 
 <Accordion icon="robot" iconType="duotone" title="Details" defaultOpen>
-The feature is available through the following Vital Mobile SDK releases:
+The feature is available through the following Junction Mobile SDK releases:
 | Platform       | Version |
 | -------------- | ------- |
 | Native Android | 2.0.0+  |
@@ -371,8 +390,8 @@ The feature is available through the following Vital Mobile SDK releases:
 | React Native   | 3.1.0+  |
 
 Check out the following documentation for information, integration guidance as well as caveats
-of the experimental Background Sync :
-* [Vital Health SDK: Automatic Data Sync](/wearables/sdks/vital-health#automatic-data-sync) for a general overview
+of the experimental Background Sync:
+* [Junction Health SDK: Automatic Data Sync](/wearables/sdks/health/overview#automatic-data-sync) for a general overview
 * [Android Health Connect integration guide](/wearables/guides/android-health-connect#background-sync-experimental), which includes guidance on the experimental Background Sync feature.
 </Accordion>
 

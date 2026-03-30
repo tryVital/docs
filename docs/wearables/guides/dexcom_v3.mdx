@@ -1,5 +1,6 @@
 ---
 title: "Dexcom (OAuth based)"
+description: "Connect Dexcom CGM devices via the OAuth-based dexcom_v3 integration, including webhook behavior and custom OAuth credential setup."
 ---
 
 <Note>
@@ -11,17 +12,17 @@ import BYOO from '/snippets/byoo.mdx';
 
 <BYOO />
 
-## Connecting Dexcom to Vital
+## Connecting Dexcom to Junction
 
-You can connect your dexcom device to vital through Junction Link Widget or programatically like any 
+You can connect your Dexcom device to Junction through the Junction Link Widget or programmatically like any 
 other [OAuth](/api-reference/link/link-oauth-provider) provider.
 We recommend you obtain custom OAuth credentials from [Dexcom](https://developer.dexcom.com) with production access and follow the guide
-for [setting up custom credentials](/wearables/connecting-providers/bring_your_own_oauth) to get started.
+for [setting up custom credentials](/wearables/connecting-providers/bring-your-own-oauth/overview) to get started.
 
 ## Webhooks
 
-On successful connection, you will receive a [Connection create](/event-catalog/provider.connection.created) webhook, 
+On successful connection, you will receive a [Connection created](/event-catalog/provider.connection.created) webhook, 
 and subsequently, [Daily](/event-catalog/daily.data.glucose.created) and [Historical](/event-catalog/historical.data.glucose.created) Glucose webhooks.
 
-The histrical webhook informs you that the last **30 days** of data prior to connection is available and the daily webhooks follow the usual semantics
-for all vital daily webhooks.
+The historical webhook informs you that the last **30 days** of data prior to connection is available and the daily webhooks follow the usual semantics
+for all Junction daily webhooks.

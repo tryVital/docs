@@ -1,15 +1,16 @@
 ---
 title: "Result Formats"
+description: "Retrieve lab test results in two formats: raw PDF reports from partner labs and structured JSON data through the Junction API."
 ---
 
-Vital's API returns results in two different formats.
+Junction's API returns results in two different formats.
 
 - `PDF`
 - `JSON`
 
 ## PDF Results
 
-We return the raw results in PDF form, that we receive directly from our partner labs. This can be retrieved as follows:
+We return the raw results in PDF form that we receive directly from our partner labs. This can be retrieved as follows:
 
 ```bash Get order results PDF
 curl --request GET \
@@ -20,7 +21,7 @@ curl --request GET \
 ```
 
 <Note>
-Some laboratories do not issue PDFs for partial results, and only provide PDF reports once all results are finalized
+Some laboratories do not issue PDFs for partial results, and only provide PDF reports once all results are finalized.
 </Note>
 
 An example result:
@@ -33,7 +34,7 @@ We also return the parsed results in JSON format, so you can use them to generat
 
 These results are returned in a structured format, which you can find [here](/api-reference/results/get-results).
 
-<Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`</Warning>
+<Warning>The `results` field, according to the spec, can return either a `list[BiomarkerResult]` or an untyped `dict`. This is due to backwards compatibility, and you can disregard the untyped `dict`.</Warning>
 
 ### Result Status
 
@@ -41,14 +42,14 @@ The `status` field can be one of the following:
 
 1. `ResultStatus.PARTIAL` - The results are partial.
     Labs can return results before all biomarkers are available.
-    Vital makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
+    Junction makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
 
-    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.update` event.
+    This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.order.updated` event.
 
-    This is done due to the possibility of [critical values](/lab/workflow/lab-test-lifecycle#critical-results) in the results.
+    This is done due to the possibility of [critical values](/lab/results/critical-results) in the results.
 
 2. `ResultStatus.FINAL` - The results are complete.
-    This means that all biomarkers are available, and the results are final. You will receive a `labtest.update` webhook notification for this event.
+    This means that all biomarkers are available, and the results are final. You will receive a `labtest.order.updated` webhook notification for this event.
 
 ### BiomarkerResult
 
@@ -104,7 +105,7 @@ Results can fall into one of the following categories:
 
     This type is used for specialized tests like the Galleri multi-cancer early detection test. See the [Galleri Results](/lab/results/galleri-results) documentation for detailed information.
 
-<Warning>The `value` field in deprecated and will eventually be removed.</Warning>
+<Warning>The `value` field is deprecated and will eventually be removed.</Warning>
 
 #### Interpretation
 
@@ -113,15 +114,15 @@ Interpretation is a string value that can be one of the following:
 1. `Interpretation.NORMAL` - The result is within normal parameters.
 2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
 3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
-    In this case, refer to the [critical values](/lab/workflow/lab-test-lifecycle#critical-results) section.
+    In this case, refer to the [critical values](/lab/results/critical-results) section.
 
 
-#### Standardisation - LOINC
+#### Standardization - LOINC
 
 It's possible to test the same biomarkers across different laboratories. For these to match, we use the [LOINC](https://loinc.org/) standard.
 
 In the `BiomarkerResult` object, you can see two fields `loinc_slug` and `loinc`. These fields refer to the LOINC standard. Customers should use this standard, so it's possible to match results across different laboratories.
-You can expect that the `slug` field is what the laboratory returns to us - and the `loinc_slug` is the standardised version.
+You can expect that the `slug` field is what the laboratory returns to us - and the `loinc_slug` is the standardized version.
 
 An example:
 
@@ -130,7 +131,7 @@ An example:
 | Labcorp | hdl-cholesterol | 2085-9 | cholesterol-in-hdl-mass-vol |
 | USSL | hdl | 2085-9 | cholesterol-in-hdl-mass-vol |
 
-As you can see, the same biomarker `HDL Cholesterol` can have different slugs across different laboratories. However it's represented by the same LOINC value.
+As you can see, the same biomarker `HDL Cholesterol` can have different slugs across different laboratories. However, it's represented by the same LOINC value.
 
 <Warning>
 LOINC codes may be missing in some results due to our LOINC compendium still being expanded and updated, labs providing data in formats our system does not recognize, or labs not including LOINC codes in their data at all. We are actively improving both the completeness of our compendium and our ability to interpret data variations, but missing LOINCs can still occur. Integrations should be built to handle cases where LOINC codes are not guaranteed.
@@ -230,13 +231,13 @@ In order to obtain this data, you can use the following endpoints:
 
 2. [GET /v3/lab_tests/\{id\}/markers](/api-reference/lab-testing/lab-test-markers)
 
-    This allows you to see all markers associated with a lab test and it's expected results.
+    This allows you to see all markers associated with a lab test and its expected results.
 
 #### Source Markers
 
 As mentioned above, a marker can be composed of one or more results. This means that if you order a `Lipid Panel`, there will be no `Lipid Panel` result returned, but instead a series of markers that originate from the `Lipid Panel`.
 
-Vital identifies the source marker via the `source_markers` field.
+Junction identifies the source marker via the `source_markers` field.
 
 ```json
     {
@@ -267,13 +268,13 @@ Vital identifies the source marker via the `source_markers` field.
     },
 ```
 
-When Vital cannot identify the source, then this field will be `null`, indicating that this is an unsolicited result.
+When Junction cannot identify the source, then this field will be `null`, indicating that this is an unsolicited result.
 There may also be more than one `source` marker, if there are two or more ordered markers that contain the same underlying result, using the same testing method.
 
 
 #### Missing Results
 
-At times labs will commit mistakes, and expected results will be missing. Vital identifies these and parses them into a separate structure, named `missing_results`.
+At times, labs will commit mistakes, and expected results will be missing. Junction identifies these and parses them into a separate structure, named `missing_results`.
 
 This data has the following format:
 
@@ -288,20 +289,20 @@ provider_id: str | None = None
 source_markers: List[ParentBiomarkerData] | None = None
 ```
 
-`inferred_failure_type` is the Vital assigned error type.
-The error type is inferred from the comments received from the lab. They are to help assess possibly root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve more granular understanding of failure modes.
+`inferred_failure_type` is the Junction assigned error type.
+The error type is inferred from the comments received from the lab. They are to help assess possible root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve more granular understanding of failure modes.
 
 1. `quantity_not_sufficient_failure`
 
-   The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being to unable to collect the proper volume of blood from the sample, or the phlebotomist not collecting all of the sample they were meant to collect.
+   The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being unable to collect the proper volume of blood from the patient, or the phlebotomist not collecting all of the sample they were meant to collect.
 
 2. `collection_process_failure`
    
-   This is indicative of potential failures to follow the entirety phlebotomy process, often immediately following the collection. For example, improper centrifugation of the collected sample, improper refrigeration. While these are the most likely causes, there are other reasons for why sample quality may have been degraded.
+   This is indicative of potential failures to follow the entire phlebotomy process, often immediately following the collection. For example, improper centrifugation of the collected sample, improper refrigeration. While these are the most likely causes, there are other reasons for why sample quality may have been degraded.
 
 3. `drop_off_failure`
    
-   This speaks to a specific form of collection process failures. Specifically that the sample was not received by the lab in proper condition. Possible issues correspond to improper freezing, or refrigeration, or was exposed to excessive transport delay.
+   This speaks to a specific form of collection process failures. Specifically that the sample was not received by the lab in proper condition. Possible issues correspond to improper freezing, or refrigeration, or exposure to excessive transport delay.
 
 4. `internal_lab_failure`
    
@@ -317,16 +318,16 @@ The error type is inferred from the comments received from the lab. They are to 
 
 7. `unknown_failure`
 
-   This is a failure mode that could not be properly attributed to any specific failure mode. Potentially the results were simply left out and Vital was not provided any additional information.
+   This is a failure mode that could not be properly attributed to any specific failure mode. Potentially the results were simply left out and Junction was not provided any additional information.
 
 8. `patient_condition_failure`
 
-   This speaks to a failure to result due to specifics of the patient's physical condition. For example, the patient may have had some food very high in fats that immediately prior to a collection. It is possible that improper storage and handling can cause samples to fail in ways that appear to be a patient condition failure.
+   This speaks to a failure to result due to specifics of the patient's physical condition. For example, the patient may have had some food very high in fats immediately prior to a collection. It is possible that improper storage and handling can cause samples to fail in ways that appear to be a patient condition failure.
 
 9. `missing_result_calc_failure`
 
-   This failure indicates that a calculated field is missing because the underlying tests required to perform the calculation were either unable to be processed, or yielded a result outside of the allowable parameters to perform the calculation
+   This failure indicates that a calculated field is missing because the underlying tests required to perform the calculation were either unable to be processed, or yielded a result outside of the allowable parameters to perform the calculation.
 
 10. `missing_demo_aoe_calc_failure`
    
-   Some results may require additional information reported in AOE (ask on order entry) in order to yield results, such as age, to be properly calculated.
+   Some results may require additional information — such as age — reported in AOE (ask on order entry) in order to be properly calculated.

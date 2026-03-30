@@ -1,5 +1,6 @@
 ---
 title: 'Create a Test'
+description: "Create or submit lab tests via the Junction API. Requires authentication with your team API key."
 openapi: 'POST /v3/lab_tests'
 ---
 
@@ -65,7 +66,7 @@ CreateLabTestRequest request = CreateLabTestRequest
         .builder()
         .name("<name>")
         .method(LabTestCollectionMethod.TESTKIT)
-        .description("<description")
+        .description("<description>")
         .providerIds(List.of("001100"))
         .build();
 

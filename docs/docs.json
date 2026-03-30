@@ -11,26 +11,27 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Home",
+        "icon": "home",
+        "pages": [
+          "home/welcome",
+          "home/quickstart",
+          "home/libraries",
+          "home/getting-support"
+        ]
+      },
+      {
+        "tab": "Core Platform",
+        "icon": "users",
         "anchors": [
           {
-            "anchor": "Home",
-            "icon": "house",
+            "anchor": "Product Guides",
+            "icon": "users",
             "groups": [
               {
-                "group": "Home",
-                "pages": [
-                  "home/welcome",
-                  "home/quickstart",
-                  "home/libraries",
-                  "home/getting-support"
-                ]
-              },
-              {
-                "group": "API",
+                "group": "Overview",
                 "pages": [
                   "api-details/junction-api",
-                  "api-details/junction-management-api",
                   "api-details/rate_limiting",
                   "api-details/regions"
                 ]
@@ -56,87 +57,46 @@
             ]
           },
           {
-            "anchor": "Wearables",
-            "icon": "watch-fitness",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
-                "group": "Connecting Providers",
+                "group": "User Management",
                 "pages": [
-                  "wearables/connecting-providers/introduction",
-                  "wearables/connecting-providers/link_flow",
-                  "wearables/connecting-providers/launching_link",
-                  "wearables/connecting-providers/auth_types",
-                  "wearables/connecting-providers/errors",
-                  "wearables/connecting-providers/custom_widget"
+                  "api-reference/user/create-user",
+                  "api-reference/user/get-user",
+                  "api-reference/user/resolve-user",
+                  "api-reference/user/patch-user",
+                  "api-reference/user/delete-user",
+                  "api-reference/user/undo-delete-user",
+                  "api-reference/user/get-users",
+                  "api-reference/user/upsert-info",
+                  "api-reference/user/get-info-latest",
+                  "api-reference/user/create-insurance-beta",
+                  "api-reference/user/get-latest-insurance"
                 ]
               },
               {
-                "group": "Bring Your Own OAuth",
+                "group": "User Portal",
                 "pages": [
-                  "wearables/connecting-providers/bring-your-own-oauth/overview",
-                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
-                ]
-              },
-              {
-                "group": "Vital iOS App",
-                "pages": ["wearables/vital-app/introduction"]
-              },
-              {
-                "group": "Providers",
-                "pages": [
-                  "wearables/providers/introduction",
-                  "wearables/providers/resources",
-                  "wearables/providers/update-frequency",
-                  "wearables/providers/historical-data-pull-range",
-                  "wearables/providers/test_data"
-                ]
-              },
-              {
-                "group": "Data",
-                "pages": [
-                  "wearables/providers/data-primary-key",
-                  "wearables/providers/timestamps-and-time-zones",
-                  "wearables/providers/data-attributions",
-                  "wearables/providers/data-ingestion-bounds",
-                  "wearables/providers/heart-rate-zones"
-                ]
-              },
-              {
-                "group": "Mobile SDKs",
-                "pages": [
-                  "wearables/sdks/installation",
-                  "wearables/sdks/authentication",
-                  "wearables/sdks/vital-core",
-                  {
-                    "group": "Health SDK",
-                    "pages": [
-                      "wearables/sdks/health/overview",
-                      "wearables/sdks/health/connection-policies"
-                    ]
-                  },
-                  "wearables/sdks/vital-devices"
-                ]
-              },
-              {
-                "group": "Guides",
-                "pages": [
-                  "wearables/guides/abbott-libreview",
-                  "wearables/guides/apple-healthkit",
-                  "wearables/guides/android-health-connect",
-                  "wearables/guides/dexcom_v3",
-                  "wearables/guides/dexcom",
-                  "wearables/guides/fitbit",
-                  "wearables/guides/garmin",
-                  "wearables/guides/google_fit",
-                  "wearables/guides/omron",
-                  "wearables/guides/polar",
-                  "wearables/guides/whoop"
+                  "api-reference/user/create-portal-url"
                 ]
               }
             ]
           },
           {
-            "anchor": "Lab Testing",
+            "anchor": "Changelog",
+            "icon": "book",
+            "href": "https://docs.junction.com/changelog/core"
+          }
+        ]
+      },
+      {
+        "tab": "Lab Testing",
+        "icon": "flask",
+        "anchors": [
+          {
+            "anchor": "Product Guides",
             "icon": "flask",
             "groups": [
               {
@@ -160,6 +120,7 @@
                 "pages": [
                   "lab/workflow/ordering",
                   "lab/workflow/lab-test-lifecycle",
+                  "lab/workflow/order-transactions",
                   "lab/workflow/order-requirements",
                   "lab/workflow/scheduled-orders",
                   "lab/workflow/cancelling-an-order",
@@ -206,6 +167,7 @@
                 "pages": [
                   "lab/testkits/overview",
                   "lab/testkits/order-lifecycle",
+                  "lab/testkits/status-details",
                   "lab/testkits/webhooks",
                   "lab/testkits/communications"
                 ]
@@ -228,91 +190,254 @@
             ]
           },
           {
-            "anchor": "Horizon AI",
-            "icon": "robot",
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
-                "group": "Horizon AI Query",
+                "group": "Orders",
                 "pages": [
-                  "api-reference/horizon-ai/aggregation/overview",
-                  "api-reference/horizon-ai/aggregation/using-continuous-query",
-                  "api-reference/horizon-ai/aggregation/using-query-api",
-                  "api-reference/horizon-ai/aggregation/data-prioritization",
-                  "api-reference/horizon-ai/aggregation/examples"
+                  "api-reference/lab-testing/create-order",
+                  "api-reference/lab-testing/get-orders",
+                  "api-reference/lab-testing/get-order",
+                  "api-reference/lab-testing/cancel-order",
+                  "api-reference/lab-testing/requisition-pdf",
+                  "api-reference/lab-testing/abn-pdf",
+                  "api-reference/lab-testing/labels-pdf",
+                  "api-reference/lab-testing/create-unregistered-order",
+                  "api-reference/lab-testing/register-order",
+                  "api-reference/lab-testing/import-order",
+                  "api-reference/lab-testing/simulate-order",
+                  "api-reference/lab-testing/order-collection-instructions-pdf",
+                  "api-reference/lab-testing/update-order-draw-completed"
                 ]
               },
               {
-                "group": "Horizon AI Query DSL",
+                "group": "Order Transactions",
                 "pages": [
-                  "api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
-                  "api-reference/horizon-ai/aggregation/query-dsl/select-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/where-clause",
-                  "api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis"
+                  "api-reference/lab-testing/order-transactions/get-order-transaction"
                 ]
               },
               {
-                "group": "Horizon AI Python SDK",
-                "pages": ["api-reference/horizon-ai/python-sdk/getting-started"]
-              },
-              {
-                "group": "Managing Continuous Query",
+                "group": "Lab Accounts",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/create",
-                  "api-reference/horizon-ai/continuous-query/update",
-                  "api-reference/horizon-ai/continuous-query/list"
+                  "api-reference/lab-testing/lab_accounts"
                 ]
               },
               {
-                "group": "Continuous Query Task History",
+                "group": "Area Info",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                  "api-reference/lab-testing/area-info",
+                  "api-reference/lab-testing/psc-info",
+                  "api-reference/lab-testing/order-psc-info"
                 ]
               },
               {
-                "group": "Continuous Query Results",
+                "group": "At-home Phlebotomy",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-result-table"
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
+                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
                 ]
               },
               {
-                "group": "Query API",
-                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
+                "group": "Patient Service Center (PSC)",
+                "pages": [
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-availability",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-booking",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons",
+                  "api-reference/lab-testing/psc-scheduling/get-psc-appointment"
+                ]
+              },
+              {
+                "group": "Tests",
+                "pages": [
+                  "api-reference/lab-testing/tests",
+                  "api-reference/lab-testing/tests-paginated",
+                  "api-reference/lab-testing/get-lab-test",
+                  "api-reference/lab-testing/biomarkers",
+                  "api-reference/lab-testing/labs",
+                  "api-reference/lab-testing/post-test",
+                  "api-reference/lab-testing/patch-lab-test",
+                  "api-reference/lab-testing/lab-test-markers",
+                  "api-reference/lab-testing/order-set-marker",
+                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
+                ]
+              },
+              {
+                "group": "Results",
+                "pages": [
+                  "api-reference/lab-testing/results/get-results",
+                  "api-reference/lab-testing/results/get-results-pdf",
+                  "api-reference/lab-testing/results/get-results-metadata",
+                  "api-reference/lab-testing/results/get-order-transaction-results",
+                  "api-reference/lab-testing/results/get-order-transaction-results-pdf"
+                ]
+              },
+              {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
+                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
+                ]
+              },
+              {
+                "group": "Health Insurance",
+                "pages": [
+                  "api-reference/lab-testing/insurance/search-diagnosis",
+                  "api-reference/lab-testing/insurance/search-payor-get",
+                  "api-reference/lab-testing/insurance/create-payor"
+                ]
+              },
+              {
+                "group": "Compendium",
+                "pages": [
+                  "api-reference/lab-testing/compendium/search",
+                  "api-reference/lab-testing/compendium/convert"
+                ]
               }
             ]
+          },
+          {
+            "anchor": "Event Catalog",
+            "icon": "envelope",
+            "pages": [
+              {
+                "group": "Orders",
+                "pages": [
+                  "event-catalog/labtest.order.created",
+                  "event-catalog/labtest.order.updated"
+                ]
+              },
+              {
+                "group": "Results",
+                "pages": [
+                  "event-catalog/labtest.result.critical"
+                ]
+              },
+              {
+                "group": "Appointments",
+                "pages": [
+                  "event-catalog/labtest.appointment.updated"
+                ]
+              },
+              {
+                "group": "Lab Report Parsing",
+                "pages": [
+                  "event-catalog/lab_report.parsing_job.created",
+                  "event-catalog/lab_report.parsing_job.updated"
+                ]
+              }
+            ]
+          },
+          {
+            "anchor": "Changelog",
+            "icon": "book",
+            "href": "https://docs.junction.com/changelog/lab-testing"
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Devices",
+        "icon": "watch-fitness",
         "anchors": [
           {
-            "anchor": "Core",
-            "icon": "square-code",
+            "anchor": "Product Guides",
+            "icon": "watch-fitness",
             "groups": [
               {
-                "group": "User Management",
+                "group": "Connecting Providers",
                 "pages": [
-                  "api-reference/user/create-user",
-                  "api-reference/user/get-user",
-                  "api-reference/user/resolve-user",
-                  "api-reference/user/patch-user",
-                  "api-reference/user/delete-user",
-                  "api-reference/user/undo-delete-user",
-                  "api-reference/user/get-users",
-                  "api-reference/user/upsert-info",
-                  "api-reference/user/get-info-latest",
-                  "api-reference/user/create-insurance-beta",
-                  "api-reference/user/get-latest-insurance"
+                  "wearables/connecting-providers/introduction",
+                  "wearables/connecting-providers/link_flow",
+                  "wearables/connecting-providers/launching_link",
+                  "wearables/connecting-providers/auth_types",
+                  "wearables/connecting-providers/errors",
+                  "wearables/connecting-providers/custom_widget"
                 ]
               },
               {
-                "group": "User Portal",
-                "pages": ["api-reference/user/create-portal-url"]
+                "group": "Bring Your Own OAuth",
+                "pages": [
+                  "wearables/connecting-providers/bring-your-own-oauth/overview",
+                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
+                ]
               },
               {
-                "group": "Vital Mobile SDK Integration",
-                "pages": ["api-reference/user/create-sign-in-token"]
+                "group": "Vital iOS App",
+                "pages": [
+                  "wearables/vital-app/introduction"
+                ]
+              },
+              {
+                "group": "Providers",
+                "pages": [
+                  "wearables/providers/introduction",
+                  "wearables/providers/resources",
+                  "wearables/providers/update-frequency",
+                  "wearables/providers/historical-data-pull-range",
+                  "wearables/providers/test_data"
+                ]
+              },
+              {
+                "group": "Data",
+                "pages": [
+                  "wearables/providers/data-primary-key",
+                  "wearables/providers/timestamps-and-time-zones",
+                  "wearables/providers/data-attributions",
+                  "wearables/providers/data-ingestion-bounds",
+                  "wearables/providers/heart-rate-zones"
+                ]
+              },
+              {
+                "group": "Mobile SDKs",
+                "pages": [
+                  "wearables/sdks/installation",
+                  "wearables/sdks/authentication",
+                  "wearables/sdks/vital-core",
+                  {
+                    "group": "Health SDK",
+                    "pages": [
+                      "wearables/sdks/health/overview",
+                      "wearables/sdks/health/connection-policies"
+                    ]
+                  },
+                  "wearables/sdks/vital-devices"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "wearables/guides/abbott-libreview",
+                  "wearables/guides/apple-healthkit",
+                  "wearables/guides/android-health-connect",
+                  "wearables/guides/samsung-health",
+                  "wearables/guides/dexcom_v3",
+                  "wearables/guides/dexcom",
+                  "wearables/guides/fitbit",
+                  "wearables/guides/garmin",
+                  "wearables/guides/google_fit",
+                  "wearables/guides/omron",
+                  "wearables/guides/polar",
+                  "wearables/guides/whoop"
+                ]
+              }
+            ]
+          },
+          {
+            "anchor": "API Reference",
+            "icon": "square-code",
+            "groups": [
+              {
+                "group": "Junction Mobile SDK Integration",
+                "pages": [
+                  "api-reference/user/create-sign-in-token"
+                ]
               },
               {
                 "group": "Device Connections",
@@ -344,13 +469,7 @@
                   "api-reference/link/bulk-pause",
                   "api-reference/link/bulk-export"
                 ]
-              }
-            ]
-          },
-          {
-            "anchor": "Data Access",
-            "icon": "magnifying-glass",
-            "groups": [
+              },
               {
                 "group": "Debugging",
                 "pages": [
@@ -374,11 +493,15 @@
               },
               {
                 "group": "Sleep Cycle",
-                "pages": ["api-reference/data/sleep-cycle/get-summary"]
+                "pages": [
+                  "api-reference/data/sleep-cycle/get-summary"
+                ]
               },
               {
                 "group": "Meal",
-                "pages": ["api-reference/data/meal/get-summary"]
+                "pages": [
+                  "api-reference/data/meal/get-summary"
+                ]
               },
               {
                 "group": "Workouts",
@@ -411,7 +534,9 @@
               },
               {
                 "group": "Menstrual Cycle",
-                "pages": ["api-reference/data/menstrual-cycle/get-summary"]
+                "pages": [
+                  "api-reference/data/menstrual-cycle/get-summary"
+                ]
               },
               {
                 "group": "Electrocardiogram",
@@ -489,7 +614,9 @@
               },
               {
                 "group": "Diary Timeseries",
-                "pages": ["api-reference/data/timeseries/note"]
+                "pages": [
+                  "api-reference/data/timeseries/note"
+                ]
               },
               {
                 "group": "Nutrition Timeseries",
@@ -502,152 +629,584 @@
             ]
           },
           {
-            "anchor": "Lab Testing",
-            "icon": "flask",
+            "anchor": "Event Catalog",
+            "icon": "envelope",
             "groups": [
               {
-                "group": "Orders",
+                "group": "Connection & Devices",
                 "pages": [
-                  "api-reference/lab-testing/create-order",
-                  "api-reference/lab-testing/get-orders",
-                  "api-reference/lab-testing/get-order",
-                  "api-reference/lab-testing/cancel-order",
-                  "api-reference/lab-testing/requisition-pdf",
-                  "api-reference/lab-testing/abn-pdf",
-                  "api-reference/lab-testing/labels-pdf",
-                  "api-reference/lab-testing/create-unregistered-order",
-                  "api-reference/lab-testing/register-order",
-                  "api-reference/lab-testing/import-order",
-                  "api-reference/lab-testing/simulate-order",
-                  "api-reference/lab-testing/order-collection-instructions-pdf",
-                  "api-reference/lab-testing/update-order-draw-completed"
+                  "event-catalog/provider.connection.created",
+                  "event-catalog/provider.connection.error",
+                  "event-catalog/provider.device.created",
+                  "event-catalog/provider.device.updated"
                 ]
               },
               {
-                "group": "Order Transactions",
+                "group": "Summaries",
                 "pages": [
-                  "api-reference/lab-testing/order-transactions/get-order-transaction"
+                  {
+                    "group": "Activity",
+                    "pages": [
+                      "event-catalog/daily.data.activity.created",
+                      "event-catalog/daily.data.activity.updated",
+                      "event-catalog/historical.data.activity.created"
+                    ]
+                  },
+                  {
+                    "group": "Body",
+                    "pages": [
+                      "event-catalog/daily.data.body.created",
+                      "event-catalog/daily.data.body.updated",
+                      "event-catalog/historical.data.body.created"
+                    ]
+                  },
+                  {
+                    "group": "Meal",
+                    "pages": [
+                      "event-catalog/daily.data.meal.created",
+                      "event-catalog/daily.data.meal.updated",
+                      "event-catalog/historical.data.meal.created"
+                    ]
+                  },
+                  {
+                    "group": "Menstrual Cycle",
+                    "pages": [
+                      "event-catalog/daily.data.menstrual_cycle.created",
+                      "event-catalog/daily.data.menstrual_cycle.updated",
+                      "event-catalog/historical.data.menstrual_cycle.created"
+                    ]
+                  },
+                  {
+                    "group": "Profile",
+                    "pages": [
+                      "event-catalog/daily.data.profile.created",
+                      "event-catalog/historical.data.profile.created"
+                    ]
+                  },
+                  {
+                    "group": "Sleep",
+                    "pages": [
+                      "event-catalog/daily.data.sleep.created",
+                      "event-catalog/daily.data.sleep.updated",
+                      "event-catalog/historical.data.sleep.created"
+                    ]
+                  },
+                  {
+                    "group": "Sleep Cycle",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_cycle.created",
+                      "event-catalog/daily.data.sleep_cycle.updated",
+                      "event-catalog/historical.data.sleep_cycle.created"
+                    ]
+                  },
+                  {
+                    "group": "Workout",
+                    "pages": [
+                      "event-catalog/daily.data.workouts.created",
+                      "event-catalog/daily.data.workouts.updated",
+                      "event-catalog/historical.data.workouts.created"
+                    ]
+                  },
+                  {
+                    "group": "Workout Stream",
+                    "pages": [
+                      "event-catalog/daily.data.workout_stream.created",
+                      "event-catalog/daily.data.workout_stream.updated"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Lab Accounts",
+                "group": "Activity Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/lab_accounts"
+                  {
+                    "group": "Calories Active",
+                    "pages": [
+                      "event-catalog/daily.data.calories_active.created",
+                      "event-catalog/daily.data.calories_active.updated",
+                      "event-catalog/historical.data.calories_active.created"
+                    ]
+                  },
+                  {
+                    "group": "Calories Basal",
+                    "pages": [
+                      "event-catalog/daily.data.calories_basal.created",
+                      "event-catalog/daily.data.calories_basal.updated",
+                      "event-catalog/historical.data.calories_basal.created"
+                    ]
+                  },
+                  {
+                    "group": "Distance",
+                    "pages": [
+                      "event-catalog/daily.data.distance.created",
+                      "event-catalog/daily.data.distance.updated",
+                      "event-catalog/historical.data.distance.created"
+                    ]
+                  },
+                  {
+                    "group": "Floors Climbed",
+                    "pages": [
+                      "event-catalog/daily.data.floors_climbed.created",
+                      "event-catalog/daily.data.floors_climbed.updated",
+                      "event-catalog/historical.data.floors_climbed.created"
+                    ]
+                  },
+                  {
+                    "group": "Steps",
+                    "pages": [
+                      "event-catalog/daily.data.steps.created",
+                      "event-catalog/daily.data.steps.updated",
+                      "event-catalog/historical.data.steps.created"
+                    ]
+                  },
+                  {
+                    "group": "VO2 Max",
+                    "pages": [
+                      "event-catalog/daily.data.vo2_max.created",
+                      "event-catalog/daily.data.vo2_max.updated",
+                      "event-catalog/historical.data.vo2_max.created"
+                    ]
+                  },
+                  {
+                    "group": "Workout Duration",
+                    "pages": [
+                      "event-catalog/daily.data.workout_duration.created",
+                      "event-catalog/daily.data.workout_duration.updated",
+                      "event-catalog/historical.data.workout_duration.created"
+                    ]
+                  },
+                  {
+                    "group": "Wheelchair Push",
+                    "pages": [
+                      "event-catalog/daily.data.wheelchair_push.created",
+                      "event-catalog/daily.data.wheelchair_push.updated",
+                      "event-catalog/historical.data.wheelchair_push.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Hour",
+                    "pages": [
+                      "event-catalog/daily.data.stand_hour.created",
+                      "event-catalog/daily.data.stand_hour.updated",
+                      "event-catalog/historical.data.stand_hour.created"
+                    ]
+                  },
+                  {
+                    "group": "Stand Duration",
+                    "pages": [
+                      "event-catalog/daily.data.stand_duration.created",
+                      "event-catalog/daily.data.stand_duration.updated",
+                      "event-catalog/historical.data.stand_duration.created"
+                    ]
+                  },
+                  {
+                    "group": "Fall",
+                    "pages": [
+                      "event-catalog/daily.data.fall.created",
+                      "event-catalog/daily.data.fall.updated",
+                      "event-catalog/historical.data.fall.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Area Info",
+                "group": "Workout Stream Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/area-info",
-                  "api-reference/lab-testing/psc-info",
-                  "api-reference/lab-testing/order-psc-info"
+                  {
+                    "group": "Workout Distance",
+                    "pages": [
+                      "event-catalog/daily.data.workout_distance.created",
+                      "event-catalog/daily.data.workout_distance.updated",
+                      "event-catalog/historical.data.workout_distance.created"
+                    ]
+                  },
+                  {
+                    "group": "Workout Swimming Stroke",
+                    "pages": [
+                      "event-catalog/daily.data.workout_swimming_stroke.created",
+                      "event-catalog/daily.data.workout_swimming_stroke.updated",
+                      "event-catalog/historical.data.workout_swimming_stroke.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "At-home Phlebotomy",
+                "group": "Vitals Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
-                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
+                  {
+                    "group": "Blood Pressure",
+                    "pages": [
+                      "event-catalog/daily.data.blood_pressure.created",
+                      "event-catalog/daily.data.blood_pressure.updated",
+                      "event-catalog/historical.data.blood_pressure.created"
+                    ]
+                  },
+                  {
+                    "group": "Blood Oxygen",
+                    "pages": [
+                      "event-catalog/daily.data.blood_oxygen.created",
+                      "event-catalog/daily.data.blood_oxygen.updated",
+                      "event-catalog/historical.data.blood_oxygen.created"
+                    ]
+                  },
+                  {
+                    "group": "Electrocardiogram Voltage",
+                    "pages": [
+                      "event-catalog/daily.data.electrocardiogram_voltage.created",
+                      "event-catalog/daily.data.electrocardiogram_voltage.updated",
+                      "event-catalog/historical.data.electrocardiogram_voltage.created"
+                    ]
+                  },
+                  {
+                    "group": "Glucose",
+                    "pages": [
+                      "event-catalog/daily.data.glucose.created",
+                      "event-catalog/daily.data.glucose.updated",
+                      "event-catalog/historical.data.glucose.created"
+                    ]
+                  },
+                  {
+                    "group": "Insulin Injection",
+                    "pages": [
+                      "event-catalog/daily.data.insulin_injection.created",
+                      "event-catalog/daily.data.insulin_injection.updated",
+                      "event-catalog/historical.data.insulin_injection.created"
+                    ]
+                  },
+                  {
+                    "group": "Heart rate",
+                    "pages": [
+                      "event-catalog/daily.data.heartrate.created",
+                      "event-catalog/daily.data.heartrate.updated",
+                      "event-catalog/historical.data.heartrate.created"
+                    ]
+                  },
+                  {
+                    "group": "HRV",
+                    "pages": [
+                      "event-catalog/daily.data.hrv.created",
+                      "event-catalog/daily.data.hrv.updated",
+                      "event-catalog/historical.data.hrv.created"
+                    ]
+                  },
+                  {
+                    "group": "Respiratory Rate",
+                    "pages": [
+                      "event-catalog/daily.data.respiratory_rate.created",
+                      "event-catalog/daily.data.respiratory_rate.updated",
+                      "event-catalog/historical.data.respiratory_rate.created"
+                    ]
+                  },
+                  {
+                    "group": "Forced Expiratory Volume 1",
+                    "pages": [
+                      "event-catalog/daily.data.forced_expiratory_volume_1.created",
+                      "event-catalog/daily.data.forced_expiratory_volume_1.updated",
+                      "event-catalog/historical.data.forced_expiratory_volume_1.created"
+                    ]
+                  },
+                  {
+                    "group": "Forced Vital Capacity",
+                    "pages": [
+                      "event-catalog/daily.data.forced_vital_capacity.created",
+                      "event-catalog/daily.data.forced_vital_capacity.updated",
+                      "event-catalog/historical.data.forced_vital_capacity.created"
+                    ]
+                  },
+                  {
+                    "group": "Peak Expiratory Flow Rate",
+                    "pages": [
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.created",
+                      "event-catalog/daily.data.peak_expiratory_flow_rate.updated",
+                      "event-catalog/historical.data.peak_expiratory_flow_rate.created"
+                    ]
+                  },
+                  {
+                    "group": "Inhaler Usage",
+                    "pages": [
+                      "event-catalog/daily.data.inhaler_usage.created",
+                      "event-catalog/daily.data.inhaler_usage.updated",
+                      "event-catalog/historical.data.inhaler_usage.created"
+                    ]
+                  },
+                  {
+                    "group": "Heart Rate Recovery One Minute",
+                    "pages": [
+                      "event-catalog/daily.data.heart_rate_recovery_one_minute.created",
+                      "event-catalog/daily.data.heart_rate_recovery_one_minute.updated",
+                      "event-catalog/historical.data.heart_rate_recovery_one_minute.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Patient Service Center (PSC)",
+                "group": "Body Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
-                  "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
+                  {
+                    "group": "Body Fat",
+                    "pages": [
+                      "event-catalog/daily.data.fat.created",
+                      "event-catalog/daily.data.fat.updated",
+                      "event-catalog/historical.data.fat.created"
+                    ]
+                  },
+                  {
+                    "group": "Body Weight",
+                    "pages": [
+                      "event-catalog/daily.data.weight.created",
+                      "event-catalog/daily.data.weight.updated",
+                      "event-catalog/historical.data.weight.created"
+                    ]
+                  },
+                  {
+                    "group": "Body Mass Index",
+                    "pages": [
+                      "event-catalog/daily.data.body_mass_index.created",
+                      "event-catalog/daily.data.body_mass_index.updated",
+                      "event-catalog/historical.data.body_mass_index.created"
+                    ]
+                  },
+                  {
+                    "group": "Lean Body Mass",
+                    "pages": [
+                      "event-catalog/daily.data.lean_body_mass.created",
+                      "event-catalog/daily.data.lean_body_mass.updated",
+                      "event-catalog/historical.data.lean_body_mass.created"
+                    ]
+                  },
+                  {
+                    "group": "Waist Circumference",
+                    "pages": [
+                      "event-catalog/daily.data.waist_circumference.created",
+                      "event-catalog/daily.data.waist_circumference.updated",
+                      "event-catalog/historical.data.waist_circumference.created"
+                    ]
+                  },
+                  {
+                    "group": "Body Temperature",
+                    "pages": [
+                      "event-catalog/daily.data.body_temperature.created",
+                      "event-catalog/daily.data.body_temperature.updated",
+                      "event-catalog/historical.data.body_temperature.created"
+                    ]
+                  },
+                  {
+                    "group": "Body Temperature Delta",
+                    "pages": [
+                      "event-catalog/daily.data.body_temperature_delta.created",
+                      "event-catalog/daily.data.body_temperature_delta.updated",
+                      "event-catalog/historical.data.body_temperature_delta.created"
+                    ]
+                  },
+                  {
+                    "group": "Basal Body Temperature",
+                    "pages": [
+                      "event-catalog/daily.data.basal_body_temperature.created",
+                      "event-catalog/daily.data.basal_body_temperature.updated",
+                      "event-catalog/historical.data.basal_body_temperature.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Tests",
+                "group": "Diary Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/tests",
-                  "api-reference/lab-testing/tests-paginated",
-                  "api-reference/lab-testing/get-lab-test",
-                  "api-reference/lab-testing/biomarkers",
-                  "api-reference/lab-testing/labs",
-                  "api-reference/lab-testing/post-test",
-                  "api-reference/lab-testing/patch-lab-test",
-                  "api-reference/lab-testing/lab-test-markers",
-                  "api-reference/lab-testing/order-set-marker",
-                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
+                  {
+                    "group": "Note",
+                    "pages": [
+                      "event-catalog/daily.data.note.created",
+                      "event-catalog/daily.data.note.updated",
+                      "event-catalog/historical.data.note.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Results",
+                "group": "Nutrition Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/results/get-results",
-                  "api-reference/lab-testing/results/get-results-pdf",
-                  "api-reference/lab-testing/results/get-results-metadata",
-                  "api-reference/lab-testing/results/get-order-transaction-results",
-                  "api-reference/lab-testing/results/get-order-transaction-results-pdf"
+                  {
+                    "group": "Caffeine",
+                    "pages": [
+                      "event-catalog/daily.data.caffeine.created",
+                      "event-catalog/daily.data.caffeine.updated",
+                      "event-catalog/historical.data.caffeine.created"
+                    ]
+                  },
+                  {
+                    "group": "Carbohydrates",
+                    "pages": [
+                      "event-catalog/daily.data.carbohydrates.created",
+                      "event-catalog/daily.data.carbohydrates.updated",
+                      "event-catalog/historical.data.carbohydrates.created"
+                    ]
+                  },
+                  {
+                    "group": "Water",
+                    "pages": [
+                      "event-catalog/daily.data.water.created",
+                      "event-catalog/daily.data.water.updated",
+                      "event-catalog/historical.data.water.created"
+                    ]
+                  }
                 ]
               },
               {
-                "group": "Lab Report Parsing",
+                "group": "Wellness Timeseries",
                 "pages": [
-                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
-                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
-                ]
-              },
-              {
-                "group": "Health Insurance",
-                "pages": [
-                  "api-reference/lab-testing/insurance/search-diagnosis",
-                  "api-reference/lab-testing/insurance/search-payor-get",
-                  "api-reference/lab-testing/insurance/create-payor"
-                ]
-              },
-              {
-                "group": "Compendium",
-                "pages": [
-                  "api-reference/lab-testing/compendium/search",
-                  "api-reference/lab-testing/compendium/convert"
+                  {
+                    "group": "Sleep Apnea Alert",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_apnea_alert.created",
+                      "event-catalog/daily.data.sleep_apnea_alert.updated",
+                      "event-catalog/historical.data.sleep_apnea_alert.created"
+                    ]
+                  },
+                  {
+                    "group": "Sleep Breathing Disturbance",
+                    "pages": [
+                      "event-catalog/daily.data.sleep_breathing_disturbance.created",
+                      "event-catalog/daily.data.sleep_breathing_disturbance.updated",
+                      "event-catalog/historical.data.sleep_breathing_disturbance.created"
+                    ]
+                  },
+                  {
+                    "group": "Mindfulness Minutes",
+                    "pages": [
+                      "event-catalog/daily.data.mindfulness_minutes.created",
+                      "event-catalog/daily.data.mindfulness_minutes.updated",
+                      "event-catalog/historical.data.mindfulness_minutes.created"
+                    ]
+                  },
+                  {
+                    "group": "Stress Level",
+                    "pages": [
+                      "event-catalog/daily.data.stress_level.created",
+                      "event-catalog/daily.data.stress_level.updated",
+                      "event-catalog/historical.data.stress_level.created"
+                    ]
+                  },
+                  {
+                    "group": "UV Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.uv_exposure.created",
+                      "event-catalog/daily.data.uv_exposure.updated",
+                      "event-catalog/historical.data.uv_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Daylight Exposure",
+                    "pages": [
+                      "event-catalog/daily.data.daylight_exposure.created",
+                      "event-catalog/daily.data.daylight_exposure.updated",
+                      "event-catalog/historical.data.daylight_exposure.created"
+                    ]
+                  },
+                  {
+                    "group": "Handwashing",
+                    "pages": [
+                      "event-catalog/daily.data.handwashing.created",
+                      "event-catalog/daily.data.handwashing.updated",
+                      "event-catalog/historical.data.handwashing.created"
+                    ]
+                  }
                 ]
               }
             ]
           },
           {
-            "anchor": "Horizon AI",
+            "anchor": "Changelog",
+            "icon": "book",
+            "href": "https://docs.junction.com/changelog/wearables"
+          }
+        ]
+      },
+      {
+        "tab": "Junction Sense",
+        "icon": "sensor",
+        "anchors": [
+          {
+            "anchor": "Product Guides",
             "icon": "robot",
             "groups": [
               {
-                "group": "Managing Continuous Query",
+                "group": "Junction Sense",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/create",
-                  "api-reference/horizon-ai/continuous-query/update",
-                  "api-reference/horizon-ai/continuous-query/list"
+                  "sense/overview",
+                  "sense/using-continuous-query",
+                  "sense/using-query-api",
+                  "sense/data-prioritization",
+                  "sense/examples"
                 ]
               },
               {
-                "group": "Continuous Query Task History",
+                "group": "Query DSL",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-task-history"
+                  "sense/query-dsl/column-expressions",
+                  "sense/query-dsl/select-clause",
+                  "sense/query-dsl/group-by-clause",
+                  "sense/query-dsl/where-clause",
+                  "sense/query-dsl/sleep-analysis",
+                  "sense/query-dsl/readiness-scores"
                 ]
               },
               {
-                "group": "Continuous Query Results",
+                "group": "Python SDK",
                 "pages": [
-                  "api-reference/horizon-ai/continuous-query/get-result-table"
+                  "sense/python-sdk/getting-started"
                 ]
-              },
-              {
-                "group": "Query API",
-                "pages": ["api-reference/horizon-ai/aggregation/query-one"]
               }
             ]
           },
           {
-            "anchor": "Management",
-            "icon": "building",
+            "anchor": "API Reference",
+            "icon": "square-code",
+            "groups": [
+              {
+                "group": "Junction API",
+                "pages": [
+                  "api-reference/sense/query-one",
+                  "api-reference/sense/continuous-query/get-task-history",
+                  "api-reference/sense/continuous-query/get-result-table"
+                ]
+              },
+              {
+                "group": "Junction Management API",
+                "pages": [
+                  "api-reference/sense/continuous-query/create",
+                  "api-reference/sense/continuous-query/update",
+                  "api-reference/sense/continuous-query/list"
+                ]
+              }
+            ]
+          },
+          {
+            "anchor": "Event Catalog",
+            "icon": "envelope",
+            "groups": [
+              {
+                "group": "Continuous Query",
+                "pages": [
+                  "event-catalog/continuous_query.result_table.changed"
+                ]
+              }
+            ]
+          }
+        ] 
+      },
+      {
+        "tab": "Management API",
+        "icon": "gear",
+        "anchors": [
+          {
+            "anchor": "Product Guides",
+            "icon": "gear",
+            "pages": [
+              "api-details/junction-management-api"
+            ]
+          },
+          {
+            "anchor": "API Reference",
+            "icon": "square-code",
             "groups": [
               {
                 "group": "Team",
@@ -755,522 +1314,15 @@
         ]
       },
       {
-        "tab": "Event Catalog",
-        "groups": [
-          {
-            "group": "Lab Tests",
-            "pages": [
-              {
-                "group": "Orders",
-                "pages": [
-                  "event-catalog/labtest.order.created",
-                  "event-catalog/labtest.order.updated"
-                ]
-              },
-              {
-                "group": "Results",
-                "pages": ["event-catalog/labtest.result.critical"]
-              },
-              {
-                "group": "Appointments",
-                "pages": ["event-catalog/labtest.appointment.updated"]
-              },
-              {
-                "group": "Lab Report Parsing",
-                "pages": [
-                  "event-catalog/lab_report.parsing_job.created",
-                  "event-catalog/lab_report.parsing_job.updated"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Connection & Devices",
-            "pages": [
-              "event-catalog/provider.connection.created",
-              "event-catalog/provider.connection.error",
-              "event-catalog/provider.device.created",
-              "event-catalog/provider.device.updated"
-            ]
-          },
-          {
-            "group": "Summaries",
-            "pages": [
-              {
-                "group": "Activity",
-                "pages": [
-                  "event-catalog/daily.data.activity.created",
-                  "event-catalog/daily.data.activity.updated",
-                  "event-catalog/historical.data.activity.created"
-                ]
-              },
-              {
-                "group": "Body",
-                "pages": [
-                  "event-catalog/daily.data.body.created",
-                  "event-catalog/daily.data.body.updated",
-                  "event-catalog/historical.data.body.created"
-                ]
-              },
-              {
-                "group": "Meal",
-                "pages": [
-                  "event-catalog/daily.data.meal.created",
-                  "event-catalog/daily.data.meal.updated",
-                  "event-catalog/historical.data.meal.created"
-                ]
-              },
-              {
-                "group": "Menstrual Cycle",
-                "pages": [
-                  "event-catalog/daily.data.menstrual_cycle.created",
-                  "event-catalog/daily.data.menstrual_cycle.updated",
-                  "event-catalog/historical.data.menstrual_cycle.created"
-                ]
-              },
-              {
-                "group": "Profile",
-                "pages": [
-                  "event-catalog/daily.data.profile.created",
-                  "event-catalog/historical.data.profile.created"
-                ]
-              },
-              {
-                "group": "Sleep",
-                "pages": [
-                  "event-catalog/daily.data.sleep.created",
-                  "event-catalog/daily.data.sleep.updated",
-                  "event-catalog/historical.data.sleep.created"
-                ]
-              },
-              {
-                "group": "Sleep Cycle",
-                "pages": [
-                  "event-catalog/daily.data.sleep_cycle.created",
-                  "event-catalog/daily.data.sleep_cycle.updated",
-                  "event-catalog/historical.data.sleep_cycle.created"
-                ]
-              },
-              {
-                "group": "Workout",
-                "pages": [
-                  "event-catalog/daily.data.workouts.created",
-                  "event-catalog/daily.data.workouts.updated",
-                  "event-catalog/historical.data.workouts.created"
-                ]
-              },
-              {
-                "group": "Workout Stream",
-                "pages": [
-                  "event-catalog/daily.data.workout_stream.created",
-                  "event-catalog/daily.data.workout_stream.updated"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Activity Timeseries",
-            "pages": [
-              {
-                "group": "Calories Active",
-                "pages": [
-                  "event-catalog/daily.data.calories_active.created",
-                  "event-catalog/daily.data.calories_active.updated",
-                  "event-catalog/historical.data.calories_active.created"
-                ]
-              },
-              {
-                "group": "Calories Basal",
-                "pages": [
-                  "event-catalog/daily.data.calories_basal.created",
-                  "event-catalog/daily.data.calories_basal.updated",
-                  "event-catalog/historical.data.calories_basal.created"
-                ]
-              },
-              {
-                "group": "Distance",
-                "pages": [
-                  "event-catalog/daily.data.distance.created",
-                  "event-catalog/daily.data.distance.updated",
-                  "event-catalog/historical.data.distance.created"
-                ]
-              },
-              {
-                "group": "Floors Climbed",
-                "pages": [
-                  "event-catalog/daily.data.floors_climbed.created",
-                  "event-catalog/daily.data.floors_climbed.updated",
-                  "event-catalog/historical.data.floors_climbed.created"
-                ]
-              },
-              {
-                "group": "Steps",
-                "pages": [
-                  "event-catalog/daily.data.steps.created",
-                  "event-catalog/daily.data.steps.updated",
-                  "event-catalog/historical.data.steps.created"
-                ]
-              },
-              {
-                "group": "VO2 Max",
-                "pages": [
-                  "event-catalog/daily.data.vo2_max.created",
-                  "event-catalog/daily.data.vo2_max.updated",
-                  "event-catalog/historical.data.vo2_max.created"
-                ]
-              },
-              {
-                "group": "Workout Duration",
-                "pages": [
-                  "event-catalog/daily.data.workout_duration.created",
-                  "event-catalog/daily.data.workout_duration.updated",
-                  "event-catalog/historical.data.workout_duration.created"
-                ]
-              },
-              {
-                "group": "Wheelchair Push",
-                "pages": [
-                  "event-catalog/daily.data.wheelchair_push.created",
-                  "event-catalog/daily.data.wheelchair_push.updated",
-                  "event-catalog/historical.data.wheelchair_push.created"
-                ]
-              },
-              {
-                "group": "Stand Hour",
-                "pages": [
-                  "event-catalog/daily.data.stand_hour.created",
-                  "event-catalog/daily.data.stand_hour.updated",
-                  "event-catalog/historical.data.stand_hour.created"
-                ]
-              },
-              {
-                "group": "Stand Duration",
-                "pages": [
-                  "event-catalog/daily.data.stand_duration.created",
-                  "event-catalog/daily.data.stand_duration.updated",
-                  "event-catalog/historical.data.stand_duration.created"
-                ]
-              },
-              {
-                "group": "Fall",
-                "pages": [
-                  "event-catalog/daily.data.fall.created",
-                  "event-catalog/daily.data.fall.updated",
-                  "event-catalog/historical.data.fall.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Workout Stream Timeseries",
-            "pages": [
-              {
-                "group": "Workout Distance",
-                "pages": [
-                  "event-catalog/daily.data.workout_distance.created",
-                  "event-catalog/daily.data.workout_distance.updated",
-                  "event-catalog/historical.data.workout_distance.created"
-                ]
-              },
-              {
-                "group": "Workout Swimming Stroke",
-                "pages": [
-                  "event-catalog/daily.data.workout_swimming_stroke.created",
-                  "event-catalog/daily.data.workout_swimming_stroke.updated",
-                  "event-catalog/historical.data.workout_swimming_stroke.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Vitals Timeseries",
-            "pages": [
-              {
-                "group": "Blood Pressure",
-                "pages": [
-                  "event-catalog/daily.data.blood_pressure.created",
-                  "event-catalog/daily.data.blood_pressure.updated",
-                  "event-catalog/historical.data.blood_pressure.created"
-                ]
-              },
-              {
-                "group": "Blood Oxygen",
-                "pages": [
-                  "event-catalog/daily.data.blood_oxygen.created",
-                  "event-catalog/daily.data.blood_oxygen.updated",
-                  "event-catalog/historical.data.blood_oxygen.created"
-                ]
-              },
-              {
-                "group": "Electrocardiogram Voltage",
-                "pages": [
-                  "event-catalog/daily.data.electrocardiogram_voltage.created",
-                  "event-catalog/daily.data.electrocardiogram_voltage.updated",
-                  "event-catalog/historical.data.electrocardiogram_voltage.created"
-                ]
-              },
-              {
-                "group": "Glucose",
-                "pages": [
-                  "event-catalog/daily.data.glucose.created",
-                  "event-catalog/daily.data.glucose.updated",
-                  "event-catalog/historical.data.glucose.created"
-                ]
-              },
-              {
-                "group": "Insulin Injection",
-                "pages": [
-                  "event-catalog/daily.data.insulin_injection.created",
-                  "event-catalog/daily.data.insulin_injection.updated",
-                  "event-catalog/historical.data.insulin_injection.created"
-                ]
-              },
-              {
-                "group": "Heart rate",
-                "pages": [
-                  "event-catalog/daily.data.heartrate.created",
-                  "event-catalog/daily.data.heartrate.updated",
-                  "event-catalog/historical.data.heartrate.created"
-                ]
-              },
-              {
-                "group": "HRV",
-                "pages": [
-                  "event-catalog/daily.data.hrv.created",
-                  "event-catalog/daily.data.hrv.updated",
-                  "event-catalog/historical.data.hrv.created"
-                ]
-              },
-              {
-                "group": "Respiratory Rate",
-                "pages": [
-                  "event-catalog/daily.data.respiratory_rate.created",
-                  "event-catalog/daily.data.respiratory_rate.updated",
-                  "event-catalog/historical.data.respiratory_rate.created"
-                ]
-              },
-              {
-                "group": "Forced Expiratory Volume 1",
-                "pages": [
-                  "event-catalog/daily.data.forced_expiratory_volume_1.created",
-                  "event-catalog/daily.data.forced_expiratory_volume_1.updated",
-                  "event-catalog/historical.data.forced_expiratory_volume_1.created"
-                ]
-              },
-              {
-                "group": "Forced Vital Capacity",
-                "pages": [
-                  "event-catalog/daily.data.forced_vital_capacity.created",
-                  "event-catalog/daily.data.forced_vital_capacity.updated",
-                  "event-catalog/historical.data.forced_vital_capacity.created"
-                ]
-              },
-              {
-                "group": "Peak Expiratory Flow Rate",
-                "pages": [
-                  "event-catalog/daily.data.peak_expiratory_flow_rate.created",
-                  "event-catalog/daily.data.peak_expiratory_flow_rate.updated",
-                  "event-catalog/historical.data.peak_expiratory_flow_rate.created"
-                ]
-              },
-              {
-                "group": "Inhaler Usage",
-                "pages": [
-                  "event-catalog/daily.data.inhaler_usage.created",
-                  "event-catalog/daily.data.inhaler_usage.updated",
-                  "event-catalog/historical.data.inhaler_usage.created"
-                ]
-              },
-              {
-                "group": "Heart Rate Recovery One Minute",
-                "pages": [
-                  "event-catalog/daily.data.heart_rate_recovery_one_minute.created",
-                  "event-catalog/daily.data.heart_rate_recovery_one_minute.updated",
-                  "event-catalog/historical.data.heart_rate_recovery_one_minute.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Body Timeseries",
-            "pages": [
-              {
-                "group": "Body Fat",
-                "pages": [
-                  "event-catalog/daily.data.fat.created",
-                  "event-catalog/daily.data.fat.updated",
-                  "event-catalog/historical.data.fat.created"
-                ]
-              },
-              {
-                "group": "Body Weight",
-                "pages": [
-                  "event-catalog/daily.data.weight.created",
-                  "event-catalog/daily.data.weight.updated",
-                  "event-catalog/historical.data.weight.created"
-                ]
-              },
-              {
-                "group": "Body Mass Index",
-                "pages": [
-                  "event-catalog/daily.data.body_mass_index.created",
-                  "event-catalog/daily.data.body_mass_index.updated",
-                  "event-catalog/historical.data.body_mass_index.created"
-                ]
-              },
-              {
-                "group": "Lean Body Mass",
-                "pages": [
-                  "event-catalog/daily.data.lean_body_mass.created",
-                  "event-catalog/daily.data.lean_body_mass.updated",
-                  "event-catalog/historical.data.lean_body_mass.created"
-                ]
-              },
-              {
-                "group": "Waist Circumference",
-                "pages": [
-                  "event-catalog/daily.data.waist_circumference.created",
-                  "event-catalog/daily.data.waist_circumference.updated",
-                  "event-catalog/historical.data.waist_circumference.created"
-                ]
-              },
-              {
-                "group": "Body Temperature",
-                "pages": [
-                  "event-catalog/daily.data.body_temperature.created",
-                  "event-catalog/daily.data.body_temperature.updated",
-                  "event-catalog/historical.data.body_temperature.created"
-                ]
-              },
-              {
-                "group": "Body Temperature Delta",
-                "pages": [
-                  "event-catalog/daily.data.body_temperature_delta.created",
-                  "event-catalog/daily.data.body_temperature_delta.updated",
-                  "event-catalog/historical.data.body_temperature_delta.created"
-                ]
-              },
-              {
-                "group": "Basal Body Temperature",
-                "pages": [
-                  "event-catalog/daily.data.basal_body_temperature.created",
-                  "event-catalog/daily.data.basal_body_temperature.updated",
-                  "event-catalog/historical.data.basal_body_temperature.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Diary Timeseries",
-            "pages": [
-              {
-                "group": "Note",
-                "pages": [
-                  "event-catalog/daily.data.note.created",
-                  "event-catalog/daily.data.note.updated",
-                  "event-catalog/historical.data.note.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Nutrition Timeseries",
-            "pages": [
-              {
-                "group": "Caffeine",
-                "pages": [
-                  "event-catalog/daily.data.caffeine.created",
-                  "event-catalog/daily.data.caffeine.updated",
-                  "event-catalog/historical.data.caffeine.created"
-                ]
-              },
-              {
-                "group": "Carbohydrates",
-                "pages": [
-                  "event-catalog/daily.data.carbohydrates.created",
-                  "event-catalog/daily.data.carbohydrates.updated",
-                  "event-catalog/historical.data.carbohydrates.created"
-                ]
-              },
-              {
-                "group": "Water",
-                "pages": [
-                  "event-catalog/daily.data.water.created",
-                  "event-catalog/daily.data.water.updated",
-                  "event-catalog/historical.data.water.created"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Wellness Timeseries",
-            "pages": [
-              {
-                "group": "Sleep Apnea Alert",
-                "pages": [
-                  "event-catalog/daily.data.sleep_apnea_alert.created",
-                  "event-catalog/daily.data.sleep_apnea_alert.updated",
-                  "event-catalog/historical.data.sleep_apnea_alert.created"
-                ]
-              },
-              {
-                "group": "Sleep Breathing Disturbance",
-                "pages": [
-                  "event-catalog/daily.data.sleep_breathing_disturbance.created",
-                  "event-catalog/daily.data.sleep_breathing_disturbance.updated",
-                  "event-catalog/historical.data.sleep_breathing_disturbance.created"
-                ]
-              },
-              {
-                "group": "Mindfulness Minutes",
-                "pages": [
-                  "event-catalog/daily.data.mindfulness_minutes.created",
-                  "event-catalog/daily.data.mindfulness_minutes.updated",
-                  "event-catalog/historical.data.mindfulness_minutes.created"
-                ]
-              },
-              {
-                "group": "Stress Level",
-                "pages": [
-                  "event-catalog/daily.data.stress_level.created",
-                  "event-catalog/daily.data.stress_level.updated",
-                  "event-catalog/historical.data.stress_level.created"
-                ]
-              },
-              {
-                "group": "UV Exposure",
-                "pages": [
-                  "event-catalog/daily.data.uv_exposure.created",
-                  "event-catalog/daily.data.uv_exposure.updated",
-                  "event-catalog/historical.data.uv_exposure.created"
-                ]
-              },
-              {
-                "group": "Daylight Exposure",
-                "pages": [
-                  "event-catalog/daily.data.daylight_exposure.created",
-                  "event-catalog/daily.data.daylight_exposure.updated",
-                  "event-catalog/historical.data.daylight_exposure.created"
-                ]
-              },
-              {
-                "group": "Handwashing",
-                "pages": [
-                  "event-catalog/daily.data.handwashing.created",
-                  "event-catalog/daily.data.handwashing.updated",
-                  "event-catalog/historical.data.handwashing.created"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
         "tab": "Changelog",
+        "icon": "book",
         "groups": [
           {
             "group": "Core",
-            "pages": ["changelog/core/api", "changelog/core/dashboard"]
+            "pages": [
+              "changelog/core/api",
+              "changelog/core/dashboard"
+            ]
           },
           {
             "group": "Wearables",
@@ -1296,7 +1348,10 @@
     "dark": "/logo/dark.svg"
   },
   "api": {
-    "openapi": ["swagger.json", "org-management-api.json"],
+    "openapi": [
+      "swagger.json",
+      "org-management-api.json"
+    ],
     "mdx": {
       "server": [
         "https://api.us.junction.com",
@@ -1314,6 +1369,7 @@
     "links": [
       {
         "label": "GitHub",
+        "type": "github",
         "href": "https://github.com/tryVital"
       }
     ],
@@ -1371,6 +1427,10 @@
     {
       "source": "/wearables/guides/apple_health_kit",
       "destination": "/wearables/guides/apple-healthkit"
+    },
+    {
+      "source": "/wearables/guides/samsung_health",
+      "destination": "/wearables/guides/samsung-health"
     },
     {
       "source": "/wearables/guides/freestyle",
@@ -1439,6 +1499,78 @@
     {
       "source": "/wearables/sdks/vital-health",
       "destination": "/wearables/sdks/health/overview"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/overview",
+      "destination": "/sense/overview"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/using-continuous-query",
+      "destination": "/sense/using-continuous-query"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/using-query-api",
+      "destination": "/sense/using-query-api"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/data-prioritization",
+      "destination": "/sense/data-prioritization"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/examples",
+      "destination": "/sense/examples"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/column-expressions",
+      "destination": "/sense/query-dsl/column-expressions"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/select-clause",
+      "destination": "/sense/query-dsl/select-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause",
+      "destination": "/sense/query-dsl/group-by-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/where-clause",
+      "destination": "/sense/query-dsl/where-clause"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis",
+      "destination": "/sense/query-dsl/sleep-analysis"
+    },
+    {
+      "source": "/api-reference/horizon-ai/python-sdk/getting-started",
+      "destination": "/sense/python-sdk/getting-started"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/create",
+      "destination": "/api-reference/sense/continuous-query/create"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/update",
+      "destination": "/api-reference/sense/continuous-query/update"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/list",
+      "destination": "/api-reference/sense/continuous-query/list"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/get-task-history",
+      "destination": "/api-reference/sense/continuous-query/get-task-history"
+    },
+    {
+      "source": "/api-reference/horizon-ai/continuous-query/get-result-table",
+      "destination": "/api-reference/sense/continuous-query/get-result-table"
+    },
+    {
+      "source": "/api-reference/horizon-ai/aggregation/query-one",
+      "destination": "/api-reference/sense/query-one"
+    },
+    {
+      "source": "/api-reference/lab-testing/psc-schedulling/:slug*",
+      "destination": "/api-reference/lab-testing/psc-scheduling/:slug*"
     }
   ]
 }

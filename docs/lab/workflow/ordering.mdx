@@ -1,13 +1,15 @@
 ---
 title: "Ordering"
+description: "Learn the ordering concepts including markers, lab tests, and the various order_set field combinations for placing lab test orders."
 ---
 
 # Concepts
 
-Vital has a series of concepts to grasp regarding ordering: 
+Junction has a series of concepts to grasp regarding ordering:
 
 - [Lab Tests](/lab/workflow/create-test)
-- [Lifecyle of an Order](/lab/workflow/lab-test-lifecycle)
+- [Lifecycle of an Order](/lab/workflow/lab-test-lifecycle)
+- [Order Transactions](/lab/workflow/order-transactions)
 - [AoE](/lab/workflow/aoe)
 - [Registrable Kits](/lab/workflow/order-registrable-testkit)
 - [Scheduled Orders](/lab/workflow/scheduled-orders)
@@ -16,11 +18,11 @@ In this document, we will focus on orderable panels/biomarkers.
 
 ### Markers
 
-[_Markers_](/api-reference/lab-testing/biomarkers) are individual, orderable tests, at the lab level. So, for example, at _Labcorp_ you can order a `Lipid Panel` test and a `Vitamin D` test, a `panel` and a `biomarker` respectively. At Vital, these are both refered to as **markers**.
+[_Markers_](/api-reference/lab-testing/biomarkers) are individual, orderable tests, at the lab level. So, for example, at _Labcorp_ you can order a `Lipid Panel` test and a `Vitamin D` test, a `panel` and a `biomarker` respectively. At Junction, these are both referred to as **markers**.
 
 ### Lab Tests
 
-[_Lab Tests_](/api-reference/lab-testing/post-test) are a collection of markers, or a preset combination of markers, that you can order. Using the example above, you can create a `Labcorp Lipid Panel and Vitamin D` lab test. You can then place orders at Vital using this preset. This is useful for situations where you repeatedly want to order the same markers.
+[_Lab Tests_](/api-reference/lab-testing/post-test) are a collection of markers, or a preset combination of markers, that you can order. Using the example above, you can create a `Labcorp Lipid Panel and Vitamin D` lab test. You can then place orders at Junction using this preset. This is useful for situations where you repeatedly want to order the same markers.
 
 
 # Ordering 
@@ -79,13 +81,13 @@ client.lab_tests.create_order(
 
 ### Ordering without a _Lab Test_ 
 
-This is what Vital calls `à la carte` ordering. You may want to order from the marker compendium without creating a preset.
+This is what Junction calls `à la carte` ordering. You may want to order from the marker compendium without creating a preset.
 
 <Note>
-This is a team level configuration that must be requested from Vital. Not all markers can be ordered in this manner. 
+This is a team level configuration that must be requested from Junction. Not all markers can be ordered in this manner. 
 </Note>
 
-It is possible to order `a-la-carte` using Vital `marker_ids` or the lab's `provider_id`.
+It is possible to order `a-la-carte` using Junction `marker_ids` or the lab's `provider_ids`.
 
 <CodeGroup>
 
@@ -147,7 +149,7 @@ When supplying the `add_on` field, it is always required to provide the `collect
 
 ## Collection Method
 
-Further explored in the documentation, Vital also has the concept of _Collection Method_. Vital currently supports three methods, [`At Home Phlebotomy`](lab/at-home-phlebotomy/overview), [`Walk In Phlebotomy`](lab/walk-in/overview) and [`Testkits`](lab/testkits/overview).
+Further explored in the documentation, Junction also has the concept of _Collection Method_. Junction currently supports four methods: [`At Home Phlebotomy`](/lab/at-home-phlebotomy/overview), [`Walk In`](/lab/walk-in/overview), [`Testkits`](/lab/testkits/overview), and [`On-Site Collection`](/lab/on-site-collection/overview).
 When ordering, you must select one of these, either at lab test creation, or at ordering time.
 
 
@@ -174,7 +176,7 @@ client.lab_tests.create_order(
 
 ## À La Carte Markers
 
-As mentioned above, not all `markers` are `a la carte` orderable. You can find which one's are orderable via the [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers).
+As mentioned above, not all `markers` are `a la carte` orderable. You can find which ones are orderable via the [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers).
 
 <CodeGroup>
 
@@ -201,7 +203,7 @@ if not all([m.a_la_carte_enabled for m in markers.markers]):
 
 ## Error Cases
 
-With the existance of various allowed combinations with the `order_set` field, there's many validations that are done server side. Here are some of the errors you can expect to encounter:
+With the existence of various allowed combinations with the `order_set` field, there are many validations that are done server side. Here are some of the errors you can expect to encounter:
 
 ### 400 Bad Request
 
@@ -209,5 +211,5 @@ With the existance of various allowed combinations with the `order_set` field, t
 2. `marker_ids or provider_ids must be set in add_on`: One of `marker_ids` or `provider_ids` must be set, if the `add_on` field is provided.
 3. `cannot set both marker_ids and provider_ids in add_on`: Similarly, only one of the former fields can be provided.
 4. `cannot order lab_tests from multiple labs`: You can only order multiple lab tests from the same lab.
-5. `cannot order with lab tests with multiple collection methods`: You must supply a `collection_method` if ordering multiple lab tests with multiple collection methods.
+5. `cannot order lab tests with multiple collection methods`: You must supply a `collection_method` if ordering multiple lab tests with multiple collection methods.
 6. `Lab <lab name> does not allow gender <gender value>`: The associated lab restricts which patient genders it accepts. This restriction applies to the entire lab, not to individual lab tests.

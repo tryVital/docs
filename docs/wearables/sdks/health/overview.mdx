@@ -1,32 +1,39 @@
 ---
 title: "Junction Health SDK"
+description: "Overview of the Junction Health SDK for integrating with Apple HealthKit and Android Health Connect, including setup and common API usage."
 sidebarTitle: "Overview"
 ---
 
+import ProviderArg from '/snippets/health-sdk-provider-arg.mdx';
 
 ## Overview
 
 <Note>
-  Make sure you have successfully integrated with a Vital Mobile SDK authentication scheme, before you proceed
+  Make sure you have successfully integrated with a Junction Mobile SDK authentication scheme, before you proceed
   to try out Junction Health SDK.
 
   <Card title="Mobile SDK Authentication" icon="id-card" href="/wearables/sdks/authentication" horizontal>
-    Learn how to authenticate your mobile app user with Vital Mobile SDK.
+    Learn how to authenticate your mobile app user with Junction Mobile SDK.
   </Card>
 </Note>
 
-This Junction Health SDK guidance page focuses on the inital setup and API usage of the Health SDK that is common to both
-the Apple HealthKit and Android Health Connect integration.
+This Junction Health SDK guidance page focuses on the initial setup and API usage of the Health SDK that is common to
+Apple HealthKit, Android Health Connect, and Samsung Health integrations, where supported.
 
-Please consult the following guides on requirements and restrictions of Apple HealthKit and Android Health Connect:
+Please consult the following guides on requirements and restrictions of Apple HealthKit, Android Health Connect, and
+Samsung Health:
 
 <Card title="Apple HealthKit" icon="apple" href="/wearables/guides/apple-healthkit" horizontal>
-  Learn how to integrate with Apple HealthKit through Vital Mobile SDKs, available in
+  Learn how to integrate with Apple HealthKit through Junction Mobile SDKs, available in
   Native iOS, React Native and Flutter.
 </Card>
 <Card title="Android Health Connect" icon="android" href="/wearables/guides/android-health-connect" horizontal>
-  Learn how to integrate with Android Health Connect through Vital Mobile SDKs, available in
+  Learn how to integrate with Android Health Connect through Junction Mobile SDKs, available in
   Native Android, React Native and Flutter.
+</Card>
+<Card title="Samsung Health" icon="heart" iconType="solid" href="/wearables/guides/samsung-health" horizontal>
+  Learn how to integrate with Samsung Health through Junction Mobile SDKs, available in
+  Native Android and React Native.
 </Card>
 
 
@@ -40,9 +47,10 @@ Junction Health SDK has two Connection Policy options:
 
 * The opt-in [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode) mode.
 
-If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit and Health Connect
-connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
-mode more appealling.
+
+If your device connection management UX is built upon an explicit notion of connecting and disconnecting Apple HealthKit,
+Health Connect and Samsung Health connections — as if they are like their cloud-based counterparts — you might find the [Explicit Connect](/wearables/sdks/health/connection-policies#explicit-connect-mode)
+mode more appealing.
 
 ### iOS apps: Configure your App Delegate
 
@@ -53,11 +61,11 @@ This section applies to:
 
 This section does not apply to:
 
-* ❌ Fluter iOS apps (using Junction Flutter SDK 4.3.8 or later).
+* ❌ Flutter iOS apps (using Junction Flutter SDK 4.3.8 or later).
 
 <Note>
-Vital **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
-You need not manual edit your AppDelegate in **Flutter** iOS projects.
+Junction **Flutter** SDK (4.3.8 and later) automatically integrates with your App Delegate through the Flutter Plugin machinery.
+You need not manually edit your AppDelegate in **Flutter** iOS projects.
 </Note>
 
 
@@ -72,7 +80,7 @@ In your AppDelegate's `application(_:didFinishLaunchingWithOptions:)` implementa
 
 <Accordion title="Details" icon="apple" defaultOpen>
 
-Vital needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
+Junction needs to register various handlers with the system frameworks like Apple HealthKit and BackgroundTasks. These frameworks
 require said registrations to be completed **before** the "app finished launching" moment [[1]](https://developer.apple.com/documentation/healthkit/hkhealthstore/1614175-enablebackgrounddelivery#3801028)
 [[2]](https://developer.apple.com/documentation/backgroundtasks/bgtaskscheduler/register(fortaskwithidentifier:using:launchhandler:)#Discussion).
 
@@ -122,6 +130,12 @@ The Health SDK must be configured before use.
 The configuration is persistent, so you typically only need to do this a single time — immediately after
 [a successful authentication with the Core SDK](/wearables/sdks/authentication).
 
+<Tip>
+Health Connect and Samsung Health are two independent SDK integrations on Android, despite sharing the same
+Health SDK API. If you intend to use both integrations, you must configure both of them explicitly.
+</Tip>
+
+<ProviderArg />
 
 <CodeGroup>
 ```swift Native iOS
@@ -141,8 +155,12 @@ VitalHealthKitClient.configure(
 ```
 
 ```kotlin Native Android
+
+/**
+ * Configure Health Connect
+ */
 import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
-import io.tryvital.vitalhealthconnect.model.ConnectionPolicy
+import io.tryvital.vitalhealthcore.model.ConnectionPolicy
 
 val manager = VitalHealthConnectManager.configure(context)
 manager.configureHealthConnectClient(
@@ -155,12 +173,35 @@ manager.configureHealthConnectClient(
   connectionPolicy = ConnectionPolicy.Explicit
 
 )
+
+/**
+ * Configure Samsung Health
+ */
+import io.tryvital.vitalsamsunghealth.VitalSamsungHealthManager
+import io.tryvital.vitalhealthcore.model.ConnectionPolicy
+
+val manager = VitalSamsungHealthManager.configure(context)
+manager.configureSamsungHealthClient(
+  syncNotificationBuilder = null,
+
+  // Using Auto Connect mode (default)
+  connectionPolicy = ConnectionPolicy.AutoConnect
+
+  // Using Explicit Connect mode
+  connectionPolicy = ConnectionPolicy.Explicit
+
+)
 ```
 
-```typescript React Native
-import { VitalHealth, HealthConfig } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import { Platform } from "react-native";
+import {
+  HealthConfig,
+  VitalHealth,
+} from "@tryvital/vital-health-react-native";
 
 let config = new HealthConfig();
+
 config.iOSConfig.backgroundDeliveryEnabled = true;
 
 // Using Auto Connect mode (default)
@@ -169,7 +210,15 @@ config.connectionPolicy = "autoConnect";
 // Using Explicit Connect mode
 config.connectionPolicy = "explicit";
 
+// Configure only Apple HealthKit (iOS) or Health Connect (Android)
 await VitalHealth.configure(config);
+
+// Configure only Samsung Health
+await VitalHealth.configure(config, "samsung_health");
+
+// Configure both Health Connect and Samsung Health
+await VitalHealth.configure(config, "health_connect");
+await VitalHealth.configure(config, "samsung_health");
 ```
 
 ```dart Flutter
@@ -196,6 +245,8 @@ await vital_health.configure(
 ### Ask user for health data permissions
 
 Before the SDK can read any data, you need to ask the end user to grant health data permissions.
+
+<ProviderArg />
 
 <CodeGroup>
 ```swift Native iOS
@@ -257,13 +308,27 @@ activity.registerForActivityResult(contract) { outcomeAsync ->
 }
 ```
 
-```typescript React Native
-import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import { Platform } from "react-native";
+import {
+  VitalHealth,
+  VitalResource,
+} from "@tryvital/vital-health-react-native";
 
+// Apple HealthKit (iOS) or Health Connect (Android)
 await VitalHealth.ask(
     [VitalResource.Activity, VitalResource.Workout, VitalResource.Sleep],
-    []
-)
+    [],
+    undefined,
+);
+
+// Samsung Health
+await VitalHealth.ask(
+    [VitalResource.Activity, VitalResource.Workout, VitalResource.Sleep],
+    [],
+    undefined,
+    "samsung_health"
+);
 ```
 
 ```dart Flutter
@@ -287,26 +352,27 @@ to provide a way for users to review their permission grants or denials, you can
 [inform them of the system app location where they can do so](#check-if-a-read-permission-was-granted-or-denied-spoiler-you-cant).
 
 <Warning>
-The health data read permission prompted is managed by the operating system. Vital cannot customize or
-alter its behaviour.
+The health data read permission prompt is managed by the operating system. Junction cannot customize or
+alter its behavior.
 </Warning>
 
 ### Check if your app has asked for permissions before
 
 You can check if your app has already asked the user _at least once_ before, for permissions on a specific `VitalResource`.
 
-Because [Ask for Permission](#ask-user-for-health-data-permissions) are gracefully ignored by the operating system beyond
-the first time, checking before asking can help you skip the parts of your UX journey that only makes sense to users
+Because [Ask for Permission](#ask-user-for-health-data-permissions) is gracefully ignored by the operating system beyond
+the first time, checking before asking can help you skip the parts of your UX journey that only make sense to users
 going through [Ask for Permission](#ask-user-for-health-data-permissions) for the first time.
 
-The only exception to this behaviour is when a `VitalResource` pulls a new data type introduced in a new OS release.
-In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in a OS permission
+The only exception to this behavior is when a `VitalResource` pulls a new data type introduced in a new OS release.
+In this scenario, calling [Ask for Permission](#ask-user-for-health-data-permissions) would result in an OS permission
 prompt that asks for permissions on _specifically_ those new data types.
 
 If you wish
 to provide a way for users to review their permission grants or denials, you can
 [inform them of the system app location where they can do so](#check-if-a-read-permission-was-granted-or-denied-spoiler-you-cant).
 
+<ProviderArg />
 
 <CodeGroup>
 ```swift Native iOS
@@ -322,10 +388,18 @@ val manager = VitalHealthConnectManager.configure(context)
 manager.hasAskedForPermission(VitalResource.Activity)
 ```
 
-```typescript React Native
-import { VitalHealth, VitalResource } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import { Platform } from "react-native";
+import {
+  VitalHealth,
+  VitalResource,
+} from "@tryvital/vital-health-react-native";
 
-await VitalHealth.hasAskedForPermission(VitalResource.Activity);
+// Apple HealthKit (iOS) or Health Connect (Android)
+await VitalHealth.hasAskedForPermission(VitalResource.Activity, provider);
+
+// Samsung Health
+await VitalHealth.hasAskedForPermission(VitalResource.Activity, "samsung_health");
 ```
 
 ```dart Flutter
@@ -384,6 +458,7 @@ the provider-specific guides for the requirements and setup instructions:
 
 * [Apple HealthKit guide](/wearables/guides/apple-healthkit)
 * [Android Health Connect guide](/wearables/guides/android-health-connect)
+* [Samsung Health guide](/wearables/guides/samsung-health)
 
 
 ### iOS
@@ -391,10 +466,10 @@ the provider-specific guides for the requirements and setup instructions:
 | Sync is automatically... |           |
 | ------------------------ | --------- |
 | Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
-| Triggered by             | Two behaviours: <ul><li>Foreground: Apple HealthKit immediately delivers buffered and new changes.</li><li>Background: Hourly batch delivery of changes, subject to OS throttling.</li></ul> |
+| Triggered by             | Two behaviors: <ul><li>Foreground: Apple HealthKit immediately delivers buffered and new changes.</li><li>Background: Hourly batch delivery of changes, subject to OS throttling.</li></ul> |
 
 <Note>
-HealthKit change notification is an always-on behaviour.
+HealthKit change notification is an always-on behavior.
 
 If you did not configure [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit)
 as instructed, your app will not receive any HealthKit change notification while it is in background.
@@ -406,31 +481,35 @@ In turn, background sync would not occur.
 | Sync is automatically... |           |
 | ------------------------ | --------- |
 | Activated on             | All resource types you have [asked permission for](#ask-user-for-health-data-permissions). |
-| Triggered by             | Two mechanisms: <ul><li>[Sync On App Launch](/wearables/guides/android-health-connect#sync-on-app-launch)</li><li>[Background Sync](/wearables/guides/android-health-connect#background-sync) if it is enabled.</li></ul> |
+| Triggered by             | Two mechanisms: <ul><li>Sync On App Launch</li><li>Background Sync if it is enabled.</li></ul> |
 
 <Note>
-Sync On App Launch is an always-on behaviour. Background Sync is an **opt-in** behaviour.
+Sync On App Launch is an always-on behavior. Background Sync is an **opt-in** behavior.
 
-Please refer to the [Android Health Connect guide](/wearables/guides/android-health-connect) for the full context
-and required configuration of these two behaviours.
+Please refer to the [Android Health Connect guide](/wearables/guides/android-health-connect) or
+the [Samsung Health guide](/wearables/guides/samsung-health) for the full context and required configuration
+of these two behaviors.
 </Note>
 
 ### Background Sync Frequency
 
-Junction Health SDK schedules hourly background sync with both Apple HealthKit and Android Health Connect, provided that you have:
+Junction Health SDK schedules hourly background sync with Apple HealthKit, Android Health Connect and Samsung Health,
+provided that you have:
 
 1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instruction; and
-2. Configured [Health Connect Background Sync](/wearables/guides/android-health-connect#background-sync) and request user permissions (when necessary) as per instruction.
+2. Configured Android Background Sync for the provider you are using — [Health Connect](/wearables/guides/android-health-connect#background-sync)
+   or [Samsung Health](/wearables/guides/samsung-health#background-sync) — and request user permissions (when necessary) as per instruction.
 
 However, this schedule is only advisory. The OS has full discretion to defer the scheduled time based on runtime
-constraints like battery power, as well as platform background execution policies. For more detailed explanation, please refer to:
+constraints like battery power, as well as platform background execution policies. For a more detailed explanation, please refer to:
 
 * [Apple HealthKit: Sync Frequency](/wearables/guides/apple-healthkit#sync-frequency)
 * [Android Health Connect: Sync Frequency](/wearables/guides/android-health-connect#sync-frequency)
+* [Samsung Health: Background Sync](/wearables/guides/samsung-health#background-sync)
 
 In other words, your product experience should not assume near real-time availability of wearable data, since the norm
 is a variable delay ranging from an hour to a day. Longer delay is also possible due to the lack of Internet
-connectivity, e.g.,  a long-haul flight, or an off-the-grid trip.
+connectivity, e.g., a long-haul flight, or an off-the-grid trip.
 
 The only possible exception is when your product experience does involve
 **active usage** of your consumer app with an active Internet connection. For example, iOS 17+ supports third-party
@@ -439,9 +518,11 @@ apps initiating an Apple Watch workout session that would be live synced with yo
 
 ### Pausing Data Synchronization
 
-You can pause and unpause data sync at any time, without having to sign-out the user from the Vital Mobile SDK.
+You can pause and unpause data sync at any time, without having to sign-out the user from the Junction Mobile SDK.
 Note that pausing data sync does not reset the incremental sync progress and does not trigger a historical stage
 upon unpause. It only "freezes" the sync progress.
+
+<ProviderArg />
 
 <CodeGroup>
 ```swift Native iOS
@@ -472,17 +553,29 @@ manager.pauseSynchronization = false
 Log.i("sync", "Paused? ${manager.pauseSynchronization}")
 ```
 
-```typescript React Native
-import { VitalHealth } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import { Platform } from "react-native";
+import {
+  VitalHealth,
+} from "@tryvital/vital-health-react-native";
 
 // Pause Synchronization
 await VitalHealth.setPauseSynchronization(true);
+await VitalHealth.setPauseSynchronization(true, "apple_health_kit");
+await VitalHealth.setPauseSynchronization(true, "health_connect");
+await VitalHealth.setPauseSynchronization(true, "samsung_health");
 
 // Unpause Synchronization
 await VitalHealth.setPauseSynchronization(false);
+await VitalHealth.setPauseSynchronization(false, "apple_health_kit");
+await VitalHealth.setPauseSynchronization(false, "health_connect");
+await VitalHealth.setPauseSynchronization(false, "samsung_health");
 
 // Check if synchronization is paused
-const isPaused = await VitalHealth.pauseSynchronization;
+const isPaused = await VitalHealth.isProviderSynchronizationPaused();
+const isPaused = await VitalHealth.isProviderSynchronizationPaused("apple_health_kit");
+const isPaused = await VitalHealth.isProviderSynchronizationPaused("health_connect");
+const isPaused = await VitalHealth.isProviderSynchronizationPaused("samsung_health");
 ```
 
 ```dart Flutter
@@ -499,87 +592,6 @@ final isPaused = await vital_health.pauseSynchronization;
 ```
 </CodeGroup>
 
-## Manually start data sync
-
-You can force data sync to start with `syncData()`.
-
-<CodeGroup>
-```swift Native iOS
-import VitalHealthKit
-
-VitalHealthKitClient.shared.syncData()
-```
-
-```kotlin Native Android
-import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
-
-val manager = VitalHealthConnectManager.getOrCreate(context)
-
-manager.syncData()
-```
-
-```typescript React Native
-import { VitalHealth } from "@tryvital/vital-health-react-native";
-
-await VitalHealth.syncData();
-```
-
-```dart Flutter
-import 'package:vital_health/vital_health.dart' as vital_health;
-
-await vital_health.syncData();
-```
-</CodeGroup>
-
-## Writing data
-
-You can also write data back to Apple HealthKit and Android Health Connect:
-
-<CodeGroup>
-```swift Native iOS
-import VitalHealthKit
-
-try await VitalHealthKitClient.shared.write(
-  input: .water(milliliters: 1000),
-  startDate: Date(),
-  endDate: Date()
-)
-```
-
-```kotlin Native Android
-import io.tryvital.vitalhealthconnect.VitalHealthConnectManager
-import io.tryvital.vitalhealthconnect.model.WritableVitalResource
-
-val manager = VitalHealthConnectManager.getOrCreate(context)
-
-manager.writeRecord(
-    WritableVitalResource.Water,
-    Instant.now(),
-    Instant.now(),
-    100.0
-)
-```
-
-```typescript React Native
-await VitalHealth.writeHealthData(
-    VitalWriteResource.Water,
-    100.0,
-    new Date(),
-    new Date(),
-)
-```
-
-```dart Flutter
-import 'package:vital_health/vital_health.dart' as vital_health;
-
-await vital_health.writeHealthData(vital_health.HealthResourceWrite.water, startDate, endDate, 1000);
-```
-</CodeGroup>
-
-<Tip>
-  Not all resources are writable in both iOS and Android. Please refer to the
-  `health_resource.dart` file.
-</Tip>
 
 ## Sync Status
 
@@ -607,14 +619,26 @@ manager.status
   .launchIn(coroutineScope)
 ```
 
-```typescript React Native
-import { VitalHealthEvents, VitalHealthReactNativeModule } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import { Platform } from "react-native";
+import {
+  AndroidHealthProvider,
+  IOSHealthProvider,
+  VitalHealth,
+} from "@tryvital/vital-health-react-native";
 
-const healthEventEmitter = new NativeEventEmitter(VitalHealthReactNativeModule);
-
-healthEventEmitter.addListener(VitalHealthEvents.statusEvent, (event: any) => {
-  console.log(VitalHealthEvents.statusEvent, event);
+// Apple HealthKit (iOS) or Health Connect (Android)
+const subscription = VitalHealth.observeSyncStatusChange((status) => {
+  console.log("Sync Status", status);
 });
+
+// Samsung Health
+const subscription = VitalHealth.observeSyncStatusChange((status) => {
+  console.log("Sync Status", status);
+}, "samsung_health");
+
+// later
+subscription.remove();
 ```
 
 ```dart Flutter
@@ -670,8 +694,11 @@ import 'package:vital_health/vital_health.dart' as vital_health;
 unawaited(vital_health.openSyncProgressView());
 ```
 
-```typescript React Native
-import { VitalHealth } from "@tryvital/vital-health-react-native";
+```typescript Expo & React Native
+import {
+  IOSHealthProvider,
+  VitalHealth,
+} from "@tryvital/vital-health-react-native";
 
 await VitalHealth.openSyncProgressView();
 ```
@@ -686,3 +713,60 @@ Note that it is currently a no-op on Android.
 </Accordion>
 
 </AccordionGroup>
+
+## Persistent Logging (iOS only)
+
+While Junction Dashboard provides a fairly comprehensive Mobile SDK Sync Progress view, the reporting mechanism
+can only include condensed and headline information in order to conserve network bandwidth usage.
+
+In order to troubleshoot data sync issues that are non-reproducible in controlled environments, the Health
+SDK supports **opt-in** Persistent Logging which would keep logs on disk across application launches.
+
+<Tip>
+The archive file is simply an Apple Archive (aar) containing various JSON files and plain text logs. Your app developers
+are welcome to dig into it for a self-troubleshooting attempt.
+</Tip>
+
+<CodeGroup>
+```swift iOS
+import VitalCore
+import VitalHealthKit
+
+// Toggle Persistent Logging
+// ℹ️ Note that this persists across application launches.
+VitalPersistentLogger.isEnabled = true
+
+// Generate the archive file, and open the system Share Sheet.
+VitalHealthKitClient.createAndShareLogArchive()
+```
+
+```typescript Expo & React Native
+import {
+  VitalHealth,
+} from "@tryvital/vital-health-react-native";
+
+// Toggle Persistent Logging
+// ℹ️ Note that this persists across application launches.
+await VitalHealth.setPersistentLoggingEnabled(true);
+
+// Check if Persistent Logging is enabled.
+const isEnabled = await VitalHealth.isPersistentLoggingEnabled();
+
+// Generate the archive file, and open the system Share Sheet.
+await VitalHealth.sharePersistentLogArchive(true);
+```
+</CodeGroup>
+
+
+You can introduce a couple of simple UI controls in a non-prominent location in your user experience, e.g., the app settings screen:
+
+* A "Capture Sync Issues" switch, which toggles the SDK Persistent Logging.
+* A "Share the Capture" button, which triggers the archive file generate-and-share flow.
+
+Then on an as-needed basis, your support team can:
+1. Instruct users to enable capturing; and
+2. In a few days' time, share the capture (archive file) with you.
+
+<Note>
+Junction may also require your support team's help to obtain an archive file, in order to make progress on any non-reproducible issue reports.
+</Note>

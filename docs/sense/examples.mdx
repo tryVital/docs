@@ -1,5 +1,6 @@
 ---
 title: Examples
+description: "Explore practical code examples of Junction Sense Continuous Query use cases including daily sleep analysis, in both Python and JSON DSL."
 ---
 
 A couple of examples to get you started with Continuous Query:
@@ -22,7 +23,7 @@ va.select(
 ).finalize()
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "where": "type = 'long_sleep'",
   "select": [
@@ -65,7 +66,7 @@ va.select(
 ```
 </CodeGroup>
 
-## Weekly Insights Into Users Activity
+## Weekly Insights Into Users' Activity
 
 <CodeGroup>
 ```python Python DSL
@@ -76,13 +77,13 @@ va.select(
     va.Activity.col("heart_rate_resting").mean(),
     va.Activity.col("calories_total").max(),
     va.Activity.col("steps").min(),
-    va.Activity.col("duration_active_seconds").mean()
+    va.Activity.col("duration_active_second").mean()
 ).group_by(
     va.date_trunc(va.Activity.index(), 1, "week")
 ).finalize()
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
     {
@@ -111,7 +112,7 @@ va.select(
         "activity": "duration_active_second"
       },
       "func": "mean"
-    },
+    }
   ],
   "group_by": [
     {
@@ -144,7 +145,7 @@ va.select(
 ).finalize()
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
       {
@@ -195,7 +196,7 @@ va.select(
 ).finalize()
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
       {
@@ -230,16 +231,30 @@ va.select(
         "func": "mean"
       },
       {
-      "arg": {
-        "timeseries": "calories_active",
-        "field": "value"
+        "arg": {
+          "timeseries": "calories_active",
+          "field": "value"
         },
         "func": "sum"
       },
       {
-      "arg": {
-        "timeseries": "body_temperature",
-        "field": "value"
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
+        },
+        "func": "mean"
+      },
+      {
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
+        },
+        "func": "min"
+      },
+      {
+        "arg": {
+          "timeseries": "body_temperature",
+          "field": "value"
         },
         "func": "max"
       }
@@ -281,7 +296,7 @@ va.select(
 ).finalize()
 ```
 
-```python JSON dsl
+```jsonc JSON DSL
 {
   "select": [
     {

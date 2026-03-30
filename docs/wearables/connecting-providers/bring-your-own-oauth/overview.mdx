@@ -1,22 +1,24 @@
 ---
 title: "Bring Your Own OAuth"
+description: "Use Bring Your Own OAuth (BYOO) to connect wearable providers through Junction using your own branded OAuth client credentials."
 sidebarTitle: "Overview"
 ---
 
 import BYOO from '/snippets/byoo.mdx';
+import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
 
 <BYOO />
 
 Junction supports bringing your own OAuth application credentials, so that your user would see the OAuth consent flow
 in your own brand when they connect to cloud-based OAuth providers.
 
-This provides a more cohesive experience for your users as it gives a truly whitelabelled experience for your application/mobile application.
+This provides a more cohesive experience for your users as it gives a truly white-labeled experience for your application/mobile application.
 
-Typically when you don't use custom credentials your oauth screen will look like this and used our shared credentials:
+Typically when you don't use custom credentials your OAuth screen will look like this and use our shared credentials:
 
 ![Default Credentials](/img/default_credentials.png)
 
-With custom credentials you can use your own team name and setup your own logo for the provider.
+With custom credentials you can use your own team name and set up your own logo for the provider.
 
 ## OAuth Providers supporting BYOO
 
@@ -72,7 +74,7 @@ This section documents the _starting_ rate limit of a brand new OAuth applicatio
 <Steps>
 <Step title="Setup your OAuth application">
 Use the [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials)
-endpoint to obtain the instructions to setup your OAuth application.
+endpoint to obtain the instructions to set up your OAuth application.
 </Step>
 
 <Step title="Set your application credentials">
@@ -121,10 +123,10 @@ The following providers are not immediately active. You need to take a couple of
 
 ### Through the Dashboard
 
-To setup custom OAuth application credentials via the Dashboard, you need to do the following:
+To set up custom OAuth application credentials via the Dashboard, you need to do the following:
 
 1. Create a developer account with the cloud-based OAuth providers.
-2. Generate a OAuth application credentials from your developer account. You can do this by going to the providers developer accounts page and creating a new application.
+2. Generate OAuth application credentials from your developer account. You can do this by going to the provider's developer account page and creating a new application.
 3. Navigate to **Custom Credentials** under **Config** on the left sidebar in the Junction Dashboard.
 4. Find the provider you want to configure and click the **Setup** button.
 5. In the input form that appears, enter your **OAuth Client ID** and **OAuth Client Secret**.

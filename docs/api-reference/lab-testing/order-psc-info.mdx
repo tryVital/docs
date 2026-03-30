@@ -1,4 +1,6 @@
 ---
+title: "Get order PSC info"
+description: "Retrieve order psc info via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v3/order/{order_id}/psc/info"
 ---
 
@@ -44,7 +46,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getOrderPscInfo("order_id);
+var data = vital.labTests().getOrderPscInfo("order_id");
 ```
 
 ```go Go
@@ -62,7 +64,7 @@ client := vitalclient.NewClient(
 )
 
 
-response, err := client.LabTests.GetOrderPscInfo(context.TODO(), "order_id)
+response, err := client.LabTests.GetOrderPscInfo(context.TODO(), "order_id")
 if err != nil {
   return err
 }
@@ -92,7 +94,7 @@ fmt.Printf("Received data %s\n", response)
       },
       "distance": "25",
       "capabilities": ["stat"]
-    },
+    }
   ]
 }
 ```

@@ -1,14 +1,20 @@
 ---
-openapi: "GET /v3/order/{order_id}/psc/appointment"
-title: "Get PSC Appointment"
+openapi: "PATCH /v3/order/{order_id}/psc/appointment/reschedule"
+title: "Reschedule PSC Appointment"
+description: "Partially update order psc appointment reschedule via the Junction API. Requires authentication with your team API key."
 ---
 
 <RequestExample>
 ```bash cURL
-curl --request GET \
-     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment' \
+curl --request PATCH \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment/reschedule' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '
+{
+    "booking_key": "bar456"
+}
+'
 ```
 
 ```python Python
@@ -20,31 +26,42 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get_psc_appointment(order_id="<order_id>")
+data = client.lab_tests.reschedule_psc_appointment(order_id="<order_id>", booking_key="<booking_key>");
 ```
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import {  AppointmentRescheduleRequest } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getpscAppointment("<order_id>");
+const request: AppointmentRescheduleRequest = {
+    bookingKey: "<reason_id>",
+}
+
+const data = await client.labTests.reschedulePscAppointment("<order_id>", request);
 ```
 
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.AppointmentRescheduleRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getpscAppointment("<order_id>");
+AppointmentRescheduleRequest request = AppointmentRescheduleRequest
+        .builder()
+        .bookingKey("<booking_key>")
+        .build();
+
+var data = vital.labTests().reschedulePscAppointment("<order_id>", request);
 ```
 
 ```go Go
@@ -61,7 +78,11 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetpscAppointment(context.TODO(), "<order_id>")
+request := &vital.AppointmentRescheduleRequest{
+    BookingKey: "<booking_key>",
+}
+
+response, err := client.LabTests.ReschedulePscAppointment(context.TODO(), "<order_id>", request)
 if err != nil {
     return err
 }
@@ -81,7 +102,7 @@ fmt.Printf("Received data %s\n", response)
         "city": "Phoenix",
         "state": "AZ",
         "zip_code": "85004",
-        "unit": "14"
+        "unit":"14"
     },
     "location": {
         "lng": -112.0772235,

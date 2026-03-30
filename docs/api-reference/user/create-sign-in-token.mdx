@@ -1,19 +1,20 @@
 ---
 title: Create Sign-In Token
+description: "Create or submit user sign in token via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/user/{user_id}/sign_in_token"
 ---
 
-Create a [Vital Sign-In Token](/wearables/sdks/authentication#vital-sign-in-token) for your mobile apps to
-sign in with [Vital Mobile SDKs](/wearables/sdks/authentication).
+Create a [Junction Sign-In Token](/wearables/sdks/authentication#junction-sign-in-token) for your mobile apps to
+sign in with [Junction Mobile SDKs](/wearables/sdks/authentication).
 
 <Info>
-Avoid requesting Vital Sign-In Token every time your mobile app relaunches.
-Your mobile app only needs to sign-in once with the Vital Mobile SDK. A signed-in session is persistent on device.
+Avoid requesting Junction Sign-In Token every time your mobile app relaunches.
+Your mobile app only needs to sign-in once with the Junction Mobile SDK. A signed-in session is persistent on device.
 </Info>
 
 <RequestExample>
 
-```cURL
+```bash cURL
 curl --request POST \
      --url {{BASE_URL}}/v2/user/{{USER_ID}}/sign_in_token \
      --header 'Accept: application/json' \
@@ -21,7 +22,7 @@ curl --request POST \
      --header 'Content-Type: application/json' \
 ```
 
-```python Python
+```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
@@ -29,12 +30,12 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.user.get_user_sign_in_token(
+const data = await client.user.getUserSignInToken(
     '<user_id>'
 );
 ```
 
-```javascript Node
+```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 
@@ -43,9 +44,9 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.user.getUserSignInToken(
+data = client.user.get_user_sign_in_token(
     user_id="<user_id>"
-);
+)
 ```
 
 ```java Java

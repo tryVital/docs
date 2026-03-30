@@ -1,5 +1,6 @@
 ---
 title: "Summary"
+description: "Retrieve processed activity summary data for a specific user, including steps, calories, and distance metrics."
 openapi: "GET /v2/summary/activity/{user_id}"
 ---
 
@@ -7,7 +8,7 @@ openapi: "GET /v2/summary/activity/{user_id}"
 
 ```bash Shell
 curl --request GET \
-     --url {{BASE_URL}}/v2/summary/activity/{user_id}/raw \
+     --url {{BASE_URL}}/v2/summary/activity/{user_id} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>'
 ```

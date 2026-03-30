@@ -1,24 +1,25 @@
 ---
 title: Data Prioritization
+description: "Learn how Junction Sense automatically prioritizes data from multiple providers and source types, keeping only the highest-priority source per group."
 ---
 
 ## Overview
 
-Data prioritization automatically kicks in whenever you use a [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause).
+Data prioritization automatically kicks in whenever you use a [Group By clause](/sense/query-dsl/group-by-clause).
 
-Within each group outlined by your [Group By clause](/api-reference/horizon-ai/query-dsl/group-by-clause), the query executor would **implicitly**:
+Within each group outlined by your [Group By clause](/sense/query-dsl/group-by-clause), the query executor would **implicitly**:
 
 * Sub-group the data further by their Provider and their [Source Type](/wearables/providers/data-attributions);
-* Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-group
-  exists for the same Source Type.
+* Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-groups exist
+  for the same Source Type.
 
 <Note>
-Data prioritization works only in a [Group By](/api-reference/horizon-ai/query-dsl/group-by-clause) context.
+Data prioritization works only in a [Group By](/sense/query-dsl/group-by-clause) context.
 </Note>
 
 <Note>
-If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/sense/data-prioritization) behavior would be disabled.
 </Note>
 
 <Accordion title="Example" defaultOpen>
@@ -27,10 +28,10 @@ You are querying Sleep Score grouped by every 1 day:
 ```json
 {
     "select": [
-        { "func": "newest", { "value_macro": "sleep_score" } }
+        { "func": "newest", "arg": { "value_macro": "sleep_score" } }
     ],
     "group_by": [
-        { "date_trunc": { "value": 1, "unit": "day }, "arg": { "index": "sleep" } }
+        { "date_trunc": { "value": 1, "unit": "day" }, "arg": { "index": "sleep" } }
     ]
 }
 ```
@@ -48,7 +49,7 @@ The query result would be:
 * Day 1-4: Sleep Score computed from Oura sleep data
 * Day 5-7: Sleep Score computed from Apple HealthKit sleep data
 
-### If your team priority states that Oura > Apple HealthKit
+#### If your team priority states that Oura > Apple HealthKit
 
 The query result would be:
 
@@ -64,7 +65,7 @@ days and has higher provider priority.
 
 ## Previewing the prioritization effect
 
-You can experiment and preview the effect of prioritization using the [Query API](/api-reference/horizon-ai/aggregation/using-query-api).
+You can experiment and preview the effect of prioritization using the [Query API](/sense/using-query-api).
 
 By specifying a list of provider slugs in `config.provider_priority_overrides`, you instruct the query executor to treat these providers
 as the highest priority — above the team provider priority — specifically in this query invocation.

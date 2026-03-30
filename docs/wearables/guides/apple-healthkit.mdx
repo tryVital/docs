@@ -1,28 +1,29 @@
 ---
 title: "Apple HealthKit"
+description: "Integrate Apple HealthKit as an SDK-based provider with Junction, including sync frequency, background delivery, and Mobile SDK setup."
 ---
 
-Apple HealthKit is an SDK-based provider. Your iOS consumer app would embed the Vital Mobile SDKs on a supported
+Apple HealthKit is an SDK-based provider. Your iOS consumer app would embed the Junction Mobile SDKs on a supported
 stack. Data are then pulled from the Apple HealthKit data store on the user's iOS device.
 
-Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK](/wearables/sdks/vital-health) guides for SDK installation
-instructions and general API usage. This guide contains information on the the behaviour and required configuration
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Junction Health SDK](/wearables/sdks/health/overview) guides for SDK installation
+instructions and general API usage. This guide contains information on the behavior and required configuration
 specific to the Apple HealthKit integration.
 
 <Card title="Mobile SDK Installation" icon="helmet-safety" href="/wearables/sdks/installation" horizontal>
-Learn about the minimum runtime and build-time requirements of Vital Mobile SDKs, and how to add them into
+Learn about the minimum runtime and build-time requirements of Junction Mobile SDKs, and how to add them into
 your project through your package dependency manager.
 </Card>
 
-<Card title="Vital Health SDK" icon="heart" iconType="solid" href="/wearables/sdks/vital-health" horizontal>
-Learn about the initial setup required by Vital Health SDK, and the API exposed by Vital Health SDK
+<Card title="Junction Health SDK" icon="heart" iconType="solid" href="/wearables/sdks/health/overview" horizontal>
+Learn about the initial setup required by Junction Health SDK, and the API exposed by Junction Health SDK
 for managing and inspecting health data permissions and automatic data sync.
 </Card>
 
 
 ## Sync Frequency
 
-| App state  | Behaviour |
+| App state  | Behavior |
 | ---------- | --------- |
 | Foreground | Apple HealthKit delivers any buffered and new changes immediately. |
 | Background | Hourly batch delivery of changes, subject to operating system throttling. |
@@ -30,32 +31,32 @@ for managing and inspecting health data permissions and automatic data sync.
 While the SDK schedules hourly data sync with Apple HealthKit, iOS has full discretion to defer the scheduled time
 based on factors like CPU usage, battery usage, connectivity, and Low Power Mode.
 
-In other words, the Vital SDK — or any third-party HealthKit apps — cannot guarantee the sync to happen on a strict
-schedule. The hourly schedule is advisory and non-binding from the persective of iOS. The actual delivery frequency
-can therefore fluctuate from hourly, to once a day, or when certain opportunity arises (e.g., when Sleep Mode ends,
+In other words, the Junction SDK — or any third-party HealthKit apps — cannot guarantee the sync to happen on a strict
+schedule. The hourly schedule is advisory and non-binding from the perspective of iOS. The actual delivery frequency
+can therefore fluctuate from hourly, to once a day, or when a certain opportunity arises (e.g., when Sleep Mode ends,
 or when the phone starts charging).
 
 ## Getting Started
 
-To enable this integration, you would need to integrate [Vital Core SDK](/wearables/sdks/vital-core) and
-[Vital Health SDK](/wearables/sdks/vital-core) into your Native iOS, React Native or Flutter mobile app.
+To enable this integration, you would need to integrate [Junction Core SDK](/wearables/sdks/vital-core) and
+[Junction Health SDK](/wearables/sdks/health/overview) into your Native iOS, React Native or Flutter mobile app.
 
 <Steps>
 
-<Step title="Add Vital SDKs as dependencies">
+<Step title="Add Junction SDKs as dependencies">
 Review the [installation requirements and package installation instructions](/wearables/sdks/installation).
 </Step>
 
-<Step title="Integrate with Vital Mobile SDK Authentication">
+<Step title="Integrate with Junction Mobile SDK Authentication">
 Follow the [SDK Authentication](/wearables/sdks/authentication) guidance to integrate your app with the authentication
-mechanism of Vital Core SDK.
+mechanism of Junction Core SDK.
 </Step>
 
 <Step title="Configure Health SDK and ask user for read permissions">
-Follow the [Vital Health SDK](/wearables/sdks/vital-health) guidance to
-[configure your App Delegate](/wearables/sdks/vital-health#configure-your-app-delegate-ios-only), 
-[configure the Health SDK](/wearables/sdks/vital-health#sdk-configuration) and to 
-[ask for health data read permissions](/wearables/sdks/vital-health#ask-user-for-health-data-permissions) from your user.
+Follow the [Junction Health SDK](/wearables/sdks/health/overview) guidance to
+[configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate), 
+[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to 
+[ask for health data read permissions](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) from your user.
 
 <Note>
 Health data sync is activated only on `VitalResource`s which you have asked permissions from your user for. If you
@@ -65,7 +66,7 @@ did not ask for permissions, data sync would not occur.
 
 <Step title="Configure Background Delivery">
 Follow the [Apple HealthKit Background Delivery guidance](#setting-up-apple-healthkit-background-delivery) below to
-setup your iOS app target as an eligible target for Apple HealthKit Background Delivery.
+set up your iOS app target as an eligible target for Apple HealthKit Background Delivery.
 </Step>
 
 </Steps>
@@ -74,16 +75,16 @@ setup your iOS app target as an eligible target for Apple HealthKit Background D
 ## Setting up Apple HealthKit Background Delivery
 
 <Warning>
-You **MUST** [configure your App Delegate](/wearables/sdks/vital-health#configure-your-app-delegate-ios-only) for 
+You **MUST** [configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate) for 
 Apple HealthKit Background Delivery to function as expected.
 </Warning>
 
 
-Vital Health SDK can subscribe to Apple HealthKit Background Delivery, so that data sync can happen automatically in
+Junction Health SDK can subscribe to Apple HealthKit Background Delivery, so that data sync can happen automatically in
 background. The subscription persists even when:
 
 1. Your app user does not open your app regularly;
-2. Your app user forces quit your app; or
+2. Your app user force-quits your app; or
 3. The iPhone has been restarted for any reason.
 
 
@@ -98,7 +99,7 @@ Enable the "HealthKit > Background Delivery" entitlement:
 
 <img src="/img/iOS/health_kit_permission_background_delivery.png" />
 
-Enable the "Background Modes > Background Processing entitlement:
+Enable the "Background Modes > Background Processing" entitlement:
 
 <img src="/img/iOS/ios_background_processing.png" />
 
@@ -125,7 +126,7 @@ If you request write permissions, you must also specify:
 You are all set!
 
 Note that there is no need to call `syncData()` manually at all. Once you have asked the user for permission on 
-resources, sync would automatically starts every app launch, as well as whenever your app is woken up by Apple HealthKit to
+resources, sync would automatically start every app launch, as well as whenever your app is woken up by Apple HealthKit to
 respond to newly available data.
 
 <Note>

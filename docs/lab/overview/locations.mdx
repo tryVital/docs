@@ -1,5 +1,6 @@
 ---
 title: "Patient Service Centers and Appointments"
+description: "Find and verify nearby Patient Service Centers (PSCs) for walk-in lab tests using the Area Info and PSC Info API endpoints."
 ---
 
 # Finding the Nearest Serviceable Patient Service Centers
@@ -10,12 +11,12 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 
 1. Fetch PSC location data via the `GET` [Area Info](/api-reference/lab-testing/area-info) endpoint, the response payload should look like this:
 
-   ```json
+   ```python
    {
      "zip_code": "85004",
      "central_labs": {
        "labcorp": {
-           "within_radius": 5, # the number of PSC's within radius of provided zip code
+           "within_radius": 5, # the number of PSCs within radius of provided zip code
            "radius": "25", # miles
            "capabilities": ["stat", "appointment_scheduling_with_lab"] # aggregate list of capabilities provided by PSCs within the radius
        }
@@ -23,7 +24,7 @@ The recommended high-level flow for verifying PSC availability at Junction is:
      ...
    }
    ```
-2. Then you can query the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint for specific information on the PSCs within the radius of the provided zip code, which will look like this:
+2. Then you can query the `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoint for specific information on the PSCs within the radius of the provided zip code, which will look like this:
 
    ```json
    {
@@ -55,20 +56,20 @@ The recommended high-level flow for verifying PSC availability at Junction is:
 </Note>
 
 
-# Booking appointments at Patient Service Centers 
+# Booking appointments at Patient Service Centers
 
 <Warning>
-  Currently only available for Quest lab locations. 
+  Currently only available for Quest lab locations.
 </Warning>
 
 ## **Appointment Scheduling Capability**
 
 
 
-The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoints as:
+The ability to schedule appointments is designated with the `capabilities` field in the response from the `GET` [Area Info](/api-reference/lab-testing/area-info) or `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoints as:
 
-- `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction’s API.
-- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction’s API.
+- `appointment_scheduling_via_junction`: Indicates that the PSC allows scheduling appointments via Junction's API.
+- `appointment_scheduling_with_lab`: Indicates that the PSC allows scheduling appointments directly with the lab, either online or via phone. This capability also indicates that scheduling appointments with this location is **not** available through Junction's API.
 
 If neither scheduling capability is present, that means the PSC either does not offer appointment scheduling, or its scheduling availability is unknown.
 
@@ -78,11 +79,11 @@ If neither scheduling capability is present, that means the PSC either does not 
 
 ## Appointment Availability
 
-Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [Psc Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
+Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint to obtain the available slots. You can provide the `site_code` you obtain from the `GET` [PSC Info](/api-reference/lab-testing/psc-info) endpoint, or supply a zip code directly.
 
 - If you provide a zip code, a maximum of 3 PSC locations will be displayed.
 
-Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data. 
+Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data.
 
 - ⚠️ The individual start and end times are in UTC, and each location has its own `iana_timezone` key, which should be used to convert these start and end dates to the correct time zone.
 - The overarching `timezone` key will always be `null` in this endpoint.
@@ -90,12 +91,12 @@ Note that since this endpoint can return availability for multiple PSCs, there m
 ## Booking
 
 <Warning>
-  Patient Service Centers have access to the booked appointment, which can be canceled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
+  Patient Service Centers have access to the booked appointment, which can be cancelled or updated outside of our system. When this occurs, the lab does not expose this to us, and so we do not have visibility, and it will not be reflected in our system or API.
 </Warning>
 
-In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-schedulling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-schedulling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) with Junction as many times as you want.
+In order to book these appointments, you can use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint to find available appointment slots. You can then [book](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking), [reschedule](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling), or [cancel](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) with Junction as many times as you want.
 
-To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks. 
+To allow the patient to track their appointment individually, we expose the `external_id` parameter in the appointment endpoints and webhooks.
 
 - This code is the unique identifier for the appointment at the provider and should be made available to the patient.
 - We provide it to the patient via [SMS communications](/lab/walk-in/communications) for the appointment.

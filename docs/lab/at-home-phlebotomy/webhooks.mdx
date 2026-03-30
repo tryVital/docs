@@ -1,20 +1,21 @@
 ---
 title: "Webhooks"
+description: "Reference for webhook events triggered during at-home phlebotomy order and appointment lifecycle changes, with example payloads."
 ---
 
-The following webhook events are of interest, when placing an At-Home Phlebotomy order. Those are
+The following webhook events are of interest when placing an At-Home Phlebotomy order. These are
 described in detail in the following sections.
 
 ## Order webhook events
 
 Based on the status present in [`Order and Appointment Lifecycle - Order Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle#order-lifecycle),
-Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
+Junction will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
 [`labtest.order.updated`](/event-catalog/labtest.order.updated).
 
 The `labtest.order.created` event is triggered when an order is created in the system,
 having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
 
-<Note>The `partial_results` status does not trigger a Webhook unless specifically requested from Vital.</Note>
+<Note>The `partial_results` status does not trigger a Webhook unless specifically requested from Junction.</Note>
 
 The webhook payload body will have the following information if the Order is in the `appointment_scheduled` status:
 
@@ -86,7 +87,7 @@ The webhook payload body will have the following information if the Order is in 
 ## Appointment webhook events
 
 Based on the status present in [`Order and Appointment Lifecycle - Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle#appointment-lifecycle),
-Vital will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
+Junction will trigger the [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook event.
 
 <Info>
     The `labtest.appointment.updated` event is triggered for all possible appointment statuses, and is the **recommended** way of integrating to fetch all
@@ -145,7 +146,7 @@ The webhook payload body may have the following information if the appointment i
           "is_reschedule": true
         },
         "status": "scheduled"
-      },
+      }
     ]
   }
 }

@@ -1,13 +1,14 @@
 ---
-title: "Vital Devices SDK"
+title: "Junction Devices SDK"
+description: "Use the Junction Devices SDK for Bluetooth-based device connectivity with required permission setup for iOS and Android projects."
 sidebarTitle: "Devices SDK"
 ---
 
 
 ## Prerequisites
 
-Your app project must declare the required permission usage. This applies equally to both native,
-Flutter and React Native app projects.
+Your app project must declare the required permission usage. This applies equally to native,
+Flutter, and React Native app projects.
 
 <AccordionGroup>
   <Accordion title="iOS projects">
@@ -33,7 +34,7 @@ Flutter and React Native app projects.
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
   ```
 
-  You will have to request the appropriate permissions at in your app before you can call the Vital Devices SDK.
+  You will have to request the appropriate permissions in your app before you can call the Junction Devices SDK.
   </Accordion>
 </AccordionGroup>
 
@@ -86,7 +87,7 @@ final deviceModel = deviceModels[0];
 
 ### Scanning for devices
 
-First you have to scan for one of the supported devices. 
+First, you have to scan for one of the supported devices.
 
 <CodeGroup>
 ```swift Native iOS
@@ -196,7 +197,7 @@ glucoseSamples = await deviceManager.readGlucoseMeterData(scannedDevice);
 ```
 </CodeGroup>
 
-After you have received samples depending on the type of device you might need to star scanning again to receive the
+After you have received samples, depending on the type of device, you might need to start scanning again to receive the
 next set of samples.
 
 ## Freestyle Libre 1
@@ -211,7 +212,7 @@ We currently support Libre 1 sensors via NFC readings. Please make sure you add 
 
 <img src="/img/iOS/nfc_permission.png" />
 
-Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
+Also add the key `NFCReaderUsageDescription` in your Info.plist. This key should explain why your app needs to use NFC.
 
 To use the reader:
 
@@ -231,7 +232,7 @@ let reading = try await reader.read()
 import android.app.Activity
 import io.tryvital.vitaldevices.devices.Libre1Reader
 
-let currentActivity: Activity
+val currentActivity: Activity
 
 val reading = Libre1Reader.create(currentActivity).read()
 ```
@@ -239,7 +240,7 @@ val reading = Libre1Reader.create(currentActivity).read()
 ```typescript React Native
 import { VitalDevicesManager } from "@tryvital/vital-devices-react-native";
 
-let devicesManager: VitalDeviceManager
+let devicesManager: VitalDevicesManager
 
 let result = await devicesManager.readLibre1("reading", "errored", "completed")
 ```
@@ -250,15 +251,15 @@ let result = await devicesManager.readLibre1("reading", "errored", "completed")
 1. the sensor information; and
 2. a list of glucose samples.
 
-## Upload device samples to Vital
+## Upload device samples to Junction
 
 <Note>
-This automatic behaviour is available since Junction iOS 1.0.0, Junction Android 3.0.0, Junction Flutter SDK 4.0.0
+This automatic behavior is available since Junction iOS 1.0.0, Junction Android 3.0.0, Junction Flutter SDK 4.0.0
 and Junction React Native 4.0.0.
 </Note>
 
-Vital Devices SDK automatically uploads any blood pressure and glucose samples discovered during
-the read operation, provided that the Vital Core SDK [has a signed-in user](/wearables/sdks/vital-core#core-sdk-status).
+Junction Devices SDK automatically uploads any blood pressure and glucose samples discovered during
+the read operation, provided that the Junction Core SDK [has a signed-in user](/wearables/sdks/vital-core#core-sdk-status).
 
 The SDK does not currently buffer samples that fail to upload. You might want to ensure that the
 device has Internet connectivity before initiating the read operation.

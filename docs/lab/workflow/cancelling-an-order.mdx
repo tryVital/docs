@@ -1,5 +1,6 @@
 ---
 title: 'Cancelling an Order'
+description: "Cancel lab test orders based on their current status and collection method, with guidance on timing to avoid unnecessary costs."
 ---
 
 Order cancellation depends on the current status of your order and its collection method. Orders follow a finite state machine (FSM) pattern with specific rules governing when cancellation is permitted.
@@ -9,8 +10,8 @@ Order cancellation depends on the current status of your order and its collectio
 
 * **At-home phlebotomy**: Appointments cancelled more than 24 hours in advance will be fully refunded. Cancellations made less than 24 hours before the scheduled appointment are non-refundable.
 * **Testkits**: Cancel before shipment to avoid fees. Testkits typically ship within the same business day if orders are placed before 1pm EST.
-* **Walk-in tests**: Can generally be cancelled until sample collection begins
-* **On-site collection**: Cancel before the collection event
+* **Walk-in tests**: Can generally be cancelled until sample collection begins.
+* **On-site collection**: Cancel before the collection event.
 </Warning>
 
 ## When Orders Can Be Cancelled
@@ -19,7 +20,7 @@ Order cancellation depends on the current status of your order and its collectio
 
 All collection methods allow cancellation during these early phases:
 - `ordered` - Initial order placement
-- `requisition_created` - After requisition form is generated  
+- `requisition_created` - After requisition form is generated
 - `requisition_bypassed` - When requisition is bypassed
 - `awaiting_registration` - For registrable testkits
 
@@ -49,7 +50,7 @@ Orders **cannot** be cancelled once they reach these states:
     - `collecting_sample.walk_in_test.redraw_available` - Order marked as final but has missing results
     - `failed.walk_in_test.sample_error` - Sample error occurred
 
-    <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
+    <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
   </Tab>
 
   <Tab title="At-Home Phlebotomy">
@@ -94,7 +95,7 @@ Orders **cannot** be cancelled once they reach these states:
     - `received.on_site_collection.ordered`
     - `received.on_site_collection.requisition_created`
     - `received.on_site_collection.requisition_bypassed`
-    - `sample_with_lab.on_site_collection.draw_completed`
+    - `collecting_sample.on_site_collection.draw_completed`
 
     **❌ Cannot cancel once collection begins:**
     - `cancelled.on_site_collection.cancelled` - Already cancelled
@@ -115,7 +116,7 @@ Orders **cannot** be cancelled once they reach these states:
 If you need to cancel only the appointment (without cancelling the entire order), use the appropriate endpoint for your collection method:
 
 - **At-home phlebotomy**: [Appointment Cancellation endpoint](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
-- **Walk-in tests (PSC)**: [PSC Appointment Cancellation endpoint](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling)
+- **Walk-in tests (PSC)**: [PSC Appointment Cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 
 #### At-Home Phlebotomy Appointment Cancellation
 
@@ -157,7 +158,7 @@ const request: AppointmentCancelRequest = {
     cancellationReasonId: "<reason_id>",
 }
 
-const data = await client.labTests.cancelPhlabotomyAppointment("<order_id>", request);
+const data = await client.labTests.cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 ```java Java
@@ -172,10 +173,10 @@ Vital vital = Vital.builder()
 
 AppointmentCancelRequest request = AppointmentCancelRequest
         .builder()
-        .cancellationReasonId("<reason_id")
+        .cancellationReasonId("<reason_id>")
         .build();
 
-var data = vital.labTests().cancelPhlabotomyAppointment("<order_id>", request);
+var data = vital.labTests().cancelPhlebotomyAppointment("<order_id>", request);
 ```
 
 ```go Go
@@ -196,7 +197,7 @@ request := &vital.AppointmentCancelRequest{
     CancellationReasonId: "<cancellation_reason_id>",
 }
 
-response, err := client.LabTests.CancelPhlabotomyAppointment(context.TODO(), "<order_id>", request)
+response, err := client.LabTests.CancelPhlebotomyAppointment(context.TODO(), "<order_id>", request)
 if err != nil {
     return err
 }
@@ -448,7 +449,7 @@ Look for these indicators in the response:
                 "created_at": "2022-01-01T00:00:00Z",
                 "status": "cancelled.testkit.cancelled",
             }
-    ],
+        ],
 }
 ```
 
@@ -486,9 +487,9 @@ Look for these indicators in the response:
 - [Order Lifecycle Overview](/lab/workflow/lab-test-lifecycle)
 - [API Reference: Cancel Order](/api-reference/lab-testing/cancel-order)
 - [API Reference: Cancel At-Home Appointment](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
-- [API Reference: Cancel PSC Appointment](/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling)
+- [API Reference: Cancel PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 - [Webhooks for Order Events](/lab/testkits/webhooks)
 
 ---
 
-*For questions about specific cancellation scenarios, please contact support at support@junction.com*
+*For questions about specific cancellation scenarios, please contact support at [support@junction.com](mailto:support@junction.com)*

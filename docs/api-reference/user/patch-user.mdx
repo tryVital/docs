@@ -1,19 +1,21 @@
 ---
+title: "Update user"
+description: "Partially update user via the Junction API. Requires authentication with your team API key."
 openapi: "PATCH /v2/user/{user_id}"
 ---
 
 <RequestExample>
 
 ```bash cURL
-curl --request POST \
-     --url {{BASE_URL}}/v2/user/ \
+curl --request PATCH \
+     --url {{BASE_URL}}/v2/user/{user_id} \
      --header 'Accept: application/json' \
      --header 'x-vital-api-key: <API_KEY>' \
      --header 'Content-Type: application/json' \
      --data '
 {
      "fallback_time_zone": "Europe/London",
-     "fallback_birth_date" "1980-03-13"
+     "fallback_birth_date": "1980-03-13"
 }
 '
 ```

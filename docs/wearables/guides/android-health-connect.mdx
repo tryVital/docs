@@ -1,45 +1,46 @@
 ---
 title: "Android Health Connect"
+description: "Integrate Android Health Connect as an SDK-based provider with Junction, including setup, permissions, and required Mobile SDK components."
 ---
 
-Android Health Connect is an SDK-based provider. Your Android consumer app would embed the Vital Mobile SDKs on a supported
+Android Health Connect is an SDK-based provider. Your Android consumer app would embed the Junction Mobile SDKs on a supported
 stack. Data are then pulled from the Health Connect data store on the user's Android device.
 
-Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Vital Health SDK](/wearables/sdks/vital-health) guides for SDK installation
-instructions and general API usage. This guide contains information on the the behaviour and required configuration
+Refer to the [Mobile SDK Installation](/wearables/sdks/installation) and [Junction Health SDK](/wearables/sdks/health/overview) guides for SDK installation
+instructions and general API usage. This guide contains information on the behavior and required configuration
 specific to the Android Health Connect integration.
 
 <Card title="Mobile SDK Installation" icon="helmet-safety" href="/wearables/sdks/installation" horizontal>
-Learn about the minimum runtime and build-time requirements of Vital Mobile SDKs, and how to add them into
+Learn about the minimum runtime and build-time requirements of Junction Mobile SDKs, and how to add them into
 your project through your package dependency manager.
 </Card>
 
-<Card title="Vital Health SDK" icon="heart" iconType="solid" href="/wearables/sdks/vital-health" horizontal>
-Learn about the initial setup required by Vital Health SDK, and the API exposed by Vital Health SDK
+<Card title="Junction Health SDK" icon="heart" iconType="solid" href="/wearables/sdks/health/overview" horizontal>
+Learn about the initial setup required by Junction Health SDK, and the API exposed by Junction Health SDK
 for managing and inspecting health data permissions and automatic data sync.
 </Card>
 
 
 ## Getting Started
 
-To enable this integration, you would need to integrate [Vital Core SDK](/wearables/sdks/vital-core) and
-[Vital Health SDK](/wearables/sdks/vital-core) into your Native iOS, React Native or Flutter mobile app.
+To enable this integration, you would need to integrate [Junction Core SDK](/wearables/sdks/vital-core) and
+[Junction Health SDK](/wearables/sdks/health/overview) into your Native Android, React Native or Flutter mobile app.
 
 <Steps>
 
-<Step title="Add Vital SDKs as dependencies">
+<Step title="Add Junction SDKs as dependencies">
 Review the [installation requirements and package installation instructions](/wearables/sdks/installation).
 </Step>
 
-<Step title="Integrate with Vital Mobile SDK Authentication">
+<Step title="Integrate with Junction Mobile SDK Authentication">
 Follow the [SDK Authentication](/wearables/sdks/authentication) guidance to integrate your app with the authentication
-mechanism of Vital Core SDK.
+mechanism of Junction Core SDK.
 </Step>
 
 <Step title="Configure Health SDK and ask user for read permissions">
-Follow the [Vital Health SDK](/wearables/sdks/vital-health) starting guidance to
-[configure the Health SDK](/wearables/sdks/vital-health#sdk-configuration) and to 
-[ask for health data read permissions](/wearables/sdks/vital-health#ask-user-for-health-data-permissions) from your user.
+Follow the [Junction Health SDK](/wearables/sdks/health/overview) starting guidance to
+[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to 
+[ask for health data read permissions](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) from your user.
 
 <Note>
 Health data sync is activated only on `VitalResource`s which you have asked permissions from your user for. If you
@@ -71,7 +72,7 @@ Note that the application form is located under the "How do I access data throug
 
 ## Configure your AndroidManifest.xml
 
-### Health Connect privacy dialogue
+### Health Connect privacy dialog
 
 <Warning>Missing manifest declarations may result in Health Connect ignoring your app.</Warning>
 
@@ -116,7 +117,7 @@ Here is a minimum declaration example:
 
 Your app manifest (`AndroidManifest.xml`) must declare all the read or write permissions for all the data types you intend to sync.
 
-For example, if you intend to sync Blood Pressure records and Blood Glucose reocrds, your app manifest must contain the following
+For example, if you intend to sync Blood Pressure records and Blood Glucose records, your app manifest must contain the following
 `<uses-permission>` declarations:
 
 ```xml
@@ -150,26 +151,26 @@ For example, if you intend to sync Blood Pressure records and Blood Glucose reoc
 
 ### Foreground Service permissions
 
-Vital Health SDK runs all its data sync workers inside a short-service Foreground Services.
+Junction Health SDK runs all its data sync workers inside short-service Foreground Services.
 
-At build time, Vital Health SDK injects all the required `shortService` Foreground Services declarations
+At build time, Junction Health SDK injects all the required `shortService` Foreground Services declarations
 into your AndroidManifest.xml. You need not modify your app's Manifest to enable this.
 
 <Info>
-Vital Health SDK can run work inside the [AndroidX WorkManager](https://developer.android.com/develop/background-work/background-tasks/persistent/how-to/long-running#declare-foreground-service-types-manifest)
-foregorund service, as well as our own `SyncOnExactAlarmService`. The merged AndroidManifest.xml of your app
+Junction Health SDK can run work inside the [AndroidX WorkManager](https://developer.android.com/develop/background-work/background-tasks/persistent/how-to/long-running#declare-foreground-service-types-manifest)
+foreground service, as well as our own `SyncOnExactAlarmService`. The merged AndroidManifest.xml of your app
 would include both of them.
 </Info>
 
 
 ## Prepare your app architecture
 
-<Warning>Incompliance to the guidelines below may result in Health Connect permission flow failing to launch on specific Android OS versions.</Warning>
+<Warning>Non-compliance with the guidelines below may result in Health Connect permission flow failing to launch on specific Android OS versions.</Warning>
 
 <Tabs>
 <Tab title="Native Android">
 
-When requesting permission using the `ActivityResultContract` created by Vital Health `createPermissionRequestContract()`, you must launch
+When requesting permission using the `ActivityResultContract` created by Junction Health `createPermissionRequestContract()`, you must launch
 the contract using AndroidX Activity Result API.
 
 Attempts to launch the contract manually via the legacy `Activity.startActivityForResult` API would result in an `android.content.ActivityNotFoundException`
@@ -181,9 +182,9 @@ exception on Android 14 and later.
 
 The `MainActivity` of your Android host app project must be augmented with either of the two options below:
 
-1. Subclassing `VitalHealthReactActivity` provided by the Vital Health SDK `com.vitalhealthreactnative` package, instead of the default `ReactActivity`.
+1. Subclassing `VitalHealthReactActivity` provided by the Junction Health SDK `com.vitalhealthreactnative` package, instead of the default `ReactActivity`.
 
-2. Overriding `onRequestPermissionsResult(...)` so as to manually propagate permission request results to the Vital Health SDK.
+2. Overriding `onRequestPermissionsResult(...)` so as to manually propagate permission request results to the Junction Health SDK.
 
 ```kotlin
 // MainActivity in your host app project
@@ -195,7 +196,7 @@ open class MainActivity: ReactActivity() {
   ) {
     super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-    // Propagate permission flow results to Vital Health SDK.
+    // Propagate permission flow results to Junction Health SDK.
     VitalHealthReactNativeModule.onRequestPermissionsResult(
       this.reactInstanceManager,
       requestCode,
@@ -206,7 +207,7 @@ open class MainActivity: ReactActivity() {
 }
 ```
 
-The argumentation above is a workaround to React Native internals AndroidX-incompatible handling of permission request result callbacks,
+The augmentation above is a workaround to React Native's AndroidX-incompatible handling of permission request result callbacks,
 which breaks the AndroidX Activity Result API required by Android Health Connect.
 
 </Tab>
@@ -224,22 +225,22 @@ Android Health Connect, whilst `FlutterActivity` is not.
 
 ### Sync On App Launch
 
-When your app resumes from background (i.e., having no Activity), Vital Health SDK triggers a data sync on all the resources
+When your app resumes from background (i.e., having no Activity), Junction Health SDK triggers a data sync on all the resources
 to which the user has granted read permission.
 
 The SDK imposes a **2-minute** throttle on automatic data sync. This is to prevent rapid app switching from causing an
 excessive amount of data sync work being scheduled.
 
 <Info>
-Vital Health SDK relies on the [AndroidX ProcessLifecycleOwner](https://developer.android.com/reference/androidx/lifecycle/ProcessLifecycleOwner)
+Junction Health SDK relies on the [AndroidX ProcessLifecycleOwner](https://developer.android.com/reference/androidx/lifecycle/ProcessLifecycleOwner)
 to get notified of your app's resumption.
 </Info>
 
 ### Running as Foreground Service
 
-<Info>You cannot opt-out of this behaviour.</Info>
+<Info>You cannot opt-out of this behavior.</Info>
 
-Vital Health SDK runs all its data sync workers inside a Foreground Service. Running as a foreground service helps in two ways:
+Junction Health SDK runs all its data sync workers inside a Foreground Service. Running as a foreground service helps in two ways:
 
 1. It ensures ongoing data sync can run to completion even if the user switches away from your app; and
 
@@ -250,7 +251,7 @@ Android requires every Foreground Service to [be associated with a user-visible 
 The OS typically grants a grace period of about 10 seconds before making the user aware of this notification. In other words,
 if the data sync worker completes within the grace period, no notification would be posted.
 
-Vital Health SDK installs these notification copies by default:
+Junction Health SDK installs these notification copies by default:
 
 | Item | Copy |
 | ---- | ---- |
@@ -350,7 +351,7 @@ await VitalHealth.setSyncNotificationContent({
 Register your custom copies through `vital_health.setSyncNotificationContent` as early as possible in
 your Flutter app startup logic.
 
-```typescript
+```dart
 import 'package:vital_health/vital_health.dart' as vital_health;
 
 vital_health.setSyncNotificationContent(vital_health.SyncNotificationContent(
@@ -365,17 +366,17 @@ vital_health.setSyncNotificationContent(vital_health.SyncNotificationContent(
 
 ## Background Sync
 
-Vital Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
-experience with Android Health Connect, siimlar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#background-delivery) on iOS.
+Junction Health SDK supports an **opt-in** Android Background Sync feature. It provides a continuous monitoring
+experience with Android Health Connect, similar to [Background Delivery for Apple HealthKit](/wearables/guides/apple-healthkit#setting-up-apple-healthkit-background-delivery) on iOS.
 
 
 ### Sync Frequency
 
-The [Sync On App Launch](#sync-on-app-launch) behaviour is always-on.
+The [Sync On App Launch](#sync-on-app-launch) behavior is always-on.
 
 When Background Sync is enabled, the SDK additionally schedules hourly sync using the Android [Exact Alarms](https://developer.android.com/develop/background-work/services/alarms/schedule) mechanism.
 
-The OS has full discretion on whether to honour or defer the time as scheduled by the Vital Health SDK. This includes the policies
+The OS has full discretion on whether to honor or defer the time as scheduled by the Junction Health SDK. This includes the policies
 of the base Android OS, as well as any vendor-specific OS augmentation.
 
 For example, the device may enter [Doze mode](https://developer.android.com/training/monitoring-device-state/doze-standby) during device inactivity. Doze mode
@@ -383,11 +384,11 @@ would batch and defer most Exact Alarms and other background work to run at a lo
 
 <Info>
 Not to be confused with Alarm Clock apps, **Exact Alarm** is the technical name of an Android framework for scheduling
-app wake-ups in background at certain wall clock time. It is the Vital Health SDK being silently "alarmed" in background.
+app wake-ups in background at certain wall clock time. It is the Junction Health SDK being silently "alarmed" in background.
 
 Your user **will not be alarmed hourly** as a result of enabling Background Sync.
 
-However, if the data sync took longer than 10 seconds, the OS might nudge them of this occurrence with a user-visible notification.
+However, if the data sync took longer than 10 seconds, the OS might notify them of this occurrence with a user-visible notification.
 The notification content is configurable by you — see the ["Running as Foreground Service"](#running-as-foreground-service) section for more details.
 </Info>
 
@@ -416,7 +417,7 @@ schedule Exact Alarms without interactive permission requests.
 
 If you choose to incorporate `USE_EXACT_ALARM`, you should prepare to justify to Google Play Store:
 
-1. Why hourly background sync is quintessential to your product experience; and
+1. Why hourly background sync is essential to your product experience; and
 2. Why the interactive permission request required by `SCHEDULE_EXACT_ALARM` is non-optimal to your product experience.
 
 </Warning>
@@ -426,8 +427,8 @@ Here is a matrix summarizing the Exact Alarm permission request requirements:
 | Android OS           | API Level | Requirements |
 | -------------------- | --------- | ---------------- |
 | Android 11 or below  | &lt;=30   | No interactive permission request. |
-| Android 12           | 31, 32    | `SCHEDULE_EXACT_ALARM`: Requires a runtime permission request. Revokable. |
-| Android 13 and above | &gt;=33   | App must declare either:<ul><li>`SCHEDULE_EXACT_ALARM`: Requires runtime permission request. Revokable.</li><li>`USE_EXACT_ALARM`: No interactive permission request.</li></ul> |
+| Android 12           | 31, 32    | `SCHEDULE_EXACT_ALARM`: Requires a runtime permission request. Revocable. |
+| Android 13 and above | &gt;=33   | App must declare either:<ul><li>`SCHEDULE_EXACT_ALARM`: Requires runtime permission request. Revocable.</li><li>`USE_EXACT_ALARM`: No interactive permission request.</li></ul> |
 
 ### Updating your AndroidManifest.xml
 
@@ -436,7 +437,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 <Tabs>
     <Tab title="The SCHEDULE_EXACT_ALARM route">
     <Note>
-    Make sure you read and understand [Runtime User Permission](#runtime-user-permission-android-12) before moving forward.
+    Make sure you read and understand [Runtime Permission Request](#runtime-permission-request) before moving forward.
     This option is mutually exclusive with `USE_EXACT_ALARM` in the second tab.
     </Note>
     ```xml
@@ -450,7 +451,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     </Tab>
     <Tab title="The USE_EXACT_ALARM route">
     <Warning>
-    Make sure you read and understand [Runtime User Permission](#runtime-user-permission-android-12) before moving forward,
+    Make sure you read and understand [Runtime Permission Request](#runtime-permission-request) before moving forward,
     especially the Google Play Store review policy surrounding the `USE_EXACT_ALARM` permission.
     This option is mutually exclusive with `SCHEDULE_EXACT_ALARM` in the first tab.
     </Warning>
@@ -474,7 +475,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="Native Android">
     You can enable Background Sync through `enableBackgroundSyncContract()` (an AndroidX `ActivityResultContract`).
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12), this contract will launch
+    If the runtime [requires an interactive permission request](#runtime-permission-request), this contract will launch
     an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
     or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
     the contract returns `false`.
@@ -529,7 +530,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="React Native">
     You can enable Background Sync through `enableBackgroundSync()`.
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    If the runtime [requires an interactive permission request](#runtime-permission-request),
     `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
     The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
     For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
@@ -556,7 +557,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     <Tab title="Flutter">
     You can enable Background Sync through `enableBackgroundSync()`.
 
-    If the runtime [requires an interactive permission request](#runtime-user-permission-android-12),
+    If the runtime [requires an interactive permission request](#runtime-permission-request),
     `enableBackgroundSync()` will launch an Android Intent to request the _"Alarms & Reminders"_ permission.
     The promise result is a boolean, indicating whether or not the Background Sync has been enabled successfully.
     For example, if the user did not grant the permission during the said Android Intent, the contract returns `false`.
@@ -569,7 +570,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     When running on iOS, both `enableBackgroundSync()` and `isBackgroundSyncEnabled` always return `true` immediately.
     </Note>
 
-    ```typescript
+    ```dart
     import 'package:vital_health/vital_health.dart' as vital_health;
 
     final success = await vital_health.enableBackgroundSync();
@@ -644,4 +645,4 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
 
 ### Miscellaneous
 
-When you `signOut()` a user, Vital SDK will automatically disable Background Sync.
+When you `signOut()` a user, Junction SDK will automatically disable Background Sync.

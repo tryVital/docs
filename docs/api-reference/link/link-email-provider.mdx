@@ -1,5 +1,6 @@
 ---
 title: "Link Email provider"
+description: "Create or submit link provider email via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/link/provider/email/{provider}"
 ---
 
@@ -13,7 +14,7 @@ curl --request POST \
      --header 'x-vital-link-token: <VITAL-LINK-TOKEN>' \
      --data '
 {
-     "email": "test@email.com"
+     "email": "test@email.com",
      "region": "us"
 }
 '
@@ -87,7 +88,7 @@ EmailProviderAuthLink request = EmailProviderAuthLink
         .email("<email>")
         .build();
 
-var data = vital.link().connectEmailAuthProvider("<provider", request);
+var data = vital.link().connectEmailAuthProvider("<provider>", request);
 ```
 
 ```go Go

@@ -1,14 +1,14 @@
 ---
 title: Sleep Macros
-description: Value macro expressions for Sleep Analysis
+description: "Use value macro expressions for sleep analysis in Junction Sense queries to access computed sleep stage metrics and breakdowns."
 icon: moon
 ---
 
-Macros are precomputed fields available in the Vital Aggregation DSL. Use them anywhere you would use a regular column expression.
+Macros are precomputed fields available in the Junction Sense DSL. Use them anywhere you would use a regular column expression.
 Reference a macro with the `value_macro` expression:
 
 <CodeGroup>
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "value_macro": "chronotype" }
@@ -28,7 +28,7 @@ va.select(va.Sleep.chronotype())
 | <span style={{ whiteSpace: "nowrap" }}>Macro Name</span> | Description | <span style={{ whiteSpace: "nowrap" }}>Output Column Name</span> |
 | ------- | ------- | ------- |
 | **Chronotype** | The chronotype of the sleep session, categorized as `lark`, `third`, or `owl`. | `chronotype` |
-| **Sleep Score** | A score from 0 to 100 computed using the Vital Horizon AI Sleep Score model. | `sleep_score` |
+| **Sleep Score** | A score from 0 to 100 computed using the Junction Sense Sleep Score model. | `sleep_score` |
 | **Asleep At** | Computed time of user falling asleep based on sleep session start time and latency. | `asleep_at` |
 | **Awake At** | Computed time the user woke up (may differ from session end time). | `awake_at` |
 
@@ -73,11 +73,11 @@ import vitalx.aggregation as va
 va.select(
     va.Sleep.chronotype().latest()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "func": "latest", "arg": { "value_macro": "chronotype" } }
@@ -87,6 +87,9 @@ va.select(
             "date_trunc": {
                 "unit": "week",
                 "value": 1
+            },
+            "arg": {
+                "index": "sleep"
             }
         }
     ]
@@ -107,11 +110,11 @@ import vitalx.aggregation as va
 va.select(
     va.Sleep.score().mean()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "func": "mean", "arg": { "value_macro": "sleep_score" } }
@@ -121,6 +124,9 @@ va.select(
             "date_trunc": {
                 "unit": "week",
                 "value": 1
+            },
+            "arg": {
+                "index": "sleep"
             }
         }
     ]
@@ -144,11 +150,11 @@ va.select(
     va.Sleep.asleep_at().mean(),
     va.Sleep.awake_at().mean()
 ).group_by(
-    date_trunc(Sleep.index(), 1, "week")
+    va.date_trunc(va.Sleep.index(), 1, "week")
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "func": "mean", "arg": { "value_macro": "asleep_at" } },
@@ -159,6 +165,9 @@ va.select(
             "date_trunc": {
                 "unit": "week",
                 "value": 1
+            },
+            "arg": {
+                "index": "sleep"
             }
         }
     ]

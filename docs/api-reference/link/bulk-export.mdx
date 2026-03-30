@@ -1,5 +1,6 @@
 ---
 title: "Bulk Export"
+description: "Create or submit link bulk export via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/link/bulk_export"
 ---
 
@@ -9,5 +10,5 @@ import ConnectionMigration from '/snippets/connection-migration.mdx';
 
 <Warning>
 You should [pause the connections](/api-reference/link/bulk-pause) before bulk exporting them. Pausing stops
-Vital systems from refreshing the connections, ensuring the exported data are most up-to-date.
+Junction systems from refreshing the connections, ensuring the exported data is the most up-to-date.
 </Warning>

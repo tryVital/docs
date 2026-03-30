@@ -1,14 +1,15 @@
 ---
 title: "Webhooks"
+description: "Reference for webhook events triggered during at-home testkit order lifecycle changes, with example payload structures."
 ---
 
-The following webhook events are of interest, when placing an At-Home Testkit order. Those are
+The following webhook events are of interest when placing an At-Home Testkit order. These are
 described in detail in the following sections.
 
 ## Order webhook events
 
-Based on the status present in [`Order Lifecycle`](/lab/testkit/order-lifecycle),
-Vital will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
+Based on the status present in [`Order Lifecycle`](/lab/testkits/order-lifecycle),
+Junction will trigger two kinds of webhook events, [`labtest.order.created`](/event-catalog/labtest.order.created) and
 [`labtest.order.updated`](/event-catalog/labtest.order.updated).
 
 The `labtest.order.created` event is triggered when an order is created in the system,
@@ -77,7 +78,7 @@ The webhook payload body will have the following information if the Order is in 
       },
       "priority":false,
       "requisition_form_url":null,
-      "sample_id": "some_id,
+      "sample_id": "some_id",
       "shipping_details":null,
       "status":"received",
       "team_id":"f07f59d2-2903-4bcd-a2ac-3e87fa47c4bc",
@@ -97,7 +98,7 @@ The webhook payload body will have the following information if the Order is in 
                "origin": "initial"
             }
          ]
-      },
+      }
    },
    "event_type":"labtest.order.updated"
 }

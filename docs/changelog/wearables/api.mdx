@@ -1,18 +1,64 @@
 ---
 title: "API"
+description: "Changelog of Junction Wearables API updates including Sense readiness scores, WHERE clause support, and derived readiness query tables."
 ---
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-### Horizon AI Query WHERE clause (September 2025)
+### Junction Sense Readiness Scores (March 2026)
 
-Horizon AI Query now accepts a `where` clause so you can filter input rows before aggregation.
+Junction Sense now supports Readiness Scores, a new query table that provides daily readiness insights derived from sleep.
+Use it to query sleep, recovery, stress and strain scores, their zones, and chronotype without building custom scoring logic.
+
+Check out the [Readiness Scores](/sense/query-dsl/readiness-scores) documentation for full details.
+
+<Accordion icon="bed" iconType="duotone" title="Details" defaultOpen>
+
+- New query table: `derived_readiness`
+- New index expression: `{ "index": "derived_readiness" }` / `DerivedReadiness.index()`
+- Works with standard Query DSL patterns (`select`, `where`, `group_by`, and aggregations).
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.DerivedReadiness.col("recovery_score").mean(),
+    va.DerivedReadiness.col("strain_score").max(),
+).group_by(
+    va.date_trunc(va.DerivedReadiness.index(), 1, "week")
+)
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "derived_readiness": "recovery_score" } },
+    { "func": "max", "arg": { "derived_readiness": "strain_score" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "week" },
+      "arg": { "index": "derived_readiness" }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+</Accordion>
+
+### Junction Sense WHERE clause (September 2025)
+
+Junction Sense now accepts a `where` clause so you can filter input rows before aggregation.
 
 <Accordion icon="filter" iconType="duotone" title="Details" defaultOpen>
 
-- Compose SQL-style predicates with `>`, `>=`, `<`, `<=`, `=`, `!=`, `NOT`, `AND`, `OR`, and parenthesis grouping.
+- Compose SQL-style predicates with `>`, `>=`, `<`, `<=`, `=`, `!=`, `NOT`, `AND`, `OR`, and parentheses grouping.
 - Filters always run before `group_by` evaluation when both clauses are present.
-- Check out the [WHERE clause](/api-reference/horizon-ai/aggregation/query-dsl/where-clause) documentation for more details.
+- Check out the [WHERE clause](/sense/query-dsl/where-clause) documentation for more details.
 
 <CodeGroup>
 ```python Python DSL
@@ -30,7 +76,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "group_key": "*" },
@@ -51,17 +97,17 @@ va.select(
 
 </Accordion>
 
-### Horizon AI Query sleep macros (September 2025)
+### Junction Sense sleep macros (September 2025)
 
-Horizon AI Query now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
-Check out [Sleep Analysis](/api-reference/horizon-ai/aggregation/query-dsl/sleep-analysis) for more details.
+Junction Sense now exposes two new Sleep Macros to help you pinpoint when users fall asleep and wake up within a session.
+Check out [Sleep Analysis](/sense/query-dsl/sleep-analysis) for more details.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
 - `asleep_at` returns the first instance at which the user is considered to be asleep, i.e., session start + sleep latency.
 - `awake_at` returns the time at which the user has stopped sleeping, sans any brief awakening.
 
-Use these macros in the Select clause of Horizon AI queries to surface consistent bedtime and wake-up timestamps across providers.
+Use these macros in the Select clause of Junction Sense queries to surface consistent bedtime and wake-up timestamps across providers.
 
 Syntax:
 
@@ -75,7 +121,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "value_macro": "asleep_at" },
@@ -106,16 +152,16 @@ We've also added [Provider Device Created](/event-catalog/provider.device.create
 ### Detecting password expiration in password-based connections (July 2025)
 
 The [Link Password Provider endpoint](/api-reference/link/link-password-provider), the [Get User Connections endpoint](/api-reference/user/get-users-connected-providers)
-and the [Provider Connection Error events](/event-catalog/provider.connection.error) would now report password expiration using the `provider_password_expired` error type.
+and the [Provider Connection Error events](/event-catalog/provider.connection.error) now report password expiration using the `provider_password_expired` error type.
 
 This mainly affects [Abbott LibreView patient-based connections](/wearables/guides/abbott-libreview#abbott-libreview-for-patient-based-connections).
 
-### Introducing Universal Group By Support to Horizon AI Query (June 2025)
+### Introducing Universal Group By Support to Junction Sense (June 2025)
 
 <HorizonAIBeta />
 
-Horizon AI Query can now group and aggregate the data by any [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#table-column-expression)
-and/or any [Source Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions#source-column-expression).
+Junction Sense can now group and aggregate the data by any [Table Column expression](/sense/query-dsl/column-expressions#table-column-expression)
+and/or any [Source Column expression](/sense/query-dsl/column-expressions#source-column-expression).
 
 This gives you more options on how the data should be dissected — not just by calendar units, but now also by Data Source fields and categorical values from the
 data itself.
@@ -123,11 +169,11 @@ data itself.
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
-Check out the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause) documentation.
+Check out the [Group By clause](/sense/query-dsl/group-by-clause) documentation.
 
 <Note>
-If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/api-reference/horizon-ai/aggregation/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/api-reference/horizon-ai/aggregation/data-prioritization) behaviour would be disabled.
+If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
+the implicit [Data Prioritization](/sense/data-prioritization) behavior would be disabled.
 </Note>
 
 #### Example queries
@@ -164,7 +210,7 @@ va.select(...).group_by(
    va.Timeseries.col("sleep_breathing_disturbance").field("type"),
 )
 ```
-```json JSON DSL
+```jsonc JSON DSL
 # Group Summary Data by Week, Provider and Source Type
 
 {
@@ -252,10 +298,10 @@ With a few simple configuration steps, Continuous Query enables you to:
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 
 You can now select timeseries resources in a Query:
-  * For each resource, you can select all of specific fields of interest.
-  * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval of blood pressure).
+  * For each resource, you can select all specific fields of interest.
+  * You can select multiple timeseries resources simultaneously, even though they are of different types (discrete, interval, or blood pressure).
 
-Check out the [Table Column expression](/api-reference/horizon-ai/aggregation/query-dsl/column-expressions) documentation.
+Check out the [Table Column expression](/sense/query-dsl/column-expressions) documentation.
 
 #### Examples of Timeseries Table Column expressions
 
@@ -284,7 +330,7 @@ select(
     Timeseries.col("workout_distance").field("workout_id"),
 )
 ```
-```json JSON DSL:
+```jsonc JSON DSL
 [
     # Blood Pressure
     {
@@ -375,7 +421,7 @@ Check out the [Provider Connection Created](/event-catalog/provider.connection.c
 We have increased Link Token expiry from 15 minutes to 60 minutes.
 
 We have also added an `on_error=redirect` Link Token option which forces any error scenario to redirect to your specified `redirect_url`
-URL, disabling any in-built error handling behaviour in the Link Widget.
+URL, disabling any in-built error handling behavior in the Link Widget.
 
 <Accordion icon="link" iconType="duotone" title="Details" defaultOpen>
 Check out the [Link Error](/wearables/connecting-providers/errors) format and the [Generate a Link Token](/api-reference/link/generate-link-token) endpoint documentation.
@@ -385,14 +431,14 @@ Check out the [Link Error](/wearables/connecting-providers/errors) format and th
 We now offer the ability to set custom historical data ranges for wearables providers, with resource-level granularity.
 
 <Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
-You can now extend the historical pull range for a number of supported providers using the [Org Management API](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences)
+You can now extend the historical pull range for a number of supported providers using the [Org Management API](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences).
 
 <Info>
 Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
 </Info>
 
 Check out the [Set Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences),
-[Get Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/get-team-scope-requirements), [Delete Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/delete-team-scope-requirements) endpoint documentation for more details.
+[Get Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences), [Delete Data Pull Preferences](/api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences) endpoint documentation for more details.
 </Accordion>
 
 ### Introspection: Historical Pull Timeline (May 2024)
@@ -400,19 +446,19 @@ The Historical Pull Introspection endpoint now reports the execution timeline of
 
 <Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
 The timeline tracks when the historical pull was scheduled, started, and eventually ended (success or failure). This
-improves the visibility around the latency of historical pulls, as well as providing more indicator of an incomplete
+improves the visibility around the latency of historical pulls, as well as providing more indicators of an incomplete
 execution.
 
-Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
+Check out the [Historical Pull Introspection](/api-reference/data/introspection/historical-pulls) endpoint documentation.
 
 </Accordion>
 
 ### Team Scope Requirements (Apr 2024)
-You can now tailor what scopes Vital would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
+You can now tailor what scopes Junction would request from your Users using the [Org Management API](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements).
 This applies when your user connects to an [OAuth provider](/wearables/connecting-providers/auth_types) which supports scopes.
 
 <Accordion icon="lightbulb" iconType="duotone" title="Details" defaultOpen>
-Vital ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
+Junction ensures that any new provider connection can be established only when the user has granted all the scopes specified in the `user_must_grant` scope list.
 
 The scopes specified as `user_may_grant` would be requested alongside the `user_must_grant` scopes. However, unlike `user_must_grant`, they do not prevent the connection from being established.
 
@@ -431,7 +477,7 @@ You can now configure your Junction Team through the [Org Management API](/api-r
 to reject duplicate wearable connections.
 
 <Accordion icon="person-military-pointing" iconType="duotone" title="Details" defaultOpen>
-When the `reject_duplicate_connection` setting is enabled on the Team, Vital checks whether or
+When the `reject_duplicate_connection` setting is enabled on the Team, Junction checks whether or
 not the provider-reported user ID is already connected to an existing User in your Team.
 
 If it does, the Link API would report the [`duplicate_connection` error](/wearables/connecting-providers/errors).
@@ -500,8 +546,8 @@ Check out the [Provider Connection Created](/event-catalog/provider.connection.c
 You can now set a Fallback Birth Date on a user.
 
 <Accordion icon="cake-candles" iconType="duotone" title="Details" defaultOpen>
-Vital can use this to compute a more accurate workout Heart Rate Zones, when the provider
-exposes neither heart rate zones nor user age to Vital.
+Junction can use this to compute more accurate workout Heart Rate Zones, when the provider
+exposes neither heart rate zones nor user age to Junction.
 
 Check out the [Heart Rate Zones](/wearables/providers/heart-rate-zones#fallback-birth-date) documentation.
 </Accordion>
@@ -515,7 +561,7 @@ You can now get grouped timeseries data.
 This initial release groups data by [Source Type](/wearables/providers/data-attributions#source-type)
 from [supported providers](/wearables/providers/data-attributions#supported-providers).
 
-Check out the [Blood Oxygen](/api-reference/timeseries-grouped/blood-oxygen) endpoint documentation for an example.
+Check out the [Blood Oxygen](/api-reference/data/timeseries/blood-oxygen) endpoint documentation for an example.
 </Accordion>
 
 
@@ -526,7 +572,7 @@ You can now introspect the status of all one-off user historical data pulls.
 It also provides the pulled date-time range, as well as a rough estimate of the amount of
 data ingested (in terms of "days with data").
 
-Check out the [Historical Pull Introspection](/api-reference/introspection/historical-pulls) endpoint documentation.
+Check out the [Historical Pull Introspection](/api-reference/data/introspection/historical-pulls) endpoint documentation.
 </Accordion>
 
 ### User Resources Introspection (Dec 2023)
@@ -539,22 +585,22 @@ For example, the endpoint provides:
 2. The number of objects sent in `*.created` events
 3. The status and time of the last ingestion attempt (polling or push)
 
-Check out the [User Resources Introspection](/api-reference/introspection/user-resources) endpoint documentation.
+Check out the [User Resources Introspection](/api-reference/data/introspection/user-resources) endpoint documentation.
 </Accordion>
 
 
-### Vital Sign-In Token for Mobile SDKs (Nov 2023)
+### Junction Sign-In Token for Mobile SDKs (Nov 2023)
 
-Vital Sign-In Token is a new, user-scoped Authentication scheme for Vital Mobile SDKs.
+Junction Sign-In Token is a new, user-scoped Authentication scheme for Junction Mobile SDKs.
 
 <Accordion icon="id-badge" iconType="duotone" title="Details" defaultOpen>
 It grants only user-scoped access to your mobile app sign-ins. This allows you to keep your Junction Team API Keys
 as server-side secrets.
 
 We encourage all customers using Junction Team API Keys in their production mobile apps to
-migrate to the Vital Sign-In Token scheme.
+migrate to the Junction Sign-In Token scheme.
 
-Check out the [SDK Authentication](/wearables/sdks/authentication#vital-sign-in-token) guide on how to migrate to
+Check out the [SDK Authentication](/wearables/sdks/authentication#junction-sign-in-token) guide on how to migrate to
 this scheme. Check out the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint documentation
 on how to generate tokens for your mobile app sign-ins.
 </Accordion>

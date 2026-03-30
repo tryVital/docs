@@ -1,5 +1,6 @@
 ---
 title: "Dexcom (G6 and older)"
+description: "Connect legacy Dexcom G6 devices via the password-based integration, which requires users to enable Dexcom Share for data access."
 ---
 
 <Note>
@@ -10,7 +11,7 @@ For the OAuth-based `dexcom_v3` integration, see [Dexcom (OAuth based)](./dexcom
 
 <Warning>
 
-This provider is being phased out in favour of the new [OAuth-based Dexcom](./dexcom_v3) integration. Consider migrating to the new API at your earliest convinence.
+This provider is being phased out in favor of the new [OAuth-based Dexcom](./dexcom_v3) integration. Consider migrating to the new API at your earliest convenience.
 
 </Warning>
 
@@ -30,28 +31,28 @@ Note that the Dexcom Clarity app would not work for this integration.
 Please refer to the [official help article on how to enable Dexcom Share](https://www.dexcom.com/faqs/how-do-i-share-my-dexcom-g6-glucose-data-followers).
 
 They **must** have at least one follower<sup>[1]</sup> on Dexcom Share to keep the sharing activated. Otherwise, the API would
-stop reporting data to Vital.
+stop reporting data to Junction.
 
 <Info>
-<sup>[1]</sup> You can setup your own Dexcom account for your user to add as a follower in the Dexcom G6 mobile app.
-Alternatively, your user can invite `support@tryvital.io` as a follower.
+<sup>[1]</sup> You can set up your own Dexcom account for your user to add as a follower in the Dexcom G6 mobile app.
+Alternatively, your user can invite `support@junction.com` as a follower.
 </Info>
 </Step>
 
 <Step title="Connect via Junction Link">
-They **must** connect to Vital using their _own_ Dexcom account — the one which their Dexcom G6 app is signed into.
+They **must** connect to Junction using their _own_ Dexcom account — the one which their Dexcom G6 app is signed into.
 This should **not** be the accounts of the followers.
 </Step>
 
 </Steps>
 
-## Vital Widget
+## Junction Widget
 
-To connect your device with the *widget*, follow the link wizard ensuring and enter your username and password.
+To connect your device with the *widget*, follow the link wizard and enter your username and password.
 
 ## Junction Link
 
-You can also connect a Dexcom user to vital using vital client. For additional information please consult the API reference.
+You can also connect a Dexcom user to Junction using the Junction client. For additional information, please consult the API reference.
 
 <CodeGroup>
 
@@ -72,6 +73,6 @@ await client.Link.password_provider(
 
 ## Webhooks
 
-On successful connection, you will receive a [Connection create](/webhooks/data_flow#connection-created) wehbook. [Daily webhooks](/webhooks/data_flow#daily-data-flow) `data.daily.glucose.created` and `data.daily.glucose.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
+On successful connection, you will receive a [Connection created](/webhooks/introduction#connection-created-stage) webhook. [Daily webhooks](/webhooks/introduction#incremental-data-stage) `daily.data.glucose.created` and `daily.data.glucose.updated` will also be issued to your team as new or more up-to-date data becomes available during the day.
 
-For this provider however, Vital will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no [Historical webhooks](/webhooks/data_flow#historical-data-flow) issued. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.
+For this provider, however, Junction will begin to aggregate the data for the last 24 hours and will not go beyond that. As a result, there will be no [Historical webhooks](/webhooks/introduction#historical-data-backfill-stage) issued. If you would like to pull the data immediately after connection, you can use the `user/refresh` endpoint.

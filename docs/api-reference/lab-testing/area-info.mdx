@@ -1,4 +1,6 @@
 ---
+title: "Get area info"
+description: "Retrieve order area info via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v3/order/area/info"
 ---
 
@@ -104,7 +106,7 @@ fmt.Printf("Received data %s\n", response)
   "central_labs": {
     "labcorp": {
       "patient_service_centers": {
-        "within_radius": 5, # number of PSC's within radius of provided zip code
+        "within_radius": 5,
         "radius": "25",
         "capabilities": ["stat"]
       }

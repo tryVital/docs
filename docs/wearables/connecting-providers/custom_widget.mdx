@@ -1,19 +1,20 @@
 ---
 title: "Building a Custom Widget"
+description: "Build a custom Link widget UI to connect wearable providers as an alternative to the default Junction Link hosted widget."
 ---
 
 import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 
 <LinkSDKProvider />
 
-You may want to have your own custom Link widget to match your app's UI. This is useful for customers who don't want to use Vital link but still want to use the Junction API. It's worthwhile ensuring that you have read the [Auth Types](/docs/auth-types) documentation before proceeding. A full code example in React Native can be seen [here](https://github.com/tryVital/vital-connect-rn).
+You may want to have your own custom Link widget to match your app's UI. This is useful for customers who don't want to use Junction Link but still want to use the Junction API. It's worth ensuring that you have read the [Auth Types](/wearables/connecting-providers/auth_types) documentation before proceeding. A full code example in React Native can be seen [here](https://github.com/tryVital/vital-connect-rn).
 
 An overview of the process is as follows:
 
 1. Get a list of all available providers ["/v2/providers"](/api-reference/providers)
 2. Build your UI using this list of providers
 3. When selecting a provider, generate a link token for that provider ["/v2/link/token"](/api-reference/link/generate-link-token)
-4. Use the link token to generate an oauth link, or authorize an email, or email and password.
+4. Use the link token to generate an OAuth link, or authorize an email, or email and password.
 
 ## 1. List of all available providers
 
@@ -130,7 +131,7 @@ Once you have a list of all available providers, you can build your UI. You can 
 
 ## 3. Generate a link token
 
-Once a user has selected a provider, you can generate a link token. This link token is used to generate an oauth link, or authorize an email, or email and password. You can read more about the link token [here](/api-reference/link/generate-link-token).
+Once a user has selected a provider, you can generate a link token. This link token is used to generate an OAuth link, or authorize an email, or email and password. You can read more about the link token [here](/api-reference/link/generate-link-token).
 
 <CodeGroup>
 
@@ -217,9 +218,9 @@ fmt.Printf("Received data %s\n", response)
 
 ## 4. Link the user to the provider
 
-Once you have a link token, you can use it to generate an oauth link, or authorize an email, or email and password.
+Once you have a link token, you can use it to generate an OAuth link, or authorize an email, or email and password.
 
-### Connect an oauth provider
+### Connect an OAuth provider
 
 <CodeGroup>
 
@@ -335,7 +336,7 @@ fmt.Printf("Received data %s\n", oauth)
 
 </CodeGroup>
 
-### Connact an Email/Password provider
+### Connect an Email/Password provider
 
 <CodeGroup>
 

@@ -1,5 +1,6 @@
 ---
 title: "Overview"
+description: "Overview of the at-home phlebotomy modality where a phlebotomist visits a patient at home to draw blood for lab testing."
 ---
 
 At-home phlebotomy tests are one of our offered modalities.
@@ -11,20 +12,32 @@ The phlebotomist is responsible for bringing the required equipment and tubes an
 
 To achieve this, a high-level overview of the process is defined as:
 
-- An order is placed in Vital's system through our Dashboard or API.
+- An order is placed in Junction's system through our Dashboard or API.
 - The order is added to a background queue and additional checks are made before a test requisition is created with the chosen Laboratory.
-- After the requisition is created, some form of communication is carried out with the patient so he can book an appointment with our phlebotomy partners.
-- At the day of the appointment, our partner phlebotomist will contact the patient directly to assert that everything is correct for carrying out the appointment.
+- After the requisition is created, some form of communication is carried out with the patient so they can book an appointment with our phlebotomy partners.
+- On the day of the appointment, our partner phlebotomist will contact the patient directly to assert that everything is correct for carrying out the appointment.
 - The phlebotomist goes to the appointment, draws the patient's blood and then delivers it to the Laboratory.
 - The Laboratory processes the patient's blood sample and generates the required results.
-- Vital exposes the results via API as soon as they are available, both on PDF and structured data via API.
+- Junction exposes the results as soon as they are available, both as PDF and structured data via API.
 
+
+## Access Notes and Appointment Notes
+
+There are two ways to provide instructions for the phlebotomist:
+
+### Access Notes
+
+Set `access_notes` on the patient address when creating an order. These describe how to physically reach the patient's location — gate codes, parking instructions, entrance details, etc. Access notes are automatically forwarded to the phlebotomy provider on every booking and reschedule.
+
+### Appointment Notes
+
+Set `appointment_notes` in the booking, request, or reschedule request body. These are per-appointment special instructions — for example, "Please bring photo ID" or "Patient prefers left arm". Appointment notes can be changed on each reschedule and are stored on the appointment itself.
 
 ## Constraints
 
 - Phlebotomy appointments are not supported for patients under 18 years of age.
 - The same patient can't have more than one active appointment with a specific **Phlebotomy provider**.
-- The addresses provided when fetching the appointment availability slots must be reachable by the phlebotomist, containing street number and unit (if exists).
+- The addresses provided when fetching the appointment availability slots must be reachable by the phlebotomist, containing street number and unit (if it exists).
 
 
 To find out more details, see [`Order and Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle), [`Communications`](/lab/at-home-phlebotomy/communications) and [`Webhooks`](/lab/at-home-phlebotomy/webhooks).
