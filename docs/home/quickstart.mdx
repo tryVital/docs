@@ -202,7 +202,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 client = Vital(
-  api_key=<YOUR_API_KEY>,
+  api_key="<YOUR_API_KEY>",
   environment=VitalEnvironment.SANDBOX,
   timeout=30
 )
@@ -434,6 +434,3 @@ There are a few directions you can go in now:
   data from the various providers.
 </Card>
 
-- [Junction Link](/wearables/connecting-providers/introduction)
-- [Junction SDKs](/wearables/sdks/installation)
-- [Junction Webhooks](/webhooks/introduction)
