@@ -344,7 +344,7 @@ await vital_health.askForPermission(readResources, []);
 </CodeGroup>
 
 Regardless of whether the user has granted or denied the permissions, any subsequent re-request would
-be non-interactive and returns instantly. This is because the operating system only prompts the end user
+be non-interactive and return instantly. This is because the operating system only prompts the end user
 once for each resource type.
 
 If you wish
@@ -496,9 +496,9 @@ of these two behaviors.
 Junction Health SDK schedules hourly background sync with Apple HealthKit, Android Health Connect and Samsung Health,
 provided that you have:
 
-1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instruction; and
+1. Configured [Apple HealthKit Background Delivery](/wearables/guides/apple-healthkit) as per instructions; and
 2. Configured Android Background Sync for the provider you are using — [Health Connect](/wearables/guides/android-health-connect#background-sync)
-   or [Samsung Health](/wearables/guides/samsung-health#background-sync) — and request user permissions (when necessary) as per instruction.
+   or [Samsung Health](/wearables/guides/samsung-health#background-sync) — and request user permissions (when necessary) as per instructions.
 
 However, this schedule is only advisory. The OS has full discretion to defer the scheduled time based on runtime
 constraints like battery power, as well as platform background execution policies. For a more detailed explanation, please refer to:
