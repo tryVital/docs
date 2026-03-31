@@ -51,7 +51,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     slug.
 
     Using the [Steps data event](/event-catalog/daily.data.steps.created) as an illustration, originally
-    the `source` field describes the wearable data provider:
+    the `source` field described the wearable data provider:
     ```json daily.data.steps.created (Original)
     {
         "event_type": "daily.data.steps.created",
@@ -67,7 +67,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     }
     ```
 
-    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this steps timeseries
+    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of the `steps` timeseries
     value group. So Junction has introduced a few new _Source_ context fields:
 
     ```json daily.data.steps.created (Current)
@@ -137,7 +137,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     slug.
 
     Using the [Get Profile endpoint](/api-reference/data/profile/get-summary) as an illustration, originally
-    the `source` field describes the wearable data provider:
+    the `source` field described the wearable data provider:
     ```json Profile (Original)
     {
         "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
