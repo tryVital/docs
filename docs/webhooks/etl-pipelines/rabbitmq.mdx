@@ -17,7 +17,7 @@ Each event is published with these RabbitMQ message custom headers:
 | Key | Value |
 | --- | --- |
 | Routing Key | Junction event type, e.g., `daily.data.activity.created` |
-| `Content-Type` | application/json : UTF-8 JSON document |
+| `Content-Type` | application/json: UTF-8 JSON document |
 | `Content-Encoding` | gzip: The blob is compressed by gzip. null/absent: The blob is uncompressed. |
 | Data | Encoded JSON blob. This may or may not be compressed — see `Content-Encoding`. |
 
