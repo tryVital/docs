@@ -14,7 +14,7 @@ We return the raw results in PDF form that we receive directly from our partner 
 
 ```bash Get order results PDF
 curl --request GET \
-     --url {{BASE_URL}}/v3/order/result/pdf \
+     --url {{BASE_URL}}/v3/order/{order_id}/result/pdf \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/pdf' \
      --header 'x-vital-api-key: <your_api_key>' \
