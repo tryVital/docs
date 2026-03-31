@@ -17,7 +17,7 @@ Each event is published with these Cloud Pub/Sub message attributes:
 | Type | Key | Value |
 | --- | --- | --- |
 | Attribute | `event-type` | Junction event type, e.g., `daily.data.activity.created` |
-| Attribute | `blob-type` | `json` : UTF-8 JSON document |
+| Attribute | `blob-type` | `json`: UTF-8 JSON document |
 | Attribute | `blob-codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
 | Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
 | Ordering Key | - | Junction User ID (If you have enabled Event Ordering) |
