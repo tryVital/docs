@@ -86,7 +86,7 @@ The `guarantor` is an optional field, that must be provided when the relationshi
 
 The `payor_code` is a lab-specific identifier for an insurance company. Junction has abstracted this away into our own Junction payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
 
-To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
+To obtain this code, use the [Search Payor Code](/api-reference/lab-testing/insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
 
 It is also possible to use this endpoint to search using external providers' payor codes (e.g. Change Healthcare or Availity).
 
@@ -131,7 +131,7 @@ By default, Junction orders are Client Bill. In order to trigger the insurance f
 
 ### Diagnosis Codes
 
-Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing-insurance/search-diagnosis) endpoint.
+Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) endpoint.
 
 
 
