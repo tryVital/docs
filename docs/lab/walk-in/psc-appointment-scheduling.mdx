@@ -182,17 +182,17 @@ When calling the [Book PSC Appointment](/api-reference/lab-testing/psc-schedulin
 
 With Async Confirmation enabled, Junction waits synchronously for the provider to acknowledge the booking request, up to `sync_confirmation_timeout_millisecond` (default: 2.5s, range: 1–10s).
 
-* If an acknowledgment is received before the timeout, Junction creates a _reserved_ or _confirmed_ appointment immediately and returns it in the response.
+- If an acknowledgment is received before the timeout, Junction creates a _reserved_ or _confirmed_ appointment immediately and returns it in the response.
 
-* If no acknowledgment is received before the timeout, Junction creates a placeholder **pending** appointment and returns it in the response.
+- If no acknowledgment is received before the timeout, Junction creates a placeholder **pending** appointment and returns it in the response.
 
 #### Background retries
 
 If a pending appointment is created, Junction continues to retry the booking request with the PSC Appointment Provider in the background, up to `async_confirmation_timeout_millisecond` (default: 15min, range: 1min–48hr).
 
-* If an acknowledgment is received before the timeout, the appointment transitions to _reserved_ or _confirmed_ status.
+- If an acknowledgment is received before the timeout, the appointment transitions to _reserved_ or _confirmed_ status.
 
-* If the provider still fails to acknowledge after the timeout, the pending appointment transitions to _cancelled_ status.
+- If the provider still fails to acknowledge after the timeout, the pending appointment transitions to _cancelled_ status.
 
 #### Webhooks
 
