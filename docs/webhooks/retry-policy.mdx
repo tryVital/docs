@@ -22,7 +22,7 @@ Each message is retried according to the following fixed schedule after a failed
 
 - Retries **always occur in the order listed above**, with each period starting only after the previous attempt fails.
 - If an endpoint is removed or disabled, further delivery attempts to that endpoint will be stopped.
-- Example: If a message fails three times before eventually succeeding, it will be delivered roughly **35 minutes and 5 seconds** after the initial attempt (Immediate + 5 seconds + 5 minutes + 30 minutes).
+- Example: If a message fails four times before eventually succeeding, it will be delivered roughly **35 minutes and 5 seconds** after the initial attempt (Immediate + 5 seconds + 5 minutes + 30 minutes).
 
 
 ## Indicating successful delivery
