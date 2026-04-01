@@ -35,7 +35,7 @@ Having said that, you are strongly encouraged to check for and drop any events w
 
 ## Pub/Sub event ordering
 
-If you wish to receive events for each Junction user in their publication order, Junction supports Pub/Sub Event Ordering, and uses the Junction User ID as the event ordering key. 
+If you wish to receive events for each Junction user in their publication order, Junction supports Pub/Sub Event Ordering, and uses the Junction User ID as the event ordering key.
 
 Junction publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
 
@@ -43,7 +43,7 @@ Junction publishes all events through the `us-central1` and `europe-west1` PubSu
 Pub/Sub Exactly Once Delivery is **discouraged** from being used together with Event Ordering. Our own trial suggested that the combination would struggle to move a high volume of events.
 </Warning>
 
-## IAM Permission
+## IAM Permissions
 
 Grant the relevant IAM Principals on your topic with these pre-defined roles:
 
