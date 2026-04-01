@@ -146,7 +146,7 @@ fmt.Printf("Received data %s\n", oauth)
 
 </CodeGroup>
 
-For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
+For `OAuth` Providers we return an `oauth_url` that can be used to redirect users to. In a web view, on redirection, you should check that the user has connected to the provider successfully. In the case of mobile, the user should receive a message to return to the app.
 
 The possible error codes that are returned are as follows:
 - `401 INVALID_REQUEST` Link Token is Invalid
