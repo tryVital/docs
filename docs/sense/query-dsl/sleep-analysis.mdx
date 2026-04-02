@@ -31,6 +31,7 @@ va.select(va.Sleep.chronotype())
 | **Sleep Score** | A score from 0 to 100 computed using the Junction Sense Sleep Score model. | `sleep_score` |
 | **Asleep At** | Computed time of user falling asleep based on sleep session start time and latency. | `asleep_at` |
 | **Awake At** | Computed time the user woke up (may differ from session end time). | `awake_at` |
+| **Awakenings** | Count of transitions from a sleeping phase to an awake phase, computed from sleep cycle hypnogram data. | `awakenings` |
 
 You can combine multiple sleep macros in a single query and mix them with standard aggregations or other select expressions.
 
@@ -44,7 +45,8 @@ You can combine multiple sleep macros in a single query and mix them with standa
         { "func": "mean", "arg": { "sleep": "efficiency" } },
         { "func": "newest", "arg": { "value_macro": "chronotype" } },
         { "func": "newest", "arg": { "value_macro": "asleep_at" } },
-        { "func": "newest", "arg": { "value_macro": "awake_at" } }
+        { "func": "newest", "arg": { "value_macro": "awake_at" } },
+        { "func": "mean", "arg": { "value_macro": "awakenings" } }
     ],
     "group_by": [
         {
@@ -159,6 +161,43 @@ va.select(
     "select": [
         { "func": "mean", "arg": { "value_macro": "asleep_at" } },
         { "func": "mean", "arg": { "value_macro": "awake_at" } }
+    ],
+    "group_by": [
+        {
+            "date_trunc": {
+                "unit": "week",
+                "value": 1
+            },
+            "arg": {
+                "index": "sleep"
+            }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+## Awakenings
+
+Count the number of times a user transitioned from a sleeping phase (deep, light, or REM) to an awake phase during a sleep session. This is computed from sleep cycle hypnogram data.
+
+### Get average nightly awakenings per week
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Sleep.awakenings().mean()
+).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "week")
+)
+```
+
+```jsonc JSON DSL
+{
+    "select": [
+        { "func": "mean", "arg": { "value_macro": "awakenings" } }
     ],
     "group_by": [
         {
