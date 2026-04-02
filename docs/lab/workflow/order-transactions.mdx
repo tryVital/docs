@@ -6,7 +6,7 @@ description: "Understand the importance of order transactions and how they are u
 ## Order Transactions and Initial Orders
 
 Junction uses the concept of **order transactions** to group related orders together and provide unified results.
-An order transaction represents a single testing journey, which will include at a minimum, one `initial` order.
+An order transaction represents a single testing journey, which will include, at a minimum, one `initial` order.
 
 An order transaction is created whenever a new `initial` order is created and a link is established between the two entities. 
 - `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.

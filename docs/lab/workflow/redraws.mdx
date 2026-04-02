@@ -19,7 +19,7 @@ To facilitate this flow, Junction uses the concept of [order transactions](/lab/
 ## Order Transactions and Redraw Orders
 
 If an `initial` order is eligible for a redraw, rather than transitioning the [low-level status](/lab/workflow/lab-test-lifecycle) of the order to `completed`, the order status is set to `redraw_available`.
-- At this point, a new order is created, with `origin` set to `redraw` and it is linked to the same order transaction as the `initial` order
+- At this point, a new order is created, with `origin` set to `redraw`, and it is linked to the same order transaction as the `initial` order.
 - The order transaction's `status` field will be as follows:
   - `active` - one or more orders belonging to the order transaction are in progress
   - `completed` - all expected lab work for this transaction is completed and no further updates are expected
