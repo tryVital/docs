@@ -294,7 +294,7 @@ The changes bring historical data sync incrementality, prioritization, network r
 
     * During the historical pull stage, all timeseries resources would be suppressed until all the summary types have been successfully uploaded.
 
-    * After the historical pull stage, the SDK would make forward progress on summary types, before it proceeds to deal with the more CPU-time consuming timeseries data that are more prone to operating system throttling.
+    * After the historical pull stage, the SDK would make forward progress on summary types, before it proceeds to deal with the more CPU-time-consuming timeseries data that are more prone to operating system throttling.
 
 3. With an updated iOS App Target configuration, the SDK would now self-register as a `BGProcessingTask` or `BGHealthResearchTask` (iOS 17+) to the iOS BackgroundTasks framework.
 
