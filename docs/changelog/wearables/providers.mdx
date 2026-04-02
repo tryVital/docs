@@ -3,6 +3,17 @@ title: "Providers and Resources"
 description: "Changelog of wearable provider updates including Health SDK Explicit Connect mode, sync progress logs, and provider-specific improvements."
 ---
 
+### Sleep summary extension: `recovery_readiness_score` (April 2026)
+
+The Sleep summary now includes `recovery_readiness_score`, a value between 0 and 100 representing the provider's recovery or readiness proxy.
+
+<Accordion icon="bed" iconType="duotone" title="Details" defaultOpen>
+
+- Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery.
+- Available as a regular column in Continuous Query: `Sleep.col("recovery_readiness_score")` / `{ "sleep": "recovery_readiness_score" }`.
+
+</Accordion>
+
 ### Samsung Health via Junction Health SDK (March 2026)
 
 Junction Health SDK now supports Samsung Health as an SDK-based connection on Android phones.

@@ -5,17 +5,6 @@ description: "Changelog of Junction Wearables API updates including Sense readin
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-### Sleep summary extension: `recovery_readiness_score` (April 2026)
-
-The Sleep summary now includes `recovery_readiness_score`, a value between 0 and 100 representing the provider's recovery or readiness proxy.
-
-<Accordion icon="bed" iconType="duotone" title="Details" defaultOpen>
-
-- Currently sourced from Oura readiness score, Whoop recovery score, and Ultrahuman recovery.
-- Available as a regular column in Continuous Query: `Sleep.col("recovery_readiness_score")` / `{ "sleep": "recovery_readiness_score" }`.
-
-</Accordion>
-
 ### Junction Sense `awakenings` macro (April 2026)
 
 Junction Sense now exposes a new Sleep Macro that counts the number of awakenings during a sleep session.
