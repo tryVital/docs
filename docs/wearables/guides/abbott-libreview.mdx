@@ -228,6 +228,30 @@ Inform Junction support of the invitation, and wait for the support acknowledgme
 Once the connection is established, Junction Link would recognize all patient emails having connected to your LibreView practice.
 These patients do not need to connect separately to the [Junction practices](#using-junction-practices).
 
+#### Binding a Team to a Practice
+
+<Info>
+This feature is available for [the Scale plan](https://tryvital.io/pricing) and requires a custom practice to be set up first.
+</Info>
+
+By default, when a patient connects via Junction Link, the patient search runs across all practices that
+Junction is **Care Team Admin** of. You can bind a team to a specific LibreView practice to restrict this — when a
+practice binding is configured, a patient will only be able to connect if they are a member of that practice.
+
+To bind a team to a practice, use the [Team Custom Credentials API](/api-reference/org-management/upsert-team-custom-credentials)
+with the `freestyle_libre` provider. The `client_id` field should be set to your **LibreView Practice ID** — the
+identifier you chose when creating your practice in the LibreView portal. The match is case-insensitive.
+
+<Note>
+For `freestyle_libre` practice bindings, only `client_id` is required. The `client_secret`, `details`, and
+`redirect_url_override` fields are not supported and must be omitted.
+</Note>
+
+Practice bindings only affect new connections. Existing connections will continue to sync regardless of
+whether a binding is added, changed, or removed.
+
+You can manage the binding through the [Team Custom Credentials API](/api-reference/org-management/team-custom-credentials).
+
 ### Using Junction Practices
 
 <Info>
