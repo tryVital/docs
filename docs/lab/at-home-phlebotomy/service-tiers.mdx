@@ -51,6 +51,6 @@ The recommended high-level flow for selecting an appointment at Junction is:
 ```
 
 - Select the Provider that best fits your needs.
-    - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/book`](/api-reference/lab-testing-at-home-phlebotomy/appointment-booking) endpoint, an `appointment-ready` provider is chosen on your behalf.
-    - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/request`](/api-reference/lab-testing-at-home-phlebotomy/appointment-request) endpoint, you must select a provider that offers an `appointment-request` tier.
+    - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/book`](/api-reference/lab-testing/at-home-phlebotomy/appointment-booking) endpoint, an `appointment-ready` provider is chosen on your behalf.
+    - If you use the [`POST /v3/order/{order_id}/phlebotomy/appointment/request`](/api-reference/lab-testing/at-home-phlebotomy/appointment-request) endpoint, you must select a provider that offers an `appointment-request` tier.
 - Wait for the `Appointment Webhooks` and `Order Webhooks` described in the [Webhooks](/lab/at-home-phlebotomy/webhooks) section.
