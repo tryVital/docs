@@ -193,10 +193,10 @@ All events now include Team ID, User ID and Client User ID as top-level fields.
 
   #### Before
 
-  ```json Basic event structure
+  ```jsonc Basic event structure
   {
     "data": {
-      # ... event specific data
+      // ... event specific data
     },
     "event_type": "daily.data.glucose.created",
   }
@@ -204,10 +204,10 @@ All events now include Team ID, User ID and Client User ID as top-level fields.
 
   #### After
 
-  ```json Basic event structure
+  ```jsonc Basic event structure
   {
     "data": {
-      # ... event specific data
+      // ... event specific data
     },
     "event_type": "daily.data.glucose.created",
     "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
