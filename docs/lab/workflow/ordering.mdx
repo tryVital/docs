@@ -25,7 +25,7 @@ In this document, we will focus on orderable panels/biomarkers.
 [_Lab Tests_](/api-reference/lab-testing/post-test) are a collection of markers, or a preset combination of markers, that you can order. Using the example above, you can create a `Labcorp Lipid Panel and Vitamin D` lab test. You can then place orders at Junction using this preset. This is useful for situations where you repeatedly want to order the same markers.
 
 
-# Ordering 
+# Ordering
 
 When placing an [Order](/api-reference/lab-testing/create-order), you will see an `order_set` field. This is what defines what markers will be ordered.
 
@@ -79,12 +79,12 @@ client.lab_tests.create_order(
 ```
 </CodeGroup>
 
-### Ordering without a _Lab Test_ 
+### Ordering without a _Lab Test_
 
 This is what Junction calls `à la carte` ordering. You may want to order from the marker compendium without creating a preset.
 
 <Note>
-This is a team level configuration that must be requested from Junction. Not all markers can be ordered in this manner. 
+This is a team-level configuration that must be requested from Junction. Not all markers can be ordered in this manner.
 </Note>
 
 It is possible to order `à la carte` using Junction `marker_ids` or the lab's `provider_ids`.

@@ -28,10 +28,10 @@ All collection methods allow cancellation during these early phases:
 
 Orders **cannot** be cancelled once they reach these states:
 - **Already cancelled**: `cancelled`, `do_not_process`
-- **Completed**: `completed`, `partial_results` 
+- **Completed**: `completed`, `partial_results`
 - **Failed**: `lost`, `sample_error`, `failure_to_deliver_to_customer`, `failure_to_deliver_to_lab`
 
-## Collection Method Specific Rules
+## Collection method-specific rules
 
 <Tabs>
   <Tab title="Walk-In Tests">
@@ -75,7 +75,7 @@ Orders **cannot** be cancelled once they reach these states:
   <Tab title="Testkits">
     **✅ Can cancel:**
     - `received.testkit.ordered`
-    - `received.testkit.awaiting_registration` 
+    - `received.testkit.awaiting_registration`
     - `received.testkit.requisition_created`
     - `received.testkit.requisition_bypassed`
     - `received.testkit.testkit_registered`
@@ -279,10 +279,10 @@ fmt.Printf("Received data %s\n", response)
 
 ### Cancel the Order
 
-Use the [order cancellation endpoint](/api-reference/lab-testing/cancel-order) to cancel any lab test order. 
+Use the [order cancellation endpoint](/api-reference/lab-testing/cancel-order) to cancel any lab test order.
 
 <Info>
-**Automatic Appointment Handling**: 
+**Automatic Appointment Handling**:
 - **At-home phlebotomy**: Appointments are automatically cancelled when you cancel the order
 - **Walk-in PSC**: Appointments are **not** automatically cancelled to prevent poor patient experience if they show up. Orders can be reinstated if needed.
 </Info>
