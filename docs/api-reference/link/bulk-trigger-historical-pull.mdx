@@ -15,7 +15,7 @@ The Bulk Trigger Historical Pull endpoint enqueues all trigger requests you subm
 
 You can inspect the status of the resulting background operation through the [List Bulk Ops](/api-reference/link/list-bulk-ops) endpoint.
 
-Optionally, you may opt into the `wait_for_completion` mode, which would respond 200 OK only if the operation does complete within 20 seconds.
+Optionally, you may opt into the `wait_for_completion` mode, which would respond with 200 OK only if the operation does complete within 20 seconds.
 Otherwise, the endpoint responds 202 Accepted.
 
 <Note>
