@@ -8,7 +8,7 @@ description: "Understand the importance of order transactions and how they are u
 Junction uses the concept of **order transactions** to group related orders together and provide unified results.
 An order transaction represents a single testing journey, which will include at a minimum, one `initial` order.
 
-An order transaction is created whenever a new `initial` order is created and a link is established between the two entities. 
+An order transaction is created whenever a new `initial` order is created and a link is established between the two entities.
 - `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.
 - Order transactions have a `status` field, which can either be `active`, `completed`, or `cancelled`.
   - `active` - one or more orders belonging to the order transaction are in progress
@@ -17,7 +17,7 @@ An order transaction is created whenever a new `initial` order is created and a 
 
 - An order can only ever belong to one order transaction
 
-We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction. 
+We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction.
 Both of these IDs will be needed when implementing some of Junction's current and future features like [redraws](/lab/workflow/redraws).
 
 ## API Endpoints

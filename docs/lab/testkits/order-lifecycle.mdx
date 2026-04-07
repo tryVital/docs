@@ -21,7 +21,7 @@ possible low-level statuses are:
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
 - `requisition_bypassed`: An order requisition form wasn't created when the order was placed with us because it already existed.
-- `transit_customer`: The testkit is shipped and in transit to the customer. 
+- `transit_customer`: The testkit is shipped and in transit to the customer.
 - `out_for_delivery`: The testkit is out for delivery.
 - `with_customer`: The testkit is delivered to the customer.
 - `transit_lab`: The customer has sent the testkit back to the lab.
@@ -46,7 +46,7 @@ in the following diagram.
 
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
 - `awaiting_registration`: Order is created but no user has been registered yet.
-- `transit_customer`: The testkit is shipped and in transit to the customer. 
+- `transit_customer`: The testkit is shipped and in transit to the customer.
 - `out_for_delivery`: The testkit is out for delivery.
 - `with_customer`: The testkit is delivered to the customer.
 - `registered`: Order has been registered, and a requisition will be created.
