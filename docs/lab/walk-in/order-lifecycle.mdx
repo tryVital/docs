@@ -5,7 +5,7 @@ description: "Reference for all order and appointment lifecycle statuses in the 
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
-The **Walk-In Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
+The **Walk-In Test** orders are composed of two different lifecycles, the **Order** lifecycle and
 the **appointment** lifecycle, detailed in the following sections.
 
 ## Order Lifecycle
@@ -15,7 +15,7 @@ each lab testing modality has the following format:
 
 ```[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]```
 
-For each modality, there can be multiple **low-level statuses**, for **Walk-In Phlebotomy** the
+For each modality, there can be multiple **low-level statuses**, for **Walk-In Test** the
 possible low-level statuses are:
 
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
@@ -33,7 +33,7 @@ possible low-level statuses are:
 The Finite State Machine that defines the possible transitions for the low-level statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the Walk-In Phlebotomy Order low-level statuses.">
+<Frame caption="Possible state transitions for the Walk-In Test Order low-level statuses.">
     <img src="/img/walkin-statuses.png"/>
 </Frame>
 
@@ -52,7 +52,7 @@ The possible statuses are defined as follows:
 The Finite State Machine that defines the possible transitions for the appointment statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the Walk-In Phlebotomy Appointment statuses.">
+<Frame caption="Possible state transitions for the Walk-In Test Appointment statuses.">
     <img src="/img/walkin_appt_statuses.png"/>
 </Frame>
 
