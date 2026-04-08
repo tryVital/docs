@@ -226,7 +226,7 @@ You can use this information to verify if the final results are composed of all 
 In order to obtain this data, you can use the following endpoints:
 
 1. [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers)
-    
+
     This allows you to search markers based on laboratory or name.
 
 2. [GET /v3/lab_tests/\{id\}/markers](/api-reference/lab-testing/lab-test-markers)
@@ -297,15 +297,15 @@ The error type is inferred from the comments received from the lab. They are to 
    The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being unable to collect the proper volume of blood from the patient, or the phlebotomist not collecting all of the sample they were meant to collect.
 
 2. `collection_process_failure`
-   
+
    This is indicative of potential failures to follow the entire phlebotomy process, often immediately following the collection. For example, improper centrifugation of the collected sample or improper refrigeration. While these are the most likely causes, there are other reasons why sample quality may have been degraded.
 
 3. `drop_off_failure`
-   
+
    This speaks to a specific form of collection process failures. Specifically, the sample was not received by the lab in proper condition. Possible issues correspond to improper freezing, refrigeration, or exposure to excessive transport delay.
 
 4. `internal_lab_failure`
-   
+
    This speaks to failures that are most likely to have happened internally at the lab. This includes issues such as misplacing a collected sample, or errors that could not be best attributed to any external cause.
 
 5. `order_entry_failure`
@@ -329,5 +329,5 @@ The error type is inferred from the comments received from the lab. They are to 
    This failure indicates that a calculated field is missing because the underlying tests required to perform the calculation were either unable to be processed, or yielded a result outside of the allowable parameters to perform the calculation.
 
 10. `missing_demo_aoe_calc_failure`
-   
+
    Some results may require additional information — such as age — reported in AOE (ask on order entry) in order to be properly calculated.

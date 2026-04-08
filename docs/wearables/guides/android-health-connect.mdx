@@ -39,7 +39,7 @@ mechanism of Junction Core SDK.
 
 <Step title="Configure Health SDK and ask user for read permissions">
 Follow the [Junction Health SDK](/wearables/sdks/health/overview) starting guidance to
-[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to 
+[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to
 [ask for health data read permissions](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) from your user.
 
 <Note>
@@ -479,7 +479,7 @@ Your app's AndroidManifest.xml must include the following `uses-permission` clai
     an Android Intent to request the _"Alarms & Reminders"_ permission. The contract result is a boolean, indicating whether
     or not the Background Sync has been enabled successfully. For example, if the user did not grant the permission during the said Android Intent,
     the contract returns `false`.
-    
+
     Otherwise, the contract returns `true` synchronously when no user interaction is required.
 
     You must launch this `ActivityResultContract` either through the in-built Android Compose support, or

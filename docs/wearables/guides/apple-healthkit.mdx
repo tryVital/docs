@@ -54,8 +54,8 @@ mechanism of Junction Core SDK.
 
 <Step title="Configure Health SDK and ask user for read permissions">
 Follow the [Junction Health SDK](/wearables/sdks/health/overview) guidance to
-[configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate), 
-[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to 
+[configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate),
+[configure the Health SDK](/wearables/sdks/health/overview#configure-the-junction-health-sdk) and to
 [ask for health data read permissions](/wearables/sdks/health/overview#ask-user-for-health-data-permissions) from your user.
 
 <Note>
@@ -75,7 +75,7 @@ set up your iOS app target as an eligible target for Apple HealthKit Background 
 ## Setting up Apple HealthKit Background Delivery
 
 <Warning>
-You **MUST** [configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate) for 
+You **MUST** [configure your App Delegate](/wearables/sdks/health/overview#ios-apps-configure-your-app-delegate) for
 Apple HealthKit Background Delivery to function as expected.
 </Warning>
 
@@ -125,7 +125,7 @@ If you request write permissions, you must also specify:
 
 You are all set!
 
-Note that there is no need to call `syncData()` manually at all. Once you have asked the user for permission on 
+Note that there is no need to call `syncData()` manually at all. Once you have asked the user for permission on
 resources, sync would automatically start every app launch, as well as whenever your app is woken up by Apple HealthKit to
 respond to newly available data.
 
