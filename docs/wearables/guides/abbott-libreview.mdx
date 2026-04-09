@@ -238,19 +238,24 @@ By default, when a patient connects via Junction Link, the patient search runs a
 Junction is **Care Team Admin** of. You can bind a team to a specific LibreView practice to restrict this — when a
 practice binding is configured, a patient will only be able to connect if they are a member of that practice.
 
-To bind a team to a practice, use the [Team Custom Credentials API](/api-reference/org-management/upsert-team-custom-credentials)
-with the `freestyle_libre` provider. The `client_id` field should be set to your **LibreView Practice ID** — the
-identifier you chose when creating your practice in the LibreView portal. The match is case-insensitive.
+You can bind a team to a practice through either the **Dashboard** or the **API**:
+
+- **Dashboard**: Navigate to your team's **Custom Credentials** page and set up the `Freestyle Libre` provider
+  with your Practice ID.
+- **API**: Use the [Team Custom Credentials API](/api-reference/org-management/upsert-team-custom-credentials)
+  with the `freestyle_libre` provider. The `client_id` field should be set to your **LibreView Practice ID**.
+
+The Practice ID is the identifier you chose when creating your practice in the LibreView portal. The match is case-insensitive.
 
 <Note>
-For `freestyle_libre` practice bindings, only `client_id` is required. The `client_secret`, `details`, and
-`redirect_url_override` fields are not supported and must be omitted.
+For `freestyle_libre` practice bindings, only the Practice ID is required. The `client_secret`, `details`, and
+`redirect_url_override` fields are not supported and must be omitted when using the API.
 </Note>
 
 Practice bindings only affect new connections. Existing connections will continue to sync regardless of
 whether a binding is added, changed, or removed.
 
-You can manage the binding through the [Team Custom Credentials API](/api-reference/org-management/team-custom-credentials).
+You can view and delete existing bindings through the Dashboard or the [Team Custom Credentials API](/api-reference/org-management/team-custom-credentials).
 
 ### Using Junction Practices
 
