@@ -238,11 +238,11 @@ By default, when a patient connects via Junction Link, the patient search runs a
 Junction is **Care Team Admin** of. You can bind a team to a specific LibreView practice to restrict this. When a
 practice binding is configured, a patient will only be able to connect if they are a member of that practice.
 
-You can bind a team to a practice through either the **Dashboard** or the **API**:
+You can manage your team's practice bindings through either the **Dashboard** or the **API**:
 
 - **Dashboard**: Navigate to your team's **Custom Credentials** page and set up the `Freestyle Libre` provider
   with your Practice ID.
-- **API**: Use the [Team Custom Credentials API](/api-reference/org-management/upsert-team-custom-credentials)
+- **API**: Use the [Team Custom Credentials API](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials)
   with the `freestyle_libre` provider. The `client_id` field should be set to your **LibreView Practice ID**.
 
 The Practice ID is the identifier you chose when creating your practice in the LibreView portal. The match is case-insensitive.
@@ -254,8 +254,6 @@ For `freestyle_libre` practice bindings, only the Practice ID is required. The `
 
 Practice bindings only affect new connections. Existing connections will continue to sync regardless of
 whether a binding is added, changed, or removed.
-
-You can view and delete existing bindings through the Dashboard or the [Team Custom Credentials API](/api-reference/org-management/team-custom-credentials).
 
 ### Using Junction Practices
 
