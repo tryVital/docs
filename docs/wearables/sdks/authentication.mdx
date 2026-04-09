@@ -53,7 +53,7 @@ You should sign in and sign out of the Junction Mobile SDK as an integral part o
 
 2. When the user signs out from your app, you would also sign out from the Junction Mobile SDK.
 
-Junction Mobile SDK persists the signed-in Junction User — as well as any settings and sync state — across app relaunches and device reboots. 
+Junction Mobile SDK persists the signed-in Junction User — as well as any settings and sync state — across app relaunches and device reboots.
 
 </Accordion>
 
@@ -71,7 +71,7 @@ We recommend regularly reconciling the state of the Junction Mobile SDK and your
 
 You can achieve this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) API in three steps:
 
-1. Query the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) Status and the Current User ID; 
+1. Query the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) Status and the Current User ID;
 2. Compare these against your app's user state; and
 3. Only if a discrepancy is detected, perform a Junction SDK sign-in or sign-out in accordance with the discrepancy.
 
@@ -139,7 +139,7 @@ to exchange for the token secrets it needs.
 
     Once your user has successfully authenticated, your app is issued with token secrets for accessing your backend API.
     Your app stores these token secrets securely.
-    
+
     It then makes some API requests to your backend API, in order to gather all information required to set up your app
     into an authenticated state.
 
@@ -156,7 +156,7 @@ to exchange for the token secrets it needs.
     ```
 
     Your backend API receives and validates the token issuance request. Once validated, your backend service:
-    
+
     * Looks up the Junction User associated with this authenticated user;
 
     * If one does not yet exist, call the [Create User](/api-reference/user/create-user) endpoint to create a Junction User; and
@@ -197,7 +197,7 @@ to exchange for the token secrets it needs.
 
     Your app receives a response from your backend API, which includes the Junction Sign-In Token for the authenticated
     user.
-    
+
     Your app then calls the Junction Mobile SDK `signIn` method with the Junction Sign-In Token:
 
     <CodeGroup>
@@ -402,7 +402,7 @@ It is as simple as performing a one-off migration logic during app launch:
   </Step>
   <Step title="Sign-in with the token">
     Your app can simply sign-in with the Junction Sign-In Token.
-    
+
     Note that it is **unnecessary to reset** the SDK beforehand — the SDK `signIn` method would automatically migrate, as
     long as the supplied Sign-In Token is compatible with the existing API Key sign-in (i.e., having the same Junction user ID,
     same Junction environment, and same Junction region).

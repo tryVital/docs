@@ -77,7 +77,7 @@ A basic configuration would look like this:
 You can [configure your Azure Event Hub destination](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
 to route certain events to designated Event Hubs that are _not_ the default Event Hub.
 
-You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`). For every outbound event, 
+You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`). For every outbound event,
 Junction sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
 
 ```json Example
