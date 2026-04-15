@@ -114,7 +114,7 @@ publish raw data events beyond the 1 MiB size limit of Azure Event Hub.
 
 Junction writes each matched event as a Block Blob. The blob name follows the standard format of:
 
-```
+```text
 # uncompressed
 {team-id}/{user-id}/{timestamp_rfc3339}#{event-type}#{idempotency-key}.json
 
