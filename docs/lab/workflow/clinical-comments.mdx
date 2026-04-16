@@ -1,24 +1,22 @@
 ---
-title: 'Clinical Notes'
+title: "Clinical Notes"
 ---
 
-Central labs (Labcorp, Quest and BioReference) allow you to pass in clinical notes. These are reflected in the Requisition form that is generated.
+Central labs (Labcorp, Quest, Sonora Quest and BioReference) allow you to pass in clinical notes. These are reflected in the Requisition form that is generated.
 
 Junction also allows you to set these notes, on a order by order basis, or as a [Lab Account](/lab/overview/lab-accounts) default.
 
 <Warning>
-The Lab Account default is an internal configuration, contact your CSM to set this up.
+  The Lab Account default is an internal configuration, contact your CSM to set this up.
 </Warning>
 
 If your Lab Account has a default configured, then it will always be propagated to every order placed with the given Lab Account.
-
 
 ### Order Level Notes
 
 You can also pass in order specific notes, that will be displayed in the requisition form.
 
 This can be achieved via the `clinical_notes` field in the [Create Order endpoint](/api-reference/lab-testing/create-order).
-
 
 ### What happens when both the Order and the Lab Account have a clinical note?
 
