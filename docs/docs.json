@@ -129,7 +129,8 @@
                   "lab/workflow/importing-order",
                   "lab/workflow/aoe",
                   "lab/workflow/partials",
-                  "lab/workflow/redraws"
+                  "lab/workflow/redraws",
+                  "lab/workflow/clinical-comments"
                 ]
               },
               {
@@ -1191,7 +1192,7 @@
               }
             ]
           }
-        ] 
+        ]
       },
       {
         "tab": "Management API",
