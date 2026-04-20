@@ -7,8 +7,7 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
 <HorizonAIBeta />
 
-You can create a **Continuous Query** to have your Junction Sense [Query](/sense/overview)
-automatically evaluated by Junction as needed, and receive any query result changes through [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
+You can create a **Continuous Query** to have your Junction Sense [Query](/sense/overview) automatically evaluated by Junction as needed, and receive any query result changes through [your Webhook or ETL Pipeline destinations](/webhooks/introduction).
 
 <AccordionGroup>
 <Accordion title="Automatic Evaluation" icon="wand-sparkles" defaultOpen>
@@ -30,20 +29,19 @@ The latest result table can be queried through [Junction API](/api-reference/sen
 
 With Continuous Query, you can focus on adding value to your product with the aggregated data insights:
 
-* you need not build your own scalable data pipeline from scratch to ingest, store, and aggregate standardized device data.
-* you need not poll the Query API to receive query results.
+* No need to build your own scalable data pipeline from scratch to ingest, store, and aggregate standardized device data.
+* No need to poll the Query API to receive query results.
 
 
 ## Continuous Query requirements
 
-While Continuous Query uses the same [Query DSL](/sense/query-dsl/) as the Query API, some
-restrictions are in place:
+While Continuous Query uses the same [Query DSL](/sense/query-dsl/) as the Query API, some restrictions are in place:
 
-* The query must [group by a truncated datetime](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime).
-* The query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
+- The query must [group by a truncated datetime](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime).
+- The query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
 
 <Note>
-Do reach out to us if your use case is hampered by these restrictions.
+  Please reach out if your use case is limited by these restrictions
 </Note>
 
 ## Subscribing to query result changes
@@ -93,6 +91,6 @@ You can manage your Continuous Query using our [Org Management API](/api-referen
 * [Create Continuous Query Endpoint](/api-reference/sense/continuous-query/create)
 * [List Continuous Queries Endpoint](/api-reference/sense/continuous-query/list)
 
-You can also manage them through the _Continuous Query_ section of the Junction Dashboard:
+You can also manage them through the _Continuous Query_ section of the [Junction Dashboard](/sense/managing-queries):
 
 ![Screenshot of the query creator](/img/aggregation/query-creator-dashboard.png)

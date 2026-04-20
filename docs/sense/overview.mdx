@@ -5,10 +5,9 @@ description: "Junction Sense consolidates wearable data from multiple providers 
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-<HorizonAIBeta />
+import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-Junction Sense consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction)
-and [source types](/wearables/providers/data-attributions#source-type) into simple tabular outputs.
+Junction Sense consolidates the multitude of user data collected across [wearable data providers](/wearables/providers/introduction) and [source types](/wearables/providers/data-attributions#source-type) into simple tabular outputs.
 
 ![A high-level illustration of the inputs and outputs of the Aggregation API](/img/aggregation/overview.png)
 
@@ -23,7 +22,7 @@ experimentation.
 </Card>
 
 <Card title="Aggregate in floating time" icon="timeline-arrow" horizontal>
-Work with time zone agnostic outputs that are indexed in the user's perception of time (i.e., _floating time_).
+  Work with time zone agnostic outputs that are indexed in the user's perception of time (i.e., _floating time_).
 </Card>
 
 ## Query API and Continuous Query
@@ -42,12 +41,13 @@ You can use Junction Sense through two mediums:
 * Pushed Changes: New and changed query results are pushed to you as webhooks via Svix or ETL Pipelines.
 
 ### Decision Guide
+
 <Steps>
-<Step title="Experiment with Query API">
+  <Step title="Experiment with Query API">
     Start with Query API if you need quick insights, one-time analysis or query experimentation using an individual user's data.
-</Step>
-<Step title="Productize with Continuous Query">
+  </Step>
+  <Step title="Productize with Continuous Query">
     Switch to Continuous Query once you have queries which you wish to turn into a continuously updated, named dataset and to receive change events for.
-</Step>
+  </Step>
 </Steps>
 Choose based on your current needs — rapid analysis and iteration with Query API or continual data monitoring with Continuous Query. Both features use the same Query DSL, complement each other, and can adapt as your product evolves.

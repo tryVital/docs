@@ -352,17 +352,6 @@
             "icon": "watch-fitness",
             "groups": [
               {
-                "group": "Connecting Providers",
-                "pages": [
-                  "wearables/connecting-providers/introduction",
-                  "wearables/connecting-providers/link_flow",
-                  "wearables/connecting-providers/launching_link",
-                  "wearables/connecting-providers/auth_types",
-                  "wearables/connecting-providers/errors",
-                  "wearables/connecting-providers/custom_widget"
-                ]
-              },
-              {
                 "group": "Bring Your Own OAuth",
                 "pages": [
                   "wearables/connecting-providers/bring-your-own-oauth/overview",
@@ -370,7 +359,7 @@
                 ]
               },
               {
-                "group": "Vital iOS App",
+                "group": "Junction iOS App",
                 "pages": [
                   "wearables/vital-app/introduction"
                 ]
@@ -386,7 +375,18 @@
                 ]
               },
               {
-                "group": "Data",
+                "group": "Connecting Providers",
+                "pages": [
+                  "wearables/connecting-providers/introduction",
+                  "wearables/connecting-providers/link_flow",
+                  "wearables/connecting-providers/launching_link",
+                  "wearables/connecting-providers/auth_types",
+                  "wearables/connecting-providers/errors",
+                  "wearables/connecting-providers/custom_widget"
+                ]
+              },
+              {
+                "group": "Device Data",
                 "pages": [
                   "wearables/providers/data-primary-key",
                   "wearables/providers/timestamps-and-time-zones",
@@ -412,7 +412,7 @@
                 ]
               },
               {
-                "group": "Guides",
+                "group": "Provider Guides",
                 "pages": [
                   "wearables/guides/abbott-libreview",
                   "wearables/guides/apple-healthkit",
@@ -1122,7 +1122,7 @@
         ]
       },
       {
-        "tab": "Junction Sense",
+        "tab": "Horizon AI",
         "icon": "sensor",
         "anchors": [
           {
@@ -1133,7 +1133,9 @@
                 "group": "Junction Sense",
                 "pages": [
                   "sense/overview",
+                  "continuous-query-overview",
                   "sense/using-continuous-query",
+                  "sense/managing-queries",
                   "sense/using-query-api",
                   "sense/data-prioritization",
                   "sense/examples"
