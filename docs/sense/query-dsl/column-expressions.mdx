@@ -271,10 +271,7 @@ index using the special Index Column expression:
 | Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }` |
 | Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }` |
 
-
-
 ## Group Key Column expression
-
 
 When your Query Instruction uses [the `group_by` clause](/sense/query-dsl/group-by-clause), each expression
 in the `group_by` clause creates a temporary Group Key Column (`group_key.$OFFSET`). These temporary columns are then used to
