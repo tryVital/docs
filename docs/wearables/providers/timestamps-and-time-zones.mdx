@@ -163,7 +163,7 @@ point to be in `2023/09/27 07:48 AM ET`. We then finally convert this to UTC, re
 Some providers neither expose nor even capture time zone information at source. So Junction can only request data and interpret them strictly in UTC.
 
 If you prefer the data to be contextualized to the geographical location of a user, a Fallback Time Zone (denoted by an [IANA tz database identifier](https://data.iana.org/time-zones/tz-link.html))
-can be specified on a per-user basis. Once specified, Junction would use the time zone to pull data and interpret timestamps from any time-zone-unaware providers from that point onwards. 
+can be specified on a per-user basis. Once specified, Junction would use the time zone to pull data and interpret timestamps from any time-zone-unaware providers from that point onwards.
 
 You can specify the Fallback Time Zone when:
 
