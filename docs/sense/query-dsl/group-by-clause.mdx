@@ -1,19 +1,20 @@
 ---
 title: GROUP BY clause
+description: "Use the GROUP BY clause in Junction Sense queries for date truncation, date part extraction, table column, and source column grouping."
 icon: objects-column
 iconType: duotone
 ---
 
 ## Overview
 
-You specify how a Junction Sense should dissect the selected data through a Group By clause. The [Aggregate expressions](/sense/query-dsl/select-clause#aggregate-a-table-column)
+You specify how Junction Sense should dissect the selected data through a Group By clause. The [Aggregate expressions](/sense/query-dsl/select-clause#aggregate-a-table-column)
 you specify would then be applied to the resulting groups.
 
 Your Group By clause can contain one or more of the following expressions:
 
 * a [Date Truncate expression](#group-by-a-truncated-datetime)
 
-    * A synchronous [Query](/sense/using-query-api) can have at most one [Date Truncate expression](#group-by-a-truncated-datetime)
+    * A synchronous [Query](/sense/using-query-api) can have at most one [Date Truncate expression](#group-by-a-truncated-datetime).
     * A [Continuous Query](/sense/using-continuous-query) must have exactly one [Date Truncate expression](#group-by-a-truncated-datetime).
 
 * a [Date Part expression](#group-by-a-date-or-time-component)
@@ -34,10 +35,10 @@ This is similar to the `DATE_TRUNC` function in SQL.
 <AccordionGroup>
 <Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
 
-| Argument         | Remarks 
-| ---------------- | ---------------
-| date_trunc       | The date or time period to truncate the input datetime to.
-| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted.
+| Argument         | Remarks |
+| ---------------- | --------------- |
+| date_trunc       | The date or time period to truncate the input datetime to. |
+| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted. |
 
 </Accordion>
 
@@ -63,7 +64,7 @@ va.select(...).group_by(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 # Truncate to every 1 day.
 {
     "group_by": [
@@ -97,10 +98,10 @@ This is similar to the `DATE_PART` function in SQL.
 <AccordionGroup>
 <Accordion title="Input argument" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
 
-| Argument         | Remarks 
-| ---------------- | ---------------
-| date_part        | The date or time unit to extract.
-| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted.
+| Argument         | Remarks |
+| ---------------- | --------------- |
+| date_part        | The date or time unit to extract. |
+| arg              | The input expression — only an [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression) is accepted. |
 
 </Accordion>
 
@@ -126,7 +127,7 @@ va.select(...).group_by(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 # Extract the weekday
 {
     "group_by": [
@@ -183,7 +184,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 
 # Group by calendar date and Stand Hour type (idle vs stand)
 {
@@ -211,7 +212,7 @@ This is similar to a generic `GROUP BY` clause in SQL.
 
 <Note>
 If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
-the implicit [Data Prioritization](/sense/data-prioritization) behaviour would be disabled.
+the implicit [Data Prioritization](/sense/data-prioritization) behavior would be disabled.
 </Note>
 
 <AccordionGroup>
@@ -241,7 +242,7 @@ va.select(...).group_by(
 
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 # Group by the source provider and source type
 {
     "group_by": [

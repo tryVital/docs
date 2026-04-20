@@ -1,5 +1,6 @@
 ---
 title: "Provider Types"
+description: "Browse all supported wearable providers grouped by authentication type: OAuth, email, and email plus password connections."
 ---
 
 Providers have different authentication flows. Some require a username and password, others require an email address and password. Junction supports the following provider types:
@@ -8,12 +9,12 @@ Providers have different authentication flows. Some require a username and passw
 - `Email`
 - `Email + Password`
 
-The majority of providers are `OAuth` providers. These providers require a user to be redirected to a third party website to authenticate. Once authenticated, the user is redirected back to the link widget.
-The `Email` and `Email + Password` providers require a user to enter their email address and password into the link widget. This is then sent to Junction and used to connect to the provider.
+The majority of providers are `OAuth` providers. These providers require a user to be redirected to a third-party website to authenticate. Once authenticated, the user is redirected back to the link widget.
+The `Email` and `Email + Password` providers require a user to enter their email address and password into the link widget. These are then sent to Junction and used to connect to the provider.
 
-The list of providers and their oauth types are as follows:
+The list of providers and their auth types is as follows:
 
-### 'OAuth'
+### OAuth
 
 Current OAuth providers are:
 
@@ -32,7 +33,7 @@ Current OAuth providers are:
 | `WHOOP`      | Smart Activity Watches                                        |
 | `Dexcom`     | Glucose monitors                                              |
 
-To connect an oauth provider:
+To connect an OAuth provider:
 
 <CodeGroup>
 
@@ -154,7 +155,7 @@ The possible error codes that are returned are as follows:
 - `400 INVALID_USER_ID` User id is incorrect
 - `400 INVALID_CREDENTIALS` Credentials for provider are incorrect
 
-### 'Email'
+### Email
 
 Current email providers are:
 
@@ -162,7 +163,7 @@ Current email providers are:
 | ----------- | -------------------------- |
 | `Freestyle` | Abbott CGM Glucose monitor |
 
-### 'Email + Password'
+### Email + Password
 
 Current email and password providers are:
 
@@ -177,7 +178,7 @@ Current email and password providers are:
 | `MyFitnessPal`      | Meal Tracking Application          |
 | `Kardia`            | EKG Application                    |
 
-To connect a email and password provider:
+To connect an email and password provider:
 
 <CodeGroup>
 

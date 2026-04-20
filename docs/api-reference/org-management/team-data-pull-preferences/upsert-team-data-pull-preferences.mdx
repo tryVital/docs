@@ -1,6 +1,7 @@
 ---
 openapi: post /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
 title: Post Team Data Pull Preferences
+description: "Post org team data pull preferences via the Junction API. Requires authentication with your team API key."
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
@@ -13,7 +14,7 @@ import HistoricalPullLimitTable from '/snippets/historical-pull-limits.mdx';
 ```bash cURL
 curl --request POST \
   --url https://api.management.junction.com/v1/org/{org_id}/team_data_pull_preferences/{env}/{region} \
-  --header 'X-Vital-Org-Key: <api-key>'
+  --header 'X-Vital-Org-Key: <api-key>' \
   --data '{
     "team_ids": [
         "<uuid>"
@@ -45,13 +46,13 @@ By setting a higher value, you acknowledge your awareness of _the facts of API l
 <Warning>
 Provider rate limiting typically happens at OAuth application level.
 
-Therefore, Vital recommends [Bring Your Own OAuth](/wearables/connecting-providers/bring_your_own_oauth)
+Therefore, Junction recommends [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview)
 if you want to set an extended historical pull range. This creates a rate limit quota dedicated to
-your Vital Team, not being shared with other Vital customers.
+your Junction Team, not being shared with other Junction customers.
 </Warning>
 
 <Info>
-The Team Data Pull Preferences you specified is _advisory_. There are scenarios in which Vital systems
+The Team Data Pull Preferences you specified are _advisory_. There are scenarios in which Junction systems
 may not adhere strictly to your stated preferences.
 </Info>
 

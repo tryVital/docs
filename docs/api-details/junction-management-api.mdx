@@ -1,5 +1,6 @@
 ---
 title: "Junction Management API"
+description: "Use the Junction Management API to programmatically manage organization resources like teams, members, API keys, and ETL pipelines."
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
@@ -27,19 +28,19 @@ There is one production environment for Junction Management API:
 
 | Environment      | Base URL                              | Management Key Prefix    |
 | ---------------- | ------------------------------------- | ---------------------- |
-| 🤖 Production    | `https://api.management.junction.com/` | `mg_*`
+| 🤖 Production    | `https://api.management.junction.com/` | `mg_*` |
 
 
 ## Authentication
 
-Junction Management API accepts **Management Key**. Enterprise customers can request a Management Key
-through your Junction Customer Success manager.
+Junction Management API accepts a **Management Key**. Enterprise customers can request a Management Key
+through your Junction Customer Success Manager.
 
 Your API requests should present the Management Key under the `X-Management-Key` header. For example:
 
 ```bash cURL
-curl --request GET
-  --url "https://api.management.junction.com/v1/org/${ORG_ID}"
+curl --request GET \
+  --url "https://api.management.junction.com/v1/org/${ORG_ID}" \
   --header 'X-Management-Key: ${YOUR_MANAGEMENT_KEY}'
 ```
 

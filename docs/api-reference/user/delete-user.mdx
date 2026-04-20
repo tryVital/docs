@@ -1,9 +1,11 @@
 ---
+title: "Delete user"
+description: "Remove user via the Junction API. Requires authentication with your team API key."
 openapi: "DELETE /v2/user/{user_id}"
 ---
 
-Deleting a user would also [deregister their all provider connections](/api-reference/user/deregister-a-provider) immediately.
-Vital erases the user data after a 7-day grace period.
+Deleting a user would also [deregister all their provider connections](/api-reference/user/deregister-a-provider) immediately.
+Junction erases the user data after a 7-day grace period.
 
 <Info>
 If you wish to undo a user deletion for any reason, you can undo the deletion through the

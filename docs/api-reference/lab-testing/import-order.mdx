@@ -1,5 +1,6 @@
 ---
 title: "Import Order"
+description: "Create or submit order import via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v3/order/import"
 ---
 
@@ -73,7 +74,7 @@ const request: ImportOrderBody = {
     userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
     billingType: Billing.ClientBill,
     orderSet: {
-      lab_test_ids=[],
+      labTestIds: [],
     },
     collectionMethod: LabTestCollectionMethod.WalkInTest,
     physician: {
@@ -160,7 +161,7 @@ ImportOrderBody request = ImportOrderBody
       .physician(physician)
       .patientDetails(details)
       .patientAddress(address)
-      .sampleId("1234567890)
+      .sampleId("1234567890")
       .build();
 
 var data = vital.labTests().importOrder(request);
@@ -190,7 +191,7 @@ details := &vital.PatientDetails{
 }
 
 address := &vital.PatientAddressCompatible{
-   ReceiverName: vital.String("john Doe"),
+   ReceiverName: vital.String("John Doe"),
    FirstLine:    "123 Main St.",
    SecondLine:   vital.String("Apt. 208"),
    City:         "San Francisco",
@@ -206,7 +207,7 @@ order_set = &vital.OrderSetRequest{
 
 physician = &vital.PhysicianCreateRequest{
       FirstName: vital.String("Jane"),
-      LastName:  vital.String("Doe),
+      LastName:  vital.String("Doe"),
       Npi:       "",
 }
 
@@ -218,7 +219,7 @@ request := &vital.ImportOrderBody{
    Physician:        physician,
    PatientDetails:   details,
    PatientAddress:   address,
-   SampleId:         vital.String("123456789),
+   SampleId:         vital.String("123456789"),
 }
 
 response, err := client.LabTests.ImportOrder(context.TODO(), request)

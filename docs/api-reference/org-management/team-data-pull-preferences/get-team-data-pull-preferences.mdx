@@ -1,6 +1,7 @@
 ---
 openapi: get /v1/org/{org_id}/team_data_pull_preferences/{env}/{region}
 title: Get Team Data Pull Preferences
+description: "Get org team data pull preferences via the Junction API. Requires authentication with your team API key."
 ---
 
 <RequestExample>
@@ -12,7 +13,7 @@ curl --request GET \
 </RequestExample>
 
 <Info>
-The endpoint will return the default vital settings if no custom preferences are set.
+The endpoint will return the default Junction settings if no custom preferences are set.
 </Info>
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';

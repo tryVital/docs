@@ -1,15 +1,16 @@
 ---
 title: "Quickstart"
+description: "Step-by-step guide to placing your first lab test order through the Junction API, from user creation to order submission."
 ---
 
-We have carefully designed Junction’s API to ensure a seamless and hassle-free experience for developers. You can get up and running with just a few lines of code. In this guide, we will walk you through the essential steps to order your first lab test.
+We have carefully designed Junction's API to ensure a seamless and hassle-free experience for developers. You can get up and running with just a few lines of code. In this guide, we will walk you through the essential steps to order your first lab test.
 
 ### What you need
 
 * If you haven't done so yet, you can get API keys by signing up for a Junction account in the [Dashboard](https://app.junction.com). Detailed instructions are available [here](/home/quickstart#1-api-keys).
-* One of our [client libraries](/home/libraries). The lab testing API is available for the [python](https://pypi.org/project/vital/) and [node](https://www.npmjs.com/package/@tryvital/vital-node) SDKs. If none of those fit your use-case, you can always directly call the API. Email support@junction.com for specific library support.
+* One of our [client libraries](/home/libraries). The lab testing API is available for the [Python](https://pypi.org/project/vital/) and [Node](https://www.npmjs.com/package/@tryvital/vital-node) SDKs. If none of those fit your use case, you can always directly call the API. Email [support@junction.com](mailto:support@junction.com) for specific library support.
 
-In the following, replace `{{BASE_URL}}` with your team's [environment URL](/home/environments).
+In the following, replace `{{BASE_URL}}` with your team's [environment URL](/api-details/junction-api#environments).
 
 ### (1) Creating a user
 
@@ -101,9 +102,9 @@ fmt.Printf("Received data %s\n", response)
 
 </CodeGroup>
 
-### (2) Listing Available Tests
+### (2) Listing available tests
 
-To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [setup a call](/lab/overview/introduction#production-launch) and get you ready for launch!
+To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [set up a call](/lab/overview/introduction#production-launch) and get you ready for launch!
 
 <CodeGroup>
 
@@ -124,7 +125,7 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get();
+data = client.lab_tests.get()
 ```
 
 ```javascript Node
@@ -180,13 +181,13 @@ This will return a list of all the available tests to you. They include a descri
 {
   "lab_tests": [
     {
-      "id": "e2eaa385-a311-4f17-b33f-2165e3d24dd9"
+      "id": "e2eaa385-a311-4f17-b33f-2165e3d24dd9",
       "name": "Lipids Panel",
       "description": "Cholesterol tests",
       "sample_type": "dried blood spot",
       "method": "testkit",
       "price": 10.0,
-      "is_active": True,
+      "is_active": true,
       "lab": {
           "slug": "USSL",
           "name": "US Specialty Lab",
@@ -280,7 +281,7 @@ data = client.lab_tests.create_order(
         email="email@email.com"
     ),
     patient_address=PatientAddressCompatible(
-      receiver_name="john Doe",
+      receiver_name="John Doe",
       first_line="123 Main St.",
       second_line="Apt. 208",
       city="San Francisco",
@@ -314,7 +315,7 @@ const request: CreateOrderRequestCompatible = {
         email: "email@email.com"
     },
     patientAddress: {
-      receiverName: "john Doe",
+      receiverName: "John Doe",
       firstLine: "123 Main St.",
       secondLine: "Apt. 208",
       city: "San Francisco",
@@ -392,7 +393,7 @@ details := &vital.PatientDetails{
 }
 
 address := &vital.PatientAddressCompatible{
-   ReceiverName: vital.String("john Doe"),
+   ReceiverName: vital.String("John Doe"),
    FirstLine:    "123 Main St.",
    SecondLine:   vital.String("Apt. 208"),
    City:         "San Francisco",
@@ -420,7 +421,7 @@ fmt.Printf("Received data %s\n", response)
 
 ```json Response
 {
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "patient_details": {"dob": "2020-01-01", "gender": "male"},
         "patient_address": {

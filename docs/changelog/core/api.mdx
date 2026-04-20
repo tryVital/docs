@@ -1,5 +1,6 @@
 ---
 title: "API"
+description: "Changelog of core Junction API updates including lab test result interpretation, user ingestion bounds, and Sense query improvements."
 ---
 
 ### Error for closed beta endpoint calls is now JSON (Nov 2025)
@@ -8,7 +9,7 @@ Previously, if you tried to access an endpoint in closed beta and for which your
 
 ### Lab Test Result Interpretation Filtering (June 2025)
 
-You can now filter lab test orders by result interpretation using the new `interpretation` query parameter in the [GET /orders](/api-reference/lab/orders/get-orders) endpoint.
+You can now filter lab test orders by result interpretation using the new `interpretation` query parameter in the [GET /orders](/api-reference/lab-testing/get-orders) endpoint.
 
 <Accordion icon="filter" iconType="duotone" title="Details" defaultOpen>
 
@@ -30,7 +31,7 @@ Order responses now include a new `interpretation` field providing the clinical 
 
 This enhancement enables you to programmatically identify and prioritize critical lab results, improving clinical workflow efficiency and patient care monitoring.
 
-Check out the [GET /orders](/api-reference/lab/orders/get-orders) endpoint documentation.
+Check out the [GET /orders](/api-reference/lab-testing/get-orders) endpoint documentation.
 
 </Accordion>
 
@@ -93,7 +94,7 @@ As a recap, there are now two types of Management Keys:
 [Junction Management API](/api-details/junction-management-api) now accepts Management Keys (previously _Org Keys_)
 in the `X-Management-Key` header, in addition to the `X-Vital-Org-Key` header.
 
-We would continue to support the `X-Vital-Org-Key` header. Though we recommend moving over to `X-Management-Key` to avoid
+We will continue to support the `X-Vital-Org-Key` header, though we recommend moving over to `X-Management-Key` to avoid
 confusion, especially if you do plan to adopt Team Management Keys.
 
 <Info>
@@ -106,13 +107,13 @@ We've added a new "Retrying" state to the Historical Pull Status page and the hi
 Additionally, failed historical pulls now include extra error information, making troubleshooting easier and more efficient.
 
 <Info>
-  This applies to connections established after 9th May.
+  This applies to connections established after May 9th.
 </Info>
 
 ### Prepare Team Custom Credentials endpoint (Aug 2024)
 
 The new [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials) endpoint
-provides instructions for preparation of [Bring Your Own OAuth](/wearables/connecting-providers/bring_your_own_oauth) custom credentials.
+provides instructions for preparation of [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) custom credentials.
 
 You can use the information to configure things like OAuth callback URI and the Webhook URI (if applicable), before activating it on your
 Junction Team through the [Set Team Custom Credential](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials)
@@ -124,10 +125,10 @@ endpoint.
 
 ### Azure Event Hub: Flexible routing (Aug 2024)
 
-You can now configure your [Azure Event Hub destination in ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub)
+You can now configure your [Azure Event Hub destination in ETL Pipelines](/webhooks/etl-pipelines/azure-event-hubs)
 to route Junction data events to different Event Hubs based on their event type prefix.
 
-Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple-event-hubs) documentation.
+Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines/azure-event-hubs#multiple-event-hubs) documentation.
 
 <Info>
   ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
@@ -137,7 +138,7 @@ Check out the [ETL Pipelines - Azure Event Hub](/webhooks/etl-pipelines#multiple
 
 You can now receive [events](/webhooks/introduction) from Junction directly with your Azure Event Hubs.
 
-Check out the [ETL Pipelines](/webhooks/etl-pipelines#azure-event-hub) documentation.
+Check out the [ETL Pipelines](/webhooks/etl-pipelines/azure-event-hubs) documentation.
 
 <Info>
   ETL Pipelines are available for [the Scale plan](https://tryvital.io/pricing).
@@ -151,7 +152,7 @@ You can now manage Brand Information of your Junction Teams through the Org Mana
   Team Brand Information is used in:
 
   1. the Junction-hosted [Link widget](/wearables/connecting-providers/introduction);
-  2. all user communications [Junction Lab Testing](/lab/overview/introduction) sent on your behalf; and
+  2. all user communications in [Junction Lab Testing](/lab/overview/introduction) sent on your behalf; and
   3. the Junction-hosted Appointment Booking page for [Junction Lab Testing](/lab/overview/introduction).
 
   <Info>
@@ -172,8 +173,8 @@ transparently grouped and migrated to the new structure.
   1. multi-region presence; or
   2. user organization with diverging team-level configurations.
 
-  We introduced the Org Management API because customers have asked for the programmatic access to
-  dyanmically create Junction Teams and manage different aspects of their Junction Teams.
+  We introduced the Org Management API because customers have asked for programmatic access to
+  dynamically create Junction Teams and manage different aspects of their Junction Teams.
 
   <Info>
     Org Management API is available for [the Scale plan](https://tryvital.io/pricing).
@@ -186,7 +187,7 @@ transparently grouped and migrated to the new structure.
 All events now include Team ID, User ID and Client User ID as top-level fields.
 
 <Accordion title="Details" defaultOpen icon="message" iconType="duotone">
-  We introduced this because this helps reduce a Junction User ID -\> Client User ID database lookup on your end.
+  We introduced this because this helps reduce a Junction User ID → Client User ID database lookup on your end.
 
   Check out the [Webhook Event Structure](/webhooks/event-structure) documentation.
 

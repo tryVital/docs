@@ -120,6 +120,7 @@
                 "pages": [
                   "lab/workflow/ordering",
                   "lab/workflow/lab-test-lifecycle",
+                  "lab/workflow/order-transactions",
                   "lab/workflow/order-requirements",
                   "lab/workflow/scheduled-orders",
                   "lab/workflow/cancelling-an-order",
@@ -128,7 +129,8 @@
                   "lab/workflow/importing-order",
                   "lab/workflow/aoe",
                   "lab/workflow/partials",
-                  "lab/workflow/redraws"
+                  "lab/workflow/redraws",
+                  "lab/workflow/clinical-comments"
                 ]
               },
               {
@@ -166,6 +168,7 @@
                 "pages": [
                   "lab/testkits/overview",
                   "lab/testkits/order-lifecycle",
+                  "lab/testkits/status-details",
                   "lab/testkits/webhooks",
                   "lab/testkits/communications"
                 ]
@@ -244,12 +247,12 @@
               {
                 "group": "Patient Service Center (PSC)",
                 "pages": [
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-availability",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-booking",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling",
-                  "api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons",
-                  "api-reference/lab-testing/psc-schedulling/get-psc-appointment"
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-availability",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-booking",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling",
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons",
+                  "api-reference/lab-testing/psc-scheduling/get-psc-appointment"
                 ]
               },
               {
@@ -414,6 +417,7 @@
                   "wearables/guides/abbott-libreview",
                   "wearables/guides/apple-healthkit",
                   "wearables/guides/android-health-connect",
+                  "wearables/guides/samsung-health",
                   "wearables/guides/dexcom_v3",
                   "wearables/guides/dexcom",
                   "wearables/guides/fitbit",
@@ -1428,6 +1432,10 @@
       "destination": "/wearables/guides/apple-healthkit"
     },
     {
+      "source": "/wearables/guides/samsung_health",
+      "destination": "/wearables/guides/samsung-health"
+    },
+    {
       "source": "/wearables/guides/freestyle",
       "destination": "/wearables/guides/abbott-libreview"
     },
@@ -1562,6 +1570,10 @@
     {
       "source": "/api-reference/horizon-ai/aggregation/query-one",
       "destination": "/api-reference/sense/query-one"
+    },
+    {
+      "source": "/api-reference/lab-testing/psc-schedulling/:slug*",
+      "destination": "/api-reference/lab-testing/psc-scheduling/:slug*"
     }
   ]
 }

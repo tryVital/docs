@@ -1,5 +1,6 @@
 ---
 title: "Supported Providers"
+description: "Browse all 300+ supported wearable device providers organized by connection type, with BYOO availability and developer program details."
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api-upsell.mdx';
@@ -7,7 +8,7 @@ import HistoricalPullLimitTable from '/snippets/historical-pull-limits.mdx';
 
 import BYOO from '/snippets/byoo.mdx';
 
-We currently support over 300+ devices, a full list can be seen below.
+We currently support 300+ devices. A full list can be seen below.
 
 ## Cloud Based Providers
 
@@ -15,7 +16,7 @@ We currently support over 300+ devices, a full list can be seen below.
 
 <BYOO />
 
-These data provider connections would use **Junction-branded** OAuth application by default.
+These data provider connections would use a **Junction-branded** OAuth application by default.
 
 Optionally, you can _Bring Your Own OAuth_ — existing or newly applied API applications — to your Junction Team:
 
@@ -26,24 +27,24 @@ Optionally, you can _Bring Your Own OAuth_ — existing or newly applied API app
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Fitbit](https://www.fitbit.com/global/uk/home)  <br />`fitbit`<br />Activity Trackers (all devices)<br /><br />[↗️ Fitbit Guide](/wearables/guides/fitbit)                | 🟢<br />Enabled      | 🟢<br />Self Sign-Up         | You can [create your own Fitbit API Application](https://dev.fitbit.com/build/reference/web-api/developer-guide/getting-started/). Note that for access to Intraday (timeseries) data, you must [submit an application to Fitbit](https://dev.fitbit.com/build/reference/web-api/intraday/). |
 | [Garmin](https://www.garmin.com)                 <br />`garmin`<br />Fitness watches (all devices)<br /><br />[↗️ Garmin Guide](/wearables/guides/garmin)                  | 🟢<br />Enabled      | ⚠️<br />Application required | You must [apply for Garmin Developer Program](https://developer.garmin.com/gc-developer-program/program-faq/).                                                                                                                                                                               |
-| [Strava](https://www.strava.com)                 <br />`strava`<br />Running & Cycling Social Network                                                                      | 🟡<br />Congested    | ⚠️<br />Application required | You can self-create a Strava API Application for testing. To connect more than 1 athelete, you must [submit your app to Strava for review](https://developers.strava.com/docs/getting-started/).                                                                                             |
+| [Strava](https://www.strava.com)                 <br />`strava`<br />Running & Cycling Social Network                                                                      | 🟡<br />Congested    | ⚠️<br />Application required | You can self-create a Strava API Application for testing. To connect more than 1 athlete, you must [submit your app to Strava for review](https://developers.strava.com/docs/getting-started/).                                                                                             |
 | [Oura](https://ouraring.com)                     <br />`oura`<br />Smart Sleep tracking ring                                                                               | 🟢<br />Enabled      | ⚠️<br />Application required | You can self-create an Oura API Application for testing. To connect more than 10 Oura users, you must [submit your app to Oura for review](https://cloud.ouraring.com/docs/).                                                                                                                |
 | [Wahoo](https://wahoofitness.com)                <br />`wahoo`<br />Cycling Equipment                                                                                      | 🟢<br />Enabled      | ⚠️<br />Application required | You must [apply for Wahoo Cloud API access](https://developers.wahooligan.com/cloud).                                                                                                                                                                                                        |
 | [Withings](https://www.withings.com)             <br />`withings`<br />Fitness scales, watches and health monitors                                                         | 🟡<br />Congested    | 🟢<br />Self Sign-Up         | You can [create your own Withings API Application](https://developer.withings.com/developer-guide/v3/withings-solutions/withings-api-plans).                                                                                                                                                 |
 | [Polar](https://www.polar.com/accesslink-api/)   <br />`polar`<br />Finnish sports tech pioneer<br /><br />[↗️ Polar Guide](/wearables/guides/polar)                       | 🟢<br />Enabled      | 🟢<br />Self Sign-Up         | You can [create your own Polar API Application](https://www.polar.com/accesslink-api/#introduction).                                                                                                                                                                                         |
 | [Cronometer](https://www.cronometer.com)         <br />`cronometer`<br />Nutrition data                                                                                    | 🟢<br />Enabled      | ⚠️<br />Application required | You must [apply to be a Cronometer API partner](https://cronometer.com/about/).                                                                                                                                                                                                              |
-| [Ultrahuman](https://www.ultrahuman.com)         <br />`ultrahuman`<br />Real-time nutrition and fitness tracking                                                          | 🟢<br />Enabled      | ⚠️<br />Application required | You must [apply to be a Ultrahuman API partner](https://blog.ultrahuman.com/blog/accessing-the-ultrahuman-partnership-api/).                                                                                                                                                                 |
+| [Ultrahuman](https://www.ultrahuman.com)         <br />`ultrahuman`<br />Real-time nutrition and fitness tracking                                                          | 🟢<br />Enabled      | ⚠️<br />Application required | You must [apply to be an Ultrahuman API partner](https://blog.ultrahuman.com/blog/accessing-the-ultrahuman-partnership-api/).                                                                                                                                                                 |
 | [Dexcom](https://www.dexcom.com)                 <br />`dexcom_v3`<br />Dexcom CGM Glucose monitors<br /><br />[↗️ Dexcom Guide](/wearables/guides/dexcom_v3)              | ➖<br />Unavailable   | ⚠️<br />Application required | You can self-create a Dexcom Sandbox API Application for testing. To connect Dexcom production users, you must [apply for the Dexcom Digital Health Partner status](https://developer.dexcom.com/docs/dexcom/scopes-access).                                                                 |
-| [WHOOP](https://www.whoop.com)                   <br />`whoop_v2`<br />Your Personal Digital Fitness and Health Coach<br /><br />[↗️ WHOOP Guide](/wearables/guides/whoop) | ➖<br />Unavailable   | ⚠️<br />Application required | You can self-create a Whoop API Application for testing. To connect more than 10 WHOOP members, you must [submit your app to WHOOP for review](https://developer.whoop.com/docs/developing/app-approval).                                                                                    |
+| [WHOOP](https://www.whoop.com)                   <br />`whoop_v2`<br />Your Personal Digital Fitness and Health Coach<br /><br />[↗️ WHOOP Guide](/wearables/guides/whoop) | ➖<br />Unavailable   | ⚠️<br />Application required | You can self-create a WHOOP API Application for testing. To connect more than 10 WHOOP members, you must [submit your app to WHOOP for review](https://developer.whoop.com/docs/developing/app-approval).                                                                                    |
 | [MyFitnessPal API](https://www.myfitnesspalapi.com) <br />`my_fitness_pal_v2`<br />Nutrition data                                                                          | ➖<br />Unavailable   | ➖<br />Application closed    | N/A                                                                                                                                                                                                                                                                                          |
-| [MapMyFitness](https://developer.mapmyfitness.com)         <br />`map_my_fitness`<br />Technology for all atheletes                                                        | ➖<br />Unavailable   | ➖<br />Application closed    | N/A                                                                                                                                                                                                                                                                                          |
+| [MapMyFitness](https://developer.mapmyfitness.com)         <br />`map_my_fitness`<br />Technology for all athletes                                                        | ➖<br />Unavailable   | ➖<br />Application closed    | N/A                                                                                                                                                                                                                                                                                          |
 
 ### Non-OAuth Providers
 
 | Provider (Slug)                                                                                                                               | Description                    | Remarks                    |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | -------------------------- |
 | [Beurer](https://www.beurer.com/web/gb/)         <br />`beurer_api`                                                                           | Beurer Blood Pressure monitors | Password Auth              |
-| [Dexcom (G6 And Older)](https://www.dexcom.com)  <br />`dexcom`<br /><br />[↗️ Dexcom Guide](/wearables/guides/dexcom)                        | Dexcom CGM Glucose monitors    | Password Auth              |
+| [Dexcom (G6 and Older)](https://www.dexcom.com)  <br />`dexcom`<br /><br />[↗️ Dexcom Guide](/wearables/guides/dexcom)                        | Dexcom CGM Glucose monitors    | Password Auth              |
 | [8Sleep](https://www.eightsleep.com)             <br />`eight_sleep`                                                                          | Smart Mattress                 | Password Auth              |
 | [Abbott LibreView](https://www.libreview.com/)   <br />`abbott_libreview`<br /><br />[↗️ LibreView Guide](/wearables/guides/abbott-libreview) | Abbott CGM Glucose monitor     | Password Auth              |
 | [Freestyle Libre](https://www.libreview.com/)    <br />`freestyle_libre`<br /><br />[↗️ LibreView Guide](/wearables/guides/abbott-libreview)  | Abbott CGM Glucose monitor     | Practice-based Connections |
@@ -62,17 +63,23 @@ Optionally, you can _Bring Your Own OAuth_ — existing or newly applied API app
 
 | Provider (Slug)                                                                                  | Description                                       | Guide                                                |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ---------------------------------------------------- |
-| [Accu-Chek](https://www.accu-chek.com) (Bluetooth)                   <br />`accuchek_ble`        | Glucose Strips/MySugr App                         |                                                      |
 | [Apple HealthKit](https://www.apple.com/uk/ios/health/)              <br />`apple_health_kit`    | Health and fitness data on iPhone and Apple Watch | [↗️ Guide](/wearables/guides/apple-healthkit)        |
+| [Android Health Connect](https://developer.android.com/health-connect)<br />`health_connect`     | Health and fitness data on Android devices        | [↗️ Guide](/wearables/guides/android-health-connect) |
+| [Samsung Health](https://developer.samsung.com/health/data)          <br />`samsung_health`      | Health and fitness data on supported Samsung Android devices | [↗️ Guide](/wearables/guides/samsung-health) |
+
+## SDK Based Devices
+
+| Provider (Slug)                                                                                  | Description                                       | Guide                                                |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------- | ---------------------------------------------------- |
+| [Accu-Chek](https://www.accu-chek.com) (Bluetooth)                   <br />`accuchek_ble`        | Glucose Strips/MySugr App                         |                                                      |
 | [Beurer](https://www.beurer.com/web/gb/) (Bluetooth)                 <br />`beurer_ble`          | Beurer Blood Pressure monitors                    |                                                      |
 | [Contour](https://www.diabetes.ascensia.com) (Bluetooth)             <br />`contour_ble`         | Glucometers                                       |                                                      |
 | [Freestyle Libre BLE](https://www.freestylelibre.co.uk/libre/) (NFC) <br />`freestyle_libre_ble` | Abbott CGM Glucose monitor readings via SDK       |                                                      |
 | [Omron](https://www.omron-healthcare.com) (Bluetooth)                <br />`omron_ble`           | Blood Pressure monitors and scales                |                                                      |
-| [Android Health Connect](https://developer.android.com/health-connect)<br />`health_connect`     | Health and fitness data on Android devices        | [↗️ Guide](/wearables/guides/android-health-connect) |
 
 ## Providers under beta
 
-**Beta**: Providers under beta, these are providers that have been recently added. All providers here are available in sandbox, any feedback you have is greatly appreciated!
+**Beta**: Providers under beta — these are providers that have been recently added. All providers here are available in sandbox. Any feedback you have is greatly appreciated!
 
 | Provider                                          | Slug     | Description                        |
 | ------------------------------------------------- | -------- | ---------------------------------- |

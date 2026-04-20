@@ -1,5 +1,6 @@
 ---
 title: "Deprecations"
+description: "Deprecated features in the Junction Wearables API, including the hypnogram timeseries type and redefined Source/Provider terminology."
 ---
 
 ### The `hypnogram` timeseries type
@@ -18,7 +19,7 @@ Stop processing the `historical.timeseries.hypnogram.created`, `daily.timeseries
 
 <Warning>The stated removals in this section will happen on or after **31 July 2024**.</Warning>
 
-Junction has redefined what _Source_ and _Provider_ means across our API and event schemas:
+Junction has redefined what _Source_ and _Provider_ mean across our API and event schemas:
 
 <Accordion title="The new definitions of Provider and Source">
 
@@ -27,14 +28,14 @@ Junction has redefined what _Source_ and _Provider_ means across our API and eve
 | Source   | The source context of a specific summary or a specific timeseries value group. | 
 | Provider | A wearable data provider (an app, a platform, a service, or Junction Mobile SDKs). |
 
-A _Source_ context comprises of:
+A _Source_ context comprises:
 * the Provider (slug only)
 * the [Source Type](/wearables/providers/data-attributions#source-type)
 * the [App ID](/wearables/providers/data-attributions#app-id) (_optional_)
 
-We have also plans for the _Source_ context to include source device metadata where available.
+We also have plans for the _Source_ context to include source device metadata where available.
 
-A _Provider_ object is a short description of a wearable data provider. It comprises of the familiar
+A _Provider_ object is a short description of a wearable data provider. It comprises the familiar
 `name`, `logo` and `slug` trio you have been receiving in many data events.
 
 </Accordion>
@@ -42,7 +43,7 @@ A _Provider_ object is a short description of a wearable data provider. It compr
 To migrate to the new definitions, Junction is announcing the following deprecations:
 
 <Steps>
-  <Step title="All Data Dvents (daily.data.*)" stepNumber="1" titleSize="p">
+  <Step title="All Data Events (daily.data.*)" stepNumber="1" titleSize="p">
     Inside the Source context located at `$.data.source`, the `name`, `logo`, and `slug` fields are
     now deprecated.
 
@@ -50,7 +51,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     slug.
 
     Using the [Steps data event](/event-catalog/daily.data.steps.created) as an illustration, originally
-    the `source` field describes the wearable data provider:
+    the `source` field described the wearable data provider:
     ```json daily.data.steps.created (Original)
     {
         "event_type": "daily.data.steps.created",
@@ -66,7 +67,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     }
     ```
 
-    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this steps timeseries
+    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of the `steps` timeseries
     value group. So Junction has introduced a few new _Source_ context fields:
 
     ```json daily.data.steps.created (Current)
@@ -135,8 +136,8 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     Junction no longer embeds these _Provider_ object fields in every summary, except for the provider
     slug.
 
-    Using the [Get Profile endpoint](/api-reference/profile/get-summary) as an illustration, originally
-    the `source` field describes the wearable data provider:
+    Using the [Get Profile endpoint](/api-reference/data/profile/get-summary) as an illustration, originally
+    the `source` field described the wearable data provider:
     ```json Profile (Original)
     {
         "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
@@ -210,7 +211,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     Junction has renamed the `source` field in this event to `provider`, aligning with the redefinition of _Source_
     and _Provider_.
 
-    To illustrate the change, originally the `source` field describes the wearable data provider:
+    To illustrate the change, originally the `source` field described the wearable data provider:
     ```json provider.connection.created (Original)
     {
         "event_type": "provider.connection.created",
@@ -279,7 +280,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
 
 ### The `is_final` flag in `historical.data.*.created` events
 
-<Warning>The removal will happen on or after **31 June 2024**.</Warning>
+<Warning>The removal will happen on or after **30 June 2024**.</Warning>
 
 We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
 

@@ -1,5 +1,6 @@
 ---
 title: "Azure Event Hubs"
+description: "Stream Junction events to Azure Event Hubs as an ETL pipeline destination, with details on event structure, properties, and compression."
 icon: "microsoft"
 ---
 
@@ -24,44 +25,44 @@ Each event is published with these [Azure EventData Properties](https://learn.mi
 | Data     | -                | The JSON blob. This may or may not be compressed — see `content-encoding`. |
 
 <Info>
-By default, payload smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
+By default, payloads smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if
 decompression of the event payload blob is necessary.
 
 To force Junction to always compress the payload, set `compression: always` on your
-[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+[Team ETL Pipeline](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
 </Info>
 
 <Info>
-At this time, Junction publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Junction publishes exclusively JSON blobs.
 
-Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `content-encoding`.
 </Info>
 
 ## Broker authentication
 
 Junction connects to your Azure Event Hub namespace through a connection URL you supplied in your
-[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration:
+[Team ETL Pipeline](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration:
 
-* It must embed a Event Hub Shared Access Signature (SAS); and
+* It must embed an Event Hub Shared Access Signature (SAS); and
 * It must **not** specify an Event Hub — the default Event Hub should be declared separately as part of your
-  [Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
+  [Team ETL Pipeline](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) configuration.
 
 
 ## Configuration
 
 <OrgManagementAPI />
 
-You can manage your Azure Event Hub destination through the Org Management API
-[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
+You can manage your Azure Event Hubs destination through the Org Management API
+[Team ETL Pipeline](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
 
-A basic configuration would look as such:
+A basic configuration would look like this:
 
 ```json
 {
   "team_id": "TEAM_ID",
   "preferences": {
     "enabled": ["azure_amqp"],
-    "preferred": "azure_amqp",
+    "preferred": "azure_amqp"
   },
   "azure_amqp": {
     "connection_string": "Endpoint://...;...",
@@ -73,10 +74,10 @@ A basic configuration would look as such:
 
 ### Multiple Event Hubs
 
-You can [configure your Azure Event Hub destination](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
+You can [configure your Azure Event Hub destination](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
 to route certain events to designated Event Hubs that are _not_ the default Event Hub.
 
-You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`) . For every outbound event, 
+You can do so by declaring a list of Event Hub Matchers (JSON Path: `$.azure_amqp.event_hub_matchers`). For every outbound event, 
 Junction sends it to the first ever Event Hub which has a matching Event Type prefix, or the default Event Hub if none matches.
 
 ```json Example
@@ -107,7 +108,7 @@ Junction sends it to the first ever Event Hub which has a matching Event Type pr
 ### Azure Blob Storage
 
 
-You can [configure your Azure Event Hub destination](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
+You can [configure your Azure Event Hub destination](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines)
 to route certain events to an Azure Blob Storage container. This is useful if you have enabled the Provider Raw Data firehose, which may
 publish raw data events beyond the 1 MiB size limit of Azure Event Hub.
 
@@ -152,7 +153,7 @@ You can do so by declaring an Event Hub Matcher that targets a Blob Storage cont
 ```
 
 <Warning>
-Some polling-based providers can write 96 writes per day per user on certain event types, e.g., like `daily.data.activity.*` and
+Some polling-based providers can produce 96 writes per day per user on certain event types, e.g., `daily.data.activity.*` and
 `raw.fitbit.daily_activity_summary`. Azure Blob Storage typically charges based on volume and classes of operations, in addition
 to the retention cost.
 </Warning>

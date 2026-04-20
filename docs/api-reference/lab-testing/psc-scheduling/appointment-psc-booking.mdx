@@ -1,14 +1,26 @@
 ---
-openapi: "GET /v3/order/{order_id}/psc/appointment"
-title: "Get PSC Appointment"
+openapi: "POST /v3/order/{order_id}/psc/appointment/book"
+title: "Book PSC Appointment"
+description: "Create or submit order psc appointment book via the Junction API. Requires authentication with your team API key."
 ---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<Tip>
+This endpoint supports optional `idempotency_key` and Async Confirmation features. These features are currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#beta-features) for more info.
+</Tip>
 
 <RequestExample>
 ```bash cURL
-curl --request GET \
-     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment' \
+curl --request POST \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment/book' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '
+{
+    "booking_key": "foo123"
+}
+'
 ```
 
 ```python Python
@@ -20,31 +32,41 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get_psc_appointment(order_id="<order_id>")
+data = client.lab_tests.book_psc_appointment(order_id="<order_id>", booking_key="<booking_key>")
 ```
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { AppointmentBookingRequest } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getpscAppointment("<order_id>");
+const request: AppointmentBookingRequest = {
+    bookingKey: "<booking_key>",
+}
+const data = await client.labTests.bookPscAppointment("<order_id>", request);
 ```
 
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
+import com.vital.api.resources.labtests.requests.AppointmentBookingRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getpscAppointment("<order_id>");
+AppointmentBookingRequest request = AppointmentBookingRequest
+        .builder()
+        .bookingKey("<booking_key>")
+        .build();
+
+var data = vital.labTests().bookPscAppointment("<order_id>", request);
 ```
 
 ```go Go
@@ -61,7 +83,11 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetpscAppointment(context.TODO(), "<order_id>")
+request := &vital.AppointmentBookingRequest{
+    BookingKey: "<booking_key>",
+}
+
+response, err := client.LabTests.BookPscAppointment(context.TODO(), "<order_id>", request)
 if err != nil {
     return err
 }
@@ -87,14 +113,15 @@ fmt.Printf("Received data %s\n", response)
         "lng": -112.0772235,
         "lat": 33.4421912
     },
-    "start_at": "2023-05-17T20:00:00+00:00",
-    "end_at": "2023-05-17T22:00:00+00:00",
+    "start_at": "2023-05-15T16:00:00+00:00",
+    "end_at": "2023-05-15T18:00:00+00:00",
     "iana_timezone": "America/Phoenix",
     "type": "patient_service_center",
     "provider": "quest",
-    "status": "confirmed",
+    "status": "pending",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
-    "can_reschedule": true
+    "can_reschedule": true,
+    "external_id": "ABCDEF"
 }
 ```
 </ResponseExample>

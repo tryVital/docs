@@ -1,5 +1,6 @@
 ---
 title: SELECT clause
+description: "Use the SELECT clause in Junction Sense queries to choose table columns, apply aggregate functions, and retrieve group key columns."
 icon: hand-pointer
 ---
 
@@ -8,7 +9,7 @@ icon: hand-pointer
 Select a specific table column using a [Table Column expression](/sense/query-dsl/column-expressions).
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-The name of column being selected.
+The name of the column being selected.
 </Accordion>
 
 <CodeGroup>
@@ -18,7 +19,7 @@ import vitalx.aggregation as va
 va.select(va.Sleep.col("efficiency"))
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "sleep": "efficiency" }
@@ -35,7 +36,7 @@ Perform data analysis with in-built algorithms using value macro expressions:
 * [Sleep Analysis](/sense/query-dsl/sleep-analysis) value macro expressions
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-The name of the value macro, e.g., `sleep_score` for the Chronotype value macro.
+The name of the value macro, e.g., `chronotype` for the Chronotype value macro.
 </Accordion>
 
 <CodeGroup>
@@ -45,7 +46,7 @@ import vitalx.aggregation as va
 va.select(va.Sleep.chronotype())
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         { "value_macro": "chronotype" }
@@ -66,24 +67,24 @@ The result set is N aggregated values where N is the number of groups.
 <AccordionGroup>
 <Accordion title="Statistical functions" icon="chart-column" iconType="duotone" defaultOpen>
 
-| Aggregate function         | Python DSL      | JSON DSL
-| -------------------------- | --------------- | -----------------------------------------
-| Minimum                    | `$EXPR.min()`    | `{ "func": "min", "arg": $EXPR }`
-| Maximum                    | `$EXPR.max()`    | `{ "func": "max", "arg": $EXPR }`
-| Mean                       | `$EXPR.mean()`   | `{ "func": "mean", "arg": $EXPR }`
-| Median                     | `$EXPR.median()` | `{ "func": "median", "arg": $EXPR }`
-| Standard Deviation         | `$EXPR.stddev()` | `{ "func": "stddev", "arg": $EXPR }`
-| Count                      | `$EXPR.count()`  | `{ "func": "count", "arg": $EXPR }`
-| Oldest Value               | `$EXPR.oldest()` | `{ "func": "oldest", "arg": $EXPR }`
-| Newest Value               | `$EXPR.newest()` | `{ "func": "newest", "arg": $EXPR }`
+| Aggregate function         | Python DSL      | JSON DSL |
+| -------------------------- | --------------- | ----------------------------------------- |
+| Minimum                    | `$EXPR.min()`    | `{ "func": "min", "arg": $EXPR }` |
+| Maximum                    | `$EXPR.max()`    | `{ "func": "max", "arg": $EXPR }` |
+| Mean                       | `$EXPR.mean()`   | `{ "func": "mean", "arg": $EXPR }` |
+| Median                     | `$EXPR.median()` | `{ "func": "median", "arg": $EXPR }` |
+| Standard Deviation         | `$EXPR.stddev()` | `{ "func": "stddev", "arg": $EXPR }` |
+| Count                      | `$EXPR.count()`  | `{ "func": "count", "arg": $EXPR }` |
+| Oldest Value               | `$EXPR.oldest()` | `{ "func": "oldest", "arg": $EXPR }` |
+| Newest Value               | `$EXPR.newest()` | `{ "func": "newest", "arg": $EXPR }` |
 
 </Accordion>
 
 <Accordion title="Math functions" icon="sigma" iconType="duotone" defaultOpen>
 
-| Aggregate function         | Python DSL      | JSON DSL                                  
-| -------------------------- | --------------- | -----------------------------------------
-| Sum                        | `$EXPR.sum()`    | `{ "func": "sum", "arg": $EXPR }`
+| Aggregate function         | Python DSL      | JSON DSL |
+| -------------------------- | --------------- | ----------------------------------------- |
+| Sum                        | `$EXPR.sum()`    | `{ "func": "sum", "arg": $EXPR }` |
 
 </Accordion>
 
@@ -102,7 +103,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
         {
@@ -128,13 +129,13 @@ Select the primary datetime index of the table using the [Index Column expressio
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.Sleep.col("efficiency"))
+va.select(va.Sleep.index())
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
     "select": [
-        { "sleep": "efficiency" }
+        { "index": "sleep" }
     ]
 }
 ```
@@ -163,7 +164,7 @@ va.select(va.group_key("*"))
 va.select(va.group_key(2))
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 # Select all group key columns
 {
     "select": [

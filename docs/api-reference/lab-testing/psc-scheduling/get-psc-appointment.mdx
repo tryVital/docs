@@ -1,19 +1,15 @@
 ---
-openapi: "PATCH /v3/order/{order_id}/psc/appointment/cancel"
-title: "Cancel PSC Appointment"
+openapi: "GET /v3/order/{order_id}/psc/appointment"
+title: "Get PSC Appointment"
+description: "Retrieve order psc appointment via the Junction API. Requires authentication with your team API key."
 ---
 
 <RequestExample>
 ```bash cURL
-curl --request PATCH \
-     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment/cancel' \
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/psc/appointment' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
-     --data '
-{
-    "cancellation_reason_id": "7dfd7da5-ed6e-40bb-a7e4-c8003f0c10a9"
-}
-'
+     --header 'x-vital-api-key: {YOUR_KEY}'
 ```
 
 ```python Python
@@ -25,42 +21,31 @@ client = Vital(
   environment=VitalEnvironment.SANDBOX
 )
 
-data = client.lab_tests.get_psc_appointment_cancellation_reason();
+data = client.lab_tests.get_psc_appointment(order_id="<order_id>")
 ```
 
 ```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import {  AppointmentCancelRequest } from '@tryvital/vital-node/api';
 
 const client = new VitalClient({
     apiKey: '<my_api_key>',
     environment: VitalEnvironment.Sandbox,
 });
 
-const request: AppointmentCancelRequest = {
-    cancellationReasonId: "<reason_id>",
-}
-
-const data = await client.labTests.cancelPscAppointment("<order_id>", request);
+const data = await client.labTests.getpscAppointment("<order_id>");
 ```
 
 
 ```java Java
 import com.vital.api.Vital;
 import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.AppointmentCancelRequest;
 
 Vital vital = Vital.builder()
         .apiKey("YOUR_API_KEY")
         .environment(Environment.SANDBOX)
         .build();
 
-AppointmentCancelRequest request = AppointmentCancelRequest
-        .builder()
-        .cancellationReasonId("<reason_id")
-        .build();
-
-var data = vital.labTests().cancelPscAppointment("<order_id>", request);
+var data = vital.labTests().getpscAppointment("<order_id>");
 ```
 
 ```go Go
@@ -77,11 +62,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-request := &vital.AppointmentCancelRequest{
-    CancellationReasonId: "<cancellation_reason_id>",
-}
-
-response, err := client.LabTests.CancelPscAppointment(context.TODO(), "<order_id>", request)
+response, err := client.LabTests.GetpscAppointment(context.TODO(), "<order_id>")
 if err != nil {
     return err
 }
@@ -112,7 +93,7 @@ fmt.Printf("Received data %s\n", response)
     "iana_timezone": "America/Phoenix",
     "type": "patient_service_center",
     "provider": "quest",
-    "status": "cancelled",
+    "status": "confirmed",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
     "can_reschedule": true
 }

@@ -1,12 +1,13 @@
 ---
 title: "Getting Started"
+description: "Get started with the Junction Sense Python SDK for authentication, query construction, and integration with Polars and Pandas DataFrames."
 ---
 
 <Note>
-The [`vital` PyPI package](/home/libraries)  (Junction API Python SDK) provides typed bindings
-of the Junction API in Python that tracks our OpenAPI Schema.
+The [`vital` PyPI package](/home/libraries) (Junction API Python SDK) provides typed bindings
+of the Junction API in Python that track our OpenAPI Schema.
 
-Junction Sense Python SDK is a standalone product offering, separately from the `vital` PyPI package.
+Junction Sense Python SDK is a standalone product offering, separate from the `vital` PyPI package.
 </Note>
 
 **Junction Sense Python SDK** bridges Junction's data aggregation and intelligence capabilities with the
@@ -17,7 +18,7 @@ rich Python ecosystem for scientific computing and data analysis.
 <AccordionGroup>
 
 <Accordion title="Deployed Services" icon="server" defaultOpen>
-Use the same [Vital API Keys](/api-details/authentication#server-to-server) your system used to interact with Junction API.
+Use the same [Junction API Keys](/api-details/junction-api#authentication) your system uses to interact with the Junction API.
 
 To set the Junction API Key for the Junction Sense Python SDK, you can:
 * Pass the Junction API Key explicitly to the Junction Sense SDK entity's constructor (e.g., the Query Executor); or
@@ -78,7 +79,7 @@ poetry run vitalx-cli auth login
 </Step>
 
 <Step title="Sign in with your Junction Dashboard account">
-You would be prompted in your default web browser to sign-in to the [Junction Dashboard](https://app.junction.com/).
+You will be prompted in your default web browser to sign in to the [Junction Dashboard](https://app.junction.com/).
 You will then be asked to confirm the device authorization.
 
 <Frame>
@@ -86,8 +87,8 @@ You will then be asked to confirm the device authorization.
 </Frame>
 </Step>
 
-<Step title="Voila!">
-You have now signed-in. You can now use any Junction Sense SDK entity without a Junction API Key.
+<Step title="Voilà!">
+You have now signed in. You can now use any Junction Sense SDK entity without a Junction API Key.
 
 <Note>
 Your permanent session is stored at `~/.vitalx/`.
@@ -101,7 +102,7 @@ Your permanent session is stored at `~/.vitalx/`.
 ## Example
 
 [tryvital/vitalx-notebook](https://github.com/tryVital/vitalx-notebook) is a pre-configured Jupyter Notebook project
-with dependencies on Aggregation API and SDK Command Line Tool pre-configured.
+with dependencies on Aggregation API and SDK Command Line Tool.
 
 The notebook also includes an example to compute _Chronotypes_ using the Aggregation API.
 

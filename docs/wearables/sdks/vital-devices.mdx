@@ -1,13 +1,14 @@
 ---
 title: "Junction Devices SDK"
+description: "Use the Junction Devices SDK for Bluetooth-based device connectivity with required permission setup for iOS and Android projects."
 sidebarTitle: "Devices SDK"
 ---
 
 
 ## Prerequisites
 
-Your app project must declare the required permission usage. This applies equally to both native,
-Flutter and React Native app projects.
+Your app project must declare the required permission usage. This applies equally to native,
+Flutter, and React Native app projects.
 
 <AccordionGroup>
   <Accordion title="iOS projects">
@@ -33,7 +34,7 @@ Flutter and React Native app projects.
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30"/>
   ```
 
-  You will have to request the appropriate permissions at in your app before you can call the Junction Devices SDK.
+  You will have to request the appropriate permissions in your app before you can call the Junction Devices SDK.
   </Accordion>
 </AccordionGroup>
 
@@ -86,7 +87,7 @@ final deviceModel = deviceModels[0];
 
 ### Scanning for devices
 
-First you have to scan for one of the supported devices. 
+First, you have to scan for one of the supported devices.
 
 <CodeGroup>
 ```swift Native iOS
@@ -196,22 +197,22 @@ glucoseSamples = await deviceManager.readGlucoseMeterData(scannedDevice);
 ```
 </CodeGroup>
 
-After you have received samples depending on the type of device you might need to star scanning again to receive the
+After you have received samples, depending on the type of device, you might need to start scanning again to receive the
 next set of samples.
 
 ## Freestyle Libre 1
 
 <Warning>
   Readings taken with the SDK are not guaranteed to match the official Freestyle
-  Libre app. This mismatch happens due to the algorithm difference used by us,
-  compared to the official Freestyle Libre.
+  Libre app. This mismatch happens due to algorithm differences between our
+  implementation and the official Freestyle Libre.
 </Warning>
 
 We currently support Libre 1 sensors via NFC readings. Please make sure you add NFC capabilities in your app:
 
 <img src="/img/iOS/nfc_permission.png" />
 
-Also add the key `NFCReaderUsageDescription` in your info.plist. This key should explain why your app needs to use NFC.
+Also add the key `NFCReaderUsageDescription` in your Info.plist. This key should explain why your app needs to use NFC.
 
 To use the reader:
 
@@ -231,7 +232,7 @@ let reading = try await reader.read()
 import android.app.Activity
 import io.tryvital.vitaldevices.devices.Libre1Reader
 
-let currentActivity: Activity
+val currentActivity: Activity
 
 val reading = Libre1Reader.create(currentActivity).read()
 ```
@@ -239,7 +240,7 @@ val reading = Libre1Reader.create(currentActivity).read()
 ```typescript React Native
 import { VitalDevicesManager } from "@tryvital/vital-devices-react-native";
 
-let devicesManager: VitalDeviceManager
+let devicesManager: VitalDevicesManager
 
 let result = await devicesManager.readLibre1("reading", "errored", "completed")
 ```
@@ -253,8 +254,8 @@ let result = await devicesManager.readLibre1("reading", "errored", "completed")
 ## Upload device samples to Junction
 
 <Note>
-This automatic behaviour is available since Junction iOS 1.0.0, Junction Android 3.0.0, Junction Flutter SDK 4.0.0
-and Junction React Native 4.0.0.
+This automatic behavior is available since Junction iOS SDK 1.0.0, Junction Android SDK 3.0.0, Junction Flutter SDK 4.0.0
+and Junction React Native SDK 4.0.0.
 </Note>
 
 Junction Devices SDK automatically uploads any blood pressure and glucose samples discovered during

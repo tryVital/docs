@@ -1,6 +1,7 @@
 ---
 openapi: "PATCH /v2/user/{user_id}/info"
 title: Update User Demographics
+description: "Partially update user info via the Junction API. Requires authentication with your team API key."
 ---
 
 <Note>
@@ -29,7 +30,7 @@ curl --request PATCH \
 	  "second_line": null,
     "zip_code": "85004",
     "state": "AZ",
-    "city": "Phoenix",
+    "city": "Phoenix"
   }
 }
 '
@@ -52,7 +53,7 @@ curl --request PATCH \
 	  "second_line": null,
     "zip_code": "85004",
     "state": "AZ",
-    "city": "Phoenix",
+    "city": "Phoenix"
   }
 }
 ```

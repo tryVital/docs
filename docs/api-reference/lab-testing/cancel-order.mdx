@@ -1,4 +1,6 @@
 ---
+title: "Cancel order (legacy)"
+description: "Cancel an order via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v3/order/{order_id}/cancel"
 ---
 
@@ -8,7 +10,7 @@ openapi: "POST /v3/order/{order_id}/cancel"
 from vital import Client
 
 client = Client(
-  api_key=<API_KEY>,
+  api_key="<API_KEY>",
   environment="sandbox",
   region="us"
 )
@@ -596,6 +598,7 @@ fmt.Printf("Received data %s\n", response)
                   "collecting_sample.testkit.problem_in_transit_customer",
                   "collecting_sample.testkit.problem_in_transit_lab",
                   "sample_with_lab.testkit.delivered_to_lab",
+                  "sample_with_lab.testkit.lab_processing_blocked",
                   "completed.testkit.completed",
                   "failed.testkit.failure_to_deliver_to_customer",
                   "failed.testkit.failure_to_deliver_to_lab",

@@ -1,5 +1,6 @@
 ---
 title: "RabbitMQ"
+description: "Stream Junction events to RabbitMQ as an ETL pipeline destination, with details on message headers, routing keys, and compression behavior."
 icon: "rabbit"
 ---
 
@@ -16,17 +17,17 @@ Each event is published with these RabbitMQ message custom headers:
 | Key | Value |
 | --- | --- |
 | Routing Key | Junction event type, e.g., `daily.data.activity.created` |
-| `Content-Type` | application/json : UTF8 JSON document |
+| `Content-Type` | application/json: UTF-8 JSON document |
 | `Content-Encoding` | gzip: The blob is compressed by gzip. null/absent: The blob is uncompressed. |
-| Data | Encoded JSON blob. This may or may not be compressed — see blob_codec. |
+| Data | Encoded JSON blob. This may or may not be compressed — see `Content-Encoding`. |
 
 <Info>
-Payload smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
+Payloads smaller than 1KiB would not be compressed. You must check `Content-Encoding` to identify if
 decompression of the message payload blob is necessary.
 </Info>
 
 <Info>
-At this time, Junction publishes exclusively JSON blobs (`blob_type == json`).
+At this time, Junction publishes exclusively JSON blobs (`Content-Type == application/json`).
 
 Having said that, you are strongly encouraged to check for and drop any events with unrecognized `Content-Type` and `Content-Encoding`.
 </Info>
@@ -48,16 +49,16 @@ Please get in touch if these need to be configured differently for your RabbitMQ
 <OrgManagementAPI />
 
 You can manage your RabbitMQ destination through the Org Management API
-[Team ETL Pipeline](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
+[Team ETL Pipeline](/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines) endpoints.
 
-A basic configuration would look as such:
+A basic configuration would look like this:
 
 ```json
 {
   "team_id": "TEAM_ID",
   "preferences": {
     "enabled": ["rabbitmq"],
-    "preferred": "rabbitmq",
+    "preferred": "rabbitmq"
   },
   "rabbitmq": {
       "uri": "amqps://...",

@@ -1,6 +1,7 @@
 ---
 openapi: "GET /v2/user/{user_id}/info/latest"
 title: Get User Demographics
+description: "Retrieve user info latest via the Junction API. Requires authentication with your team API key."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
@@ -94,7 +95,7 @@ fmt.Printf("Received data %s\n", response)
 	  "second_line": null,
     "zip_code": "85004",
     "state": "AZ",
-    "city": "Phoenix",
+    "city": "Phoenix"
   }
 }
 ```

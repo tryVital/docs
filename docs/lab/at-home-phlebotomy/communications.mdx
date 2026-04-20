@@ -1,5 +1,6 @@
 ---
 title: "Communications"
+description: "Configure SMS and email notifications sent to patients during each status change in the at-home phlebotomy order lifecycle."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
@@ -13,7 +14,7 @@ Customers have the following options when setting this up:
 
 Each option has a different set of content and status changes, depending on what triggered them.
 
-<Info>You can enable or disable SMS and Email communications individually through the [**Junction Dashboard**](http://app.junction.com/), under the Team Settings section.</Info>
+<Info>You can enable or disable SMS and Email communications individually through the [**Junction Dashboard**](https://app.junction.com/), under the Team Settings section.</Info>
 
 ## Default Communications
 
@@ -28,7 +29,7 @@ A table of the **Order Status** and **default SMS** is provided below:
 | `appointment_cancelled` | _"Hey, your at-home-phlebotomy appointment at **date** for the **team_name** has been cancelled. You can rebook using the following link **booking_link**."_ |
 | `draw_completed` | _"Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing."_ |
 | `completed` | _"The lab has finished processing your blood sample, your results should be ready soon :)"_ |
-| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support."_ |
+| `cancelled` | _"Hey, your order for the **team_name** at-home-phlebotomy appointment has been cancelled. If this is by accident, please contact support."_ |
 
 <Info>SMS Texts are customizable, and can be enabled or disabled individually.</Info>
 
@@ -42,7 +43,7 @@ For emails, the following table describes what information each email contains f
 | `appointment_scheduled` | An email confirming the appointment date and time will be sent to the patient, with the possibility of rescheduling or cancelling the appointment. |
 | `appointment_cancelled` | An email confirming the cancellation of the appointment is sent, providing the possibility of scheduling a new appointment. |
 
-<Info>Emails can be white labelled and sent from your own domain.</Info>
+<Info>Emails can be white-labeled and sent from your own domain.</Info>
 
 
 ## Scheduling Appointments Before A Requisition Has Been Created
@@ -50,7 +51,7 @@ For emails, the following table describes what information each email contains f
 <FeatureBeta />
 
 If the ability to [`schedule appointments before a requisition has been created`](/lab/at-home-phlebotomy/order-appointment-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, all appointment-related messages
-will be triggered by the **appointment** status, not the **order** status. All non appointment-related messages will be triggered by the **order** status e.g.
+will be triggered by the **appointment** status, not the **order** status. All non-appointment-related messages will be triggered by the **order** status e.g.
 `requisition_created`, `draw_completed` etc. (see above section).
 
 ### SMS Messages

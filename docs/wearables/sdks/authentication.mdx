@@ -1,15 +1,16 @@
 ---
 title: "Mobile SDK Authentication"
+description: "Authenticate Junction Mobile SDKs using Sign-In Tokens that give each app installation scoped API access as an individual user."
 sidebarTitle: "Authentication"
 ---
 
 ## Junction Sign-In Token
 
-In the _Vital Sign-In Token_ scheme, each mobile app installation signs in with Junction Mobile SDK
+In the _Junction Sign-In Token_ scheme, each mobile app installation signs in with Junction Mobile SDK
 as an individual user in your Team. The app installation would be granted only Junction API access
 scoped to that specific user.
 
-Instead of hardcoding a [Junction Team API Key](#vital-api-keys), your app would request your own backend to generate
+Instead of hardcoding a [Junction Team API Key](#junction-team-api-keys), your app would request your own backend to generate
 a **Junction Sign-In Token** for the user, through your own API authentication and authorization systems.
 
 In this model, your Junction Team API Keys are kept strictly as a server-side secret.
@@ -39,20 +40,20 @@ There are some known circumstances where you would have to sign in the user agai
 * The SDK automatically signed out, because it had detected the deletion of the Junction User.
 
 <Note>
-It is unnecessary to request and sign-in with the Junction Sign-In Token every time your app launches.
+It is unnecessary to request and sign in with the Junction Sign-In Token every time your app launches.
 </Note>
 
 </Accordion>
 
 <Accordion title="Integrating into your app's user lifecycle" icon="arrows-spin" iconType="sharp-solid" defaultOpen>
 
-You should sign-in and sign-out of the Junction Mobile SDK as an integral part of your app's user lifecycle:
+You should sign in and sign out of the Junction Mobile SDK as an integral part of your app's user lifecycle:
 
 1. When the user signs in to your app, you would request the Junction Sign-In Token from your backend, and then sign in with the Junction Mobile SDK.
 
 2. When the user signs out from your app, you would also sign out from the Junction Mobile SDK.
 
-Junction Mobile SDK persists the signed-in Junction User — as well as any settings and sync state — across app relaunches and device reboot. 
+Junction Mobile SDK persists the signed-in Junction User — as well as any settings and sync state — across app relaunches and device reboots.
 
 </Accordion>
 
@@ -72,7 +73,7 @@ You can achieve this through the [Core SDK](/wearables/sdks/vital-core#core-sdk-
 
 1. Query the [Core SDK](/wearables/sdks/vital-core#core-sdk-status) Status and the Current User ID; 
 2. Compare these against your app's user state; and
-3. Only if a discrepancy is detected, perform a Junction SDK sign-in or sign-out in accordance to the discrepancy.
+3. Only if a discrepancy is detected, perform a Junction SDK sign-in or sign-out in accordance with the discrepancy.
 
 You would typically schedule this as an asynchronous task that spawns when your application process launches.
 
@@ -139,7 +140,7 @@ to exchange for the token secrets it needs.
     Once your user has successfully authenticated, your app is issued with token secrets for accessing your backend API.
     Your app stores these token secrets securely.
     
-    It then makes some API requests to your backend API, in order to gather all information required to setup your app
+    It then makes some API requests to your backend API, in order to gather all information required to set up your app
     into an authenticated state.
 
     Among these API requests, one would be requesting your backend API to issue a Junction Sign-In Token for your authenticated user.
@@ -156,15 +157,15 @@ to exchange for the token secrets it needs.
 
     Your backend API receives and validates the token issuance request. Once validated, your backend service:
     
-    * Look up the Junction User associated with this authenticated user;
+    * Looks up the Junction User associated with this authenticated user;
 
     * If one does not yet exist, call the [Create User](/api-reference/user/create-user) endpoint to create a Junction User; and
 
     * Call the [Create Sign-In Token](/api-reference/user/create-sign-in-token) endpoint to obtain a Junction Sign-In Token for
-      this Junction user.
+      this Junction User.
 
     <Note>
-    Only this step would use a [Junction Team API Key](/api-details/authentication). Because this step happens in your
+    Only this step would use a [Junction Team API Key](/api-details/junction-api#authentication). Because this step happens in your
     backend service, this enables you to keep the Junction Team API Key strictly as a server-side secret.
     </Note>
 
@@ -236,11 +237,11 @@ to exchange for the token secrets it needs.
 
       const response: MyAPIResponse
 
-      do {
+      try {
         await VitalCore.signIn(response.signInToken)
 
         console.log("Signed in with Junction successfully")
-      } catch let error {
+      } catch (error) {
         console.error("Error signing in with Junction", error)
       }
       ```
@@ -253,9 +254,9 @@ to exchange for the token secrets it needs.
       try {
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Junction successfully")
+        Fimber.i("Signed in with Junction successfully")
       } catch (error) {
-        Fimble.e("Error signing in with Junction", error)
+        Fimber.e("Error signing in with Junction", error)
       }
       ```
     </CodeGroup>
@@ -268,7 +269,7 @@ to exchange for the token secrets it needs.
     </Warning>
 
   </Step>
-  <Step title="Voila!">
+  <Step title="Voilà!">
     The Junction Mobile SDK is now signed-in with the Junction User associated with your authenticated user.
     You can now proceed to use all the Junction SDK features.
   </Step>
@@ -281,7 +282,7 @@ to exchange for the token secrets it needs.
 API Key is **discouraged** for production mobile apps, since it would be distributed as cleartext.
 API Key support is intended only for customer early evaluation in Sandbox.
 
-Use [Junction Sign-In Token](#vital-sign-in-token) whenever possible.
+Use [Junction Sign-In Token](#junction-sign-in-token) whenever possible.
 </Warning>
 
 Junction Mobile SDK can be configured to authenticate using API Key alongside a target user ID.
@@ -341,7 +342,7 @@ Junction Mobile SDK can be configured to authenticate using API Key alongside a 
 <Info>
 When running on iOS, the SDK must be **explicitly** configured before other SDK methods can be invoked.
 
-Alternatively, follow the [Apple HealthKit guide](https://docs.tryvital.io/wearables/guides/apple-healthkit#2-integrate-with-ios-system-callbacks)
+Alternatively, follow the [Apple HealthKit guide](/wearables/guides/apple-healthkit#setting-up-apple-healthkit-background-delivery)
 to enable SDK Automatic Configuration during app launch. This auto-configures the SDK using the last known configuration you supplied — including but
 not limited to the API Key, the environment and the target User ID. Not only is this a prerequisite to enable HealthKit Background Delivery, this
 allows you also to only call `configure(...)` and `setUserId(...)` once to "sign-in" the user persistently when using the Junction Team API Key scheme.
@@ -384,7 +385,7 @@ This erases any persistent user session and configuration stored by the Junction
 ## Migrate from Junction Team API Keys to Junction Sign-In Tokens
 
 <Warning>
-Always use [Junction Sign-In Token](#vital-sign-in-tokens) for your production mobile apps.
+Always use [Junction Sign-In Token](#junction-sign-in-token) for your production mobile apps.
 </Warning>
 
 An existing app installation signed-in with Junction Team API Key + User ID can be seamlessly migrated to
@@ -417,8 +418,6 @@ It is as simple as performing a one-off migration logic during app launch:
     do {
       let response = await callBackend(...)
       try await VitalClient.signIn(withToken: response.signInToken)
-    }
-
       print("Signed in with Junction successfully")
     } catch let error {
       print("Error signing in with Junction", error)
@@ -453,12 +452,12 @@ It is as simple as performing a one-off migration logic during app launch:
   const status = await VitalCore.status();
 
   if (status.includes("useApiKey")) {
-    do {
+    try {
         const response = await callBackend(...);
         await VitalCore.signIn(response.signInToken);
 
         console.log("Signed in with Junction successfully");
-    } catch let error {
+    } catch (error) {
         console.error("Error signing in with Junction", error);
     }
   }
@@ -474,11 +473,10 @@ It is as simple as performing a one-off migration logic during app launch:
         MyAPIResponse response = await callBackend(...);
         await vital_core.signIn(response.signInToken)
 
-        Fimble.i("Signed in with Junction successfully")
+        Fimber.i("Signed in with Junction successfully")
     } catch (error) {
-        Fimble.e("Error signing in with Junction", error)
+        Fimber.e("Error signing in with Junction", error)
     }
   }
   ```
 </CodeGroup>
-		

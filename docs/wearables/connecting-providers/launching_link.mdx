@@ -1,5 +1,6 @@
 ---
 title: "Launching Link"
+description: "Launch Junction Link by creating a Link Token on your backend and using it to open the provider connection flow in your application."
 ---
 
 import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
@@ -12,7 +13,7 @@ import LinkSDKProvider from '/snippets/link-sdk-provider.mdx';
 Create a Junction Link Token for a user using the [Create Link Token](/api-reference/link/generate-link-token) endpoint.
 
 <Note>
-Junction Link Token expires 60 minutes after its creation.
+A Junction Link Token expires 60 minutes after its creation.
 </Note>
 
 <br />
@@ -100,7 +101,7 @@ fmt.Printf("Received data %s\n", response)
 curl --request POST \
      --url {{BASE_URL}}/v2/link/token \
      --header 'Accept: application/json' \
-     --header 'Content-Type: application/json'
+     --header 'Content-Type: application/json' \
      --header 'x-vital-api-key: <API-KEY>'
 ```
 
@@ -109,7 +110,7 @@ curl --request POST \
 </Step>
 
 <Step number="2" title="Your Frontend">
-Use the Link Token to [launch the Link Widget](/wearables/vital-link/link_flow) on your frontend.
+Use the Link Token to [launch the Link Widget](/wearables/connecting-providers/link_flow) on your frontend.
 
 <img src="/img/link_specific.png" width={"60%"} />{" "}
 
@@ -134,7 +135,7 @@ based on the Link flow outcome:
 | Flow state | Query parameters |
 | ---------- | ---------------- |
 | Success    | `state=success`  |
-| Error      | See [Link Errors](https://docs.tryvital.io/wearables/connecting-providers/errors). |
+| Error      | See [Link Errors](/wearables/connecting-providers/errors). |
 
 </Accordion>
 <Accordion title="Option 2: Using the `useVitalLink` React hook (`@tryvital/vital-link`)" icon="react" iconType="sharp-solid">

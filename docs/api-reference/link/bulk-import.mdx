@@ -1,5 +1,6 @@
 ---
 title: "Bulk Import"
+description: "Create or submit link bulk import via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/link/bulk_import"
 ---
 
@@ -11,24 +12,24 @@ Import existing provider connections to your [Bring Your Own OAuth](/wearables/c
 
 Before migrating any connection through this endpoint, you must first
 [configure your BYOO app credential](/wearables/connecting-providers/bring-your-own-oauth/overview#setting-up-your-oauth-credentials) for the data provider
-on your Vital Team.
+on your Junction Team.
 
 
 Note that these connections cannot be migrated:
 
-1. Any connection that is bound to an OAuth application credential not in your possession 
+1. Any connection that is bound to an OAuth application credential not in your possession.
 
-2. Any connection that is not bound to the OAuth application credential set on your Vital Team.
+2. Any connection that is not bound to the OAuth application credential set on your Junction Team.
 
 ### Asynchronous execution
 
 The Bulk Import endpoint enqueues all connections you submitted to a persistent background operation. It then responds
-*202 Created* immediately afterwards.
+*202 Accepted* immediately afterwards.
 
 You can inspect the status of the resulting background operation through the [List Bulk Ops](/api-reference/link/list-bulk-ops) endpoint.
 
-Optionally, you may opt into the `wait_for_completion` mode, which would respond 200 OK only if the operation does complete within 20 seconds.
-Otherwise, the endpoint responds 202 Created.
+Optionally, you may opt into the `wait_for_completion` mode, which would respond with 200 OK only if the operation does complete within 20 seconds.
+Otherwise, the endpoint responds 202 Accepted.
 
 <Note>
 You can submit any number of — or even all — connections through the Bulk Import API within a short period of time. Enqueuing is fast and

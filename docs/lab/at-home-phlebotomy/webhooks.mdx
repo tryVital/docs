@@ -1,8 +1,9 @@
 ---
 title: "Webhooks"
+description: "Reference for webhook events triggered during at-home phlebotomy order and appointment lifecycle changes, with example payloads."
 ---
 
-The following webhook events are of interest, when placing an At-Home Phlebotomy order. Those are
+The following webhook events are of interest when placing an At-Home Phlebotomy order. These are
 described in detail in the following sections.
 
 ## Order webhook events
@@ -67,7 +68,7 @@ The webhook payload body will have the following information if the Order is in 
   ],
   "origin": "initial",
   "order_transaction": {
-    "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+    "id": "6424dd45-ee1a-49c6-ad0c-5769b8e03fc1",
     "status": "active",
     "orders": [
       {
@@ -106,7 +107,7 @@ The webhook payload body may have the following information if the appointment i
     "id": "06c2c65b-74a0-4f25-a4a9-44f796296355",
     "user_id": "acf79a82-0c2c-4ca0-998b-378931793905",
     "order_id": "1ed9c8d7-e1b4-4d61-8123-0f99de5ae99a",
-    "order_transaction_id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+    "order_transaction_id": "6424dd45-ee1a-49c6-ad0c-5769b8e03fc1",
     "address": {
       "first_line": "123 Main St.",
       "second_line": "Apt. 208",
@@ -145,7 +146,7 @@ The webhook payload body may have the following information if the appointment i
           "is_reschedule": true
         },
         "status": "scheduled"
-      },
+      }
     ]
   }
 }

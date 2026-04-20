@@ -1,6 +1,7 @@
 ---
 openapi: "GET /v3/order/psc/appointment/cancellation-reasons"
 title: "PSC Appointment Cancellation Reasons"
+description: "Retrieve order psc appointment cancellation-reasons via the Junction API. Requires authentication with your team API key."
 ---
 
 <RequestExample>
@@ -9,7 +10,6 @@ curl --request GET \
      --url '{{BASE_URL}}/v3/order/psc/appointment/cancellation-reasons' \
      --header 'accept: application/json' \
      --header 'x-vital-api-key: {YOUR_KEY}'
-'
 ```
 
 ```python Python
@@ -78,7 +78,7 @@ fmt.Printf("Received data %s\n", response)
       "id": "5c0257ef-6fea-4a22-b20a-3ddab573d5c9",
       "name": "Other",
       "is_refundable": true
-   },
+   }
 ]
 ```
 </ResponseExample>

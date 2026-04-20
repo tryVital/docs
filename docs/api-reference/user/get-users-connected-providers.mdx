@@ -1,5 +1,6 @@
 ---
 title: "Get User Connections"
+description: "Retrieve user providers via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v2/user/providers/{user_id}"
 ---
 
@@ -9,7 +10,7 @@ openapi: "GET /v2/user/providers/{user_id}"
 curl --request GET \
      --url {{BASE_URL}}/v2/user/providers/{user_id} \
      --header 'Accept: application/json' \
-     --header 'x-vital-api-key: API_KEY'
+     --header 'x-vital-api-key: <API_KEY>'
 ```
 
 

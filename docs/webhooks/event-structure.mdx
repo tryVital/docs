@@ -1,5 +1,6 @@
 ---
 title: "Event Structure"
+description: "Reference for the standard webhook event payload structure including event_type, data, team_id, user_id, and client_user_id fields."
 ---
 
 import SummaryID from '/snippets/data/summary-id.mdx';
@@ -11,7 +12,7 @@ All our webhook events have the following standard structure:
 * A top-level `data` field containing the event-specific payload.
 * A set of top-level fields describing the event subject:
   * `team_id`: Your Junction Team ID.
-  * `user_id` and `client_user_id`: The unique Junction User ID.
+  * `user_id`: The unique Junction User ID.
   * `client_user_id`: Your application user reference you declared for [the Junction User](/api-reference/user/create-user).
 
 Schemas and examples are available through [the Event Catalog tab in the Webhooks section of our Web app](https://app.junction.com).
@@ -51,7 +52,7 @@ Schemas and examples are available through [the Event Catalog tab in the Webhook
 Wearable data events have the following extended standard structure:
 
 * An `event_type` field for differentiating the payload contained in the data field.
-* A `data` field, which comprises of:
+* A `data` field, which comprises:
    * The UUID of the Junction user for which this event is intended — note that this is not the `client_user_id` of the Junction user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
       * `name`: The human-readable name of the source
@@ -154,7 +155,7 @@ The samples are made available under an inner `data` field under the top-level `
 
 <Info>While most timeseries data are immutable, there have been exceptions of some sources aggregating some data types using time bucketing,
 and some may even send updates ASAP on time buckets that have incomplete data. For example, activity timeseries data from Apple HealthKit
-(integration in production) and Garmin (integration planned) do exhibit such behaviour.<br /><br />These exceptions are the rationale behind the recommended deduplication semantic as stated above.</Info>
+(integration in production) and Garmin (integration planned) do exhibit such behavior.<br /><br />These exceptions are the rationale behind the recommended deduplication semantic as stated above.</Info>
 
 <CodeGroup>
 ```json Timeseries data event structure
@@ -246,12 +247,12 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 
 ### Workout Streams
 
-While Workout Streams are classified as a timeseries type, it contains a huge amount of timeseries data
+While Workout Streams are classified as a timeseries type, they contain a huge amount of timeseries data,
 which cannot be delivered by our webhook message transport.
 
-So events for Webhook Streams are shallow, with only some minimal metadata about the workout. Successful
+So events for Workout Streams are shallow, with only some minimal metadata about the workout. Successful
 reception of the event indicates that the data are available to be read via our REST API,
-e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
+e.g., [the Workout Stream endpoint](/api-reference/data/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
 
 ```json Workout Stream created
 {
@@ -263,7 +264,7 @@ e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2
       "name": "Other",
       "slug": "other"
     },
-    "workout_id": "fdc70dd0-8cc8-4ec8-8b80-121fd9a3302a"
+    "workout_id": "fdc70dd0-8cc8-4ec8-8b80-121fd9a3302a",
 
     # Common wearable data event fields
     "source": {
@@ -271,7 +272,7 @@ e.g., [the Workout Stream endpoint](/api-reference/workouts/get-stream) `GET /v2
       "name": "Fitbit",
       "slug": "fitbit"
     },
-    "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03",
+    "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03"
   },
   "event_type": "daily.data.workout_stream.created",
   "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",

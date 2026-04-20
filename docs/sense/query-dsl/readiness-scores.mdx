@@ -1,6 +1,6 @@
 ---
 title: Readiness Scores
-description: Daily recovery, stress, and strain scores
+description: "Query daily recovery, stress, and strain scores from connected wearable providers using Junction Sense readiness score expressions."
 icon: bed
 ---
 
@@ -112,7 +112,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
     { "derived_readiness": "date" },
@@ -143,7 +143,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
     { "group_key": "*" },
@@ -177,7 +177,7 @@ va.select(
 )
 ```
 
-```python JSON DSL
+```jsonc JSON DSL
 {
   "select": [
     { "derived_readiness": "date" },

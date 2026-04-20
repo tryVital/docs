@@ -1,5 +1,6 @@
 ---
 title: "Resources"
+description: "Understand the two wearable data categories in Junction: Summaries for daily aggregates and Timeseries for granular time-stamped measurements."
 ---
 
 ## Overview
@@ -9,11 +10,11 @@ There are two broad resource categories provided by Junction:
 * A **Summary** type is a summarization of a specific calendar day or a session.
 * A **Timeseries** type is a time-ordered collection of data samples.
 
-There is no relation in resource availability among these two categories. Some providers do offer both,
+There is no relation in resource availability between these two categories. Some providers do offer both,
 while some providers offer only one category. For example:
 
 * Fitbit provides daily activity summaries, as well as **some** high-frequency activity timeseries data.
-* Oura provides only daily activity summary, without any complementary high-frequency activity timeseries data.
+* Oura provides only a daily activity summary, without any complementary high-frequency activity timeseries data.
 
 There is also no strict relation between a field in a _Summary_ type and a _Timeseries_ type.
 For example:
@@ -44,13 +45,13 @@ Each value is associated with a single point in time.
 
 ### Interval Timeseries types
 
-Each value is associated with a half-open time interval (`[start, end[`).
+Each value is associated with a half-open time interval (`[start, end)`).
 
 | Category          | Resources |
 | ----------------- | --------- |
 | Activity          | `calories_active`, `calories_basal`, `distance`, `floors_climbed`, `steps`, `workout_duration`, `fall`, `wheelchair_push`, `stand_duration`, `stand_hour` |
 | Body              | `body_temperature`, `body_temperature_delta`, `insulin_injection`, `waist_circumference`, `body_mass_index`, `lean_body_mass`, `basal_body_temperature` |
-| Vitals            | `afib_burden`, `heart_rate_alert`, `forced_expiratory_volume_1`, `forced_vital_capacity`, `peak_expiratory_flow_rate`,  `inhaler_usage`, `heart_rate_recovery_one_minute` |
+| Vitals            | `afib_burden`, `heart_rate_alert`, `forced_expiratory_volume_1`, `forced_vital_capacity`, `peak_expiratory_flow_rate`, `inhaler_usage`, `heart_rate_recovery_one_minute` |
 | Cardiorespiratory | `vo2_max` |
 | Nutrition         | `carbohydrates`, `caffeine`, `water` |
 | Wellness          | `mindfulness_minutes`, `sleep_apnea_alert`, `sleep_breathing_disturbance`, `uv_exposure`, `daylight_exposure`, `handwashing` |
@@ -62,7 +63,7 @@ Each value is associated with a half-open time interval (`[start, end[`).
 Junction records and forwards timeseries data from the data provider, without any upsampling or downsampling applied.
 Even within the same data provider, these data may come from different devices or data sources with varying sampling rates.
 
-Because of this, you should not make assumptions of any particular timeseries resource having a fixed sampling rate. 
+Because of this, you should not make assumptions about any particular timeseries resource having a fixed sampling rate. 
 
 For technical design and capacity planning purposes, you may model after the following three categories of timeseries resources:
 
@@ -74,7 +75,7 @@ Peak rate                  | Example Scenario
 -------------------------- | ------------------------------
 1 sample every 3 seconds   | Apple Watch workouts
 1 sample every 15 seconds  | Garmin
-1 sample every 1-15 minute | Apple Watch, Fitbit
+1 sample every 1-15 minutes | Apple Watch, Fitbit
 
 
 Resources that fall into this category:
@@ -85,7 +86,7 @@ Resource | Events | Notable Providers
 `calories_active` | `daily.data.calories_active.*` | Apple, Fitbit, Garmin
 
 
-### High frequency Timeseries
+### High Frequency Timeseries
 
 Minute-level peak sampling rate; typically 100s samples per day.
 
@@ -160,7 +161,7 @@ Summary resources can be fetched from our `/summary/<resource>/<user_id>` API, w
 
 </Tip>
 
-For example, `Workouts` is made up of fields specific to an workout, like calories, distance and duration. When you make a request to `/summary/workouts/<user_id>` you get the following fields:
+For example, `Workouts` is made up of fields specific to a workout, like calories, distance and duration. When you make a request to `/summary/workouts/<user_id>` you get the following fields:
 
 ```json
 {
@@ -208,10 +209,11 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
         "logo": "https://storage.googleapis.com/vital-assets/garmin.png"
       }
     }
+  ]
 }
 ```
 
-`Heartrate` on the other hand, is a timeseries resources. You can fetch it via `timeseries/<user_id>/heartrate` and looks like this:
+`Heartrate` on the other hand, is a timeseries resource. You can fetch it via `timeseries/<user_id>/heartrate` and it looks like this:
 
 ```json
 [
@@ -253,22 +255,22 @@ For example, `Workouts` is made up of fields specific to an workout, like calori
 ]
 ```
 
-Different providers (e.g. Garmin), have different resources available. As an example, Garmin doesn't have `Glucose` as a resource.
+Different providers (e.g., Garmin) have different resources available. As an example, Garmin doesn't have `Glucose` as a resource.
 
 
 ## Fields by Provider
 
-Resources alone are not the whole story. Depending on the provider, a field might not be available. For example both Garmin and Strava provide `Workouts`, yet the former doesn't have `ele_high` nor `ele_low`.
+Resources alone are not the whole story. Depending on the provider, a field might not be available. For example, both Garmin and Strava provide `Workouts`, yet the former doesn't have `elev_high` or `elev_low`.
 
 <Note>
 
-Providers mark with `*` means that Junction calculates the field's value. In some cases, they might came as `null`, since we weren't able to make the calculation.
+Providers marked with `*` mean that Junction calculates the field's value. In some cases, they might come as `null`, since we weren't able to make the calculation.
 
 </Note>
 
 <Warning>
 
-Even if a field is available for a provider, it doesn't mean it's available. For example, Fitbit is capable of generating HRV data. However HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
+Even if a field is listed for a provider, it doesn't mean it will always contain data. For example, Fitbit is capable of generating HRV data. However, HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
 
 </Warning>
 

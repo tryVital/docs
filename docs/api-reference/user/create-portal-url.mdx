@@ -1,5 +1,6 @@
 ---
 title: Create Portal URL
+description: "Create a Portal URL for a user via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/user/{user_id}/create_portal_url"
 ---
 
@@ -9,7 +10,7 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 Create a URL to Junction User Portal pre-authorized to a particular User.
 
-Junction User Portal requires demographics having been specified for the User:
+Junction User Portal requires that demographics have been specified for the User:
 
 * Use the [Get User Demographics](/api-reference/user/get-info-latest) endpoint to review currently set demographics;
 * Use the [Update User Demographics](/api-reference/user/upsert-info) endpoint to update the user's demographics.
@@ -20,7 +21,7 @@ If you attempt to create a Portal URL for a user without demographics, you will 
 
 <RequestExample>
 
-```cURL
+```bash cURL
 curl --request POST \
      --url {{BASE_URL}}/v2/user/{{USER_ID}}/create_portal_url \
      --header 'Accept: application/json' \
@@ -29,7 +30,7 @@ curl --request POST \
      --data '{"context":"launch"}'
 ```
 
-```python Node
+```javascript Node
 import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
 
 const client = new VitalClient({
@@ -42,7 +43,7 @@ const data = await client.user.createPortalUrl(
 );
 ```
 
-```javascript Python
+```python Python
 from vital.client import Vital
 from vital.environment import VitalEnvironment
 from vital.user import CreateUserPortalUrlBodyContext

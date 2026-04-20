@@ -1,11 +1,12 @@
 ---
 title: "Webhooks"
+description: "Reference for webhook events triggered during on-site collection order lifecycle changes, with example payload structures."
 ---
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-The following webhook events are of interest, when placing an On-site collection. Those are
+The following webhook events are of interest when placing an On-site collection order. These are
 described in detail in the following sections.
 
 ## Order webhook events
@@ -62,9 +63,9 @@ The webhook payload body will have the following information if the Order is in 
       "status": "received.on_site_collection.requisition_created"
     },
     {
-      "id": 33,
+      "id": 3,
       "created_at": "2022-01-03T00:00:00Z",
-      "status": "sample_with_lab.on_site_collection.draw_completed"
+      "status": "collecting_sample.on_site_collection.draw_completed"
     },
     {
       "id": 4,
@@ -79,7 +80,7 @@ The webhook payload body will have the following information if the Order is in 
   ],
   "origin": "initial",
   "order_transaction": {
-    "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+    "id": "6424dd45-ee1a-49c6-ad0c-5769b8e03fc1",
     "status": "completed",
     "orders": [
       {

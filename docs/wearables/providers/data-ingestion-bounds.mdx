@@ -1,31 +1,32 @@
 ---
 title: "Data Ingestion Bounds"
+description: "Set per-user data ingestion start and end dates to control the historical pull range and automatically pause connections after expiry."
 ---
 
 ## Overview
 
 By default, Junction:
 
-* pulls historical data as far back as indicated by the [pull preferences](/wearables/providers/introduction#customizing-historical-data-pull-range)
-  you specified (if any), or the [default historical pull range](/wearables/providers/introduction#historical-data-pull-range).
+* pulls historical data as far back as indicated by the [pull preferences](/wearables/providers/historical-data-pull-range#customizing-historical-data-pull-range)
+  you specified (if any), or the [default historical pull range](/wearables/providers/historical-data-pull-range).
 
 * accepts **all** new and changed data discovered through polling, incoming provider webhooks and Junction Mobile SDK integrations.
 
-If you need to impose a date bounds on the data being collected, you can set **data ingestion bounds** on a per-user basis:
+If you need to impose date bounds on the data being collected, you can set **data ingestion bounds** on a per-user basis:
 
-* The data ingestion bounds restricts the historical pull range of any new connections of the user.
+* The data ingestion bounds restrict the historical pull range of any new connections of the user.
 
-* The data ingestion bounds restricts data ingestion from any connections of the user — out of bound data are dropped.
+* The data ingestion bounds restrict data ingestion from any connections of the user — out-of-bounds data are dropped.
 
 * When the user ingestion end date is reached, a 7-day late delivery catchment period starts. Once the catchment
   period expires, all connections of the user are automatically de-registered and marked as _paused_.
 
 <Note>
-Because _dates_ are in floating time, you should expect an error margin of ±1 days on ingestion bound enforcement.
+Because _dates_ are in floating time, you should expect an error margin of ±1 day on ingestion bound enforcement.
 If you cannot tolerate an error margin, offset the user data ingestion bounds you set accordingly.
 </Note>
 
-##  Setting Ingestion Start and End Dates
+## Setting Ingestion Start and End Dates
 
 You can specify the user data ingestion bounds (`ingestion_start` and `ingestion_end`) when you:
 
@@ -34,14 +35,14 @@ You can specify the user data ingestion bounds (`ingestion_start` and `ingestion
 * [Update an existing user](/api-reference/user/patch-user)
 
 
-```json Example
+```jsonc Example
 {
   "user_id": "409d9870-21fb-443a-8daa-c5222659f40e",
   "team_id": "3aac677c-557f-40b7-9251-0315c1f48e77",
   "client_user_id": "d734e32e-dd43-4b77-ab56-692524279531",
   /** snipped **/
   "ingestion_start": "2024-01-01",
-  "ingestion_end": "2024-12-15",
+  "ingestion_end": "2024-12-15"
 }
 ```
 

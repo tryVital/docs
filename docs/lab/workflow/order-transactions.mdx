@@ -1,0 +1,35 @@
+---
+title: "Order Transactions"
+description: "Understand the importance of order transactions and how they are used."
+---
+
+## Order Transactions and Initial Orders
+
+Junction uses the concept of **order transactions** to group related orders together and provide unified results.
+An order transaction represents a single testing journey, which will include, at a minimum, one `initial` order.
+
+An order transaction is created whenever a new `initial` order is created and a link is established between the two entities.
+- `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.
+- Order transactions have a `status` field, which can either be `active`, `completed`, or `cancelled`.
+  - `active` - one or more orders belonging to the order transaction are in progress
+  - `completed` - all expected lab work for this transaction is completed and no further updates are expected
+  - `cancelled` - all orders belonging to the order transaction have been cancelled
+
+- An order can only ever belong to one order transaction
+
+We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction.
+Both of these IDs will be needed when implementing some of Junction's current and future features like [redraws](/lab/workflow/redraws).
+
+## API Endpoints
+
+The following endpoints are available to retrieve order transaction information and combined results for all orders within a transaction:
+
+- `GET /v3/order_transaction/{order_transaction_id}` - Get an order transaction's details and list of orders
+- `GET /v3/order_transaction/{order_transaction_id}/result` - Get combined results for an order transaction in JSON format
+- `GET /v3/order_transaction/{order_transaction_id}/result/pdf` - Get combined results for an order transaction in PDF format
+
+Responses for the following endpoints also include order transaction details:
+
+- `GET /v3/orders` - Get a list of filtered orders (including the ability to filter by order transaction ID)
+- `GET /v3/order/{order_id}` - Get an individual order
+- `GET /v3/order/{order_id}/result` - Get an individual order's results

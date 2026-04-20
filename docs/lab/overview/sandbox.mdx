@@ -1,16 +1,17 @@
 ---
 title: "Testing in Sandbox"
+description: "Test lab test ordering in the Junction sandbox environment with lifecycle simulation, pre-configured tests, and collection method restrictions."
 ---
 
-To enable Customers to simulate the ordering process in the sandbox environment, Junction provides simulated results and a way to transition an order through its [lifecycle](/lab/workflow/lab-test-lifecycle).
+To enable customers to simulate the ordering process in the sandbox environment, Junction provides simulated results and a way to transition an order through its [lifecycle](/lab/workflow/lab-test-lifecycle).
 
 ## Creating Lab Tests
 
-Every created team comes with 3 standard `Lab Tests` to allow the Customer to test all 4 collection modalities:
+Every created team comes with 4 standard `Lab Tests` to allow the customer to test all 4 collection modalities:
 
 - **Test Kit**: At-home collection using shipped test kits
 - **Walk-in Test**: Patient visits a Patient Service Center (PSC) location
-- **At-Home Phlebotomy**: A Mobile phlebotomist visits the patient's location
+- **At-Home Phlebotomy**: A mobile phlebotomist visits the patient's location
 - **On-Site Collection**: Collection at the customer's facility
 
 However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Junction generates results based on the associated markers. More on this in the [results section](/lab/overview/sandbox#results).
@@ -19,7 +20,7 @@ However, since most customers choose to have their own custom lab tests, you sho
 
 When an order is placed in the sandbox environment, it is "stuck" in the `ordered` state and will not progress unless triggered to do so. This can be done through the dashboard or through the [API](/api-reference/lab-testing/simulate-order).
 
-Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails, and SMS's.
+Initiating the simulation process will progress the order through the expected success states defined in the [lifecycle section](/lab/workflow/lab-test-lifecycle), triggering all expected webhooks, emails, and SMS messages.
 
 ## Collection Method Restrictions
 
@@ -28,7 +29,7 @@ Initiating the simulation process will progress the order through the expected s
 <Warning>
   When testing At-Home Phlebotomy appointments, there are only two specific zip codes allowed:
 
-  - **85004** (Phoenix, AZ) - Uses GetLabs provider
+  - **85004** (Phoenix, AZ) - Uses Getlabs provider
     - And only one specific address: `West Lincoln Street, Phoenix, AZ 85004, USA`
   - **54650** - Uses PhlebFinders provider
 </Warning>
@@ -51,7 +52,7 @@ We have a feature request in our backlog to support more representative sandbox 
 
 ## Results
 
-To allow Customers to test, Junction generates fake results for each lab test based on the [expected markers](/lab/results/result-formats#expected-results).
+To allow customers to test, Junction generates fake results for each lab test based on the [expected markers](/lab/results/result-formats#expected-results).
 
 The generated JSON results will cycle through all possible [result types](/lab/results/result-formats#resulttype):
 
@@ -135,4 +136,4 @@ This simulates scenarios where some biomarkers fail processing or are unavailabl
 1. **Use Custom Lab Tests**: Create tests with your specific biomarkers for realistic result simulation
 2. **Test All Collection Methods**: Verify each modality works with your integration
 3. **Test Error Scenarios**: Use missing results and different interpretations
-5. **Test Appointment Workflows**: Book, reschedule, and cancel appointments to verify full flow
+4. **Test Appointment Workflows**: Book, reschedule, and cancel appointments to verify full flow

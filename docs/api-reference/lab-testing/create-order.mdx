@@ -1,4 +1,6 @@
 ---
+title: "Create order"
+description: "Create or submit order via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v3/order"
 ---
 
@@ -34,14 +36,15 @@ data = client.lab_tests.create_order(
         email="email@email.com"
     ),
     patient_address=PatientAddressCompatible(
-      receiver_name="john Doe",
+      receiver_name="John Doe",
       first_line="123 Main St.",
       second_line="Apt. 208",
       city="San Francisco",
       state="CA",
       zip="91189",
       country="US",
-      phone_number="+1123456789"
+      phone_number="+1123456789",
+      access_notes="Gate code #1234, use side entrance"
     ),
 )
 ```
@@ -68,14 +71,15 @@ const request: CreateOrderRequestCompatible = {
         email: "email@email.com"
     },
     patientAddress: {
-      receiverName: "john Doe",
+      receiverName: "John Doe",
       first_line: "123 Main St.",
       second_line: "Apt. 208",
       city: "San Francisco",
       state: "CA",
       zip: "91189",
       country: "US",
-      phoneNumber: "+1123456789"
+      phoneNumber: "+1123456789",
+      accessNotes: "Gate code #1234, use side entrance"
     },
 }
 
@@ -146,7 +150,7 @@ details := &vital.PatientDetails{
 }
 
 address := &vital.PatientAddressCompatible{
-   ReceiverName: vital.String("john Doe"),
+   ReceiverName: vital.String("John Doe"),
    FirstLine:    "123 Main St.",
    SecondLine:   vital.String("Apt. 208"),
    City:         "San Francisco",
@@ -192,7 +196,8 @@ fmt.Printf("Received data %s\n", response)
          "state": "CA",
          "zip": "91189",
          "country": "United States",
-         "phone_number": "+1123456789"
+         "phone_number": "+1123456789",
+         "access_notes": "Gate code #1234, use side entrance"
       },
       "priority": false,
       "health_insurance_id": "33ec11aa-d8bf-4f46-950d-c9171be3c22f",

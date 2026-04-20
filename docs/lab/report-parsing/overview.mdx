@@ -1,5 +1,6 @@
 ---
 title: "Lab Report Parsing"
+description: "Extract structured biomarker data from PDF and image lab reports using the Lab Report Parsing API with automatic LOINC code matching."
 ---
 
 Junction's Lab Report Parsing API extracts structured data from lab report files (PDF, JPEG, or PNG) and matches biomarkers to standardized LOINC codes. This enables you to digitize and integrate lab results from any source into your application.
@@ -125,7 +126,7 @@ Example webhook payload:
   "data": {
     "id": "8eb0217f-4683-4a3c-adca-faf95ac65739",
     "status": "completed",
-    "failure_reason": None,
+    "failure_reason": null,
     "data": {
         "metadata": {
             "patient_first_name": "Jane",
@@ -134,7 +135,7 @@ Example webhook payload:
             "lab_name": "Acme Labs",
             "date_reported": "2025-01-01",
             "date_collected": "2024-12-30",
-            "specimen_number": "ABC123",
+            "specimen_number": "ABC123"
         },
         "results": [
             {
@@ -151,17 +152,17 @@ Example webhook payload:
                         "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
                         "display_name": "Glucose",
                         "aliases": [],
-                        "confidence_score": 0.99,
+                        "confidence_score": 0.99
                     }
                 ],
                 "interpretation": "normal",
-                "is_above_max_range": False,
-                "is_below_min_range": False,
+                "is_above_max_range": false,
+                "is_below_min_range": false
             }
-        ],
+        ]
     },
-    "needs_human_review": False,
-    "is_reviewed": False
+    "needs_human_review": false,
+    "is_reviewed": false
   }
 }
 ```

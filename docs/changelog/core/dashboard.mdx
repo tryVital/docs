@@ -1,5 +1,6 @@
 ---
 title: "Dashboard"
+description: "Changelog of Junction Dashboard updates including compendium search, lab account selection, and patient demographics improvements."
 ---
 
 ### Cross-Compendium Marker Search (Mar 2026)
@@ -42,8 +43,8 @@ Each account card shows the lab name, provider account ID, geographic coverage, 
 
 You can now provision and manage Management Keys through the Junction Dashboard:
 
-* Org Management Keys, through the new Org Config page.
-* Team Management Keys, through the Team Config page of a specific team.
+- Org Management Keys, through the new Org Config page.
+- Team Management Keys, through the Team Config page of a specific team.
 
 <AccordionGroup>
 <Accordion title="Team Management Keys" defaultOpen icon="key" iconType="duotone">
@@ -56,7 +57,7 @@ You can now provision and manage Management Keys through the Junction Dashboard:
 </Accordion>
 <Accordion title="Org Management Keys" defaultOpen icon="key" iconType="duotone">
 
-  Only Org Admins can managed Org Management Keys, and it must be done through the Junction Dashboard.
+  Only Org Admins can manage Org Management Keys, and it must be done through the Junction Dashboard.
 
 </Accordion>
 </AccordionGroup>
@@ -64,15 +65,15 @@ You can now provision and manage Management Keys through the Junction Dashboard:
 
 ### Managing Brand Information (June 2025)
 
-We have updated the **Branding and Communcations** tab (previously _White-Labelling_) in the Team Config page. You can now
+We have updated the **Branding and Communications** tab (previously _White-Labelling_) in the Team Config page. You can now
 review and update your Team's brand information through this page.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
   Team Brand Information is used in:
 
-  1. All patient communication [Junction Lab Testing](/lab/overview/introduction) sent on your behalf;
+  1. All patient communication in [Junction Lab Testing](/lab/overview/introduction) sent on your behalf;
   2. the Junction-hosted Appointment Booking page for [Junction Lab Testing](/lab/overview/introduction); and
-  3. the Junction-hosted [Link Widget](/wearables/connecting-providers/introduction);
+  3. the Junction-hosted [Link Widget](/wearables/connecting-providers/introduction).
 
   You can also manage this information programmatically through the Management API — check out the
   [Update Team](/api-reference/org-management/team/update-team) and [Create Team](/api-reference/org-management/team/create-team)
@@ -85,7 +86,7 @@ review and update your Team's brand information through this page.
 Introducing **Team Admin** roles for the Junction Dashboard users. Choose between organization-wide and team-specific admin privileges when adding members.
 
 <Accordion title="Details" defaultOpen icon="magnifying-glass" iconType="duotone">
-  ## What’s New
+  ## What's New
 
   - **Two Permission Levels** – When inviting new members to your organization, you can now choose between **Org Admin** and **Team Admin** roles.
   - **Team-Specific Access** – **Team Admins** can be granted access to specific teams by providing a list of team IDs during invitation or role modification.
@@ -119,8 +120,8 @@ We have improved the search and filtering capabilities in the Orders page, helpi
   - Patient Email
   - Patient Date of Birth
     - in the YYYY-MM-DD format.
-    - e.g., “1988” will filter for all patients born in 1988.
-    - e.g., “1988-03” will filter for all patients born in March of 1988 and “1988-03-07” will filter for all patients born on March 7th, 1988.
+    - e.g., "1988" will filter for all patients born in 1988.
+    - e.g., "1988-03" will filter for all patients born in March of 1988 and "1988-03-07" will filter for all patients born on March 7th, 1988.
   - User ID
   - Client User ID
   - Order ID
@@ -181,5 +182,5 @@ available. You can now also click on specific users to inspect device connection
 
   Provides device connection availability and data ingestion insights of the Junction User.
 
-  You can also obtain this same information programmatically through the [Introspection API](/api-reference/introspection/user-resources).
+  You can also obtain this same information programmatically through the [Introspection API](/api-reference/data/introspection/user-resources).
 </Accordion>

@@ -1,4 +1,6 @@
 ---
+title: "Get orders"
+description: "Retrieve orders via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v3/orders"
 ---
 
@@ -9,7 +11,6 @@ curl --request GET \
      --url '{{BASE_URL}}/v3/orders' \
      --header 'accept: application/json' \
      --header 'x-vital-api-key: {YOUR_KEY}'
-'
 ```
 
 ```python Python
@@ -90,7 +91,7 @@ ShippingAddress address = ShippingAddress
 CreateRegistrableTestkitOrderRequest request = CreateRegistrableTestkitOrderRequest
         .builder()
         .userId("<user_id>")
-        .labTestId("<lab_test_id")
+        .labTestId("<lab_test_id>")
         .shippingDetails(address)
         .build();
 
@@ -201,7 +202,7 @@ fmt.Printf("Received data %s\n", response)
       ],
       "origin": "initial",
       "order_transaction": {
-        "id": "6424d45-ee1a-49c6-ad0c-5769b8e03fc1",
+        "id": "6424dd45-ee1a-49c6-ad0c-5769b8e03fc1",
         "status": "active",
         "orders": [
           {

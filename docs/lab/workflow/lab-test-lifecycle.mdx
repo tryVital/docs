@@ -1,15 +1,16 @@
 ---
 title: "Lab Test Lifecycle"
+description: "Understand the namespaced status system for lab test orders with high-level and modality-specific low-level status transitions."
 ---
 
 ## Introduction
 
-We encapsulate our lab test modalities in the `order` object. This is the main object you will interact with, as it contains all the information related to that lab test. An order has a high-level status which represents where the order is throughout its lifecycle, e.g. received/delivered/completed/cancelled etc.
+We encapsulate our lab test modalities in the `order` object. This is the main object you will interact with, as it contains all the information related to that lab test. An order has a high-level status which represents where the order is throughout its lifecycle, e.g., received/delivered/completed/cancelled, etc.
 
-The high-level status is the same across test modalities. On top of that, each modality has its own sub-statuses, to represents lifecycle stages specific to that modality. For example, test-kits involve shipping of the box, so we have a whole set of statuses to track the shipment.
+The high-level status is the same across test modalities. On top of that, each modality has its own sub-statuses to represent lifecycle stages specific to that modality. For example, test-kits involve shipping of the box, so we have a whole set of statuses to track the shipment.
 
 <Warning>
-**Please note**: To ensure future compatibility, we ask that you avoid exhaustive matching on enum values such as an order’s status. We may introduce new statuses (and other enum values) over time, and code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
+**Please note**: To ensure future compatibility, we ask that you avoid exhaustive matching on enum values such as an order's status. We may introduce new statuses (and other enum values) over time, and code that assumes all current values are exhaustive could break or fail to compile with SDK upgrades.
 
 To stay compatible and benefit from future enhancements, treat unknown values gracefully—for example, by using default cases or limiting checks to only the values your integration depends on.
 </Warning>
@@ -24,7 +25,7 @@ As an example, the status `collecting_sample.at_home_phlebotomy.appointment_sche
 
 ### High-level statuses
 
-The high-level statuses of an order, are represented by `order.status`:
+The high-level statuses of an order are represented by `order.status`:
 
 - `received`: we received the order, stored it into our system, and started processing it.
 - `collecting_sample`: these track collecting the sample from the patient. For test-kits, these track the shipment of the kit. For at-home phlebotomy and walk-in tests, these track appointment scheduling and management.
@@ -33,7 +34,7 @@ The high-level statuses of an order, are represented by `order.status`:
 - `cancelled`: the order has been cancelled, by you or the patient.
 - `failed`: we failed to process the order.
 
-Modality specific sub-statuses are encapsulated in the `order.events` list. These include a list of all the events for that test:
+Modality-specific sub-statuses are encapsulated in the `order.events` list. These include a list of all the events for that test:
 
 ```json Test kit order status
 {
@@ -55,7 +56,7 @@ Modality specific sub-statuses are encapsulated in the `order.events` list. Thes
                 "created_at": "2022-01-01T00:00:00Z",
                 "status": "collecting_sample.testkit.transit_customer"
             },
-    ],
+        ],
 }
 ```
 
@@ -75,6 +76,7 @@ Below is a full list of all the available statuses by test modality. The names s
 - `collecting_sample.testkit.problem_in_transit_customer`
 - `collecting_sample.testkit.problem_in_transit_lab`
 - `sample_with_lab.testkit.delivered_to_lab`
+- `sample_with_lab.testkit.lab_processing_blocked`
 - `completed.testkit.completed`
 - `failed.testkit.failure_to_deliver_to_customer`
 - `failed.testkit.failure_to_deliver_to_lab`

@@ -1,5 +1,6 @@
 ---
 title: "Junction Core SDK"
+description: "Use the Junction Core SDK to access the Junction API from mobile apps through typed request methods across iOS, Android, Flutter, and React Native."
 sidebarTitle: "Core SDK"
 ---
 
@@ -48,7 +49,7 @@ final linkService = client.linkService;
 
 ## Generating Junction Link URL
 
-You can obtain an URL to the Junction Link Widget through `VitalClient.linkWidgetUrl`. Note that the URL contains
+You can obtain a URL to the Junction Link Widget through `VitalClient.linkWidgetUrl`. Note that the URL contains
 a short-lived token with 10-minute expiry.
 
 For the `redirectUrl`, you should set it to a URL with a custom URL scheme which your app would register to handle.
@@ -73,7 +74,7 @@ The SDK normally reports one of the following status combinations:
 
 | Combinations                                | Auth Scheme         | Remarks |
 | ----                                        | ----                | ---- |
-| _Empty_                                     | N/A                 | The SDK has neither been configured nor an active sign-in. |
+| _Empty_                                     | N/A                 | The SDK has neither been configured nor has an active sign-in. |
 | `Configured`                                | API Key             | The SDK has been configured, but does not have an active sign-in. |
 | `Configured`, `SignedIn` & `UseApiKey`      | API Key             | The active sign-in was done by setting an API Key and a target Junction User ID. |
 | `Configured`, `SignedIn` & `UseSignInToken` | Junction Sign-In Token | The active sign-in was done by consuming a Junction Sign-In Token. |
@@ -135,7 +136,7 @@ The SDK normally reports one of the following status combinations:
   statuses = VitalClient.statuses(applicationContext)
 
   val job = statuses
-    .onEach { /** ... **/ }
+    .onEach { /** ... */ }
     .launchIn(...)
   ```
 
@@ -198,7 +199,7 @@ Refer to [the Sign Out section in the SDK Authentication guide](/wearables/sdks/
 ## Verbose Logging to Console/Logcat
 
 You can enable verbose logging to have a deeper look into how Junction Mobile SDK is reacting to your calls, as well as
-all the automatic behaviours that the SDK is performing in background.
+all the automatic behaviors that the SDK is performing in background.
 
 To avoid any missing log entry, you should enable verbose logging as early as possible — preferably before any usage of
 any Junction Mobile SDKs.
@@ -230,7 +231,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 ```objc Native iOS (Objective-C)
 #import "AppDelegate.h"
 
-@import VitalCore
+@import VitalCore;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 

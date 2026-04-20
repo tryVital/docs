@@ -1,5 +1,6 @@
 ---
 title: "List of Providers"
+description: "Retrieve providers via the Junction API. Requires authentication with your team API key."
 openapi: "GET /v2/providers"
 ---
 
@@ -8,9 +9,8 @@ openapi: "GET /v2/providers"
 ```bash cURL
 curl --request GET \
      --url https://api.tryvital.io/v2/providers/ \
-     --header 'Accept: application/json'
-     --header 'x-vital-api-key: <API_KEY>' \
-'
+     --header 'Accept: application/json' \
+     --header 'x-vital-api-key: <API_KEY>'
 ```
 
 ```javascript Node

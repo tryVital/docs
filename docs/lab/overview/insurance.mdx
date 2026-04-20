@@ -1,5 +1,6 @@
 ---
 title: "Insurance Ordering"
+description: "Set up and place lab test orders with commercial insurance billing, including Medicare and Medicaid inference support."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
@@ -14,12 +15,12 @@ Junction supports ordering with commercial insurance billing. To set this up, th
 <Note>
 **Medicare and Medicaid location inference closed beta**
 
-If insurance is covered by Medicare or Medicaid, we have closed beta support for inferring the plan to use based on a patient's address. This endpoint supports `payor_code`s with values of `MEDFED` (Medicare) and
+If the patient is covered by Medicare or Medicaid, we have closed beta support for inferring the plan to use based on the patient's address. This endpoint supports `payor_code` values of `MEDFED` (Medicare) and
 `MAIDFED` (Medicaid) to do this.
 
 For example, supplying a `payor_code` of `MEDFED` for a patient that lives in Arizona will create insurance data using Arizona's Medicare plan payor code.
 
-Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
+Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success Manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
 </Note>
 
 To place an order for a `user` in Junction with commercial insurance, you must first provide Junction with insurance data.
@@ -30,7 +31,7 @@ This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/creat
 Note that you can only set insurance data for users that already have patient information set, either via an order or via the [`PATCH /v2/user/{user_id}/info`](/api-reference/user/upsert-info).
 </Note>
 
-It is expected that insurance data will become outdated or change with time. It is the customer's responsability to update this data with Junction in order to minimise the risk of a denied claim.
+It is expected that insurance data will become outdated or change with time. It is the customer's responsibility to update this data with Junction in order to minimize the risk of a denied claim.
 
 ```json
 "insurance": {
@@ -75,7 +76,7 @@ It is expected that insurance data will become outdated or change with time. It 
 
 First, let's understand the `relationship`, `insured` and `guarantor` fields.
 
-`insured` refers to the insured person, and must always be provided. The `relationship` field, is the relationship between the patient and the holder of the insurance.
+`insured` refers to the insured person, and must always be provided. The `relationship` field is the relationship between the patient and the holder of the insurance.
 For example, if the insured person and the insurance holder are the same, then the relationship is `Self`.
 
 The `guarantor` is an optional field, that must be provided when the relationship is **NOT** `Self`. The guarantor is the financially responsible party. If provided when the relationship is `Self`, we will store it, but it may not be propagated to all lab partners, as not all partners accept a guarantor in this situation.
@@ -83,11 +84,11 @@ The `guarantor` is an optional field, that must be provided when the relationshi
 
 ### Payor Code
 
-The `payor code` is a lab specific identifier for an insurance company. Junction has abstracted this away into our own Junction payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
+The `payor_code` is a lab-specific identifier for an insurance company. Junction has abstracted this away into our own Junction payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
 
-To obtain this code, use the [Search Payor Code](/api-reference/lab-testing-insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
+To obtain this code, use the [Search Payor Code](/api-reference/lab-testing/insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
 
-It is also possible to use this endpoint to search using external provider's payor codes (e.g Change HealthCare or Availity).
+It is also possible to use this endpoint to search using external providers' payor codes (e.g., Change Healthcare or Availity).
 
 ```json
 [
@@ -95,7 +96,6 @@ It is also possible to use this endpoint to search using external provider's pay
     "code": "AARPA",
     "name": "AARP",
     "aliases": [
-      "AARP",
       "AARP"
     ],
     "org_address": {
@@ -131,7 +131,7 @@ By default, Junction orders are Client Bill. In order to trigger the insurance f
 
 ### Diagnosis Codes
 
-Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing-insurance/search-diagnosis) endpoint.
+Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) endpoint.
 
 
 
@@ -164,5 +164,5 @@ If a particular lab supports insurance, then you should see `commercial_insuranc
 
 1. Order with `commercial_insurance` billing for a lab that does not support it.
 2. Order with `commercial_insurance` billing for a state that does not support it.
-3. Order with `commercial_insurance` billing and provide no ICD codes or invalid ICD codes.
+3. Order with `commercial_insurance` billing and no ICD codes or invalid ICD codes provided.
 4. Order with `commercial_insurance` billing and the user has no insurance data.

@@ -1,23 +1,19 @@
 ---
 title: "Quickstart"
-description: "A quick introduction to building with Junction"
+description: "Get started with the Junction API by setting up API keys, connecting a wearable device, and fetching your first health data in minutes."
 ---
 
 ## 1. API keys
 
 Let's test out running Junction locally by cloning the [Quickstart app](https://github.com/tryVital/quickstart).
-You can get API keys by signing up in the [Dashboard](https://app.junction.com).
-Once registered, you can create a team. A team is associated with a region (either `EU` or `US`),
-the region dictates where data is stored. You can learn more at [regions](/api-details/regions).
-
 To create a team and get your API keys, you first need to sign up for a Junction account in the [Dashboard](https://app.junction.com).
 
 Once registered, you can create a team by hovering over your username at the bottom of the Dashboard sidebar.
-A team is associated with a region (either `EU` or `US`), the region dictates where data is stored.
+A team is associated with a region (either `EU` or `US`). The region dictates where data is stored.
 You can learn more at [regions](/api-details/regions).
 
 To create your API keys, go to the configuration section of the Dashboard.
-For each region, you'll have access to two environments Sandbox and Production.
+For each region, you'll have access to two environments: Sandbox and Production.
 We'll start in the Sandbox environment, so create a new Sandbox API key.
 
 <Note>
@@ -28,7 +24,7 @@ We'll start in the Sandbox environment, so create a new Sandbox API key.
 
 | Environment  |                                             |                         |
 | ------------ | ------------------------------------------- | ----------------------- |
-| `sandbox`    | Testing, Connect up to 10 live users        | api.sandbox.tryvital.io |
+| `sandbox`    | Testing, connect up to 50 live users        | api.sandbox.tryvital.io |
 | `production` | Live environment to use with real customers | api.tryvital.io         |
 
 ## 2. Running Quickstart locally
@@ -78,18 +74,18 @@ npm run dev
 
 When retrieving data or connecting devices, Junction will require a `user_id` as input.
 A `user_id` is a unique representation that we hold for a user. It allows you to fetch data for that user.
-To create a user, you need to pass an unique id (`client_user_id`). This represents the user in your system. Our recommendation is
+To create a user, you need to pass a unique id (`client_user_id`). This represents the user in your system. Our recommendation is
 to store the Junction `user_id` in your db against the user row.
 
 <Warning>
 
-Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `user_id` parameter.
+Personally identifiable information (PII), such as an email address or phone number, should not be used as input for the `client_user_id` parameter.
 
 </Warning>
 
 Enter a new `client_user_id` and tap Create:
 
-<img src="/img/quickstart.jpg" alt="quickstart" />{" "}
+<img src="/img/quickstart.jpg" alt="quickstart" />
 
 This can also be achieved via the API as follows.
 
@@ -184,7 +180,7 @@ let user = try await VitalClient.shared.user.create(clientUserId)
 ## 4. Connecting a source
 
 A source, at Junction, is a medical device, wearable, or lab. It is a source of information for health data.
-To connect a source tap the connect button, this will launch the Junction Link Widget for that user.
+To connect a source, tap the connect button. This will launch the Junction Link Widget for that user.
 
 Once you have entered your credentials and moved to the next screen, you have connected your first source!
 You can now make API calls to retrieve data for that Source.
@@ -192,22 +188,21 @@ You can now make API calls to retrieve data for that Source.
 ### How it works
 
 As you might have noticed, you use both a server and a client-side component to access the Junction APIs.
-A more detailed explanation on how linking works can be found in [link flow](/wearables/connecting-providers/link_flow)
+A more detailed explanation of how linking works can be found in [link flow](/wearables/connecting-providers/link_flow).
 
 The first step is to create a new `link_token` by making a `/link/token` request and passing in the
-required configuration. This `link_token` is a short lived, one-time use token that authenticates your
+required configuration. This `link_token` is a short-lived, one-time use token that authenticates your
 app with Junction Link, our frontend module.
 
 ```python Generating a Link Token
 # TEST BACKEND IMPLEMENTATION
 from vital.client import Vital
 from vital.environment import VitalEnvironment
-from vital.client import Vital
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 client = Vital(
-  api_key=<YOUR_API_KEY>,
+  api_key="<YOUR_API_KEY>",
   environment=VitalEnvironment.SANDBOX,
   timeout=30
 )
@@ -291,7 +286,7 @@ export const LinkButton: React.FC<{ userID: string | null }> = ({ userID }) => {
 };
 ```
 
-This is what your users see to connect their medical device or wearables:
+This is what your users see to connect their medical devices or wearables:
 
 <img src="/img/link_specific.png" width="75%" alt="Link specific" />
 
@@ -391,20 +386,20 @@ let sleepData = try await VitalClient.shared.summary.sleep(userId, startDate, en
 
 </CodeGroup>
 
-## 6. SDK's and Libraries
+## 6. SDKs and Libraries
 
 We offer different SDKs so you can start building your app right away:
 
 |                                                                  |                                                      |
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
 | [vital-python](https://pypi.org/project/vital)                   | Python library for calling Junction API on your backend |
-| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing link                  |
+| [vital-link](https://www.npmjs.com/package/@tryvital/vital-link) | React Library for initializing Link                  |
 | [vital-node](https://www.npmjs.com/package/@tryvital/vital-node) | Junction Node Client                                    |
 | [vital-ios](https://github.com/tryVital/vital-ios)               | Junction iOS Client                                     |
-| Java                                                             | Soon to be added                                     |
-| Go                                                               | Soon to be added                                     |
+| [vital-java](https://github.com/tryVital/vital-java)             | Junction Java Client                                 |
+| [vital-go](https://github.com/tryVital/vital-go)                 | Junction Go Client                                   |
 
-You can also download our [API collection](https://www.postman.com/collections/35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533) or by installing postman first and clicking on the below button.
+You can also download our [API collection](https://www.postman.com/collections/35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533), or install Postman first and click the button below.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D35339909-b0d080b7-3870-4aa8-a68b-a675f93a0533%26entityType%3Dcollection%26workspaceId%3Ddd82502b-0c9d-4fe4-9760-73a54bc2b8bf)
 
@@ -419,13 +414,13 @@ There are a few directions you can go in now:
   title="Junction Link"
   icon="link"
   iconType="regular"
-  href="/wearables/vital-link/introduction"
+  href="/wearables/connecting-providers/introduction"
 >
   A client-side component your users will interact with in order to link their
   accounts with Junction. It allows you to access their accounts via the Junction API.
 </Card>
 
-<Card title="Junction SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/ios">
+<Card title="Junction SDKs" icon="toolbox" iconType="regular" href="/wearables/sdks/installation">
   Native toolkits to integrate Junction into iOS, Android, and Flutter
 </Card>
 
@@ -439,6 +434,3 @@ There are a few directions you can go in now:
   data from the various providers.
 </Card>
 
-- [Junction Link](/wearables/vital-link/introduction)
-- [Junction SDKs](/wearables/sdks/ios)
-- [Junction Webhooks](/webhooks/Introduction)

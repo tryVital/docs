@@ -1,10 +1,11 @@
 ---
 title: "Order Requirements"
+description: "Review all requirements for placing a lab test order including patient consents, physician options, and patient name validation rules."
 ---
 
 ### Consents
 
-When you order a lab test through our API, you may have to collect consents from the patient and forward it to us. The following consents may include:
+When you order a lab test through our API, you may have to collect consents from the patient and forward them to us. The following consents may include:
 
 - `hipaa-authorization`.
 - `terms-of-use`.
@@ -33,7 +34,7 @@ Patient names must conform to a specific regex pattern due to lab restrictions. 
 
 **Valid Name Examples:**
 - `John`
-- `Mary-Jane` 
+- `Mary-Jane`
 - `O'Connor`
 - `Dr. Smith`
 - `Jean-Pierre`
@@ -48,8 +49,8 @@ Patient names must conform to a specific regex pattern due to lab restrictions. 
 
 ### Minors
 
-Ordering for minors (under 18 years old) requires a specific configuration, which you can request with your Junction Customer Success Manager.
+Ordering for minors (under 18 years old) requires a specific configuration, which you can request from your Junction Customer Success Manager.
 
-Once enabled, you are able to order for a minor patient, by providing information regarding the medical proxy.
+Once enabled, you are able to order for a minor patient by providing information regarding the medical proxy.
 
 This information can be supplied at [ordering time](/api-reference/lab-testing/create-order#body-patient-details-medical-proxy), or at any time by updating the [user demographics](/api-reference/user/upsert-info#body-medical-proxy).

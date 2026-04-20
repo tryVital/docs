@@ -1,4 +1,6 @@
 ---
+title: "Create appointment request"
+description: "Create or submit order phlebotomy appointment request via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v3/order/{order_id}/phlebotomy/appointment/request"
 ---
 
@@ -16,9 +18,10 @@ curl --request POST \
         "second_line": "14",
         "city": "Phoenix",
         "state": "AZ",
-        "zip_code": "85004",
-    }
-    "provider": "phlebfinders"
+        "zip_code": "85004"
+    },
+    "provider": "phlebfinders",
+    "appointment_notes": "Please bring photo ID"
 }
 '
 ```
@@ -84,7 +87,7 @@ Vital vital = Vital.builder()
 
 UsAddress address = UsAddress
     .builder()
-    .firstLine("<first_line")
+    .firstLine("<first_line>")
     .city("<city>")
     .state("<state>")
     .zipCode("<zip_code>")
@@ -144,7 +147,8 @@ fmt.Printf("Received data %s\n", response)
         "city": "Phoenix",
         "state": "AZ",
         "zip_code": "85004",
-        "unit": "14"
+        "unit": "14",
+        "access_notes": "Gate code #1234, use side entrance"
     },
     "location": {
         "lng": -112.0772235,
@@ -154,7 +158,8 @@ fmt.Printf("Received data %s\n", response)
     "provider": "phlebfinders",
     "status": "pending",
     "provider_id": "e89eb489-7382-4966-bb14-7ab4763eba6c",
-    "can_reschedule":false
+    "can_reschedule":false,
+    "appointment_notes": "Please bring photo ID"
 }
 ```
 </ResponseExample>
