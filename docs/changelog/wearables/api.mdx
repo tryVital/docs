@@ -136,7 +136,7 @@ Check out [Sleep Analysis](/sense/query-dsl/sleep-analysis) for more details.
 
 <Accordion icon="moon" iconType="duotone" title="Details" defaultOpen>
 
-- `asleep_at` returns the first instance at which the user is considered to be asleep, i.e., session start + sleep latency.
+- `asleep_at` returns the first instant at which the user is considered to be asleep, i.e., session start + sleep latency.
 - `awake_at` returns the time at which the user has stopped sleeping, sans any brief awakening.
 
 Use these macros in the Select clause of Junction Sense queries to surface consistent bedtime and wake-up timestamps across providers.
