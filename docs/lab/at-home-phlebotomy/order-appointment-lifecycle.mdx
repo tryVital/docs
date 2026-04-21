@@ -6,7 +6,7 @@ description: "Reference for all order and appointment lifecycle statuses in the 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 The **At-Home Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
-the **appointment** lifecycle, detailed in the following sections.
+the **Appointment** lifecycle, detailed in the following sections.
 
 ## Order Lifecycle
 
@@ -84,7 +84,6 @@ asynchronous requisition creation process that may take an indeterminate amount 
   For an [Appointment Request Tier](/lab/at-home-phlebotomy/service-tiers) service, the Appointment starts with the `pending`
   status. Once the service has penciled in the time slot, the Appointment moves to the `reserved` status — if the order
   requisition still has not yet been created by then.
-
 
   <Note>
   If the order requisition has been created on or before the time slot confirmation, the Appointment moves directly to the

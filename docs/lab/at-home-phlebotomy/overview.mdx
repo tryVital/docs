@@ -20,7 +20,6 @@ To achieve this, a high-level overview of the process is defined as:
 - The Laboratory processes the patient's blood sample and generates the required results.
 - Junction exposes the results as soon as they are available, both as PDF and structured data via API.
 
-
 ## Access Notes and Appointment Notes
 
 There are two ways to provide instructions for the phlebotomist:
@@ -38,6 +37,5 @@ Set `appointment_notes` in the booking, request, or reschedule request body. The
 - Phlebotomy appointments are not supported for patients under 18 years of age.
 - The same patient can't have more than one active appointment with a specific **Phlebotomy provider**.
 - The addresses provided when fetching the appointment availability slots must be reachable by the phlebotomist and must contain a street number and unit (if applicable).
-
 
 To find out more details, see [`Order and Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle), [`Communications`](/lab/at-home-phlebotomy/communications) and [`Webhooks`](/lab/at-home-phlebotomy/webhooks).
