@@ -10,7 +10,7 @@ An order transaction represents a single testing journey, which will include, at
 
 An order transaction is created whenever a new `initial` order is created and a link is established between the two entities.
 - `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.
-- Order transactions have a `status` field, which can either be `active`, `completed`, or `cancelled`.
+- Order transactions have a `status` field, which can be `active`, `completed`, or `cancelled`.
   - `active` - one or more orders belonging to the order transaction are in progress
   - `completed` - all expected lab work for this transaction is completed and no further updates are expected
   - `cancelled` - all orders belonging to the order transaction have been cancelled
