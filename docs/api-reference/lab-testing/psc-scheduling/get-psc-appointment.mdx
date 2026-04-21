@@ -32,7 +32,7 @@ const client = new VitalClient({
     environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.labTests.getpscAppointment("<order_id>");
+const data = await client.labTests.getPscAppointment("<order_id>");
 ```
 
 
@@ -45,7 +45,7 @@ Vital vital = Vital.builder()
         .environment(Environment.SANDBOX)
         .build();
 
-var data = vital.labTests().getpscAppointment("<order_id>");
+var data = vital.labTests().getPscAppointment("<order_id>");
 ```
 
 ```go Go
@@ -62,7 +62,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetpscAppointment(context.TODO(), "<order_id>")
+response, err := client.LabTests.GetPscAppointment(context.TODO(), "<order_id>")
 if err != nil {
     return err
 }

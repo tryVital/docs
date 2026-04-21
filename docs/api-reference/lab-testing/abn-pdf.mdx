@@ -69,7 +69,7 @@ client := vitalclient.NewClient(
   option.WithBaseURL(vital.Environments.Sandbox),
 )
 
-response, err := client.LabTests.getOrderAbnPdf(context.TODO(), "<order_id>")
+response, err := client.LabTests.GetOrderAbnPdf(context.TODO(), "<order_id>")
 if err != nil {
   return err
 }
