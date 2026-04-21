@@ -18,7 +18,7 @@ different tables in the same query instruction.
 </Info>
 
 <Note>
-Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle, and lab testing biomarkers are planned to be introduced in the future.
+Column expressions for Electrocardiogram, Sleep Cycle, and lab testing biomarkers are planned to be introduced in the future.
 </Note>
 
 ### Summaries
@@ -31,6 +31,7 @@ Column expressions for Electrocardiogram, Sleep Cycle, Menstrual Cycle, and lab 
 | Readiness scores<br/>`derived_readiness` | `DerivedReadiness.col("$1")` | `{ "derived_readiness": "$1" }` |
 | Workout summary<br/>`workout`         | `Workout.col("$1")`   | `{ "workout": "$1" }` |
 | Meal summary<br/>`meal`               | `Meal.col("$1")`      | `{ "meal": "$1" }` |
+| Menstrual cycle<br/>`menstrual_cycle` | `MenstrualCycle.col("$1")` | `{ "menstrual_cycle": "$1" }` |
 | Profile<br/>`profile`                    | `Profile.col("$1")`   | `{ "profile": "$1" }` |
 
 ### Column Mappings
@@ -213,6 +214,33 @@ Map summary resource properties to their Continuous Query column equivalents.
 | `source.app_id` | `source_app_id` |
 | `source.device_id` | `source_device_id` |
 
+#### MenstrualCycle
+
+| MenstrualCycle field | Query Column | Element type |
+| --- | --- | --- |
+| `period_start` | `period_start` | scalar (Date) |
+| `period_end` | `period_end` | scalar (Date) |
+| `cycle_end` | `cycle_end` | scalar (Date) |
+| `is_predicted` | `is_predicted` | scalar (Boolean) |
+| `menstrual_flow` | `menstrual_flow` | list of struct `{date, flow}` |
+| `cervical_mucus` | `cervical_mucus` | list of struct `{date, quality}` |
+| `intermenstrual_bleeding` | `intermenstrual_bleeding` | list of struct `{date}` |
+| `contraceptive` | `contraceptive` | list of struct `{date, type}` |
+| `detected_deviations` | `detected_deviations` | list of struct `{date, deviation}` |
+| `ovulation_test` | `ovulation_test` | list of struct `{date, test_result}` |
+| `home_pregnancy_test` | `home_pregnancy_test` | list of struct `{date, test_result}` |
+| `home_progesterone_test` | `home_progesterone_test` | list of struct `{date, test_result}` |
+| `sexual_activity` | `sexual_activity` | list of struct `{date, protection_used}` |
+| `basal_body_temperature` | `basal_body_temperature` | list of struct `{date, value}` |
+| `source.slug` | `source_provider` | scalar |
+| `source.type` | `source_type` | scalar |
+| `source.device_id` | `source_device_id` | scalar |
+| `source.app_id` | `source_app_id` | scalar |
+
+<Note>
+List columns cannot be selected directly as a table column — aggregate them with a scalar-output subquery. See [List-column aggregation](/sense/query-dsl/list-column-aggregation) for the full syntax.
+</Note>
+
 #### Profile
 
 | Profile field | Query Column |
@@ -269,6 +297,7 @@ index using the special Index Column expression:
 | Sleep summary<br/>`sleep`            | Session end datetime   | `Sleep.index()`     | `{ "index": "sleep" }` |
 | Readiness scores<br/>`derived_readiness` | Calendar date       | `DerivedReadiness.index()` | `{ "index": "derived_readiness" }` |
 | Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }` |
+| Menstrual cycle<br/>`menstrual_cycle`| Period start date      | `MenstrualCycle.index()` | `{ "index": "menstrual_cycle" }` |
 | Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }` |
 
 

@@ -1148,6 +1148,7 @@
                   "sense/query-dsl/select-clause",
                   "sense/query-dsl/group-by-clause",
                   "sense/query-dsl/where-clause",
+                  "sense/query-dsl/list-column-aggregation",
                   "sense/query-dsl/sleep-analysis",
                   "sense/query-dsl/readiness-scores"
                 ]

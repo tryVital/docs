@@ -1,0 +1,198 @@
+---
+title: List-column aggregation
+description: "Aggregate list columns in Junction Sense queries with a scalar-output subquery."
+icon: list-tree
+---
+
+## Overview
+
+Some Junction resources expose **list columns** — columns whose value on each row is itself a list. For example, the Menstrual Cycle resource stores `basal_body_temperature` as a list of `{date, value}` structs.
+
+List columns cannot be selected directly as a Table Column. Instead, you aggregate their elements with a **scalar-output subquery** — a self-contained expression that unnests the list, optionally filters its elements, applies an aggregate function, and returns **one scalar per outer row**.
+
+That scalar can be selected directly, or wrapped in a group-level aggregate (`.mean()`, `.sum()`, …) when used inside a GROUP BY.
+
+## Anatomy
+
+A scalar-output subquery has three parts:
+
+```
+select: aggregate function + optional element reference
+from:   UNNEST(<list column>)
+where:  optional predicate on element fields (or `element` for scalar lists)
+```
+
+The shape mirrors a SQL subquery: `SELECT agg(element) FROM UNNEST(list) WHERE <predicate>`.
+
+## Aggregate a struct-field
+
+Compute the mean basal body temperature per cycle, alongside the cycle's period end and cycle end dates. Scalar columns can be selected directly next to subquery aggregates — they share the per-cycle output row.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.MenstrualCycle.index(),
+    va.MenstrualCycle.col("period_end"),
+    va.MenstrualCycle.col("cycle_end"),
+    va.MenstrualCycle.col("basal_body_temperature")
+        .unnest_and_select(lambda col: col.field("value").mean())
+)
+```
+
+```jsonc JSON DSL
+{
+    "select": [
+        { "index": "menstrual_cycle" },
+        { "menstrual_cycle": "period_end" },
+        { "menstrual_cycle": "cycle_end" },
+        {
+            "select": {
+                "func": "mean",
+                "arg": { "field_for": "menstrual_cycle", "basal_body_temperature": "value" }
+            },
+            "from": { "unnest": { "menstrual_cycle": "basal_body_temperature" } }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+## Aggregate a scalar-element list
+
+When the list elements are scalars rather than structs (for example, a list of string tags or numeric samples), use `count` with `arg: null`, or target the element explicitly with `{ "element": true }` for any other aggregate.
+
+Count the tags on each note row:
+
+```jsonc JSON DSL
+{
+    "select": [
+        {
+            "select": { "func": "count", "arg": null },
+            "from": { "unnest": { "timeseries": "note", "field": "tags" } }
+        }
+    ]
+}
+```
+
+Sum the values of a numeric scalar-element list:
+
+```jsonc JSON DSL
+{
+    "select": [
+        {
+            "select": { "func": "sum", "arg": { "element": true } },
+            "from": { "unnest": { "timeseries": "some_numeric_series", "field": "values" } }
+        }
+    ]
+}
+```
+
+## Choosing `arg`
+
+| Goal | `arg` |
+| --- | --- |
+| Count elements regardless of content | `null` (only valid with `func: "count"`) |
+| Aggregate a struct field of each element | a struct-field reference, e.g. `{ "field_for": "menstrual_cycle", "basal_body_temperature": "value" }` |
+| Aggregate scalar elements directly | `{ "element": true }` |
+
+Struct-field references work only on struct-element lists; `{ "element": true }` works only on scalar-element lists.
+
+## Filter elements with WHERE
+
+The `where` predicate filters elements **before** the aggregate runs. The identifiers inside the predicate resolve against the unnested element:
+
+- **Struct-element lists**: identifiers refer to struct fields of each element (e.g., `"flow != 'none'"` on `menstrual_flow` references the `flow` field of each struct). Unknown field names are rejected.
+- **Scalar-element lists**: the reserved identifier `element` refers to the element value itself (e.g., `"element != 'unspecified'"`). Any identifier other than `element` is rejected.
+
+Count only meaningful flow days per cycle:
+
+<CodeGroup>
+```python Python DSL
+va.select(
+    va.MenstrualCycle.index(),
+    va.MenstrualCycle.col("menstrual_flow")
+        .unnest_and_select(lambda col: col.count())
+        .where("flow != 'none'")
+)
+```
+
+```jsonc JSON DSL
+{
+    "select": [
+        { "index": "menstrual_cycle" },
+        {
+            "select": { "func": "count", "arg": null },
+            "from": { "unnest": { "menstrual_cycle": "menstrual_flow" } },
+            "where": "flow != 'none'"
+        }
+    ]
+}
+```
+</CodeGroup>
+
+The predicate grammar is the same as the top-level [WHERE clause](/sense/query-dsl/where-clause): comparison (`>`, `>=`, `<`, `<=`, `=`, `!=`), logical (`AND`, `OR`, `NOT`), parentheses, and string/numeric literals.
+
+## Use inside GROUP BY
+
+A scalar-output subquery in a grouped query must be wrapped in an outer aggregate.
+
+Period end, cycle end, and number of meaningful flow days, one row per cycle:
+
+<CodeGroup>
+```python Python DSL
+va.select(
+    va.group_key("*"),
+    va.MenstrualCycle.col("period_end").newest(),
+    va.MenstrualCycle.col("cycle_end").newest(),
+    va.MenstrualCycle.col("menstrual_flow")
+        .unnest_and_select(lambda col: col.count())
+        .where("flow != 'none'")
+        .mean(),
+).group_by(
+    va.date_trunc(va.MenstrualCycle.index(), 1, "day")
+)
+```
+
+```jsonc JSON DSL
+{
+    "select": [
+        { "group_key": "*" },
+        { "func": "newest", "arg": { "menstrual_cycle": "period_end" } },
+        { "func": "newest", "arg": { "menstrual_cycle": "cycle_end" } },
+        {
+            "func": "mean",
+            "arg": {
+                "select": { "func": "count", "arg": null },
+                "from": { "unnest": { "menstrual_cycle": "menstrual_flow" } },
+                "where": "flow != 'none'"
+            }
+        }
+    ],
+    "group_by": [
+        {
+            "date_trunc": { "value": 1, "unit": "day" },
+            "arg": { "index": "menstrual_cycle" }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+## Supported aggregates
+
+Inside the subquery's `select`:
+
+- `count` — count of elements (or matching elements if `where` is present).
+- `sum`, `mean`, `min`, `max`, `median`, `stddev` — numeric aggregates over the element value or extracted struct field.
+
+`oldest` and `newest` are **not** available inside a subquery — list elements have no inherent ordering.
+
+## Output column naming
+
+- `arg: null` → `$COLUMN` (e.g., `menstrual_flow`).
+- Struct field extract → `$COLUMN.$FIELD` (e.g., `basal_body_temperature.value`).
+- `{ "element": true }` → `$COLUMN.element` (e.g., `tags.element`).
+
+When the subquery is wrapped in an outer aggregate, the outer aggregate function prefix is added following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules.

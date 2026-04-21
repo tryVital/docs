@@ -387,3 +387,63 @@ va.select(
 ```
 
 </CodeGroup>
+
+## Per-Cycle Menstrual Cycle Summary
+
+Period end, cycle end, mean basal body temperature, and number of meaningful flow days — one row per cycle.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.MenstrualCycle.col("period_end").newest(),
+    va.MenstrualCycle.col("cycle_end").newest(),
+    va.MenstrualCycle.col("basal_body_temperature")
+        .unnest_and_select(lambda col: col.field("value").mean())
+        .mean(),
+    va.MenstrualCycle.col("menstrual_flow")
+        .unnest_and_select(lambda col: col.count())
+        .where("flow != 'none'")
+        .mean(),
+).group_by(
+    va.date_trunc(va.MenstrualCycle.index(), 1, "day")
+).finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "newest", "arg": { "menstrual_cycle": "period_end" } },
+    { "func": "newest", "arg": { "menstrual_cycle": "cycle_end" } },
+    {
+      "func": "mean",
+      "arg": {
+        "select": {
+          "func": "mean",
+          "arg": { "field_for": "menstrual_cycle", "basal_body_temperature": "value" }
+        },
+        "from": { "unnest": { "menstrual_cycle": "basal_body_temperature" } }
+      }
+    },
+    {
+      "func": "mean",
+      "arg": {
+        "select": { "func": "count", "arg": null },
+        "from": { "unnest": { "menstrual_cycle": "menstrual_flow" } },
+        "where": "flow != 'none'"
+      }
+    }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "menstrual_cycle" }
+    }
+  ]
+}
+```
+
+</CodeGroup>

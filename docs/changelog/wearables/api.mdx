@@ -5,6 +5,66 @@ description: "Changelog of Junction Wearables API updates including Sense readin
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Junction Sense Menstrual Cycle resource & list-column aggregation (April 2026)
+
+Junction Sense now supports the `menstrual_cycle` query table, and introduces a subquery syntax for aggregating list-column elements — for example, averaging the basal body temperature entries within each cycle.
+
+Check out [List-column aggregation](/sense/query-dsl/list-column-aggregation) and the updated [Column expressions](/sense/query-dsl/column-expressions#menstrualcycle) reference for full details.
+
+<Accordion icon="droplet" iconType="duotone" title="Details" defaultOpen>
+
+- New query table: `menstrual_cycle`, with scalar columns (`period_start`, `period_end`, `cycle_end`, `is_predicted`, `source_*`) and list-of-struct columns (`menstrual_flow`, `cervical_mucus`, `basal_body_temperature`, `intermenstrual_bleeding`, `contraceptive`, `detected_deviations`, `ovulation_test`, `home_pregnancy_test`, `home_progesterone_test`, `sexual_activity`).
+- New index expression: `{ "index": "menstrual_cycle" }` / `MenstrualCycle.index()`.
+- New select-expression variant for list columns: a scalar-output subquery with `select` / `from` (UNNEST) / optional `where`, producing one scalar per outer row. Wrap the subquery in an outer aggregate (e.g. `.mean()`) to use it inside a GROUP BY.
+- Inside an UNNEST `where` over a scalar-element list (e.g. `List[Utf8]`), the reserved identifier `element` refers to the element value itself.
+
+Example — period end, cycle end, and mean basal body temperature, one row per cycle:
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.MenstrualCycle.col("period_end").newest(),
+    va.MenstrualCycle.col("cycle_end").newest(),
+    va.MenstrualCycle.col("basal_body_temperature")
+        .unnest_and_select(lambda col: col.field("value").mean())
+        .mean(),
+).group_by(
+    va.date_trunc(va.MenstrualCycle.index(), 1, "day")
+)
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "newest", "arg": { "menstrual_cycle": "period_end" } },
+    { "func": "newest", "arg": { "menstrual_cycle": "cycle_end" } },
+    {
+      "func": "mean",
+      "arg": {
+        "select": {
+          "func": "mean",
+          "arg": { "field_for": "menstrual_cycle", "basal_body_temperature": "value" }
+        },
+        "from": { "unnest": { "menstrual_cycle": "basal_body_temperature" } }
+      }
+    }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "menstrual_cycle" }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+</Accordion>
+
 ### Junction Sense `awakenings` macro (April 2026)
 
 Junction Sense now exposes a new Sleep Macro that counts the number of awakenings during a sleep session.
