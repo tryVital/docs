@@ -191,8 +191,10 @@ Inside the subquery's `select`:
 
 ## Output column naming
 
-- `arg: null` → `$COLUMN` (e.g., `menstrual_flow`).
-- Struct field extract → `$COLUMN.$FIELD` (e.g., `basal_body_temperature.value`).
-- `{ "element": true }` → `$COLUMN.element` (e.g., `tags.element`).
+Each subquery's output column name includes the inner aggregate function so subqueries that differ only in the inner aggregate resolve to distinct columns.
 
-When the subquery is wrapped in an outer aggregate, the outer aggregate function prefix is added following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules.
+- `arg: null` → `$COLUMN.$FUNC` (e.g., `menstrual_flow.count`).
+- Struct field extract → `$COLUMN.$FIELD.$FUNC` (e.g., `basal_body_temperature.value.mean`).
+- `{ "element": true }` → `$COLUMN.element.$FUNC` (e.g., `tags.element.sum`).
+
+When the subquery is wrapped in an outer aggregate, the outer aggregate function prefix is added following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules — e.g. `mean.basal_body_temperature.value.mean` for a mean-of-per-cycle-means.

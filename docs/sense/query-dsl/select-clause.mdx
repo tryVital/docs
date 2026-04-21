@@ -122,9 +122,9 @@ va.select(
 Resources like Menstrual Cycle expose list-of-struct columns (for example, `basal_body_temperature` is a list of `{date, value}` entries). Aggregate their elements with a scalar-output subquery — a self-contained `select` / `from` (UNNEST) / optional `where` block that produces one scalar per outer row.
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-* the list column name (e.g., `menstrual_flow`) when the subquery aggregates rows directly; or
-* `$COLUMN.$FIELD` when a struct field is extracted (e.g., `basal_body_temperature.value`); or
-* `$COLUMN.element` when the scalar-list element itself is aggregated.
+* `$COLUMN.$FUNC` when the subquery aggregates rows directly (e.g., `menstrual_flow.count`); or
+* `$COLUMN.$FIELD.$FUNC` when a struct field is extracted (e.g., `basal_body_temperature.value.mean`); or
+* `$COLUMN.element.$FUNC` when the scalar-list element itself is aggregated (e.g., `tags.element.sum`).
 </Accordion>
 
 <CodeGroup>
