@@ -19,7 +19,7 @@ client = Vital(
 data = client.lab_tests.update_lab_test(
     lab_test_id="<lab_test_id>",
     name="<name>",
-    active=<True>,
+    active=True,
 )
 ```
 
@@ -34,7 +34,7 @@ const client = new VitalClient({
 
 const request: UpdateLabTestRequest = {
     name: '<name>',
-    active: <true>,
+    active: true,
 }
 
 const data = await client.labTests.updateLabTest(labTestId, request);
@@ -53,7 +53,7 @@ Vital vital = Vital.builder()
 UpdateLabTestRequest request = UpdateLabTestRequest
         .builder()
         .name("<name>")
-        .active(<true>)
+        .active(true)
         .build();
 
 var data = vital.labTests().updateLabTest(labTestId, request);
@@ -75,7 +75,7 @@ client := vitalclient.NewClient(
 
 request := &vital.UpdateLabTestRequest{
   Name:        "<name>",
-  Active:     <true>,
+  Active:     true,
 }
 
 response, err := client.LabTests.UpdateLabTest(context.TODO(), labTestId, request)
