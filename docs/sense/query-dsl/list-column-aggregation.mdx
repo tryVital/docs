@@ -191,10 +191,10 @@ Inside the subquery's `select`:
 
 ## Output column naming
 
-Each subquery's output column name includes the inner aggregate function so subqueries that differ only in the inner aggregate resolve to distinct columns.
+The subquery's inner aggregate function is added as a prefix, matching the standard aggregate-prefix convention.
 
-- `arg: null` → `$COLUMN.$FUNC` (e.g., `menstrual_flow.count`).
-- Struct field extract → `$COLUMN.$FIELD.$FUNC` (e.g., `basal_body_temperature.value.mean`).
-- `{ "element": true }` → `$COLUMN.element.$FUNC` (e.g., `tags.element.sum`).
+- `arg: null` → `$FUNC.$COLUMN` (e.g., `count.menstrual_flow`).
+- Struct field extract → `$FUNC.$COLUMN.$FIELD` (e.g., `mean.basal_body_temperature.value`).
+- `{ "element": true }` → `$FUNC.$COLUMN.element` (e.g., `sum.tags.element`).
 
-When the subquery is wrapped in an outer aggregate, the outer aggregate function prefix is added following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules — e.g. `mean.basal_body_temperature.value.mean` for a mean-of-per-cycle-means.
+When the subquery is wrapped in an outer aggregate, the outer func prefix composes on top following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules — e.g. `mean.mean.basal_body_temperature.value` reads as "mean of per-cycle mean of `basal_body_temperature.value`".
