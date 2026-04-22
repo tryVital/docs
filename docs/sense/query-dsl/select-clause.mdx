@@ -117,6 +117,41 @@ va.select(
 
 
 
+## Aggregate list-column elements
+
+Resources like Menstrual Cycle expose list-of-struct columns (for example, `basal_body_temperature` is a list of `{date, value}` entries). Aggregate their elements with a scalar-output subquery — a self-contained `select` / `from` (UNNEST) / optional `where` block that produces one scalar per outer row.
+
+<Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
+* `$FUNC.$COLUMN` when the subquery aggregates rows directly (e.g., `count.menstrual_flow`); or
+* `$FUNC.$COLUMN.$FIELD` when a struct field is extracted (e.g., `mean.basal_body_temperature.value`); or
+* `$FUNC.$COLUMN.element` when the scalar-list element itself is aggregated (e.g., `sum.tags.element`).
+</Accordion>
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.MenstrualCycle.col("menstrual_flow")
+        .unnest_and_select(lambda col: col.count())
+)
+```
+
+```jsonc JSON DSL
+{
+    "select": [
+        {
+            "select": { "func": "count", "arg": null },
+            "from": { "unnest": { "menstrual_cycle": "menstrual_flow" } }
+        }
+    ]
+}
+```
+</CodeGroup>
+
+See [List-column aggregation](/sense/query-dsl/list-column-aggregation) for the full reference, including the `where` predicate, struct-field extraction, and the reserved `element` identifier for scalar-element lists.
+
+
 ## Select the Index Column
 
 Select the primary datetime index of the table using the [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression).

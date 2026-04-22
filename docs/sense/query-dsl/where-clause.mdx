@@ -26,6 +26,10 @@ Comparison operands can reference table columns (for example, `stage_rem_second`
 Column identifiers follow the Continuous Query column names. See [Column Mappings](/sense/query-dsl/column-expressions#column-mappings) for a full list.
 </Note>
 
+<Note>
+Inside a subquery over a scalar-element list (for example, `List[Utf8]` note `tags`), the reserved identifier `element` refers to the list element itself — e.g. `"element != 'unspecified'"`. Struct-element list predicates reference the struct field names directly. See [List-column aggregation](/sense/query-dsl/list-column-aggregation#filter-elements-with-where) for the full context.
+</Note>
+
 ## Filter rows before grouping
 
 <CodeGroup>
