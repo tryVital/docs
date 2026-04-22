@@ -15,7 +15,7 @@ Check out the updated [Column expressions](/sense/query-dsl/column-expressions#m
 
 - New query table: `menstrual_cycle`, with scalar columns (`period_start`, `period_end`, `cycle_end`, `is_predicted`, `source_*`) and list-of-struct columns (`menstrual_flow`, `cervical_mucus`, `basal_body_temperature`, `intermenstrual_bleeding`, `contraceptive`, `detected_deviations`, `ovulation_test`, `home_pregnancy_test`, `home_progesterone_test`, `sexual_activity`).
 - New index expression: `{ "index": "menstrual_cycle" }` / `MenstrualCycle.index()`.
-- Aggregate the nested daily logs with the [list-column aggregation](/sense/query-dsl/list-column-aggregation)
+- Aggregate the nested daily logs with the [list-column aggregation](/sense/query-dsl/list-column-aggregation).
 
 Example — period end, cycle end, and mean basal body temperature, one row per cycle:
 
