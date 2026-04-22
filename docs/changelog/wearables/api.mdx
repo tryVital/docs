@@ -5,18 +5,17 @@ description: "Changelog of Junction Wearables API updates including Sense readin
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-### Junction Sense Menstrual Cycle resource & list-column aggregation (April 2026)
+### Junction Sense: Menstrual Cycle resource (April 2026)
 
-Junction Sense now supports the `menstrual_cycle` query table, and introduces a subquery syntax for aggregating list-column elements — for example, averaging the basal body temperature entries within each cycle.
+Junction Sense now supports the `menstrual_cycle` query table, covering cycle-level scalars and the nested daily logs.
 
-Check out [List-column aggregation](/sense/query-dsl/list-column-aggregation) and the updated [Column expressions](/sense/query-dsl/column-expressions#menstrualcycle) reference for full details.
+Check out the updated [Column expressions](/sense/query-dsl/column-expressions#menstrualcycle) reference for the full field mapping.
 
 <Accordion icon="droplet" iconType="duotone" title="Details" defaultOpen>
 
 - New query table: `menstrual_cycle`, with scalar columns (`period_start`, `period_end`, `cycle_end`, `is_predicted`, `source_*`) and list-of-struct columns (`menstrual_flow`, `cervical_mucus`, `basal_body_temperature`, `intermenstrual_bleeding`, `contraceptive`, `detected_deviations`, `ovulation_test`, `home_pregnancy_test`, `home_progesterone_test`, `sexual_activity`).
 - New index expression: `{ "index": "menstrual_cycle" }` / `MenstrualCycle.index()`.
-- New select-expression variant for list columns: a scalar-output subquery with `select` / `from` (UNNEST) / optional `where`, producing one scalar per outer row. Wrap the subquery in an outer aggregate (e.g. `.mean()`) to use it inside a GROUP BY.
-- Inside an UNNEST `where` over a scalar-element list (e.g. `List[Utf8]`), the reserved identifier `element` refers to the element value itself.
+- Aggregate the nested daily logs with the [list-column aggregation](/sense/query-dsl/list-column-aggregation)
 
 Example — period end, cycle end, and mean basal body temperature, one row per cycle:
 
@@ -57,6 +56,48 @@ va.select(
     {
       "date_trunc": { "value": 1, "unit": "day" },
       "arg": { "index": "menstrual_cycle" }
+    }
+  ]
+}
+```
+</CodeGroup>
+
+</Accordion>
+
+### Junction Sense: list-column aggregation (April 2026)
+
+Junction Sense now supports aggregating the elements of list columns via a scalar-output subquery - for example, counting meaningful flow days per cycle or summing elements of a scalar-element list.
+
+Check out [List-column aggregation](/sense/query-dsl/list-column-aggregation) for the full reference.
+
+<Accordion icon="list-tree" iconType="duotone" title="Details" defaultOpen>
+
+- New select-expression variant for list columns: a scalar-output subquery with `select` / `from` (UNNEST) / optional `where`, producing one scalar per outer row. Wrap the subquery in an outer aggregate (e.g. `.mean()`) to use it inside a GROUP BY.
+- `arg` in the subquery's `select` has three shapes: `null` (SQL `COUNT(*)`), a struct-field reference (struct-element lists), or `{ "element": true }` (scalar-element lists).
+- Inside an UNNEST `where` over a scalar-element list (e.g. a list of string tags), the reserved identifier `element` refers to the element value itself.
+
+Example — count only the meaningful flow entries within each menstrual cycle:
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.MenstrualCycle.index(),
+    va.MenstrualCycle.col("menstrual_flow")
+        .unnest_and_select(lambda col: col.count())
+        .where("flow != 'none'")
+)
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "index": "menstrual_cycle" },
+    {
+      "select": { "func": "count", "arg": null },
+      "from": { "unnest": { "menstrual_cycle": "menstrual_flow" } },
+      "where": "flow != 'none'"
     }
   ]
 }
