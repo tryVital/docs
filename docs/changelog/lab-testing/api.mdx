@@ -3,6 +3,20 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### PSC Appointment Scheduling API Improvements (April 2026)
+
+We have introduced three opt-in features to the PSC Appointment Scheduling API to help improve the availability and reliability of the end patient experience.
+
+<Accordion title="Details" defaultOpen icon="pencil" iconType="duotone">
+  You can now:
+
+  * [Query PSC availability through our minutely-updated cache](/lab/walk-in/psc-appointment-scheduling-opt-ins#availability-cache) to improve your slot searching and selection experience.
+  * [Specify an Idempotency Key](/lab/walk-in/psc-appointment-scheduling-opt-ins#idempotency-key) to ensure that your booking CTA is resilient against any network connectivity issues.
+  * [Adopt the Async Confirmation flow](/lab/walk-in/psc-appointment-scheduling-opt-ins#async-confirmation) to buffer your booking experience from any instability and unavailability of the underlying PSC Provider API.
+
+  Check out the [PSC Appointment Scheduling: Opt-in Features](/lab/walk-in/psc-appointment-scheduling-opt-ins) for details.
+</Accordion>
+
 ### Status details for order events and top-level `last_event` field (Mar 2026)
 
 Each order event in API responses and webhook bodies now has a nullable `status_detail` field. If populated, it will contain more granular information about the status.

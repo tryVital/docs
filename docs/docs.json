@@ -158,7 +158,14 @@
                 "pages": [
                   "lab/walk-in/overview",
                   "lab/walk-in/order-lifecycle",
-                  "lab/walk-in/psc-appointment-scheduling",
+                  {
+                    "group": "PSC Appointment Scheduling",
+                    "expanded": true,
+                    "pages": [
+                      "lab/walk-in/psc-appointment-scheduling",
+                      "lab/walk-in/psc-appointment-scheduling-opt-ins"
+                    ]
+                  },
                   "lab/walk-in/webhooks",
                   "lab/walk-in/communications"
                 ]
