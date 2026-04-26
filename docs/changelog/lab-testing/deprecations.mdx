@@ -10,9 +10,9 @@ description: "Deprecated features in the Junction Lab Testing API, including the
 <Steps>
   <Step title="Remove lab_test_id usage" stepNumber="1" titleSize="p">
     In the `order` payload, remove the usage of `lab_test_id`
-    ```json
+    ```jsonc
     {
-        "lab_test_id": "some_id" # Remove this
+        "lab_test_id": "some_id" // Remove this
     }
     ```
   </Step>
