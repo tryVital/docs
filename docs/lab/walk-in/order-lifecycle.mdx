@@ -86,7 +86,7 @@ This allows you to build an experience that can order the lab test _and_ book an
     1. The Order will move through the `requisition_created`, `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
     2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-    You will receive three `labtest.order.updated` events, one each for the three Order status transition. You will also received a `labtest.appointment.updated` event for the Appointment status transition.
+    You will receive three `labtest.order.updated` events, one each for the three Order status transitions. You will also receive a `labtest.appointment.updated` event for the Appointment status transition.
   </Step>
 </Steps>
 
@@ -121,7 +121,7 @@ When this feature is enabled on your Team, you can book appointments with Quest 
 
 <Steps>
   <Step title="Creating an appointment">
-    You create an Appointment for an Order to a Arizona PSC.
+    You create an Appointment for an Order to an Arizona PSC.
 
     The Appointment starts with the `reserved` status.
   </Step>
@@ -134,13 +134,13 @@ When this feature is enabled on your Team, you can book appointments with Quest 
     1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
     2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-    You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also received a `labtest.appointment.updated` event for the Appointment status transition.
+    You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also receive a `labtest.appointment.updated` event for the Appointment status transition.
   </Step>
 </Steps>
 
 ### Appointment Booking Failure
 
-If an we are unable to book the Appointment asynchronously, then:
+If we are unable to book the Appointment asynchronously, then:
 
 - The Appointment will move to the `cancelled` status; and
 - There is no change to the Order, which will remain in it's last status.
