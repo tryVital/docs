@@ -42,7 +42,7 @@ The Finite State Machine that defines the possible transitions for the low-level
 
 ## Appointment Lifecycle
 
-The appointment lifecycle is separate from the order lifecyle, and it corresponds to a single appointment. The possible status are defined as follows:
+The appointment lifecycle is separate from the order lifecycle, and it corresponds to a single appointment. The possible status are defined as follows:
 
 - `pending`: An appointment was placed in the system, and is pending updates from the phlebotomy service.
 - `scheduled`: An appointment was scheduled or rescheduled.
@@ -53,7 +53,7 @@ The Finite State Machine that defines the possible transitions for the appointme
   ![](/img/walkin_appt_statuses.png)
 </Frame>
 
-The events are related to a single appointment. An order can have multiple existing appointments in Vital system, although only one appointment will be considered active and returned when using the [GET Appointment endpoint](/api-reference/lab-testing/psc-schedulling/get-psc-appointment).
+The events are related to a single appointment. An order can have multiple existing appointments in Vital system, although only one appointment will be considered active and returned when using the [GET Appointment endpoint](/api-reference/lab-testing/psc-scheduling/get-psc-appointment).
 
 ## Scheduling Appointments Before A Requisition Has Been Created
 
@@ -109,7 +109,7 @@ In cases where appointments can be scheduled before a requisition has been creat
 1. More than 8 hours have passed since the order was created, and no requisition has been received.
 2. There is less than 2 hours until the appointment start time, and no requisition has been received.
 
-## Arizona Schedulling
+## Arizona Scheduling
 
 <Note>
   This feature is available upon request. To enable, please get in touch with your Customer Success Manager
@@ -143,8 +143,8 @@ When this feature is enabled on your Team, you can book appointments with Quest 
 If we are unable to book the Appointment asynchronously, then:
 
 - The Appointment will move to the `cancelled` status; and
-- There is no change to the Order, which will remain in it's last status.
+- There is no change to the Order, which will remain in its last status.
 
-### Cancellation and Reschedulling
+### Cancellation and Rescheduling
 
-Cancellation and reschedulling for Arizona should be done directly by the patient, via the email they receive from Sonora Quest. It is not possible to cancel/reschedule via Junction.
+Cancellation and rescheduling for Arizona should be done directly by the patient, via the email they receive from Sonora Quest. It is not possible to cancel/reschedule via Junction.
