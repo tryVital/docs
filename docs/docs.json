@@ -362,7 +362,8 @@
                 "group": "Bring Your Own OAuth",
                 "pages": [
                   "wearables/connecting-providers/bring-your-own-oauth/overview",
-                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
+                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials",
+                  "wearables/connecting-providers/bring-your-own-oauth/callback-endpoints"
                 ]
               },
               {
