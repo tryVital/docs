@@ -1,0 +1,123 @@
+---
+title: "Hosting OAuth Callbacks on Your Own Domain"
+---
+
+Some OAuth providers require that redirect URIs belong to a domain you own and can verify. This is common during app review or when providers enforce verified domain policies.
+
+In these cases, you cannot register a Junction redirect URI such as `https://api.us.junction.com/…` directly, because you do not own that domain.
+
+The solution is to host a lightweight callback endpoint on your own domain that forwards the OAuth response to Junction.
+
+## When this is required
+
+Use this pattern if a provider:
+
+- Requires proof of domain ownership for redirect URIs
+- Enforces trusted or verified domains
+- Rejects third-party redirect URIs
+
+## Customer-hosted callback endpoint
+
+The full setup has four parts: configure a redirect URI override in Junction, register with the provider, implement the endpoint, and target the correct Junction endpoint for your environment.
+
+<Note>
+Examples in this guide use **Acme Fit** (`acme_fit`) as a fictional provider for illustration purposes.
+</Note>
+
+<Steps>
+
+<Step title="Configure your redirect URI in Junction">
+
+In your Junction dashboard (or via the Management API), set the redirect URL override for the provider to your domain's callback URL. You can find this under [custom credentials](/wearables/connecting-providers/bring-your-own-oauth/overview#through-the-dashboard).
+
+```
+https://yourdomain.com/oauth_callback/{provider}
+```
+
+Example:
+
+```
+https://yourdomain.com/oauth_callback/acme_fit
+```
+
+This is the URI Junction passes to the provider during the authorization code exchange. It must exactly match the URI you register in Step 2.
+
+<Note>
+The path shown in the redirect URI override is just a suggestion. You can use any path that meets your provider's redirect URI requirements — what matters is that it sits on a domain you control and that your endpoint forwards the OAuth response to Junction.
+</Note>
+
+</Step>
+
+<Step title="Register your redirect URI with the provider">
+
+Register the same URI from Step 1 as an allowed redirect URI with the provider:
+
+```
+https://yourdomain.com/oauth_callback/{provider}
+```
+
+</Step>
+
+<Step title="Implement the callback endpoint">
+
+Your endpoint must:
+
+- Accept the incoming OAuth redirect (GET request)
+- Return a `307 Temporary Redirect`
+- Forward the request to the appropriate Junction endpoint
+- Preserve the full original query string unchanged
+
+Example flow:
+
+```
+Incoming request:
+GET /oauth_callback/acme_fit?code=abc123&state=xyz
+
+Response:
+307 Temporary Redirect
+Location: https://api.us.junction.com/v2/link/connect/acme_fit?code=abc123&state=xyz
+```
+
+Implementation requirements:
+
+- Use HTTP `307` (not `302`) — this preserves the GET method
+- Forward the full query string exactly as received
+- Do not modify, parse, or re-encode any parameters — the `state` parameter is a signed token that must arrive at Junction unmodified
+
+</Step>
+
+<Step title="Use the correct Junction endpoint">
+
+Choose the Junction target URL based on your environment:
+
+<AccordionGroup>
+<Accordion title="Junction endpoint URLs by environment" defaultOpen>
+
+| Environment       | Junction endpoint |
+| ----------------- | ----------------- |
+| Sandbox (US)      | `https://api.sandbox.us.junction.com/v2/link/connect/{provider}` |
+| Sandbox (EU)      | `https://api.sandbox.eu.junction.com/v2/link/connect/{provider}` |
+| Production (US)   | `https://api.us.junction.com/v2/link/connect/{provider}` |
+| Production (EU)   | `https://api.eu.junction.com/v2/link/connect/{provider}` |
+
+</Accordion>
+</AccordionGroup>
+
+<Note>
+Ensure your callback endpoint forwards to the correct environment. Do not forward sandbox traffic to production or vice versa.
+</Note>
+
+</Step>
+
+</Steps>
+
+## How it works
+
+The OAuth provider validates the `redirect_uri` in two places: when the authorization request is initiated, and when Junction exchanges the authorization code for an access token. Junction uses the redirect URI stored in your team credentials (set in Step 1) for the code exchange — so both values must match exactly.
+
+By registering your own domain as the redirect URI:
+
+1. You satisfy the provider's domain ownership requirement
+2. The provider redirects the user to your endpoint after authorization
+3. Your endpoint forwards the callback to Junction via a `307` redirect
+4. Junction completes the token exchange using your registered redirect URI
