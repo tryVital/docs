@@ -4,7 +4,7 @@ title: "Hosting OAuth Callbacks on Your Own Domain"
 
 Some OAuth providers require that redirect URIs belong to a domain you own and can verify. This is common during app review or when providers enforce verified domain policies.
 
-In these cases, you cannot register a Junction redirect URI such as `https://api.tryvital.io/…` directly, because you do not own that domain.
+In these cases, you cannot register a Junction redirect URI such as `https://api.us.junction.com/…` directly, because you do not own that domain.
 
 The solution is to host a lightweight callback endpoint on your own domain that forwards the OAuth response to Junction.
 
@@ -75,7 +75,7 @@ GET /oauth_callback/acme_fit?code=abc123&state=xyz
 
 Response:
 307 Temporary Redirect
-Location: https://api.tryvital.io/v2/link/connect/acme_fit?code=abc123&state=xyz
+Location: https://api.us.junction.com/v2/link/connect/acme_fit?code=abc123&state=xyz
 ```
 
 Implementation requirements:
@@ -95,9 +95,10 @@ Choose the Junction target URL based on your environment:
 
 | Environment       | Junction endpoint |
 | ----------------- | ----------------- |
-| Sandbox (US)      | `https://api.sandbox.tryvital.io/v2/link/connect/{provider}` |
-| Production (US)   | `https://api.tryvital.io/v2/link/connect/{provider}` |
-| Production (EU)   | `https://api.eu.tryvital.io/v2/link/connect/{provider}` |
+| Sandbox (US)      | `https://api.sandbox.us.junction.com/v2/link/connect/{provider}` |
+| Sandbox (EU)      | `https://api.sandbox.eu.junction.com/v2/link/connect/{provider}` |
+| Production (US)   | `https://api.us.junction.com/v2/link/connect/{provider}` |
+| Production (EU)   | `https://api.eu.junction.com/v2/link/connect/{provider}` |
 
 </Accordion>
 </AccordionGroup>
