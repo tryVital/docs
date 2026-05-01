@@ -3,6 +3,59 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Lab account delegation status enforced (May 2026)
+
+We will soon be enforcing that at least one physician is supplied on order creation for Labcorp, Quest, and Sonora Quest labs _if your order is configured to use a delegated lab account_. Up until now, even if the order should be delegated, we would allow a fallback to using Junction physicians if a physician wans't provided in the order. Going forward, non-delegated orders will use Junction physicians, but delegated orders must supply a physician.
+
+There will be a grace period to give you time to ensure your integration is always supplying a physician for delegated orders. Details of how to check your delegation status are below. Please contact your customer success manager with any questions.
+
+<Accordion title="Details" defaultOpen icon="pencil" iconType="duotone">
+  You can view the lab account for a given team using the [team-level Get Lab Accounts endpoint](/api-reference/lab-testing/lab_accounts), or all lab accounts for an org using the [org-level Get Lab Accounts endpoint](/api-reference/org-management/lab-accounts/get-lab-accounts). Each will include the `delegated_flow` for each lab account in the response body.
+
+  Delegated flow values of either `order_delegated` or `fully_delegated` mean that we expect you to be supplying your own physicians in order requests. This only applies when you're using your own lab account or a Junction subaccount. If you only order with Junction platform accounts, these are non-delegated and orders will continue to use our physicians.
+
+  Whenever possible, we recommend specifying the lab account ID in requests.
+
+  Here are some example scenarios.
+
+  #### You haven't created any client lab accounts and you place a Quest order
+
+  This order will use Junction's Quest account and Junction physicians. You don't need to specify the lab account ID or include physicians in the request.
+
+  #### You are using a non-delegated Junction subaccount and place a Labcorp order
+
+  This order will use the Junction subaccount. Please provide the lab account ID. Since the lab account isn't delegated, you don't need to supply physicians in the request.
+
+  ```json
+  {
+    "order" {
+      ...
+      "lab_account_id": "<UUID of the subaccount you want to use>"
+      ...
+    }
+  }
+  ```
+
+  #### You are using your own delegated Quest account
+
+  This order will use your own account. Please provide the lab account ID. Since the lab account is delegated, you must supply physician information in the request.
+
+  ```json
+  {
+    "order" {
+      ...
+      "lab_account_id": "<UUID of the lab account you want to use>",
+      "physician": {
+        "first_name": "<physician's first name>",
+        "last_name": "<physician's last name>",
+        "npi": "<physician's NPI>",
+      }
+      ...
+    }
+  }
+  ```
+</Accordion>
+
 ### PSC Appointment Scheduling API Improvements (April 2026)
 
 We have introduced three opt-in features to the PSC Appointment Scheduling API to help improve the availability and reliability of the end patient experience.
