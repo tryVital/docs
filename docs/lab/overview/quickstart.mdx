@@ -14,7 +14,7 @@ In the following, replace `{{BASE_URL}}` with your team's [environment URL](/api
 
 ### (1) Creating a user
 
-In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the userId on our side, which you'll be able to use for future requests.
+In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the `user_id` on our side, which you'll be able to use for future requests.
 
 You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
 
@@ -193,7 +193,7 @@ This will return a list of all the available tests to you. They include a descri
           "name": "US Specialty Lab",
           "first_line_address": "123 Main St",
           "city": "New York",
-          "zipcode": "10001",
+          "zipcode": "10001"
       },
       "markers": [
           {
@@ -204,7 +204,7 @@ This will return a list of all the available tests to you. They include a descri
               "max_value": 200,
               "unit": "fg/L"
           }
-      ],
+      ]
     }
   ]
 }
