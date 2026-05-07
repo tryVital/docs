@@ -1,4 +1,4 @@
-# Vital Docs
+# Junction Docs
 
 ## Quickstart
 
