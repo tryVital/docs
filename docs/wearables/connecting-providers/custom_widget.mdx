@@ -22,17 +22,12 @@ The first step to creating a custom widget is to make a call to the [providers e
 
 <CodeGroup>
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
-import {
-  LinkTokenExchange,
-  LinkGenerateOauthLinkRequest,
-  OAuthProviders,
-} from "@tryvital/vital-node/api";
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-  apiKey: "<my_api_key>",
-  environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
 const allProviders = await client.providers.getAll();
@@ -51,13 +46,12 @@ const allProviders = await client.providers.getAll();
 
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.o_auth_providers import OAuthProviders
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 all_providers = client.providers.get_all()
@@ -76,41 +70,36 @@ all_providers = client.providers.get_all()
 
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
-import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.types.OAuthProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-var all_providers = vital.providers().getAll();
+var allProviders = client.providers().getAll();
 ```
 
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-response, err := client.Providers.getAll(context.TODO())
-
+response, err := c.Providers.GetAll(context.TODO(), nil)
 if err != nil {
-  return err
+    return err
 }
-
 fmt.Printf("Received data %s\n", response)
 ```
 
@@ -135,34 +124,25 @@ Once a user has selected a provider, you can generate a link token. This link to
 
 <CodeGroup>
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
-import {
-  LinkTokenExchange,
-  LinkGenerateOauthLinkRequest,
-  OAuthProviders,
-} from "@tryvital/vital-node/api";
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-  apiKey: "<my_api_key>",
-  environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
-  userId: "<user_id>",
-};
-const tokenResponse = await client.link.token(request);
+const tokenResponse = await client.link.token({ userId: "<user_id>" });
 ```
 
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.o_auth_providers import OAuthProviders
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 token_response = client.link.token(user_id="<user_id>")
@@ -170,47 +150,43 @@ token_response = client.link.token(user_id="<user_id>")
 
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
-import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.types.OAuthProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.LinkTokenExchange;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkTokenExchange request = LinkTokenExchange
-        .builder()
+var tokenResponse = client.link().token(
+    LinkTokenExchange.builder()
         .userId("<user_id>")
-        .build();
-
-var token_response = vital.link().token(request);
+        .build()
+);
 ```
 
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
-provider := vital.ProvidersOura
-request := &vital.LinkTokenExchange{
-  UserId:   "<user_id>",
-  Provider: &provider,
+
+response, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId: "<user_id>",
+})
+if err != nil {
+    return err
 }
-
-response, err := client.Link.Token(context.TODO(), request)
-
 fmt.Printf("Received data %s\n", response)
 ```
 
@@ -224,112 +200,95 @@ Once you have a link token, you can use it to generate an OAuth link, or authori
 
 <CodeGroup>
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LinkTokenExchange, LinkGenerateOauthLinkRequest, OAuthProviders } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
-    userId: "<user_id>",
-}
-const tokenResponse = await client.link.token(request)
+const tokenResponse = await client.link.token({ userId: "<user_id>" });
 
-const linkRequest: LinkGenerateOauthLinkRequest = {
+const auth = await client.link.generateOauthLink({
+    oauthProvider: "oura",
     vitalLinkToken: tokenResponse.linkToken,
-}
-
-const auth = await client.link.generateOauthLink(
-    OAuthProviders.<provider>,
-    linkRequest
-)
+});
 ```
 
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.o_auth_providers import OAuthProviders
+from junction import Junction, OAuthProviders
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 token_response = client.link.token(user_id="<user_id>")
 
 oauth = client.link.generate_oauth_link(
-  oauth_provider=OAuthProviders.<provider>,
-  vital_link_token=token_response.link_token,
+    OAuthProviders.OURA,
+    vital_link_token=token_response.link_token,
 )
 ```
 
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
-import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.types.OAuthProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.GenerateOauthLinkLinkRequest;
+import com.junction.api.resources.link.requests.LinkTokenExchange;
+import com.junction.api.types.OAuthProviders;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkTokenExchange request = LinkTokenExchange
-        .builder()
+var tokenResponse = client.link().token(
+    LinkTokenExchange.builder()
         .userId("<user_id>")
-        .build();
+        .build()
+);
 
-var token_response = vital.link().token(request);
-
-LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
-        .builder()
-        .vitalLinkToken(token_response.getLinkToken())
-        .build();
-
-var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
+var oauth = client.link().generateOauthLink(
+    OAuthProviders.OURA,
+    GenerateOauthLinkLinkRequest.builder()
+        .vitalLinkToken(tokenResponse.getLinkToken())
+        .build()
+);
 ```
 
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
-provider := vital.ProvidersOura
-request := &vital.LinkTokenExchange{
-  UserId:   "<user_id>",
-  Provider: &provider,
-}
 
-response, err := client.Link.Token(context.TODO(), request)
-
+tokenResponse, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId: "<user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 
-generateLinkRequest := &vital.LinkGenerateOauthLinkRequest{
-  VitalLinkToken: response.LinkToken,
-}
-
-oauth, err := client.Link.GenerateOauthLink(context.TODO(), vital.OAuthProvidersOura, generateLinkRequest)
-
+oauth, err := c.Link.GenerateOauthLink(context.TODO(), &junction.GenerateOauthLinkLinkRequest{
+    OauthProvider:  junction.OAuthProvidersOura,
+    VitalLinkToken: &tokenResponse.LinkToken,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", oauth)
 ```
@@ -340,83 +299,81 @@ fmt.Printf("Received data %s\n", oauth)
 
 <CodeGroup>
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { IndividualProviderData, PasswordProviders } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const request: IndividualProviderData = {
-    username: '<username>',
-    password: '<password>',
-}
-const data = await client.link.connectPasswordProvider(PasswordProviders.<provider>, request)
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.link.connectPasswordProvider({
+    provider: "whoop",
+    username: "<username>",
+    password: "<password>",
+});
 ```
 
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.password_providers import PasswordProviders
+from junction import Junction, PasswordProviders
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.link.connect_password_provider(
-  PasswordProviders.<provider>,
-  username="<username>",
-  password="<password>"
+    PasswordProviders.WHOOP,
+    username="<username>",
+    password="<password>",
 )
 ```
 
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.IndividualProviderData;
-import com.vital.api.types.PasswordProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.IndividualProviderData;
+import com.junction.api.types.PasswordProviders;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-IndividualProviderData request = IndividualProviderData
-        .builder()
+var data = client.link().connectPasswordProvider(
+    PasswordProviders.WHOOP,
+    IndividualProviderData.builder()
         .username("<username>")
         .password("<password>")
-        .build();
-
-var data = vital.link().connectPasswordProvider(PasswordProviders.<provider>, request);
+        .build()
+);
 ```
 
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.IndividualProviderData{
-  Username: "<username>",
-  Password: "<password>",
-}
-
-response, err := client.Link.ConnectPasswordProvider(
-  context.TODO(),
-  vital.PasswordProviders<provider>,
-  request
-)
+response, err := c.Link.ConnectPasswordProvider(context.TODO(), &junction.IndividualProviderData{
+    Provider: junction.PasswordProvidersWhoop,
+    Username: "<username>",
+    Password: "<password>",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

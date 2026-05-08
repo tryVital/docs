@@ -20,113 +20,96 @@ curl --request POST \
 '
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { EmailProviderAuthLink, LinkTokenExchange } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
-    userId: "<user_id>",
-}
-const tokenResponse = await client.link.token(request)
+const tokenResponse = await client.link.token({ userId: "<user_id>" });
 
-const linkRequest: EmailProviderAuthLink = {
-    vitalLinkToken: tokenResponse.linkToken,
+const data = await client.link.connectEmailAuthProvider({
+    provider: "freestyle_libre",
     email: "<email>",
-    region: Region.<region>
-}
-
-const connectEmailResponse = await client.link.connectEmailAuthProvider(
-    "freestyle_libre",
-    linkRequest
-)
+    vitalLinkToken: tokenResponse.linkToken,
+});
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 token_response = client.link.token(user_id="<user_id>")
 
-linkResponse = client.link.connect_email_auth_provider(
-  provider="freestyle_libre", 
-  email="<email>", 
-  vital_link_token=token_response.link_token
+data = client.link.connect_email_auth_provider(
+    email="<email>",
+    vital_link_token=token_response.link_token,
 )
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.EmailProviderAuthLink;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.EmailProviderAuthLink;
+import com.junction.api.resources.link.requests.LinkTokenExchange;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkTokenExchange request = LinkTokenExchange
-        .builder()
+var tokenResponse = client.link().token(
+    LinkTokenExchange.builder()
         .userId("<user_id>")
-        .build();
+        .build()
+);
 
-var tokenResponse = vital.link().token(request);
-
-EmailProviderAuthLink request = EmailProviderAuthLink
-        .builder()
-        .vitalLinkToken(tokenResponse.getLinkToken())
+var data = client.link().connectEmailAuthProvider(
+    "freestyle_libre",
+    EmailProviderAuthLink.builder()
         .email("<email>")
-        .build();
-
-var data = vital.link().connectEmailAuthProvider("<provider>", request);
+        .vitalLinkToken(tokenResponse.getLinkToken())
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-provider := vital.ProvidersOura
-request := &vital.LinkTokenExchange{
-  UserId:   "<user_id>",
-  Provider: &provider,
-}
-
-response, err := client.Link.Token(context.TODO(), request)
-
+tokenResponse, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId: "<user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 
-emailAuthRequest := &vital.EmailProviderAuthLink{
-  VitalLinkToken: response.LinkToken,
-  Email:          "<email>",
-}
-
-emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre", emailAuthRequest)
+response, err := c.Link.ConnectEmailAuthProvider(context.TODO(), &junction.EmailProviderAuthLink{
+    Provider:       "freestyle_libre",
+    Email:          "<email>",
+    VitalLinkToken: &tokenResponse.LinkToken,
+})
 if err != nil {
-  return err
+    return err
 }
-fmt.Printf("Received data %s\n", emailAuth)
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

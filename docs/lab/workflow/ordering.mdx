@@ -38,19 +38,19 @@ When ordering from **one** previously created _Lab Test_, the `order_set` field 
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction, OrderSetRequest
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 client.lab_tests.create_order(
-        order_set=OrderSet(
-            lab_test_ids=["lab_test_id"]
-        )
-        ...
+    order_set=OrderSetRequest(
+        lab_test_ids=["<lab_test_id>"],
+    ),
+    # ...
 )
 ```
 </CodeGroup>
@@ -62,19 +62,19 @@ You may want to combine two or more existing Lab Tests without creating a new on
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction, OrderSetRequest
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 client.lab_tests.create_order(
-        order_set=OrderSet(
-            lab_test_ids=["lab_test_id1", "lab_test_id_2"]
-        )
-        ...
+    order_set=OrderSetRequest(
+        lab_test_ids=["<lab_test_id_1>", "<lab_test_id_2>"],
+    ),
+    # ...
 )
 ```
 </CodeGroup>
@@ -92,23 +92,23 @@ It is possible to order `à la carte` using Junction `marker_ids` or the lab's `
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import AddOnOrder, Junction, LabTestCollectionMethod, OrderSetRequest
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 client.lab_tests.create_order(
-        order_set=OrderSet(
-            add_on=AddOn(
-                provider_ids=["322022"]
-                # marker_ids=[1] 
-            )
+    order_set=OrderSetRequest(
+        add_on=AddOnOrder(
+            provider_ids=["322022"],
+            # marker_ids=[1],
         ),
-        collection_method="walk_in_test",
-        ...
+    ),
+    collection_method=LabTestCollectionMethod.WALK_IN_TEST,
+    # ...
 )
 ```
 </CodeGroup>
@@ -120,24 +120,24 @@ You may also add extra **markers** to an order. For example, you want to order t
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import AddOnOrder, Junction, LabTestCollectionMethod, OrderSetRequest
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 client.lab_tests.create_order(
-        order_set=OrderSet(
-            lab_test_ids=["lab_test_id"],
-            add_on=AddOn(
-                provider_ids=["322022"]
-                # marker_ids=[1] 
-            )
+    order_set=OrderSetRequest(
+        lab_test_ids=["<lab_test_id>"],
+        add_on=AddOnOrder(
+            provider_ids=["322022"],
+            # marker_ids=[1],
         ),
-        collection_method="walk_in_test",
-        ...
+    ),
+    collection_method=LabTestCollectionMethod.WALK_IN_TEST,
+    # ...
 )
 ```
 </CodeGroup>
@@ -156,20 +156,20 @@ When ordering, you must select one of these, either at lab test creation, or at 
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction, LabTestCollectionMethod, OrderSetRequest
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 client.lab_tests.create_order(
-        order_set=OrderSet(
-            lab_test_ids=["lab_test_id"],
-        ),
-        collection_method="walk_in_test",
-        ...
+    order_set=OrderSetRequest(
+        lab_test_ids=["<lab_test_id>"],
+    ),
+    collection_method=LabTestCollectionMethod.WALK_IN_TEST,
+    # ...
 )
 ```
 </CodeGroup>
@@ -181,20 +181,20 @@ As mentioned above, not all `markers` are `à la carte` orderable. You can find 
 <CodeGroup>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 markers = client.lab_tests.get_markers(
-        name="322022",
-        a_la_carte_enabled=True
+    name="322022",
+    a_la_carte_enabled=True,
 )
 
-if not all([m.a_la_carte_enabled for m in markers.markers]):
+if not all(m.a_la_carte_enabled for m in markers.markers):
     raise Exception("Markers not a_la_carte_enabled")
 ```
 </CodeGroup>

@@ -9,7 +9,7 @@ openapi: "POST /v3/order/{order_id}/phlebotomy/appointment/request"
 curl --request POST \
      --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/phlebotomy/appointment/request' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      --data '
 {
     "address":
@@ -27,107 +27,98 @@ curl --request POST \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import AppointmentProvider, Junction, UsAddress
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-request = RequestAppointmentRequest(
-    address= UsAddress(
+data = client.lab_tests.request_phlebotomy_appointment(
+    "<order_id>",
+    address=UsAddress(
         first_line="123 Main St",
-        second_line="",
         city="San Francisco",
         state="CA",
-        zip_code="94111",
-        unit="",
+        zip_code="94105",
     ),
-    provider="phlebfinders"
+    provider=AppointmentProvider.PHLEBFINDERS,
 )
-
-data = client.lab_tests.request_phlebotomy_appointment(order_id="<order_id>", request=request)
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { RequestAppointmentRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const address: UsAddress = {
-    firstLine: "123 Main St",
-    city: "San Francisco",
-    state: "CA",
-    zipCode: "94105",
-}
-
-const request: RequestAppointmentRequest = {
-    address: address,
-    provider: "phlebfinders"
-}
-
-const data = await client.labTests.requestPhlebotomyAppointment("<order_id>", request);
+const data = await client.labTests.requestPhlebotomyAppointment({
+    orderId: "<order_id>",
+    address: {
+        firstLine: "123 Main St",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94105",
+    },
+    provider: "phlebfinders",
+});
 ```
 
-
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.RequestAppointmentRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.RequestAppointmentRequest;
+import com.junction.api.types.AppointmentProvider;
+import com.junction.api.types.UsAddress;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
-
-UsAddress address = UsAddress
-    .builder()
-    .firstLine("<first_line>")
-    .city("<city>")
-    .state("<state>")
-    .zipCode("<zip_code>")
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
     .build();
 
-RequestAppointmentRequest request = RequestAppointmentRequest
-        .builder()
-        .address(address)
-        .provider("phlebfinders")
-        .build();
-
-var data = vital.labTests().requestPhlebotomyAppointment("<order_id>", request);
+var data = client.labTests().requestPhlebotomyAppointment(
+    "<order_id>",
+    RequestAppointmentRequest.builder()
+        .address(
+            UsAddress.builder()
+                .firstLine("123 Main St")
+                .city("San Francisco")
+                .state("CA")
+                .zipCode("94105")
+                .build()
+        )
+        .provider(AppointmentProvider.PHLEBFINDERS)
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-address := &vital.UsAddress{
-    FirstLine: "123 Main St",
-    City:      "New York",
-    State:     "NY",
-    ZipCode:   "10001",
-}
-request := &vital.RequestAppointmentRequest{
-    Address: address,
-    Provider: "phlebfinders",
-}
-
-response, err := client.LabTests.RequestPhlebotomyAppointment(context.TODO(), "<order_id>", request)
+response, err := c.LabTests.RequestPhlebotomyAppointment(context.TODO(), &junction.RequestAppointmentRequest{
+    OrderId: "<order_id>",
+    Address: &junction.UsAddress{
+        FirstLine: "123 Main St",
+        City:      "San Francisco",
+        State:     "CA",
+        ZipCode:   "94105",
+    },
+    Provider: junction.AppointmentProviderPhlebfinders,
+})
 if err != nil {
     return err
 }

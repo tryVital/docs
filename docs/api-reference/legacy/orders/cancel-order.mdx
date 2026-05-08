@@ -6,13 +6,62 @@ openapi: "POST /v2/testkit/orders/{order_id}/cancel"
 
 <RequestExample>
 
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.labTests.cancelOrder({ orderId: "<order_id>" });
+```
+
 ```python Python
-from vital import Client
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Client(api_key, "sandbox")
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
 
-data = client.Testkits.cancel(user_id="<user_id>")
+data = client.lab_tests.cancel_order("<order_id>")
+```
 
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.labTests().cancelOrder("<order_id>");
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.LabTests.CancelOrder(context.TODO(), &junction.CancelOrderLabTestsRequest{
+    OrderId: "<order_id>",
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

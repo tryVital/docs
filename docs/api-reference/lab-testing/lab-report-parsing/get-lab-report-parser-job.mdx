@@ -19,58 +19,61 @@ Retrieve the status and results of a lab report parsing job. When the job status
 curl --request GET \
      --url '{{BASE_URL}}/lab_report/v1/parser/job/<job_id>' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: YOUR_API_KEY'
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.lab_report.parser_get_job(job_id="<job_id>")
+data = client.lab_report.parser_get_job("<job_id>")
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-  apiKey: "<my_api_key>",
-  environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const data = await client.labReport.parserGetJob("<job_id>");
+const data = await client.labReport.parserGetJob({ jobId: "<job_id>" });
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-var data = vital.labReport().parserGetJob("<job_id>");
+var data = client.labReport().parserGetJob("<job_id>");
 ```
 
 ```go Go
 import (
-  "context"
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-response, err := client.LabReport.ParserGetJob(context.TODO(), "<job_id>")
+response, err := c.LabReport.ParserGetJob(context.TODO(), &junction.ParserGetJobLabReportRequest{
+    JobId: "<job_id>",
+})
 if err != nil {
     return err
 }

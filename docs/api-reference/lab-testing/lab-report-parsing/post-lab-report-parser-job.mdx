@@ -12,75 +12,89 @@ Upload a lab report file (PDF, JPEG, or PNG) to create a parsing job. The job wi
 curl --request POST \
      --url '{{BASE_URL}}/lab_report/v1/parser/job' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      --header 'Content-Type: multipart/form-data' \
      --form 'file=@/path/to/lab_report.pdf' \
+     --form 'user_id=<user_id>' \
      --form 'needs_human_review=false'
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 with open("lab_report.pdf", "rb") as f:
     data = client.lab_report.parser_create_job(
-        file=f,
-        needs_human_review=False
+        file=[f],
+        user_id="<user_id>",
+        needs_human_review=False,
     )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from "@tryvital/vital-node";
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 import * as fs from "fs";
 
-const client = new VitalClient({
-  apiKey: "<my_api_key>",
-  environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const file = fs.createReadStream("lab_report.pdf");
-const data = await client.labReport.parserCreateJob(file, {
-  needsHumanReview: false,
+const data = await client.labReport.parserCreateJob({
+    file: [fs.createReadStream("lab_report.pdf")],
+    userId: "<user_id>",
+    needsHumanReview: false,
 });
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labreport.requests.CreateLabReportParserJobBody;
 import java.io.File;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-File file = new File("lab_report.pdf");
-var data = vital.labReport().parserCreateJob(file);
+var data = client.labReport().parserCreateJob(
+    new File("lab_report.pdf"),
+    CreateLabReportParserJobBody.builder()
+        .userId("<user_id>")
+        .needsHumanReview(false)
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
-  "os"
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    "context"
+    "os"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
 file, _ := os.Open("lab_report.pdf")
 defer file.Close()
 
-response, err := client.LabReport.ParserCreateJob(context.TODO(), file, nil)
+response, err := c.LabReport.ParserCreateJob(context.TODO(), &junction.CreateLabReportParserJobBody{
+    File:             []io.Reader{file},
+    UserId:           "<user_id>",
+    NeedsHumanReview: junction.Bool(false),
+})
 if err != nil {
     return err
 }

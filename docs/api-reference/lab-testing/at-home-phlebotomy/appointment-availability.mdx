@@ -10,7 +10,7 @@ openapi: "POST /v3/order/phlebotomy/appointment/availability"
 curl --request POST \
      --url '{{BASE_URL}}/v3/order/phlebotomy/appointment/availability' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      --data '
 {
     "first_line": "256 West Lincoln Street",
@@ -23,92 +23,82 @@ curl --request POST \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.us_address import UsAddress
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-request = UsAddress(
+data = client.lab_tests.get_phlebotomy_appointment_availability(
     first_line="123 Main St",
-    second_line="",
     city="San Francisco",
     state="CA",
-    zip_code="94111",
-    unit="",
+    zip_code="94105",
 )
-
-
-data = client.lab_tests.get_phlebotomy_appointment_availability(request=request)
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { UsAddress } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: UsAddress = {
-    firstLine: "123 Main St",
-    city: "San Francisco",
-    state: "CA",
-    zipCode: "94105",
-}
-
-const data = await client.labTests.getPhlebotomyAppointmentAvailability(request);
+const data = await client.labTests.getPhlebotomyAppointmentAvailability({
+    body: {
+        firstLine: "123 Main St",
+        city: "San Francisco",
+        state: "CA",
+        zipCode: "94105",
+    },
+});
 ```
 
-
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.types.UsAddress;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.types.UsAddress;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
-
-UsAddress request = UsAddress
-    .builder()
-    .firstLine("<first_line>")
-    .city("<city>")
-    .state("<state>")
-    .zipCode("<zip_code>")
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
     .build();
 
-var data = vital.labTests().getPhlebotomyAppointmentAvailability(request);
+var data = client.labTests().getPhlebotomyAppointmentAvailability(
+    UsAddress.builder()
+        .firstLine("123 Main St")
+        .city("San Francisco")
+        .state("CA")
+        .zipCode("94105")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.UsAddress{
-    FirstLine: "123 Main St",
-    City:      "New York",
-    State:     "NY",
-    ZipCode:   "10001",
-}
-
-response, err := client.LabTests.GetPhlebotomyAppointmentAvailability(context.TODO(), request)
+response, err := c.LabTests.GetPhlebotomyAppointmentAvailability(context.TODO(), &junction.GetPhlebotomyAppointmentAvailabilityLabTestsRequest{
+    Body: &junction.UsAddress{
+        FirstLine: "123 Main St",
+        City:      "San Francisco",
+        State:     "CA",
+        ZipCode:   "94105",
+    },
+})
 if err != nil {
     return err
 }

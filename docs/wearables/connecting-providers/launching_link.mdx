@@ -20,79 +20,72 @@ A Junction Link Token expires 60 minutes after its creation.
 
 <CodeGroup>
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LinkTokenExchange } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
+const data = await client.link.token({
     userId: "<user_id>",
     provider: "oura",
-}
-const data = await client.link.token(request)
+});
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.providers import Providers
+from junction import Junction, Providers
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.link.token(user_id="<user_id>", provider=Providers.OURA)
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.types.Providers;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.LinkTokenExchange;
+import com.junction.api.types.Providers;
 
-Vital vital = Vital.builder()
-     .apiKey("YOUR_API_KEY")
-     .environment(Environment.SANDBOX)
-     .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkTokenExchange request = LinkTokenExchange
-     .builder()
-     .userId("<user_id>")
-     .provider(Providers.OURA)
-     .build();
-
-var data = vital.link().token(request);
+var data = client.link().token(
+    LinkTokenExchange.builder()
+        .userId("<user_id>")
+        .provider(Providers.OURA)
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-provider := vital.ProvidersOura
-request := &vital.LinkTokenExchange{
-     UserId:   "<user_id>",
-     Provider: &provider,
-}
-
-response, err := client.Link.Token(context.TODO(), request)
+provider := junction.ProvidersOura
+response, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId:   "<user_id>",
+    Provider: &provider,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

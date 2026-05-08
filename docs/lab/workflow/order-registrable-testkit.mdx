@@ -23,26 +23,119 @@ After step 2, the order flow resumes as normal, the patient sends the `testkit` 
 
 To make an order, make a request to our [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), to fulfill step 1.
 
+<CodeGroup>
+
 ```python Python
-from vital import Client
+from junction import Junction, ShippingAddressWithValidation
+from junction.environment import JunctionEnvironment
 
-client = Client(api_key, "sandbox")
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
 
-data = client.LabTests.create_unregistered_testkit_order(
-  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-  lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-  shipping_details={
-    "receiver_name": "John Doe",
-    "street": "123 Main St.",
-    "street_number": "Apt. 208",
-    "city": "San Francisco",
-    "state": "CA",
-    "zip": "91189",
-    "country": "US",
-    "phone_number": "+11234567890"
-  }
+data = client.testkit.create_order(
+    user_id="<user_id>",
+    lab_test_id="<lab_test_id>",
+    shipping_details=ShippingAddressWithValidation(
+        receiver_name="John Doe",
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+        phone_number="+11234567890",
+    ),
 )
 ```
+
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.testkit.createOrder({
+    userId: "<user_id>",
+    labTestId: "<lab_test_id>",
+    shippingDetails: {
+        receiverName: "John Doe",
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+        phoneNumber: "+11234567890",
+    },
+});
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.testkit.requests.CreateRegistrableTestkitOrderRequest;
+import com.junction.api.types.ShippingAddressWithValidation;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.testkit().createOrder(
+    CreateRegistrableTestkitOrderRequest.builder()
+        .userId("<user_id>")
+        .labTestId("<lab_test_id>")
+        .shippingDetails(ShippingAddressWithValidation.builder()
+            .receiverName("John Doe")
+            .firstLine("123 Main St.")
+            .city("San Francisco")
+            .state("CA")
+            .zip("91189")
+            .country("US")
+            .phoneNumber("+11234567890")
+            .build())
+        .build()
+);
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.Testkit.CreateOrder(context.TODO(), &junction.CreateRegistrableTestkitOrderRequest{
+    UserId:    "<user_id>",
+    LabTestId: "<lab_test_id>",
+    ShippingDetails: &junction.ShippingAddressWithValidation{
+        ReceiverName: "John Doe",
+        FirstLine:    "123 Main St.",
+        City:         "San Francisco",
+        State:        "CA",
+        Zip:          "91189",
+        Country:      "US",
+        PhoneNumber:  "+11234567890",
+    },
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</CodeGroup>
 
 
 The `testkit` is now ordered, and will be sent to the specified address. Once delivered, it can be kept until its expiration.
@@ -57,35 +150,166 @@ For this example, we will assume the use of your own physician.
 
 To register a `testkit` order, make a request to our [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), to fulfill step 2.
 
-```python Python
-client = Client(api_key, "sandbox")
+<CodeGroup>
 
-data = client.LabTests.register_testkit_order(
-  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-  sample_id="123123123",
-  patient_details={
-    "first_name": "John",
-    "last_name": "Doe",
-    "dob": "2020-01-01",
-    "gender": "male",
-    "phone_number": "+1123456789",
-    "email": "email@email.com"
-  },
-  patient_address={
-    "receiver_name": "John Doe",
-    "street": "123 Main St.",
-    "street_number": "Apt. 208",
-    "city": "San Francisco",
-    "state": "CA",
-    "zip": "91189",
-    "country": "US"
-  },
-  physician={
-    "first_name": "Doctor",
-    "last_name": "Doc",
-    "npi": "123123123"
-  }
+```python Python
+from junction import Gender, Junction, PatientAddressWithValidation, PatientDetailsWithValidation, PhysicianCreateRequestBase
+from junction.environment import JunctionEnvironment
+
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
+
+data = client.testkit.register(
+    user_id="<user_id>",
+    sample_id="123123123",
+    patient_details=PatientDetailsWithValidation(
+        first_name="John",
+        last_name="Doe",
+        dob="2020-01-01",
+        gender=Gender.MALE,
+        phone_number="+1123456789",
+        email="email@email.com",
+    ),
+    patient_address=PatientAddressWithValidation(
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+    ),
+    physician=PhysicianCreateRequestBase(
+        first_name="Doctor",
+        last_name="Doc",
+        npi="123123123",
+    ),
 )
 ```
+
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.testkit.register({
+    userId: "<user_id>",
+    sampleId: "123123123",
+    patientDetails: {
+        firstName: "John",
+        lastName: "Doe",
+        dob: "2020-01-01",
+        gender: "male",
+        phoneNumber: "+1123456789",
+        email: "email@email.com",
+    },
+    patientAddress: {
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+    },
+    physician: {
+        firstName: "Doctor",
+        lastName: "Doc",
+        npi: "123123123",
+    },
+});
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.testkit.requests.RegisterTestkitRequest;
+import com.junction.api.types.Gender;
+import com.junction.api.types.PatientAddressWithValidation;
+import com.junction.api.types.PatientDetailsWithValidation;
+import com.junction.api.types.PhysicianCreateRequestBase;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.testkit().register(
+    RegisterTestkitRequest.builder()
+        .sampleId("123123123")
+        .patientDetails(PatientDetailsWithValidation.builder()
+            .firstName("John")
+            .lastName("Doe")
+            .dob("2020-01-01")
+            .gender(Gender.MALE)
+            .phoneNumber("+1123456789")
+            .email("email@email.com")
+            .build())
+        .patientAddress(PatientAddressWithValidation.builder()
+            .firstLine("123 Main St.")
+            .city("San Francisco")
+            .state("CA")
+            .zip("91189")
+            .country("US")
+            .build())
+        .userId("<user_id>")
+        .physician(PhysicianCreateRequestBase.builder()
+            .firstName("Doctor")
+            .lastName("Doc")
+            .npi("123123123")
+            .build())
+        .build()
+);
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+userId := "<user_id>"
+response, err := c.Testkit.Register(context.TODO(), &junction.RegisterTestkitRequest{
+    UserId:   &userId,
+    SampleId: "123123123",
+    PatientDetails: &junction.PatientDetailsWithValidation{
+        FirstName:   "John",
+        LastName:    "Doe",
+        Dob:         "2020-01-01",
+        Gender:      junction.GenderMale,
+        PhoneNumber: "+1123456789",
+        Email:       "email@email.com",
+    },
+    PatientAddress: &junction.PatientAddressWithValidation{
+        FirstLine: "123 Main St.",
+        City:      "San Francisco",
+        State:     "CA",
+        Zip:       "91189",
+        Country:   "US",
+    },
+    Physician: &junction.PhysicianCreateRequestBase{
+        FirstName: "Doctor",
+        LastName:  "Doc",
+        Npi:       "123123123",
+    },
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</CodeGroup>
 
 Your `testkit` order is now registered, and the order flow should resume as normal. For more information regarding the lifecycle of a test, refer to the [lab test lifecycle](/lab/workflow/lab-test-lifecycle) page.

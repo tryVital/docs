@@ -9,7 +9,7 @@ openapi: "POST /v3/order/{order_id}/phlebotomy/appointment/book"
 curl --request POST \
      --url '{{BASE_URL}}/v3/order/413d7205-f8a9-42ed-aa4a-edb99e481ca0/phlebotomy/appointment/book' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      --data '
 {
     "booking_key": "foo123",
@@ -19,70 +19,79 @@ curl --request POST \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.lab_tests.book_phlebotomy_appointment(order_id="<order_id>", booking_key="<booking_key>")
+data = client.lab_tests.book_phlebotomy_appointment(
+    "<order_id>",
+    booking_key="<booking_key>",
+)
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { AppointmentBookingRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: AppointmentBookingRequest = {
-    bookingKey: "<booking_key>",
-}
-const data = await client.labTests.bookPhlebotomyAppointment("<order_id>", request);
+const data = await client.labTests.bookPhlebotomyAppointment({
+    orderId: "<order_id>",
+    body: {
+        bookingKey: "<booking_key>",
+    },
+});
 ```
 
-
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.AppointmentBookingRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.BookPhlebotomyAppointmentLabTestsRequest;
+import com.junction.api.types.AppointmentBookingRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-AppointmentBookingRequest request = AppointmentBookingRequest
-        .builder()
-        .bookingKey("<booking_key>")
-        .build();
-
-var data = vital.labTests().bookPhlebotomyAppointment("<order_id>", request);
+var data = client.labTests().bookPhlebotomyAppointment(
+    "<order_id>",
+    BookPhlebotomyAppointmentLabTestsRequest.builder()
+        .body(
+            AppointmentBookingRequest.builder()
+                .bookingKey("<booking_key>")
+                .build()
+        )
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.AppointmentBookingRequest{
-    BookingKey: "<booking_key>",
-}
-
-response, err := client.LabTests.BookPhlebotomyAppointment(context.TODO(), "<order_id>", request)
+response, err := c.LabTests.BookPhlebotomyAppointment(context.TODO(), &junction.BookPhlebotomyAppointmentLabTestsRequest{
+    OrderId: "<order_id>",
+    Body: &junction.AppointmentBookingRequest{
+        BookingKey: "<booking_key>",
+    },
+})
 if err != nil {
     return err
 }

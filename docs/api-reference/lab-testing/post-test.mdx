@@ -7,96 +7,82 @@ openapi: 'POST /v3/lab_tests'
 <RequestExample>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.lab_test_collection_method import LabTestCollectionMethod
-from vital.types.lab_test_sample_type import LabTestSampleType
-from vital.types.us_address import UsAddress
+from junction import Junction, LabTestCollectionMethod
+from junction.environment import JunctionEnvironment
 
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.create(
-    provider_ids=["000110"],
     name="<name>",
     method=LabTestCollectionMethod.TESTKIT,
-    description="<description>"
+    description="<description>",
+    provider_ids=["000110"],
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import {
-  CreateLabTestRequest,
-  LabTestCollectionMethod,
-  LabTestSampleType,
-} from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-  apiKey: '<my_api_key>',
-  environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: CreateLabTestRequest = {
-  providerIds: ['000110'],
-  name: '<name>',
-  method: LabTestCollectionMethod.Testkit,
-  description: '<description>',
-};
-
-const data = await client.labTests.create(request);
+const data = await client.labTests.create({
+    name: "<name>",
+    method: "testkit",
+    description: "<description>",
+    providerIds: ["000110"],
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.CreateLabTestRequest;
-import com.vital.api.types.LabTestCollectionMethod;
-import com.vital.api.types.LabTestSampleType;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.CreateLabTestRequest;
+import com.junction.api.types.LabTestCollectionMethod;
+import java.util.List;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-CreateLabTestRequest request = CreateLabTestRequest
-        .builder()
+var data = client.labTests().create(
+    CreateLabTestRequest.builder()
         .name("<name>")
         .method(LabTestCollectionMethod.TESTKIT)
         .description("<description>")
-        .providerIds(List.of("001100"))
-        .build();
-
-var data = vital.labTests().create(request);
+        .providerIds(List.of("000110"))
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.CreateLabTestRequest{
-  ProviderIds:   []int{"001100"},
-  Name:        "<name>",
-  Method:      vital.LabTestCollectionMethodTestkit,
-  Description: "<description>",
-}
-
-response, err := client.LabTests.Create(context.TODO(), request)
+response, err := c.LabTests.Create(context.TODO(), &junction.CreateLabTestRequest{
+    Name:        "<name>",
+    Method:      junction.LabTestCollectionMethodTestkit,
+    Description: "<description>",
+    ProviderIds: []string{"000110"},
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

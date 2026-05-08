@@ -45,83 +45,81 @@ Now you can create a demo connection for the Junction user you just created, in 
 
 ```bash Creating a demo connection
 curl --request POST \
-     --url https://api.sandbox.tryvital.io/v2/link/connect/demo \
+     --url {{BASE_URL}}/v2/link/connect/demo \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --header 'x-vital-api-key: <your_api_key>' \
      --data '{"user_id": "<user_id>", "provider": "<provider>"}'
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { DemoConnectionCreationPayload, DemoProviders } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: DemoConnectionCreationPayload = {
+const data = await client.link.connectDemoProvider({
     userId: "<user_id>",
-    provider: DemoProviders.<provider>,
-}
-const data = await client.link.connectDemoProvider(request);
+    provider: "fitbit",
+});
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import DemoProviders, Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.link.connect_demo_provider(user_id="<user_id>", provider=DemoProviders.<provider>)
+data = client.link.connect_demo_provider(
+    user_id="<user_id>",
+    provider=DemoProviders.FITBIT,
+)
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.DemoConnectionCreationPayload;
-import com.vital.api.types.DemoProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.DemoConnectionCreationPayload;
+import com.junction.api.types.DemoProviders;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-DemoConnectionCreationPayload request = DemoConnectionCreationPayload
-        .builder()
+var data = client.link().connectDemoProvider(
+    DemoConnectionCreationPayload.builder()
         .userId("<user_id>")
-        .provider(DemoProviders.<provider>)
-        .build();
-
-var data = vital.link().connectDemoProvider(request);
+        .provider(DemoProviders.FITBIT)
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
-request := &vital.DemoConnectionCreationPayload{
-  UserId:   "<user_id>",
-  Provider: vital.DemoProviders<provider_name>,
-}
 
-response, err := client.Link.ConnectDemoProvider(context.TODO(), request)
+response, err := c.Link.ConnectDemoProvider(context.TODO(), &junction.DemoConnectionCreationPayload{
+    UserId:   "<user_id>",
+    Provider: junction.DemoProvidersFitbit,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

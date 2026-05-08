@@ -12,164 +12,151 @@ Patient name fields (`first_name`, `last_name`) must follow specific validation 
 <RequestExample>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.gender import Gender
-from vital.types.patient_address_compatible import PatientAddressCompatible
-from vital.types.patient_details import PatientDetails
-from datetime import datetime
+from junction import Gender, Junction, PatientAddressWithValidation, PatientDetailsWithValidation
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.create_order(
     user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
     lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-    patient_details=PatientDetails(
+    patient_details=PatientDetailsWithValidation(
         first_name="John",
         last_name="Doe",
-        dob=datetime.fromisoformat("2020-01-01"),
+        dob="2020-01-01",
         gender=Gender.MALE,
         phone_number="+1123456789",
-        email="email@email.com"
+        email="email@email.com",
     ),
-    patient_address=PatientAddressCompatible(
-      receiver_name="John Doe",
-      first_line="123 Main St.",
-      second_line="Apt. 208",
-      city="San Francisco",
-      state="CA",
-      zip="91189",
-      country="US",
-      phone_number="+1123456789",
-      access_notes="Gate code #1234, use side entrance"
+    patient_address=PatientAddressWithValidation(
+        receiver_name="John Doe",
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+        phone_number="+1123456789",
+        access_notes="Gate code #1234, use side entrance",
     ),
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { CreateOrderRequestCompatible} from '@tryvital/vital-node/api/resources/labTests';
-import { Gender } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: CreateOrderRequestCompatible = {
+const data = await client.labTests.createOrder({
     userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
     labTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
     patientDetails: {
         firstName: "John",
         lastName: "Doe",
-        dob: new Date("2020-01-01"),
-        gender: Gender.Male,
+        dob: "2020-01-01",
+        gender: "male",
         phoneNumber: "+1123456789",
-        email: "email@email.com"
+        email: "email@email.com",
     },
     patientAddress: {
-      receiverName: "John Doe",
-      first_line: "123 Main St.",
-      second_line: "Apt. 208",
-      city: "San Francisco",
-      state: "CA",
-      zip: "91189",
-      country: "US",
-      phoneNumber: "+1123456789",
-      accessNotes: "Gate code #1234, use side entrance"
+        receiverName: "John Doe",
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+        phoneNumber: "+1123456789",
+        accessNotes: "Gate code #1234, use side entrance",
     },
-}
-
-const data = await client.labTests.createOrder(request)
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.CreateOrderRequestCompatible;
+import com.junction.api.types.Gender;
+import com.junction.api.types.PatientAddressWithValidation;
+import com.junction.api.types.PatientDetailsWithValidation;
 
-Vital vital = Vital.builder()
-      .apiKey("YOUR_API_KEY")
-      .environment(Environment.SANDBOX)
-      .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-PatientDetails details = PatientDetails.builder()
-      .firstName("John")
-      .lastName("Doe")
-      .dob(OffsetDateTime.parse("2020-01-01"))
-      .gender(Gender.MALE)
-      .phoneNumber("+1123456789")
-      .email("email@email.com")
-      .build();
-
-PatientAddressCompatible address = PatientAddressCompatible
-      .builder()
-      .first_line("123 Main St.")
-      .city("San Francisco")
-      .state("CA")
-      .zip("91189")
-      .country("US")
-      .phoneNumber("+1123456789")
-      .build();
-
-CreateOrderRequestCompatible request = CreateOrderRequestCompatible
-      .builder()
-      .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
-      .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
-      .patientDetails(details)
-      .patientAddress(address)
-      .build();
-
-var data = vital.labTests().createOrder(request);
+var data = client.labTests().createOrder(
+    CreateOrderRequestCompatible.builder()
+        .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
+        .patientDetails(
+            PatientDetailsWithValidation.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .dob("2020-01-01")
+                .gender(Gender.MALE)
+                .phoneNumber("+1123456789")
+                .email("email@email.com")
+                .build()
+        )
+        .patientAddress(
+            PatientAddressWithValidation.builder()
+                .firstLine("123 Main St.")
+                .city("San Francisco")
+                .state("CA")
+                .zip("91189")
+                .country("US")
+                .build()
+        )
+        .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-details := &vital.PatientDetails{
-   FirstName:   "John",
-   LastName:    "Doe",
-   Dob:         time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
-   Gender:      vital.GenderMale,
-   PhoneNumber: "+1123456789",
-   Email:       "email@email.com",
-}
-
-address := &vital.PatientAddressCompatible{
-   ReceiverName: vital.String("John Doe"),
-   FirstLine:    "123 Main St.",
-   SecondLine:   vital.String("Apt. 208"),
-   City:         "San Francisco",
-   State:        "CA",
-   Zip:          "91189",
-   Country:      "US",
-   PhoneNumber:  vital.String("+1123456789"),
-}
-
-request := &vital.CreateOrderRequestCompatible{
-   UserId:         "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-   LabTestId:      "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-   PatientDetails: details,
-   PatientAddress: address,
-}
-
-response, err := client.LabTests.CreateOrder(context.TODO(), request)
+response, err := c.LabTests.CreateOrder(context.TODO(), &junction.CreateOrderRequestCompatible{
+    UserId:    "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    LabTestId: junction.String("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf"),
+    PatientDetails: &junction.PatientDetailsWithValidation{
+        FirstName:   "John",
+        LastName:    "Doe",
+        Dob:         "2020-01-01",
+        Gender:      junction.GenderMale,
+        PhoneNumber: "+1123456789",
+        Email:       "email@email.com",
+    },
+    PatientAddress: &junction.PatientAddressWithValidation{
+        ReceiverName: junction.String("John Doe"),
+        FirstLine:    "123 Main St.",
+        SecondLine:   junction.String("Apt. 208"),
+        City:         "San Francisco",
+        State:        "CA",
+        Zip:          "91189",
+        Country:      "US",
+        PhoneNumber:  junction.String("+1123456789"),
+        AccessNotes:  junction.String("Gate code #1234, use side entrance"),
+    },
+})
 if err != nil {
-   return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

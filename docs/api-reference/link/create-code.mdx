@@ -16,76 +16,67 @@ curl --request POST \
      --header 'x-vital-api-key: <API_KEY>'
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LinkCodeCreateRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkCodeCreateRequest = {
-    userId: '<my_user_id>',
-}
-
-const data = await client.link.codeCreate(request);
+const data = await client.link.codeCreate({ userId: "<user_id>" });
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.link.code_create(user_id='<my_user_id>')
+data = client.link.code_create(user_id="<user_id>")
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkCodeCreateRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.CodeCreateLinkRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkCodeCreateRequest request = LinkCodeCreateRequest
-        .builder()
-        .userId("<my_user_id>")
-        .build();
-
-var data = vital.link().codeCreate(request);
+var data = client.link().codeCreate(
+    CodeCreateLinkRequest.builder()
+        .userId("<user_id>")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
-request := &vital.LinkCodeCreateRequest{
-  UserId: "<my_user_id>",
-}
 
-response, err := client.Link.CodeCreate(context.TODO(), request)
+response, err := c.Link.CodeCreate(context.TODO(), &junction.CodeCreateLinkRequest{
+    UserId: "<user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
-
 ```
 
 </RequestExample>

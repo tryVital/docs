@@ -56,15 +56,19 @@ With this information, you can create a lab test using [`POST /v3/lab_tests`](/a
 As an example, let's say you wanted a test from `Labcorp`, with markers with provider IDs `006056` and `070085`:
 
 ```python Create a new test
-from vital import Client
+from junction import Junction, LabTestCollectionMethod
+from junction.environment import JunctionEnvironment
 
-client = Client(api_key, "sandbox")
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
 
-data = client.LabTests.create_test(
-  name="Example test",
-  description="Example test",
-  method="at_home_phlebotomy",
-  provider_ids=["006056", "070085"] # or use the marker ids e.g marker_ids=[1, 2],
+data = client.lab_tests.create(
+    name="Example test",
+    description="Example test",
+    method=LabTestCollectionMethod.AT_HOME_PHLEBOTOMY,
+    provider_ids=["006056", "070085"],  # or use the marker ids e.g marker_ids=[1, 2]
 )
 ```
 
