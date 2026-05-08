@@ -1,0 +1,29 @@
+---
+title: "Get Team Physicians"
+description: "Retrieve the list of physicians associated with a team. Requires authentication with your team API key."
+openapi: "GET /v2/team/{team_id}/physicians"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.tryvital.io/v2/team/{team_id}/physicians \
+  --header 'x-vital-api-key: <api-key>'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+[
+  {
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "npi": "1234567890"
+  }
+]
+```
+
+</ResponseExample>

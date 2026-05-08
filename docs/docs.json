@@ -232,6 +232,12 @@
                 ]
               },
               {
+                "group": "Physicians",
+                "pages": [
+                  "api-reference/lab-testing/get-team-physicians"
+                ]
+              },
+              {
                 "group": "Area Info",
                 "pages": [
                   "api-reference/lab-testing/area-info",
