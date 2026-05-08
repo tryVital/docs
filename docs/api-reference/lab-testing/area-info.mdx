@@ -10,75 +10,68 @@ openapi: "GET /v3/order/area/info"
 curl --request GET \
      --url '{{BASE_URL}}/v3/order/area/info?zip_code=85004' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: YOUR_API_KEY'
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.get_area_info(zip_code="85004")
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LabTestsGetAreaInfoRequest } from '@tryvital/vital-node/api/resources/labTests';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LabTestsGetAreaInfoRequest = {
-    zipCode: "85004"
-}
-
-const data = await client.labTests.getAreaInfo(request);
+const data = await client.labTests.getAreaInfo({ zipCode: "85004" });
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.GetAreaInfoLabTestsRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LabTestsGetAreaInfoRequest request = LabTestsGetAreaInfoRequest.builder()
+var data = client.labTests().getAreaInfo(
+    GetAreaInfoLabTestsRequest.builder()
         .zipCode("85004")
-        .build();
-
-var data = vital.labTests().getAreaInfo(request);
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.LabTestsGetAreaInfoRequest{
-  ZipCode: "85004",
-}
-
-response, err := client.LabTests.GetAreaInfo(context.TODO(), request)
+response, err := c.LabTests.GetAreaInfo(context.TODO(), &junction.GetAreaInfoLabTestsRequest{
+    ZipCode: "85004",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

@@ -25,50 +25,182 @@ After an order is successfully imported, it will be in the `requisition_bypassed
 
 ### Example
 
-```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.billing import Billing
-from vital.types.gender import Gender
-from vital.types.lab_test_collection_method import LabTestCollectionMethod
-from vital.types.order_set_request import OrderSetRequest
-from vital.types.patient_address_compatible import PatientAddressCompatible
-from vital.types.patient_details import PatientDetails
-from vital.types.physician_create_request import PhysicianCreateRequest
-from datetime import datetime
+<CodeGroup>
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+```python Python
+from junction import Billing, Gender, Junction, LabTestCollectionMethod, OrderSetRequest, PatientAddress, PatientDetailsWithValidation, PhysicianCreateRequest
+from junction.environment import JunctionEnvironment
+
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.import_order(
-    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    user_id="<user_id>",
     billing_type=Billing.CLIENT_BILL,
-    order_set=OrderSetRequest(lab_test_ids=["0e18c2f8-0740-475d-8868-431f7e9c0cfd"]),
+    order_set=OrderSetRequest(lab_test_ids=["<lab_test_id>"]),
     collection_method=LabTestCollectionMethod.WALK_IN_TEST,
     physician=PhysicianCreateRequest(first_name="Jane", last_name="Doe", npi=""),
-    patient_details=PatientDetails(
+    patient_details=PatientDetailsWithValidation(
         first_name="John",
         last_name="Doe",
-        dob=datetime.fromisoformat("2020-01-01"),
+        dob="2020-01-01",
         gender=Gender.MALE,
         phone_number="+1123456789",
-        email="email@email.com"
+        email="email@email.com",
     ),
-    patient_address=PatientAddressCompatible(
-      receiver_name="John Doe",
-      first_line="123 Main St.",
-      second_line="Apt. 208",
-      city="San Francisco",
-      state="CA",
-      zip="91189",
-      country="US",
-      phone_number="+1123456789"
+    patient_address=PatientAddress(
+        receiver_name="John Doe",
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+        phone_number="+1123456789",
     ),
     sample_id="1234567890",
 )
 ```
+
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.labTests.importOrder({
+    userId: "<user_id>",
+    billingType: "client_bill",
+    orderSet: { labTestIds: ["<lab_test_id>"] },
+    collectionMethod: "walk_in_test",
+    physician: { firstName: "Jane", lastName: "Doe", npi: "" },
+    patientDetails: {
+        firstName: "John",
+        lastName: "Doe",
+        dob: "2020-01-01",
+        gender: "male",
+        phoneNumber: "+1123456789",
+        email: "email@email.com",
+    },
+    patientAddress: {
+        receiverName: "John Doe",
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+        phoneNumber: "+1123456789",
+    },
+    sampleId: "1234567890",
+});
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.ImportOrderBody;
+import com.junction.api.types.Billing;
+import com.junction.api.types.Gender;
+import com.junction.api.types.LabTestCollectionMethod;
+import com.junction.api.types.OrderSetRequest;
+import com.junction.api.types.PatientAddress;
+import com.junction.api.types.PatientDetailsWithValidation;
+import com.junction.api.types.PhysicianCreateRequest;
+import java.util.List;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.labTests().importOrder(
+    ImportOrderBody.builder()
+        .userId("<user_id>")
+        .billingType(Billing.CLIENT_BILL)
+        .orderSet(OrderSetRequest.builder()
+            .labTestIds(List.of("<lab_test_id>"))
+            .build())
+        .collectionMethod(LabTestCollectionMethod.WALK_IN_TEST)
+        .patientDetails(PatientDetailsWithValidation.builder()
+            .firstName("John")
+            .lastName("Doe")
+            .dob("2020-01-01")
+            .gender(Gender.MALE)
+            .phoneNumber("+1123456789")
+            .email("email@email.com")
+            .build())
+        .patientAddress(PatientAddress.builder()
+            .receiverName("John Doe")
+            .firstLine("123 Main St.")
+            .city("San Francisco")
+            .state("CA")
+            .zip("91189")
+            .country("US")
+            .build())
+        .sampleId("1234567890")
+        .physician(PhysicianCreateRequest.builder()
+            .firstName("Jane")
+            .lastName("Doe")
+            .npi("")
+            .build())
+        .build()
+);
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.LabTests.ImportOrder(context.TODO(), &junction.ImportOrderBody{
+    UserId:           "<user_id>",
+    BillingType:      junction.BillingClientBill,
+    OrderSet:         &junction.OrderSetRequest{LabTestIds: []string{"<lab_test_id>"}},
+    CollectionMethod: junction.LabTestCollectionMethodWalkInTest,
+    Physician: &junction.PhysicianCreateRequest{
+        FirstName: "Jane",
+        LastName:  "Doe",
+        Npi:       "",
+    },
+    PatientDetails: &junction.PatientDetailsWithValidation{
+        FirstName:   "John",
+        LastName:    "Doe",
+        Dob:         "2020-01-01",
+        Gender:      junction.GenderMale,
+        PhoneNumber: "+1123456789",
+        Email:       "email@email.com",
+    },
+    PatientAddress: &junction.PatientAddress{
+        ReceiverName: "John Doe",
+        FirstLine:    "123 Main St.",
+        City:         "San Francisco",
+        State:        "CA",
+        Zip:          "91189",
+        Country:      "US",
+    },
+    SampleId: "1234567890",
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</CodeGroup>
 
 This example assumes you provide your own physician. The physician must be provided if your team configuration is set up as delegated. The billing type provided must also be appropriate to your team configuration. These aspects will be validated when making the request.
 

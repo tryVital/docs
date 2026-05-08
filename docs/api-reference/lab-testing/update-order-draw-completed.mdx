@@ -12,32 +12,61 @@ Update an on-site collection order when the draw has been completed.
 <RequestExample>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.gender import Gender
-from vital.types.patient_address_compatible import PatientAddressCompatible
-from vital.types.patient_details import PatientDetails
-from datetime import datetime
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.lab_tests.update_on_site_collection_order_draw_completed(
-    order_id="order_id",
-)
+data = client.lab_tests.update_on_site_collection_order_draw_completed("<order_id>")
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const data = await client.labTests.updateOnSiteCollectionOrderDrawCompleted("order_id")
+const data = await client.labTests.updateOnSiteCollectionOrderDrawCompleted({ orderId: "<order_id>" });
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.labTests().updateOnSiteCollectionOrderDrawCompleted("<order_id>");
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.LabTests.UpdateOnSiteCollectionOrderDrawCompleted(context.TODO(), &junction.UpdateOnSiteCollectionOrderDrawCompletedLabTestsRequest{
+    OrderId: "<order_id>",
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

@@ -14,79 +14,77 @@ curl --request GET \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.meal.get(
-  user_id="<user_id>", 
-  start_date="2021-01-01", 
-  end_date="2021-01-02"
+    "<user_id>",
+    start_date="2021-01-01",
+    end_date="2021-01-02",
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { MealGetRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: MealGetRequest = {
-    startDate: '2021-01-01',
-    endDate: '2021-01-02',
-};
-
-const data = await client.meal.get('user_id', request);
+const data = await client.meal.get({
+    userId: "<user_id>",
+    startDate: "2021-01-01",
+    endDate: "2021-01-02",
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.meal.requests.MealGetRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.meal.requests.GetMealRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-MealGetRequest request = MealGetRequest
-        .builder()
+var data = client.meal().get(
+    "<user_id>",
+    GetMealRequest.builder()
         .startDate("2021-01-01")
         .endDate("2021-01-02")
-        .build();
-
-var data = vital.meal().get("<user_id>", request);
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-EndDate := "2021-01-02"
-request := &vital.MealGetRequest{
-  StartDate: "2021-01-01",
-  EndDate:   &EndDate,
-}
-
-response, err := client.Meal.Get(
-  context.TODO(), 
-  "<user_id>", 
-  request
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
+
+endDate := "2021-01-02"
+response, err := c.Meal.Get(context.TODO(), &junction.GetMealRequest{
+    UserId:    "<user_id>",
+    StartDate: "2021-01-01",
+    EndDate:   &endDate,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

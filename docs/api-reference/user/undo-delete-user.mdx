@@ -30,70 +30,66 @@ curl --request POST \
 '
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const data = await client.user.undoDelete({
-    clientUserId: '8DS6YRVBCSQQ4S0',
-});
+const data = await client.user.undoDelete({ clientUserId: "<client_user_id>" });
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.user.undo_delete(
-    client_user_id="8DS6YRVBCSQQ4S0"
-)
+data = client.user.undo_delete(client_user_id="<client_user_id>")
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.user.requests.UserUndoDeleteRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.user.requests.UndoDeleteUserRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-UserUndoDeleteRequest request = UserUndoDeleteRequest.builder()
-        .clientUserId("8DS6YRVBCSQQ4S0")
-        .build();
-
-var data = vital.user().undoDelete(request);
+var data = client.user().undoDelete(
+    UndoDeleteUserRequest.builder()
+        .clientUserId("<client_user_id>")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request = &vital.UserUndoDeleteRequest{
-  ClientUserId: "8DS6YRVBCSQQ4S0",
-}
-response, err := client.User.UndoDelete(context.TODO(), request)
+clientUserId := "<client_user_id>"
+response, err := c.User.UndoDelete(context.TODO(), &junction.UndoDeleteUserRequest{
+    ClientUserId: &clientUserId,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

@@ -29,73 +29,65 @@ curl --request POST \
      --data '{"client_user_id":"<YOUR_CLIENT_USER_ID>"}'
 ```
 
-```js Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { UserCreateBody } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: UserCreateBody = {
-    clientUserId: "<client_user_id>"
-}
-
-const data = await client.user.create(request)
+const data = await client.user.create({ clientUserId: "<client_user_id>" });
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.user.create(client_user_id="<client_user_id>")
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.user.requests.UserCreateBody;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.user.requests.UserCreateBody;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-UserCreateBody request = UserCreateBody
-     .builder()
-     .clientUserId("<client_user_id>")
-     .build();
-
-var data = vital.user().create(request);
+var data = client.user().create(
+    UserCreateBody.builder()
+        .clientUserId("<client_user_id>")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.UserCreateBody{
-     ClientUserId: "<client_user_id>",
-}
-
-response, err := client.User.Create(context.TODO(), request)
+response, err := c.User.Create(context.TODO(), &junction.UserCreateBody{
+    ClientUserId: "<client_user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```
@@ -117,23 +109,23 @@ curl --request GET \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.get()
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
 const data = await client.labTests.get();
@@ -141,32 +133,32 @@ const data = await client.labTests.get();
 
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-var data = vital.labTests().get();
+var data = client.labTests().get();
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-response, err := client.LabTests.Get(context.TODO())
+response, err := c.LabTests.Get(context.TODO(), nil)
 if err != nil {
     return err
 }
@@ -257,162 +249,140 @@ curl --request POST \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.gender import Gender
-from vital.types.patient_address_compatible import PatientAddressCompatible
-from vital.types.patient_details import PatientDetails
-from datetime import datetime
+from junction import Gender, Junction, PatientAddressWithValidation, PatientDetailsWithValidation
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.create_order(
-    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-    patient_details=PatientDetails(
+    user_id="<user_id>",
+    lab_test_id="<lab_test_id>",
+    patient_details=PatientDetailsWithValidation(
         first_name="John",
         last_name="Doe",
-        dob=datetime.fromisoformat("2020-01-01"),
+        dob="2020-01-01",
         gender=Gender.MALE,
         phone_number="+1123456789",
-        email="email@email.com"
+        email="email@email.com",
     ),
-    patient_address=PatientAddressCompatible(
-      receiver_name="John Doe",
-      first_line="123 Main St.",
-      second_line="Apt. 208",
-      city="San Francisco",
-      state="CA",
-      zip="91189",
-      country="US",
-      phone_number="+1123456789"
+    patient_address=PatientAddressWithValidation(
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+        phone_number="+1123456789",
     ),
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { CreateOrderRequestCompatible} from '@tryvital/vital-node/api/resources/labTests';
-import { Gender } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: CreateOrderRequestCompatible = {
-    userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-    labTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+const data = await client.labTests.createOrder({
+    userId: "<user_id>",
+    labTestId: "<lab_test_id>",
     patientDetails: {
         firstName: "John",
         lastName: "Doe",
-        dob: new Date("2020-01-01"),
-        gender: Gender.Male,
+        dob: "2020-01-01",
+        gender: "male",
         phoneNumber: "+1123456789",
-        email: "email@email.com"
+        email: "email@email.com",
     },
     patientAddress: {
-      receiverName: "John Doe",
-      firstLine: "123 Main St.",
-      secondLine: "Apt. 208",
-      city: "San Francisco",
-      state: "CA",
-      zip: "91189",
-      country: "US",
-      phoneNumber: "+1123456789"
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+        phoneNumber: "+1123456789",
     },
-}
-
-const data = await client.labTests.createOrder(request)
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.LabTestsGetAreaInfoRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.CreateOrderRequestCompatible;
+import com.junction.api.types.Gender;
+import com.junction.api.types.PatientAddressWithValidation;
+import com.junction.api.types.PatientDetailsWithValidation;
 
-Vital vital = Vital.builder()
-      .apiKey("YOUR_API_KEY")
-      .environment(Environment.SANDBOX)
-      .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-PatientDetails details = PatientDetails.builder()
-      .firstName("John")
-      .lastName("Doe")
-      .dob(OffsetDateTime.parse("2020-01-01"))
-      .gender(Gender.MALE)
-      .phoneNumber("+1123456789")
-      .email("email@email.com")
-      .build();
-
-PatientAddressCompatible address = PatientAddressCompatible
-      .builder()
-      .firstLine("123 Main St.")
-      .city("San Francisco")
-      .state("CA")
-      .zip("91189")
-      .country("US")
-      .phoneNumber("+1123456789")
-      .build();
-
-CreateOrderRequestCompatible request = CreateOrderRequestCompatible
-      .builder()
-      .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
-      .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
-      .patientDetails(details)
-      .patientAddress(address)
-      .build();
-
-var data = vital.labTests().createOrder(request);
+var data = client.labTests().createOrder(
+    CreateOrderRequestCompatible.builder()
+        .userId("<user_id>")
+        .patientDetails(PatientDetailsWithValidation.builder()
+            .firstName("John")
+            .lastName("Doe")
+            .dob("2020-01-01")
+            .gender(Gender.MALE)
+            .phoneNumber("+1123456789")
+            .email("email@email.com")
+            .build())
+        .patientAddress(PatientAddressWithValidation.builder()
+            .firstLine("123 Main St.")
+            .city("San Francisco")
+            .state("CA")
+            .zip("91189")
+            .country("US")
+            .build())
+        .labTestId("<lab_test_id>")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-details := &vital.PatientDetails{
-   FirstName:   "John",
-   LastName:    "Doe",
-   Dob:         time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
-   Gender:      vital.GenderMale,
-   PhoneNumber: "+1123456789",
-   Email:       "email@email.com",
-}
-
-address := &vital.PatientAddressCompatible{
-   ReceiverName: vital.String("John Doe"),
-   FirstLine:    "123 Main St.",
-   SecondLine:   vital.String("Apt. 208"),
-   City:         "San Francisco",
-   State:        "CA",
-   Zip:          "91189",
-   Country:      "US",
-   PhoneNumber:  vital.String("+1123456789"),
-}
-
-request := &vital.CreateOrderRequestCompatible{
-   UserId:         "63661a2b-2bb3-4125-bb1a-b590f64f057f",
-   LabTestId:      "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-   PatientDetails: details,
-   PatientAddress: address,
-}
-
-response, err := client.LabTests.CreateOrder(context.TODO(), request)
+labTestId := "<lab_test_id>"
+response, err := c.LabTests.CreateOrder(context.TODO(), &junction.CreateOrderRequestCompatible{
+    UserId:    "<user_id>",
+    LabTestId: &labTestId,
+    PatientDetails: &junction.PatientDetailsWithValidation{
+        FirstName:   "John",
+        LastName:    "Doe",
+        Dob:         "2020-01-01",
+        Gender:      junction.GenderMale,
+        PhoneNumber: "+1123456789",
+        Email:       "email@email.com",
+    },
+    PatientAddress: &junction.PatientAddressWithValidation{
+        FirstLine:   "123 Main St.",
+        City:        "San Francisco",
+        State:       "CA",
+        Zip:         "91189",
+        Country:     "US",
+    },
+})
 if err != nil {
-   return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

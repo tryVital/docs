@@ -7,58 +7,59 @@ openapi: "GET /v3/order_transaction/{transaction_id}"
 <RequestExample>
 
 ```python Python
-from vital import Client
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Client(
-  api_key="<API_KEY>",
-  environment="sandbox",
-  region="us"
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.LabTests.get_transaction(transaction_id='<transaction_id>');
+data = client.order_transaction.get_transaction("<transaction_id>")
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const data = await client.labTests.get_transaction("<transaction_id>");
+const data = await client.orderTransaction.getTransaction({ transactionId: "<transaction_id>" });
 ```
 
-
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-var data = vital.labTests().get_transaction("<transaction_id>");
+var data = client.orderTransaction().getTransaction("<transaction_id>");
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetTransaction(context.TODO(), "<transaction_id>")
+response, err := c.OrderTransaction.GetTransaction(context.TODO(), &junction.GetTransactionOrderTransactionRequest{
+    TransactionId: "<transaction_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

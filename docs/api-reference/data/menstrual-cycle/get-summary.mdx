@@ -14,82 +14,77 @@ curl --request GET \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.menstrual_cycle.get(
-    user_id="*",
+    "<user_id>",
     start_date="2022-05-01",
-    end_date="2022-06-01"
+    end_date="2022-06-01",
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { MenstrualCycleGetRequest } from '@tryvital/vital-node/api/resources/menstrualCycle';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: MenstrualCycleGetRequest = {
+const data = await client.menstrualCycle.get({
+    userId: "<user_id>",
     startDate: "2022-05-01",
-    endDate: "2022-06-01"
-}
-
-const data = await client.menstrualCycle.get(
-    '<my_user_id>',
-    request
-);
+    endDate: "2022-06-01",
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.menstrualCycle.requests.MenstrualCycleGetRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.menstrualcycle.requests.GetMenstrualCycleRequest;
 
-Vital vital = Vital.builder()
-                .apiKey("YOUR_API_KEY")
-                .environment(Environment.SANDBOX)
-                .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-MenstrualCycleGetRequest request = MenstrualCycleGetRequest.builder()
-                .startDate("2022-05-01")
-                .endDate("2022-06-01")
-                .build();
-
-var data = vital.menstrualCycle().get("<my_user_id>", request);
+var data = client.menstrualCycle().get(
+    "<user_id>",
+    GetMenstrualCycleRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-EndDate := "2022-06-01"
-request := &vital.MenstrualCycleGetRequest{
-  StartDate: "2022-05-01",
-  EndDate:   &EndDate,
-}
-
-response, err := client.MenstrualCycle.Get(context.TODO(), "*", request)
+endDate := "2022-06-01"
+response, err := c.MenstrualCycle.Get(context.TODO(), &junction.GetMenstrualCycleRequest{
+    UserId:    "<user_id>",
+    StartDate: "2022-05-01",
+    EndDate:   &endDate,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

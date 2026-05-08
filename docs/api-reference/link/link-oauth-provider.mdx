@@ -14,111 +14,94 @@ curl --request GET \
      --header 'x-vital-link-token: <VITAL-LINK-TOKEN>'
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { LinkTokenExchange, LinkGenerateOauthLinkRequest, OAuthProviders } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment, OAuthProviders } from "@junction-api/sdk";
 
-
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: LinkTokenExchange = {
-    userId: "<user_id>",
-}
-const tokenResponse = await client.link.token(request)
+const tokenResponse = await client.link.token({ userId: "<user_id>" });
 
-const linkRequest: LinkGenerateOauthLinkRequest = {
+const data = await client.link.generateOauthLink({
+    oauthProvider: OAuthProviders.Oura,
     vitalLinkToken: tokenResponse.linkToken,
-}
-
-const auth = await client.link.generateOauthLink(
-    OAuthProviders.<provider>,
-    linkRequest
-)
+});
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.o_auth_providers import OAuthProviders
+from junction import Junction, OAuthProviders
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 token_response = client.link.token(user_id="<user_id>")
 
-oauth = client.link.generate_oauth_link(
-  oauth_provider=OAuthProviders.<provider>,
-  vital_link_token=token_response.link_token,
+data = client.link.generate_oauth_link(
+    OAuthProviders.OURA,
+    vital_link_token=token_response.link_token,
 )
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.link.requests.LinkGenerateOauthLinkRequest;
-import com.vital.api.resources.link.requests.LinkTokenExchange;
-import com.vital.api.types.OAuthProviders;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.link.requests.GenerateOauthLinkLinkRequest;
+import com.junction.api.resources.link.requests.LinkTokenExchange;
+import com.junction.api.types.OAuthProviders;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-LinkTokenExchange request = LinkTokenExchange
-        .builder()
+var tokenResponse = client.link().token(
+    LinkTokenExchange.builder()
         .userId("<user_id>")
-        .build();
+        .build()
+);
 
-var tokenResponse = vital.link().token(request);
-
-LinkGenerateOauthLinkRequest link_request = LinkGenerateOauthLinkRequest
-        .builder()
+var data = client.link().generateOauthLink(
+    OAuthProviders.OURA,
+    GenerateOauthLinkLinkRequest.builder()
         .vitalLinkToken(tokenResponse.getLinkToken())
-        .build();
-
-var oauth = vital.link().generateOauthLink(OAuthProviders.OURA, link_request);
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
-provider := vital.ProvidersOura
-request := &vital.LinkTokenExchange{
-  UserId:   "<user_id>",
-  Provider: &provider,
-}
 
-response, err := client.Link.Token(context.TODO(), request)
-
+tokenResponse, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId: "<user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
 
-generateLinkRequest := &vital.LinkGenerateOauthLinkRequest{
-  VitalLinkToken: response.LinkToken,
-}
-
-oauth, err := client.Link.GenerateOauthLink(context.TODO(), vital.OAuthProvidersOura, generateLinkRequest)
-
+response, err := c.Link.GenerateOauthLink(context.TODO(), &junction.GenerateOauthLinkLinkRequest{
+    OauthProvider:  junction.OAuthProvidersOura,
+    VitalLinkToken: &tokenResponse.LinkToken,
+})
 if err != nil {
-  return err
+    return err
 }
-fmt.Printf("Received data %s\n", oauth)
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

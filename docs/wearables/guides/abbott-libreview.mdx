@@ -287,32 +287,26 @@ To connect your user to Junction via the Link Widget you can follow the guide [h
 token_response = client.link.token(user_id="<user_id>")
 ```
 
-```javascript Node
-const request: LinkTokenExchange = {
-    userId: "<user_id>"
-}
-const data = await client.link.token(request)
+```typescript TypeScript
+const tokenResponse = await client.link.token({ userId: "<user_id>" });
 ```
 
 ```java Java
-LinkTokenExchange request = LinkTokenExchange
-     .builder()
-     .userId("<user_id>")
-     .build();
-
-var tokenResponse = vital.link().token(request);
+var tokenResponse = client.link().token(
+    LinkTokenExchange.builder()
+        .userId("<user_id>")
+        .build()
+);
 ```
 
 ```go Go
-request := &vital.LinkTokenExchange{
-     UserId:   "<user_id>"
-}
-
-tokenResponse, err := client.Link.Token(context.TODO(), request)
+tokenResponse, err := c.Link.Token(context.TODO(), &junction.LinkTokenExchange{
+    UserId: "<user_id>",
+})
 if err != nil {
-  return err
+    return err
 }
-fmt.Printf("Received data %s\n", response)
+fmt.Printf("Received data %s\n", tokenResponse)
 ```
 
 </CodeGroup>
@@ -325,43 +319,37 @@ fmt.Printf("Received data %s\n", response)
 
 ```python Python
 linkResponse = client.link.connect_email_auth_provider(
-  provider="freestyle_libre",
-  email="<email>",
-  vital_link_token=token_response.link_token,
+    email="<email>",
+    vital_link_token=token_response.link_token,
 )
 ```
 
-```javascript Node
-const linkRequest: EmailProviderAuthLink = {
+```typescript TypeScript
+const connectEmailResponse = await client.link.connectEmailAuthProvider({
+    provider: "freestyle_libre",
+    email: "<email>",
     vitalLinkToken: tokenResponse.linkToken,
-    email: "<email>"
-}
-
-const connectEmailResponse = await client.link.connectEmailAuthProvider(
-    "freestyle_libre",
-    linkRequest
-)
+});
 ```
 
 ```java Java
-EmailProviderAuthLink request = EmailProviderAuthLink
-        .builder()
-        .vitalLinkToken(tokenResponse.getLinkToken())
+var data = client.link().connectEmailAuthProvider(
+    "freestyle_libre",
+    EmailProviderAuthLink.builder()
         .email("<email>")
-        .build();
-
-var data = vital.link().connectEmailAuthProvider("<provider>", request);
+        .vitalLinkToken(tokenResponse.getLinkToken())
+        .build()
+);
 ```
 
 ```go Go
-emailAuthRequest := &vital.EmailProviderAuthLink{
-  VitalLinkToken: tokenResponse.LinkToken,
-  Email:          "<email>",
-}
-
-emailAuth, err := client.Link.ConnectEmailAuthProvider(context.TODO(), "freestyle_libre", emailAuthRequest)
+emailAuth, err := c.Link.ConnectEmailAuthProvider(context.TODO(), &junction.EmailProviderAuthLink{
+    Provider:       "freestyle_libre",
+    VitalLinkToken: &tokenResponse.LinkToken,
+    Email:          "<email>",
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", emailAuth)
 ```

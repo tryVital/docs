@@ -33,18 +33,19 @@ sequenceDiagram
 Upload a lab report file to create a parsing job:
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 with open("lab_report.pdf", "rb") as f:
     job = client.lab_report.parser_create_job(
-        file=f,
-        needs_human_review=False
+        file=[f],
+        user_id="<user_id>",
+        needs_human_review=False,
     )
 
 print(f"Job ID: {job.id}")
@@ -84,7 +85,7 @@ This is not enabled by default, and you need to contact support to enable it.
 Once a job completes, retrieve the extracted data:
 
 ```python Python
-job = client.lab_report.parser_get_job(job_id="<job_id>")
+job = client.lab_report.parser_get_job("<job_id>")
 
 if job.status == "completed":
     for result in job.data.results:
@@ -174,11 +175,14 @@ Example webhook payload:
 Allow patients to upload lab reports from other providers:
 
 ```python
-def handle_patient_upload(file, patient_id):
-    job = client.lab_report.parser_create_job(file=file)
+def handle_patient_upload(file, user_id):
+    job = client.lab_report.parser_create_job(
+        file=[file],
+        user_id=user_id,
+    )
 
-    # Store job_id linked to patient for later retrieval
-    store_pending_job(patient_id, job.id)
+    # Store job_id linked to user for later retrieval
+    store_pending_job(user_id, job.id)
 
     return {"message": "Processing your lab report..."}
 ```
@@ -193,8 +197,9 @@ import os
 for filename in os.listdir("historical_reports/"):
     with open(f"historical_reports/{filename}", "rb") as f:
         job = client.lab_report.parser_create_job(
-            file=f,
-            needs_human_review=True  # Verify historical data
+            file=[f],
+            user_id="<user_id>",
+            needs_human_review=True,  # Verify historical data
         )
         print(f"Created job {job.id} for {filename}")
 ```

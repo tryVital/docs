@@ -7,98 +7,131 @@ openapi: "POST /v3/order/testkit"
 <RequestExample>
 
 ```python Python
-from vital import Client
+from junction import Junction, ShippingAddressWithValidation
+from junction.environment import JunctionEnvironment
 
-client = Client(api_key, "sandbox")
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
 
-data = client.LabTests.create_unregistered_testkit_order(
-  user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
-  lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
-  shipping_details={
-    "receiver_name": "John Doe",
-    "street": "123 Main St.",
-    "street_number": "Apt. 208",
-    "city": "San Francisco",
-    "state": "CA",
-    "zip": "91189",
-    "country": "US",
-    "phone_number": "+11234567890"
-  }
+data = client.testkit.create_order(
+    user_id="63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    lab_test_id="5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    shipping_details=ShippingAddressWithValidation(
+        receiver_name="John Doe",
+        first_line="123 Main St.",
+        second_line="Apt. 208",
+        city="San Francisco",
+        state="CA",
+        zip="91189",
+        country="US",
+        phone_number="+11234567890",
+    ),
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { CreateRegistrableTestkitOrderRequest} from '@tryvital/vital-node/api/resources/testkit';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: CreateRegistrableTestkitOrderRequest = {
-    userId: "<user_id>",
-    labTestId: "<lab_test_id>",
+const data = await client.testkit.createOrder({
+    userId: "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    labTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
     shippingDetails: {
-        receiverName: "<receiver_name>",
-        firstLine: "<address_1>",
-        city: "<city>",
-        state: "<state>",
-        zip: "<zip>",
-        country: "<country>",
-        phoneNumber: "<phone_number>",
+        receiverName: "John Doe",
+        firstLine: "123 Main St.",
+        secondLine: "Apt. 208",
+        city: "San Francisco",
+        state: "CA",
+        zip: "91189",
+        country: "US",
+        phoneNumber: "+11234567890",
     },
-};
-
-const data = await client.testkit.createOrder(request);
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.testkit.requests.CreateRegistrableTestkitOrderRequest;
+import com.junction.api.types.ShippingAddressWithValidation;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-var data = vital.labTests().getOrder("<order_id>");
+var data = client.testkit().createOrder(
+    CreateRegistrableTestkitOrderRequest.builder()
+        .userId("63661a2b-2bb3-4125-bb1a-b590f64f057f")
+        .labTestId("5b41f610-ebc5-4803-8f0c-a61c3bdc7faf")
+        .shippingDetails(
+            ShippingAddressWithValidation.builder()
+                .receiverName("John Doe")
+                .firstLine("123 Main St.")
+                .city("San Francisco")
+                .state("CA")
+                .zip("91189")
+                .country("US")
+                .phoneNumber("+11234567890")
+                .build()
+        )
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-response, err := client.LabTests.GetOrders(context.TODO(), "<order_id>")
+response, err := c.Testkit.CreateOrder(context.TODO(), &junction.CreateRegistrableTestkitOrderRequest{
+    UserId:    "63661a2b-2bb3-4125-bb1a-b590f64f057f",
+    LabTestId: "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
+    ShippingDetails: &junction.ShippingAddressWithValidation{
+        ReceiverName: "John Doe",
+        FirstLine:    "123 Main St.",
+        SecondLine:   junction.String("Apt. 208"),
+        City:         "San Francisco",
+        State:        "CA",
+        Zip:          "91189",
+        Country:      "US",
+        PhoneNumber:  "+11234567890",
+    },
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```
 
 ```bash cURL
 curl --request POST \
-     --url https://api.tryvital.io/v3/order/testkit/ \
+     --url '{{BASE_URL}}/v3/order/testkit' \
      --header 'Accept: application/json' \
-     --header 'x-vital-api-key: <API_KEY>' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      --data '
 {
     "user_id": "63661a2b-2bb3-4125-bb1a-b590f64f057f",
     "lab_test_id": "5b41f610-ebc5-4803-8f0c-a61c3bdc7faf",
     "shipping_details": {
       "receiver_name": "John Doe",
-      "street": "123 Main St.",
-      "street_number": "Apt. 208",
+      "first_line": "123 Main St.",
+      "second_line": "Apt. 208",
       "city": "San Francisco",
       "state": "CA",
       "zip": "91189",
@@ -108,7 +141,6 @@ curl --request POST \
 }
 '
 ```
-
 
 </RequestExample>
 

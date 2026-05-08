@@ -10,119 +10,61 @@ openapi: "GET /v3/orders"
 curl --request GET \
      --url '{{BASE_URL}}/v3/orders' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'x-vital-api-key: YOUR_API_KEY'
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
-from vital.types.shipping_address import ShippingAddress
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-shipping_details = ShippingAddress(
-    receiver_name="John Doe",
-    first_line="123 Main St",
-    second_line="",
-    city="San Francisco",
-    state="CA",
-    zip="94103",
-    country="US",
-    phone_number="4155551234"
-)
-
-
-data = client.testkit.create_order(user_id="<user_id>", lab_test_id="<lab_test_id>", shipping_details=shipping_details)
+data = client.lab_tests.get_orders()
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { CreateRegistrableTestkitOrderRequest} from '@tryvital/vital-node/api/resources/testkit';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: CreateRegistrableTestkitOrderRequest = {
-    userId: "<user_id>",
-    labTestId: "<lab_test_id>",
-    shippingDetails: {
-        receiverName: "<receiver_name>",
-        firstLine: "<address_1>",
-        city: "<city>",
-        state: "<state>",
-        zip: "<zip>",
-        country: "<country>",
-        phoneNumber: "<phone_number>",
-    },
-};
-
-const data = await client.testkit.createOrder(request);
+const data = await client.labTests.getOrders();
 ```
 
-
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.testkit.requests.CreateRegistrableTestkitOrderRequest;
-import com.vital.api.types.ShippingAddress;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-ShippingAddress address = ShippingAddress
-        .builder()
-        .receiverName("John Doe")
-        .firstLine("<first_line>")
-        .city("<city>")
-        .state("<state>")
-        .zip("<zip>")
-        .country("<country>")
-        .phoneNumber("<phone_number>")
-        .build();
-
-CreateRegistrableTestkitOrderRequest request = CreateRegistrableTestkitOrderRequest
-        .builder()
-        .userId("<user_id>")
-        .labTestId("<lab_test_id>")
-        .shippingDetails(address)
-        .build();
-
-var data = vital.testkit().createOrder(request);
+var data = client.labTests().getOrders();
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-request := &vital.CreateRegistrableTestkitOrderRequest{
-  UserId:    "<user_id>",
-  LabTestId: "<lab_test_id>",
-  ShippingDetails: &vital.ShippingAddress{
-    ReceiverName: "<receiver_name>",
-    FirstLine:    "<first_line>",
-    City:         "<city>",
-    State:        "<state>",
-    Zip:          "<zip>",
-    Country:      "<country>",
-  },
-}
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
 
-response, err := client.Testkit.CreateOrder(context.TODO(), request)
+response, err := c.LabTests.GetOrders(context.TODO(), &junction.GetOrdersLabTestsRequest{})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

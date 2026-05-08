@@ -7,80 +7,76 @@ openapi: 'PATCH /v3/lab_tests/{lab_test_id}'
 <RequestExample>
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.lab_tests.update_lab_test(
-    lab_test_id="<lab_test_id>",
+    "<lab_test_id>",
     name="<name>",
-    active=<True>,
+    active=True,
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import {  UpdateLabTestRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: UpdateLabTestRequest = {
-    name: '<name>',
-    active: <true>,
-}
-
-const data = await client.labTests.updateLabTest(labTestId, request);
+const data = await client.labTests.updateLabTest({
+    labTestId: "<lab_test_id>",
+    name: "<name>",
+    active: true,
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.labtests.requests.UpdateLabTestRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.labtests.requests.UpdateLabTestRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-UpdateLabTestRequest request = UpdateLabTestRequest
-        .builder()
+var data = client.labTests().updateLabTest(
+    "<lab_test_id>",
+    UpdateLabTestRequest.builder()
         .name("<name>")
-        .active(<true>)
-        .build();
-
-var data = vital.labTests().updateLabTest(labTestId, request);
+        .active(true)
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-client := vitalclient.NewClient(
-  option.WithApiKey("<YOUR_API_KEY>"),
-  option.WithBaseURL(vital.Environments.Sandbox),
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
 
-request := &vital.UpdateLabTestRequest{
-  Name:        "<name>",
-  Active:     <true>,
-}
-
-response, err := client.LabTests.UpdateLabTest(context.TODO(), labTestId, request)
+response, err := c.LabTests.UpdateLabTest(context.TODO(), &junction.UpdateLabTestRequest{
+    LabTestId: "<lab_test_id>",
+    Name:      junction.String("<name>"),
+    Active:    junction.Bool(true),
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```

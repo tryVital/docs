@@ -10,7 +10,7 @@ openapi: "POST /v3/lab_tests/list_order_set_markers"
 curl --request POST \
      --url '{{BASE_URL}}/v3/lab_tests/list_order_set_markers' \
      --header 'accept: application/json' \
-     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
      -d '
      {
         "lab_test_ids": ["id"],
@@ -22,20 +22,86 @@ curl --request POST \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import AddOnOrder, Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.lab_tests.get_markers_for_order_set(OrderSetRequest(
-    lab_test_ids=["id"],
-    add_on=AddOnOrder(
-        provider_ids=["123"]
-    )
-));
+data = client.lab_tests.get_markers_for_order_set(
+    lab_test_ids=["<lab_test_id>"],
+    add_on=AddOnOrder(provider_ids=["123"]),
+)
+```
+
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.labTests.getMarkersForOrderSet({
+    body: {
+        labTestIds: ["<lab_test_id>"],
+        addOn: { providerIds: ["123"] },
+    },
+});
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.types.AddOnOrder;
+import com.junction.api.types.OrderSetRequest;
+import java.util.List;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.labTests().getMarkersForOrderSet(
+    OrderSetRequest.builder()
+        .labTestIds(List.of("<lab_test_id>"))
+        .addOn(
+            AddOnOrder.builder()
+                .providerIds(List.of("123"))
+                .build()
+        )
+        .build()
+);
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.LabTests.GetMarkersForOrderSet(context.TODO(), &junction.GetMarkersForOrderSetLabTestsRequest{
+    Body: &junction.OrderSetRequest{
+        LabTestIds: []string{"<lab_test_id>"},
+        AddOn: &junction.AddOnOrder{
+            ProviderIds: []string{"123"},
+        },
+    },
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
 ```
 
 </RequestExample>

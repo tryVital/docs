@@ -14,79 +14,77 @@ curl --request GET \
 ```
 
 ```python Python
-from vital.client import Vital
-from vital.environment import VitalEnvironment
+from junction import Junction
+from junction.environment import JunctionEnvironment
 
-client = Vital(
-  api_key="YOUR_API_KEY",
-  environment=VitalEnvironment.SANDBOX
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
 )
 
 data = client.sleep.get(
-  user_id="<user_id>", 
-  start_date="2021-01-01", 
-  end_date="2021-01-02"
+    "<user_id>",
+    start_date="2021-01-01",
+    end_date="2021-01-02",
 )
 ```
 
-```javascript Node
-import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
-import { SleepGetRequest } from '@tryvital/vital-node/api';
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-const client = new VitalClient({
-    apiKey: '<my_api_key>',
-    environment: VitalEnvironment.Sandbox,
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
 });
 
-const request: SleepGetRequest = {
-    startDate: '2021-01-01',
-    endDate: '2021-01-02',
-}
-
-const data = await client.sleep.get('user_id', request)
+const data = await client.sleep.get({
+    userId: "<user_id>",
+    startDate: "2021-01-01",
+    endDate: "2021-01-02",
+});
 ```
 
 ```java Java
-import com.vital.api.Vital;
-import com.vital.api.core.Environment;
-import com.vital.api.resources.sleep.requests.SleepGetRequest;
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.sleep.requests.GetSleepRequest;
 
-Vital vital = Vital.builder()
-        .apiKey("YOUR_API_KEY")
-        .environment(Environment.SANDBOX)
-        .build();
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
 
-SleepGetRequest request = SleepGetRequest
-        .builder()
+var data = client.sleep().get(
+    "<user_id>",
+    GetSleepRequest.builder()
         .startDate("2021-01-01")
         .endDate("2021-01-02")
-        .build();
-
-var data = vital.sleep().get("<user_id>", request);
+        .build()
+);
 ```
 
 ```go Go
 import (
-  "context"
+    "context"
 
-  vital "github.com/tryVital/vital-go"
-  vitalclient "github.com/tryVital/vital-go/client"
-  "github.com/tryVital/vital-go/option"
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
 )
 
-EndDate := "2021-01-02"
-request := &vital.SleepGetRequest{
-  StartDate: "2021-01-01",
-  EndDate:   &EndDate,
-}
-
-response, err := client.Sleep.Get(
-  context.TODO(), 
-  "<user_id>", 
-  request
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
 )
+
+endDate := "2021-01-02"
+response, err := c.Sleep.Get(context.TODO(), &junction.GetSleepRequest{
+    UserId:    "<user_id>",
+    StartDate: "2021-01-01",
+    EndDate:   &endDate,
+})
 if err != nil {
-  return err
+    return err
 }
 fmt.Printf("Received data %s\n", response)
 ```
