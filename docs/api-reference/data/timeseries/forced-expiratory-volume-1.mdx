@@ -1,6 +1,5 @@
 ---
 title: "Forced Expiratory Volume 1"
-description: "Retrieve forced expiratory volume in 1 second (FEV1) timeseries data for a user from their connected provider, grouped by source."
 openapi: "GET /v2/timeseries/{user_id}/forced_expiratory_volume_1/grouped"
 ---
 
@@ -24,77 +23,81 @@ curl --request GET \
 ```
 
 ```python Python
-from junction import Junction
-from junction.environment import JunctionEnvironment
+from vital.client import Vital
+from vital.environment import VitalEnvironment
 
-client = Junction(
-    api_key="YOUR_API_KEY",
-    environment=JunctionEnvironment.SANDBOX,
+client = Vital(
+  api_key="YOUR_API_KEY",
+  environment=VitalEnvironment.SANDBOX
 )
 
-data = client.vitals.forced_expiratory_volume1grouped(
-    "<user_id>",
-    start_date="2021-10-01",
-    end_date="2021-10-02",
+data = client.vitals.forced_expiratory_volume_1_grouped(
+  user_id="<user_id>", 
+  start_date="2021-10-01", 
+  end_date="2021-10-02"
 )
 ```
 
-```typescript TypeScript
-import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+```javascript Node
+import { VitalClient, VitalEnvironment } from '@tryvital/vital-node';
+import { VitalsForcedExpiratoryVolume1GroupedRequest } from '@tryvital/vital-node/api/resources/vitals';
 
-const client = new JunctionClient({
-    apiKey: "YOUR_API_KEY",
-    environment: JunctionEnvironment.Sandbox,
+const client = new VitalClient({
+    apiKey: '<my_api_key>',
+    environment: VitalEnvironment.Sandbox,
 });
 
-const data = await client.vitals.forcedExpiratoryVolume1Grouped({
-    userId: "<user_id>",
-    startDate: "2021-10-01",
-    endDate: "2021-10-02",
-});
+const request: VitalsForcedExpiratoryVolume1GroupedRequest = {
+    startDate: "2022-05-01",
+    endDate: "2022-06-01"
+}
+
+const data = await client.vitals.forcedExpiratoryVolume1Grouped(
+    '<my_user_id>',
+    request
+);
 ```
 
 ```java Java
-import com.junction.api.Junction;
-import com.junction.api.core.Environment;
-import com.junction.api.resources.vitals.requests.ForcedExpiratoryVolume1GroupedVitalsRequest;
+import com.vital.api.Vital;
+import com.vital.api.core.Environment;
+import com.vital.api.resources.vitals.requests.VitalsForcedExpiratoryVolume1GroupedRequest;
 
-Junction client = Junction.builder()
-    .apiKey("YOUR_API_KEY")
-    .environment(Environment.SANDBOX)
-    .build();
+Vital vital = Vital.builder()
+        .apiKey("YOUR_API_KEY")
+        .environment(Environment.SANDBOX)
+        .build();
 
-var data = client.vitals().forcedExpiratoryVolume1Grouped(
-    "<user_id>",
-    ForcedExpiratoryVolume1GroupedVitalsRequest.builder()
-        .startDate("2021-10-01")
-        .endDate("2021-10-02")
-        .build()
-);
+VitalsForcedExpiratoryVolume1GroupedRequest request = VitalsForcedExpiratoryVolume1GroupedRequest.builder()
+        .startDate("2022-05-01")
+        .endDate("2022-06-01")
+        .build();
+
+var data = vital.vitals().forcedExpiratoryVolume1Grouped("<user_id>", request);
 ```
 
 ```go Go
 import (
-    "context"
+  "context"
 
-    junction "github.com/junction-api/junction-go"
-    "github.com/junction-api/junction-go/client"
-    "github.com/junction-api/junction-go/option"
+  vital "github.com/tryVital/vital-go"
+  vitalclient "github.com/tryVital/vital-go/client"
 )
 
-c := client.NewClient(
-    option.WithApiKey("YOUR_API_KEY"),
-    option.WithBaseURL(junction.Environments.Sandbox),
+client := vitalclient.NewClient(
+  vitalclient.WithApiKey("<YOUR_API_KEY>"),
+  vitalclient.WithBaseURL(vital.Environments.Sandbox),
 )
 
-endDate := "2021-10-02"
-response, err := c.Vitals.ForcedExpiratoryVolume1Grouped(context.TODO(), &junction.ForcedExpiratoryVolume1GroupedVitalsRequest{
-    UserId:    "<user_id>",
-    StartDate: "2021-10-01",
-    EndDate:   &endDate,
-})
+EndDate := "2022-06-01"
+request := &vital.VitalsForcedExpiratoryVolume1GroupedRequest{
+  StartDate: "2022-05-01",
+  EndDate:   &EndDate,
+}
+
+response, err := client.Vitals.ForcedExpiratoryVolume1Grouped(context.TODO(), "*", request)
 if err != nil {
-    return err
+  return err
 }
 fmt.Printf("Received data %s\n", response)
 ```
