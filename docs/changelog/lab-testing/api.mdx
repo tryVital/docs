@@ -3,6 +3,10 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### More specific error when marking on-site collection order as draw completed (May 2026)
+
+On-site collection orders cannot be marked as draw completed with the [draw completed](/api-reference/lab-testing/update-order-draw-completed) endpoint if the order is in a terminal state (e.g., the order is already completed). Previously, it wasn't clear that the state was the reason for failure. The new error message explicitly tells you that the order is in a terminal state and includes the state.
+
 ### Lab account delegation status enforced (May 2026)
 
 We will soon be enforcing that at least one physician is supplied on order creation for Labcorp, Quest, and Sonora Quest labs _if your order is configured to use a delegated lab account_. Up until now, even if the order should be delegated, we would allow a fallback to using Junction physicians if a physician wasn't provided in the order. Going forward, non-delegated orders will use Junction physicians, but delegated orders must supply a physician.
