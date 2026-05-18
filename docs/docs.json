@@ -217,7 +217,8 @@
                   "api-reference/lab-testing/import-order",
                   "api-reference/lab-testing/simulate-order",
                   "api-reference/lab-testing/order-collection-instructions-pdf",
-                  "api-reference/lab-testing/update-order-draw-completed"
+                  "api-reference/lab-testing/update-order-draw-completed",
+                  "api-reference/lab-testing/resend-order-events"
                 ]
               },
               {

@@ -1,0 +1,101 @@
+---
+title: "Resend order webhooks"
+description: "Replay the latest webhook event for one or more orders via the Junction API."
+openapi: "POST /v3/order/resend_events"
+---
+
+<Note>
+  At least one of `order_ids` or `start_at` is required. When using `start_at`, `end_at` defaults to the current time and the window cannot exceed 60 days.
+</Note>
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url https://api.sandbox.junction.com/v3/order/resend_events \
+  --header 'x-vital-api-key: YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "order_ids": ["0ee312e2-6773-4a21-a6e1-506882cd98ed"]
+  }'
+```
+
+```python Python
+from junction import Junction
+from junction.environment import JunctionEnvironment
+
+client = Junction(
+    api_key="YOUR_API_KEY",
+    environment=JunctionEnvironment.SANDBOX,
+)
+
+data = client.order.resend_events(
+    order_ids=["0ee312e2-6773-4a21-a6e1-506882cd98ed"],
+)
+```
+
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
+
+const client = new JunctionClient({
+    apiKey: "YOUR_API_KEY",
+    environment: JunctionEnvironment.Sandbox,
+});
+
+const data = await client.order.resendEvents({
+    orderIds: ["0ee312e2-6773-4a21-a6e1-506882cd98ed"],
+});
+```
+
+```java Java
+import com.junction.api.Junction;
+import com.junction.api.core.Environment;
+import com.junction.api.resources.order.requests.ResendWebhookBody;
+import java.util.List;
+
+Junction client = Junction.builder()
+    .apiKey("YOUR_API_KEY")
+    .environment(Environment.SANDBOX)
+    .build();
+
+var data = client.order().resendEvents(
+    ResendWebhookBody.builder()
+        .orderIds(List.of("0ee312e2-6773-4a21-a6e1-506882cd98ed"))
+        .build()
+);
+```
+
+```go Go
+import (
+    "context"
+
+    junction "github.com/junction-api/junction-go"
+    "github.com/junction-api/junction-go/client"
+    "github.com/junction-api/junction-go/option"
+)
+
+c := client.NewClient(
+    option.WithApiKey("YOUR_API_KEY"),
+    option.WithBaseURL(junction.Environments.Sandbox),
+)
+
+response, err := c.Order.ResendEvents(context.TODO(), &junction.ResendWebhookBody{
+    OrderIds: []string{"0ee312e2-6773-4a21-a6e1-506882cd98ed"},
+})
+if err != nil {
+    return err
+}
+fmt.Printf("Received data %s\n", response)
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "order_ids": ["0ee312e2-6773-4a21-a6e1-506882cd98ed"]
+}
+```
+
+</ResponseExample>
