@@ -213,6 +213,7 @@
                   "api-reference/lab-testing/labels-pdf",
                   "api-reference/lab-testing/create-unregistered-order",
                   "api-reference/lab-testing/register-order",
+                  "api-reference/lab-testing/patch-order",
                   "api-reference/lab-testing/import-order",
                   "api-reference/lab-testing/simulate-order",
                   "api-reference/lab-testing/order-collection-instructions-pdf",

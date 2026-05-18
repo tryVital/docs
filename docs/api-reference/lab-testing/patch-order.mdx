@@ -1,0 +1,41 @@
+---
+title: "Update an order"
+description: "Update an order via the Junction API. Requires authentication with your team API key."
+openapi: "PATCH /v3/order/{order_id}"
+---
+
+<Note>
+  You can only update an order while its [low-level status](/lab/workflow/lab-test-lifecycle#statuses) is `ordered` or `awaiting_registration`. 
+</Note>
+
+<RequestExample> 
+
+```bash cURL
+curl --request PATCH \
+  --url https://api.sandbox.junction.com/v3/order/<order_id> \
+  --header 'x-vital-api-key: YOUR_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "activate_by": "2026-06-01"
+  }'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "order": {
+    "id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+    "team_id": "cbb64555-af07-46c1-be09-ef89308e9b60",
+    "user_id": "94e2d9f2-d600-4a23-9f08-536df378e2c7",
+    "activate_by": "2026-06-01",
+    "status": "received"
+  },
+  "status": "success",
+  "message": "order updated"
+}
+```
+
+</ResponseExample>
