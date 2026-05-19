@@ -48,6 +48,11 @@ If an `initial` order is eligible for a redraw, rather than transitioning the [l
   - Once the redraw order is completed, use the order transaction endpoint to retrieve combined results
 
 
+## Cancelling a Redraw Order
+
+- Once the `initial` order transitions to `redraw_available` state, it can no longer be cancelled.
+- To cancel the `redraw` order, use the [cancel order endpoint](/api-reference/lab-testing/cancel-order) with the `redraw` order ID (not the `initial` order ID). The redraw order follows the standard [walk-in test cancellation rules](/lab/workflow/cancelling-an-order).
+
 ## Integrating with Order Transactions
 
 We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction. This way, if you receive a webhook for an order that you have not seen in your system, you will be able to link it to the initial order via the `order_transaction_id`.
