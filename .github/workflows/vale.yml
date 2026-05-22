@@ -1,0 +1,34 @@
+name: Vale prose lint
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+      - 'docs/**/*.mdx'
+
+jobs:
+  vale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: errata-ai/vale-action@v2
+        id: vale
+        with:
+          files: docs/
+          fail_on_error: true
+          filter_mode: diff_context
+
+      - name: Local setup instructions
+        if: failure()
+        run: |
+          echo "## Vale check failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Run Vale locally to see and fix errors before pushing:" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "brew install vale        # one-time setup" >> $GITHUB_STEP_SUMMARY
+          echo "vale docs/               # lint everything" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "To suppress a false positive: wrap the line with \`<!-- vale Junction.EntityCase off -->\` / \`<!-- vale Junction.EntityCase on -->\`." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "See the README for full setup details." >> $GITHUB_STEP_SUMMARY
