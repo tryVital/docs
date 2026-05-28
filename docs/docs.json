@@ -339,6 +339,7 @@
               {
                 "group": "Appointments",
                 "pages": [
+                  "event-catalog/labtest.appointment.created",
                   "event-catalog/labtest.appointment.updated"
                 ]
               },
@@ -697,7 +698,16 @@
                     "group": "Profile",
                     "pages": [
                       "event-catalog/daily.data.profile.created",
+                      "event-catalog/daily.data.profile.updated",
                       "event-catalog/historical.data.profile.created"
+                    ]
+                  },
+                  {
+                    "group": "Electrocardiogram",
+                    "pages": [
+                      "event-catalog/daily.data.electrocardiogram.created",
+                      "event-catalog/daily.data.electrocardiogram.updated",
+                      "event-catalog/historical.data.electrocardiogram.created"
                     ]
                   },
                   {
@@ -728,7 +738,8 @@
                     "group": "Workout Stream",
                     "pages": [
                       "event-catalog/daily.data.workout_stream.created",
-                      "event-catalog/daily.data.workout_stream.updated"
+                      "event-catalog/daily.data.workout_stream.updated",
+                      "event-catalog/historical.data.workout_stream.created"
                     ]
                   }
                 ]
@@ -851,6 +862,14 @@
                 "group": "Vitals Timeseries",
                 "pages": [
                   {
+                    "group": "AFib Burden",
+                    "pages": [
+                      "event-catalog/daily.data.afib_burden.created",
+                      "event-catalog/daily.data.afib_burden.updated",
+                      "event-catalog/historical.data.afib_burden.created"
+                    ]
+                  },
+                  {
                     "group": "Blood Pressure",
                     "pages": [
                       "event-catalog/daily.data.blood_pressure.created",
@@ -904,6 +923,14 @@
                       "event-catalog/daily.data.hrv.created",
                       "event-catalog/daily.data.hrv.updated",
                       "event-catalog/historical.data.hrv.created"
+                    ]
+                  },
+                  {
+                    "group": "Heart Rate Alert",
+                    "pages": [
+                      "event-catalog/daily.data.heart_rate_alert.created",
+                      "event-catalog/daily.data.heart_rate_alert.updated",
+                      "event-catalog/historical.data.heart_rate_alert.created"
                     ]
                   },
                   {
