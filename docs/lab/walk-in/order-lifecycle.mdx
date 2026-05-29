@@ -3,8 +3,6 @@ title: "Order and Appointment Lifecycle"
 description: "Learn the order and appointment statuses, state transitions, and scheduling flows for Walk-In Phlebotomy lab tests."
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
-
 The **Walk-In Test** orders are composed of two different lifecycles, the **Order** lifecycle and
 the **Appointment** lifecycle, detailed in the following sections.
 
@@ -23,7 +21,7 @@ For each modality, there can be multiple **low-level statuses**, for **Walk-In P
 - `appointment_scheduled`: An appointment was scheduled or rescheduled for the order.
 - `appointment_cancelled`: The appointment was cancelled, by either the patient, Vital or you.
 - `partial_results`: The laboratory has started making partial results available.
-- `redraw_available`: The result has been marked as final but is missing biomarker results due to lab error. (Currently in beta testing.)
+- `redraw_available`: The result has been marked as final but is missing biomarker results due to lab error.
 - `completed`: The laboratory processed the blood sample and final results are available.
 - `sample_error`: The collected sample was unprocessable by the lab.
 - `cancelled`: The order was cancelled by either the patient, Vital or you.
