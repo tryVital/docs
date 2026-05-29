@@ -1,0 +1,3 @@
+{
+  "vale.valeCLI.config": "${workspaceFolder}/.vale.ini"
+}

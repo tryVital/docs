@@ -11,6 +11,26 @@
 
 The openapi spec in this repository is automatically synchronized with Junction's primary codebase, meaning a merge to main in the primary codebase triggers an update to the openapi spec in this repository, and a consequent deployment. The only exception to this rule is if a new endpoint is created.
 
+## Prose linting
+
+PRs are checked by [Vale](https://vale.sh) for style violations (e.g. capitalised API entities, British spellings). If your PR fails the Vale check, run it locally to see the errors before pushing:
+
+```bash
+brew install vale        # one-time setup
+vale docs/               # lint everything
+vale docs/path/to/file.mdx  # lint a specific file
+```
+
+To suppress a false positive on a specific line:
+
+```mdx
+<!-- vale Junction.EntityCase off -->
+The Team API Key header...
+<!-- vale Junction.EntityCase on -->
+```
+
+Install the [Vale VS Code extension](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode) to see violations inline as you write.
+
 ## Resources
 
 For more information about mintlify see [docs](https://mintlify.com/docs)

@@ -1,0 +1,6 @@
+extends: existence
+message: "'%s' should be lowercase — API entities (team, user, org) are common nouns, not branded terms. Suppress with '<!-- vale Junction.EntityCase off -->' if capitalisation is intentional."
+level: error
+nonword: true
+tokens:
+  - '(?<=[a-z,;:(]\s)(Team|Organisation|Organization|User|Member)\b'
