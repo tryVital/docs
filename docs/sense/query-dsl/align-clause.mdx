@@ -1,0 +1,307 @@
+---
+title: ALIGN clause
+description: "Use the ALIGN clause in Junction Sense queries to fill empty time buckets with carry-forward, carry-backward, or carry-nearest operators on sparse data."
+icon: arrows-left-right-to-line
+iconType: duotone
+---
+
+## Overview
+
+Use the ALIGN clause to fill empty time buckets in your aggregated output with values carried over from neighbouring buckets. Without it, a GROUP BY over sparse data - for example a once-a-week weigh-in grouped daily - produces only the rows that have real observations, with no rows for the days in between. With ALIGN you get one row per bucket in the time range, with empty buckets filled according to your chosen carry operator.
+
+All ALIGN behaviour is **post-aggregation**: Junction Sense first runs your GROUP BY and aggregates, then materialises the missing buckets and fills them.
+
+The ALIGN clause supports three carry operators:
+
+- `"carry_forward"` - fill empty buckets with the most recent prior non-empty value (last-observation-carried-forward).
+- `"carry_backward"` - fill empty buckets with the next subsequent non-empty value.
+- `"carry_nearest"` - fill empty buckets with the value from the nearest non-empty bucket (past or future, whichever is closer; ties prefer the past value).
+
+Each operator takes a duration argument (`max_age` for forward/backward, `span` for nearest) that caps how far the carry will reach. Buckets beyond the cap remain as explicit nulls in the output.
+
+## Operators
+
+### `"carry_forward"` - last-observation-carried-forward
+
+For each empty bucket, carries the most recent prior non-empty bucket's aggregate forward in time. `max_age` caps how far back the carry searches; if no prior non-empty bucket exists within `max_age`, the bucket stays as an explicit null.
+
+Use `carry_forward` for causal or streaming use cases where only past data should influence the current value - for example a daily weight series built from sparse weigh-ins, or HRV tracking that should hold the last known reading across days the device wasn't worn.
+
+<AccordionGroup>
+<Accordion title="Input arguments" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+| Argument         | Remarks |
+| ---------------- | --------------- |
+| `max_age`        | Optional [Period](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime) - caps look-back. Omit to carry indefinitely. |
+
+</Accordion>
+</AccordionGroup>
+
+### `"carry_backward"` - carry-backward
+
+Symmetric counterpart to `carry_forward`. For each empty bucket, carries the nearest subsequent non-empty bucket's aggregate backward in time. `max_age` caps how far forward the carry searches.
+
+Useful for retrospective analysis - for example applying a measurement taken on day N back to days N-1, N-2, etc., up to the cap.
+
+<AccordionGroup>
+<Accordion title="Input arguments" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+| Argument         | Remarks |
+| ---------------- | --------------- |
+| `max_age`        | Optional [Period](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime) - caps look-forward. Omit to carry indefinitely. |
+
+</Accordion>
+</AccordionGroup>
+
+### `"carry_nearest"` - carry from nearest bucket
+
+For each empty bucket, borrows the value from the nearest non-empty bucket in either direction - past or future, whichever is closer. `span` caps the search in both directions. On a tie (equidistant past and future non-empty buckets), the past value is preferred.
+
+Use `carry_nearest` when direction doesn't matter and minimising carry distance is the priority - for example filling a daily weight composite from the closest measurement within a few days, in either direction.
+
+<AccordionGroup>
+<Accordion title="Input arguments" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
+
+| Argument         | Remarks |
+| ---------------- | --------------- |
+| `span`           | Optional [Period](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime) - caps search in both directions. Omit to carry indefinitely. |
+
+</Accordion>
+</AccordionGroup>
+
+### Operator comparison
+
+| Operator | Direction | Tie behaviour |
+| --- | --- | --- |
+| `"carry_forward"` | Backward only | - (single direction) |
+| `"carry_backward"` | Forward only | - (single direction) |
+| `"carry_nearest"` | Both - picks closest | Prefer past on tie |
+
+## Behaviour
+
+### Bucket materialisation
+
+Every ALIGN operator materialises empty datetime buckets in the output. Even if the carry cap is reached and a bucket can't be filled, the row still appears in the result with a null value. Downstream consumers see a contiguous time series rather than a sparse one.
+
+### Spine extension beyond observed data
+
+The spine extends beyond the observed data range by the carry window so sparse data - like one weigh-in per week - produces a properly-carried series:
+
+- `carry_forward(max_age=X)` extends the spine forward by `X` past the latest observation.
+- `carry_backward(max_age=X)` extends the spine backward by `X` before the earliest observation.
+- `carry_nearest(span=X)` extends on both sides by `X`.
+
+When `max_age` / `span` is omitted (uncapped carry), no extension is applied - the spine falls back to the observed range. For dense-data queries that's fine; for the very-sparse case specify a cap to opt in to boundary materialisation.
+
+### Column-level carry
+
+Each output column is carried independently. A bucket that has a null aggregate for column A but a real value for column B will have A filled from the nearest eligible source while B retains its real value. This is the intended behaviour - it avoids introducing nulls when a value is available within the carry window, regardless of other columns.
+
+### Per-partition carry
+
+When `group_by` contains keys beyond the [Date Truncate expression](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime) (for example `Source.col("source_provider")`), each unique combination of those keys is treated as an independent time series. Values do not carry across partition boundaries - Oura's last reading will never fill an Apple Health bucket, even if the Apple Health partition has an empty bucket within `max_age`.
+
+Every group_by column must be projected in `select` (via `group_key("*")` or each `group_key(i)`); otherwise the query is rejected.
+
+## Validation
+
+When you create a Continuous Query or submit a synchronous Query with ALIGN, the following must hold:
+
+1. `group_by` must contain at least one [Date Truncate expression](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime). `carry_forward`, `carry_backward`, and `carry_nearest` all operate over the truncated datetime axis.
+2. `max_age` / `span` must be greater than or equal to the `group_by` Date Truncate period. A carry window smaller than the bucket size could never reach an adjacent bucket and is rejected rather than silently no-op'd.
+3. Every `group_by` column must be projected in `select` - use `group_key("*")` for the common case.
+4. `group_by` cannot mix a Date Truncate expression with a [Date Part expression](/sense/query-dsl/group-by-clause#group-by-a-date-or-time-component) (such as day-of-month). Date Part values are derived from the same date column as the bucket and treating them as independent partition keys would produce impossible combinations like (February, day-of-month=30).
+
+## Honest null is the default
+
+Omitting `.align()` preserves the existing behaviour - sparse GROUP BY output, no extra rows for missing buckets. Reach for ALIGN only when you actively want carry behaviour.
+
+## Examples
+
+### Carry weight forward up to 14 days
+
+Fill in the days between weigh-ins so a daily trend chart has a usable value every day, capped at 14 days of carry to avoid stale data.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
+  .group_by(va.date_trunc(va.Body.index(), 1, "day"))
+  .align("carry_forward", max_age=va.period(14, "day"))
+  .finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "body": "weight_kilogram" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "body" }
+    }
+  ],
+  "align": {
+    "carry": {
+      "mode": "carry_forward",
+      "max_age": { "value": 14, "unit": "day" }
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Carry HRV forward on days the wearable was not worn
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.group_key("*"), va.Sleep.col("hrv_mean_rmssd").mean())
+  .group_by(va.date_trunc(va.Sleep.index(), 1, "day"))
+  .align("carry_forward", max_age=va.period(7, "day"))
+  .finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "sleep": "hrv_mean_rmssd" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "sleep" }
+    }
+  ],
+  "align": {
+    "carry": {
+      "mode": "carry_forward",
+      "max_age": { "value": 7, "unit": "day" }
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Fill weight from the nearest measurement within 3 days
+
+Use `carry_nearest` when direction doesn't matter and minimising carry distance is the priority.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
+  .group_by(va.date_trunc(va.Body.index(), 1, "day"))
+  .align("carry_nearest", span=va.period(3, "day"))
+  .finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "body": "weight_kilogram" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "body" }
+    }
+  ],
+  "align": {
+    "carry": {
+      "mode": "carry_nearest",
+      "span": { "value": 3, "unit": "day" }
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Per-provider weight trend with independent carry
+
+Group by `source_provider` so each provider gets its own series. The carry stays within each partition - Oura's value never bleeds into Apple Health's series.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
+  .group_by(
+      va.date_trunc(va.Body.index(), 1, "day"),
+      va.Source.col("source_provider"),
+  )
+  .align("carry_forward", max_age=va.period(14, "day"))
+  .finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "mean", "arg": { "body": "weight_kilogram" } }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "body" }
+    },
+    { "source": "source_provider" }
+  ],
+  "align": {
+    "carry": {
+      "mode": "carry_forward",
+      "max_age": { "value": 14, "unit": "day" }
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Blood pressure: infrequently measured, carry up to 3 months
+
+For lab-grade measurements that are sampled infrequently but stay relevant for weeks or months between readings.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Timeseries.col("blood_pressure").field("systolic").mean(),
+)
+  .group_by(va.date_trunc(va.Timeseries.index(), 1, "day"))
+  .align("carry_forward", max_age=va.period(3, "month"))
+  .finalize()
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    {
+      "func": "mean",
+      "arg": { "timeseries": "blood_pressure", "field": "systolic" }
+    }
+  ],
+  "group_by": [
+    {
+      "date_trunc": { "value": 1, "unit": "day" },
+      "arg": { "index": "timeseries" }
+    }
+  ],
+  "align": {
+    "carry": {
+      "mode": "carry_forward",
+      "max_age": { "value": 3, "unit": "month" }
+    }
+  }
+}
+```
+</CodeGroup>
