@@ -126,10 +126,12 @@ Fill in the days between weigh-ins so a daily trend chart has a usable value eve
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
-  .group_by(va.date_trunc(va.Body.index(), 1, "day"))
-  .align("carry_forward", max_age=va.period(14, "day"))
-  .finalize()
+va.select(
+    va.group_key("*"),
+    va.Body.col("weight_kilogram").mean(),
+).group_by(
+    va.date_trunc(va.Body.index(), 1, "day"),
+).align("carry_forward", max_age=va.period(14, "day"))
 ```
 
 ```jsonc JSON DSL
@@ -160,10 +162,12 @@ va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.group_key("*"), va.Sleep.col("hrv_mean_rmssd").mean())
-  .group_by(va.date_trunc(va.Sleep.index(), 1, "day"))
-  .align("carry_forward", max_age=va.period(7, "day"))
-  .finalize()
+va.select(
+    va.group_key("*"),
+    va.Sleep.col("hrv_mean_rmssd").mean(),
+).group_by(
+    va.date_trunc(va.Sleep.index(), 1, "day"),
+).align("carry_forward", max_age=va.period(7, "day"))
 ```
 
 ```jsonc JSON DSL
@@ -196,10 +200,12 @@ Use `carry_nearest` when direction doesn't matter and minimising carry distance 
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
-  .group_by(va.date_trunc(va.Body.index(), 1, "day"))
-  .align("carry_nearest", span=va.period(3, "day"))
-  .finalize()
+va.select(
+    va.group_key("*"),
+    va.Body.col("weight_kilogram").mean(),
+).group_by(
+    va.date_trunc(va.Body.index(), 1, "day"),
+).align("carry_nearest", span=va.period(3, "day"))
 ```
 
 ```jsonc JSON DSL
@@ -232,13 +238,13 @@ Group by `source_provider` so each provider gets its own series. The carry stays
 ```python Python DSL
 import vitalx.aggregation as va
 
-va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
-  .group_by(
-      va.date_trunc(va.Body.index(), 1, "day"),
-      va.Source.col("source_provider"),
-  )
-  .align("carry_forward", max_age=va.period(14, "day"))
-  .finalize()
+va.select(
+    va.group_key("*"),
+    va.Body.col("weight_kilogram").mean(),
+).group_by(
+    va.date_trunc(va.Body.index(), 1, "day"),
+    va.Source.col("source_provider"),
+).align("carry_forward", max_age=va.period(14, "day"))
 ```
 
 ```jsonc JSON DSL
@@ -275,10 +281,9 @@ import vitalx.aggregation as va
 va.select(
     va.group_key("*"),
     va.Timeseries.col("blood_pressure").field("systolic").mean(),
-)
-  .group_by(va.date_trunc(va.Timeseries.index(), 1, "day"))
-  .align("carry_forward", max_age=va.period(3, "month"))
-  .finalize()
+).group_by(
+    va.date_trunc(va.Timeseries.index(), 1, "day"),
+).align("carry_forward", max_age=va.period(3, "month"))
 ```
 
 ```jsonc JSON DSL

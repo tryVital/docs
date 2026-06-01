@@ -24,10 +24,12 @@ Each operator takes a duration argument (`max_age` for forward/backward, `span` 
 ```python
 import vitalx.aggregation as va
 
-va.select(va.group_key("*"), va.Body.col("weight_kilogram").mean())
-  .group_by(va.date_trunc(va.Body.index(), 1, "day"))
-  .align("carry_forward", max_age=va.period(14, "day"))
-  .finalize()
+va.select(
+    va.group_key("*"),
+    va.Body.col("weight_kilogram").mean(),
+).group_by(
+    va.date_trunc(va.Body.index(), 1, "day"),
+).align("carry_forward", max_age=va.period(14, "day"))
 ```
 
 A user who weighs once a week now produces a row for every day in the spine, with the last known weight carried forward for up to 14 days. Days beyond 14d of the last weigh-in remain as explicit null rows.
