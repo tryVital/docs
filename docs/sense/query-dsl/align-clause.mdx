@@ -91,6 +91,8 @@ The spine extends beyond the observed data range by the carry window so sparse d
 - `carry_backward(max_age=X)` extends the spine backward by `X` before the earliest observation.
 - `carry_nearest(span=X)` extends on both sides by `X`.
 
+Forward extension is clamped at the current time - the spine never includes buckets dated past "now". If a recent observation plus `X` would land in the future, the spine ends at the bucket containing the current moment. Backward extension is not capped.
+
 When `max_age` / `span` is omitted (uncapped carry), no extension is applied - the spine falls back to the observed range. For dense-data queries that's fine; for the very-sparse case specify a cap to opt in to boundary materialisation.
 
 ### Column-level carry
