@@ -5,6 +5,41 @@ description: "Changelog of Junction Wearables API updates including Sense readin
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Junction Sense: ALIGN clause (May 2026)
+
+Junction Sense queries now support a new `.align()` clause that fills empty time buckets in your aggregated output with values carried over from neighbouring buckets. Use it when you want a contiguous time series from sparse input - for example a daily weight composite from a once-a-week weigh-in.
+
+<Accordion title="Details" defaultOpen icon="arrows-left-right-to-line" iconType="duotone">
+
+The ALIGN clause supports three carry operators:
+
+- **`"carry_forward"`** - fills empty buckets with the most recent prior non-empty value. Use for causal or streaming scenarios where only past data should influence the current value.
+- **`"carry_backward"`** - fills empty buckets with the next subsequent non-empty value. Use for retrospective analysis where a measurement on day N applies back to days N-1, N-2, etc.
+- **`"carry_nearest"`** - fills empty buckets with the value from the nearest non-empty bucket in either direction. Ties prefer the past value.
+
+Each operator takes a duration argument (`max_age` for forward/backward, `span` for nearest) that caps how far the carry will reach. Buckets beyond the cap remain as explicit nulls in the output.
+
+**Example - daily weight trend from sparse weigh-ins:**
+
+```python
+import vitalx.aggregation as va
+
+va.select(
+    va.group_key("*"),
+    va.Body.col("weight_kilogram").mean(),
+).group_by(
+    va.date_trunc(va.Body.index(), 1, "day"),
+).align("carry_forward", max_age=va.period(14, "day"))
+```
+
+A user who weighs once a week now produces a row for every day in the spine, with the last known weight carried forward for up to 14 days. Days beyond 14d of the last weigh-in remain as explicit null rows.
+
+When you group by additional dimensions like `Source.col("source_provider")`, carry stays within each partition - values do not cross provider boundaries.
+
+For the full reference including operator semantics, validation rules, and per-partition behaviour, see the [ALIGN clause documentation](/sense/query-dsl/align-clause).
+
+</Accordion>
+
 ### Junction Sense: Menstrual Cycle resource (April 2026)
 
 Junction Sense now supports the `menstrual_cycle` query table, covering cycle-level scalars and the nested daily logs.
