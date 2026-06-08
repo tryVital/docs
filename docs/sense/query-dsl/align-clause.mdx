@@ -7,9 +7,9 @@ iconType: duotone
 
 ## Overview
 
-Use the ALIGN clause to fill empty time buckets in your aggregated output with values carried over from neighbouring buckets. Without it, a GROUP BY over sparse data - for example a once-a-week weigh-in grouped daily - produces only the rows that have real observations, with no rows for the days in between. With ALIGN you get one row per bucket in the time range, with empty buckets filled according to your chosen carry operator.
+Use the ALIGN clause to fill empty time buckets in your aggregated output with values carried over from neighboring buckets. Without it, a GROUP BY over sparse data - for example a once-a-week weigh-in grouped daily - produces only the rows that have real observations, with no rows for the days in between. With ALIGN you get one row per bucket in the time range, with empty buckets filled according to your chosen carry operator.
 
-All ALIGN behaviour is **post-aggregation**: Junction Sense first runs your GROUP BY and aggregates, then materialises the missing buckets and fills them.
+All ALIGN behavior is **post-aggregation**: Junction Sense first runs your GROUP BY and aggregates, then materializes the missing buckets and fills them.
 
 The ALIGN clause supports three carry operators:
 
@@ -57,7 +57,7 @@ Useful for retrospective analysis - for example applying a measurement taken on 
 
 For each empty bucket, borrows the value from the nearest non-empty bucket in either direction - past or future, whichever is closer. `span` caps the search in both directions. On a tie (equidistant past and future non-empty buckets), the past value is preferred.
 
-Use `carry_nearest` when direction doesn't matter and minimising carry distance is the priority - for example filling a daily weight composite from the closest measurement within a few days, in either direction.
+Use `carry_nearest` when direction doesn't matter and minimizing carry distance is the priority - for example filling a daily weight composite from the closest measurement within a few days, in either direction.
 
 <AccordionGroup>
 <Accordion title="Input arguments" icon="arrow-right-to-bracket" iconType="duotone" defaultOpen>
@@ -71,17 +71,17 @@ Use `carry_nearest` when direction doesn't matter and minimising carry distance 
 
 ### Operator comparison
 
-| Operator | Direction | Tie behaviour |
+| Operator | Direction | Tie behavior |
 | --- | --- | --- |
 | `"carry_forward"` | Backward only | - (single direction) |
 | `"carry_backward"` | Forward only | - (single direction) |
 | `"carry_nearest"` | Both - picks closest | Prefer past on tie |
 
-## Behaviour
+## Behavior
 
-### Bucket materialisation
+### Bucket materialization
 
-Every ALIGN operator materialises empty datetime buckets in the output. Even if the carry cap is reached and a bucket can't be filled, the row still appears in the result with a null value. Downstream consumers see a contiguous time series rather than a sparse one.
+Every ALIGN operator materializes empty datetime buckets in the output. Even if the carry cap is reached and a bucket can't be filled, the row still appears in the result with a null value. Downstream consumers see a contiguous time series rather than a sparse one.
 
 ### Spine extension beyond observed data
 
@@ -93,11 +93,11 @@ The spine extends beyond the observed data range by the carry window so sparse d
 
 Forward extension is clamped at the current time - the spine never includes buckets dated past "now". If a recent observation plus `X` would land in the future, the spine ends at the bucket containing the current moment. Backward extension is not capped.
 
-When `max_age` / `span` is omitted (uncapped carry), no extension is applied - the spine falls back to the observed range. For dense-data queries that's fine; for the very-sparse case specify a cap to opt in to boundary materialisation.
+When `max_age` / `span` is omitted (uncapped carry), no extension is applied - the spine falls back to the observed range. For dense-data queries that's fine; for the very-sparse case specify a cap to opt in to boundary materialization.
 
 ### Column-level carry
 
-Each output column is carried independently. A bucket that has a null aggregate for column A but a real value for column B will have A filled from the nearest eligible source while B retains its real value. This is the intended behaviour - it avoids introducing nulls when a value is available within the carry window, regardless of other columns.
+Each output column is carried independently. A bucket that has a null aggregate for column A but a real value for column B will have A filled from the nearest eligible source while B retains its real value. This is the intended behavior - it avoids introducing nulls when a value is available within the carry window, regardless of other columns.
 
 ### Per-partition carry
 
@@ -116,7 +116,7 @@ When you create a Continuous Query or submit a synchronous Query with ALIGN, the
 
 ## Honest null is the default
 
-Omitting `.align()` preserves the existing behaviour - sparse GROUP BY output, no extra rows for missing buckets. Reach for ALIGN only when you actively want carry behaviour.
+Omitting `.align()` preserves the existing behavior - sparse GROUP BY output, no extra rows for missing buckets. Reach for ALIGN only when you actively want carry behavior.
 
 ## Examples
 
@@ -196,7 +196,7 @@ va.select(
 
 ### Fill weight from the nearest measurement within 3 days
 
-Use `carry_nearest` when direction doesn't matter and minimising carry distance is the priority.
+Use `carry_nearest` when direction doesn't matter and minimizing carry distance is the priority.
 
 <CodeGroup>
 ```python Python DSL

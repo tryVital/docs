@@ -7,7 +7,7 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
 ### Junction Sense: ALIGN clause (May 2026)
 
-Junction Sense queries now support a new `.align()` clause that fills empty time buckets in your aggregated output with values carried over from neighbouring buckets. Use it when you want a contiguous time series from sparse input - for example a daily weight composite from a once-a-week weigh-in.
+Junction Sense queries now support a new `.align()` clause that fills empty time buckets in your aggregated output with values carried over from neighboring buckets. Use it when you want a contiguous time series from sparse input - for example a daily weight composite from a once-a-week weigh-in.
 
 <Accordion title="Details" defaultOpen icon="arrows-left-right-to-line" iconType="duotone">
 
@@ -36,7 +36,7 @@ A user who weighs once a week now produces a row for every day in the spine, wit
 
 When you group by additional dimensions like `Source.col("source_provider")`, carry stays within each partition - values do not cross provider boundaries.
 
-For the full reference including operator semantics, validation rules, and per-partition behaviour, see the [ALIGN clause documentation](/sense/query-dsl/align-clause).
+For the full reference including operator semantics, validation rules, and per-partition behavior, see the [ALIGN clause documentation](/sense/query-dsl/align-clause).
 
 </Accordion>
 
