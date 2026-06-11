@@ -3,8 +3,7 @@ title: "Order and Appointment Lifecycle"
 description: "Learn the order and appointment statuses, state transitions, and scheduling flows for Walk-In Phlebotomy lab tests."
 ---
 
-The **Walk-In Test** orders are composed of two different lifecycles, the **Order** lifecycle and
-the **Appointment** lifecycle, detailed in the following sections.
+The **Walk-In Test** orders are composed of two different lifecycles, the **Order** lifecycle and the **Appointment** lifecycle, detailed in the following sections.
 
 ## Order Lifecycle
 
@@ -104,13 +103,11 @@ If an Appointment is cancelled **after** a requisition has been created:
 
 In cases where appointments can be scheduled before a requisition has been created, the appointment will be automatically cancelled by Junction if the following happens:
 
-1. More than 8 hours have passed since the order was created, and no requisition has been received.
+1. More than 8 hours have passed since the order was created, and no requisition has been received. 
 2. There are fewer than 2 hours until the appointment start time, and no requisition has been received.
 
 <Note>
-  The 8-hour auto-cancellation rule does not apply to [scheduled orders](/lab/workflow/scheduled-orders#scheduled-orders).
-  Scheduled orders are fulfilled on their `activate_by` date, so Junction does not cancel their appointments based solely on
-  the fact that more than 8 hours have passed since order creation without a requisition.
+  The 8-hour auto-cancellation rule does not apply to [scheduled orders](/lab/workflow/scheduled-orders#scheduled-orders). Scheduled orders are fulfilled on their `activate_by` date, so Junction does not cancel their appointments based solely on the fact that more than 8 hours have passed since order creation without a requisition.
 </Note>
 
 ## Arizona Scheduling
@@ -119,16 +116,9 @@ In cases where appointments can be scheduled before a requisition has been creat
   This feature is available upon request. To enable, please get in touch with your Customer Success Manager
 </Note>
 
-When this feature is enabled on your Team, you can book appointments with Quest in Arizona (Sonora Quest).
-
-<Info>
-  Arizona Scheduling uses separate Order and Appointment lifecycles. Appointment status changes are delivered through
-  [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated). The Order status updates for
-  `appointment_pending` and `appointment_scheduled` are emitted only after Sonora Quest confirms the appointment.
-  If you use this feature, make sure your webhook endpoint is subscribed to appointment-level events.
-</Info>
-
-### API Journey
+When this feature is enabled on your Team, you can book appointments with Quest in Arizona (Sonora Quest).\
+\
+API Journey
 
 <Steps>
   <Step title="Creating an appointment">
@@ -145,10 +135,21 @@ When this feature is enabled on your Team, you can book appointments with Quest 
     1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
     2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-    You will receive a `labtest.appointment.updated` event for the Appointment status transition. You will also receive
-    two `labtest.order.updated` events, one each for the two Order status transitions.
+    You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also receive a `labtest.appointment.updated` event for the Appointment status transition.
+  </Step>
+  <Step title="Appointment has been created">
+    The appointment has now been created.
+
+    1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
+    2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
+
+    You will receive a `labtest.appointment.updated` event for the Appointment status transition. You will also receive two `labtest.order.updated` events, one each for the two Order status transitions.
   </Step>
 </Steps>
+
+<Info>
+  Arizona Scheduling uses separate Order and Appointment lifecycles. Appointment status changes are delivered through [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated). The Order status updates for `appointment_pending` and `appointment_scheduled` are emitted only after Sonora Quest confirms the appointment. If you use this feature, make sure your webhook endpoint is subscribed to appointment-level events.
+</Info>
 
 ### Appointment Booking Failure
 
