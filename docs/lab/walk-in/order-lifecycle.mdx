@@ -107,6 +107,12 @@ In cases where appointments can be scheduled before a requisition has been creat
 1. More than 8 hours have passed since the order was created, and no requisition has been received.
 2. There are fewer than 2 hours until the appointment start time, and no requisition has been received.
 
+<Note>
+  The 8-hour auto-cancellation rule does not apply to [scheduled orders](/lab/workflow/scheduled-orders#scheduled-orders).
+  Scheduled orders are fulfilled on their `activate_by` date, so Junction does not cancel their appointments based solely on
+  the fact that more than 8 hours have passed since order creation without a requisition.
+</Note>
+
 ## Arizona Scheduling
 
 <Note>
