@@ -119,7 +119,14 @@ In cases where appointments can be scheduled before a requisition has been creat
   This feature is available upon request. To enable, please get in touch with your Customer Success Manager
 </Note>
 
-When this feature is enabled on your Team, you can book appointments with Quest in Arizona (Sonora Quest)
+When this feature is enabled on your Team, you can book appointments with Quest in Arizona (Sonora Quest).
+
+<Info>
+  Arizona Scheduling uses separate Order and Appointment lifecycles. Appointment status changes are delivered through
+  [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated). The Order status updates for
+  `appointment_pending` and `appointment_scheduled` are emitted only after Sonora Quest confirms the appointment.
+  If you use this feature, make sure your webhook endpoint is subscribed to appointment-level events.
+</Info>
 
 ### API Journey
 
@@ -138,7 +145,8 @@ When this feature is enabled on your Team, you can book appointments with Quest 
     1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
     2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-    You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also receive a `labtest.appointment.updated` event for the Appointment status transition.
+    You will receive a `labtest.appointment.updated` event for the Appointment status transition. You will also receive
+    two `labtest.order.updated` events, one each for the two Order status transitions.
   </Step>
 </Steps>
 
@@ -146,7 +154,8 @@ When this feature is enabled on your Team, you can book appointments with Quest 
 
 If we are unable to book the Appointment asynchronously, then:
 
-- The Appointment will move to the `cancelled` status; and
+- The Appointment will move to the `cancelled` status.
+- Junction will send a `labtest.appointment.updated` event for the cancelled Appointment.
 - There is no change to the Order, which will remain in its last status.
 
 ### Cancellation and Rescheduling

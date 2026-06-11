@@ -107,6 +107,14 @@ Junction will trigger the [`labtest.appointment.updated`](/event-catalog/labtest
     If the ability to [schedule appointments before a requisition has been created](/lab/walk-in/order-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your team, and you intend to send patient communications for appointment updates, use the `labtest.appointment.updated` event. See more on communications for this feature [here](/lab/walk-in/communications#scheduling-appointments-before-a-requisition-has-been-created).
 </Info>
 
+<Info>
+    If [Arizona Scheduling](/lab/walk-in/order-lifecycle#arizona-scheduling) is enabled for your team, subscribe to
+    `labtest.appointment.updated` for Sonora Quest appointment status changes. The Order and Appointment lifecycles are
+    managed separately for this flow, and the Order status updates for `appointment_pending` and `appointment_scheduled`
+    are emitted only after Sonora Quest confirms the appointment. An endpoint subscribed only to `labtest.order.*` will
+    not receive Appointment status changes such as scheduled or cancelled.
+</Info>
+
 The webhook payload body may have the following information if the appointment is in the `scheduled` status, after a **reschedule** has happened:
 
 ```json Walk-in Appointment Updated
