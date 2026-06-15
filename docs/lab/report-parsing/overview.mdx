@@ -2,16 +2,36 @@
 title: "Lab Report Parsing"
 description: "Extract structured biomarker data from PDF and image lab reports using the Lab Report Parsing API with automatic LOINC code matching."
 ---
+import FeatureBeta from '/snippets/feature-beta.mdx';
 
-Junction's Lab Report Parsing API extracts structured data from lab report files (PDF, JPEG, or PNG) and matches biomarkers to standardized LOINC codes. This enables you to digitize and integrate lab results from any source into your application.
+Junction's Lab Report Parsing API converts lab report files into structured JSON. You can upload PDF, JPEG, and PNG reports from external laboratories, patient-uploaded records, or historical chart archives, then retrieve extracted metadata, results, reference ranges, interpretations, and LOINC matches.
 
-## How It Works
+Lab Report Parsing is separate from Junction's ordered lab test workflow. It does not place an order, collect a sample, or request a result from a lab. It reads an existing report document and returns the data Junction can extract from that document.
 
-The parsing workflow consists of three steps:
+<FeatureBeta />
 
-1. **Upload** – Submit a lab report file to create a parsing job
-2. **Process** – Junction extracts biomarker data and matches to LOINC codes
-3. **Retrieve** – Get structured results with standardized identifiers
+## When to Use It
+
+Use Lab Report Parsing when you already have a completed lab report file and need to make it usable in your application.
+
+Common use cases include:
+
+- Patient uploads of lab reports from outside providers
+- Historical data imports from PDFs or scanned records
+- Multi-lab result aggregation using LOINC as a normalization layer
+- Backfilling structured results before a user starts ordering through Junction
+
+If the result came from a Junction lab order, use the order [result format documentation](/lab/results/result-formats) and [results endpoints](/api-reference/lab-testing/results/get-results) instead.
+
+## Workflow
+
+The parsing workflow is asynchronous:
+
+1. Upload one or more report files to create a parsing job.
+2. Junction queues the job and extracts report metadata and lab results.
+3. Junction attempts to match extracted results to LOINC codes.
+4. Your application receives a webhook or polls the job endpoint.
+5. When the job is `completed`, the `data` object contains parsed metadata and results.
 
 ```mermaid
 sequenceDiagram
@@ -19,148 +39,326 @@ sequenceDiagram
     participant API as Junction API
     participant Parser as Parser Service
 
-    App->>API: POST /lab_report/v1/parser/job (file)
+    App->>API: POST /lab_report/v1/parser/job
     API->>Parser: Queue parsing job
-    API-->>App: { job_id, status: "started" }
-    Parser->>API: Processing complete
+    API-->>App: { id, status: "upload_pending" }
+    Parser->>API: Upload file, extract results, and match LOINCs
     API-->>App: Webhook: lab_report.parsing_job.updated
     App->>API: GET /lab_report/v1/parser/job/{job_id}
-    API-->>App: { status: "completed", data: [...] }
+    API-->>App: { status: "completed", data: {...} }
 ```
 
-## Creating a Parsing Job
+## Uploading Reports
 
-Upload a lab report file to create a parsing job:
+Create a parsing job with the [Create Lab Report Parser Job](/api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job) endpoint. The request is `multipart/form-data` and requires:
 
-```python Python
-from junction import Junction
-from junction.environment import JunctionEnvironment
+| Field | Required | Description |
+| --- | --- | --- |
+| `file` | Yes | One lab report file, or multiple image files for one report. |
+| `user_id` | Yes | Junction user ID to associate with the parsed report. |
+| `needs_human_review` | No | Set to `true` to request manual review where enabled for your team. Defaults to `false`. |
 
-client = Junction(
-    api_key="YOUR_API_KEY",
-    environment=JunctionEnvironment.SANDBOX,
-)
+Supported file formats and upload limits:
 
-with open("lab_report.pdf", "rb") as f:
-    job = client.lab_report.parser_create_job(
-        file=[f],
-        user_id="<user_id>",
-        needs_human_review=False,
-    )
+| Upload | Supported formats | Limit |
+| --- | --- | --- |
+| Single file | PDF, JPEG, or PNG | 10 MB |
+| Multiple files | JPEG and PNG only | Up to 8 files, 20 MiB combined |
+| PDF pages | PDF upload or merged image upload | Up to 20 pages |
 
-print(f"Job ID: {job.id}")
-print(f"Status: {job.status}")
+When you upload multiple image files, Junction merges them into a single PDF before sending the report to the parser. Multi-file uploads cannot include PDFs. Junction validates both the declared `Content-Type` and the file's magic bytes, so spoofed or corrupted files are rejected before parsing starts.
+
+```bash cURL
+curl --request POST \
+     --url {{BASE_URL}}/lab_report/v1/parser/job \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: <YOUR_API_KEY>' \
+     --header 'Content-Type: multipart/form-data' \
+     --form 'file=@/path/to/lab_report.pdf' \
+     --form 'user_id=<USER_ID>' \
+     --form 'needs_human_review=false'
 ```
 
-### Supported File Formats
+The create response returns the job immediately. At this point, `data` is `null` because parsing has not completed.
 
-| Format | Extension       | Max Size |
-| ------ | --------------- | -------- |
-| PDF    | `.pdf`          | 10 MB    |
-| JPEG   | `.jpg`, `.jpeg` | 10 MB    |
-| PNG    | `.png`          | 10 MB    |
-
-### Human Review
-
-Set `needs_human_review=True` if you want Junction to manually verify extracted results before marking the job as complete. This is useful for:
-
-- High-stakes clinical decisions
-- Complex multi-page reports
-- Reports with handwritten annotations
-
-This is not enabled by default, and you need to contact support to enable it.
+```json Response
+{
+  "id": "8eb0217f-4683-4a3c-adca-faf95ac65739",
+  "status": "upload_pending",
+  "data": null,
+  "needs_human_review": false,
+  "is_reviewed": false
+}
+```
 
 ## Job Statuses
 
-| Status           | Description                           |
-| ---------------- | ------------------------------------- |
-| `started`        | Job created and queued for processing |
-| `processing`     | Extraction in progress                |
-| `pending_review` | Awaiting human review (if requested)  |
-| `completed`      | Results ready                         |
-| `failed`         | Processing failed                     |
+The `status` field describes the state of the parsing job.
 
-## Retrieving Results
+| Status | Description |
+| --- | --- |
+| `upload_pending` | Job was created and the file upload is being finalized. This is the status returned by the create endpoint. |
+| `started` | The file was uploaded and parsing is in progress. |
+| `completed` | Parsing completed and results are available in `data`. |
+| `failed` | Parsing failed. Check `failure_reason` for the machine-readable reason. |
 
-Once a job completes, retrieve the extracted data:
+`failure_reason` can include:
 
-```python Python
-job = client.lab_report.parser_get_job("<job_id>")
+| Failure reason | Meaning |
+| --- | --- |
+| `invalid_input` | The uploaded file is not a supported or parseable report input. |
+| `low_quality` | The document quality was too low to reliably extract results. |
+| `not_english` | The report language is not supported. |
+| `too_many_pages` | The report exceeded the parser page limit. |
 
-if job.status == "completed":
-    for result in job.data.results:
-        print(f"{result.name}: {result.result} {result.unit}")
-        print(f"  LOINC: {result.loinc} ({result.loinc_slug})")
+<Note>
+  Parser status and failure reason enums are non-exhaustive. Store unknown values safely and avoid hard-failing if Junction adds a new value.
+</Note>
+
+## Human Review
+
+Set `needs_human_review` to `true` when you want Junction to manually review extracted results before the job is finalized. Human review is useful for high-impact workflows, low-quality scans, complex multi-page reports, or reports where your application needs a higher-confidence extraction path.
+
+Human review is not enabled for every team by default. Contact your account manager before depending on it in production.
+
+If your team is not enabled for human review, creating a job with `needs_human_review=true` returns a `400` response:
+
+```json Error
+{
+  "detail": "Human review is not supported yet for your team please contact support"
+}
 ```
 
-### Result Structure
+The response includes two review fields:
 
-Each extracted biomarker includes:
+| Field | Meaning |
+| --- | --- |
+| `needs_human_review` | Whether the job was submitted for manual review. |
+| `is_reviewed` | Whether manual review has been completed. |
 
-- **name** – Biomarker name as it appears on the report
-- **result** – The value (numeric or text)
-- **unit** – Unit of measurement
-- **loinc** – LOINC code for standardization
-- **loinc_slug** – Human-readable LOINC identifier
-- **reference_range** – Normal range from the report
-- **interpretation** – `normal`, `abnormal`, or `critical`
+## Parsed Output
 
-<Info>
-  LOINC matching enables you to compare results across different labs and
-  integrate with other health systems using standardized identifiers.
-</Info>
+When `status` is `completed`, `data` contains:
+
+| Field | Description |
+| --- | --- |
+| `metadata` | Patient and report-level metadata extracted from the document. |
+| `results` | Array of extracted lab results. Each item represents one reported marker or observation. |
+
+Example completed response:
+
+```json Response
+{
+  "id": "8eb0217f-4683-4a3c-adca-faf95ac65739",
+  "status": "completed",
+  "failure_reason": null,
+  "data": {
+    "metadata": {
+      "patient_first_name": "Jane",
+      "patient_last_name": "Doe",
+      "dob": "1990-01-01",
+      "gender": "female",
+      "lab_name": "Acme Labs",
+      "date_reported": "2025-01-01",
+      "date_collected": "2024-12-30",
+      "specimen_number": "ABC123"
+    },
+    "results": [
+      {
+        "test_name": "Glucose",
+        "value": "90",
+        "type": "numeric",
+        "units": "mg/dL",
+        "min_reference_range": 70,
+        "max_reference_range": 99,
+        "source_panel_name": "CMP",
+        "sample_type": "serum_plasma_blood",
+        "measurement_kind": "direct",
+        "sensitivity": "unknown",
+        "loinc_match_status": "auto_match",
+        "loinc_matches": [
+          {
+            "loinc_code": "2345-7",
+            "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
+            "display_name": "Glucose",
+            "aliases": [],
+            "confidence_score": 0.99
+          }
+        ],
+        "interpretation": "normal",
+        "is_above_max_range": false,
+        "is_below_min_range": false
+      }
+    ]
+  },
+  "needs_human_review": false,
+  "is_reviewed": false
+}
+```
+
+### Metadata
+
+`metadata` is extracted from the document header and surrounding report content when present.
+
+| Field | Description |
+| --- | --- |
+| `patient_first_name` | Patient first name from the report. |
+| `patient_last_name` | Patient last name from the report. |
+| `dob` | Patient date of birth as printed or normalized from the report. |
+| `gender` | Extracted patient gender when present. |
+| `lab_name` | Name of the lab or reporting organization. |
+| `date_reported` | Date the report was issued. |
+| `date_collected` | Date the specimen was collected. |
+| `specimen_number` | Lab specimen, accession, or sample identifier. |
+
+Not every report contains every metadata field. Treat metadata fields as nullable.
+
+### Result Fields
+
+Each `data.results[]` item contains the extracted value and associated context.
+
+| Field | Description |
+| --- | --- |
+| `test_name` | Marker or observation name as extracted from the report. |
+| `value` | Result value as a string. See [Value and Type](#value-and-type). |
+| `type` | Result shape, such as `numeric`, `range`, or `comment`. |
+| `units` | Units extracted from the report, when available. |
+| `min_reference_range` | Numeric lower bound extracted from the reference range, when available. |
+| `max_reference_range` | Numeric upper bound extracted from the reference range, when available. |
+| `source_panel_name` | Panel name associated with the result, when available. |
+| `sample_type` | Specimen type, such as `serum_plasma_blood`, `urine`, `saliva`, `stool`, `capillary_blood`, `other`, or `unknown`. |
+| `measurement_kind` | Whether the result appears to be `direct`, `calculated`, `ratio`, or `unknown`. |
+| `sensitivity` | Sensitivity classification when the report indicates it. |
+| `interpretation` | Parsed interpretation: `normal`, `abnormal`, `critical`, or `unknown`. |
+| `is_above_max_range` | Whether the result is above `max_reference_range`, when this can be determined. |
+| `is_below_min_range` | Whether the result is below `min_reference_range`, when this can be determined. |
+| `loinc_match_status` | LOINC matching state: `auto_match`, `needs_review`, or `no_match`. |
+| `loinc_matches` | Candidate LOINC matches with confidence scores. |
+
+## Value and Type
+
+`data.results[].value` is always returned as a string. Do not assume it can always be parsed as a number.
+
+For `type: "numeric"`, `value` should be a number encoded as a string, such as `"5"` or `"5.0"`. For other result types, `value` can contain comparators, text, boolean-like values, durations, percentages, or ratios. Use `type` before deciding how to parse or display the value.
+
+| Type | Example `value` | Notes |
+| --- | --- | --- |
+| `numeric` | `"90"`, `"1e-3"` | Numeric result encoded as a string. Use `units` for measurement units. |
+| `range` | `"<5"`, `">=10"`, `"≤1e-3"`, `"3-7"` | May include comparators, approximate values, scientific notation, or lower-to-upper range notation. Do not parse as a plain float. |
+| `comment` | `"Positive"`, `"See note"` | Textual result or observation. |
+| `boolean` | `"true"`, `"false"`, `"yes"`, `"no"`, `"positive"`, `"negative"` | Boolean or presence-style findings can vary by report wording. |
+| `duration` | `"3h"`, `"12 min"`, `"10:00"` | Duration-like values are preserved as strings because reports can use different formats. |
+| `percentage` | `"5.4"`, `"5.4%"` | Percentage results may also include `%` in `units`. Handle both forms. |
+| `ratio` | `"97/100"`, `"1:80"` | Ratio formats vary by report. Slash-form ratios are inferred when `type` is not already supplied. |
+
+<Warning>
+  The parser output is optimized to preserve what was reported. Store the raw `value` string and derive typed values in your application only after checking `type`, `units`, and reference range fields.
+</Warning>
+
+The parser-specific `type` values are related to, but not identical to, the order result `ResultType` values documented in [Result Formats](/lab/results/result-formats#resulttype). Parser results currently include `numeric`, `range`, `comment`, `boolean`, `duration`, `percentage`, and `ratio`.
+
+When `type` is not supplied by extraction, Junction infers it from `value`. For example, `"<50"`, `"≥2000"`, and `"10-20"` are inferred as `range`; `"20%"` is inferred as `percentage`; `"97/100"` is inferred as `ratio`; and unrecognized text is inferred as `comment`.
+
+## Reference Ranges and Interpretation
+
+The parser may extract `min_reference_range` and `max_reference_range` as numeric bounds when the report includes a parseable reference range. It may also return:
+
+- `interpretation`: `normal`, `abnormal`, `critical`, or `unknown`
+- `is_above_max_range`: whether the result is above the extracted maximum
+- `is_below_min_range`: whether the result is below the extracted minimum
+
+These fields depend on the quality and structure of the source report. Some reports include clear numeric bounds; others include textual ranges, age-specific ranges, sex-specific ranges, comments, or formatting that cannot be normalized into numeric bounds.
+
+For numeric values, Junction can infer whether the result is above or below the extracted numeric reference bounds. For comparator range values, Junction only sets range flags when the comparator is conclusive. For example, `">2000"` with a max reference range of `1100` is above range, but `">500"` with the same max is inconclusive.
+
+If a value is conclusively outside the extracted bounds, `interpretation` is `abnormal`. Numeric values without an out-of-range flag are interpreted as `normal`. Non-numeric and inconclusive range values are interpreted as `unknown` unless the parser extracted a more specific interpretation.
+
+If you need custom boundary logic, read the result `value`, `type`, `units`, and reference range fields together. For general order-result reference range guidance, see [Reference Range](/lab/results/reference-range-parsing).
+
+## LOINC Matching
+
+Junction attempts to match extracted results to LOINC codes so you can compare markers across different labs and report formats.
+
+Each `loinc_matches[]` item includes:
+
+| Field | Description |
+| --- | --- |
+| `loinc_code` | LOINC code, such as `2345-7`. |
+| `loinc_name` | Official or normalized LOINC name. |
+| `display_name` | Display label for the match. |
+| `aliases` | Alternate names associated with the match. |
+| `confidence_score` | Relative score for this LOINC candidate. |
+
+`confidence_score` is a matching score for the candidate LOINC code. It is not an accuracy score for the extracted lab result, patient metadata, units, reference ranges, or interpretation. A high score means Junction's LOINC matcher found a stronger candidate for that result row than lower-scored candidates; it does not prove that the source document was parsed correctly.
+
+In most integrations, use `loinc_match_status` for workflow decisions instead of building your own thresholds on `confidence_score`. Store the score for debugging, audit, or support workflows, but avoid using it as a clinical-confidence or result-accuracy signal.
+
+Use `loinc_match_status` to decide how much review your workflow needs:
+
+| Status | Meaning |
+| --- | --- |
+| `auto_match` | Junction found a likely LOINC match. |
+| `needs_review` | Junction found possible matches, but review is recommended. |
+| `no_match` | Junction could not identify a match. |
+
+<Warning>
+  LOINC matches are not guaranteed for every extracted result. Your integration should handle `loinc_matches: null`, an empty match list, low confidence scores, `needs_review`, `no_match`, and future match statuses.
+</Warning>
 
 ## Webhooks
 
-Subscribe to parsing job events to avoid polling:
+Subscribe to parser events to avoid polling.
 
-| Event                            | Trigger                                      |
-| -------------------------------- | -------------------------------------------- |
-| `lab_report.parsing_job.created` | New parsing job submitted                    |
-| `lab_report.parsing_job.updated` | Job status changed (completed, failed, etc.) |
+| Event | Trigger |
+| --- | --- |
+| `lab_report.parsing_job.created` | A new parsing job was created. |
+| `lab_report.parsing_job.updated` | A parsing job changed status, including completion or failure. |
 
-Example webhook payload:
+Webhook payloads include the user, team, and parsing job:
 
-```json
+```json Webhook payload
 {
   "event_type": "lab_report.parsing_job.updated",
+  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "client_user_id": "7cbd6f62-0d22-4e5f-b7fd-bc4ee5c3fd8d",
+  "team_id": "6353bcab-3526-4838-8c92-063fa760fb6b",
   "data": {
     "id": "8eb0217f-4683-4a3c-adca-faf95ac65739",
     "status": "completed",
     "failure_reason": null,
     "data": {
-        "metadata": {
-            "patient_first_name": "Jane",
-            "patient_last_name": "Doe",
-            "dob": "1990-01-01",
-            "lab_name": "Acme Labs",
-            "date_reported": "2025-01-01",
-            "date_collected": "2024-12-30",
-            "specimen_number": "ABC123"
-        },
-        "results": [
+      "metadata": {
+        "patient_first_name": "Jane",
+        "patient_last_name": "Doe",
+        "dob": "1990-01-01",
+        "lab_name": "Acme Labs",
+        "date_reported": "2025-01-01",
+        "date_collected": "2024-12-30",
+        "specimen_number": "ABC123"
+      },
+      "results": [
+        {
+          "test_name": "Glucose",
+          "value": "90",
+          "type": "numeric",
+          "units": "mg/dL",
+          "min_reference_range": 70,
+          "max_reference_range": 99,
+          "loinc_match_status": "auto_match",
+          "loinc_matches": [
             {
-                "test_name": "Glucose",
-                "value": "90",
-                "type": "numeric",
-                "units": "mg/dL",
-                "max_reference_range": 99,
-                "min_reference_range": 70,
-                "source_panel_name": "CMP",
-                "loinc_matches": [
-                    {
-                        "loinc_code": "2345-7",
-                        "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
-                        "display_name": "Glucose",
-                        "aliases": [],
-                        "confidence_score": 0.99
-                    }
-                ],
-                "interpretation": "normal",
-                "is_above_max_range": false,
-                "is_below_min_range": false
+              "loinc_code": "2345-7",
+              "loinc_name": "Glucose [Mass/volume] in Serum or Plasma",
+              "display_name": "Glucose",
+              "aliases": [],
+              "confidence_score": 0.99
             }
-        ]
+          ],
+          "interpretation": "normal",
+          "is_above_max_range": false,
+          "is_below_min_range": false
+        }
+      ]
     },
     "needs_human_review": false,
     "is_reviewed": false
@@ -168,43 +366,35 @@ Example webhook payload:
 }
 ```
 
-## Use Cases
+For webhook delivery behavior, retries, and event structure, see [Webhooks](/webhooks/introduction).
 
-### Patient-Uploaded Lab Results
+## Sandbox Limits
 
-Allow patients to upload lab reports from other providers:
+Sandbox lab report parsing has a team-level report limit. The error response includes the configured limit for your team. For example, a team limited to 150 reports receives:
 
-```python
-def handle_patient_upload(file, user_id):
-    job = client.lab_report.parser_create_job(
-        file=[file],
-        user_id=user_id,
-    )
-
-    # Store job_id linked to user for later retrieval
-    store_pending_job(user_id, job.id)
-
-    return {"message": "Processing your lab report..."}
+```json Error
+{
+  "detail": "Sandbox lab report parsing is limited to 150 reports. Please upgrade your contract to continue."
+}
 ```
 
-### Historical Data Import
+This is a sandbox usage limit, not a file-level validation error. Retrying the same request, creating more users, or changing the report file does not reset the limit. Contact your account manager or [support@junction.com](mailto:support@junction.com) if you need the limit increased for higher-volume testing or production access.
 
-Digitize paper records or legacy PDFs:
+## Integration Guidance
 
-```python
-import os
+Build your parser integration defensively:
 
-for filename in os.listdir("historical_reports/"):
-    with open(f"historical_reports/{filename}", "rb") as f:
-        job = client.lab_report.parser_create_job(
-            file=[f],
-            user_id="<user_id>",
-            needs_human_review=True,  # Verify historical data
-        )
-        print(f"Created job {job.id} for {filename}")
-```
+- Keep the original report file or a pointer to it in your system for audit and reprocessing workflows.
+- Store `data.results[].value` as a string, even when `type` is `numeric`.
+- Treat parser enums as non-exhaustive and log unknown `status`, `type`, `failure_reason`, `sample_type`, `measurement_kind`, and `loinc_match_status` values.
+- Do not require LOINC matches to be present before displaying the extracted result to users.
+- Review low-confidence or `needs_review` LOINC matches before using them for clinical decisioning, cohort logic, or automated recommendations.
+- Expect null metadata and null reference range fields when the source report does not include parseable values.
+- Use webhooks for normal processing and keep polling as a fallback for missed events or manual support flows.
 
 ## API Reference
 
 - [Create Lab Report Parser Job](/api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job)
 - [Get Lab Report Parser Job](/api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job)
+- [Lab Report Parsing Job Created](/event-catalog/lab_report.parsing_job.created)
+- [Lab Report Parsing Job Updated](/event-catalog/lab_report.parsing_job.updated)
