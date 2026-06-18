@@ -18,10 +18,10 @@ All our webhook events have the following standard structure:
 Schemas and examples are available through [the Event Catalog tab in the Webhooks section of our Web app](https://app.junction.com).
 
 <CodeGroup>
-```json Basic event structure
+```jsonc Basic event structure
 {
   "data": {
-    # ... event specific data
+    // ... event specific data
   },
   "event_type": "daily.data.glucose.created",
   "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
@@ -61,12 +61,12 @@ Wearable data events have the following extended standard structure:
    * Any number of event-specific fields.
 
 
-```json Wearable data event structure
+```jsonc Wearable data event structure
 {
   "data": {
-    # ... event specific fields
+    // ... event specific fields
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://path/to/example",
       "name": "Fitbit",
@@ -91,12 +91,12 @@ The object is made available directly at the top-level `data` field (JSON path: 
 </Note>
 
 <CodeGroup>
-```json Summary data event structure
+```jsonc Summary data event structure
 {
   "data": {
-    # ... All summary object fields
+    // ... All summary object fields
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://path/to/example",
       "name": "Fitbit",
@@ -111,7 +111,7 @@ The object is made available directly at the top-level `data` field (JSON path: 
 }
 ```
 
-```json Example: Activity updated
+```jsonc Example: Activity updated
 {
   "data": {
     "calendar_date": "2023-05-17",
@@ -128,7 +128,7 @@ The object is made available directly at the top-level `data` field (JSON path: 
     "steps": 1496,
     "timezone_offset": 3600,
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
       "name": "Apple HealthKit",
@@ -158,7 +158,7 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 (integration in production) and Garmin (integration planned) do exhibit such behavior.<br /><br />These exceptions are the rationale behind the recommended deduplication semantic as stated above.</Info>
 
 <CodeGroup>
-```json Timeseries data event structure
+```jsonc Timeseries data event structure
 {
   "data": {
     "data": [
@@ -176,11 +176,11 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
         "unit": "count",
         "value": 451
       },
-      # ... other timeseries samples in the batch
+      // ... other timeseries samples in the batch
     ],
     "source_id": 16,
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
       "name": "Apple HealthKit",
@@ -195,7 +195,7 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 }
 ```
 
-```json Example: Calories Active created
+```jsonc Example: Calories Active created
 {
   "data": {
     "data": [
@@ -229,7 +229,7 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
     ],
     "source_id": 16,
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
       "name": "Apple HealthKit",
@@ -254,7 +254,7 @@ So events for Workout Streams are shallow, with only some minimal metadata about
 reception of the event indicates that the data are available to be read via our REST API,
 e.g., [the Workout Stream endpoint](/api-reference/data/workouts/get-stream) `GET /v2/timeseries/workouts/{workout_id}/stream`.
 
-```json Workout Stream created
+```jsonc Workout Stream created
 {
   "data": {
     "message": "Due to payload size limits, to access the workout stream, please use the /workouts/edc80dd0-8cc8-4ec8-8b80-931fd9a3309a/stream endpoint.",
@@ -266,7 +266,7 @@ e.g., [the Workout Stream endpoint](/api-reference/data/workouts/get-stream) `GE
     },
     "workout_id": "fdc70dd0-8cc8-4ec8-8b80-121fd9a3302a",
 
-    # Common wearable data event fields
+    // Common wearable data event fields
     "source": {
       "logo": "https://storage.googleapis.com/vital-assets/fitbit.png",
       "name": "Fitbit",
