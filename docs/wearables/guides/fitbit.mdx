@@ -26,7 +26,7 @@ Given this constraint, Junction constructs a respiratory rate timeseries for Fit
 
 Fitbit stores all their data in floating time. Moreover, they do not tag most of their data points or summaries with time zone information.
 
-Since Junction uses [UTC time basis](/wearables/providers/timestamps-and-time-zones), Junction has to convert the floating
+Since Junction uses a [UTC time basis](/wearables/providers/timestamps-and-time-zones), Junction has to convert the floating
 time basis to the UTC time basis, before we can ingest the data and forward it onwards to you. To facilitate this
 conversion, we must make an educated guess on the user's time zone.
 

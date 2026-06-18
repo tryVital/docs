@@ -85,7 +85,7 @@ Use the `POST` [PSC Appointment Availability](/api-reference/lab-testing/psc-sch
 
 Note that since this endpoint can return availability for multiple PSCs, there may be multiple time zones associated with the returned data.
 
-- ⚠️ The individual start and end times are in UTC, and each location has its own `iana_timezone` key, which should be used to convert these start and end dates to the correct time zone.
+- ⚠️ The individual start and end times are in UTC, and each location has its own `iana_timezone` key, which should be used to convert these start and end times to the correct time zone.
 - The overarching `timezone` key will always be `null` in this endpoint.
 
 ## Booking
