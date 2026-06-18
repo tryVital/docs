@@ -1,6 +1,6 @@
 ---
 title: "Bulk Trigger Historical Pull"
-description: "Create or submit link bulk trigger historical pull via the Junction API. Requires authentication with your team API key."
+description: "Bulk trigger historical pull for links via the Junction API. Requires authentication with your team API key."
 openapi: "POST /v2/link/bulk_trigger_historical_pull"
 ---
 
@@ -20,7 +20,7 @@ Otherwise, the endpoint responds 202 Accepted.
 
 <Note>
 You can trigger historical pull on any number of — or even all — connections through the Bulk Trigger Historical Pull API within a short period
-of time. Enqueuing is fast and does not disrupt the progress of the background operation. 
+of time. Enqueuing is fast and does not disrupt the progress of the background operation.
 </Note>
 
 #### Managing provider API rate limits
@@ -31,14 +31,14 @@ custom credentials.
 You can submit as many trigger requests as needed.
 
 
-Provider            | Historical Pull Triggering Rate
-------------------- | -----------------------------------------------------
-Garmin              | 2 connections every 1 minute
-Fitbit, Polar       | 250 connections at a time; no time-based throttling
-Strava              | 1 connection every 15 minutes
-Oura                | 150 connections every 5 minutes
-Withings            | 8 connections every 1 minute, assuming your app uses the [Withings Enterprise Plan](https://developer.withings.com/developer-guide/v3/withings-solutions/withings-api-plans/).
-All other providers | 8 connections every 1 minute
+| Provider            | Historical Pull Triggering Rate |
+| ------------------- | ----------------------------------------------------- |
+| Garmin              | 2 connections every 1 minute |
+| Fitbit, Polar       | 250 connections at a time; no time-based throttling |
+| Strava              | 1 connection every 15 minutes |
+| Oura                | 150 connections every 5 minutes |
+| Withings            | 8 connections every 1 minute, assuming your app uses the [Withings Enterprise Plan](https://developer.withings.com/developer-guide/v3/withings-solutions/withings-api-plans/). |
+| All other providers | 8 connections every 1 minute |
 
 
 #### Historical Pull Range
