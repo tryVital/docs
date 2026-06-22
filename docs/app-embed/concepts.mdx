@@ -1,0 +1,62 @@
+---
+title: "Concepts"
+description: "Concepts relevant to the App Embed flow"
+---
+
+import ContactCsm from '/snippets/contact-csm.mdx';
+
+<ContactCsm />
+
+## Terminology
+
+### Health care practice perspective
+
+| Junction noun   | Synonym | Meaning |
+| ------ | ---------------- | ------- |
+| Org    | -                | Your business entity. |
+| Team   | -                | A division in your Junction organization, containing an isolated pool of *users*. |
+| Member<br />Org Admin | Staff  | Your members of staff. |
+| Member<br />Team Admin | Provider 📍  | Your members of staff, with access restricted to a specific set of *teams*. |
+| User   | Patient          | An end user of the device and lab testing services; part of a *team*. |
+
+### Partner EMR perspective
+
+| Junction noun   | Synonym | Meaning |
+| ------ | ---------------- | ------- |
+| Org    | -                | Your business entity. |
+| Team   | -                | A customer of yours. |
+| Member<br />Org Admin | -         | Your own members of staff. |
+| Member<br />Team Admin | Provider 📍 | A customers' members of staff. |
+| User   | Patient          | An end user of the device and lab testing services; part of a *team*. |
+
+## Configuration
+
+You can configure App Embed through ["Org Config -> App Embed"](https://app.junction.com/org/ehr-integration) in the Junction Dashboard. 
+
+| Setting | Description |
+| --- | --- |
+| Unique slug | A unique kebab-case slug that identifies your organization, e.g., `my-clinical-practice`. Your [Fast Launch](/app-embed/fast-launch) subdomain is based on this slug. |
+| Modalities | The App Embed modalities you intended to use: `link_out`, `feature_embed`, both, or none. |
+| Allowed origins | Origins allowed to launch Link Out or Feature Embed sessions.<br /><br />For each Origin, you may optionally specify a publicly accessible [Session Continuation URL](/app-embed/session-continuation). If this is left unspecified, [Fast Launch](/app-embed/fast-launch) would not be functional, and an error screen would be shown when App Embed encounters a launch error or an irrecoverable client session. |
+
+## Integration-managed members
+
+To launch App Embed in either modalities, you must identify to Junction which provider 
+
+These members are created and managed through the Junction Management API by your backend system.
+
+Integration-managed members:
+
+* can sign in only through App Embed launch flows;
+* cannot sign in through Junction Dashboard identity providers; and
+* can be assigned team role bindings when created or updated.
+
+## Feature slug
+
+[Features](/app-embed/overview#features) are represented as **feature slug**.
+
+You will work with a feature flag in any of the following scenarios:
+
+* You are creating a pre-authorized [Dashboard URL](/api-reference/org-management/ehr-integration/create-dashboard-url);
+* You are assembling a [Fast Launch URL](/app-embed/fast-launch); or
+* You are handling a [Session Continuation request](/app-embed/session-continuation) from Junction App Embed.

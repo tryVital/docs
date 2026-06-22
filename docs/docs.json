@@ -1165,7 +1165,7 @@
         ]
       },
       {
-        "tab": "Horizon AI",
+        "tab": "Junction Sense",
         "icon": "sensor",
         "anchors": [
           {
@@ -1243,7 +1243,7 @@
       },
       {
         "tab": "App Embed",
-        "icon": "panel-top",
+        "icon": "frame",
         "anchors": [
           {
             "anchor": "Product Guides",
@@ -1253,7 +1253,14 @@
                 "group": "App Embed",
                 "pages": [
                   "app-embed/overview",
-                  "app-embed/getting-started",
+                  "app-embed/concepts",
+                  "app-embed/getting-started"
+                ]
+              },
+              {
+                "group": "Deeper integrations",
+                "pages": [
+                  "app-embed/callbacks",
                   "app-embed/session-continuation",
                   "app-embed/fast-launch"
                 ]
@@ -1265,20 +1272,33 @@
             "icon": "square-code",
             "groups": [
               {
-                "group": "App Embed",
+                "group": "Launch",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/get-configuration",
-                  "api-reference/org-management/ehr-integration/upsert-configuration",
-                  "api-reference/org-management/team/create-team",
-                  "api-reference/org-management/team/update-team",
-                  "api-reference/org-management/ehr-integration/create-dashboard-url",
-                  "api-reference/org-management/ehr-integration/resolve-team",
+                  "api-reference/org-management/ehr-integration/create-dashboard-url"
+                ]
+              },
+              {
+                "group": "Teams",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/managing-teams"
+                ]
+              },
+              {
+                "group": "Members",
+                "pages": [
                   "api-reference/org-management/ehr-integration/create-member",
                   "api-reference/org-management/ehr-integration/list-members",
                   "api-reference/org-management/ehr-integration/get-member",
                   "api-reference/org-management/ehr-integration/resolve-member",
                   "api-reference/org-management/ehr-integration/update-member",
                   "api-reference/org-management/ehr-integration/delete-member"
+                ]
+              },
+              {
+                "group": "Configuration",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/get-configuration",
+                  "api-reference/org-management/ehr-integration/upsert-configuration"
                 ]
               }
             ]
@@ -1307,7 +1327,8 @@
                   "api-reference/org-management/team/create-team",
                   "api-reference/org-management/team/get-team",
                   "api-reference/org-management/team/delete-team",
-                  "api-reference/org-management/team/update-team"
+                  "api-reference/org-management/team/update-team",
+                  "api-reference/org-management/team/resolve-team"
                 ]
               },
               {
