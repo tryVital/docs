@@ -102,7 +102,7 @@ The `status` field describes the state of the parsing job.
 | `upload_pending` | Job was created and the file upload is being finalized. This is the status returned by the create endpoint. |
 | `started` | The file was uploaded and parsing is in progress. |
 | `completed` | Parsing completed and results are available in `data`. |
-| `failed` | Parsing failed. Check `failure_reason` when present for the machine-readable reason. Some internal processing errors may return `failure_reason: null`. If this happens, retry the job or contact support with the job ID. |
+| `failed` | Parsing failed. Check `failure_reason` for more information. |
 
 For parser jobs, `failure_reason` commonly includes:
 
@@ -110,6 +110,7 @@ For parser jobs, `failure_reason` commonly includes:
 | --- | --- |
 | `invalid_input` | The parser determined that the document is not a lab report containing medical test results. |
 | `not_english` | The report language is not supported. |
+| `processing_error` | Junction could not process the report because of an internal parser or provider failure. |
 
 <Note>
   Parser status and failure reason enums are non-exhaustive. Store unknown values safely and avoid hard-failing if Junction adds a new value or returns `failure_reason: null`.
