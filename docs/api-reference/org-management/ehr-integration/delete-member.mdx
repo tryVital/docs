@@ -1,0 +1,18 @@
+---
+openapi: delete /v1/org/{org_id}/ehr_integration/member/{member_id}
+title: "Delete Integration-Managed Member"
+description: "Delete an integration-managed member."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request DELETE \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/member/{member_id} \
+  --header 'X-Management-Key: <management-key>'
+```
+</RequestExample>

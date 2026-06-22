@@ -1,0 +1,24 @@
+---
+openapi: patch /v1/org/{org_id}/ehr_integration/member/{member_id}
+title: "Update Integration-Managed Member"
+description: "Update profile attributes and team role bindings for an integration-managed member."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request PATCH \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/member/{member_id} \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "name": "Alex Kim",
+    "email": "alex@example.com",
+    "team_role_bindings": []
+  }'
+```
+</RequestExample>

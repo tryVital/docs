@@ -1,0 +1,22 @@
+---
+openapi: post /v1/org/{org_id}/resolve_team
+title: "Resolve Team"
+description: "Get a team by your integration team reference."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/resolve_team \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_team_id": "clinic_123"
+  }'
+```
+</RequestExample>

@@ -1,7 +1,7 @@
 ---
 openapi: post /v1/org/{org_id}/team
 title: "Create Team"
-description: "Post org team via the Junction API. Requires authentication with your team API key."
+description: "Create an organization team. App Embed integrations can provide an integration team reference."
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
@@ -14,15 +14,13 @@ import OrgManagementAPI from '/snippets/org-management-api.mdx';
 curl --request POST \
   --url https://api.management.junction.com/v1/org/{org_id}/team \
   --header 'Content-Type: application/json' \
-  --header 'X-Vital-Org-Key: <api-key>' \
+  --header 'X-Management-Key: <management-key>' \
   --data '{
   "name": "<string>",
   "region": "us",
+  "integration_team_id": "<string>",
   "lab_tests_patient_sms_communication_enabled": true,
-  "lab_tests_patient_email_communication_enabled": true,
-  "event_type_prefixes": [
-    "<string>"
-  ]
+  "lab_tests_patient_email_communication_enabled": true
 }'
 ```
 </RequestExample>

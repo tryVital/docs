@@ -1,0 +1,26 @@
+---
+openapi: post /v1/org/{org_id}/team/{team_id}/create_access_token
+title: "Create Team API Access Token"
+description: "Create a short-lived Junction API access token for a team."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<Info>
+The access token expires after 10 minutes and acts with Team Admin privileges for the selected team.
+</Info>
+
+<Warning>
+This endpoint is rate limited to prevent abuse. Cache and reuse the access token when appropriate, or use Team API Keys for long-lived access.
+</Warning>
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/team/{team_id}/create_access_token \
+  --header 'X-Management-Key: <management-key>'
+```
+</RequestExample>

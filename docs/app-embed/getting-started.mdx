@@ -1,0 +1,141 @@
+---
+title: "Getting Started"
+description: "Configure App Embed and launch a Junction workflow from your partner EMR."
+---
+
+Use this guide to launch Junction from a partner EMR for the first time.
+
+## Prerequisites
+
+You need:
+
+* a Junction organization ID;
+* a Junction Management Key;
+* a registered App Embed integration with at least one enabled modality;
+* an allowed origin for your web application; and
+* a session continuation URL controlled by your application.
+
+<Tip>
+Junction Management API requests use `https://api.management.junction.com/` and the `X-Management-Key` header.
+</Tip>
+
+## 1. Configure your integration
+
+Create or update your App Embed integration settings.
+
+```bash cURL
+curl --request PUT \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/configuration \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "slug": "my-clinical-practice",
+    "modalities": ["feature_embed", "link_out"],
+    "origin_configs": [
+      {
+        "origin": "https://app.example.com",
+        "session_continuation_url": "https://app.example.com/junction/session-continuation"
+      }
+    ]
+  }'
+```
+
+See [Upsert EHR Integration Configuration](/api-reference/org-management/ehr-integration/upsert-configuration) for the complete request schema.
+
+## 2. Create or resolve a team
+
+Teams can include an `integration_team_id`, which is your stable team reference.
+
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/team \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "name": "Downtown Clinic",
+    "region": "us",
+    "integration_team_id": "clinic_123"
+  }'
+```
+
+If the team already exists, resolve it by integration reference:
+
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/resolve_team \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_team_id": "clinic_123"
+  }'
+```
+
+## 3. Create or resolve an integration-managed member
+
+Create the member that should be signed in through App Embed. Include team role bindings for every team the member should access.
+
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/member \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456",
+    "name": "Alex Kim",
+    "email": "alex@example.com",
+    "team_role_bindings": [
+      {
+        "team_id": "00000000-0000-0000-0000-000000000000",
+        "role": "admin"
+      }
+    ]
+  }'
+```
+
+If the member already exists, resolve it by integration reference:
+
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/resolve_member \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456"
+  }'
+```
+
+## 4. Create a dashboard URL
+
+Create a post-authorization URL for the member, team, modality, feature, and environment.
+
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/create_dashboard_url \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456",
+    "integration_team_id": "clinic_123",
+    "modality": "feature_embed",
+    "feature": "order_creation",
+    "environment": "sandbox"
+  }'
+```
+
+## 5. Launch the URL
+
+For `feature_embed`, load the returned URL in an iframe:
+
+```html
+<iframe
+  src="https://..."
+  title="Junction order creation"
+  style="width: 100%; height: 800px; border: 0;"
+></iframe>
+```
+
+For `link_out`, open the returned URL in a top-level navigation context, such as a new tab or popup window.
+
+<Note>
+For faster repeated launches, use [Fast Launch](/app-embed/fast-launch) after you have implemented [Session Continuation](/app-embed/session-continuation).
+</Note>
