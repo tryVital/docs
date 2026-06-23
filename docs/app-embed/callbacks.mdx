@@ -1,9 +1,115 @@
 ---
 title: "Callbacks"
-description: "Callbacks from Feature Embeds"
+description: "Receive postMessage callbacks from Feature Embed iframes."
 ---
 
 import ContactCsm from '/snippets/contact-csm.mdx';
 
 <ContactCsm />
 
+When running in the `feature_embed` modality, the Junction iframe notifies your host page of significant events by posting a message to the parent window via the [Web Messaging API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
+
+Callbacks are only emitted from Feature Embed iframes. They are never emitted in the `link_out` modality.
+
+## Listening for callbacks
+
+Add a `message` event listener to the host window and filter by the `type` field:
+
+```ts
+// Replace with your organization's slug from App Embed configuration.
+const JUNCTION_ORIGIN = "https://<slug>.ehr.junction.com";
+
+window.addEventListener("message", (event) => {
+  // Always validate the origin before acting on the message.
+  if (event.origin !== JUNCTION_ORIGIN) {
+    return;
+  }
+
+  const message = event.data;
+
+  switch (message.type) {
+    case "urn:junction:order:created":
+      console.log("Order created", message.data);
+      break;
+
+    case "urn:junction:order:creation_cancelled":
+      console.log("Order creation cancelled", message.data);
+      break;
+  }
+});
+```
+
+<Warning>
+Always check `event.origin` before reading `event.data`. Reject any message whose origin does not match your Junction subdomain.
+</Warning>
+
+## Security
+
+Each Junction organization is served from a dedicated subdomain: `https://<slug>.ehr.junction.com`, where `<slug>` is the unique slug from your [App Embed configuration](/app-embed/concepts#configuration).
+
+Junction always targets your registered origin explicitly — it never posts to `"*"`. The target origin is resolved from the iframe's `ancestorOrigins` or `document.referrer`. If the origin cannot be resolved, the message is silently dropped rather than broadcast.
+
+Your listener must independently validate `event.origin` before trusting the payload, since any page on your origin may receive `message` events.
+
+## Callback reference
+
+### `urn:junction:order:created`
+
+Emitted when the provider successfully submits a lab order via the `order_creation` feature.
+
+**Payload**
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `order_id` | `string (UUID)` | The Junction order ID. |
+| `user_id` | `string (UUID)` | The Junction user (patient) ID for whom the order was placed. |
+| `team_id` | `string (UUID)` | The Junction team ID the order belongs to. |
+
+**Example**
+
+```json
+{
+  "type": "urn:junction:order:created",
+  "data": {
+    "order_id": "00000000-0000-0000-0000-000000000000",
+    "user_id": "00000000-0000-0000-0000-000000000000",
+    "team_id": "00000000-0000-0000-0000-000000000000"
+  }
+}
+```
+
+**Common uses**
+
+* Close or hide the embed iframe after a successful order.
+* Navigate the host application to an order detail view.
+* Trigger a server-side webhook or audit log entry.
+
+---
+
+### `urn:junction:order:creation_cancelled`
+
+Emitted when the provider explicitly cancels the order creation flow before submitting.
+
+**Payload**
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `user_id` | `string (UUID) \| null` | The Junction user (patient) ID, if one was selected before cancellation. `null` if no patient was selected. |
+| `team_id` | `string (UUID)` | The Junction team ID associated with the session. |
+
+**Example**
+
+```json
+{
+  "type": "urn:junction:order:creation_cancelled",
+  "data": {
+    "user_id": null,
+    "team_id": "00000000-0000-0000-0000-000000000000"
+  }
+}
+```
+
+**Common uses**
+
+* Close or hide the embed iframe.
+* Return the provider to a previous screen in your application.

@@ -15,10 +15,15 @@ This serves as an alternative to building your own provider experience on top of
 
 Junction supports two App Embed modalities:
 
-| Modality | Experience | Use when |
-| --- | --- | --- |
-| Link Out | Opens Junction Dashboard in a top-level browser context, such as a new tab or popup window. | You want the provider to leave your app context and use the full Junction Dashboard. |
-| Feature Embed | Embed a specific Junction Dashboard provider experience as an iframe into your web application. | You want your web application to own navigation and information architecture, while Junction provides a focused provider experience. |
+<Card title="Link Out" icon="link">
+Opens Junction Dashboard in a top-level browser context, such as a new tab or popup window.
+<Info>You want the provider to leave your app context and use the full Junction Dashboard.</Info>
+</Card>
+
+<Card title="Feature Embed" icon="frame">
+Embed a specific Junction Dashboard provider functionality (feature) as an iframe into your web application.
+<Info>You want your web application to own navigation and information architecture, while Junction provides a focused provider experience.</Info>
+</Card>
 
 ## Features
 
@@ -38,35 +43,4 @@ While you must specify a feature to launch for both the _Link Out_ and _Feature 
 | --- | --- |
 | Link Out      | The feature controls where the Junction Dashboard lands on initially. The provider can navigate away afterwards, and use other parts of the Junction Dashboard. |
 | Feature Embed | The iframe is locked to the feature you requested. |
-
-
-## Core flow
-
-<Steps>
-  <Step title="Prepare identity and team records">
-    Use the Junction Management API to create or resolve the team and integration-managed member for the current provider.
-  </Step>
-  <Step title="Create a Dashboard URL">
-    Call [Create Dashboard URL](/api-reference/org-management/ehr-integration/create-dashboard-url) with the target member, team, modality, feature, and environment.
-  </Step>
-  <Step title="Launch the App Embed">
-    Open the returned Dashboard URL in a top-level browser context for Link Out, or load it in an iframe for Feature Embed.
-  </Step>
-</Steps>
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant PartnerApp as Your Web App
-    participant PartnerBackend as Your Backend
-    participant API as Junction Management API
-    participant Junction as Junction Web App
-
-    PartnerApp->>PartnerBackend: Request dashboard URL
-    PartnerBackend->>API: POST /v1/org/{org_id}/ehr_integration/create_dashboard_url
-    API-->>PartnerBackend: Dashboard URL
-    PartnerBackend-->>PartnerApp: Dashboard URL
-    PartnerApp->>Junction: Open URL
-    Junction->>Junction: Configure session and route to feature
-```
 
