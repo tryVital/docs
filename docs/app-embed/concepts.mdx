@@ -22,23 +22,23 @@ What _provider_ means in your use case may differ. Here are two example mappings
 <AccordionGroup>
 <Accordion title="I am a health care practice..." icon="hospital" defaultOpen>
 
-| Junction noun   | Synonym | Meaning |
-| ------ | ---------------- | ------- |
-| Org    | -                | Your business entity. |
-| Team   | -                | A division in your Junction organization, containing an isolated pool of *users*. |
-| Member<br />Org Admin | Staff  | Your members of staff. |
-| Member<br />Team Admin | Provider 📍  | Your members of staff, with access restricted to a specific set of *teams*. |
-| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. |
+| Junction noun   | Synonym | Meaning | API |
+| ------ | ---------------- | ------- | --- |
+| Org    | -                | Your business entity. | [Management API](/api-details/junction-management-api) |
+| Team   | -                | A division in your Junction organization, containing an isolated pool of *users*. | [Management API](/api-details/junction-management-api) |
+| Member<br />Org Admin | Staff  | Your members of staff. | [Management API](/api-details/junction-management-api) |
+| Member<br />Team Admin | Provider 📍  | Your members of staff, with access restricted to a specific set of *teams*. | [Management API](/api-details/junction-management-api) |
+| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. | [Junction API](/api-details/junction-api) |
 </Accordion>
 <Accordion title="I am an EMR..." icon="database" defaultOpen>
 
-| Junction noun   | Synonym | Meaning |
-| ------ | ---------------- | ------- |
-| Org    | -                | Your business entity. |
-| Team   | -                | A customer of yours. |
-| Member<br />Org Admin | -         | Your own members of staff. |
-| Member<br />Team Admin | Provider 📍 | A customer's members of staff. |
-| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. |
+| Junction noun   | Synonym | Meaning | API |
+| ------ | ---------------- | ------- | --- |
+| Org    | -                | Your business entity. | [Management API](/api-details/junction-management-api) |
+| Team   | -                | A customer of yours. | [Management API](/api-details/junction-management-api) |
+| Member<br />Org Admin | -         | Your own members of staff. | [Management API](/api-details/junction-management-api) |
+| Member<br />Team Admin | Provider 📍 | A customer's members of staff. | [Management API](/api-details/junction-management-api) |
+| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. | [Junction API](/api-details/junction-api) |
 </Accordion>
 </AccordionGroup>
 
@@ -74,7 +74,7 @@ sequenceDiagram
 
 ## Configuration
 
-You can configure App Embed through ["Org Config -> EHR Integration"](https://app.junction.com/org/ehr-integration) in the Junction Dashboard.
+You can configure App Embed either through ["Org Config -> EHR Integration"](https://app.junction.com/org/ehr-integration) in the Junction Dashboard, or programmatically via the [Upsert App Embed Configuration](/api-reference/org-management/ehr-integration/upsert-configuration) endpoint on the Junction Management API.
 
 | Setting | Description |
 | --- | --- |

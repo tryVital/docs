@@ -1272,15 +1272,15 @@
             "icon": "square-code",
             "groups": [
               {
-                "group": "Launch",
+                "group": "Related topics",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/create-dashboard-url"
+                  "api-reference/org-management/ehr-integration/managing-teams"
                 ]
               },
               {
-                "group": "Teams",
+                "group": "Launch",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/managing-teams"
+                  "api-reference/org-management/ehr-integration/create-dashboard-url"
                 ]
               },
               {
@@ -1320,6 +1320,12 @@
             "anchor": "API Reference",
             "icon": "square-code",
             "groups": [
+              {
+                "group": "Related topics",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/app-embed"
+                ]
+              },
               {
                 "group": "Team",
                 "pages": [
