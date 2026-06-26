@@ -1,0 +1,45 @@
+---
+title: "Overview"
+description: "Embed Junction Dashboard experiences into your application or launch the dashboard in a separate browser context."
+---
+
+import ContactCsm from '/snippets/contact-csm.mdx';
+
+<ContactCsm />
+
+App Embed enables you to integrate the Junction Dashboard provider experience seamlessly into your existing web application.
+This serves as an alternative to building your own provider experience on top of the [Lab Testing API](/lab/overview/introduction).
+
+
+## Modalities
+
+Junction supports two App Embed modalities:
+
+<Card title="Link Out" icon="link">
+Opens Junction Dashboard in a top-level browser context, such as a new tab or popup window.
+<Info>You want the provider to leave your app context and use the full Junction Dashboard.</Info>
+</Card>
+
+<Card title="Feature Embed" icon="frame">
+Embed a specific Junction Dashboard feature as an iframe into your web application.
+<Info>You want your web application to own navigation and page structure while the iframe stays focused on one Junction workflow.</Info>
+</Card>
+
+## Features
+
+App Embed supports the following features:
+
+| Feature slug | Feature |
+| --- | --- |
+| `order_creation` | Order creation |
+| `order_creation:{user_id}` | Order creation for a specific patient (user) |
+| `order:{id}` | Order detail |
+| `team_panels` | Panel management |
+| `team_config` | Team configuration |
+
+While you must specify a feature to launch for both the _Link Out_ and _Feature Embed_ modalities, they have different behaviors:
+
+| Modality | Behavior |
+| --- | --- |
+| Link Out      | The feature controls where the Junction Dashboard lands initially. The provider can navigate away afterward and use other parts of the Junction Dashboard. |
+| Feature Embed | The iframe is locked to the feature you requested. |

@@ -1,0 +1,17 @@
+---
+title: "App Embed"
+description: "Configure and launch App Embed sessions through the Management API."
+icon: frame
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+[App Embed](/app-embed/overview) lets you launch Junction Dashboard experiences from your own web application as either a Link Out or a Feature Embed. See the [App Embed Getting Started guide](/app-embed/getting-started) for the end-to-end integration flow.
+
+You configure and launch App Embed through the [Management API](/api-details/junction-management-api):
+
+* Configure your App Embed integration through ["Org Config → EHR Integration"](https://app.junction.com/org/ehr-integration) in the [Junction Dashboard](https://app.junction.com), or programmatically with the [Get Configuration](/api-reference/org-management/ehr-integration/get-configuration) and [Set Configuration](/api-reference/org-management/ehr-integration/set-configuration) endpoints.
+* Create and manage integration-managed members with the [Create Member](/api-reference/org-management/ehr-integration/create-member), [List Members](/api-reference/org-management/ehr-integration/list-members), [Get Member](/api-reference/org-management/ehr-integration/get-member), [Resolve Member](/api-reference/org-management/ehr-integration/resolve-member), [Update Member](/api-reference/org-management/ehr-integration/update-member), and [Delete Member](/api-reference/org-management/ehr-integration/delete-member) endpoints.
+* Launch a session with the [Create Dashboard URL](/api-reference/org-management/ehr-integration/create-dashboard-url) endpoint.

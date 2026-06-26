@@ -1,0 +1,29 @@
+---
+openapi: put /v1/org/{org_id}/ehr_integration/configuration
+title: "Set App Embed Configuration"
+description: "Create or update the App Embed integration configuration for an organization."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request PUT \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/configuration \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "slug": "my-clinical-practice",
+    "modalities": ["feature_embed", "link_out"],
+    "origin_configs": [
+      {
+        "origin": "https://app.example.com",
+        "session_continuation_url": "https://app.example.com/junction/session-continuation"
+      }
+    ]
+  }'
+```
+</RequestExample>

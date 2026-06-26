@@ -1165,7 +1165,7 @@
         ]
       },
       {
-        "tab": "Horizon AI",
+        "tab": "Junction Sense",
         "icon": "sensor",
         "anchors": [
           {
@@ -1242,6 +1242,70 @@
         ]
       },
       {
+        "tab": "App Embed",
+        "icon": "frame",
+        "anchors": [
+          {
+            "anchor": "Product Guides",
+            "icon": "book-open",
+            "groups": [
+              {
+                "group": "App Embed",
+                "pages": [
+                  "app-embed/overview",
+                  "app-embed/concepts",
+                  "app-embed/getting-started"
+                ]
+              },
+              {
+                "group": "Deeper integrations",
+                "pages": [
+                  "app-embed/callbacks",
+                  "app-embed/session-continuation",
+                  "app-embed/fast-launch"
+                ]
+              }
+            ]
+          },
+          {
+            "anchor": "API Reference",
+            "icon": "square-code",
+            "groups": [
+              {
+                "group": "Related topics",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/managing-teams"
+                ]
+              },
+              {
+                "group": "Launch",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/create-dashboard-url"
+                ]
+              },
+              {
+                "group": "Members",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/create-member",
+                  "api-reference/org-management/ehr-integration/list-members",
+                  "api-reference/org-management/ehr-integration/get-member",
+                  "api-reference/org-management/ehr-integration/resolve-member",
+                  "api-reference/org-management/ehr-integration/update-member",
+                  "api-reference/org-management/ehr-integration/delete-member"
+                ]
+              },
+              {
+                "group": "Configuration",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/get-configuration",
+                  "api-reference/org-management/ehr-integration/set-configuration"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "tab": "Management API",
         "icon": "gear",
         "anchors": [
@@ -1257,13 +1321,20 @@
             "icon": "square-code",
             "groups": [
               {
+                "group": "Related topics",
+                "pages": [
+                  "api-reference/org-management/ehr-integration/app-embed"
+                ]
+              },
+              {
                 "group": "Team",
                 "pages": [
                   "api-reference/org-management/team/list-teams",
                   "api-reference/org-management/team/create-team",
                   "api-reference/org-management/team/get-team",
                   "api-reference/org-management/team/delete-team",
-                  "api-reference/org-management/team/update-team"
+                  "api-reference/org-management/team/update-team",
+                  "api-reference/org-management/team/resolve-team"
                 ]
               },
               {
@@ -1272,6 +1343,12 @@
                   "api-reference/org-management/team-api-keys/list-team-api-keys",
                   "api-reference/org-management/team-api-keys/create-team-api-key",
                   "api-reference/org-management/team-api-keys/delete-team-api-keys"
+                ]
+              },
+              {
+                "group": "Team API Access Token",
+                "pages": [
+                  "api-reference/org-management/team-api-access-token/create-team-api-access-token"
                 ]
               },
               {

@@ -1,0 +1,26 @@
+---
+openapi: post /v1/org/{org_id}/ehr_integration/create_dashboard_url
+title: "Create Dashboard URL"
+description: "Create a post-authorization URL that launches Junction Dashboard for an App Embed member."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/create_dashboard_url \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456",
+    "integration_team_id": "clinic_123",
+    "modality": "feature_embed",
+    "feature": "order_creation",
+    "environment": "sandbox"
+  }'
+```
+</RequestExample>

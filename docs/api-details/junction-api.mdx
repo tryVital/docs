@@ -38,23 +38,40 @@ Sandbox environments are functionally identical to Production environments, exce
 
 ## Authentication
 
-Junction API accepts a **Team API Key**. You can provision a Team API Key through:
+Junction API accepts two team-scoped credential types — pick one per request.
 
-1. the Team Config page in the [Junction Dashboard](https://app.junction.com); or
-2. the [Create Team API Key](/api-reference/org-management/team-api-keys/create-team-api-key) endpoint of the
-   [Junction Management API](/api-details/junction-management-api).
+| Credential | Lifetime | Header | Provisioned via |
+| ---------- | -------- | ------ | --------------- |
+| [Team API Key](/api-reference/org-management/team-api-keys/create-team-api-key) | Long-lived until revoked | `X-Vital-API-Key: <key>` | Team Config page in the [Junction Dashboard](https://app.junction.com) or [Create Team API Key](/api-reference/org-management/team-api-keys/create-team-api-key) |
+| [Team API Access Token](/api-reference/org-management/team-api-access-token/create-team-api-access-token) | Several minutes | `Authorization: Bearer <token>` | Created programmatically via [Create Team API Access Token](/api-reference/org-management/team-api-access-token/create-team-api-access-token) |
 
-Your API requests should present the Team API Key under the `X-Vital-API-Key` header. For example:
+### When to use a Team API Key
+
+Choose a Team API Key when your system can safely store a pre-shared secret and you intend to issue separate team-scoped keys to your own divisions or environments. Keys are listed and rotated from the Team Config page in the [Junction Dashboard](https://app.junction.com), or programmatically through the Management API via [Create Team API Key](/api-reference/org-management/team-api-keys/create-team-api-key).
 
 ```bash cURL
 curl --request GET \
-  --url 'https://api.tryvital.io/v2/providers' \
+  --url 'https://api.us.junction.com/v2/providers' \
   --header 'X-Vital-API-Key: <YOUR-TEAM-API-KEY>'
 ```
 
+### When to use a Team API Access Token
+
+Choose a Team API Access Token when you are integrating Junction into a multi-tenant EMR or similar platform and need to act on behalf of many customer teams without provisioning and storing a Team API Key for each one. Mint a token on demand from your backend by calling the Management API endpoint [Create Team API Access Token](/api-reference/org-management/team-api-access-token/create-team-api-access-token) with your Management Key, then call Junction API with the returned token.
+
+```bash cURL
+curl --request GET \
+  --url 'https://api.us.junction.com/v2/providers' \
+  --header 'Authorization: Bearer <YOUR-TEAM-API-ACCESS-TOKEN>'
+```
+
+<Warning>
+Tokens are short-lived (several minutes) and the Create Team API Access Token endpoint is rate limited. Cache and reuse each token until it expires rather than minting per request. When a Junction API call returns `401 Unauthorized`, mint a fresh token by calling the endpoint again, then retry the request.
+</Warning>
+
 <Note>
 A [Management Key](/api-details/junction-management-api) used by Junction Management API does not function as a Team API Key.
-However, you can manage Team API Keys through a Management Key.
+However, you can provision Team API Keys and mint Team API Access Tokens through a Management Key.
 </Note>
 
 

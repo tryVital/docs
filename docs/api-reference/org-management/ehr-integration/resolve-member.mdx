@@ -1,0 +1,22 @@
+---
+openapi: post /v1/org/{org_id}/ehr_integration/resolve_member
+title: "Resolve Integration-Managed Member"
+description: "Get an integration-managed member by your integration member reference."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/resolve_member \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456"
+  }'
+```
+</RequestExample>

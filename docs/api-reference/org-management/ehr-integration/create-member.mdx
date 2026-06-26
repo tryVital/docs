@@ -1,0 +1,26 @@
+---
+openapi: post /v1/org/{org_id}/ehr_integration/member
+title: "Create Integration-Managed Member"
+description: "Create an integration-managed member that can sign in through App Embed launch flows."
+---
+
+import OrgManagementAPI from '/snippets/org-management-api.mdx';
+
+<OrgManagementAPI />
+
+
+<RequestExample>
+```bash cURL
+curl --request POST \
+  --url https://api.management.junction.com/v1/org/{org_id}/ehr_integration/member \
+  --header 'Content-Type: application/json' \
+  --header 'X-Management-Key: <management-key>' \
+  --data '{
+    "integration_member_id": "user_456",
+    "name": "Alex Kim",
+    "email": "alex@example.com",
+    "avatar": "https://example.com/avatar.png",
+    "team_role_bindings": []
+  }'
+```
+</RequestExample>
