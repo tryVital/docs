@@ -1298,7 +1298,7 @@
                 "group": "Configuration",
                 "pages": [
                   "api-reference/org-management/ehr-integration/get-configuration",
-                  "api-reference/org-management/ehr-integration/upsert-configuration"
+                  "api-reference/org-management/ehr-integration/set-configuration"
                 ]
               }
             ]
