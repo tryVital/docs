@@ -10,7 +10,7 @@ import ContactCsm from '/snippets/contact-csm.mdx';
 
 ## Preface
 
-App Embed helps you integrate Junction Dashboard provider functionalities ("features") into your web application.
+App Embed helps you integrate Junction Dashboard features into your web application.
 
 To facilitate this, App Embed makes a few assumptions:
 
@@ -28,7 +28,7 @@ What _provider_ means in your use case may differ. Here are two example mappings
 | Team   | -                | A division in your Junction organization, containing an isolated pool of *users*. |
 | Member<br />Org Admin | Staff  | Your members of staff. |
 | Member<br />Team Admin | Provider 📍  | Your members of staff, with access restricted to a specific set of *teams*. |
-| User   | Patient          | An end user of the device and lab testing services; part of a *team*. |
+| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. |
 </Accordion>
 <Accordion title="I am an EMR..." icon="database" defaultOpen>
 
@@ -37,8 +37,8 @@ What _provider_ means in your use case may differ. Here are two example mappings
 | Org    | -                | Your business entity. |
 | Team   | -                | A customer of yours. |
 | Member<br />Org Admin | -         | Your own members of staff. |
-| Member<br />Team Admin | Provider 📍 | A customers' members of staff. |
-| User   | Patient          | An end user of the device and lab testing services; part of a *team*. |
+| Member<br />Team Admin | Provider 📍 | A customer's members of staff. |
+| User   | Patient          | An end user of the device and lab testing services; belongs to a *team*. |
 </Accordion>
 </AccordionGroup>
 
@@ -74,17 +74,17 @@ sequenceDiagram
 
 ## Configuration
 
-You can configure App Embed through ["Org Config -> App Embed"](https://app.junction.com/org/ehr-integration) in the Junction Dashboard. 
+You can configure App Embed through ["Org Config -> EHR Integration"](https://app.junction.com/org/ehr-integration) in the Junction Dashboard.
 
 | Setting | Description |
 | --- | --- |
 | Unique slug | A unique kebab-case slug that identifies your organization, e.g., `my-clinical-practice`. Your [Fast Launch](/app-embed/fast-launch) subdomain is based on this slug. |
-| Modalities | The App Embed modalities you intended to use: `link_out`, `feature_embed`, both, or none. |
-| Allowed origins | Origins allowed to launch Link Out or Feature Embed sessions.<br /><br />For each Origin, you may optionally specify a publicly accessible [Session Continuation URL](/app-embed/session-continuation). If this is left unspecified, [Fast Launch](/app-embed/fast-launch) would not be functional, and an error screen would be shown when App Embed encounters a launch error or an irrecoverable client session. |
+| Modalities | The App Embed modalities you intend to use: `link_out`, `feature_embed`, both, or none. |
+| Allowed origins | Origins allowed to launch Link Out or Feature Embed sessions.<br /><br />For each origin, you may optionally specify a publicly accessible [Session Continuation URL](/app-embed/session-continuation). If this is left unspecified, [Fast Launch](/app-embed/fast-launch) will not work, and App Embed will show an error screen when it encounters a launch error or an irrecoverable client session. |
 
 ## Integration-managed members
 
-To launch App Embed in either modalities, you must identify to Junction which provider 
+To launch App Embed in either modality, identify the provider who should use Junction Dashboard as an integration-managed member.
 
 These members are created and managed through the Junction Management API by your backend system.
 
@@ -96,10 +96,10 @@ Integration-managed members:
 
 ## Feature slug
 
-[Features](/app-embed/overview#features) are represented as **feature slug**.
+[Features](/app-embed/overview#features) are represented by a **feature slug**.
 
-You will work with a feature flag in any of the following scenarios:
+Use a feature slug when you:
 
-* You are creating a pre-authorized [Dashboard URL](/api-reference/org-management/ehr-integration/create-dashboard-url);
-* You are assembling a [Fast Launch URL](/app-embed/fast-launch); or
-* You are handling a [Session Continuation request](/app-embed/session-continuation) from Junction App Embed.
+* create a pre-authorized [Dashboard URL](/api-reference/org-management/ehr-integration/create-dashboard-url);
+* assemble a [Fast Launch URL](/app-embed/fast-launch); or
+* handle a [Session Continuation request](/app-embed/session-continuation) from Junction App Embed.

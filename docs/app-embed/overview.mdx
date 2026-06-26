@@ -1,6 +1,6 @@
 ---
 title: "Overview"
-description: "Embed Junction Dashboard experiences inside partner EMR workflows or launch the dashboard from your application."
+description: "Embed Junction Dashboard experiences into your application or launch the dashboard in a separate browser context."
 ---
 
 import ContactCsm from '/snippets/contact-csm.mdx';
@@ -21,8 +21,8 @@ Opens Junction Dashboard in a top-level browser context, such as a new tab or po
 </Card>
 
 <Card title="Feature Embed" icon="frame">
-Embed a specific Junction Dashboard provider functionality (feature) as an iframe into your web application.
-<Info>You want your web application to own navigation and information architecture, while Junction provides a focused provider experience.</Info>
+Embed a specific Junction Dashboard feature as an iframe into your web application.
+<Info>You want your web application to own navigation and page structure while the iframe stays focused on one Junction workflow.</Info>
 </Card>
 
 ## Features
@@ -37,10 +37,9 @@ App Embed supports the following features:
 | `team_panels` | Panel management |
 | `team_config` | Team configuration |
 
-While you must specify a feature to launch for both the _Link Out_ and _Feature Embed_ modalities, they have different behaviours:
+While you must specify a feature to launch for both the _Link Out_ and _Feature Embed_ modalities, they have different behaviors:
 
-| Modality | Behaviour |
+| Modality | Behavior |
 | --- | --- |
-| Link Out      | The feature controls where the Junction Dashboard lands on initially. The provider can navigate away afterwards, and use other parts of the Junction Dashboard. |
+| Link Out      | The feature controls where the Junction Dashboard lands initially. The provider can navigate away afterward and use other parts of the Junction Dashboard. |
 | Feature Embed | The iframe is locked to the feature you requested. |
-
