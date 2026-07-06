@@ -3,9 +3,36 @@ title: "Deprecations"
 description: "Deprecated features in the Junction Wearables API, including the hypnogram timeseries type and redefined Source/Provider terminology."
 ---
 
+### Non-grouped timeseries endpoints
+
+<Warning>The deprecation cycle ends on **14 September 2026**. The API endpoints will be removed afterwards.</Warning>
+
+We have introduced [Get Grouped Timeseries](/changelog/wearables/api#grouped-timeseries-feb-2024) endpoints since Feburary 2024.
+Checkout the [Get Heartrate](/api-reference/data/timeseries/heartrate) endpoint for an example. It has been supported by all Junction API
+SDKs (backend), as well as all relevant Junction Mobile SDKs (Native iOS, Native Android, Flutter) since 2024 as well.
+
+The [Get Grouped Timeseries](/changelog/wearables/api#grouped-timeseries-feb-2024) endpoints have several advantages:
+
+1. It uses cursor-based pagination, allowing you to fetch and process data incrementally.
+2. It exposes the [data source attributions](/wearables/providers/data-attributions), which is absent from the legacy endpoints.
+
+| Category | Status | API endpoint path | API SDKs |
+| -------- | ------ | ----------------- | ------- |
+| Get Grouped Timeseries | 🟢 Supported | `/v2/timeseries/{user_id}/{resource}/grouped` | `vitals.{resource}_grouped` |
+| Get Timeseries (Legacy) | ⚠️ Deprecated | `/v2/timeseries/{user_id}/{resource}` | `vitals.{resource}` |
+
+<Card title="Recommended Action" icon="lightbulb-exclamation-on">
+For Junction API SDKs, the client methods for the Get Timeseries (Legacy) endpoints have been marked as deprecated since 2024. Make sure you use the
+latest Junction API SDK releases, and take action on all the deprecations.
+
+For relevant Junction Mobile SDKs (Native iOS, Native Android, Flutter), there is no action for you to take assuming you use the latest SDK releases.
+
+For direct API calls, make sure your request URL paths do include `/grouped`, your logic do expect the grouped timeseries response schema, and that you handle pagination.
+</Card>
+
 ### The `hypnogram` timeseries type
 
-<Warning>The removal will happen on or after **31 January 2025**.</Warning>
+<Warning>The deprecation cycle ends on ~~31 January 2025~~ **14 September 2026**. The resource will be removed afterwards.</Warning>
 
 We have introduced a new Sleep Cycle summary type (`sleep_cycle`) which captures the detailed hypnogram of a sleep session.
 It replaces the existing `hypnogram` timeseries type. More details can be found here: [Sleep Cycle Summary](/api-reference/data/sleep-cycle/get-summary)
@@ -17,16 +44,16 @@ Stop processing the `historical.timeseries.hypnogram.created`, `daily.timeseries
 
 ### Redefining Source and Provider
 
-<Warning>The stated removals in this section will happen on or after **31 July 2024**.</Warning>
+<Warning>The deprecation cycle ends on ~~31 July 2024~~ **14 September 2026**. The deprecated fields will be removed afterwards.</Warning>
 
 Junction has redefined what _Source_ and _Provider_ mean across our API and event schemas:
 
-<Accordion title="The new definitions of Provider and Source">
+<Accordion title="The new definitions of Provider and Source" defaultOpen>
 
 | Entity   | Definition               |
 | -------- | ------------------------ |
-| Source   | The source context of a specific summary or a specific timeseries value group. | 
-| Provider | A wearable data provider (an app, a platform, a service, or Junction Mobile SDKs). |
+| Source   | The source context of a specific piece of data (summary or timeseries resources). | 
+| Provider | Static metadata of a wearable data provider (an app, a platform, a service, or Junction Mobile SDKs). |
 
 A _Source_ context comprises:
 * the Provider (slug only)
@@ -51,24 +78,9 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     slug.
 
     Using the [Steps data event](/event-catalog/daily.data.steps.created) as an illustration, originally
-    the `source` field described the wearable data provider:
-    ```json daily.data.steps.created (Original)
-    {
-        "event_type": "daily.data.steps.created",
-        "data": {
-            "data": [...],
-            "source": {
-                "name": "Oura",
-                "slug": "oura",
-                "logo": "https://example.com/oura.svg"
-            }
-        },
-        "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
-    }
-    ```
-
-    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of the `steps` timeseries
-    value group. So Junction has introduced a few new _Source_ context fields:
+    the `source` field described the wearable data provider. As part of this redefinition, the `source` field is
+    reappropriated to track the _Source_ context of the `steps` timeseries value group. So we have added a few
+    new _Source_ context fields, and marked several _Provider_ fields as deprecated:
 
     ```json daily.data.steps.created (Current)
     {
@@ -76,15 +88,17 @@ To migrate to the new definitions, Junction is announcing the following deprecat
         "data": {
             "data": [...],
             "source": {
+                /** 🟢 BEGIN: New source fields **/
                 "provider": "oura",
                 "type": "ring",
                 "app_id": null,
+                /** 🟢 END: New source fields **/
 
-                /** BEGIN: deprecated Provider fields **/
+                /** ⚠️ BEGIN: Deprecated provider fields, to be removed **/
                 "name": "Oura",
                 "slug": "oura",
                 "logo": "https://example.com/oura.svg"
-                /** END: deprecated Provider fields **/
+                /** ⚠️ END: Deprecated provider fields, to be removed **/
             }
         },
         "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
@@ -99,9 +113,11 @@ To migrate to the new definitions, Junction is announcing the following deprecat
         "data": {
             "data": [...],
             "source": {
+                /** 🟢 BEGIN: New source fields **/
                 "provider": "oura",
                 "type": "ring",
                 "app_id": null
+                /** 🟢 END: New source fields **/
             }
         },
         "user_id": "fb58770e-8b7b-4416-a5bd-8433786d10dc"
@@ -136,24 +152,9 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     Junction no longer embeds these _Provider_ object fields in every summary, except for the provider
     slug.
 
-    Using the [Get Profile endpoint](/api-reference/data/profile/get-summary) as an illustration, originally
-    the `source` field described the wearable data provider:
-    ```json Profile (Original)
-    {
-        "id": "eadba0c7-4e81-4d17-962c-9ebe0629c08f",
-        "date": "2022-08-04",
-        "height": 183,
-        "source": {
-            "name": "Oura",
-            "slug": "oura",
-            "logo": "https://logo_url.com"
-        },
-        "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
-    }
-    ```
-
-    As part of this redefinition, the `source` field is redefined to mean the _Source_ context of this Profile
-    summary. So Junction has introduced a few new _Source_ context fields:
+    Using the [Get Profile endpoint](/api-reference/data/profile/get-summary) as an illustration, the `source` object has
+    been reappropriated as the _Source_ context of this Profile summary. So we have added a few new _Source_ context fields,
+    and marked several _Provider_ fields as deprecated:
 
     ```json Profile (Current)
     {
@@ -161,15 +162,17 @@ To migrate to the new definitions, Junction is announcing the following deprecat
         "date": "2022-08-04",
         "height": 183,
         "source": {
+            /** 🟢 BEGIN: New source fields **/
             "provider": "oura",
             "type": "app",
             "app_id": null,
+            /** 🟢 END: New source fields **/
 
-            /** BEGIN: deprecated Provider fields **/
+            /** ⚠️ BEGIN: Deprecated provider fields, to be removed **/
             "name": "Oura",
             "slug": "oura",
             "logo": "https://example.com/oura.svg"
-            /** END: deprecated Provider fields **/
+            /** ⚠️ END: Deprecated provider fields, to be removed **/
         },
         "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
     }
@@ -183,9 +186,11 @@ To migrate to the new definitions, Junction is announcing the following deprecat
         "date": "2022-08-04",
         "height": 183,
         "source": {
+            /** 🟢 BEGIN: New source fields **/
             "provider": "oura",
             "type": "app",
             "app_id": null
+            /** 🟢 END: New fields **/
         },
         "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6"
     }
@@ -211,44 +216,31 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     Junction has renamed the `source` field in this event to `provider`, aligning with the redefinition of _Source_
     and _Provider_.
 
-    To illustrate the change, originally the `source` field described the wearable data provider:
-    ```json provider.connection.created (Original)
-    {
-        "event_type": "provider.connection.created",
-        "data": {
-            "source": {
-                "name": "Oura",
-                "slug": "oura",
-                "logo": "https://logo_url.com"
-            },
-            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
-            "resource_availability": {...}
-        }
-    }
-    ```
-
-    As part of this redefinition, `source` is no longer applicable here. Junction has introduced an identical
-    `provider` field as its replacement.
+    To illustrate the change, originally the `source` field described the wearable data provider. As part of this
+    redefinition, `source` no longer applies in this context. Junction has introduced an identical
+    `provider` field as its replacement:
 
     ```json provider.connection.created (Current)
     {
         "event_type": "provider.connection.created",
         "data": {
+            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
+            "resource_availability": {...},
+
+            /** 🟢 BEGIN: New field **/
             "provider": {
                 "name": "Oura",
                 "slug": "oura",
                 "logo": "https://logo_url.com"
             },
-            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
-            "resource_availability": {...},
 
-            /** BEGIN: deprecated field **/
+            /** ⚠️ BEGIN: Deprecated field, to be removed **/
             "source": {
                 "name": "Oura",
                 "slug": "oura",
                 "logo": "https://logo_url.com"
             }
-            /** END: deprecated field **/
+            /** ⚠️ END: Deprecated field, to be removed **/
         }
     }
     ```
@@ -259,13 +251,16 @@ To migrate to the new definitions, Junction is announcing the following deprecat
     {
         "event_type": "provider.connection.created",
         "data": {
+            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
+            "resource_availability": {...}
+
+            /** 🟢 BEGIN: New field **/
             "provider": {
                 "name": "Oura",
                 "slug": "oura",
                 "logo": "https://logo_url.com"
             },
-            "user_id": "71937dd3-aebe-46b7-ab64-c287bd75b2a6",
-            "resource_availability": {...}
+            /** 🟢 END: New field **/
         }
     }
     ```
@@ -280,7 +275,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
 
 ### The `is_final` flag in `historical.data.*.created` events
 
-<Warning>The removal will happen on or after **30 June 2024**.</Warning>
+<Warning>The deprecation cycle ends on ~~30 June 2024~~ **14 September 2026**. The deprecated fields will be removed afterwards.</Warning>
 
 We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
 
