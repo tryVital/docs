@@ -1,0 +1,36 @@
+---
+title: "Strava"
+description: "Connect Strava to Junction using Bring Your Own OAuth credentials."
+---
+
+import BYOO from '/snippets/byoo.mdx';
+
+<BYOO />
+
+## Connecting Strava to Junction
+
+Strava is a [BYOO](/wearables/connecting-providers/bring-your-own-oauth/overview) only provider in Junction.
+Your team must configure custom Strava OAuth credentials before users can create new Strava connections or reconnect existing Strava connections.
+
+To connect Strava:
+
+1. Create a Strava API application in your Strava developer account.
+2. Use the [Prepare Team Custom Credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials) endpoint to get the OAuth setup values for your Junction team.
+3. Set the Strava client ID and client secret with [Set Team Custom Credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials), or configure them from **Config > Custom Credentials** in the Junction Dashboard.
+4. Connect users through Junction Link after the credentials are active.
+
+<Warning>
+Junction's default Strava OAuth application is unavailable for new Strava connections and reconnects. Existing non-BYOO Strava connections may continue syncing while their existing tokens and the default app remain valid.
+</Warning>
+
+## Strava app review and policy
+
+You can self-create a Strava API application for testing. To connect more than 1 athlete, you must [submit your app to Strava for review](https://developers.strava.com/docs/getting-started/).
+
+Review the [Strava API Policy](https://www.strava.com/legal/api_policy) for the obligations that apply to your Strava application, including Strava's terms around application purpose, data handling, retention, and subprocessors.
+
+<Note>
+Your organization is responsible for confirming that your Strava application and data use comply with Strava's developer terms.
+
+Please note that Junction cannot directly assist with or influence Strava's application review process, including expediting reviews or providing contacts within Strava. If you have questions about your application's review status or approval, you'll need to work directly with Strava through their developer support channels.
+</Note>

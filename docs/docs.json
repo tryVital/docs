@@ -442,6 +442,7 @@
                   "wearables/guides/google_fit",
                   "wearables/guides/omron",
                   "wearables/guides/polar",
+                  "wearables/guides/strava",
                   "wearables/guides/whoop"
                 ]
               }

@@ -3,6 +3,13 @@ title: "Providers and Resources"
 description: "Changelog of wearable provider updates including Health SDK Explicit Connect mode, sync progress logs, and provider-specific improvements."
 ---
 
+### Strava is BYOO-only (July 2026)
+
+New Strava connections and reconnects now require [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) credentials.
+Junction's default Strava OAuth application is unavailable for new Strava connections.
+
+Teams that need Strava should configure their own Strava OAuth application before connecting users. See the [Strava guide](/wearables/guides/strava) for setup details.
+
 ### Sleep summary extension: `recovery_readiness_score` (April 2026)
 
 The Sleep summary now includes `recovery_readiness_score`, a value between 0 and 100 representing the provider's recovery or readiness proxy.
