@@ -126,6 +126,7 @@
                   "lab/workflow/cancelling-an-order",
                   "lab/workflow/create-test",
                   "lab/workflow/order-registrable-testkit",
+                  "lab/workflow/registrable-testkit-proxy-inventory-workflows",
                   "lab/workflow/importing-order",
                   "lab/workflow/aoe",
                   "lab/workflow/partials",
