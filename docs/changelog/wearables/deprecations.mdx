@@ -13,8 +13,8 @@ SDKs (backend), as well as all relevant Junction Mobile SDKs (Native iOS, Native
 
 The [Get Grouped Timeseries](/changelog/wearables/api#grouped-timeseries-feb-2024) endpoints have several advantages:
 
-1. It uses cursor-based pagination, allowing you to fetch and process data incrementally.
-2. It exposes the [data source attributions](/wearables/providers/data-attributions), which is absent from the legacy endpoints.
+1. They use cursor-based pagination, allowing you to fetch and process data incrementally.
+2. They expose the [data source attributions](/wearables/providers/data-attributions), which are absent from the legacy endpoints.
 
 | Category | Status | API endpoint path | API SDKs |
 | -------- | ------ | ----------------- | ------- |
@@ -27,7 +27,7 @@ latest Junction API SDK releases, and take action on all the deprecations.
 
 For relevant Junction Mobile SDKs (Native iOS, Native Android, Flutter), there is no action for you to take assuming you use the latest SDK releases.
 
-For direct API calls, make sure your request URL paths do include `/grouped`, your logic do expect the grouped timeseries response schema, and that you handle pagination.
+For direct API calls, make sure your request URL paths include `/grouped`, your logic expects the grouped timeseries response schema, and that you handle pagination.
 </Card>
 
 ### The `hypnogram` timeseries type

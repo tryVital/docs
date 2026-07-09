@@ -135,14 +135,6 @@ When this feature is enabled on your Team, you can book appointments with Quest 
     1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
     2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
 
-    You will receive two `labtest.order.updated` events, one each for the two Order status transitions. You will also receive a `labtest.appointment.updated` event for the Appointment status transition.
-  </Step>
-  <Step title="Appointment has been created">
-    The appointment has now been created.
-
-    1. The Order will move through the `appointment_pending` and `appointment_scheduled` Order statuses in quick succession.
-    2. The Appointment will move to the `confirmed` status automatically, which corresponds to the `scheduled` appointment event.
-
     You will receive a `labtest.appointment.updated` event for the Appointment status transition. You will also receive two `labtest.order.updated` events, one each for the two Order status transitions.
   </Step>
 </Steps>
