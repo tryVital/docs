@@ -1,0 +1,25 @@
+---
+title: "Using Junction API"
+description: "Use the Junction API to manage patients and access Junction's team-scoped platform capabilities."
+icon: square-code
+---
+
+Use the [Junction API](/api-details/junction-api) alongside Junction Connect to work with patient and clinical data in a team.
+
+<Info>
+To create, retrieve, and update patients and their demographics, see [Managing Patients](/api-reference/org-management/connect/managing-patients).
+</Info>
+
+Authenticate Junction API requests using one of its [team-scoped authentication methods](/api-details/junction-api#authentication):
+
+* Authenticate with a **Team API Key**.
+* Authenticate with a **Team API Access Token** created through the [Create Team API Access Token](/api-reference/org-management/team-api-access-token/create-team-api-access-token) endpoint.
+
+Through the Junction API, you can:
+
+* manage users and demographics information in your Team with the [Core API](/api-reference/user/create-user);
+* manage user connections, pull ingested device data, inspect connection backfill statuses through the [Devices API](/wearables/connecting-providers/introduction);
+* order lab tests, manage appointments and pull the results through the [Lab Testing API](/lab/overview/introduction); and
+* aggregate ingested device data with the [Junction Sense API](/sense/overview).
+
+See the [Junction API overview](/api-details/junction-api) for links to each API category, available environments, regional endpoints, and authentication options.

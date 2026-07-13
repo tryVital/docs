@@ -1,0 +1,19 @@
+---
+title: "Webhooks and Events"
+description: "Receive Junction events through webhooks or stream them to supported ETL pipeline destinations."
+icon: webhook
+---
+
+Use Junction webhooks and events alongside Junction Connect to react to patient, device, and lab testing updates as they happen.
+
+<Info>
+Start with the [Webhooks and Events introduction](/webhooks/introduction), then review the [event structure](/webhooks/event-structure) and [retry policy](/webhooks/retry-policy).
+</Info>
+
+The [Event Catalog](/event-catalog) provides schemas and example payloads for every event type. Lab testing examples include:
+
+* [Order created](/event-catalog/labtest.order.created) and [order updated](/event-catalog/labtest.order.updated) events.
+* [Appointment created](/event-catalog/labtest.appointment.created) and [appointment updated](/event-catalog/labtest.appointment.updated) events.
+* The [critical result](/event-catalog/labtest.result.critical) webhook, emitted when a lab result contains a critical value requiring urgent clinical attention. See [Critical Results](/lab/results/critical-results) for the full workflow.
+
+For higher-volume delivery, [ETL Pipelines](/webhooks/etl-pipelines/overview) continuously stream Junction events to supported destinations such as Google Cloud Pub/Sub, RabbitMQ, and Azure Event Hubs. Webhooks and ETL Pipelines use the same event payload schemas.

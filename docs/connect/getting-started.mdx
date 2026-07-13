@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-description: "Configure App Embed and launch a Junction workflow from your application."
+description: "Configure Junction Connect and launch a Junction workflow from your application."
 mode: "wide"
 ---
 
@@ -16,7 +16,7 @@ You need:
 
 * a Junction organization ID;
 * a Junction Management Key;
-* a registered App Embed integration with at least one enabled modality;
+* a registered Junction Connect integration with at least one enabled modality;
 * an allowed origin for your web application; and
 * a session continuation URL controlled by your application.
 
@@ -26,7 +26,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
 
 <Steps titleSize="h3">
   <Step title="Configure your integration">
-    See [Concepts -> Configuration](/app-embed/concepts#configuration) to set your slug, modalities, and allowed origins.
+    See [Concepts -> Configuration](/connect/concepts#configuration) to set your slug, modalities, and allowed origins.
   </Step>
 
   <Step title="Create or resolve a team">
@@ -58,7 +58,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="Create or resolve an integration-managed member">
-    Create the member that should be signed in through App Embed. Include team role bindings for every team the member should access.
+    Create the member that should be signed in through Junction Connect. Include team role bindings for every team the member should access.
 
     ```bash cURL
     curl --request POST \
@@ -92,7 +92,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="(Optional) Create or resolve a user (patient)">
-    Skip this step unless you are launching a [feature](/app-embed/overview#features) that is scoped to a specific patient, such as `order_creation:{user_id}`. In that case the patient must exist as a Junction user in the destination team before you create the dashboard URL — the patient-scoped feature slug embeds the Junction `user_id`.
+    Skip this step unless you are launching a [feature](/connect/overview#features) that is scoped to a specific patient, such as `order_creation:{user_id}`. In that case the patient must exist as a Junction user in the destination team before you create the dashboard URL — the patient-scoped feature slug embeds the Junction `user_id`.
 
     Use the team-scoped Junction API (see [authentication](/api-details/junction-api#authentication) and [environments](/api-details/junction-api#environments)):
 
@@ -134,7 +134,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
     For `link_out`, open the returned URL in a top-level navigation context, such as a new tab or popup window.
 
     <Note>
-    For faster repeated launches, use [Fast Launch](/app-embed/fast-launch) after you have implemented [Session Continuation](/app-embed/session-continuation).
+    For faster repeated launches, use [Fast Launch](/connect/fast-launch) after you have implemented [Session Continuation](/connect/session-continuation).
     </Note>
   </Step>
 </Steps>

@@ -1,13 +1,13 @@
 ---
 title: "Session Continuation"
-description: "Implement the endpoint Junction calls when it needs your application to recover an App Embed session."
+description: "Implement the endpoint Junction calls when it needs your application to recover a Junction Connect session."
 ---
 
 import ContactCsm from '/snippets/contact-csm.mdx';
 
 <ContactCsm />
 
-Session continuation lets Junction recover an App Embed session when no compatible session exists, such as after prolonged inactivity or when using Fast Launch.
+Session continuation lets Junction recover a Junction Connect session when no compatible session exists, such as after prolonged inactivity or when using Fast Launch.
 
 Your session continuation URL must be a publicly accessible endpoint controlled by your application. Junction redirects the user's browser to this endpoint with launch parameters. Your application validates the current signed-in user, creates a Junction dashboard URL, and returns a `307 Temporary Redirect` to that URL.
 
@@ -35,7 +35,7 @@ sequenceDiagram
     participant Partner as Partner Session Continuation URL
     participant API as Junction Management API
 
-    Browser->>Junction: Open App Embed or Fast Launch URL
+    Browser->>Junction: Open Junction Connect or Fast Launch URL
     Junction->>Junction: No compatible session
     Junction-->>Browser: Redirect to session continuation URL
     Browser->>Partner: Request with launch parameters and partner credentials

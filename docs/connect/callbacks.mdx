@@ -16,7 +16,7 @@ Callbacks are only emitted from Feature Embed iframes. They are never emitted in
 Add a `message` event listener to the host window and filter by the `type` field:
 
 ```ts
-// Replace with your organization's slug from App Embed configuration.
+// Replace with your organization's slug from Junction Connect configuration.
 const JUNCTION_ORIGIN = "https://<slug>.ehr.junction.com";
 
 window.addEventListener("message", (event) => {
@@ -45,7 +45,7 @@ Always check `event.origin` before reading `event.data`. Reject any message whos
 
 ## Security
 
-Each Junction organization is served from a dedicated subdomain: `https://<slug>.ehr.junction.com`, where `<slug>` is the unique slug from your [App Embed configuration](/app-embed/concepts#configuration).
+Each Junction organization is served from a dedicated subdomain: `https://<slug>.ehr.junction.com`, where `<slug>` is the unique slug from your [Junction Connect configuration](/connect/concepts#configuration).
 
 Junction always targets your registered origin explicitly — it never posts to `"*"`. The target origin is resolved from the iframe's `ancestorOrigins` or `document.referrer`. If the origin cannot be resolved, the message is silently dropped rather than broadcast.
 
