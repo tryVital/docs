@@ -1,0 +1,25 @@
+---
+title: "Managing Patients"
+description: "Create and manage patients in Junction Connect teams through the Junction API."
+icon: users
+---
+
+Patients in Junction Connect teams are Junction users. You manage them through the [Junction API](/api-details/junction-api), using one of its [team-scoped authentication methods](/api-details/junction-api#authentication):
+
+* Authenticate with a **Team API Key**.
+* Authenticate with a **Team API Access Token** created through the [Create Team API Access Token](/api-reference/org-management/team-api-access-token/create-team-api-access-token) endpoint.
+
+Common patient-management operations include:
+
+* Create a patient with the [Create user](/api-reference/user/create-user) endpoint.
+* Retrieve a patient with the [Get User](/api-reference/user/get-user) endpoint.
+* Retrieve patient demographics with the [Get User Demographics](/api-reference/user/get-info-latest) endpoint.
+* Set patient demographics with the [Update User Demographics](/api-reference/user/upsert-info) endpoint.
+
+<Tip>
+Use these endpoints to provision patients upfront, then launch the Junction Connect [Order Creation feature](/connect/overview#features) with a preselected patient by using the `order_creation:{user_id}` feature slug.
+</Tip>
+
+<Info>
+See the [full Core Platform API reference](/api-reference/user/create-user) for all available user-management endpoints.
+</Info>

@@ -1243,7 +1243,7 @@
         ]
       },
       {
-        "tab": "App Embed",
+        "tab": "Junction Connect",
         "icon": "frame",
         "anchors": [
           {
@@ -1251,19 +1251,19 @@
             "icon": "book-open",
             "groups": [
               {
-                "group": "App Embed",
+                "group": "Junction Connect",
                 "pages": [
-                  "app-embed/overview",
-                  "app-embed/concepts",
-                  "app-embed/getting-started"
+                  "connect/overview",
+                  "connect/concepts",
+                  "connect/getting-started"
                 ]
               },
               {
                 "group": "Deeper integrations",
                 "pages": [
-                  "app-embed/callbacks",
-                  "app-embed/session-continuation",
-                  "app-embed/fast-launch"
+                  "connect/callbacks",
+                  "connect/session-continuation",
+                  "connect/fast-launch"
                 ]
               }
             ]
@@ -1275,31 +1275,34 @@
               {
                 "group": "Related topics",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/managing-teams"
+                  "api-reference/org-management/connect/managing-teams",
+                  "api-reference/org-management/connect/managing-patients",
+                  "api-reference/org-management/connect/using-junction-api",
+                  "api-reference/org-management/connect/webhooks-and-events"
                 ]
               },
               {
                 "group": "Launch",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/create-dashboard-url"
+                  "api-reference/org-management/connect/create-dashboard-url"
                 ]
               },
               {
                 "group": "Members",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/create-member",
-                  "api-reference/org-management/ehr-integration/list-members",
-                  "api-reference/org-management/ehr-integration/get-member",
-                  "api-reference/org-management/ehr-integration/resolve-member",
-                  "api-reference/org-management/ehr-integration/update-member",
-                  "api-reference/org-management/ehr-integration/delete-member"
+                  "api-reference/org-management/connect/create-member",
+                  "api-reference/org-management/connect/list-members",
+                  "api-reference/org-management/connect/get-member",
+                  "api-reference/org-management/connect/resolve-member",
+                  "api-reference/org-management/connect/update-member",
+                  "api-reference/org-management/connect/delete-member"
                 ]
               },
               {
                 "group": "Configuration",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/get-configuration",
-                  "api-reference/org-management/ehr-integration/set-configuration"
+                  "api-reference/org-management/connect/get-configuration",
+                  "api-reference/org-management/connect/set-configuration"
                 ]
               }
             ]
@@ -1324,7 +1327,7 @@
               {
                 "group": "Related topics",
                 "pages": [
-                  "api-reference/org-management/ehr-integration/app-embed"
+                  "api-reference/org-management/connect/junction-connect"
                 ]
               },
               {
@@ -1518,6 +1521,18 @@
     }
   },
   "redirects": [
+    {
+      "source": "/api-reference/org-management/ehr-integration/app-embed",
+      "destination": "/api-reference/org-management/connect/junction-connect"
+    },
+    {
+      "source": "/api-reference/org-management/ehr-integration/:subpaths*",
+      "destination": "/api-reference/org-management/connect/:subpaths*"
+    },
+    {
+      "source": "/app-embed/:subpaths*",
+      "destination": "/connect/:subpaths*"
+    },
     {
       "source": "/wearables/introspection-api/user-resource",
       "destination": "/api-reference/data/introspection/user-resources"

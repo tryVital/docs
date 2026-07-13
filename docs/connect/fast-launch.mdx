@@ -1,13 +1,13 @@
 ---
 title: "Fast Launch"
-description: "Use Fast Launch URLs to reduce repeated App Embed launch latency when a compatible Junction session already exists."
+description: "Use Fast Launch URLs to reduce repeated Junction Connect launch latency when a compatible Junction session already exists."
 ---
 
 import ContactCsm from '/snippets/contact-csm.mdx';
 
 <ContactCsm />
 
-Fast Launch lets your client-side application open a Junction feature without first asking your backend to create a dashboard URL. When Junction detects an existing compatible session, it routes directly to the requested feature. If it cannot reuse a session, it redirects to your [session continuation URL](/app-embed/session-continuation), where your application creates a new dashboard URL.
+Fast Launch lets your client-side application open a Junction feature without first asking your backend to create a dashboard URL. When Junction detects an existing compatible session, it routes directly to the requested feature. If it cannot reuse a session, it redirects to your [session continuation URL](/connect/session-continuation), where your application creates a new dashboard URL.
 
 Use Fast Launch when:
 
@@ -62,7 +62,7 @@ https://{integration_slug}.ehr.junction.com/auth/launch
 sequenceDiagram
     autonumber
     participant PartnerApp as Your Web App
-    participant Junction as Junction App Embed
+    participant Junction as Junction Connect
     participant Continuation as Session Continuation URL
     participant API as Junction Management API
 
