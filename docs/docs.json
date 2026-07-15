@@ -130,7 +130,8 @@
                   "lab/workflow/aoe",
                   "lab/workflow/partials",
                   "lab/workflow/redraws",
-                  "lab/workflow/clinical-comments"
+                  "lab/workflow/clinical-comments",
+                  "lab/workflow/unmatched-results"
                 ]
               },
               {
@@ -293,6 +294,15 @@
                   "api-reference/lab-testing/results/get-results-metadata",
                   "api-reference/lab-testing/results/get-order-transaction-results",
                   "api-reference/lab-testing/results/get-order-transaction-results-pdf"
+                ]
+              },
+              {
+                "group": "Unmatched Results",
+                "pages": [
+                  "api-reference/lab-testing/unmatched-results/list-unmatched-results",
+                  "api-reference/lab-testing/unmatched-results/get-unmatched-result",
+                  "api-reference/lab-testing/unmatched-results/accept-unmatched-result",
+                  "api-reference/lab-testing/unmatched-results/resolve-unmatched-result"
                 ]
               },
               {

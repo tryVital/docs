@@ -1,0 +1,376 @@
+# Unmatched Lab Results Integration Guide
+
+The Unmatched Results API lets you review a lab result that could not be safely
+attached to an order automatically. You can accept a proposed match, reject the
+result, or ask the Vital operations team to review it.
+
+This guide covers:
+
+- receiving review notifications by webhook;
+- listing and retrieving unmatched results;
+- accepting, rejecting, or escalating a result; and
+- understanding the available match cases.
+
+## Recommended integration flow
+
+1. Subscribe your webhook endpoint to `labtest.match_review.created`.
+2. When the webhook arrives, store its `data.id` as the unmatched-result ID.
+3. Fetch the full item with `GET /v3/unmatched_result/{id}`.
+4. Present the result, patient context, and candidate orders to a reviewer.
+5. Display only the actions listed in `allowed_actions`.
+6. Call the accept or resolve endpoint with the reviewer's decision.
+7. Use the returned resource as the source of truth for the final state and
+   store its `order_transaction.id` to track related orders.
+
+You can also poll the list endpoint to reconcile missed or delayed webhook
+deliveries.
+
+## Webhook
+
+### Event type
+
+```text
+labtest.match_review.created
+```
+
+The event is sent when an unmatched result first becomes available for customer
+review. An item that is only awaiting internal operations review does not emit
+this event.
+
+The webhook is a notification, not the complete review record. Fetch `data.id`
+from the API before displaying or resolving the item.
+
+Example payload:
+
+```json
+{
+  "event_type": "labtest.match_review.created",
+  "team_id": "44444444-4444-4444-4444-444444444444",
+  "user_id": "11111111-1111-1111-1111-111111111111",
+  "client_user_id": "customer-patient-123",
+  "data": {
+    "id": "6c3a56b7-c3ef-4edb-889a-6c4c874bcf00",
+    "status": "pending_customer_review",
+    "decision_code": "match_sample_id_mismatch_demo",
+    "sub_reason_codes": []
+  }
+}
+```
+
+Configure this event on your existing webhook destination; it does not require
+a separate callback URL. Verify each delivery using the signing secret for that
+destination, return a successful response promptly, and process repeated
+deliveries idempotently.
+
+## API endpoints
+
+### List unmatched results
+
+```http
+GET /v3/unmatched_result
+```
+
+Example:
+
+```bash
+curl --request GET \
+  --url 'https://api.tryvital.io/v3/unmatched_result?status=pending_customer_review&lab_slug=labcorp&limit=50' \
+  --header "x-vital-api-key: $VITAL_API_KEY"
+```
+
+Query parameters:
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `limit` | integer | Page size. Defaults to `50`. |
+| `next_cursor` | string | Opaque cursor returned by the previous page. |
+| `status` | string | `pending_customer_review`, `pending_ops_review`, or `resolved`. |
+| `decision_code` | string | One of the decision codes listed below. |
+| `lab_slug` | string | Lab identifier, such as `labcorp` or `quest`. |
+| `created_at_start` | date | Result receipt date on or after this UTC date, formatted `YYYY-MM-DD`. |
+| `created_at_end` | date | Result receipt date on or before this UTC date, formatted `YYYY-MM-DD`. |
+
+Without a `status` filter, the endpoint returns actionable customer items and
+items that you escalated with `unsure`. Resolved items are excluded by default.
+
+Response:
+
+```json
+{
+  "data": [
+    {
+      "id": "6c3a56b7-c3ef-4edb-889a-6c4c874bcf00",
+      "status": "pending_customer_review",
+      "decision_code": "match_sample_id_mismatch_demo",
+      "sub_reason_codes": [],
+      "reason": "The sample matched, but the demographics do not line up with the existing order.",
+      "patient": {
+        "first_name": "Ada",
+        "last_name": "Lovelace",
+        "dob": "1815-12-10T00:00:00Z",
+        "gender": "female"
+      },
+      "lab": {
+        "id": 1,
+        "name": "Labcorp",
+        "slug": "labcorp"
+      },
+      "markers": [
+        {
+          "provider_id": "005009",
+          "name": "Complete Blood Count"
+        }
+      ],
+      "interpretation": "abnormal",
+      "result_status": "partial",
+      "note": null,
+      "allowed_actions": ["accept", "reject", "unsure"],
+      "candidate_groups": [
+        {
+          "user_id": "11111111-1111-1111-1111-111111111111",
+          "candidates": [
+            {
+              "candidate_type": "provenance_order",
+              "order_id": "22222222-2222-2222-2222-222222222222",
+              "order_transaction_id": "33333333-3333-3333-3333-333333333333",
+              "last_status": "completed",
+              "confidence_level": "high",
+              "confidence_score": 0.9,
+              "reasons": ["sample_id_match", "demographic_mismatch"],
+              "marker_overlap": null,
+              "status_context": null
+            }
+          ]
+        }
+      ],
+      "created_at": "2026-07-15T14:50:40Z",
+      "updated_at": "2026-07-15T14:50:40Z",
+      "reviewed_at": null
+    }
+  ],
+  "next_cursor": null
+}
+```
+
+Pass `next_cursor` unchanged into the next request. Do not parse or construct
+cursor values in your application.
+
+### Get one unmatched result
+
+```http
+GET /v3/unmatched_result/{raw_result_id}
+```
+
+```bash
+curl --request GET \
+  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00' \
+  --header "x-vital-api-key: $VITAL_API_KEY"
+```
+
+The response uses the same unmatched-result shape as an item in the list
+response.
+
+Important fields:
+
+| Field | Meaning |
+| --- | --- |
+| `id` | Raw result ID used by the API and webhook. |
+| `status` | Current review state. |
+| `decision_code` | The primary reason the result entered this flow. |
+| `reason` | Human-readable summary for the reviewer. |
+| `result_status` | Whether the incoming lab result is `partial` or `final`. |
+| `allowed_actions` | Actions currently accepted by the API. Always use this field to enable UI controls. |
+| `candidate_groups` | Candidate orders grouped by Vital `user_id`. |
+| `candidate_groups[].candidates[].order_transaction_id` | Groups a candidate with its related original, replacement, or recreated orders. |
+
+Candidate confidence and reason codes are review aids; they do not replace human
+confirmation. A `provenance_order` is the order associated with the incoming
+sample or result history. An `order_option` is another order that may be a valid
+target.
+
+### Accept a match
+
+```http
+POST /v3/unmatched_result/{raw_result_id}/accept
+```
+
+Use `accept` only when it appears in `allowed_actions`.
+
+Request fields:
+
+| Field | Required | Description |
+| --- | --- | --- |
+| `order_id` | No | Existing Vital order that should receive the result. |
+| `user_id` | No | Vital user who should own a replacement order when an existing order is not selected. |
+| `note` | No | Review context for audit and support. |
+
+If both `user_id` and `order_id` are supplied, the order must belong to that
+user. Send an empty object only when accepting the system's unambiguous default
+target. For ambiguous demographic or no-match cases, explicitly select an
+`order_id` or `user_id`.
+
+Example:
+
+```bash
+curl --request POST \
+  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/accept' \
+  --header "x-vital-api-key: $VITAL_API_KEY" \
+  --header 'content-type: application/json' \
+  --data '{
+    "order_id": "22222222-2222-2222-2222-222222222222",
+    "note": "Confirmed against the requisition."
+  }'
+```
+
+The response is the standard lab order object. Depending on the decision case,
+acceptance may use the selected order or create/recreate an appropriate order.
+Always persist the order ID returned by this endpoint instead of assuming it is
+the same as a candidate order ID.
+
+### Track related orders with an order transaction
+
+An order transaction groups orders that belong to the same order lifecycle. For
+example, an original order and an order created to replace it can have different
+order IDs while sharing one order transaction ID.
+
+The candidate records expose `order_transaction_id` when one is available. The
+order returned by `accept` includes the authoritative `order_transaction`. An
+abridged response looks like:
+
+```json
+{
+  "id": "55555555-5555-5555-5555-555555555555",
+  "order_transaction": {
+    "id": "33333333-3333-3333-3333-333333333333",
+    "status": "active",
+    "orders": [
+      {
+        "id": "22222222-2222-2222-2222-222222222222",
+        "low_level_status": "cancelled",
+        "origin": "initial",
+        "parent_id": null
+      },
+      {
+        "id": "55555555-5555-5555-5555-555555555555",
+        "low_level_status": "completed",
+        "origin": "recreation",
+        "parent_id": "22222222-2222-2222-2222-222222222222"
+      }
+    ]
+  }
+}
+```
+
+Use `order_transaction.id` as the grouping key in your system and keep each
+individual order ID as a member of that group. Use `parent_id` to identify the
+direct predecessor and `low_level_status` to determine what happened to each
+order. Do not overwrite the original order ID with the replacement order ID or
+assume that a candidate order remains the active order after acceptance.
+
+You can retrieve all orders in the group with:
+
+```http
+GET /v3/orders?order_transaction_id={order_transaction_id}
+```
+
+Always take the transaction from the order returned by `accept`. If acceptance
+creates an order for a different patient, its transaction may differ from the
+candidate transaction shown before review.
+
+### Reject or escalate a result
+
+```http
+POST /v3/unmatched_result/{raw_result_id}/resolve
+```
+
+Request body:
+
+```json
+{
+  "action": "reject",
+  "note": "This result does not belong to our patient."
+}
+```
+
+Available actions:
+
+| Action | Outcome |
+| --- | --- |
+| `reject` | Marks the review item as resolved without attaching the result to an order. |
+| `unsure` | Sends the item to the Vital operations team for review. |
+
+Example escalation:
+
+```bash
+curl --request POST \
+  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/resolve' \
+  --header "x-vital-api-key: $VITAL_API_KEY" \
+  --header 'content-type: application/json' \
+  --data '{
+    "action": "unsure",
+    "note": "The demographics match two patients. Please review."
+  }'
+```
+
+The response is the updated unmatched result. After `unsure`, its status is
+`pending_ops_review` and `allowed_actions` is empty. After `reject`, its status
+is `resolved` and `allowed_actions` is empty.
+
+## Review statuses
+
+| Status | Meaning |
+| --- | --- |
+| `pending_customer_review` | The result is waiting for your decision. |
+| `pending_ops_review` | You selected `unsure` and Vital operations is reviewing the result. |
+| `resolved` | A reviewer rejected the result or otherwise completed the review. |
+
+## Available decision cases
+
+The `decision_code` describes why automatic matching stopped. Use the API's
+`reason`, candidates, and `allowed_actions` together when presenting a case.
+
+| Decision code | Meaning | What to verify |
+| --- | --- | --- |
+| `match_completed` | The sample matched an order that is already completed. | Confirm whether the new result belongs to the same patient and test. |
+| `match_cancelled` | The sample matched an order that is cancelled. | Confirm whether the result is valid and should be released through a replacement order. |
+| `wrong_collection` | The linked order is not in a valid collection or result-ready state. | Confirm that the collection occurred and that the candidate order is correct. |
+| `wrong_lab` | The patient demographics match, but the open order is for another central lab. | Confirm the receiving lab, patient, and test before accepting. |
+| `multiple_demo_match` | The demographics match more than one patient. | Select the correct patient and order; use `unsure` if identity cannot be confirmed. |
+| `match_sample_id_mismatch_demo` | The sample identifier matches an order, but the result demographics do not. | Resolve the demographic conflict before attaching the result. |
+| `match_demo` | The demographics match a patient, but not one unambiguous order. | Select the correct candidate order or patient. |
+| `no_match` | No patient or order could be matched confidently. | Select a known patient/order, reject the result, or escalate it. |
+
+### Candidate reason codes
+
+Each candidate may include one or more machine-readable reasons:
+
+| Category | Reason codes |
+| --- | --- |
+| Identity | `sample_id_match`, `demographic_match`, `demographic_mismatch`, `same_user` |
+| Lab | `possible_wrong_lab`, `same_lab` |
+| Order state | `matched_completed_order`, `matched_cancelled_order`, `invalid_collection_state` |
+| Test contents | `marker_overlap_exact`, `marker_overlap_partial`, `marker_overlap_none` |
+
+## Error handling
+
+| HTTP status | Meaning |
+| --- | --- |
+| `400` | The unmatched-results review queue is not enabled for the authenticated team. |
+| `404` | The item, user, or order was not found for the authenticated team, or the item is no longer customer-reviewable. |
+| `422` | The request is invalid, inconsistent with the selected user/order, or cannot be completed for the case. |
+
+Because another reviewer may act on an item first, re-fetch the item after a
+failed action before prompting the user to retry. Never attempt to work around a
+`404` by using an ID from another team.
+
+## Integration checklist
+
+- Enable the unmatched-results review queue for the correct environment and team.
+- Subscribe the existing webhook destination to `labtest.match_review.created`.
+- Verify webhook signatures and handle repeated deliveries safely.
+- Fetch the full item from the API after receiving a webhook.
+- Use `allowed_actions` to control available review actions.
+- Require an explicit patient/order selection for ambiguous cases.
+- Store the order and `order_transaction.id` returned by `accept`.
+- Group related orders by transaction ID while retaining each individual order ID.
+- Reconcile outstanding items periodically with the list endpoint.
