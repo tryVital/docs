@@ -1,11 +1,3 @@
----
-title: "Unmatched Results"
----
-
-import FeatureBeta from '/snippets/feature-beta.mdx';
-
-<FeatureBeta />
-
 # Unmatched Lab Results Integration Guide
 
 The Unmatched Results API lets you review a lab result that could not be safely
@@ -19,6 +11,26 @@ This guide covers:
 - accepting, rejecting, or escalating a result; and
 - understanding the available match cases.
 
+## Access and authentication
+
+The unmatched-results review queue must be enabled for your team. Contact your
+account team if the endpoints or webhook event are not available.
+
+All API calls use your normal team API key:
+
+```http
+x-vital-api-key: <YOUR_API_KEY>
+```
+
+The production base URL is `https://api.tryvital.io`. The base path for these
+endpoints is:
+
+```text
+/v3/unmatched_result
+```
+
+API keys are environment-specific. Do not use a sandbox key in production or
+expose an API key in client-side code.
 
 ## Recommended integration flow
 
@@ -28,7 +40,8 @@ This guide covers:
 4. Present the result, patient context, and candidate orders to a reviewer.
 5. Display only the actions listed in `allowed_actions`.
 6. Call the accept or resolve endpoint with the reviewer's decision.
-7. Use the returned resource as the source of truth for the final state.
+7. Use the returned resource as the source of truth for the final state and
+   store its `order_transaction.id` to track related orders.
 
 You can also poll the list endpoint to reconcile missed or delayed webhook
 deliveries.
@@ -185,11 +198,11 @@ Important fields:
 | `id` | Raw result ID used by the API and webhook. |
 | `status` | Current review state. |
 | `decision_code` | The primary reason the result entered this flow. |
-| `sub_reason_codes` | Additional concerns, such as a lab-account mismatch. |
 | `reason` | Human-readable summary for the reviewer. |
 | `result_status` | Whether the incoming lab result is `partial` or `final`. |
 | `allowed_actions` | Actions currently accepted by the API. Always use this field to enable UI controls. |
 | `candidate_groups` | Candidate orders grouped by Vital `user_id`. |
+| `candidate_groups[].candidates[].order_transaction_id` | Groups a candidate with its related original, replacement, or recreated orders. |
 
 Candidate confidence and reason codes are review aids; they do not replace human
 confirmation. A `provenance_order` is the order associated with the incoming
@@ -234,6 +247,56 @@ The response is the standard lab order object. Depending on the decision case,
 acceptance may use the selected order or create/recreate an appropriate order.
 Always persist the order ID returned by this endpoint instead of assuming it is
 the same as a candidate order ID.
+
+### Track related orders with an order transaction
+
+An order transaction groups orders that belong to the same order lifecycle. For
+example, an original order and an order created to replace it can have different
+order IDs while sharing one order transaction ID.
+
+The candidate records expose `order_transaction_id` when one is available. The
+order returned by `accept` includes the authoritative `order_transaction`. An
+abridged response looks like:
+
+```json
+{
+  "id": "55555555-5555-5555-5555-555555555555",
+  "order_transaction": {
+    "id": "33333333-3333-3333-3333-333333333333",
+    "status": "active",
+    "orders": [
+      {
+        "id": "22222222-2222-2222-2222-222222222222",
+        "low_level_status": "cancelled",
+        "origin": "initial",
+        "parent_id": null
+      },
+      {
+        "id": "55555555-5555-5555-5555-555555555555",
+        "low_level_status": "completed",
+        "origin": "recreation",
+        "parent_id": "22222222-2222-2222-2222-222222222222"
+      }
+    ]
+  }
+}
+```
+
+Use `order_transaction.id` as the grouping key in your system and keep each
+individual order ID as a member of that group. Use `parent_id` to identify the
+direct predecessor and `low_level_status` to determine what happened to each
+order. Do not overwrite the original order ID with the replacement order ID or
+assume that a candidate order remains the active order after acceptance.
+
+You can retrieve all orders in the group with:
+
+```http
+GET /v3/orders?order_transaction_id={order_transaction_id}
+```
+
+Always take the transaction from the order returned by `accept`. If acceptance
+creates an order for a different patient, its transaction may differ from the
+candidate transaction shown before review.
 
 ### Reject or escalate a result
 
@@ -281,7 +344,6 @@ is `resolved` and `allowed_actions` is empty.
 | `pending_customer_review` | The result is waiting for your decision. |
 | `pending_ops_review` | You selected `unsure` and Vital operations is reviewing the result. |
 | `resolved` | A reviewer rejected the result or otherwise completed the review. |
-| `matched` | The result has been matched. This state is not available as a list filter. |
 
 ## Available decision cases
 
@@ -290,7 +352,6 @@ The `decision_code` describes why automatic matching stopped. Use the API's
 
 | Decision code | Meaning | What to verify |
 | --- | --- | --- |
-| `match_sample_id` | The sample identifier matched an existing order. This normally matches automatically, but an additional concern can require review. | Confirm the sample, patient, and any `sub_reason_codes`. |
 | `match_completed` | The sample matched an order that is already completed. | Confirm whether the new result belongs to the same patient and test. |
 | `match_cancelled` | The sample matched an order that is cancelled. | Confirm whether the result is valid and should be released through a replacement order. |
 | `wrong_collection` | The linked order is not in a valid collection or result-ready state. | Confirm that the collection occurred and that the candidate order is correct. |
@@ -300,13 +361,6 @@ The `decision_code` describes why automatic matching stopped. Use the API's
 | `match_demo` | The demographics match a patient, but not one unambiguous order. | Select the correct candidate order or patient. |
 | `no_match` | No patient or order could be matched confidently. | Select a known patient/order, reject the result, or escalate it. |
 
-### Lab-account mismatch
-
-`lab_account_mismatch` is a `sub_reason_code`, not a separate decision case. It
-means the provider account identifier in the incoming result does not match the
-lab account associated with the candidate order. Treat it as an additional
-identity and routing check before accepting the result.
-
 ### Candidate reason codes
 
 Each candidate may include one or more machine-readable reasons:
@@ -314,7 +368,7 @@ Each candidate may include one or more machine-readable reasons:
 | Category | Reason codes |
 | --- | --- |
 | Identity | `sample_id_match`, `demographic_match`, `demographic_mismatch`, `same_user` |
-| Account and lab | `lab_account_mismatch`, `possible_wrong_lab`, `same_lab` |
+| Lab | `possible_wrong_lab`, `same_lab` |
 | Order state | `matched_completed_order`, `matched_cancelled_order`, `invalid_collection_state` |
 | Test contents | `marker_overlap_exact`, `marker_overlap_partial`, `marker_overlap_none` |
 
@@ -338,5 +392,6 @@ failed action before prompting the user to retry. Never attempt to work around a
 - Fetch the full item from the API after receiving a webhook.
 - Use `allowed_actions` to control available review actions.
 - Require an explicit patient/order selection for ambiguous cases.
-- Store the order returned by `accept`.
+- Store the order and `order_transaction.id` returned by `accept`.
+- Group related orders by transaction ID while retaining each individual order ID.
 - Reconcile outstanding items periodically with the list endpoint.

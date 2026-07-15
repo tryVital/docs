@@ -3,6 +3,29 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Unmatched Results API (July 2026)
+
+We introduced the Unmatched Results API for reviewing lab results that could not be safely attached to an order automatically.
+
+<Accordion title="Details" defaultOpen icon="link" iconType="duotone">
+  ## New Endpoints
+
+  - [**GET /v3/unmatched_result**](/api-reference/lab-testing/unmatched-results/list-unmatched-results) – List lab results that require match review.
+  - [**GET /v3/unmatched_result/&#123;raw_result_id&#125;**](/api-reference/lab-testing/unmatched-results/get-unmatched-result) – Retrieve an unmatched result and its candidate orders.
+  - [**POST /v3/unmatched_result/&#123;raw_result_id&#125;/accept**](/api-reference/lab-testing/unmatched-results/accept-unmatched-result) – Accept a proposed match.
+  - [**POST /v3/unmatched_result/&#123;raw_result_id&#125;/resolve**](/api-reference/lab-testing/unmatched-results/resolve-unmatched-result) – Reject a result or escalate it to Junction's operations team.
+
+  ## New Webhook Event
+
+  The `labtest.match_review.created` event notifies your webhook when an unmatched result becomes available for customer review.
+
+  <Info>
+    This feature is currently in closed beta. Contact your Customer Success Manager to enable it.
+  </Info>
+
+  See the [Unmatched Results integration guide](/lab/workflow/unmatched-results) for the complete review workflow.
+</Accordion>
+
 ### Lab account delegation status enforced (May 2026)
 
 We will soon be enforcing that at least one physician is supplied on order creation for Labcorp, Quest, and Sonora Quest labs _if your order is configured to use a delegated lab account_. Up until now, even if the order should be delegated, we would allow a fallback to using Junction physicians if a physician wasn't provided in the order. Going forward, non-delegated orders will use Junction physicians, but delegated orders must supply a physician.
