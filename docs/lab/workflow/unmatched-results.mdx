@@ -11,27 +11,6 @@ This guide covers:
 - accepting, rejecting, or escalating a result; and
 - understanding the available match cases.
 
-## Access and authentication
-
-The unmatched-results review queue must be enabled for your team. Contact your
-account team if the endpoints or webhook event are not available.
-
-All API calls use your normal team API key:
-
-```http
-x-vital-api-key: <YOUR_API_KEY>
-```
-
-The production base URL is `https://api.tryvital.io`. The base path for these
-endpoints is:
-
-```text
-/v3/unmatched_result
-```
-
-API keys are environment-specific. Do not use a sandbox key in production or
-expose an API key in client-side code.
-
 ## Recommended integration flow
 
 1. Subscribe your webhook endpoint to `labtest.match_review.created`.
