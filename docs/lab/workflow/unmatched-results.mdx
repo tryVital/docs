@@ -5,9 +5,7 @@ description: "Review lab results that could not be automatically matched to an o
 
 # Unmatched Lab Results Integration Guide
 
-The Unmatched Results API lets you review a lab result that could not be safely
-attached to an order automatically. You can accept a proposed match, reject the
-result, or ask the Vital operations team to review it.
+The Unmatched Results API lets you review a lab result that could not be safely attached to an order automatically. You can accept a proposed match, reject the result, or ask the Junction operations team to review it.
 
 This guide covers:
 
@@ -24,11 +22,9 @@ This guide covers:
 4. Present the result, patient context, and candidate orders to a reviewer.
 5. Display only the actions listed in `allowed_actions`.
 6. Call the accept or resolve endpoint with the reviewer's decision.
-7. Use the returned resource as the source of truth for the final state and
-   store its `order_transaction.id` to track related orders.
+7. Use the returned resource as the source of truth for the final state and store its `order_transaction.id` to track related orders.
 
-You can also poll the list endpoint to reconcile missed or delayed webhook
-deliveries.
+You can also poll the list endpoint to reconcile missed or delayed webhook deliveries.
 
 ## Webhook
 
@@ -38,12 +34,9 @@ deliveries.
 labtest.match_review.created
 ```
 
-The event is sent when an unmatched result first becomes available for customer
-review. An item that is only awaiting internal operations review does not emit
-this event.
+The event is sent when an unmatched result first becomes available for customer review. An item that is only awaiting internal operations review does not emit this event.
 
-The webhook is a notification, not the complete review record. Fetch `data.id`
-from the API before displaying or resolving the item.
+The webhook is a notification, not the complete review record. Fetch `data.id` from the API before displaying or resolving the item.
 
 Example payload:
 
@@ -62,10 +55,7 @@ Example payload:
 }
 ```
 
-Configure this event on your existing webhook destination; it does not require
-a separate callback URL. Verify each delivery using the signing secret for that
-destination, return a successful response promptly, and process repeated
-deliveries idempotently.
+Configure this event on your existing webhook destination; it does not require a separate callback URL. Verify each delivery using the signing secret for that destination, return a successful response promptly, and process repeated deliveries idempotently.
 
 ## API endpoints
 
@@ -95,8 +85,7 @@ Query parameters:
 | `created_at_start` | date | Result receipt date on or after this UTC date, formatted `YYYY-MM-DD`. |
 | `created_at_end` | date | Result receipt date on or before this UTC date, formatted `YYYY-MM-DD`. |
 
-Without a `status` filter, the endpoint returns actionable customer items and
-items that you escalated with `unsure`. Resolved items are excluded by default.
+Without a `status` filter, the endpoint returns actionable customer items and items that you escalated with `unsure`. Resolved items are excluded by default.
 
 Response:
 
@@ -157,8 +146,7 @@ Response:
 }
 ```
 
-Pass `next_cursor` unchanged into the next request. Do not parse or construct
-cursor values in your application.
+Pass `next_cursor` unchanged into the next request. Do not parse or construct cursor values in your application.
 
 ### Get one unmatched result
 
@@ -172,8 +160,7 @@ curl --request GET \
   --header "x-vital-api-key: $VITAL_API_KEY"
 ```
 
-The response uses the same unmatched-result shape as an item in the list
-response.
+The response uses the same unmatched-result shape as an item in the list response.
 
 Important fields:
 
@@ -185,13 +172,10 @@ Important fields:
 | `reason` | Human-readable summary for the reviewer. |
 | `result_status` | Whether the incoming lab result is `partial` or `final`. |
 | `allowed_actions` | Actions currently accepted by the API. Always use this field to enable UI controls. |
-| `candidate_groups` | Candidate orders grouped by Vital `user_id`. |
+| `candidate_groups` | Candidate orders grouped by Junction `user_id`. |
 | `candidate_groups[].candidates[].order_transaction_id` | Groups a candidate with its related original, replacement, or recreated orders. |
 
-Candidate confidence and reason codes are review aids; they do not replace human
-confirmation. A `provenance_order` is the order associated with the incoming
-sample or result history. An `order_option` is another order that may be a valid
-target.
+Candidate confidence and reason codes are review aids; they do not replace human confirmation. A `provenance_order` is the order associated with the incoming sample or result history. An `order_option` is another order that may be a valid target.
 
 ### Accept a match
 
@@ -205,14 +189,11 @@ Request fields:
 
 | Field | Required | Description |
 | --- | --- | --- |
-| `order_id` | No | Existing Vital order that should receive the result. |
-| `user_id` | No | Vital user who should own a replacement order when an existing order is not selected. |
+| `order_id` | No | Existing Junction order that should receive the result. |
+| `user_id` | No | Junction user who should own a replacement order when an existing order is not selected. |
 | `note` | No | Review context for audit and support. |
 
-If both `user_id` and `order_id` are supplied, the order must belong to that
-user. Send an empty object only when accepting the system's unambiguous default
-target. For ambiguous demographic or no-match cases, explicitly select an
-`order_id` or `user_id`.
+If both `user_id` and `order_id` are supplied, the order must belong to that user. Send an empty object only when accepting the system's unambiguous default target. For ambiguous demographic or no-match cases, explicitly select an `order_id` or `user_id`.
 
 Example:
 
@@ -227,20 +208,13 @@ curl --request POST \
   }'
 ```
 
-The response is the standard lab order object. Depending on the decision case,
-acceptance may use the selected order or create/recreate an appropriate order.
-Always persist the order ID returned by this endpoint instead of assuming it is
-the same as a candidate order ID.
+The response is the standard lab order object. Depending on the decision case, acceptance may use the selected order or create/recreate an appropriate order. Always persist the order ID returned by this endpoint instead of assuming it is the same as a candidate order ID.
 
 ### Track related orders with an order transaction
 
-An order transaction groups orders that belong to the same order lifecycle. For
-example, an original order and an order created to replace it can have different
-order IDs while sharing one order transaction ID.
+An order transaction groups orders that belong to the same order lifecycle. For example, an original order and an order created to replace it can have different order IDs while sharing one order transaction ID.
 
-The candidate records expose `order_transaction_id` when one is available. The
-order returned by `accept` includes the authoritative `order_transaction`. An
-abridged response looks like:
+The candidate records expose `order_transaction_id` when one is available. The order returned by `accept` includes the authoritative `order_transaction`. An abridged response looks like:
 
 ```json
 {
@@ -266,11 +240,7 @@ abridged response looks like:
 }
 ```
 
-Use `order_transaction.id` as the grouping key in your system and keep each
-individual order ID as a member of that group. Use `parent_id` to identify the
-direct predecessor and `low_level_status` to determine what happened to each
-order. Do not overwrite the original order ID with the replacement order ID or
-assume that a candidate order remains the active order after acceptance.
+Use `order_transaction.id` as the grouping key in your system and keep each individual order ID as a member of that group. Use `parent_id` to identify the direct predecessor and `low_level_status` to determine what happened to each order. Do not overwrite the original order ID with the replacement order ID or assume that a candidate order remains the active order after acceptance.
 
 You can retrieve all orders in the group with:
 
@@ -278,9 +248,7 @@ You can retrieve all orders in the group with:
 GET /v3/orders?order_transaction_id={order_transaction_id}
 ```
 
-Always take the transaction from the order returned by `accept`. If acceptance
-creates an order for a different patient, its transaction may differ from the
-candidate transaction shown before review.
+Always take the transaction from the order returned by `accept`. If acceptance creates an order for a different patient, its transaction may differ from the candidate transaction shown before review.
 
 ### Reject or escalate a result
 
@@ -302,7 +270,7 @@ Available actions:
 | Action | Outcome |
 | --- | --- |
 | `reject` | Marks the review item as resolved without attaching the result to an order. |
-| `unsure` | Sends the item to the Vital operations team for review. |
+| `unsure` | Sends the item to the Junction operations team for review. |
 
 Example escalation:
 
@@ -317,22 +285,19 @@ curl --request POST \
   }'
 ```
 
-The response is the updated unmatched result. After `unsure`, its status is
-`pending_ops_review` and `allowed_actions` is empty. After `reject`, its status
-is `resolved` and `allowed_actions` is empty.
+The response is the updated unmatched result. After `unsure`, its status is `pending_ops_review` and `allowed_actions` is empty. After `reject`, its status is `resolved` and `allowed_actions` is empty.
 
 ## Review statuses
 
 | Status | Meaning |
 | --- | --- |
 | `pending_customer_review` | The result is waiting for your decision. |
-| `pending_ops_review` | You selected `unsure` and Vital operations is reviewing the result. |
+| `pending_ops_review` | You selected `unsure` and Junction operations is reviewing the result. |
 | `resolved` | A reviewer rejected the result or otherwise completed the review. |
 
 ## Available decision cases
 
-The `decision_code` describes why automatic matching stopped. Use the API's
-`reason`, candidates, and `allowed_actions` together when presenting a case.
+The `decision_code` describes why automatic matching stopped. Use the API's `reason`, candidates, and `allowed_actions` together when presenting a case.
 
 | Decision code | Meaning | What to verify |
 | --- | --- | --- |
@@ -364,9 +329,7 @@ Each candidate may include one or more machine-readable reasons:
 | `404` | The item, user, or order was not found for the authenticated team, or the item is no longer customer-reviewable. |
 | `422` | The request is invalid, inconsistent with the selected user/order, or cannot be completed for the case. |
 
-Because another reviewer may act on an item first, re-fetch the item after a
-failed action before prompting the user to retry. Never attempt to work around a
-`404` by using an ID from another team.
+Because another reviewer may act on an item first, re-fetch the item after a failed action before prompting the user to retry. Never attempt to work around a `404` by using an ID from another team.
 
 ## Integration checklist
 
