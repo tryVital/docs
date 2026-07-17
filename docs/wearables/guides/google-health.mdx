@@ -1,0 +1,248 @@
+---
+title: "Google Health API"
+description: "Configure and verify a Bring Your Own OAuth Google Health integration through Junction."
+---
+
+import BYOO from '/snippets/byoo.mdx';
+
+<Warning>
+Google Health API is available through [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) only. You must provide your own Google OAuth application until Junction's default application is approved, and Google must verify it before public production use.
+</Warning>
+
+<BYOO />
+
+Google Health API is the successor to the Fitbit Web API. It returns health and fitness data from Fitbit devices, Pixel Watches, and other sources synchronized to Google Health. It is separate from Google Fit and Android Health Connect.
+
+This guide covers the `google_health` provider. Complete the setup separately for each Junction environment and region that you use.
+
+## Before you begin
+
+You need:
+
+- A Google Cloud project administered by your organization
+- A Google account that is a Project Owner for that project
+- DNS access for a domain that your organization owns
+- Public application homepage, privacy policy, and terms of service pages
+- A customer-hosted HTTPS OAuth callback endpoint
+
+Google's [OAuth policies](https://developers.google.com/identity/protocols/oauth2/policies#use-separate-projects-for-testing-and-production) require separate projects for testing and production. Unverified applications are limited to 100 users. While a project remains in **Testing**, only accounts listed under **Google Auth Platform > Audience > Test users** can authorize, and their refresh tokens expire after seven days. See [Set up Google Cloud and OAuth](https://developers.google.com/health/setup).
+
+## Prepare the Junction environment
+
+Open **Config > Custom Credentials** in the Junction Dashboard, select **Google Health**, and copy the preparation values displayed before the credential form.
+
+Alternatively, call [Prepare team custom credentials](/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials) with:
+
+```json
+{
+  "team_id": "<team-id>",
+  "provider": "google_health"
+}
+```
+
+Record both returned values:
+
+- **Redirect URI:** the Junction callback for the selected environment and region
+- **IAM principal:** the Junction service account that must impersonate your service account
+
+<Info>
+For production, the returned Junction redirect URI is the target of your callback forwarder. It is not the redirect URI registered with Google, because your organization cannot verify ownership of a Junction domain.
+</Info>
+
+## Configure Google Cloud and OAuth
+
+<Steps>
+
+<Step title="Create the Google Cloud project">
+
+Create or select the project, enable **Google Health API**, and record its project ID and numeric project number. Junction requires the **project number**, not the project ID.
+
+</Step>
+
+<Step title="Configure branding and policies">
+
+In **Google Auth Platform > Branding**, configure your application name, logo, support email, developer contacts, homepage, privacy policy, and terms of service.
+
+The public pages and an in-product disclosure shown immediately before consent must accurately explain how your application accesses, uses, stores, deletes, and shares Google Health data. Describe Junction as a service that receives and processes the data on your behalf. Your homepage or privacy policy must affirm that your use of Google Health information complies with the [Google Health API data policy](https://developers.google.com/health/policies/health-api-developer-user-data-policy), including its Limited Use requirements.
+
+</Step>
+
+<Step title="Verify your domain">
+
+Using the Google Cloud Project Owner account, add the registrable root domain as a **Domain** property in [Google Search Console](https://search.google.com/search-console/), publish Google's DNS TXT record, and verify ownership. Keep the TXT record in DNS, then add the root domain under **Google Auth Platform > Branding > Authorized domains**.
+
+Every domain used by your homepage, policy pages, JavaScript origins, or redirect URIs must be authorized and verifiable by your organization. Keep the list minimal: Google permits no more than ten authorized domains in a verification request.
+
+</Step>
+
+<Step title="Host the OAuth callback">
+
+Host an HTTPS callback on your verified domain, for example:
+
+```text
+https://auth.example.com/oauth/callback/google_health
+```
+
+The endpoint must accept Google's `GET` request, preserve the complete query string without parsing or re-encoding it, and return `307 Temporary Redirect` to the Junction redirect URI returned by the preparation step.
+
+```text
+GET /oauth/callback/google_health?code=abc123&state=xyz
+
+HTTP/1.1 307 Temporary Redirect
+Location: https://api.us.junction.com/v2/link/connect/google_health?code=abc123&state=xyz
+```
+
+Use the Junction target for the same environment and region. See [Hosting OAuth Callbacks on Your Own Domain](/wearables/connecting-providers/bring-your-own-oauth/callback-endpoints) for all targets and implementation requirements.
+
+</Step>
+
+<Step title="Create the OAuth client">
+
+Create a **Web application** OAuth client. Google may call this option **Web Server**, including for native products that use Junction on their backend.
+
+Register your customer-hosted callback as the authorized redirect URI. Do not use Google's `https://www.google.com` quick-start placeholder or the Junction callback directly. Save the OAuth client ID and client secret securely.
+
+</Step>
+
+<Step title="Add the scopes">
+
+In **Google Auth Platform > Data Access**, add every scope requested by your Junction flow. Without custom team scope requirements, Junction requests all of these supported read-only scopes:
+
+| Junction data | Google OAuth scope |
+| --- | --- |
+| Identity | `openid`, `email` |
+| Activity, workouts, steps, distance, and VO2 max | `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly` |
+| Sleep | `https://www.googleapis.com/auth/googlehealth.sleep.readonly` |
+| Heart rate, body measurements, glucose, oxygen, and temperature | `https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly` |
+| Meals, water, caffeine, and carbohydrates | `https://www.googleapis.com/auth/googlehealth.nutrition.readonly` |
+| Electrocardiogram | `https://www.googleapis.com/auth/googlehealth.ecg.readonly` |
+| Irregular rhythm notifications | `https://www.googleapis.com/auth/googlehealth.irn.readonly` |
+| Workout location | `https://www.googleapis.com/auth/googlehealth.location.readonly` |
+| Profile | `https://www.googleapis.com/auth/googlehealth.profile.readonly` |
+| Paired devices and settings | `https://www.googleapis.com/auth/googlehealth.settings.readonly` |
+
+Do not add write scopes. If your product does not use every resource, configure [team scope requirements](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements) before testing so the consent flow requests only the scopes you can justify. Google requires a justification and an in-product demonstration for every restricted scope requested. See the [Google Health scope reference](https://developers.google.com/health/scopes).
+
+</Step>
+
+</Steps>
+
+## Configure the service account and IAM
+
+Create a service account in the Google Health project. Junction uses it only to manage the Google Health subscriber and user subscriptions; end-user health data still requires user OAuth consent.
+
+Grant the service account **Google Health API Editor** (`roles/health.editor`) on the project. Then grant the Junction IAM principal returned by the preparation step **Service Account Token Creator** (`roles/iam.serviceAccountTokenCreator`) on that service account.
+
+You can configure both grants in Google Cloud Console or with `gcloud`:
+
+```bash
+gcloud projects add-iam-policy-binding PROJECT_ID \
+  --member="serviceAccount:SERVICE_ACCOUNT_EMAIL" \
+  --role="roles/health.editor"
+
+gcloud iam service-accounts add-iam-policy-binding SERVICE_ACCOUNT_EMAIL \
+  --project=PROJECT_ID \
+  --member="serviceAccount:JUNCTION_IAM_PRINCIPAL" \
+  --role="roles/iam.serviceAccountTokenCreator"
+```
+
+Replace the uppercase placeholders with your project ID, service account email, and the exact environment-specific Junction principal. Do not create or upload a service-account JSON key.
+
+## Add the credentials to Junction
+
+In **Config > Custom Credentials > Google Health**, enter:
+
+- OAuth Client ID
+- OAuth Client Secret
+- Redirect URL Override: your customer-hosted callback URL
+- Project Number: the numeric Google Cloud project number
+- Service Account Email
+
+Although **Redirect URL Override** is labeled optional in the shared form, it is required for a production Google Health application.
+
+To configure the credentials through the Org Management API, call [Set team custom credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials):
+
+```json
+{
+  "team_id": "<team-id>",
+  "provider": "google_health",
+  "client_id": "<oauth-client-id>",
+  "client_secret": "<oauth-client-secret>",
+  "redirect_url_override": "https://auth.example.com/oauth/callback/google_health",
+  "details": {
+    "project_number": "123456789012",
+    "service_account_email": "google-health@project.iam.gserviceaccount.com"
+  }
+}
+```
+
+Saving valid credentials activates the provider immediately. Junction creates and manages the Google Health subscriber, subscription IDs, webhook endpoint, and verification secret. Do not configure separate Google Health webhook infrastructure.
+
+## Test authorization and data access
+
+<Steps>
+
+<Step title="Prepare a test user">
+
+Add the Google account under **Google Auth Platform > Audience > Test users**. Ensure the account has representative Fitbit or Pixel Watch data and has recently synchronized with Google Health.
+
+</Step>
+
+<Step title="Complete authorization">
+
+Use [Junction Link](/wearables/connecting-providers/launching_link) to connect `google_health`. Confirm that the callback returns to Junction, the consent screen contains the expected scopes, and the [connection-created event](/event-catalog/provider.connection.created) is delivered.
+
+</Step>
+
+<Step title="Verify ingestion">
+
+Confirm the connection through [Get user's connected providers](/api-reference/user/get-users-connected-providers), inspect available resources through [user resources](/api-reference/data/introspection/user-resources), and monitor [historical pulls](/api-reference/data/introspection/historical-pulls). Google Health backfills up to 90 days of available data.
+
+</Step>
+
+<Step title="Read and update data">
+
+Read at least one populated resource through the Data Access API, such as [Activity Summary](/api-reference/data/activity/get-summary) or [Steps](/api-reference/data/timeseries/steps). Then synchronize new source data and confirm that Junction delivers the corresponding update webhook.
+
+</Step>
+
+</Steps>
+
+Common failures are:
+
+| Symptom | Check |
+| --- | --- |
+| `redirect_uri_mismatch` | Google, Junction's Redirect URL Override, and the authorization request must use the exact same customer callback URL. |
+| User cannot authorize | Add the account as a test user and confirm the application's publishing status. |
+| Credentials fail to save | Check the project number, service account email, and both IAM grants. |
+| A resource is absent | Confirm that its scope was granted, source data exists, and the historical pull has completed. |
+
+## Record the verification video
+
+Use the same production OAuth client, branding, callback, and application that you will submit. Record the complete customer-facing flow in English:
+
+1. Show the public homepage, privacy information, and in-product disclosure.
+2. Start the Google Health connection from your application and complete Junction Link.
+3. Show the browser address bar containing the submitted OAuth client ID.
+4. Show the complete consent screen and every requested scope.
+5. Return to your application and demonstrate the user-facing feature enabled by each scope.
+
+A successful callback or API response alone does not demonstrate how your product uses the data. Do not expose client secrets, API keys, access tokens, or personal data that should not appear in the recording.
+
+Upload the video to YouTube with **Unlisted** visibility. See [Google's verification requirements](https://support.google.com/cloud/answer/13464321) for the current recording requirements.
+
+## Submit the production application
+
+Before submitting, confirm that your production application:
+
+- Uses only the scopes its user-facing features require
+- Has verified domains and consistent branding, homepage, privacy policy, and terms URLs
+- Provides an accurate in-product disclosure and data deletion path
+- Has working reviewer credentials or test instructions
+- Uses the production customer-owned callback and Junction credentials
+
+In the Google Cloud OAuth Verification Center, declare every scope, provide a scope-by-scope justification, add relevant product documentation, include reviewer instructions, and attach the unlisted demonstration video.
+
+Google Health scopes are restricted. Because Junction receives and processes this data through its servers, your application must complete an annual third-party security assessment under CASA in addition to OAuth verification. Google Trust and Safety will provide the assessment instructions. Review [Google Health app verification](https://developers.google.com/health/app-verification) and [restricted-scope verification](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification) before submitting.
+
+Follow the current Verification Center prompts for publishing status. Before public launch, the final application must be verified and **In Production**.
