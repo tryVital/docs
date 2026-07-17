@@ -6,7 +6,7 @@ description: "Configure and verify a Bring Your Own OAuth Google Health integrat
 import BYOO from '/snippets/byoo.mdx';
 
 <Warning>
-Google Health API is available through [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) only. You must provide your own Google OAuth application until Junction's default application is approved, and Google must verify it before public production use.
+Google Health API is temporarily available through [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) only while Junction's default OAuth application awaits Google approval. Until then, use your own Google OAuth application. Google must verify your application before public production use.
 </Warning>
 
 <BYOO />
@@ -121,7 +121,7 @@ In **Google Auth Platform > Data Access**, add every scope requested by your Jun
 | Profile | `https://www.googleapis.com/auth/googlehealth.profile.readonly` |
 | Paired devices and settings | `https://www.googleapis.com/auth/googlehealth.settings.readonly` |
 
-Do not add write scopes. If your product does not use every resource, configure [team scope requirements](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements) before testing so the consent flow requests only the scopes you can justify. Google requires a justification and an in-product demonstration for every restricted scope requested. See the [Google Health scope reference](https://developers.google.com/health/scopes).
+Junction currently requests and uses only the read-only scopes listed above, so do not request Google Health write scopes. If your product does not use every resource, configure [team scope requirements](/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements) before testing so the consent flow requests only the scopes you can justify. Google requires a justification and an in-product demonstration for every restricted scope requested. See the [Google Health scope reference](https://developers.google.com/health/scopes).
 
 </Step>
 
@@ -158,7 +158,7 @@ In **Config > Custom Credentials > Google Health**, enter:
 - Project Number: the numeric Google Cloud project number
 - Service Account Email
 
-Although **Redirect URL Override** is labeled optional in the shared form, it is required for a production Google Health application.
+The credential form is shared with providers that can use a Junction-owned redirect URI, so **Redirect URL Override** is optional for those providers. Google requires production redirect URI domains to be owned and verified by the OAuth application developer, so set this field to your customer-hosted callback URL for Google Health.
 
 To configure the credentials through the Org Management API, call [Set team custom credentials](/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials):
 
@@ -219,17 +219,17 @@ Common failures are:
 
 ## Record the verification video
 
-Use the same production OAuth client, branding, callback, and application that you will submit. Record the complete customer-facing flow in English:
+Use the OAuth client intended for production, along with the branding, callback, and application that you will submit. The client can remain in **Testing** while you record with an allowlisted test user. Record the complete customer-facing flow:
 
-1. Show the public homepage, privacy information, and in-product disclosure.
-2. Start the Google Health connection from your application and complete Junction Link.
-3. Show the browser address bar containing the submitted OAuth client ID.
-4. Show the complete consent screen and every requested scope.
-5. Return to your application and demonstrate the user-facing feature enabled by each scope.
+1. Start the Google Health connection from your application and complete the end-to-end OAuth grant flow, including Junction Link.
+2. Show the same application name and branding as your submission.
+3. Set the consent screen language to English, then show the complete screen with every requested scope and the browser address bar containing the submitted OAuth client ID.
+4. Return to your application and demonstrate the user-facing functionality enabled by each requested scope.
+5. If your application uses multiple OAuth clients, show how it accesses data through each client.
 
-A successful callback or API response alone does not demonstrate how your product uses the data. Do not expose client secrets, API keys, access tokens, or personal data that should not appear in the recording.
+A successful callback or API response alone does not demonstrate how your product uses the data. Use a test account and safe sample data. Do not expose client secrets, API keys, access tokens, or unrelated personal data.
 
-Upload the video to YouTube with **Unlisted** visibility. See [Google's verification requirements](https://support.google.com/cloud/answer/13464321) for the current recording requirements.
+Upload the recording to YouTube Studio with **Unlisted** visibility, then provide the link in Google's verification form. See [Google's restricted-scope verification requirements](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification) for the current recording requirements.
 
 ## Submit the production application
 
@@ -241,7 +241,7 @@ Before submitting, confirm that your production application:
 - Has working reviewer credentials or test instructions
 - Uses the production customer-owned callback and Junction credentials
 
-In the Google Cloud OAuth Verification Center, declare every scope, provide a scope-by-scope justification, add relevant product documentation, include reviewer instructions, and attach the unlisted demonstration video.
+In the Google Cloud OAuth Verification Center, declare every scope, provide a scope-by-scope justification, add relevant product documentation, include reviewer instructions, and provide the unlisted YouTube demonstration-video link.
 
 Google Health scopes are restricted. Because Junction receives and processes this data through its servers, your application must complete an annual third-party security assessment under CASA in addition to OAuth verification. Google Trust and Safety will provide the assessment instructions. Review [Google Health app verification](https://developers.google.com/health/app-verification) and [restricted-scope verification](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification) before submitting.
 
