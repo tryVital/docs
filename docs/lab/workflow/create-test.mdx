@@ -11,8 +11,7 @@ Junction provides a way to create your own lab tests. A lab test is a collection
 Once a Lab Test is created and approved, you can use it when making an order.
 
 <Warning>
-  When you create a Lab Test, it is not immediately available. We need to
-  validate and approve it on our side, before you can use it when making orders.
+  When you create a Lab Test, it is not immediately available. We need to validate and approve it on our side, before you can use it when making orders.
 </Warning>
 
 ### Example
@@ -73,7 +72,7 @@ data = client.lab_tests.create(
 ```
 
 <Note>
-It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared across environments. Not all labs provide these, so in their absence, use the marker id.
+  It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared across environments. Not all labs provide these, so in their absence, use the marker id.
 </Note>
 
 Once your lab test creation is successful you will receive the following response:
@@ -111,4 +110,4 @@ Once your lab test creation is successful you will receive the following respons
 }
 ```
 
-Note that `status` is set to `pending_approval`. You can verify when it changes to `active` by calling the [lab tests endpoint](/api-reference/lab-testing/tests). The `is_active` field is deprecated; use `status` instead.
+Note that `status` is set to `pending_approval`. You can verify when it changes to `active` by calling the [lab tests endpoint](/api-reference/lab-testing/tests-paginated). The `is_active` field is deprecated; use `status` instead.
