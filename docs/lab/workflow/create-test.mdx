@@ -87,6 +87,7 @@ Once your lab test creation is successful you will receive the following respons
     "method": "at_home_phlebotomy",
     "price": 10,
     "is_active": false,
+    "status": "pending_approval",
     "lab": {
       "slug": "labcorp",
       "name": "LabCorp",
@@ -110,4 +111,4 @@ Once your lab test creation is successful you will receive the following respons
 }
 ```
 
-Note that `is_active` is set to `false`. You can verify its status by calling the [lab tests endpoint](/api-reference/lab-testing/tests).
+Note that `status` is set to `pending_approval`. You can verify when it changes to `active` by calling the [lab tests endpoint](/api-reference/lab-testing/tests). The `is_active` field is deprecated; use `status` instead.
