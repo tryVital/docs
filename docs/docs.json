@@ -344,6 +344,7 @@
               {
                 "group": "Results",
                 "pages": [
+                  "event-catalog/labtest.match_review.created",
                   "event-catalog/labtest.result.critical"
                 ]
               },
