@@ -303,7 +303,10 @@
                   "api-reference/lab-testing/unmatched-results/list-unmatched-results",
                   "api-reference/lab-testing/unmatched-results/get-unmatched-result",
                   "api-reference/lab-testing/unmatched-results/accept-unmatched-result",
-                  "api-reference/lab-testing/unmatched-results/resolve-unmatched-result"
+                  "api-reference/lab-testing/unmatched-results/resolve-unmatched-result",
+                  "api-reference/lab-testing/unmatched-results/list-unmatched-result-test-cases",
+                  "api-reference/lab-testing/unmatched-results/create-unmatched-result-test",
+                  "api-reference/lab-testing/unmatched-results/get-unmatched-result-test"
                 ]
               },
               {
@@ -1492,6 +1495,7 @@
   "api": {
     "openapi": [
       "swagger.json",
+      "unmatched-result-testing-openapi.json",
       "org-management-api.json"
     ],
     "mdx": {
