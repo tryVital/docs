@@ -1,0 +1,14 @@
+---
+title: "Create Unmatched Result Test"
+description: "Create a Sandbox test run that generates an unmatched lab result via the Junction API."
+openapi: "POST /v3/unmatched_result_test"
+version: "beta"
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+<Note>
+This endpoint is available only in Sandbox and requires unmatched-result testing to be enabled for your team. Every request requires an `X-Idempotency-Key` header.
+</Note>
