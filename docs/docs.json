@@ -1495,7 +1495,6 @@
   "api": {
     "openapi": [
       "swagger.json",
-      "unmatched-result-testing-openapi.json",
       "org-management-api.json"
     ],
     "mdx": {
