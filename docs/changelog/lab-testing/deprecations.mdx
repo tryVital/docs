@@ -46,4 +46,6 @@ This field is a signed GCP bucket URL, which is only active for 7 days. It will 
 
 ### `GET /v3/lab_tests` in favor of `GET /v3/lab_test`
 
+<Warning>The deprecation cycle ends on **1 October 2026**. The API endpoint will be removed afterwards.</Warning>
+
 The endpoint `GET /v3/lab_tests` is deprecated in favor of `GET /v3/lab_test`. The new endpoint will return a paginated list of lab tests and supports two new parameters: `lab_test_limit` and `next_cursor`.
