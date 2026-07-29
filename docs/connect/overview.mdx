@@ -25,6 +25,21 @@ Embed a specific Junction Dashboard feature as an iframe into your web applicati
 <Info>You want your web application to own navigation and page structure while the iframe stays focused on one Junction workflow.</Info>
 </Card>
 
+## Target sandbox or production
+
+<Info>
+The [Create Dashboard URL endpoint](/api-reference/org-management/connect/create-dashboard-url) can launch Junction Connect in either your `sandbox` or `production` team environment. Set the request's `environment` field to the environment you want the provider to access.
+</Info>
+
+Users, orders, and other resources remain isolated between sandbox and production. Make sure the feature slug references a resource in the selected environment.
+
+For example, you can create test orders in Junction Dashboard and test the embedded order detail experience throughout the order lifecycle:
+
+1. Create a Dashboard URL with `environment` set to `sandbox` and `feature` set to `order_creation`.
+2. Open the URL and create a test order in Junction Dashboard.
+3. As the order moves through its lifecycle, create a new sandbox Dashboard URL with `feature` set to `order:{id}`.
+4. Load each returned URL in your embed to test the order detail experience at the relevant lifecycle state.
+
 ## Features
 
 Junction Connect supports the following features:
