@@ -33,7 +33,7 @@ The unmatched-result testing API creates realistic review items in Junction Sand
 After a test run succeeds, use its `raw_result_id` with the normal unmatched-results API to test your polling, webhook, review, accept, reject, and escalation flows.
 
 <Note>
-The testing API is available only in Sandbox and returns `404 Not Found` in production. It also requires the unmatched-result testing feature to be enabled for your Sandbox team. Contact your Junction representative to enable it.
+  The testing API is available only in Sandbox and returns `404 Not Found` in production. It also requires the unmatched-result testing feature to be enabled for your Sandbox team. Contact your Junction representative to enable it.
 </Note>
 
 Test fixtures:
@@ -55,8 +55,6 @@ Enabling the testing API in Sandbox does not enable automatic unmatched-result r
 6. Reconcile the API state with the normal match-review webhooks.
 
 The case catalog is the source of truth for each case's required order roles, target statuses, and lab constraints. Do not hard-code these requirements.
-
-The following example uses the United States Sandbox URL. For teams in Europe, use `https://api.sandbox.eu.junction.com`.
 
 This request creates a completed-order match with Junction-managed orders:
 
