@@ -25,13 +25,15 @@ Embed a specific Junction Dashboard feature as an iframe into your web applicati
 <Info>You want your web application to own navigation and page structure while the iframe stays focused on one Junction workflow.</Info>
 </Card>
 
-## Target sandbox or production
+## Environments
+
+Junction Connect supports launching a team into the sandbox environment or the production environment. The sandbox environment is
+isolated from the production environment, and provides you access to [additional testing facilities](/lab/overview/sandbox), such as
+creating test orders as well as order life cycle simulation.
 
 <Info>
-The [Create Dashboard URL endpoint](/api-reference/org-management/connect/create-dashboard-url) can launch Junction Connect in either your `sandbox` or `production` team environment. Set the request's `environment` field to the environment you want the provider to access.
+Specify your target environment through the request `environment` field in the [Create Dashboard URL](/api-reference/org-management/connect/create-dashboard-url) endpoint.
 </Info>
-
-Users, orders, and other resources remain isolated between sandbox and production. Make sure the feature slug references a resource in the selected environment.
 
 For example, you can create test orders in Junction Dashboard and test the embedded order detail experience throughout the order lifecycle:
 
