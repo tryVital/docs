@@ -26,11 +26,11 @@ Junction Management API requests use `https://api.management.junction.com/` and 
 
 <Steps titleSize="h3">
   <Step title="Configure your integration">
-    See [Concepts -> Configuration](/connect/concepts#configuration) to set your slug, modalities, and allowed origins.
+    Use the [Set Junction Connect Configuration endpoint](/api-reference/org-management/connect/set-configuration) to set your slug, modalities, and allowed origins. See [Concepts -> Configuration](/connect/concepts#configuration) for details about each setting.
   </Step>
 
   <Step title="Create or resolve a team">
-    Teams can include an `integration_team_id`, which is your stable team reference.
+    Use the [Create Team endpoint](/api-reference/org-management/team/create-team). Teams can include an `integration_team_id`, which is your stable team reference.
 
     ```bash cURL
     curl --request POST \
@@ -44,7 +44,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
       }'
     ```
 
-    If the team already exists, resolve it by integration reference:
+    If the team already exists, use the [Resolve Team endpoint](/api-reference/org-management/team/resolve-team) to resolve it by integration reference:
 
     ```bash cURL
     curl --request POST \
@@ -58,7 +58,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="Create or resolve an integration-managed member">
-    Create the member that should be signed in through Junction Connect. Include team role bindings for every team the member should access.
+    Use the [Create Integration-Managed Member endpoint](/api-reference/org-management/connect/create-member) to create the member that should be signed in through Junction Connect. Include team role bindings for every team the member should access.
 
     ```bash cURL
     curl --request POST \
@@ -78,7 +78,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
       }'
     ```
 
-    If the member already exists, resolve it by integration reference:
+    If the member already exists, use the [Resolve Integration-Managed Member endpoint](/api-reference/org-management/connect/resolve-member) to resolve it by integration reference:
 
     ```bash cURL
     curl --request POST \
@@ -103,7 +103,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="Create a dashboard URL">
-    Create a post-authorization URL for the member, team, modality, feature, and environment.
+    Use the [Create Dashboard URL endpoint](/api-reference/org-management/connect/create-dashboard-url) to create a post-authorization URL for the member, team, modality, feature, and environment.
 
     ```bash cURL
     curl --request POST \
@@ -121,7 +121,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="Launch the URL">
-    For `feature_embed`, load the returned URL in an iframe:
+    Use the URL returned by the [Create Dashboard URL endpoint](/api-reference/org-management/connect/create-dashboard-url). For `feature_embed`, load it in an iframe:
 
     ```html
     <iframe
