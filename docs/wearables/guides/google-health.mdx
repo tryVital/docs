@@ -1,21 +1,84 @@
 ---
 title: "Google Health API"
-description: "Configure and verify a Bring Your Own OAuth Google Health integration through Junction."
+description: "Connect Fitbit and Pixel Watch data through Junction's Google Health integration."
 ---
 
 import BYOO from '/snippets/byoo.mdx';
 
+<Info>
+Junction's default Google Health OAuth application is conditionally approved and available while Junction completes the required Cloud Application Security Assessment (CASA). Teams using Junction's default application do not need to complete a separate assessment. Customers using their own OAuth application remain responsible for Google's verification and CASA requirements.
+</Info>
+
+Google Health API is the successor to the Fitbit Web API. It returns health and fitness data from Fitbit devices, Pixel Watches, and other sources synchronized to Google Health.
+
+This guide covers the `google_health` provider through Junction's default application or an optional customer-owned application.
+
+## Connect with Junction's default application
+
+Connect users to Google Health through Junction Link in the same way as any other OAuth provider. Junction manages the OAuth application, callback, subscriber, and webhook infrastructure.
+
+You do not need to create a Google Cloud project, configure custom credentials, or complete the setup under [Bring Your Own OAuth](#configure-bring-your-own-oauth). Continue to [Test authorization and data access](#test-authorization-and-data-access) after connecting a user.
+
+## Migrate from Fitbit
+
 <Warning>
-Junction's default Google Health OAuth application is not yet available. To use Google Health at this time, configure your own Google OAuth application through [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview). Google must verify your application before public production use.
+Google will turn down the legacy Fitbit Web API in **September 2026**, after which it will no longer synchronize Fitbit user data. This retirement applies to the legacy API, not Fitbit devices. Migrate existing `fitbit` connections to `google_health` before the shutdown to avoid an interruption. See [Google's retirement notice](https://developers.google.com/health/about) and [migration guide](https://developers.google.com/health/migration).
 </Warning>
+
+Google Health uses Google OAuth 2.0, so every existing Fitbit user must authorize a new `google_health` connection. Fitbit access and refresh tokens cannot be transferred, and [Link Bulk Import](/api-reference/link/bulk-import) cannot convert a Fitbit grant into a Google Health grant.
+
+<Steps>
+
+<Step title="Send new connections to Google Health">
+
+Offer `google_health` instead of `fitbit` to new users immediately.
+
+</Step>
+
+<Step title="Reconnect existing users">
+
+Reconnect the user to `google_health` with the same Junction user ID, using the Google Account linked to their Fitbit data.
+
+</Step>
+
+<Step title="Verify the new connection">
+
+Keep the existing Fitbit connection active until you receive the Google Health [connection-created event](/event-catalog/provider.connection.created), its historical pull completes, representative summary and timeseries resources contain data, and a new update webhook arrives.
+
+</Step>
+
+<Step title="Complete the cutover">
+
+Update provider filters, priorities, and downstream handling to use `google_health`, then [deregister the Fitbit connection](/api-reference/user/deregister-a-provider). Roll out in cohorts and follow up with users who dismiss or fail the new authorization flow.
+
+</Step>
+
+</Steps>
+
+<Warning>
+During a dual-connection window, the same underlying Fitbit observations can arrive under both `fitbit` and `google_health`. Junction does not automatically deduplicate data across providers. Keep the overlap short and filter or deduplicate using provider filters and each resource's `source` field in downstream processing.
+</Warning>
+
+## Data parity with Fitbit
+
+Google Health covers the primary Junction resources used by Fitbit integrations and adds several resources through its newer API surface.
+
+| Coverage | Junction resources |
+| --- | --- |
+| Shared coverage | Activity, body, sleep, sleep cycle, workouts, meals, profile, devices, heart rate, active calories, distance, steps, VO2 max, water, body temperature, fat, weight, heart rate variability, blood oxygen, respiratory rate, heart-rate alerts, and workout streams |
+| Additional Google Health coverage | Floors-climbed timeseries, carbohydrates, caffeine, glucose, electrocardiogram summaries, and electrocardiogram voltage |
+
+<Note>
+This is resource-level parity, not a guarantee of identical fields or data availability. Granted scopes, device capabilities, recorded source data, and the user's synchronization state determine which fields and resources are populated.
+</Note>
+
+## Configure Bring Your Own OAuth
 
 <BYOO />
 
-Google Health API is the successor to the Fitbit Web API. It returns health and fitness data from Fitbit devices, Pixel Watches, and other sources synchronized to Google Health. It is separate from Google Fit and Android Health Connect.
+Complete this setup separately for each Junction environment and region that uses your application.
 
-This guide covers the `google_health` provider. Complete the setup separately for each Junction environment and region that you use.
-
-## Before you begin
+### Before you begin
 
 You need:
 
@@ -27,7 +90,7 @@ You need:
 
 Google's [OAuth policies](https://developers.google.com/identity/protocols/oauth2/policies#use-separate-projects-for-testing-and-production) require separate projects for testing and production. Unverified applications are limited to 100 users. While a project remains in **Testing**, only accounts listed under **Google Auth Platform > Audience > Test users** can authorize, and their refresh tokens expire after seven days. See [Set up Google Cloud and OAuth](https://developers.google.com/health/setup).
 
-## Prepare the Junction environment
+### Prepare the Junction environment
 
 Open **Config > Custom Credentials** in the Junction Dashboard, select **Google Health**, and copy the preparation values displayed before the credential form.
 
@@ -49,7 +112,7 @@ Record both returned values:
 For production, the returned Junction redirect URI is the target of your callback forwarder. It is not the redirect URI registered with Google, because your organization cannot verify ownership of a Junction domain.
 </Info>
 
-## Configure Google Cloud and OAuth
+### Configure Google Cloud and OAuth
 
 <Steps>
 
@@ -127,7 +190,7 @@ Junction currently requests and uses only the read-only scopes listed above, so 
 
 </Steps>
 
-## Configure the service account and IAM
+### Configure the service account and IAM
 
 Create a service account in the Google Health project. Junction uses it only to manage the Google Health subscriber and user subscriptions; end-user health data still requires user OAuth consent.
 
@@ -148,7 +211,7 @@ gcloud iam service-accounts add-iam-policy-binding SERVICE_ACCOUNT_EMAIL \
 
 Replace the uppercase placeholders with your project ID, service account email, and the exact environment-specific Junction principal. Do not create or upload a service-account JSON key.
 
-## Add the credentials to Junction
+### Add the credentials to Junction
 
 In **Config > Custom Credentials > Google Health**, enter:
 
@@ -184,7 +247,7 @@ Saving valid credentials activates the provider immediately. Junction creates an
 
 <Step title="Prepare a test user">
 
-Add the Google account under **Google Auth Platform > Audience > Test users**. Ensure the account has representative Fitbit or Pixel Watch data and has recently synchronized with Google Health.
+If you use a customer-owned application in **Testing**, add the Google account under **Google Auth Platform > Audience > Test users**. Ensure the account has representative Fitbit or Pixel Watch data and has recently synchronized with Google Health.
 
 </Step>
 
@@ -212,12 +275,14 @@ Common failures are:
 
 | Symptom | Check |
 | --- | --- |
-| `redirect_uri_mismatch` | Google, Junction's Redirect URL Override, and the authorization request must use the exact same customer callback URL. |
-| User cannot authorize | Add the account as a test user and confirm the application's publishing status. |
-| Credentials fail to save | Check the project number, service account email, and both IAM grants. |
+| `redirect_uri_mismatch` | For a customer-owned application, Google, Junction's Redirect URL Override, and the authorization request must use the exact same customer callback URL. |
+| User cannot authorize | For a customer-owned application in Testing, add the account as a test user and confirm the application's publishing status. |
+| Custom credentials fail to save | Check the project number, service account email, and both IAM grants. |
 | A resource is absent | Confirm that its scope was granted, source data exists, and the historical pull has completed. |
 
-## Record the verification video
+## Verify a customer-owned application
+
+### Record the verification video
 
 Use the OAuth client intended for production, along with the branding, callback, and application that you will submit. The client can remain in **Testing** while you record with an allowlisted test user. Record the complete customer-facing flow:
 
@@ -231,7 +296,7 @@ A successful callback or API response alone does not demonstrate how your produc
 
 Upload the recording to YouTube Studio with **Unlisted** visibility, then provide the link in Google's verification form. See [Google's restricted-scope verification requirements](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification) for the current recording requirements.
 
-## Submit the production application
+### Submit the production application
 
 Before submitting, confirm that your production application:
 
