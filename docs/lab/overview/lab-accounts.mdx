@@ -6,8 +6,38 @@ Lab accounts encapsulate the information needed to place orders and receive resu
 
 When an active lab account is linked to a Team, that Team can place orders using that lab account. A Team can have multiple lab accounts linked, even for a single lab, but an individual order must be placed with a single lab account. The [Create Order](/api-reference/lab-testing/create-order) endpoint accepts a `lab_account_id` to specify the lab account.
 
+## Ordering with a lab account ID
+
+<Note>
+  You only need to provide `lab_account_id` if you have your own account with a core lab. If your Team uses Junction's platform accounts, you do not need to provide it when placing an order.
+</Note>
+
+If you have your own core lab account, provide [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when you want an order to be placed with that account rather than Junction's platform account. This makes your intended account explicit and ensures that Junction uses that lab account's configuration when routing the order. Your lab account must be active, linked to your Team, and associated with the lab selected for the order.
+
+```json
+{
+  "lab_account_id": "<lab_account_id>",
+  "order_set": {
+    "lab_test_ids": ["<lab_test_id>"]
+  }
+}
+```
+
+Before placing an order, use the [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts) endpoint to retrieve the lab accounts available to your Team and select the appropriate `id`.
+
+### How Junction selects an account when `lab_account_id` is omitted
+
+Junction evaluates the active lab accounts linked to your Team for the lab selected by the order:
+
+| Lab accounts linked for the selected lab | Account selection |
+| --- | --- |
+| No lab accounts are linked | Junction uses its platform account when one is available to your Team for that lab. |
+| Exactly one active lab account is linked | Junction uses your active linked account. |
+| More than one active lab account is linked | Junction does not select an account because it cannot determine which of your accounts you intended to use. |
+| Lab accounts are linked, but none is active | Junction does not fall back to its platform account. |
+
 <Warning>
-  If `lab_account_id` is not provided when placing an order, we will try to determine an appropriate lab account based on available information, but if we cannot unambiguously find one lab account that should be used, we might not be able to place the order. We recommend including the `lab_account_id` when possible.
+  If more than one of your active lab accounts is linked to your Team for the selected lab, Junction does not fall back to its platform account. The order may be rejected unless you provide `lab_account_id`.
 </Warning>
 
 Lab accounts for an Org can be viewed using the [Get Lab Accounts (Org-level)](/api-reference/org-management/lab-accounts/get-lab-accounts) endpoint. Teams can fetch their available lab accounts using [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts). Team linkage is managed only through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint.
