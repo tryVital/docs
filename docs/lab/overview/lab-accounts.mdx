@@ -2,9 +2,9 @@
 title: "Lab Accounts"
 description: "Manage lab accounts that link your team to partner laboratories for order routing and result delivery configuration."
 ---
-Lab accounts encapsulate the information needed to place orders and receive results for a particular lab. They are tied to Orgs and can be dynamically linked to as many Teams within the Org as desired.
+Lab accounts contain the configuration Junction needs to place orders and receive results from a specific lab. Each lab account belongs to an Org and can be linked to one or more Teams.
 
-When an active lab account is linked to a Team, that Team can place orders using that lab account. A Team can have multiple lab accounts linked, even for a single lab, but an individual order must be placed with a single lab account. The [Create Order](/api-reference/lab-testing/create-order) endpoint accepts a `lab_account_id` to specify the lab account.
+A Team can have multiple lab accounts linked, including multiple accounts for the same lab, but each order uses only one lab account.
 
 ## Ordering with a lab account ID
 
@@ -13,6 +13,8 @@ When an active lab account is linked to a Team, that Team can place orders using
 </Note>
 
 If you have your own core lab account, provide [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when you want an order to be placed with that account rather than Junction's platform account. This makes your intended account explicit and ensures that Junction uses that lab account's configuration when routing the order. Your lab account must be active, linked to your Team, and associated with the lab selected for the order.
+
+The relevant fields in the Create Order request are:
 
 ```json
 {
@@ -27,9 +29,9 @@ Before placing an order, use the [Get Lab Accounts (Team-level)](/api-reference/
 
 ### How Junction selects an account when `lab_account_id` is omitted
 
-Junction evaluates the active lab accounts linked to your Team for the lab selected by the order:
+Junction evaluates the lab accounts linked to your Team for the lab selected by the order:
 
-| Lab accounts linked for the selected lab | Account selection |
+| Lab accounts linked to your Team for the selected lab | Account selection |
 | --- | --- |
 | No lab accounts are linked | Junction uses its platform account when one is available to your Team for that lab. |
 | Exactly one active lab account is linked | Junction uses your active linked account. |
@@ -37,29 +39,22 @@ Junction evaluates the active lab accounts linked to your Team for the lab selec
 | Lab accounts are linked, but none is active | Junction does not fall back to its platform account. |
 
 <Warning>
-  If more than one of your active lab accounts is linked to your Team for the selected lab, Junction does not fall back to its platform account. The order may be rejected unless you provide `lab_account_id`.
+  If more than one active lab account is linked to your Team for the selected lab, the order may be rejected unless you provide `lab_account_id`. If no active account is available, or you encounter any other lab account issue, [contact the Junction team](/home/getting-support#getting-support).
 </Warning>
 
-Lab accounts for an Org can be viewed using the [Get Lab Accounts (Org-level)](/api-reference/org-management/lab-accounts/get-lab-accounts) endpoint. Teams can fetch their available lab accounts using [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts). Team linkage is managed only through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint.
+## Retrieving and managing lab accounts
 
-## Which endpoint should I use?
+Use the Team-level endpoint to retrieve the accounts available to your Team for ordering. Use the Org-level endpoint to retrieve accounts across your Org and review which Teams are linked to each account.
 
-Use both endpoints for different jobs. They are complementary, not interchangeable.
-
-| Topic | Org-level Get Lab Accounts | Team-level Get Lab Accounts |
+| Topic | [Org-level Get Lab Accounts](/api-reference/org-management/lab-accounts/get-lab-accounts) | [Team-level Get Lab Accounts](/api-reference/lab-testing/lab_accounts) |
 | ----- | ----- | ----- |
-| Scope | Returns lab accounts for the Org, across teams | Returns lab accounts available to one team context |
+| Scope | Returns lab accounts for the Org, across Teams | Returns lab accounts available to the current Team |
 | Typical user | Org admin or platform integrator | Team-scoped integration |
 | Best use case | Org-wide visibility and management | Team-specific runtime operations |
-| Filtering behavior | Can be used to review accounts at the Org level and understand team linkage | Returns only accounts available in the current team context |
+| Team linkage | Shows which Teams are linked to each account | Returns only accounts linked to the current Team |
 
-Recommendation:
-- Use the team-level endpoint when operating within one team context.
-- Use the org-level endpoint when you need cross-team, org-level management views.
-- There is no team-level endpoint for updating lab account team linkage.
+Manage Team linkage through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint. There is no Team-level endpoint for updating lab account linkage.
 
-Practical examples:
-- **Org-level endpoint:** An operations admin audits all lab accounts in the Org and confirms which teams are linked to each account.
-- **Team-level endpoint:** A team-specific ordering workflow fetches only the lab accounts that team can use before creating an order.
+[Contact the Junction team](/home/getting-support#getting-support) to create a lab account or resolve any lab account issue.
 
 You can also view lab accounts tied to your Org on the [Lab Interface Requests page of your Org Config](https://app.junction.com/org/lab-interface-requests) in the Junction dashboard.
