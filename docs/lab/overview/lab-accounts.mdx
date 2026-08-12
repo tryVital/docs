@@ -2,7 +2,7 @@
 title: "Lab Accounts"
 description: "Manage lab accounts that link your team to partner laboratories for order routing and result delivery configuration."
 ---
-Lab accounts contain the configuration Junction needs to place orders and receive results from a specific lab. Each lab account belongs to an Org and can be linked to one or more Teams.
+Lab accounts contain the configuration Junction needs to place orders and receive results from a specific lab. Each customer-owned lab account belongs to an Org and can be linked to one or more Teams. Junction platform accounts are managed by Junction and are not owned by a customer Org.
 
 A Team can have multiple lab accounts linked, including multiple accounts for the same lab, but each order uses only one lab account.
 
@@ -14,7 +14,7 @@ A Team can have multiple lab accounts linked, including multiple accounts for th
 
 If you have your own core lab account, provide [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when you want an order to be placed with that account rather than Junction's platform account. This makes your intended account explicit and ensures that Junction uses that lab account's configuration when routing the order. Your lab account must be active, linked to your Team, and associated with the lab selected for the order.
 
-The relevant fields in the Create Order request are:
+The relevant fields in the [Create Order](/api-reference/lab-testing/create-order) request are:
 
 ```json
 {
@@ -27,9 +27,9 @@ The relevant fields in the Create Order request are:
 
 Before placing an order, use the [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts) endpoint to retrieve the lab accounts available to your Team and select the appropriate `id`.
 
-### How Junction selects a lab account when `lab_account_id` is omitted from a Create Order request
+### How Junction selects a lab account when `lab_account_id` is omitted
 
-Junction evaluates the lab accounts linked to your Team for the lab selected by the order:
+When `lab_account_id` is omitted from a [Create Order](/api-reference/lab-testing/create-order) request, Junction evaluates the lab accounts linked to your Team for the lab selected by the order:
 
 | Lab accounts linked to your Team for the selected lab | Account selection |
 | --- | --- |
@@ -39,8 +39,25 @@ Junction evaluates the lab accounts linked to your Team for the lab selected by 
 | Lab accounts are linked, but none is active | Junction does not fall back to its platform account. |
 
 <Warning>
-  If more than one active lab account is linked to your Team for the selected lab, the order may be rejected unless you provide `lab_account_id`. If no active account is available, or you encounter any other lab account issue, [contact the Junction team](/home/getting-support#getting-support).
+  If more than one active lab account is linked to your Team for the selected lab, the order may be rejected unless you provide `lab_account_id`. Junction cannot place the order if no active account is available.
 </Warning>
+
+## Billing types
+
+Each lab account defines the billing types it supports and the states where each type is available. Each lab account object returned by [Get Lab Accounts (Team-level)](/api-reference/lab-testing/lab_accounts) includes an `allowed_billing` field such as:
+
+```json
+{
+  "allowed_billing": {
+    "client_bill": ["AZ", "CA", "NY"],
+    "commercial_insurance": ["AZ", "CA"]
+  }
+}
+```
+
+Each key is a supported `billing_type`, and its value lists the patient states where that billing type is available for the account. If a billing type is absent, the lab account does not support it. If the patient's state is absent from its list, that billing type is not available for the account in that state.
+
+The `billing_type` in a [Create Order](/api-reference/lab-testing/create-order) request must be supported by the lab account used for the order. For the additional requirements associated with `commercial_insurance`, see [Insurance Ordering](/lab/overview/insurance).
 
 ## Retrieving and managing lab accounts
 
@@ -55,6 +72,8 @@ Use the Team-level endpoint to retrieve the accounts available to your Team for 
 
 Manage Team linkage through the [Update Lab Account Teams (Org-level)](/api-reference/org-management/lab-accounts/update-lab-account-teams) endpoint. There is no Team-level endpoint for updating lab account linkage.
 
-[Contact the Junction team](/home/getting-support#getting-support) to create a lab account or resolve any lab account issue.
-
 You can also view lab accounts tied to your Org on the [Lab Interface Requests page of your Org Config](https://app.junction.com/org/lab-interface-requests) in the Junction dashboard.
+
+<Note>
+  [Contact Junction Customer Support](/home/getting-support#getting-support) to create a lab account or resolve a lab account issue.
+</Note>

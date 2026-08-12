@@ -1,103 +1,80 @@
 ---
 title: "Insurance Ordering"
-description: "Set up and place lab test orders with commercial insurance billing, including Medicare and Medicaid inference support."
+description: "Configure patient insurance and place lab test orders with commercial insurance billing."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
-<FeatureBeta />
+Junction supports lab test orders billed to commercial insurance. Availability depends on the lab account, patient state, and tests selected for the order.
 
-Junction supports ordering with commercial insurance billing. To set this up, there are a set of steps required. This document explains the complete flow for ordering via commercial insurance.
+## Commercial insurance workflow
 
+Complete these steps in order:
 
-## Setting Insurance Data
-
-<Note>
-**Medicare and Medicaid location inference closed beta**
-
-If the patient is covered by Medicare or Medicaid, we have closed beta support for inferring the plan to use based on the patient's address. This endpoint supports `payor_code` values of `MEDFED` (Medicare) and
-`MAIDFED` (Medicaid) to do this.
-
-For example, supplying a `payor_code` of `MEDFED` for a patient that lives in Arizona will create insurance data using Arizona's Medicare plan payor code.
-
-Medicare and Medicaid location inference is in closed beta. Get in touch with your Customer Success Manager for more information or check out the [API docs](/api-reference/user/create-insurance) on the beta channel.
-</Note>
-
-To place an order for a `user` in Junction with commercial insurance, you must first provide Junction with insurance data.
-
-This can be done via the [`POST /{user_id}/insurance`](/api-reference/user/create-insurance) endpoint, with the following payload:
+1. [Create a user](/api-reference/user/create-user), or use an existing user, and ensure the user has patient demographics. Creating a user establishes the Junction user ID but does not create the demographics required for insurance. Use [Update User Demographics](/api-reference/user/upsert-info) to add or update them.
+2. [Check insurance availability](#check-insurance-availability) for the intended lab account and patient state.
+3. [Create insurance for the user](/api-reference/user/create-insurance). Junction associates the insurance with that user's demographics.
+4. [Create the order](/api-reference/lab-testing/create-order) for the same user with `billing_type` set to `commercial_insurance` and valid diagnosis codes in `icd_codes`.
 
 <Note>
-Note that you can only set insurance data for users that already have patient information set, either via an order or via the [`PATCH /v2/user/{user_id}/info`](/api-reference/user/upsert-info).
+  Create the user's insurance before creating the order. `is_primary` defaults to `true`, and Junction uses the user's most recently created primary insurance record for commercial insurance ordering. When the insurance details change, create a new primary insurance record before placing another order.
 </Note>
 
-It is expected that insurance data will become outdated or change with time. It is the customer's responsibility to update this data with Junction in order to minimize the risk of a denied claim.
+## Create user insurance
+
+Use [`POST /v2/user/{user_id}/insurance`](/api-reference/user/create-insurance) to create an insurance record. The endpoint creates a new record; it does not update an existing one. The user must already have demographics, including an address, because Junction links the insurance to that patient record.
+
+Insurance details can change over time. Keep the user's insurance current to reduce the risk of a denied claim.
 
 ```json
-"insurance": {
-    "payor_code": "string",
-    "member_id": "string",
-    "group_id": "string", // optional
-    "relationship": "Self, Spouse, Other",
-    "insured": {
-        "first_name": "string",
-        "last_name": "string",
-        "dob": "YYYY-MM-DD",
-        "gender": "string",
-        "address": {
-            "first_line": "string", 
-            "second_line": "string", // optional
-            "zip_code": "string",
-            "state": "string",
-            "city": "string",
-        },
-        "phone_number": "string",
-        "email": "string"
+{
+  "payor_code": "UNITE",
+  "member_id": "123456789",
+  "group_id": "123",
+  "relationship": "Self",
+  "insured": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "dob": "1999-01-01",
+    "gender": "Male",
+    "address": {
+      "first_line": "123 Main Street",
+      "second_line": null,
+      "zip_code": "85004",
+      "state": "AZ",
+      "city": "Phoenix"
     },
-    "guarantor": {
-        "first_name": "string",
-        "last_name": "string",
-        "dob": "YYYY-MM-DD",
-        "gender": "string",
-        "address": {
-            "first_line": "string", 
-            "second_line": "string", // optional
-            "zip_code": "string",
-            "state": "string",
-            "city": "string",
-        },
-        "phone_number": "string",
-        "email": "string",
-    } // optional if relationship is Self
+    "phone_number": "+16025550123",
+    "email": "john@example.com"
+  },
+  "is_primary": true
 }
 ```
 
-### Insured, Guarantor and Relationship
+`group_id`, `second_line`, and `guarantor` are optional. A `guarantor` is required when `relationship` is not `Self`.
 
-First, let's understand the `relationship`, `insured` and `guarantor` fields.
+### Insured, guarantor, and relationship
 
-`insured` refers to the insured person, and must always be provided. The `relationship` field is the relationship between the patient and the holder of the insurance.
-For example, if the insured person and the insurance holder are the same, then the relationship is `Self`.
+The `insured` object identifies the person covered by the insurance plan and is always required. The `relationship` value describes the patient's relationship to the policyholder and accepts `Self`, `Spouse`, or `Other`.
 
-The `guarantor` is an optional field, that must be provided when the relationship is **NOT** `Self`. The guarantor is the financially responsible party. If provided when the relationship is `Self`, we will store it, but it may not be propagated to all lab partners, as not all partners accept a guarantor in this situation.
+When `relationship` is not `Self`, provide the financially responsible party in `guarantor`. If you provide a guarantor when `relationship` is `Self`, Junction stores it, but some lab partners may not accept it.
 
+### Payor code
 
-### Payor Code
+Partner labs use different identifiers for insurance companies. Junction standardizes these identifiers so you can use one Junction `payor_code` across supported labs.
 
-The `payor_code` is a lab-specific identifier for an insurance company. Junction has abstracted this away into our own Junction payor codes, allowing customers to supply one lab-agnostic payor code for all labs.
+Use [Search Payor Code](/api-reference/lab-testing/insurance/search-payor-get) to find the insurance company and use the returned `payor_code` when creating insurance. You can search by insurance company name or by a supported external provider's payor code, such as Change Healthcare or Availity.
 
-To obtain this code, use the [Search Payor Code](/api-reference/lab-testing/insurance/search-payor-get) endpoint, using the insurance company name, and select the `code` from your insurance company.
-
-It is also possible to use this endpoint to search using external providers' payor codes (e.g., Change Healthcare or Availity).
+<Note>
+  [Contact Junction Customer Support](/home/getting-support#getting-support) for assistance if the payor information you need is missing.
+</Note>
 
 ```json
 [
   {
-    "code": "AARPA",
+    "payor_code": "AARPA",
     "name": "AARP",
-    "aliases": [
-      "AARP"
-    ],
+    "aliases": ["AARP"],
     "org_address": {
       "first_line": "PO BOX 740819",
       "second_line": null,
@@ -106,40 +83,15 @@ It is also possible to use this endpoint to search using external providers' pay
       "city": "ATLANTA",
       "state": "GA"
     }
-  },
+  }
 ]
 ```
 
+## Check insurance availability
 
+Not every lab account, state, or test supports commercial insurance. Review the [billing types configured for the lab account](/lab/overview/lab-accounts#billing-types), then call [Area Info](/api-reference/lab-testing/area-info) for the patient's zip code and confirm that the intended lab includes `commercial_insurance` in `supported_bill_types`.
 
-## Ordering
-
-Once the above steps are complete, you can place an order as usual, with two differences.
-
-In order to trigger the commercial insurance flow, you must supply the following extra fields in the [POST /order](/api-reference/lab-testing/create-order) payload:
-
-```json
-{
-	"icd_codes": ["ICD.10"], 
-	"billing_type": "commercial_insurance" 
-}
-```
-
-### Billing type
-
-By default, Junction orders are Client Bill. In order to trigger the insurance flow, you must supply the `billing_type` field, with `commercial_insurance`.
-
-### Diagnosis Codes
-
-Insurance orders require diagnosis codes to be supplied. You can search for diagnosis codes in our [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) endpoint.
-
-
-
-## Insurance Availability
-
-Not all labs and not all states are cleared for insurance ordering. You can verify if a zip code is served for insurance via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint.
-
-If a particular lab supports insurance, then you should see `commercial_insurance` in the supported bill types.
+If you intend to use a specific lab account, pass its `lab_account_id` to Area Info and provide the same [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when creating the order. This ensures the availability check uses that account's billing configuration.
 
 ```json
 {
@@ -153,16 +105,49 @@ If a particular lab supports insurance, then you should see `commercial_insuranc
       "supported_bill_types": [
         "commercial_insurance"
       ]
-    },
-    ...
+    }
   }
 }
 ```
 
+## Create the order
 
-## Error Cases
+Create the order for the same `user_id` used to create the insurance. Include all fields required for a standard order, then set:
 
-1. Order with `commercial_insurance` billing for a lab that does not support it.
-2. Order with `commercial_insurance` billing for a state that does not support it.
-3. Order with `commercial_insurance` billing and no ICD codes or invalid ICD codes provided.
-4. Order with `commercial_insurance` billing and the user has no insurance data.
+```json
+{
+  "billing_type": "commercial_insurance",
+  "icd_codes": ["<diagnosis_code>"]
+}
+```
+
+### Billing type
+
+Orders use `client_bill` by default. Set `billing_type` to `commercial_insurance` to use the user's latest primary insurance record.
+
+### Diagnosis codes
+
+Commercial insurance orders require at least one valid diagnosis code. Use [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) to find supported codes.
+
+## Common errors
+
+Junction rejects a commercial insurance order when:
+
+- The selected lab account does not support `commercial_insurance`.
+- The patient's state does not support commercial insurance for the selected lab account.
+- The selected test or one of its markers is not available for commercial insurance in the patient's state.
+- `icd_codes` is missing or contains an invalid diagnosis code.
+- The user does not have patient demographics or a primary insurance record.
+
+## Medicare and Medicaid location inference
+
+<FeatureBeta />
+
+The closed beta can infer the appropriate Medicare or Medicaid plan from the patient's address when you [create user insurance on the beta channel](/api-reference/user/create-insurance-beta):
+
+- Use `MEDFED` for Medicare.
+- Use `MAIDFED` for Medicaid.
+
+For example, submitting `MEDFED` for a patient who lives in Arizona creates the insurance record with the applicable Arizona Medicare plan payor code.
+
+This beta applies only to Medicare and Medicaid location inference. It does not apply to commercial insurance ordering as a whole.
