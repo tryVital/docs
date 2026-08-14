@@ -1,5 +1,5 @@
 ---
-title: "Lab Test Lifecycle"
+title: "Order Status and Lifecycle"
 description: "Understand the namespaced status system for lab test orders with high-level and modality-specific low-level status transitions."
 ---
 
@@ -21,14 +21,14 @@ Statuses are namespaced with the following format:
 
 `[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]`
 
-As an example, the status `collecting_sample.at_home_phlebotomy.appointment_scheduled` means the patient has scheduled an at-home phlebotomy appointment.
+As an example, the status `collecting_sample.at_home_phlebotomy.appointment_scheduled` means the patient has scheduled a mobile phlebotomy appointment.
 
 ### High-level statuses
 
 The high-level statuses of an order are represented by `order.status`:
 
 - `received`: we received the order, stored it into our system, and started processing it.
-- `collecting_sample`: these track collecting the sample from the patient. For test-kits, these track the shipment of the kit. For at-home phlebotomy and walk-in tests, these track appointment scheduling and management.
+- `collecting_sample`: these track collecting the sample from the patient. For test kits, these track kit shipment. For mobile phlebotomy and walk-in tests, these track appointment scheduling and management.
 - `sample_with_lab`: the lab received the sample and is currently analyzing it.
 - `completed`: the order is complete and the results are ready.
 - `cancelled`: the order has been cancelled, by you or the patient.
@@ -99,7 +99,7 @@ Below is a full list of all the available statuses by test modality. The names s
 - `failed.walk_in_test.sample_error`
 - `cancelled.walk_in_test.cancelled`
 
-### At-home phlebotomy statuses
+### Mobile phlebotomy statuses
 
 - `received.at_home_phlebotomy.ordered`
 - `received.at_home_phlebotomy.requisition_created`

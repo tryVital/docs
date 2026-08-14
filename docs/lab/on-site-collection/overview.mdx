@@ -1,22 +1,31 @@
 ---
 title: "Overview"
-description: "Overview of the on-site collection modality for blood draws at customer-managed locations like clinics and wellness events."
+description: "Understand how lab orders are collected at customer-managed locations such as clinics and wellness events."
 ---
+
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-On-site collections are one of our offered modalities. Their locations are customer-managed settings where blood draws occur outside of traditional lab-owned patient service centers — such as primary care clinics, employer health centers, or event-based wellness pop-ups.
+With on-site collection, the patient has their sample collected at a customer-managed location rather than a laboratory-owned Patient Service Center. Collection locations can include clinics, employer health centers, and event-based wellness programs.
 
-## Ordering Flow overview
+## How it works
 
-To achieve this, a high-level overview of the process is defined as:
+1. Place an order through the Junction Dashboard or the [Create Order endpoint](/api-reference/lab-testing/create-order).
+2. Junction validates the order and creates a requisition with the selected partner laboratory.
+3. The patient attends the customer-managed collection location at the time defined by the collection program.
+4. Collection staff draw the sample and arrange its delivery to the laboratory.
+5. The laboratory processes the sample.
+6. Junction makes results available as structured data and a PDF. See [Result Formats](/lab/results/result-formats).
 
-- An order is placed in Junction's system through our Dashboard or API.
-- The order is added to a background queue and additional checks are made before a test requisition is created with the chosen Laboratory.
-- After the requisition is created, some form of communication is carried out with the patient.
-- After that, the patient can go at any time they want to the draw location to have their blood drawn.
-- The Laboratory processes the patient's blood sample and generates the required results.
-- Junction exposes the results as soon as they are available, both as PDF and structured data via API.
+## What to plan for
 
-To find out more details, see [`Order Lifecycle`](/lab/on-site-collection/order-lifecycle), [`Communications`](/lab/on-site-collection/communications) and [`Webhooks`](/lab/on-site-collection/webhooks).
+- **Collection logistics:** Your program is responsible for defining where and when collection occurs.
+- **Patient instructions:** Tell patients when and where to attend and provide any preparation instructions associated with the order.
+- **Availability:** On-site collection must be enabled and configured for your Team before you place orders.
+
+## Related guides
+
+- [On-site Collection Order Lifecycle](/lab/on-site-collection/order-lifecycle)
+- [Patient Communications](/lab/workflow/communications#on-site-collection)
+- [On-site Collection Webhooks](/lab/on-site-collection/webhooks)

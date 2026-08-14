@@ -1,33 +1,33 @@
 ---
 title: "Order and Appointment Lifecycle"
-description: "Learn the order and appointment statuses, state transitions, and scheduling flows for Walk-In Phlebotomy lab tests."
+description: "Learn the order and appointment statuses, state transitions, and scheduling flows for walk-in lab tests."
 ---
 
-The **Walk-In Test** orders are composed of two different lifecycles, the **Order** lifecycle and the **Appointment** lifecycle, detailed in the following sections.
+Walk-in orders have separate order and appointment lifecycles. The order lifecycle represents the overall lab order, while the appointment lifecycle represents an optional visit scheduled through Junction.
 
-## Order Lifecycle
+## Order lifecycle
 
-As discussed in [`Lab Test Lifecycle - Statuses`](/lab/workflow/lab-test-lifecycle#statuses), each lab testing modality has the following format:
+As described in [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle#statuses), each lab testing modality has the following format:
 
 `[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]`
 
-For each modality, there can be multiple **low-level statuses**, for **Walk-In Phlebotomy** the possible low-level statuses are:
+For walk-in orders, the possible low-level statuses are:
 
-- `ordered`: Vital received the order, stored it into our system, and started processing it asynchronously.
+- `ordered`: Junction received the order and started processing it asynchronously.
 - `requisition_created`: An order requisition form was validated and created with the partner laboratory, making the order available to be carried out.
 - `requisition_bypassed`: An order requisition form wasn't created when the order was placed with us because it already existed.
-- `appointment_pending`: An appointment was placed in Vital's system for the order, but doesn't have a scheduled date.
+- `appointment_pending`: An appointment was placed in Junction's system for the order but does not have a scheduled date.
 - `appointment_scheduled`: An appointment was scheduled or rescheduled for the order.
-- `appointment_cancelled`: The appointment was cancelled, by either the patient, Vital or you.
+- `appointment_cancelled`: The appointment was cancelled by the patient, Junction, or your Team.
 - `partial_results`: The laboratory has started making partial results available.
 - `redraw_available`: The result has been marked as final but is missing biomarker results due to lab error.
 - `completed`: The laboratory processed the blood sample and final results are available.
 - `sample_error`: The collected sample was unprocessable by the lab.
-- `cancelled`: The order was cancelled by either the patient, Vital or you.
+- `cancelled`: The order was cancelled by the patient, Junction, or your Team.
 
 The Finite State Machine that defines the possible transitions for the low-level statuses described above is illustrated in the following diagram.
 
-<Frame caption="Possible state transitions for the Walk-In Phlebotomy Order low-level statuses.">
+<Frame caption="Possible state transitions for walk-in order low-level statuses.">
   ![](/img/walkin-statuses.png)
 </Frame>
 
@@ -37,22 +37,47 @@ The Finite State Machine that defines the possible transitions for the low-level
   In **sandbox**, there is no async transition from the `ordered` state to the `requisition_created` state. This must be **manually triggered** via the **Junction Dashboard**.
 </Info>
 
-## Appointment Lifecycle
+## Appointment lifecycle
 
-The appointment lifecycle is separate from the order lifecycle, and it corresponds to a single appointment. The possible statuses are defined as follows:
+Each appointment has both a current `status` and a normalized `event_status`. The `events` array contains the history of normalized appointment events.
 
-- `pending`: An appointment was placed in the system, and is pending updates from the phlebotomy service.
-- `scheduled`: An appointment was scheduled or rescheduled.
+### Appointment status
+
+The appointment object's `status` describes its current scheduling or provider state:
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | Junction is waiting for the appointment provider to acknowledge the request. |
+| `reserved` | The time slot is held while the order requisition is being created. |
+| `confirmed` | The appointment is confirmed. |
+| `in_progress` | The appointment is in progress. |
+| `completed` | The appointment was completed. |
+| `cancelled` | The appointment was cancelled. |
+
+### Appointment event status
+
+The appointment object's `event_status` and each `events[].status` use normalized lifecycle values:
+
+| Event status | Meaning |
+| --- | --- |
+| `pending` | The appointment request is awaiting provider acknowledgment. |
+| `reserved` | The appointment is held until its requisition is created. |
+| `scheduled` | The appointment was scheduled or rescheduled. A `confirmed` appointment uses the `scheduled` event status. |
+| `in_progress` | The appointment is in progress. |
+| `completed` | The appointment was completed. |
+| `cancelled` | The appointment was cancelled. |
+
+Not every provider produces every status. Treat both enums as non-exhaustive and handle unknown values gracefully.
 
 The Finite State Machine that defines the possible transitions for the appointment statuses described above is illustrated in the following diagram.
 
-<Frame caption="Possible state transitions for the Walk-In Phlebotomy Appointment statuses.">
+<Frame caption="Common walk-in appointment event-status transitions.">
   ![](/img/walkin_appt_statuses.png)
 </Frame>
 
-The events are related to a single appointment. An order can have multiple existing appointments in Vital's system, although only one appointment will be considered active and returned when using the [GET Appointment endpoint](/api-reference/lab-testing/psc-scheduling/get-psc-appointment).
+An order can have multiple appointment records over time, but the [Get PSC Appointment endpoint](/api-reference/lab-testing/psc-scheduling/get-psc-appointment) returns the active appointment.
 
-## Scheduling Appointments Before A Requisition Has Been Created
+## Scheduling appointments before a requisition has been created
 
 <Note>
   This feature is available upon request. To enable, please get in touch with your Customer Success Manager.
@@ -87,7 +112,7 @@ This allows you to build an experience that can order the lab test _and_ book an
   </Step>
 </Steps>
 
-## Cancelling An Appointment
+## Cancelling an appointment
 
 If an Appointment is cancelled **before** a requisition has been created:
 
@@ -110,7 +135,7 @@ In cases where appointments can be scheduled before a requisition has been creat
   The 8-hour auto-cancellation rule does not apply to [scheduled orders](/lab/workflow/scheduled-orders#scheduled-orders). Scheduled orders are fulfilled on their `activate_by` date, so Junction does not cancel their appointments based solely on the fact that more than 8 hours have passed since order creation without a requisition.
 </Note>
 
-## Arizona Scheduling
+## Arizona scheduling
 
 <Note>
   This feature is available upon request. To enable, please get in touch with your Customer Success Manager.

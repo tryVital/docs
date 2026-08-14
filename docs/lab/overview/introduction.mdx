@@ -3,45 +3,31 @@ title: "Introduction"
 description: "Introduction to the Junction Lab Testing API for ordering lab tests, managing results, and integrating with physician networks and partner labs."
 ---
 
-Junction's lab test API allows digital health companies to carry out at-home lab testing. Companies can use the API to order a variety of tests, using multiple sampling methods.
+Junction's Lab Testing API lets you create lab orders, coordinate sample collection, monitor order progress, and retrieve results from partner laboratories through one integration.
 
-We partner with CLIA and CAP certified labs across the United States that cover a range of different diagnostic tests. For example, lipid panels, metabolic profiles, hormone tests, and more. We collect these test samples via at-home kits, or phlebotomy.
+## Core concepts
 
-### Features
+- A **user** represents the patient receiving the test.
+- A **lab test** defines the markers to order, the partner laboratory, and the supported collection methods. See [Creating a Lab Test](/lab/workflow/create-test).
+- An **order** represents one lab test performed for one patient. Its status progresses from order creation through collection and results. See [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle).
+- A **lab account** defines the laboratory configuration and supported billing types used to place an order. See [Lab Accounts](/lab/overview/lab-accounts).
+- A **result** is available as structured data and, when provided by the laboratory, a PDF report. See [Results Overview](/lab/results/overview).
 
-Our lab test API gives you an end-to-end experience, from ordering a test all the way to receiving results, all with one API call!
+## Integration workflow
 
-What we offer:
+1. Choose how the patient's sample will be collected. Compare the available [testing modalities](/lab/overview/testing-modalities).
+2. Determine which laboratory, tests, billing types, and physician workflow your program requires. See [Choosing Tests and Markers](/lab/workflow/ordering), [Lab Accounts](/lab/overview/lab-accounts), and [Order and Follow-up Physician](/lab/overview/physicians).
+3. Create the patient and place an order by following the [Quickstart](/lab/overview/quickstart).
+4. Follow the end-to-end [Orders and Results](/lab/overview/orders-and-results) guide to monitor the order, retrieve results, and handle follow-up states. If enabled, Junction can also send [patient email and SMS communications](/lab/workflow/communications).
 
-- Multiple [test modalities](/lab/overview/testing-modalities) through one unified API.
-- 50-state physician network - you can use your own physician if you have one, or we will automatically assign one from our network.
-- Updates throughout the test lifecycle - we automatically send you webhook updates and SMS updates to your patients so that you both never miss an update.
-- Test results: we will update you once the test results are ready. In case of abnormal results, we also provide follow-ups through our physician network.
-- 1:1 support: after production launch, you will have direct access to Slack and our engineers.
+## Sandbox and production
 
-### Start integrating
+Use the sandbox environment to create test orders, simulate lifecycle transitions, verify webhook handling, and test patient communications. See [Testing in Sandbox](/lab/overview/sandbox).
 
-You can sign up today for our sandbox environment. The [quickstart](/lab/overview/quickstart) guide will help you get from zero to ordering tests in less than 30 minutes! Once the integration is ready, switching to production will just be a matter of switching API keys.
+Sandbox and production have separate API keys and Team configuration. Before placing production orders, confirm that your production Team has the required lab tests, lab accounts, billing types, physician workflow, collection coverage, and communications settings.
 
-### Production launch
+## Coverage
 
-As a first step, we need to define what type of testing you want to offer to your users. We will have an introduction call to go over the test, projected volumes, customizations for kits and other questions you might have. Once we have all this information, we will begin setting up the test kits for distribution. Once the integration is complete, you will have access to the dashboard to start ordering tests via our API.
+Coverage varies by testing modality, partner laboratory, and patient location. Use the [Area Info endpoint](/api-reference/lab-testing/area-info) to check services for a ZIP code.
 
-On [this page](https://tryvital.io/labs), you can check out some examples of the test panels we offer, and book an introductory call with us.
-
-### Support
-
-We will assist you throughout the whole integration with Junction. After launch, you will have a dedicated account manager with access to Slack, and 1:1 support with our engineers.
-
-### Coverage
-
-Our lab test API is available throughout the US. This is our current coverage by test modality:
-
-- [At-home test kits](/lab/overview/testing-modalities#at-home-test-kits): 49 states (all excluding NY).
-- [Walk-in tests](/lab/overview/testing-modalities#walk-in-tests): 49 states (all excluding NY).
-- [At-home phlebotomy](/lab/overview/testing-modalities#at-home-phlebotomy): 35 states at the moment. Full coverage coming soon.
-- [On-site collection](/lab/overview/testing-modalities#on-site-collection): In beta testing.
-
-<Info>
-  To find out more about our coverage, you can use the [area info endpoint](/api-reference/lab-testing/area-info) - this endpoint takes a zip code and tells you whether that area is covered by our service or not. Or you can contact us at [support@junction.com](mailto:support@junction.com) for more info.
-</Info>
+For help planning or enabling a production workflow, [contact Junction support](/home/getting-support).

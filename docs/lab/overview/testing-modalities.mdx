@@ -1,67 +1,37 @@
 ---
 title: "Testing Modalities"
-description: "Compare the four lab testing modalities: at-home test kits, at-home phlebotomy, walk-in tests, and on-site collection."
+description: "Compare where and how samples are collected for at-home test kits, mobile phlebotomy, walk-in tests, and on-site collection."
 ---
 
-By integrating with our API, you will have access to the following testing modalities:
+A testing modality defines how and where a patient's sample is collected. The modality affects appointment or shipping workflows, available [patient communications](/lab/workflow/communications), and the statuses you receive as the order progresses.
 
-- At-home test kit.
-- At-home phlebotomy visit.
-- Walk-in test visit.
-- On-site collection visit (in closed beta).
+| Modality | Collection location | Who collects the sample? | Scheduling | Sample transport |
+| --- | --- | --- | --- | --- |
+| [At-home test kit](#at-home-test-kits) | Patient's location | Patient | Not required | Patient returns the kit by mail |
+| [Mobile phlebotomy](#mobile-phlebotomy) | Patient's home or office | Mobile phlebotomist | Required | Phlebotomist delivers the sample to the laboratory |
+| [Walk-in test](#walk-in-tests) | Partner laboratory Patient Service Center (PSC) | Laboratory staff | Optional where supported | Managed by the laboratory |
+| [On-site collection](#on-site-collection) | Customer-managed collection location | Collection staff | Managed by the customer | Defined by the collection program |
 
 ## At-home test kits
 
-This involves sending a kit to a patient's home. They will then be able to collect their specimen and send it back to our lab networks via mail.
+Junction ships a collection kit to the patient. The patient collects their sample by following the kit instructions and returns it to the laboratory by mail. This modality does not require an appointment, but your workflow must account for shipping, collection, and return-shipping statuses.
 
-At-home testing kits are comprised of a number of components such as:
+See the [At-Home Test Kit Overview](/lab/testkits/overview) for registered and registrable kit workflows.
 
-<div className="flex flex-row">
-<div>
-- Mailer Box
-- Blade Lancets
-- Plasters
-- Gauze
-- ADX Card
-- Blood collection card
-- Saliva Tubes
-- Collection Supplies
-- Instruction Booklet
+## Mobile phlebotomy
 
-Additional components can be included in the test kit box. To fully customize the kit, just contact us at [support@junction.com](mailto:support@junction.com).
+A mobile phlebotomist visits the patient's home or office, collects the sample, and delivers it to the laboratory. Appointment availability depends on the patient's address and the supported phlebotomy providers in that area.
 
-</div>
-
-<img
-  src="/img/wyndly.png"
-  className="w-1/2 h-1/2"
-/>
-
-</div>
-
-## At-home phlebotomy
-
-At-home phlebotomy requires a phlebotomist to visit a patient's home and carry out the phlebotomy draw. The sample is then delivered to the lab by the phlebotomist.
-
-The flow for at-home phlebotomy orders is as follows:
-
-- [Place an order](/lab/overview/quickstart) via the API.
-- The order is processed in the background. For at-home phlebotomy, this means generating the requisition form for the lab test.
-- Once the requisition form is ready, a webhook update and an email to the patient are sent. The email will let them know they can now book an appointment.
-- The patient goes through Junction's appointment booking dashboard, where they can select a location and time from the available slots.
-- Once the appointment takes place and the sample is drawn, it will be taken to the lab.
-- Once the lab analyzes the results, the order is complete and the results can be [fetched](/lab/results/result-formats).
+See the [Mobile Phlebotomy Overview](/lab/at-home-phlebotomy/overview) for coverage, appointment, and address requirements.
 
 ## Walk-in tests
 
-Walk-in tests require the patient to visit a lab location (often referred to as a Patient Service Center or PSC)—such as Quest, Labcorp, or BioReference—to have their sample collected. A requisition form is needed to perform the test, which Junction's API generates if the patient meets the required conditions.
+The patient visits a partner laboratory's Patient Service Center, such as a supported Quest, Labcorp, or BioReference location. The patient can generally visit during the location's operating hours after the requisition is ready. Appointment scheduling is optional and currently available through Junction for supported Quest locations.
 
-This workflow closely mirrors the at-home phlebotomy flow, except that appointment scheduling is not required. With a "walk-in" test, a patient can simply _walk in_ to a PSC or they can schedule an appointment (Quest only).
+See the [Walk-in Overview](/lab/walk-in/overview) for requisition, location, and appointment guidance.
 
 ## On-site collection
 
-On-site collection closely mirrors the walk-in test flow. Scheduling an appointment is not necessary. On-site collections are currently in beta testing.
+The patient has their sample collected at a customer-managed location, such as a clinic, employer health center, or wellness event. The customer manages when and where collection occurs instead of directing the patient to a laboratory-owned Patient Service Center.
 
-<Info>
-  Expanded support for on-site or in-clinic draws coming soon!
-</Info>
+On-site collection is currently in beta. See the [On-site Collection Overview](/lab/on-site-collection/overview) for workflow details.

@@ -1,0 +1,73 @@
+---
+title: "Orders and Results"
+description: "Plan an end-to-end lab testing integration, from configuring and creating orders through monitoring progress and retrieving results."
+---
+
+An order represents one unit of laboratory work for a patient. An [order transaction](/lab/workflow/order-transactions) represents the broader testing journey and groups the initial order with any related orders. Use this guide to understand how those objects progress from order creation to results.
+
+For a runnable sandbox example, start with the [Quickstart](/lab/overview/quickstart).
+
+## Integration flow
+
+<Steps>
+  <Step title="Configure the ordering workflow">
+    Choose a [testing modality](/lab/overview/testing-modalities), then decide which [tests and markers](/lab/workflow/ordering) the order should include. Confirm the required [lab account and billing type](/lab/overview/lab-accounts), [physician workflow](/lab/overview/physicians), and [patient information](/lab/workflow/order-requirements) before creating a production order.
+  </Step>
+  <Step title="Create the patient and order">
+    Create or identify the Junction user representing the patient, then call [Create Order](/api-reference/lab-testing/create-order). Use an [idempotency key](/lab/overview/idempotency) so a safe retry does not create a duplicate order.
+
+    Store the returned `order.id` and `order_transaction.id`. The order identifies the individual lab order. The order transaction groups the initial order with related orders, such as supported redraws, and provides access to their combined results.
+  </Step>
+  <Step title="Monitor order progress">
+    Subscribe to `labtest.order.updated` and the result events required by your workflow. Treat webhooks as notifications that data changed, then retrieve the current order before making a final workflow decision.
+
+    Use `order.status` for the high-level state and `order.events` for modality-specific transitions. See [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle) and the guide for the order's [testing modality](/lab/overview/testing-modalities).
+  </Step>
+  <Step title="Retrieve results">
+    When the order reaches `completed`, call [Get Order Results](/api-reference/lab-testing/results/get-results). Use the structured result in your application and retrieve the [result PDF](/api-reference/lab-testing/results/get-results-pdf) when the laboratory report is required and available.
+
+    Some results are available while the order is still in progress. If your workflow uses them, handle [partial results](/lab/workflow/partials) separately and do not present them as final. See [Results Overview](/lab/results/overview) for the recommended retrieval flow.
+  </Step>
+  <Step title="Handle follow-up states">
+    Plan for [critical results](/lab/results/critical-results), [redraws](/lab/workflow/redraws), and [unmatched results](/lab/workflow/unmatched-results) when those workflows apply to your integration. If Junction's physician network supports the order, [physician follow-up](/lab/results/follow-up) may apply to abnormal results.
+  </Step>
+</Steps>
+
+## How the objects relate
+
+| Object | Purpose |
+| --- | --- |
+| User | Represents the patient in Junction and can have multiple orders. |
+| Order transaction | Represents one testing journey and groups its initial and related orders. See [Order Transactions](/lab/workflow/order-transactions) for its statuses and endpoints. |
+| Order | Represents one unit of laboratory work with its own collection method, status, events, and results. |
+| Appointment | Represents an optional scheduled collection. Its lifecycle is separate from the order lifecycle. |
+| Result | Contains the laboratory findings for an order. Order-transaction result endpoints combine findings from related orders. |
+
+For example, a supported redraw creates another order in the original order transaction. The initial and redraw orders retain separate statuses and results, while the transaction provides their combined result.
+
+## Identifiers to store
+
+| Identifier | Purpose |
+| --- | --- |
+| `user.id` | Identifies the patient in Junction. |
+| `order.id` | Identifies one lab order and is used to retrieve its status and results. |
+| `order_transaction.id` | Groups the initial and related orders and is used to retrieve combined results. |
+| `sample_id` | Identifies the order or specimen at the partner laboratory after the requisition is created. |
+
+The `sample_id` may not be available when the order is first created. Store it when it appears on the order. Store your own patient and request identifiers alongside the Junction identifiers so webhook processing and operational support can reconcile records across systems.
+
+## Order status and result status
+
+Order status and result status answer different questions:
+
+- `order.status` describes the overall operational state, such as `received`, `collecting_sample`, `sample_with_lab`, or `completed`.
+- `result.status` describes whether the laboratory findings are `partial` or `final`.
+
+A partial result can be available while the order is still in progress. When the order reaches `completed`, retrieve the current result rather than treating the order webhook as the result payload.
+
+## Integration requirements
+
+- Make webhook processing idempotent because delivery can be retried or arrive out of order.
+- Treat unknown order and result enum values gracefully so newly introduced values do not break the integration.
+- Use the API as the source of truth for current order and result state rather than relying on webhook delivery order.
+- Test lifecycle transitions and result handling in the [sandbox environment](/lab/overview/sandbox) before placing production orders.

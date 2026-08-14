@@ -1,20 +1,28 @@
 ---
 title: "Overview"
-description: "Overview of the walk-in test modality where patients visit a laboratory Patient Service Center to have their blood drawn."
+description: "Understand how patients complete walk-in lab orders at a partner laboratory Patient Service Center."
 ---
 
-Walk-in tests are one of our offered modalities.
-This modality is focused on patients that are able to go to a Laboratory to have their blood drawn.
+With a walk-in order, the patient visits a partner laboratory's Patient Service Center (PSC), where laboratory staff collect the sample. The patient needs a completed requisition before collection can occur.
 
-## Ordering Flow overview
+## How it works
 
-To achieve this, a high-level overview of the process is defined as:
+1. Place an order through the Junction Dashboard or the [Create Order endpoint](/api-reference/lab-testing/create-order).
+2. Junction validates the order and creates a requisition with the selected partner laboratory.
+3. After the order reaches `requisition_created`, the patient can receive [instructions and the requisition](/lab/workflow/communications#requisition-ready-communication).
+4. The patient selects a supported [PSC location](/lab/overview/locations) and visits during its operating hours. Where supported, the patient can schedule an appointment before visiting.
+5. Laboratory staff collect and process the sample.
+6. Junction makes results available as structured data and a PDF. See [Result Formats](/lab/results/result-formats).
 
-- An order is placed in Junction's system through our Dashboard or API.
-- The order is added to a background queue and additional checks are made before a test requisition is created with the chosen Laboratory.
-- After the requisition is created, some form of communication is carried out with the patient so they can go to the assigned partner Laboratory.
-- After that, the patient can go at any time they want to the laboratory to have their blood drawn.
-- The Laboratory processes the patient's blood sample and generates the required results.
-- Junction exposes the results as soon as they are available, both as PDF and structured data via API.
+## What to plan for
 
-To find out more details, see [`Order Lifecycle`](/lab/walk-in/order-lifecycle), [`Communications`](/lab/walk-in/communications) and [`Webhooks`](/lab/walk-in/webhooks).
+- **Coverage:** Use the [Area Info endpoint](/api-reference/lab-testing/area-info) to identify supported laboratories and services for the patient's ZIP code.
+- **Locations:** Use the [PSC Info endpoint](/api-reference/lab-testing/psc-info) to find a PSC belonging to the laboratory selected for the order.
+- **Appointments:** Appointments are optional for walk-in collection. Junction appointment scheduling is currently available for supported Quest locations. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling).
+- **Patient instructions:** Confirm that the patient has the requisition and follows any collection instructions associated with the order before visiting the PSC.
+
+## Related guides
+
+- [Walk-in Order Lifecycle](/lab/walk-in/order-lifecycle)
+- [Patient Communications](/lab/workflow/communications#walk-in)
+- [Walk-in Webhooks](/lab/walk-in/webhooks)

@@ -1,41 +1,39 @@
 ---
 title: "Overview"
-description: "Overview of the at-home phlebotomy modality where a phlebotomist visits a patient at home to draw blood for lab testing."
+description: "Understand how a mobile phlebotomist visits a patient to collect a sample for laboratory testing."
 ---
 
-At-home phlebotomy tests are one of our offered modalities.
-This modality is focused on patients that don't want to go to a Laboratory,
-but instead want a phlebotomist to come to their home or office to carry out the phlebotomy draw.
-The phlebotomist is responsible for bringing the required equipment and tubes and then delivering those to our partner Laboratories.
+With mobile phlebotomy, a phlebotomist visits the patient's home or office, collects the sample, and delivers it to the partner laboratory. This modality requires an appointment at a supported address.
 
-## Ordering Flow overview
+## How it works
 
-To achieve this, a high-level overview of the process is defined as:
+1. Place an order through the Junction Dashboard or the [Create Order endpoint](/api-reference/lab-testing/create-order).
+2. Junction validates the order and creates a requisition with the selected partner laboratory.
+3. After the order reaches `requisition_created`, the patient can receive [instructions for booking the draw](/lab/workflow/communications#mobile-phlebotomy).
+4. Book or request an appointment with a phlebotomy provider. See [Service Tiers](/lab/at-home-phlebotomy/service-tiers) for the available scheduling workflows.
+5. The phlebotomist visits the patient, collects the sample, and delivers it to the laboratory.
+6. Junction makes results available as structured data and a PDF. See [Result Formats](/lab/results/result-formats).
 
-- An order is placed in Junction's system through our Dashboard or API.
-- The order is added to a background queue and additional checks are made before a test requisition is created with the chosen Laboratory.
-- After the requisition is created, some form of communication is carried out with the patient so they can book an appointment with our phlebotomy partners.
-- On the day of the appointment, our partner phlebotomist will contact the patient directly to confirm that everything is correct for carrying out the appointment.
-- The phlebotomist goes to the appointment, draws the patient's blood and then delivers it to the Laboratory.
-- The Laboratory processes the patient's blood sample and generates the required results.
-- Junction exposes the results as soon as they are available, both as PDF and structured data via API.
+<Note>
+  Some Teams can schedule an appointment before the requisition is created. See [Scheduling Appointments Before a Requisition Has Been Created](/lab/at-home-phlebotomy/order-appointment-lifecycle#scheduling-appointments-before-a-requisition-has-been-created).
+</Note>
 
-## Access Notes and Appointment Notes
+## What to plan for
 
-There are two ways to provide instructions for the phlebotomist:
+- **Coverage:** Appointment availability depends on the patient's address and the phlebotomy providers serving that area. Use the [Area Info endpoint](/api-reference/lab-testing/area-info) before presenting mobile phlebotomy as an option.
+- **Patient age:** Phlebotomy appointments are not supported for patients under 18 years old.
+- **Address:** Availability requests require a reachable street address, including a street number and unit where applicable.
+- **Active appointments:** A patient cannot have more than one active appointment with the same phlebotomy provider.
 
-### Access Notes
+## Instructions for the phlebotomist
 
-Set `access_notes` on the patient address when creating an order. These describe how to physically reach the patient's location — gate codes, parking instructions, entrance details, etc. Access notes are automatically forwarded to the phlebotomy provider on every booking and reschedule.
+Use the following fields to provide information to the phlebotomist:
 
-### Appointment Notes
+- Set `access_notes` on the patient's address when creating the order. Use this field for gate codes, parking instructions, entrances, and other details needed to reach the collection location. Junction forwards these notes to the provider when an appointment is booked or rescheduled.
+- Set `appointment_notes` when booking, requesting, or rescheduling an appointment. Use this field for instructions specific to that appointment. Appointment notes can be changed when the appointment is rescheduled.
 
-Set `appointment_notes` in the booking, request, or reschedule request body. These are per-appointment special instructions — for example, "Please bring photo ID" or "Patient prefers left arm". Appointment notes can be changed on each reschedule and are stored on the appointment itself.
+## Related guides
 
-## Constraints
-
-- Phlebotomy appointments are not supported for patients under 18 years of age.
-- The same patient can't have more than one active appointment with a specific **Phlebotomy provider**.
-- The addresses provided when fetching the appointment availability slots must be reachable by the phlebotomist and must contain a street number and unit (if applicable).
-
-To find out more details, see [`Order and Appointment Lifecycle`](/lab/at-home-phlebotomy/order-appointment-lifecycle), [`Communications`](/lab/at-home-phlebotomy/communications) and [`Webhooks`](/lab/at-home-phlebotomy/webhooks).
+- [Mobile Phlebotomy Order and Appointment Lifecycle](/lab/at-home-phlebotomy/order-appointment-lifecycle)
+- [Patient Communications](/lab/workflow/communications#mobile-phlebotomy)
+- [Mobile Phlebotomy Webhooks](/lab/at-home-phlebotomy/webhooks)

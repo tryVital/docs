@@ -1,21 +1,21 @@
 ---
 title: "Order and Appointment Lifecycle"
-description: "Reference for all order and appointment lifecycle statuses in the at-home phlebotomy flow, from order creation through results delivery."
+description: "Reference for all order and appointment lifecycle statuses in the mobile phlebotomy flow, from order creation through results delivery."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
-The **At-Home Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
+**Mobile Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
 the **Appointment** lifecycle, detailed in the following sections.
 
-## Order Lifecycle
+## Order lifecycle
 
-As discussed in [`Lab Test Lifecycle - Statuses`](/lab/workflow/lab-test-lifecycle#statuses),
+As described in [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle#statuses),
 each lab testing modality has the following format:
 
 `[HIGH-LEVEL STATUS].[TEST MODALITY].[LOW-LEVEL STATUS]`
 
-For each modality, there can be multiple **low-level statuses**, for **At-Home Phlebotomy** the
+For each modality, there can be multiple **low-level statuses**. For **Mobile Phlebotomy**, the
 possible low-level statuses are:
 
 - `ordered`: Junction received the order, stored it into our system, and started processing it asynchronously.
@@ -33,7 +33,7 @@ possible low-level statuses are:
 The Finite State Machine that defines the possible transitions for the low-level statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the At-Home Phlebotomy Order low-level statuses.">
+<Frame caption="Possible state transitions for the Mobile Phlebotomy Order low-level statuses.">
     <img src="/img/at_home_phleb_order_lifecycle.png"/>
 </Frame>
 
@@ -41,33 +41,53 @@ in the following diagram.
 
 <Info>In **sandbox**, there is no async transition from the `ordered` state to the `requisition_created` state. This must be **manually triggered** via the **Junction Dashboard**.</Info>
 
-## Appointment Lifecycle
+## Appointment lifecycle
 
-The appointment lifecycle is separate from the order lifecycle, and it corresponds to a single appointment.
-The possible statuses are defined as follows:
+Each appointment has both a current `status` and a normalized `event_status`. The `events` array contains the history of normalized appointment events.
 
-- `pending`: An appointment was placed in the system, and is pending updates from the phlebotomy service.
-- `reserved`: The time slot has been reserved for the appointment, but the scheduling confirmation is waiting on the creation of the order requisition.
-- `scheduled`: The appointment has been scheduled or rescheduled.
-- `in-progress`: The phlebotomist is on their way to the patient's address.
-- `cancelled`: The appointment was cancelled by either the patient, Junction, or you.
-- `completed`: The phlebotomy appointment was completed and the blood was drawn successfully.
+### Appointment status
+
+The appointment object's `status` describes its current scheduling or provider state:
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | Junction is waiting for the appointment provider to acknowledge or assign the request. |
+| `reserved` | The time slot is held while the order requisition is being created. |
+| `confirmed` | The appointment is confirmed. |
+| `in_progress` | The phlebotomist is completing the appointment. |
+| `completed` | The sample collection was completed. |
+| `cancelled` | The appointment was cancelled. |
+
+### Appointment event status
+
+The appointment object's `event_status` and each `events[].status` use normalized lifecycle values:
+
+| Event status | Meaning |
+| --- | --- |
+| `pending` | The appointment request is awaiting provider acknowledgment or assignment. |
+| `reserved` | The appointment is held until its requisition is created. |
+| `scheduled` | The appointment was scheduled or rescheduled. A `confirmed` appointment uses the `scheduled` event status. |
+| `in_progress` | The appointment is in progress. |
+| `completed` | The sample collection was completed. |
+| `cancelled` | The appointment was cancelled. |
+
+Not every provider produces every status. Treat both enums as non-exhaustive and handle unknown values gracefully.
 
 The Finite State Machine that defines the possible transitions for the appointment statuses described above is illustrated
 in the following diagram.
 
-<Frame caption="Possible state transitions for the At-Home Phlebotomy Appointment statuses.">
+<Frame caption="Common mobile phlebotomy appointment event-status transitions.">
     <img src="/img/at_home_phleb_appointment_lifecycle.png"/>
 </Frame>
 
 The events are related to a single appointment. An order can have multiple existing appointments in Junction's system, although only one appointment will be considered active
 and returned when using the [GET Appointment endpoint](/api-reference/lab-testing-at-home-phlebotomy/get-appointment).
 
-## Scheduling Appointments Before A Requisition Has Been Created
+## Scheduling appointments before a requisition has been created
 
 <FeatureBeta />
 
-When this feature is enabled on your Team, you can create an At-Home Phlebotomy appointment even before the requisition has been created for
+When this feature is enabled on your Team, you can create a Mobile Phlebotomy appointment even before the requisition has been created for
 the corresponding Order (i.e., reaching the `requisition_created` status).
 
 This allows you to build an experience that can order the lab test _and_ book an appointment consecutively, without having to wait on the
@@ -115,7 +135,7 @@ asynchronous requisition creation process that may take an indeterminate amount 
 </Steps>
 
 
-## Cancelling An Appointment
+## Cancelling an appointment
 
 If an Appointment is cancelled **before** a requisition has been created:
 

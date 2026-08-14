@@ -1,137 +1,57 @@
 ---
-title: "API Endpoints and Errors"
-description: "Error handling and optional features for scheduling appointments at Patient Service Centers (PSCs)."
+title: "Schedule PSC Appointments"
+description: "Find appointment availability and book, retrieve, reschedule, or cancel supported Quest PSC appointments."
 ---
 
-## API Endpoints
+Junction can schedule walk-in appointments at supported Quest Patient Service Centers. Appointment scheduling is optional; patients can generally complete a walk-in order without booking an appointment.
 
-All endpoints require authentication and are prefixed with `/v3/order`:
+## Before scheduling
 
-- [`POST /v3/order/psc/appointment/availability`](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) - Get available time slots
-- [`POST /v3/order/{order_id}/psc/appointment/book`](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) - Book an appointment
-- [`PATCH /v3/order/{order_id}/psc/appointment/reschedule`](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling) - Reschedule an appointment
-- [`PATCH /v3/order/{order_id}/psc/appointment/cancel`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) - Cancel an appointment
-- [`GET /v3/order/{order_id}/psc/appointment`](/api-reference/lab-testing/psc-scheduling/get-psc-appointment) - Get appointment details
-- [`GET /v3/order/psc/appointment/cancellation-reasons`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons) - Get cancellation reasons
+- Create a walk-in order for a supported Quest laboratory.
+- Use [Area Info and PSC Info](/lab/overview/locations) to find locations with the `appointment_scheduling_via_junction` capability.
+- Wait for the order to reach `requisition_created` unless [scheduling before requisition creation](/lab/walk-in/order-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled for your Team.
 
----
+<Note>
+  Arizona Quest locations are operated by Sonora Quest and require the [Arizona Scheduling](/lab/walk-in/order-lifecycle#arizona-scheduling) feature.
+</Note>
 
-## Error Handling
+## Scheduling workflow
 
-### Environment Differences
+<Steps>
+  <Step title="Find availability">
+    Call [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) with up to three PSC `site_codes`, or search by ZIP code and radius.
 
-⚠️ **Important**: Currently, error behavior differs between sandbox and production environments:
+    Appointment start and end times are returned in UTC. Use each location's `iana_timezone` to display local times.
+  </Step>
+  <Step title="Book the appointment">
+    Pass the selected slot's `booking_key` to [Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking). Save the appointment `id`, `status`, `event_status`, and `external_id` from the response.
+  </Step>
+  <Step title="Monitor confirmation">
+    Subscribe to `labtest.appointment.updated`. The appointment object's `status` reports its current provider state, while `event_status` reports its normalized lifecycle state. See the [appointment lifecycle](/lab/walk-in/order-lifecycle#appointment-lifecycle).
+  </Step>
+  <Step title="Manage the appointment">
+    Use the appointment endpoints to retrieve, reschedule, or cancel the active appointment. Cancelling the lab order does not automatically cancel a PSC appointment.
+  </Step>
+</Steps>
 
-| Environment    | Quest Integration | Slot Conflict Behavior                        |
-| -------------- | ----------------- | --------------------------------------------- |
-| **Sandbox**    | Mock client       | Returns 400 (mock doesn't simulate conflicts) |
-| **Production** | Real Quest API    | Returns 404 (actual Quest response)           |
+## Appointment endpoints
 
-**Recommendation**: For now, handle both 400 and 404 responses as potential slot-unavailability scenarios.
+| Operation | Endpoint |
+| --- | --- |
+| Find availability | [`POST /v3/order/psc/appointment/availability`](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) |
+| Book | [`POST /v3/order/{order_id}/psc/appointment/book`](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) |
+| Get | [`GET /v3/order/{order_id}/psc/appointment`](/api-reference/lab-testing/psc-scheduling/get-psc-appointment) |
+| Reschedule | [`PATCH /v3/order/{order_id}/psc/appointment/reschedule`](/api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling) |
+| Cancel | [`PATCH /v3/order/{order_id}/psc/appointment/cancel`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) |
+| Get cancellation reasons | [`GET /v3/order/psc/appointment/cancellation-reasons`](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons) |
 
-### Frequently Asked Questions
+## Provider appointment ID
 
-#### Q: Do I need to parse error messages to distinguish between different 400 errors?
+The `external_id` is the appointment identifier assigned by the laboratory provider. Make it available to the patient because the PSC may use it to locate the appointment. Junction includes it in supported [appointment SMS communications](/lab/workflow/communications#appointment-communications).
 
-**Yes.** Since multiple error types return 400 status codes, you must examine the error message content to determine the appropriate handling:
+## Related guides
 
-- **Time in the past**: `"This appointment slot is no longer available. Please select a new time."` → Select new slot
-- **Invalid booking key**: `"Invalid booking key format"` → Fix request
-- **Missing parameters**: `"radius must be provided when using zip_code"` → Fix request
-- **Order state issues**: `"Order is not in a state that allows booking..."` → Contact support
-
-HTTP status codes alone are insufficient because our API uses 400 for multiple distinct error categories that require different user experiences.
-
-### Error Categories
-
-#### Slot Unavailability Errors
-
-_The user should select a different time slot_
-
-| Status     | Error Message                                                               | When It Occurs                           | User Action                            |
-| ---------- | --------------------------------------------------------------------------- | ---------------------------------------- | -------------------------------------- |
-| 400        | `"This appointment slot is no longer available. Please select a new time."` | Requested time is in the past            | Select a future time slot              |
-| 400 or 404 | Quest-specific error messages                                               | Slot already taken or no longer exists   | Select a different time slot           |
-| 404        | `"No slots found for zip code"`                                             | No locations/slots in the area           | Try a different location or date range |
-| 404        | `"No slots found. Not all PSCs support scheduling..."`                      | All locations lack scheduling capability | Use different locations                |
-
-#### Input Validation Errors
-
-_Fix the request parameters_
-
-| Status | Error Message                                                 | When It Occurs                        | User Action                                     |
-| ------ | ------------------------------------------------------------- | ------------------------------------- | ----------------------------------------------- |
-| 400    | `"Invalid booking key format"`                                | Malformed or corrupted booking key    | Refresh availability and get a new booking key  |
-| 400    | `"Location with site code {code} not found"`                  | Invalid PSC location code             | Use a valid site code from the availability API |
-| 400    | `"Location with site code {code} is no longer active"`        | PSC location disabled                 | Select a different location                     |
-| 400    | `"start_date must be greater or equal than the current date"` | Past date in the availability request | Use current or future date                      |
-| 400    | `"site_codes or zip_code must be provided"`                   | Missing search parameters             | Provide either site codes or zip code           |
-| 400    | `"radius must be provided when using zip_code"`               | Missing radius with zip code search   | Include radius parameter                        |
-| 400    | `"site_codes must be less than or equal to 3"`                | Too many site codes                   | Limit to 3 site codes maximum                   |
-| 404    | `"This order doesn't exist."`                                 | Invalid order ID                      | Verify order ID is correct                      |
-| 404    | `"This order is not a walk-in phlebotomy order."`             | Wrong order type                      | Use the correct order type                      |
-
-#### Order State Errors
-
-_Order workflow or business logic issues_
-
-| Status | Error Message                                           | When It Occurs                       | User Action                             |
-| ------ | ------------------------------------------------------- | ------------------------------------ | --------------------------------------- |
-| 400    | `"Order is not a walkin phlebotomy order"`              | Wrong order type for PSC booking     | Contact support                         |
-| 400    | `"Order does not have a sample ID..."`                  | Order missing requisition            | Wait for requisition or contact support |
-| 400    | `"Order is not in a state that allows booking..."`      | Order workflow prevents booking      | Contact support                         |
-| 400    | `"Order is not in a state that allows cancelling..."`   | Order workflow prevents cancellation | Contact support                         |
-| 400    | `"Order is not in a state that allows rescheduling..."` | Order workflow prevents rescheduling | Contact support                         |
-| 400    | `"This order does not have a requisition..."`           | Missing requisition for appointment  | Wait or contact support                 |
-| 400    | `"This lab is not supported."`                          | Order not for Quest lab              | Use a supported lab                     |
-
-#### Appointment Management Errors
-
-_Appointment-specific business rules_
-
-| Status | Error Message                                         | When It Occurs                              | User Action                       |
-| ------ | ----------------------------------------------------- | ------------------------------------------- | --------------------------------- |
-| 400    | `"This order doesn't have an appointment yet."`       | Trying to modify a non-existent appointment | Book an appointment first         |
-| 400    | `"This appointment cannot be rescheduled."`           | Appointment marked non-reschedulable        | Cancel and book a new appointment |
-| 400    | `"This appointment has been cancelled or completed."` | Operating on finalized appointment          | No further action is possible     |
-| 400    | `"This appointment has already been cancelled."`      | Cancelling already cancelled appointment    | No action needed                  |
-| 404    | `"Appointment not found."`                            | Appointment doesn't exist                   | Verify appointment exists         |
-
-#### Authorization Errors
-
-_Access control issues_
-
-| Status | Error Message        | When It Occurs                      | User Action     |
-| ------ | -------------------- | ----------------------------------- | --------------- |
-| 401    | Authentication error | Invalid or expired token            | Re-authenticate |
-| 403    | `"Action forbidden"` | User lacks permission for the order | Contact support |
-
-#### Service Availability Errors
-
-_System configuration or availability_
-
-| Status | Error Message           | When It Occurs          | User Action                  |
-| ------ | ----------------------- | ----------------------- | ---------------------------- |
-| 503    | `"Feature not enabled"` | PSC scheduling disabled | Contact support or try later |
-
-### Testing Error Scenarios
-
-#### Sandbox Testing
-
-- Most validation errors can be tested in sandbox
-- Slot conflicts cannot be reliably tested (mock client always succeeds)
-- Use invalid parameters to test input validation
-
-#### Production Testing
-
-- Test with caution using real appointments
-- Slot conflicts will return actual 404 errors from Quest
-- Time-based errors can be tested with past dates
-
-### Quest API Limitations
-
-- **Timeout**: 15 seconds read timeout, 5 seconds connection timeout
-- **Slot availability**: Real-time, can change between availability check and booking
-- **Mock client**: Doesn't simulate all real-world scenarios
-- **Rate limiting**: Standard Quest API rate limits apply
-
+- [Advanced PSC Scheduling Options](/lab/walk-in/psc-appointment-scheduling-opt-ins)
+- [PSC Appointment Errors and Troubleshooting](/lab/walk-in/psc-appointment-errors)
+- [Walk-in Order and Appointment Lifecycle](/lab/walk-in/order-lifecycle)
+- [Walk-in Webhooks](/lab/walk-in/webhooks)

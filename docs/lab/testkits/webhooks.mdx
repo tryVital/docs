@@ -1,10 +1,9 @@
 ---
 title: "Webhooks"
-description: "Reference for webhook events triggered during at-home testkit order lifecycle changes, with example payload structures."
+description: "Reference for webhook events triggered during at-home test kit order lifecycle changes, with example payload structures."
 ---
 
-The following webhook events are of interest when placing an At-Home Testkit order. These are
-described in detail in the following sections.
+The following webhook events report changes to at-home test kit orders.
 
 ## Order webhook events
 
@@ -17,7 +16,7 @@ having the `ordered` status, and all subsequent status changes will trigger a `l
 
 The webhook payload body will have the following information if the Order is in the `requisition_created` status:
 
-```json Testkit Order Updated
+```json Test Kit Order Updated
 {
    "data":{
       "created_at":"2023-09-01T18:02:41.210495+00:00",

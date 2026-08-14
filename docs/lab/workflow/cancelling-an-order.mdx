@@ -8,8 +8,8 @@ Order cancellation depends on the current status of your order and its collectio
 <Warning>
 **Important timing considerations to avoid financial costs:**
 
-- **At-home phlebotomy**: Appointments cancelled more than 24 hours in advance will be fully refunded. Cancellations made less than 24 hours before the scheduled appointment are non-refundable.
-- **Testkits**: Cancel before shipment to avoid fees. Testkits typically ship within the same business day if orders are placed before 1pm EST.
+- **Mobile phlebotomy**: Appointments cancelled more than 24 hours in advance will be fully refunded. Cancellations made less than 24 hours before the scheduled appointment are non-refundable.
+- **Test kits**: Cancel before shipment to avoid fees. Test kits typically ship within the same business day if orders are placed before 1 PM ET.
 - **Walk-in tests**: Can generally be cancelled until sample collection begins.
 - **On-site collection**: Cancel before the collection event.
 </Warning>
@@ -22,7 +22,7 @@ All collection methods allow cancellation during these early phases:
 - `ordered` - Initial order placement
 - `requisition_created` - After requisition form is generated
 - `requisition_bypassed` - When requisition is bypassed
-- `awaiting_registration` - For registrable testkits
+- `awaiting_registration` - For registrable test kits
 
 ### ❌ Never Cancellable (Terminal States)
 
@@ -34,7 +34,7 @@ Orders **cannot** be cancelled once they reach these states:
 ## Collection method-specific rules
 
 <Tabs>
-  <Tab title="Walk-In Tests">
+  <Tab title="Walk-in Tests">
     **✅ Can cancel:**
     - `received.walk_in_test.ordered`
     - `received.walk_in_test.requisition_created`
@@ -53,7 +53,7 @@ Orders **cannot** be cancelled once they reach these states:
     <Info>Cancelling a walk-in test order does **not** automatically cancel PSC appointments to prevent a poor patient experience, as it could lead to a patient arriving and their appointment being cancelled. Use the [PSC appointment cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling) if you need to cancel the appointment separately. Orders can be reinstated by our support team if a patient shows up for an appointment related to a cancelled order.</Info>
   </Tab>
 
-  <Tab title="At-Home Phlebotomy">
+  <Tab title="Mobile Phlebotomy">
     **✅ Can cancel:**
     - `received.at_home_phlebotomy.ordered`
     - `received.at_home_phlebotomy.requisition_created`
@@ -69,10 +69,10 @@ Orders **cannot** be cancelled once they reach these states:
     - `sample_with_lab.at_home_phlebotomy.partial_results` - Has partial results
     - `failed.at_home_phlebotomy.sample_error` - Sample error occurred
 
-    <Warning>You can cancel the order directly - the system will automatically cancel any scheduled at-home phlebotomy appointments. Appointments cancelled with less than 24 hours' notice are non-refundable.</Warning>
+    <Warning>You can cancel the order directly - the system will automatically cancel any scheduled mobile phlebotomy appointments. Appointments cancelled with less than 24 hours' notice are non-refundable.</Warning>
   </Tab>
 
-  <Tab title="Testkits">
+  <Tab title="Test Kits">
     **✅ Can cancel:**
     - `received.testkit.ordered`
     - `received.testkit.awaiting_registration`
@@ -87,7 +87,7 @@ Orders **cannot** be cancelled once they reach these states:
     - `collecting_sample.testkit.transit_lab`
     - `sample_with_lab.testkit.delivered_to_lab`
 
-    <Warning>Testkits become non-cancellable once they enter the shipping phase to avoid logistics costs. Testkits typically ship within the same business day if orders are placed before 1pm EST.</Warning>
+    <Warning>Test kits become non-cancellable once they enter the shipping phase to avoid logistics costs. Test kits typically ship within the same business day if orders are placed before 1 PM ET.</Warning>
   </Tab>
 
   <Tab title="On-Site Collection">
@@ -110,15 +110,15 @@ Orders **cannot** be cancelled once they reach these states:
 ### Cancel Appointment (Optional - For Reference Only)
 
 <Info>
-**Note**: You can skip this step and go directly to [cancelling the order](#cancel-the-order). The system will automatically cancel at-home phlebotomy appointments when you cancel the order, but **will not** automatically cancel walk-in PSC appointments to avoid a poor patient experience where they arrive and their appointment is cancelled.
+**Note**: You can skip this step and go directly to [cancelling the order](#cancel-the-order). The system will automatically cancel mobile phlebotomy appointments when you cancel the order, but **will not** automatically cancel walk-in PSC appointments to avoid a poor patient experience where they arrive and their appointment is cancelled.
 </Info>
 
 If you need to cancel only the appointment (without cancelling the entire order), use the appropriate endpoint for your collection method:
 
-- **At-home phlebotomy**: [Appointment Cancellation endpoint](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
+- **Mobile phlebotomy**: [Appointment Cancellation endpoint](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
 - **Walk-in tests (PSC)**: [PSC Appointment Cancellation endpoint](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 
-#### At-Home Phlebotomy Appointment Cancellation
+#### Mobile Phlebotomy Appointment Cancellation
 
 <CodeGroup>
 
@@ -203,7 +203,7 @@ fmt.Printf("Received data %s\n", response)
 
 </CodeGroup>
 
-#### Walk-In Test (PSC) Appointment Cancellation
+#### Walk-in Test (PSC) Appointment Cancellation
 
 For walk-in tests scheduled at Patient Service Centers, use the PSC appointment cancellation endpoint:
 
@@ -295,7 +295,7 @@ Use the [order cancellation endpoint](/api-reference/lab-testing/cancel-order) t
 
 <Info>
 **Automatic Appointment Handling**:
-- **At-home phlebotomy**: Appointments are automatically cancelled when you cancel the order
+- **Mobile phlebotomy**: Appointments are automatically cancelled when you cancel the order
 - **Walk-in PSC**: Appointments are **not** automatically cancelled to prevent poor patient experience if they show up. Orders can be reinstated if needed.
 </Info>
 
@@ -383,7 +383,7 @@ When attempting to cancel an order that cannot be cancelled, you'll receive an e
 
 **Common reasons for cancellation failure:**
 - Order is already in a terminal state (completed, failed, or cancelled)
-- Testkit has already shipped
+- Test kit has already shipped
 - Sample has been collected or is with the lab
 - Results are already available (partial or complete)
 
@@ -500,10 +500,10 @@ Look for these indicators in the response:
 
 - [Order Lifecycle Overview](/lab/workflow/lab-test-lifecycle)
 - [API Reference: Cancel Order](/api-reference/lab-testing/cancel-order)
-- [API Reference: Cancel At-Home Appointment](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
+- [API Reference: Cancel Mobile Phlebotomy Appointment](/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling)
 - [API Reference: Cancel PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling)
 - [Webhooks for Order Events](/lab/testkits/webhooks)
 
 ---
 
-*For questions about specific cancellation scenarios, please contact support at [support@junction.com](mailto:support@junction.com)*
+For questions about a specific cancellation scenario, [contact Junction support](/home/getting-support).

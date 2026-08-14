@@ -1,0 +1,214 @@
+---
+title: "Patient Communications"
+description: "Understand which email and SMS notifications Junction sends for each lab testing modality."
+---
+
+import ContactCsm from '/snippets/contact-csm.mdx';
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+Junction can send patients email and SMS notifications as a lab order progresses. The available channels and events depend on the order's [testing modality](/lab/overview/testing-modalities).
+
+Patient communications are separate from [webhook events](/webhooks/introduction). Patient communications contact the patient, while webhooks notify your integration about order and appointment changes.
+
+<Note>
+  [Contact Junction support](/home/getting-support) to request a copy of our current default SMS and email templates.
+</Note>
+
+## Configure patient communications
+
+You can enable or disable patient email and SMS in the [Junction Dashboard](https://app.junction.com/) under **Team Settings → Branding & Communication**. The settings apply to all orders placed by the Team.
+
+| Email setting | SMS setting | Patient communications |
+| --- | --- | --- |
+| Enabled | Enabled | Junction can send email and SMS when the event supports both channels |
+| Enabled | Disabled | Junction sends supported email communications only |
+| Disabled | Enabled | Junction sends supported SMS communications only |
+| Disabled | Disabled | Junction sends no patient communications |
+
+The order must also contain the patient's contact information:
+
+- SMS messages require a valid phone number.
+- Emails require a valid email address.
+
+Provide these values in `patient_details` when [creating an order](/api-reference/lab-testing/create-order#body-patient-details).
+
+<Note>
+  Email and SMS availability varies by modality and event. The tables below show when Junction supports each communication channel.
+</Note>
+
+## Communications support by modality
+
+| Modality | SMS | Email |
+| --- | --- | --- |
+| [At-home test kit](/lab/testkits/overview) | Yes | No |
+| [Mobile phlebotomy](/lab/at-home-phlebotomy/overview) | Yes | Yes |
+| [Walk-in](/lab/walk-in/overview) | Yes | Yes |
+| [On-site collection](/lab/on-site-collection/overview) | Yes | Yes |
+
+## At-home test kits
+
+At-home test kit communications use SMS only. Junction does not send patient emails for this modality.
+
+The following communications correspond to events in the [test kit order lifecycle](/lab/testkits/order-lifecycle):
+
+| Event | Default SMS purpose |
+| --- | --- |
+| Order created with `ordered` status | Confirms that Junction received the order |
+| Kit moves to `transit_customer` | Provides the expected arrival date |
+| Kit moves to `out_for_delivery` | Tells the patient that delivery is expected that day |
+| Sample moves to `delivered_to_lab` | Confirms that the lab received the sample |
+| Order moves to `completed` | Tells the patient that result processing is complete |
+| Order moves to `cancelled` | Confirms that the order was cancelled |
+
+### Collection reminders
+
+<ContactCsm />
+
+When order SMS reminders and the Junction User Portal are enabled for your Team, Junction may remind the patient to return a kit that remains in `with_customer` status:
+
+| Timing | Purpose |
+| --- | --- |
+| 2 days after the kit reaches the patient | Reminds the patient to ship the sample and links to collection instructions |
+| 7 days after the kit reaches the patient | Sends a second reminder with the collection-instructions link |
+
+Reminders stop once the sample moves to the return-shipping or laboratory-processing stages.
+
+## Mobile phlebotomy
+
+The following communications correspond to events in the [mobile phlebotomy order and appointment lifecycle](/lab/at-home-phlebotomy/order-appointment-lifecycle).
+
+| Event | SMS | Email |
+| --- | --- | --- |
+| Order created with `ordered` status | Confirms that Junction received the order | None |
+| Order moves to `requisition_created` | Prompts the patient to book the draw | Provides the booking link and requisition |
+| Appointment is pending | Provides the appointment-request status when only SMS is enabled | Confirms that the request is pending when email is enabled |
+| Appointment is confirmed | Provides the appointment time and management link when only SMS is enabled | Provides the appointment time and management link when email is enabled |
+| Appointment is cancelled | Confirms the cancellation and provides a rebooking link when only SMS is enabled | Confirms the cancellation and provides a rebooking link when email is enabled |
+| Draw is completed | Confirms that the sample is being delivered to the lab | None |
+| Order moves to `completed` | Tells the patient that result processing is complete | None |
+| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+
+When email and SMS are both enabled, requisition creation produces both communications. Appointment status updates are delivered by email; SMS is the fallback when email is disabled and SMS is enabled.
+
+If [scheduling before requisition creation](/lab/at-home-phlebotomy/order-appointment-lifecycle#scheduling-appointments-before-a-requisition-has-been-created) is enabled, appointment messages are triggered by the appointment status. Non-appointment messages remain tied to the order status.
+
+## Walk-in
+
+Junction sends communications for selected events—not every status in the [walk-in order lifecycle](/lab/walk-in/order-lifecycle).
+
+| Event | SMS | Email |
+| --- | --- | --- |
+| Order created with `ordered` status | Confirms that Junction received the order | None |
+| Order moves to `requisition_created` | Tells the patient that they can visit the lab and provides appointment-booking instructions | Sends the requisition-ready email described below |
+| Junction appointment is confirmed | Provides the appointment date, location, and provider appointment ID | None |
+| Junction appointment is cancelled | Confirms the appointment cancellation | None |
+| Order moves to `redraw_available` | Tells the patient that another collection is recommended | Sends a redraw notification and, when available, a new requisition PDF |
+| Order moves to `completed` | Tells the patient that result processing is complete | None |
+| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+
+Statuses not listed in this table do not produce a default patient communication. For example, Junction does not send a default patient message for `partial_results`, `sample_error`, or `requisition_bypassed`.
+
+### Requisition-ready communication
+
+The requisition-ready communication occurs when the order moves from `ordered` to `requisition_created`. This transition means the partner laboratory accepted the order and generated the requisition.
+
+If SMS is enabled, Junction tells the patient that they can visit the partner laboratory. If email is enabled, Junction sends an email containing:
+
+- The partner laboratory.
+- Instructions for completing the collection.
+- An appointment-booking link.
+- The requisition PDF, when available.
+
+When the [Junction User Portal](https://support.junction.com/articles/7021490417-patient-portal-product-guide?lang=en) is enabled, the SMS and email actions open the patient's order in the portal. Otherwise, the email action opens the partner laboratory's appointment-booking page.
+
+### User Portal links
+
+For supported Teams and laboratory partners, Junction creates a time-limited, pre-authorized User Portal link when the requisition is created. The patient can use the link to find a Patient Service Center, book an appointment where supported, and review their order and appointment details.
+
+Because the link is pre-authorized, anyone with access to it may be able to open the patient's portal. Treat it as sensitive patient information and do not place it in logs or share it with anyone other than the patient.
+
+<Note>
+  The automated link is scoped to the relevant order. You do not need to call the [Create Portal URL endpoint](/api-reference/user/create-portal-url) for Junction-managed communications.
+</Note>
+
+### Appointment communications
+
+Appointments booked through Junction have a lifecycle separate from the order itself. See [PSC appointment scheduling](/lab/walk-in/psc-appointment-scheduling) and the [appointment lifecycle](/lab/walk-in/order-lifecycle#appointment-lifecycle).
+
+Junction sends SMS—but not email—when an appointment is confirmed or cancelled. At this time, Junction's PSC appointment-scheduling API is available only for supported Quest locations. Patients can still book directly with other laboratory partners using the link in the requisition-ready communication.
+
+### Appointment reminders
+
+<ContactCsm />
+
+When order SMS reminders are enabled for your Team, Junction may send SMS reminders containing a User Portal link. No reminder emails are sent.
+
+Before an appointment is booked, Junction schedules the following reminders after requisition creation:
+
+| Timing | Purpose |
+| --- | --- |
+| 24 hours | Reminds the patient to book an appointment |
+| 72 hours | Sends a second booking reminder |
+| 7 days | Sends a final booking reminder and, when available, includes a nearby Patient Service Center |
+
+Booking reminders stop after Junction receives a scheduled appointment event.
+
+For appointments scheduled through Junction, reminders may be sent:
+
+| Timing | Purpose |
+| --- | --- |
+| 24 hours before the appointment | Reminds the patient of the appointment time and provides a link to its details |
+| 2 hours before the appointment | Reminds the patient of the location and provides a rescheduling link |
+
+If an appointment is booked less than 24 hours before its start time, Junction skips the elapsed 24-hour reminder. Rescheduling recalculates the reminder times, and cancelling clears pending appointment reminders.
+
+### Scheduling before requisition creation
+
+<FeatureBeta />
+
+Some Teams can [schedule an appointment before the requisition has been created](/lab/walk-in/order-lifecycle#scheduling-appointments-before-a-requisition-has-been-created). In this workflow:
+
+- Appointment confirmation and cancellation SMS messages are triggered by the appointment status.
+- The requisition-ready SMS and email remain tied to the order's later `requisition_created` status.
+- Junction does not send appointment confirmation or cancellation emails.
+
+### Redraw communications
+
+<Note>
+  Redraws must be enabled for your Team for patients to receive SMS messages for the `redraw_available` event.
+</Note>
+
+If an order becomes eligible for a [redraw](/lab/workflow/redraws), Junction can send an SMS telling the patient that another collection is recommended and a redraw notification email. The email includes a new requisition PDF when one is available.
+
+## On-site collection
+
+<FeatureBeta />
+
+The following communications correspond to events in the [on-site collection order lifecycle](/lab/on-site-collection/order-lifecycle):
+
+| Event | SMS | Email |
+| --- | --- | --- |
+| Order created with `ordered` status | Confirms that Junction received the order | None |
+| Order moves to `requisition_created` | Tells the patient that the order form is ready | Provides the requisition PDF and collection instructions |
+| Draw is completed | Confirms that the sample is being delivered to the lab | None |
+| Order moves to `completed` | Tells the patient that result processing is complete | None |
+| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+
+## Customize or replace Junction communications
+
+<ContactCsm />
+
+Junction can customize SMS templates by event. Email templates can be branded and sent from your own domain. Work with your Customer Success Manager to configure these options.
+
+To prevent Junction from contacting patients, disable both patient email and SMS. You can then subscribe to the modality's webhook events and send communications from your own system:
+
+- [Walk-in webhooks](/lab/walk-in/webhooks)
+- [Mobile phlebotomy webhooks](/lab/at-home-phlebotomy/webhooks)
+- [At-home test kit webhooks](/lab/testkits/webhooks)
+- [On-site collection webhooks](/lab/on-site-collection/webhooks)
+
+Your integration is responsible for deciding which events should contact the patient and for preventing duplicate messages.
+
+## Test communications in sandbox
+
+Use the Junction Dashboard or the [Simulate Order endpoint](/api-reference/lab-testing/simulate-order) to move an order through supported statuses and test the corresponding communications. See [Testing in Sandbox](/lab/overview/sandbox) for the complete simulation workflow.

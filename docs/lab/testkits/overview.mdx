@@ -1,30 +1,46 @@
 ---
 title: "Overview"
-description: "Overview of the at-home testkit modality where patients receive a kit by mail, collect their own sample, and return it to the lab."
+description: "Understand how patients receive, collect, and return an at-home test kit for laboratory processing."
 ---
 
-At-home Testkits are one of our offered modalities.
-This modality involves sending a kit to a patient's home, where the patient will collect their own sample and send the kit to our Lab network through mail.
+With an at-home test kit, Junction ships collection materials to the patient. The patient collects their sample by following the kit instructions and returns it to the laboratory by mail.
 
-Within this modality, we provide two types of testkits, those which are pre-registered to a user, and those which need to be [registered by the patient upon receiving the kit](/lab/workflow/order-registrable-testkit).
+Junction supports both registered test kits, which are associated with a patient before shipment, and registrable test kits, which are associated with a patient when the kit is activated.
 
-## Ordering Flow overview
+## How it works
 
-To achieve this, a high-level overview of the process is defined as:
+1. Place an order through the Junction Dashboard or the [Create Order endpoint](/api-reference/lab-testing/create-order).
+2. Junction validates the order and prepares the kit for shipment to the provided address.
+3. The patient receives the kit and, for a registrable kit, completes [patient registration](/lab/workflow/order-registrable-testkit).
+4. The patient follows the collection instructions and returns the sample using the supplied packaging.
+5. The laboratory receives and processes the sample.
+6. Junction makes results available as structured data and a PDF. See [Result Formats](/lab/results/result-formats).
 
-- An order is placed in Junction's system through our Dashboard or API.
-- The order is added to a background queue and additional checks are made before the kit is shipped to the provided address.
-- Once the order shipment is created, a requisition is generated.
-- After the requisition is created, some form of communication is carried out with the patient.
-- If the kit is not registered, then the user must register the kit before results can be provided.
-- The patient receives the kit, collects their sample, and sends the kit back through mail.
-- The Laboratory processes the patient's blood sample and generates the required results.
-- Junction exposes the results as soon as they are available, both as PDF and structured data via API.
+## What to plan for
 
+- **Kit type:** Decide whether the kit should be registered to a known patient before shipment or registered after it reaches the recipient.
+- **Patient registration:** Junction cannot provide results for a registrable kit until a patient registers it.
+- **Shipping:** Track both outbound kit delivery and the sample's return to the laboratory. See the [At-Home Test Kit Order Lifecycle](/lab/testkits/order-lifecycle).
+- **Patient communications:** At-home test kit communications use SMS only. See [Patient Communications](/lab/workflow/communications#at-home-test-kits).
 
-## Constraints
+## Kit components
 
-- If the testkit is unregistered, then the user must register it in order for the results to be processed.
+Kit contents depend on the test and collection method. A kit may include:
 
+- A mailer box and return packaging
+- Collection devices, such as lancets, blood collection cards, or saliva tubes
+- Gauze, plasters, and other collection supplies
+- Collection instructions
 
-To find out more details, see [`Order Lifecycle`](/lab/testkits/order-lifecycle), [`Communications`](/lab/testkits/communications) and [`Webhooks`](/lab/testkits/webhooks).
+To discuss custom kit components, [contact Junction support](/home/getting-support).
+
+<Frame caption="Example of an at-home test kit.">
+  <img src="/img/wyndly.png" />
+</Frame>
+
+## Related guides
+
+- [At-Home Test Kit Order Lifecycle](/lab/testkits/order-lifecycle)
+- [Registrable Test Kits](/lab/workflow/order-registrable-testkit)
+- [Proxy and Inventory Workflows for Registrable Test Kits](/lab/workflow/registrable-testkit-proxy-inventory-workflows)
+- [At-Home Test Kit Webhooks](/lab/testkits/webhooks)

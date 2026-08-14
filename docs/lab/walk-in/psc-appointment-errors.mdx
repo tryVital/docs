@@ -1,0 +1,75 @@
+---
+title: "PSC Appointment Errors and Troubleshooting"
+description: "Handle slot conflicts, invalid requests, order-state errors, and provider failures when scheduling PSC appointments."
+---
+
+PSC appointment errors fall into four broad categories: unavailable slots, invalid input, an incompatible order state, or a provider failure. Handle errors according to whether the patient can retry, your integration must correct the request, or Junction support must review the order.
+
+## Slot availability
+
+Appointment availability can change between searching and booking. When a slot is no longer available, ask the patient to select another time and request fresh availability.
+
+Sandbox and production can return different status codes for a slot conflict:
+
+| Environment | Typical status | Behavior |
+| --- | --- | --- |
+| Sandbox | `400` | The mock provider does not reproduce every production conflict. |
+| Production | `404` | The provider reports that the requested slot is no longer available. |
+
+Handle both `400` and `404` as possible slot-unavailability responses when the message indicates a slot conflict.
+
+| Example message | Recommended action |
+| --- | --- |
+| `This appointment slot is no longer available. Please select a new time.` | Request fresh availability and select another slot. |
+| `No slots found for zip code` | Try another date range, radius, or location. |
+| `No slots found. Not all PSCs support scheduling...` | Select locations with `appointment_scheduling_via_junction`. |
+
+## Invalid requests
+
+| Example message | Recommended action |
+| --- | --- |
+| `Invalid booking key format` | Request availability again and use the returned booking key. |
+| `Location with site code {code} not found` | Use a site code returned by PSC Info or appointment availability. |
+| `Location with site code {code} is no longer active` | Select another location. |
+| `start_date must be greater or equal than the current date` | Use the current date or a future date. |
+| `site_codes or zip_code must be provided` | Provide site codes or a ZIP code. |
+| `radius must be provided when using zip_code` | Include a search radius. |
+| `site_codes must be less than or equal to 3` | Send no more than three site codes. |
+
+Several invalid requests return `400`. If the response does not include a machine-readable error code, inspect the message to distinguish errors that require different corrective actions.
+
+## Order-state errors
+
+| Condition | Recommended action |
+| --- | --- |
+| The order does not exist or belongs to another Team | Verify the order ID and API credentials. |
+| The order is not a walk-in order | Use an order with the walk-in collection method. |
+| The order does not have a requisition | Wait for `requisition_created`, unless pre-requisition scheduling is enabled. |
+| The order cannot be booked, rescheduled, or cancelled in its current state | Retrieve the current order and appointment before retrying. Contact support if the state appears incorrect. |
+| The order's laboratory does not support Junction scheduling | Let the patient walk in or schedule directly with the laboratory. |
+
+## Appointment-state errors
+
+| Condition | Recommended action |
+| --- | --- |
+| The order does not have an appointment | Book an appointment before attempting to retrieve, reschedule, or cancel it. |
+| `can_reschedule` is false | Cancel the appointment and book another slot when cancellation is allowed. |
+| The appointment is completed or cancelled | Do not retry the operation on that appointment. |
+| The appointment was already cancelled | Treat the desired cancellation state as satisfied. |
+
+## Authentication and feature availability
+
+| Status | Meaning | Recommended action |
+| --- | --- | --- |
+| `401` | The API key is missing or invalid. | Verify the environment and Team API key. |
+| `403` | The Team cannot access the order or operation. | Verify ownership and Team configuration. |
+| `503` | PSC appointment scheduling is not enabled. | Contact your Customer Success Manager. |
+
+## Testing error handling
+
+- Use sandbox to test validation and incompatible-order scenarios.
+- Do not rely on sandbox to reproduce every real-time slot conflict.
+- In production, do not create speculative appointments solely to test failure handling.
+- Always fetch fresh availability after a slot conflict.
+
+If an order remains in an unexpected state after you retrieve its current order and appointment records, [contact Junction support](/home/getting-support).

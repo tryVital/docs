@@ -1,39 +1,35 @@
 ---
-title: "Ordering"
-description: "Learn the ordering concepts including markers, lab tests, and the various order_set field combinations for placing lab test orders."
+title: "Choosing Tests and Markers"
+description: "Choose saved lab tests, à la carte markers, or a combination of both when defining what a lab order should include."
 ---
 
-# Concepts
+Use the `order_set` field when you [create an order](/api-reference/lab-testing/create-order) to define the tests and markers the laboratory should perform. You can reference reusable lab tests, select markers directly from the [compendium](/lab/overview/compendium-search), or combine both approaches.
 
-Junction has a series of concepts to grasp regarding ordering:
+| Approach | Use when |
+| --- | --- |
+| One saved lab test | You repeatedly order a predefined set of markers. |
+| Multiple saved lab tests | You need to combine compatible saved definitions for one order. |
+| À la carte markers | You need a one-off selection without creating a saved lab test. |
+| Saved lab test with add-ons | You need a standard definition plus patient-specific markers. |
 
-- [Lab Tests](/lab/workflow/create-test)
-- [Lifecycle of an Order](/lab/workflow/lab-test-lifecycle)
-- [Order Transactions](/lab/workflow/order-transactions)
-- [AOE](/lab/workflow/aoe)
-- [Registrable Kits](/lab/workflow/order-registrable-testkit)
-- [Scheduled Orders](/lab/workflow/scheduled-orders)
-
-In this document, we will focus on orderable panels/biomarkers.
+## Understand tests and markers
 
 ### Markers
 
-[_Markers_](/api-reference/lab-testing/biomarkers) are individual, orderable tests, at the lab level. So, for example, at _Labcorp_ you can order a `Lipid Panel` test and a `Vitamin D` test, a `panel` and a `biomarker` respectively. At Junction, these are both referred to as **markers**.
+[Markers](/api-reference/lab-testing/biomarkers) are the individual items a partner laboratory makes available to order. A marker can represent a single biomarker or a laboratory-defined panel. For example, Junction represents both a vitamin D test and a lipid panel as markers.
 
-### Lab Tests
+### Lab tests
 
-[_Lab Tests_](/api-reference/lab-testing/post-test) are a collection of markers, or a preset combination of markers, that you can order. Using the example above, you can create a `Labcorp Lipid Panel and Vitamin D` lab test. You can then place orders at Junction using this preset. This is useful for situations where you repeatedly want to order the same markers.
+[Lab tests](/lab/workflow/create-test) are reusable definitions that contain one or more markers. Create a lab test when your program repeatedly orders the same combination. When you place an order, reference the lab test's `id` in `order_set.lab_test_ids`.
 
 
-# Ordering
+## Choose what to order
 
-When placing an [Order](/api-reference/lab-testing/create-order), you will see an `order_set` field. This is what defines what markers will be ordered.
+Choose the `order_set` combination that matches how your integration manages reusable test definitions.
 
-There are multiple combinations allowed with this field, so let's explore all of them.
+### Use one saved lab test
 
-### Ordering a _Lab Test_
-
-When ordering from **one** previously created _Lab Test_, the `order_set` field should be populated as follows:
+Reference one previously created lab test when the same marker set is used repeatedly:
 
 <CodeGroup>
 
@@ -55,9 +51,9 @@ client.lab_tests.create_order(
 ```
 </CodeGroup>
 
-### Ordering from multiple _Lab Tests_
+### Combine saved lab tests
 
-You may want to combine two or more existing Lab Tests without creating a new one. This is possible by doing:
+Reference two or more compatible lab tests when you want to combine their markers without creating another reusable definition:
 
 <CodeGroup>
 
@@ -79,15 +75,15 @@ client.lab_tests.create_order(
 ```
 </CodeGroup>
 
-### Ordering without a _Lab Test_
+### Choose markers à la carte
 
-This is what Junction calls `à la carte` ordering. You may want to order from the marker compendium without creating a preset.
+Use à la carte ordering to select markers from the compendium without first creating a lab test.
 
 <Note>
-`à la carte` ordering is generally available to all teams. Not all markers are enabled for `à la carte` ordering — see [À La Carte Markers](#à-la-carte-markers) below.
+À la carte ordering is generally available to all Teams, but not every marker supports it. See [Find markers available à la carte](#find-markers-available-à-la-carte).
 </Note>
 
-It is possible to order `à la carte` using Junction `marker_ids` or the lab's `provider_ids`.
+Identify the markers with either Junction `marker_ids` or the partner laboratory's `provider_ids`. Do not provide both identifier types in the same `add_on` object.
 
 <CodeGroup>
 
@@ -113,9 +109,9 @@ client.lab_tests.create_order(
 ```
 </CodeGroup>
 
-### Order _Lab Tests_ with extra _Markers_
+### Add markers to a saved lab test
 
-You may also add extra **markers** to an order. For example, you want to order the `Labcorp Lipid Panel and Vitamin D` but for this particular patient, you also want to order a `CBC Panel`.
+Use `add_on` with `lab_test_ids` when an order needs a reusable lab test plus patient-specific markers.
 
 <CodeGroup>
 
@@ -143,14 +139,15 @@ client.lab_tests.create_order(
 </CodeGroup>
 
 <Note>
-When supplying the `add_on` field, it is always required to provide the `collection_method` field.
+When you provide `add_on`, you must also provide `collection_method`.
 </Note>
 
 
-## Collection Method
+## Choose a collection method
 
-As further explored in the documentation, Junction also has the concept of _Collection Method_. Junction currently supports four methods: [`At Home Phlebotomy`](/lab/at-home-phlebotomy/overview), [`Walk In`](/lab/walk-in/overview), [`Testkits`](/lab/testkits/overview), and [`On-Site Collection`](/lab/on-site-collection/overview).
-When ordering, you must select one of these, either at lab test creation, or at ordering time.
+Junction supports four collection methods: [Mobile Phlebotomy](/lab/at-home-phlebotomy/overview), [Walk-in](/lab/walk-in/overview), [At-home Test Kits](/lab/testkits/overview), and [On-site Collection](/lab/on-site-collection/overview).
+
+The collection method can come from the saved lab test or from `collection_method` in the order request. Provide it in the order request when the selected lab tests do not resolve to one collection method or when using `add_on`.
 
 
 <CodeGroup>
@@ -174,9 +171,9 @@ client.lab_tests.create_order(
 ```
 </CodeGroup>
 
-## À La Carte Markers
+## Find markers available à la carte
 
-As mentioned above, not all `markers` are `à la carte` orderable. You can find which ones are orderable via the [GET /v3/lab_tests/markers](/api-reference/lab-testing/biomarkers).
+Not every marker can be ordered à la carte. Use [Get Markers](/api-reference/lab-testing/biomarkers) with the `a_la_carte_enabled` filter to find supported markers.
 
 <CodeGroup>
 
@@ -199,15 +196,21 @@ if not all(m.a_la_carte_enabled for m in markers.markers):
 ```
 </CodeGroup>
 
-## Error Cases
+## Test-selection errors
 
-With the existence of various allowed combinations with the `order_set` field, there are many validations that are done server side. Here are some of the errors you can expect to encounter:
+The API validates the selected tests, markers, laboratories, and collection methods before accepting an order.
 
 ### 400 Bad Request
 
-1. `collection_method must be set if add_on is set`: When the `add_on` field is supplied, you must provide the `collection_method`.
-2. `marker_ids or provider_ids must be set in add_on`: One of `marker_ids` or `provider_ids` must be set, if the `add_on` field is provided.
-3. `cannot set both marker_ids and provider_ids in add_on`: Similarly, only one of these two fields can be provided.
-4. `cannot order lab_tests from multiple labs`: You can only order multiple lab tests from the same lab.
-5. `cannot order lab tests with multiple collection methods`: You must supply a `collection_method` if ordering multiple lab tests with multiple collection methods.
-6. `Lab <lab name> does not allow gender <gender value>`: The associated lab restricts which patient genders it accepts. This restriction applies to the entire lab, not to individual lab tests.
+- `collection_method must be set if add_on is set`: Include `collection_method` whenever you provide `add_on`.
+- `marker_ids or provider_ids must be set in add_on`: Include one marker identifier type in `add_on`.
+- `cannot set both marker_ids and provider_ids in add_on`: Use either Junction marker IDs or provider IDs, not both.
+- `cannot order lab_tests from multiple labs`: All referenced lab tests must belong to the same partner laboratory.
+- `cannot order lab tests with multiple collection methods`: Provide one compatible `collection_method` when combining lab tests.
+
+## Related guides
+
+- [Creating a Lab Test](/lab/workflow/create-test)
+- [Compendium Search](/lab/overview/compendium-search)
+- [Orders and Results](/lab/overview/orders-and-results)
+- [Create Order](/api-reference/lab-testing/create-order)
