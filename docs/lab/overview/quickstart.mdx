@@ -177,7 +177,7 @@ const order = await client.labTests.createOrder({
 
 </CodeGroup>
 
-The response contains the new order under `order`. Save `order.id` and inspect `order.status` and `order.events` as the order progresses. See [Create Order](/api-reference/lab-testing/create-order) for all ordering options.
+The response contains the new order under `order`. Creating this initial order also creates an order transaction representing the full testing journey. Save `order.id` and `order_transaction.id`: use the order ID for order-specific operations and the transaction ID to group the initial order with any related orders and retrieve their combined results. Inspect `order.status` and `order.events` as the individual order progresses. See [Create Order](/api-reference/lab-testing/create-order) for all ordering options.
 
 ## 4. Test the order workflow
 
@@ -188,6 +188,7 @@ See [Testing in Sandbox](/lab/overview/sandbox) for supported simulations, modal
 ## Next steps
 
 - Learn how order statuses work in [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle).
+- Learn how related orders and combined results work in [Order Transactions](/lab/workflow/order-transactions).
 - Review the workflow for the order's [testing modality](/lab/overview/testing-modalities).
 - Configure [patient communications](/lab/workflow/communications) if Junction should contact the patient.
 - Continue through the integration lifecycle with [Orders and Results](/lab/overview/orders-and-results).

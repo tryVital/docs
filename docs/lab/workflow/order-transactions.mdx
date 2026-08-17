@@ -15,7 +15,7 @@ For the complete integration sequence from order creation through result retriev
 - Each order retains its own lifecycle, events, and results.
 - Transaction result endpoints combine results across the related orders.
 
-Store both `order.id` and `order_transaction.id` from the Create Order response. Use the order ID for an individual order and the transaction ID for workflows involving related orders, including [redraws](/lab/workflow/redraws).
+Store both `order.id` and `order_transaction.id` from the Create Order response. Use the transaction ID as the stable grouping key for the full testing journey and the order ID for operations on an individual order. Related orders, including supported [redraws](/lab/workflow/redraws), retain separate order IDs and join the same transaction.
 
 ## Transaction statuses
 
