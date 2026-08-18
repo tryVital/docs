@@ -11,7 +11,7 @@ Junction can send patients email and SMS notifications as a lab order progresses
 Patient communications are separate from [webhook events](/webhooks/introduction). Patient communications contact the patient, while webhooks notify your integration about order and appointment changes.
 
 <Note>
-  [Contact Junction support](/home/getting-support) to request a copy of our current default SMS and email templates.
+  The tables below show Junction's default SMS templates. Values such as `patient_first_name`, `team_name`, and `booking_link` are replaced with order-specific information before the message is sent. If your Team uses customized templates, the messages patients receive may differ. [Contact Junction support](/home/getting-support) for information about default email templates.
 </Note>
 
 ## Configure patient communications
@@ -51,14 +51,14 @@ At-home test kit communications use SMS only. Junction does not send patient ema
 
 The following communications correspond to events in the [test kit order lifecycle](/lab/testkits/order-lifecycle):
 
-| Event | Default SMS purpose |
+| Event | Default SMS template |
 | --- | --- |
-| Order created with `ordered` status | Confirms that Junction received the order |
-| Kit moves to `transit_customer` | Provides the expected arrival date |
-| Kit moves to `out_for_delivery` | Tells the patient that delivery is expected that day |
-| Sample moves to `delivered_to_lab` | Confirms that the lab received the sample |
-| Order moves to `completed` | Tells the patient that result processing is complete |
-| Order moves to `cancelled` | Confirms that the order was cancelled |
+| Order created with `ordered` status | Hey `{receiver_name}`,<br />Your order for the `{team_name}` health kit has been placed! We'll update you with where it is in the process via messages. |
+| Kit moves to `transit_customer` | Your order for the `{team_name}` test kit is in transit, and should be arriving by `{eta}`. |
+| Kit moves to `out_for_delivery` | Your order for the `{team_name}` test kit is out for delivery, and should be arriving by today |
+| Sample moves to `delivered_to_lab` | Your test kit has arrived at our labs. We're processing your sample now! |
+| Order moves to `completed` | The lab has finished processing your test kit, and your results should be ready soon. |
+| Order moves to `cancelled` | Hey, your order for the `{team_name}` test kit has been cancelled. If this is by accident please contact support. |
 
 ### Collection reminders
 
@@ -66,10 +66,10 @@ The following communications correspond to events in the [test kit order lifecyc
 
 When order SMS reminders and the Junction User Portal are enabled for your Team, Junction may remind the patient to return a kit that remains in `with_customer` status:
 
-| Timing | Purpose |
+| Timing | Default SMS template |
 | --- | --- |
-| 2 days after the kit reaches the patient | Reminds the patient to ship the sample and links to collection instructions |
-| 7 days after the kit reaches the patient | Sends a second reminder with the collection-instructions link |
+| 2 days after the kit reaches the patient | We're still waiting to receive your testkit sample. Please ship it as soon as possible so we can process your results. You can view collection instructions here: `{patient_portal_shortlink}`. Reply STOP to opt out. |
+| 7 days after the kit reaches the patient | Reminder: we haven't received your testkit sample yet. Please ship it soon so we can process your results. You can view collection instructions here: `{patient_portal_shortlink}`. Reply STOP to opt out. |
 
 Reminders stop once the sample moves to the return-shipping or laboratory-processing stages.
 
@@ -77,16 +77,16 @@ Reminders stop once the sample moves to the return-shipping or laboratory-proces
 
 The following communications correspond to events in the [mobile phlebotomy order and appointment lifecycle](/lab/at-home-phlebotomy/order-appointment-lifecycle).
 
-| Event | SMS | Email |
+| Event | Default SMS template | Email |
 | --- | --- | --- |
-| Order created with `ordered` status | Confirms that Junction received the order | None |
-| Order moves to `requisition_created` | Prompts the patient to book the draw | Provides the booking link and requisition |
-| Appointment is pending | Provides the appointment-request status when only SMS is enabled | Confirms that the request is pending when email is enabled |
-| Appointment is confirmed | Provides the appointment time and management link when only SMS is enabled | Provides the appointment time and management link when email is enabled |
-| Appointment is cancelled | Confirms the cancellation and provides a rebooking link when only SMS is enabled | Confirms the cancellation and provides a rebooking link when email is enabled |
-| Draw is completed | Confirms that the sample is being delivered to the lab | None |
-| Order moves to `completed` | Tells the patient that result processing is complete | None |
-| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+| Order created with `ordered` status | Hi, `{patient_first_name}`, your order for the `{team_name}` at-home phlebotomy service has been placed! We'll provide you with updates on the status of your order via text messages. | None |
+| Order moves to `requisition_created` | Hey `{patient_first_name}`, it's time to book your at-home phlebotomy draw. Please book a slot using the link provided in the e-mail you just received. | Provides the booking link and requisition |
+| Appointment is pending | Your appointment with the phlebotomist has been requested! The assigned Phlebotomist should contact you in the next few days via e-mail or phone. | Confirms that the request is pending when email is enabled |
+| Appointment is confirmed | Your appointment with the phlebotomist has been booked at `{date}`! You can reschedule or cancel using the following link `{booking_link}`. | Provides the appointment time and management link when email is enabled |
+| Appointment is cancelled | Hey, your at-home-phlebotomy appointment at `{date}` for the `{team_name}` has been cancelled. You can rebook using the following link `{booking_link}`. | Confirms the cancellation and provides a rebooking link when email is enabled |
+| Draw is completed | Your at-home phlebotomy draw is complete! We're delivering your sample to the lab for processing. | None |
+| Order moves to `completed` | The lab has finished processing your blood sample, and your results should be ready soon. | None |
+| Order moves to `cancelled` | Hey, your order for the `{team_name}` at-home-phlebotomy appointment has been cancelled. If this is by accident please contact support. | None |
 
 When email and SMS are both enabled, requisition creation produces both communications. Appointment status updates are delivered by email; SMS is the fallback when email is disabled and SMS is enabled.
 
@@ -96,15 +96,15 @@ If [scheduling before requisition creation](/lab/at-home-phlebotomy/order-appoin
 
 Junction sends communications for selected events—not every status in the [walk-in order lifecycle](/lab/walk-in/order-lifecycle).
 
-| Event | SMS | Email |
+| Event | Default SMS template | Email |
 | --- | --- | --- |
-| Order created with `ordered` status | Confirms that Junction received the order | None |
-| Order moves to `requisition_created` | Tells the patient that they can visit the lab and provides appointment-booking instructions | Sends the requisition-ready email described below |
-| Junction appointment is confirmed | Provides the appointment date, location, and provider appointment ID | None |
-| Junction appointment is cancelled | Confirms the appointment cancellation | None |
-| Order moves to `redraw_available` | Tells the patient that another collection is recommended | Sends a redraw notification and, when available, a new requisition PDF |
-| Order moves to `completed` | Tells the patient that result processing is complete | None |
-| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+| Order created with `ordered` status | Hi, `{patient_first_name}`, your order for the `{team_name}` walk-in-test has been placed! We'll provide you with updates on the status of your order via text messages. | None |
+| Order moves to `requisition_created` | When the User Portal is enabled: Hey `{patient_first_name}`, it's time to visit your local `{lab_name}` center. You can book your appointment at `{patient_portal_shortlink}`.<br /><br />Without a User Portal link: Hey `{patient_first_name}`, it's time to visit your local `{lab_name}` center. Please check the email you just received for instructions. | Sends the requisition-ready email described below |
+| Junction appointment is confirmed | Your appointment with the lab has been booked at `{date}` over at `{address}`! Here's your appointment key: `{appointment_key}`. | None |
+| Junction appointment is cancelled | Hey, your lab appointment at `{date}` for `{team_name}` has been cancelled. | None |
+| Order moves to `redraw_available` | Hi `{patient_first_name}`, your `{team_name}` results have come back with at least one missing biomarker. We recommend a redraw to complete your lab testing. We will send you an email shortly with more information. | Sends a redraw notification and, when available, a new requisition PDF |
+| Order moves to `completed` | Your results have finished processing, and your results should be ready soon. | None |
+| Order moves to `cancelled` | Hey, your order for the `{team_name}` walk-in-test has been cancelled. If this is by accident please contact support. | None |
 
 Statuses not listed in this table do not produce a default patient communication. For example, Junction does not send a default patient message for `partial_results`, `sample_error`, or `requisition_bypassed`.
 
@@ -145,20 +145,20 @@ When order SMS reminders are enabled for your Team, Junction may send SMS remind
 
 Before an appointment is booked, Junction schedules the following reminders after requisition creation:
 
-| Timing | Purpose |
+| Timing | Default SMS template |
 | --- | --- |
-| 24 hours | Reminds the patient to book an appointment |
-| 72 hours | Sends a second booking reminder |
-| 7 days | Sends a final booking reminder and, when available, includes a nearby Patient Service Center |
+| 24 hours | Lab appointments can fill up fast. Booking now helps you avoid long wait times: `{patient_portal_shortlink}`. Reply STOP to opt out. |
+| 72 hours | Still need to book your lab? It only takes a minute and guarantees your spot: `{patient_portal_shortlink}`. Reply STOP to opt out. |
+| 7 days | There's a lab appointment available at `{psc_address}`. Use this booking link before it is gone: `{patient_portal_shortlink}`. Reply STOP to opt out.<br /><br />If no nearby Patient Service Center address is available: A quick reminder that your lab order is still open. Use this booking link to schedule an appointment: `{patient_portal_shortlink}`. Reply STOP to opt out. |
 
 Booking reminders stop after Junction receives a scheduled appointment event.
 
 For appointments scheduled through Junction, reminders may be sent:
 
-| Timing | Purpose |
+| Timing | Default SMS template |
 | --- | --- |
-| 24 hours before the appointment | Reminds the patient of the appointment time and provides a link to its details |
-| 2 hours before the appointment | Reminds the patient of the location and provides a rescheduling link |
+| 24 hours before the appointment | Reminder: You have a lab appointment tomorrow at `{appointment_time}`. View details: `{patient_portal_shortlink}`. Reply STOP to opt out.<br /><br />If the appointment time is unavailable: Reminder: You have a lab appointment tomorrow. View details: `{patient_portal_shortlink}`. Reply STOP to opt out. |
+| 2 hours before the appointment | Your lab appointment at `{appointment_address}` is in 2 hours. Don't forget to account for traffic and parking on your way in. To reschedule: `{patient_portal_shortlink}`. Reply STOP to opt out. |
 
 If an appointment is booked less than 24 hours before its start time, Junction skips the elapsed 24-hour reminder. Rescheduling recalculates the reminder times, and cancelling clears pending appointment reminders.
 
@@ -186,13 +186,13 @@ If an order becomes eligible for a [redraw](/lab/workflow/redraws), Junction can
 
 The following communications correspond to events in the [on-site collection order lifecycle](/lab/on-site-collection/order-lifecycle):
 
-| Event | SMS | Email |
+| Event | Default SMS template | Email |
 | --- | --- | --- |
-| Order created with `ordered` status | Confirms that Junction received the order | None |
-| Order moves to `requisition_created` | Tells the patient that the order form is ready | Provides the requisition PDF and collection instructions |
-| Draw is completed | Confirms that the sample is being delivered to the lab | None |
-| Order moves to `completed` | Tells the patient that result processing is complete | None |
-| Order moves to `cancelled` | Confirms that the order was cancelled | None |
+| Order created with `ordered` status | Hi `{patient_first_name}`, your lab test with `{team_name}` has been ordered. Updates will be sent here. If you need help, please ask your on-site provider as this is a no-reply phone number. | None |
+| Order moves to `requisition_created` | Your lab order form is ready! Please check your email for the PDF and follow your provider's instructions for sample collection. You will receive follow-up communications when results are ready. | Provides the requisition PDF and collection instructions |
+| Draw is completed | Your on-site collection is complete! We're delivering your sample to the lab for processing. | None |
+| Order moves to `completed` | Your results have finished processing and should be ready soon. | None |
+| Order moves to `cancelled` | Hey, your order for the `{team_name}` on-site collection has been cancelled. If this is by accident, please contact support. | None |
 
 ## Customize or replace Junction communications
 
