@@ -43,6 +43,7 @@ sequenceDiagram
     API->>API: Validate and stage file
     API->>Parser: Queue parsing job
     API-->>App: { id, status: "upload_pending" }
+    API-->>App: Webhook: lab_report.parsing_job.created
     Parser->>Parser: Extract results and match LOINCs
     API-->>App: Webhook: lab_report.parsing_job.updated
     App->>API: GET /lab_report/v1/parser/job/{job_id}
@@ -63,11 +64,13 @@ Supported file formats and upload limits:
 
 | Upload | Supported formats | Limit |
 | --- | --- | --- |
-| Single file | PDF, JPEG, or PNG | 10 MB |
-| Multiple files | JPEG and PNG only | Up to 8 files, 10 MB per file, 20 MiB combined |
-| PDF pages | PDF upload | Up to 20 pages |
+| Single file | PDF, JPEG, or PNG | 30 MiB |
+| Multiple files | JPEG and PNG only | Up to 8 files and 30 MiB combined |
+| PDF pages | PDF upload | Up to 30 pages |
 
-When you upload multiple image files, Junction merges them into a single PDF before sending the report to the parser. Multi-file uploads cannot include PDFs. Junction validates both the declared `Content-Type` and the file's magic bytes, so spoofed or corrupted files are rejected before parsing starts.
+When you upload multiple image files, Junction treats each image as one page and merges the files into a single PDF in the order supplied. Multi-file uploads cannot include PDFs. Each individual file must also be no larger than 30 MiB, although the 30 MiB combined limit is normally the effective limit for a multi-file request.
+
+Junction validates the declared `Content-Type` and file signature for every file. It also verifies that PDFs can be read and decodes images in multi-file uploads while merging them. A file that passes synchronous upload validation can still fail later during asynchronous parsing.
 
 ```bash cURL
 curl --request POST \
@@ -104,7 +107,7 @@ The `status` field describes the state of the parsing job.
 | `completed` | Parsing completed and results are available in `data`. |
 | `failed` | Parsing failed. Check `failure_reason` for more information. |
 
-For parser jobs, `failure_reason` commonly includes:
+If a parsing job fails, `failure_reason` can include:
 
 | Failure reason | Meaning |
 | --- | --- |
@@ -118,20 +121,24 @@ For parser jobs, `failure_reason` commonly includes:
 
 ### Upload Validation Errors
 
-Some invalid uploads are rejected synchronously by the create endpoint instead of becoming failed parser jobs. These errors return an HTTP error response and do not produce a completed async parsing result.
+Some invalid uploads are rejected synchronously by the create endpoint instead of becoming failed parser jobs. These errors return an HTTP error response before a parsing job is created.
 
 | Upload issue | Response behavior |
 | --- | --- |
 | Unsupported file type | `400` error before parsing starts. |
 | Empty file | `400` error before parsing starts. |
 | Declared `Content-Type` does not match file bytes | `400` error before parsing starts. |
+| More than 8 files | `400` error before parsing starts. |
+| Multiple files include a PDF | `400` error before parsing starts. |
+| An image in a multi-file upload cannot be decoded | `400` error before parsing starts. |
 | File is larger than the upload limit | `413` error before parsing starts. |
+| Combined upload is larger than 30 MiB | `413` error before parsing starts. |
 | PDF is corrupted, truncated, or unreadable | `400` error before parsing starts. |
 | PDF exceeds the page limit | `400` error before parsing starts. |
 
 ## Human Review
 
-Set `needs_human_review` to `true` to mark the job as requiring manual review where enabled for your team. Human review is useful for high-impact workflows, low-quality scans, complex multi-page reports, or reports where your application needs a higher-confidence extraction path.
+Set `needs_human_review` to `true` to request manual review where enabled for your team. Do not use this field as a substitute for your application's own clinical review or validation requirements.
 
 Human review is not enabled for every team by default. Contact your account manager before depending on it in production.
 
@@ -148,7 +155,7 @@ The response includes two review fields:
 | Field | Meaning |
 | --- | --- |
 | `needs_human_review` | Whether the job was submitted with a manual-review request. |
-| `is_reviewed` | Whether manual review has been completed, where a manual-review workflow is enabled. |
+| `is_reviewed` | Whether Junction has recorded the requested manual review as completed. |
 
 ## Parsed Output
 
@@ -218,7 +225,7 @@ Example completed response:
 | --- | --- |
 | `patient_first_name` | Patient first name from the report. |
 | `patient_last_name` | Patient last name from the report. |
-| `dob` | Patient date of birth as printed or normalized from the report. |
+| `dob` | Patient date of birth extracted from the report. |
 | `gender` | Extracted patient gender normalized to `male`, `female`, or `other`. |
 | `lab_name` | Name of the lab or reporting organization. |
 | `date_reported` | Date the report was issued. |
@@ -227,13 +234,15 @@ Example completed response:
 
 Not every report contains every metadata field. Treat patient names, date of birth, lab name, report dates, and specimen number as nullable. Treat unknown or unsupported gender values as `other`.
 
+Date fields are strings and are not guaranteed to use one date format. Parse them only after validating the returned value.
+
 ### Result Fields
 
 Each `data.results[]` item contains the extracted value and associated context.
 
 | Field | Description |
 | --- | --- |
-| `test_name` | Normalized marker or observation name derived from the report. |
+| `test_name` | Marker or observation name extracted from the report. |
 | `value` | Result value as a string. See [Value and Type](#value-and-type). |
 | `type` | Result shape, such as `numeric`, `range`, or `comment`. |
 | `units` | Units extracted from the report, when available. |
@@ -242,7 +251,7 @@ Each `data.results[]` item contains the extracted value and associated context.
 | `source_panel_name` | Panel name associated with the result, when available. |
 | `sample_type` | Specimen type, such as `serum_plasma_blood`, `urine`, `saliva`, `stool`, `capillary_blood`, `other`, or `unknown`. |
 | `measurement_kind` | Whether the result appears to be `direct`, `calculated`, `ratio`, or `unknown`. |
-| `sensitivity` | Sensitivity classification when the report indicates it. |
+| `sensitivity` | Assay sensitivity classification: `sensitive`, `insensitive`, or `unknown`. Defaults to `unknown`. |
 | `interpretation` | Parsed or inferred interpretation. Possible values are `normal`, `abnormal`, `critical`, or `unknown`. |
 | `is_above_max_range` | Whether the result is above `max_reference_range`, when this can be determined. |
 | `is_below_min_range` | Whether the result is below `min_reference_range`, when this can be determined. |
@@ -259,7 +268,7 @@ For `type: "numeric"`, `value` should be a number encoded as a string, such as `
 | --- | --- | --- |
 | `numeric` | `"90"`, `"1e-3"` | Numeric result encoded as a string. Use `units` for measurement units. |
 | `range` | `"<5"`, `">=10"`, `"≤1e-3"`, `"3-7"` | May include comparators, approximate values, scientific notation, or lower-to-upper range notation. Do not parse as a plain float. |
-| `comment` | `"Positive"`, `"See note"` | Textual result or observation. |
+| `comment` | `"See note"`, `"Unable to calculate"` | Textual result or observation. |
 | `boolean` | `"true"`, `"false"`, `"yes"`, `"no"`, `"positive"`, `"negative"` | Boolean or presence-style findings can vary by report wording. |
 | `duration` | `"3h"`, `"12 min"`, `"10:00"` | Duration-like values are preserved as strings because reports can use different formats. |
 | `percentage` | `"5.4%"` | Inferred when the value includes `%`. If the value is `"5.4"` and `units` is `%`, the result may be returned as `numeric`; read `value`, `type`, and `units` together. |
@@ -301,7 +310,7 @@ Each `loinc_matches[]` item includes:
 | `loinc_name` | Official or normalized LOINC name. |
 | `display_name` | Display label for the match. |
 | `aliases` | Alternate names associated with the match. |
-| `confidence_score` | Relative score for this LOINC candidate. |
+| `confidence_score` | Relative score for this LOINC candidate. Candidates are returned in descending score order, with up to five matches per result. |
 
 `confidence_score` is a matching score for the candidate LOINC code. It is not an accuracy score for the extracted lab result, patient metadata, units, reference ranges, or interpretation. A high score means Junction's LOINC matcher found a stronger candidate for that result row than lower-scored candidates; it does not prove that the source document was parsed correctly.
 
@@ -327,6 +336,8 @@ Subscribe to parser events to avoid polling.
 | --- | --- |
 | `lab_report.parsing_job.created` | A new parsing job was created. |
 | `lab_report.parsing_job.updated` | A parsing job changed status, including completion or failure. |
+
+The POST response is produced from the initial job record and returns `upload_pending`. After Junction stages the file, the `lab_report.parsing_job.created` webhook contains the same job in `started` status. A later `lab_report.parsing_job.updated` webhook contains the terminal `completed` or `failed` state. Webhook delivery is asynchronous, so your application should not depend on receiving events in the same order as API responses.
 
 Webhook payloads include the user, team, and parsing job:
 
@@ -385,15 +396,19 @@ For webhook delivery behavior, retries, and event structure, see [Webhooks](/web
 
 ## Sandbox Limits
 
-Sandbox lab report parsing has a team-level report limit. The error response includes the configured limit for your team. For example, a team limited to 150 reports receives:
+Sandbox lab report parsing has a limit of 300 non-failed jobs per team. Jobs in `upload_pending`, `started`, or `completed` count toward the limit. Jobs with `status: "failed"` or a non-null `failure_reason` do not count.
+
+When the sandbox limit is reached, the response is:
 
 ```json Error
 {
-  "detail": "Sandbox lab report parsing is limited to 150 reports. Please upgrade your contract to continue."
+  "detail": "Sandbox lab report parsing is limited to 300 reports. Please upgrade your contract to continue."
 }
 ```
 
-This is a sandbox usage limit, not a file-level validation error. Retrying the same request, creating more users, or changing the report file does not reset the limit. [Contact Junction support](/home/getting-support) if you need the limit increased for higher-volume testing or production access.
+This is a team-wide sandbox usage limit, not a per-user or file-level validation error. Retrying the same request, creating more users, or changing the report file does not reset it.
+
+Production access is enabled per team and does not use the sandbox job-count check. [Contact Junction support](/home/getting-support) if you need higher-volume testing or production access.
 
 ## Integration Guidance
 
