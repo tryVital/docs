@@ -3,6 +3,19 @@ title: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### New Galleri cancer signal origin and subcategory values (Aug 2026)
+
+We added two Galleri predicted cancer signal origin values and their corresponding subcategory values:
+
+- **Origin:** `HEMATOPOIETIC_AND_LYMPHOID_ORGANS`
+  - **Subcategory:** `BONE_MARROW_PRIMARY_AND_SECONDARY_LYMPHOID_TISSUE_LYMPH_NODES_EXTRANODAL_LYMPHOID_TISSUE_SPLEEN_THYMUS`
+- **Origin:** `MELANOCYTE_CONTAINING_TISSUES_SKIN`
+  - **Subcategory:** `MELANOCYTE_CONTAINING_TISSUES_SKIN_UVEA_AND_OTHER_ORGANS_SKIN_AND_MUCOSAL_TISSUE`
+
+These are additive values in `BiomarkerResult.result`. Existing values and response fields are unchanged. Integrations that validate or exhaustively match Galleri enum values should add these values or handle unknown values gracefully.
+
+See the [Galleri results guide](/lab/results/galleri-results) for the complete enum reference.
+
 ### Unmatched Results API (July 2026)
 
 We introduced the Unmatched Results API for reviewing lab results that could not be safely attached to an order automatically.
