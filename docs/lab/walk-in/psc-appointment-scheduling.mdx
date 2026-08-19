@@ -42,6 +42,16 @@ All endpoints require authentication and are prefixed with `/v3/order`:
 
 HTTP status codes alone are insufficient because our API uses 400 for multiple distinct error categories that require different user experiences.
 
+#### Q: Does a `booking_key` hold a Quest PSC slot or prevent other bookings for the same time?
+
+**No.** A `booking_key` does not place a hold on Quest capacity, and Junction does not remove a time slot simply because a booking key was generated for it.
+
+There is no intermediate hold step in the Quest booking flow, and Quest PSC inventory is shared with users outside Junction. Availability can therefore change between the availability and booking calls.
+
+You should also not assume that one generated booking key means only one appointment remains for that time window. The same time can still appear in availability after a booking, so your integration should treat booking conflicts as a normal race and prompt the patient to choose another slot.
+
+If you need to safely retry the same booking request after a client-side failure, use `X-Idempotency-Key` when that feature is enabled for your team. Idempotency helps prevent duplicate processing of the same request, but it does not reserve capacity.
+
 ### Error Categories
 
 #### Slot Unavailability Errors
@@ -132,6 +142,7 @@ _System configuration or availability_
 
 - **Timeout**: 15 seconds read timeout, 5 seconds connection timeout
 - **Slot availability**: Real-time, can change between availability check and booking
+- **No slot holds**: Booking keys do not reserve Quest capacity, and the same slot can be booked by another Quest user before your booking request is processed
 - **Mock client**: Doesn't simulate all real-world scenarios
 - **Rate limiting**: Standard Quest API rate limits apply
 
