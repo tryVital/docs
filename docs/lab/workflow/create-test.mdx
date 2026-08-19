@@ -23,7 +23,7 @@ Once a Lab Test is created and approved, you can use it when making an order.
 For eligible teams and labs, Junction evaluates an `at_home_phlebotomy` lab test when it is created. The lab test is created with a status of `active` and can be ordered immediately when:
 
 - Collection Instructions are available for every marker.
-- Every marker is enabled for *à la carte* ordering, unless your team uses a delegated flow.
+- Every marker is enabled for *à la carte* ordering, if your team does not use a delegated flow.
 - The estimated draw is fewer than 15 tubes. An estimate of 15 tubes or more is rejected.
 
 If an eligible at-home phlebotomy test does not meet one of these requirements, creation returns HTTP 400 and no lab test is created.

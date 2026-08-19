@@ -14,7 +14,11 @@ Patient name fields (`first_name`, `last_name`) must follow specific validation 
 
 <FeatureBeta />
 
-This beta applies only to auto-approval of at-home phlebotomy tests. An inline or derived at-home phlebotomy lab test from `order_set`, including one with `add_on` markers, is subject to the same auto-approval validation as `POST /v3/lab_tests`. For eligible teams and labs, all markers must be *à la carte* enabled unless the team uses a delegated flow, have available collection instructions, and have an estimated draw of fewer than 15 tubes. If validation fails, the request returns HTTP 400 and no derived lab test or order is created.
+This beta applies only to auto-approval of at-home phlebotomy tests. When ordering without a _Lab Test_, this is subject to the same auto-approval validation as `POST /v3/lab_tests`. For eligible teams and labs, this validation is successful when:
+
+- Collection Instructions are available for every marker.
+- Every marker is enabled for *à la carte* ordering, if your team does not use a delegated flow.
+- The estimated draw is fewer than 15 tubes. An estimate of 15 tubes or more is rejected.
 
 A referenced lab test must be `active`. A pending at-home phlebotomy test that was created before auto-evaluation applied to the current team can return HTTP 400 when ordered.
 

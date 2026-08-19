@@ -10,9 +10,13 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-This beta applies only to the at-home phlebotomy auto-approval behavior. For eligible teams and labs, an `at_home_phlebotomy` lab test is created with `status: "active"` instead of `pending_approval` when every marker is *à la carte* enabled (unless the team uses a delegated flow), has available collection instructions, and the estimated draw is fewer than 15 tubes.
+For eligible teams and labs, Junction evaluates an `at_home_phlebotomy` lab test when it is created. The lab test is created with a status of `active` and can be ordered immediately when:
 
-If this evaluation fails, the request returns HTTP 400 and no lab test is created.
+- Collection Instructions are available for every marker.
+- Every marker is enabled for *à la carte* ordering, if your team does not use a delegated flow.
+- The estimated draw is fewer than 15 tubes. An estimate of 15 tubes or more is rejected.
+
+If an eligible at-home phlebotomy test does not meet one of these requirements, creation returns HTTP 400 and no lab test is created.
 
 <RequestExample>
 
