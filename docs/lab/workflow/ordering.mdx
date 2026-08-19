@@ -145,6 +145,7 @@ client.lab_tests.create_order(
 When you provide `add_on`, you must also provide `collection_method`.
 </Note>
 
+<<<<<<< HEAD
 #### At-Home Phlebotomy Validation
 
 <FeatureBeta />
@@ -153,6 +154,9 @@ An inline or derived at-home phlebotomy lab test from `order_set`, including one
 
 
 ## Choose a collection method
+=======
+## Collection Method
+>>>>>>> 7b611fd4d (changing placement of the section)
 
 Junction supports four collection methods: [Mobile Phlebotomy](/lab/at-home-phlebotomy/overview), [Walk-in](/lab/walk-in/overview), [At-home Test Kits](/lab/testkits/overview), and [On-site Collection](/lab/on-site-collection/overview).
 
@@ -179,6 +183,13 @@ client.lab_tests.create_order(
 )
 ```
 </CodeGroup>
+
+#### At-Home Phlebotomy Validation
+
+<FeatureBeta />
+
+An inline or derived at-home phlebotomy lab test from `order_set`, including one with `add_on` markers, is subject to the same auto-approval validation as a lab test created with [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test). For eligible teams and labs, all markers must be *à la carte* enabled unless your team uses a delegated flow, have available collection instructions, and have an estimated draw of fewer than 15 tubes. If validation fails, the order request returns HTTP 400 and no derived lab test or order is created.
+
 
 ## Find markers available à la carte
 
