@@ -1,9 +1,7 @@
 ---
-title: "Unmatched lab results"
+title: "Unmatched Lab Results"
 description: "Review lab results that could not be automatically matched to an order, including webhooks, listing, accepting, rejecting, and escalating."
 ---
-
-# Unmatched Lab Results Integration Guide
 
 The Unmatched Results API lets you review a lab result that could not be safely attached to an order automatically. You can accept a proposed match, reject the result, or ask the Junction operations team to review it.
 
@@ -114,7 +112,7 @@ When the run succeeds, the response includes the generated `raw_result_id` and a
 }
 ```
 
-Managed mode is available for every case except `wrong_collection`. That case requires a provided at-home phlebotomy order. In `provided` mode, the `orders` object must contain exactly the role names returned by the case catalog, and the orders must belong to the authenticated Sandbox team.
+Managed mode is available for every case except `wrong_collection`. That case requires a provided mobile phlebotomy order. In `provided` mode, the `orders` object must contain exactly the role names returned by the case catalog, and the orders must belong to the authenticated Sandbox team.
 
 If Junction finds more than one eligible central-lab panel, include `lab_test_id` in the create request. For `wrong_lab`, use `wrong_lab_test_id` in managed mode to select the panel for the order at the other central lab.
 
@@ -163,8 +161,8 @@ Example:
 
 ```bash
 curl --request GET \
-  --url 'https://api.tryvital.io/v3/unmatched_result?status=pending_customer_review&lab_slug=labcorp&limit=50' \
-  --header "x-vital-api-key: $VITAL_API_KEY"
+  --url '{{BASE_URL}}/v3/unmatched_result?status=pending_customer_review&lab_slug=labcorp&limit=50' \
+  --header "x-vital-api-key: $JUNCTION_API_KEY"
 ```
 
 Query parameters:
@@ -250,8 +248,8 @@ GET /v3/unmatched_result/{raw_result_id}
 
 ```bash
 curl --request GET \
-  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00' \
-  --header "x-vital-api-key: $VITAL_API_KEY"
+  --url '{{BASE_URL}}/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00' \
+  --header "x-vital-api-key: $JUNCTION_API_KEY"
 ```
 
 The response uses the same unmatched-result shape as an item in the list response.
@@ -293,8 +291,8 @@ Example:
 
 ```bash
 curl --request POST \
-  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/accept' \
-  --header "x-vital-api-key: $VITAL_API_KEY" \
+  --url '{{BASE_URL}}/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/accept' \
+  --header "x-vital-api-key: $JUNCTION_API_KEY" \
   --header 'content-type: application/json' \
   --data '{
     "order_id": "22222222-2222-2222-2222-222222222222",
@@ -370,8 +368,8 @@ Example escalation:
 
 ```bash
 curl --request POST \
-  --url 'https://api.tryvital.io/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/resolve' \
-  --header "x-vital-api-key: $VITAL_API_KEY" \
+  --url '{{BASE_URL}}/v3/unmatched_result/6c3a56b7-c3ef-4edb-889a-6c4c874bcf00/resolve' \
+  --header "x-vital-api-key: $JUNCTION_API_KEY" \
   --header 'content-type: application/json' \
   --data '{
     "action": "unsure",

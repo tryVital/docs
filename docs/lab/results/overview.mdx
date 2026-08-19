@@ -1,0 +1,52 @@
+---
+title: "Results Overview"
+description: "Understand how Junction receives, exposes, and notifies your integration about partial, final, critical, and unmatched lab results."
+---
+
+Junction receives results from the partner laboratory, associates them with an order, and exposes them through the API. Your integration should use webhooks to detect changes and the results endpoints to retrieve the current result data.
+
+## Recommended integration flow
+
+1. Store the `order.id` and `order_transaction.id` returned when you create an order.
+2. Subscribe to `labtest.order.updated` and the result events your workflow requires.
+3. Use each order's status and events to track its progress, and use `order_transaction.status` to track whether the full testing journey is active, completed, or cancelled.
+4. When the transaction reaches `completed`, call [Get Order Transaction Results](/api-reference/lab-testing/results/get-order-transaction-results) to retrieve the complete result across its orders.
+5. Use [Get Order Results](/api-reference/lab-testing/results/get-results) when you specifically need the result associated with one order.
+6. Store or display the structured result according to its `status`, `interpretation`, and result types.
+7. Retrieve the [order transaction results PDF](/api-reference/lab-testing/results/get-order-transaction-results-pdf) when your workflow needs the combined laboratory report and one is available.
+
+Treat webhook payloads as notifications that data changed. Fetch the current order or result before making a final workflow decision, and make webhook processing idempotent because delivery can be retried or arrive out of order.
+
+## Result availability
+
+| Result state | What it means | Notification behavior |
+| --- | --- | --- |
+| `partial` | The laboratory has reported some, but not all, results. | Available through the results API. Partial-result webhooks are optional. |
+| `final` | The laboratory has finished reporting the result. | The order normally moves to `completed` and emits `labtest.order.updated`. |
+| Critical interpretation | The laboratory reported a critical marker or overall interpretation. | Junction emits `labtest.result.critical` when applicable. |
+
+See [Result Formats](/lab/results/result-formats) for the structured schema, PDF behavior, result types, and interpretation fields.
+
+## Partial results
+
+Partial results can be available before an order completes. By default, your integration may retrieve a partial result without receiving a webhook for that partial update. Teams that need proactive notifications can request [Partial Result Notifications](/lab/workflow/partials).
+
+Do not treat a partial result as final, and do not assume every ordered marker will be present until the result reaches `final`.
+
+## Abnormal and critical results
+
+Marker and overall interpretations can be `normal`, `abnormal`, or `critical`. Use the interpretation returned by Junction and preserve the laboratory's reference-range context. See [Critical Results](/lab/results/critical-results) and [Reference Range](/lab/results/reference-range-parsing).
+
+If your orders use Junction's physician network, [physician follow-up](/lab/results/follow-up) may apply to abnormal results. If you provide your own ordering or follow-up physician, your clinical workflow is responsible for the corresponding patient follow-up.
+
+## Redraws and related orders
+
+For supported walk-in orders, a laboratory issue can produce a `redraw_available` status and a related redraw order. The initial and redraw orders share an order transaction. Continue tracking their individual statuses, but use `order_transaction.id` to associate them and retrieve the complete result set. See [Redraws](/lab/workflow/redraws) and [Order Transactions](/lab/workflow/order-transactions).
+
+## Unmatched results
+
+Some incoming laboratory results cannot be matched automatically to an order. If your workflow supports customer review of these results, subscribe to the unmatched-result webhook and follow the [Unmatched Lab Results](/lab/workflow/unmatched-results) review process.
+
+## Modality-specific results
+
+Most modalities use the same result retrieval flow. Some products return specialized values or schemas; for example, see [Galleri Multi-Cancer Early Detection Results](/lab/results/galleri-results).

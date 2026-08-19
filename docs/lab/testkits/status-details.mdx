@@ -1,11 +1,11 @@
 ---
-title: "Testkit Status Details"
-description: "Reference for testkit order status details, including lab processing blocks and sample errors returned by the API."
+title: "Test Kit Status Details"
+description: "Reference for test kit order status details, including lab processing blocks and sample errors returned by the API."
 ---
 
 ## Overview
 
-When a testkit order enters a problem or blocked state, the API surfaces additional detail beyond the order event status. This page describes the named status details and what they mean.
+When a test kit order enters a problem or blocked state, the API surfaces additional detail beyond the order event status. This page describes the named status details and what they mean.
 
 <Warning>
 **Please note**: To ensure future compatibility, avoid exhaustive matching on status detail values. New values may be introduced over time. Handle unknown values gracefully using a default case.
@@ -58,4 +58,3 @@ These status details indicate the collected sample could not be processed by the
 | Specimen hemolyzed | `sample_error` | `sample_hemolyzed` | 
 | Specimen too old / stability exceeded | `sample_error` | `sample_stability_exceeded` |
 | Specimen mislabeled | `sample_error` | — |
-

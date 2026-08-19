@@ -1,35 +1,42 @@
 ---
 title: "Order Transactions"
-description: "Understand the importance of order transactions and how they are used."
+description: "Use order transactions to group an initial order with related orders and retrieve their combined results."
 ---
 
-## Order Transactions and Initial Orders
+An order transaction groups the orders that belong to one patient testing journey. Every newly created initial order starts an order transaction, and related orders—such as supported redraws—join that transaction.
 
-Junction uses the concept of **order transactions** to group related orders together and provide unified results.
-An order transaction represents a single testing journey, which will include, at a minimum, one `initial` order.
+For the complete integration sequence from order creation through result retrieval, see [Orders and Results](/lab/overview/orders-and-results).
 
-An order transaction is created whenever a new `initial` order is created and a link is established between the two entities.
-- `initial` orders are orders that are not derived from another order. This is denoted in the order's `origin` field.
-- Order transactions have a `status` field, which can be `active`, `completed`, or `cancelled`.
-  - `active` - one or more orders belonging to the order transaction are in progress
-  - `completed` - all expected lab work for this transaction is completed and no further updates are expected
-  - `cancelled` - all orders belonging to the order transaction have been cancelled
+## Relationship to orders
 
-- An order can only ever belong to one order transaction
+- An initial order has `origin: initial` and is not derived from another order.
+- Every order belongs to exactly one order transaction.
+- One order transaction contains at least its initial order and can contain related orders.
+- Each order retains its own lifecycle, events, and results.
+- Transaction result endpoints combine results across the related orders.
 
-We recommend that you store both the `order_id` and `order_transaction_id` when placing an order in Junction.
-Both of these IDs will be needed when implementing some of Junction's current and future features like [redraws](/lab/workflow/redraws).
+Store both `order.id` and `order_transaction.id` from the Create Order response. Use the transaction ID as the stable grouping key for the full testing journey and the order ID for operations on an individual order. Related orders, including supported [redraws](/lab/workflow/redraws), retain separate order IDs and join the same transaction.
 
-## API Endpoints
+## Transaction statuses
+
+| Status | Meaning |
+| --- | --- |
+| `active` | One or more orders in the transaction are still in progress. |
+| `completed` | All expected laboratory work is complete and no further updates are expected. |
+| `cancelled` | All orders in the transaction are cancelled. |
+
+The transaction status summarizes the group. Continue to use each order's `status` and `events` when your workflow depends on the progress of an individual order.
+
+## API endpoints
 
 The following endpoints are available to retrieve order transaction information and combined results for all orders within a transaction:
 
-- `GET /v3/order_transaction/{order_transaction_id}` - Get an order transaction's details and list of orders
-- `GET /v3/order_transaction/{order_transaction_id}/result` - Get combined results for an order transaction in JSON format
-- `GET /v3/order_transaction/{order_transaction_id}/result/pdf` - Get combined results for an order transaction in PDF format
+- [Get Order Transaction](/api-reference/lab-testing/order-transactions/get-order-transaction) — Retrieve transaction details and its list of orders.
+- [Get Order Transaction Results](/api-reference/lab-testing/results/get-order-transaction-results) — Retrieve combined structured results for the transaction.
+- [Get Order Transaction Results PDF](/api-reference/lab-testing/results/get-order-transaction-results-pdf) — Retrieve the combined result PDF.
 
 Responses for the following endpoints also include order transaction details:
 
-- `GET /v3/orders` - Get a list of filtered orders (including the ability to filter by order transaction ID)
-- `GET /v3/order/{order_id}` - Get an individual order
-- `GET /v3/order/{order_id}/result` - Get an individual order's results
+- [Get Orders](/api-reference/lab-testing/get-orders) — List and filter orders, including by order transaction ID.
+- [Get Order](/api-reference/lab-testing/get-order) — Retrieve an individual order.
+- [Get Order Results](/api-reference/lab-testing/results/get-results) — Retrieve an individual order's results.

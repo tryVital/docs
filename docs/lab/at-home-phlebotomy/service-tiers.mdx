@@ -17,7 +17,7 @@ The following Providers are available for each Tier:
 
 <Info>`appointment-request` appointments will start in the `pending` status, and won't have any time or date information.</Info>
 
-## High Level flow for Appointment Scheduling
+## Appointment scheduling flow
 
 <Frame caption="Phlebotomy Flow.">
     <img src="/img/phlebotomy-flow.png"/>
@@ -27,7 +27,7 @@ The following Providers are available for each Tier:
 
 The recommended high-level flow for selecting an appointment at Junction is:
 
-- Place an At-Home Phlebotomy order with the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint.
+- Place a Mobile Phlebotomy order with the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint.
 - Wait for the `Requisition Ready` status updates through our Webhooks.
 - Fetch Provider data via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint, the response payload should look like this:
 

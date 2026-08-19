@@ -100,95 +100,95 @@
             "icon": "flask",
             "groups": [
               {
-                "group": "Overview",
+                "group": "Getting Started",
                 "pages": [
                   "lab/overview/introduction",
                   "lab/overview/testing-modalities",
-                  "lab/overview/compendium-search",
-                  "lab/overview/quickstart",
-                  "lab/overview/physicians",
-                  "lab/overview/locations",
-                  "lab/overview/insurance",
-                  "lab/overview/sandbox",
-                  "lab/overview/turnaround-times",
-                  "lab/overview/idempotency",
-                  "lab/overview/lab-accounts"
-                ]
-              },
-              {
-                "group": "Workflow",
-                "pages": [
-                  "lab/workflow/ordering",
                   "lab/workflow/lab-test-lifecycle",
-                  "lab/workflow/order-transactions",
-                  "lab/workflow/order-requirements",
-                  "lab/workflow/scheduled-orders",
-                  "lab/workflow/cancelling-an-order",
-                  "lab/workflow/create-test",
-                  "lab/workflow/order-registrable-testkit",
-                  "lab/workflow/registrable-testkit-proxy-inventory-workflows",
-                  "lab/workflow/importing-order",
+                  "lab/overview/orders-and-results",
+                  "lab/overview/lab-accounts",
+                  "lab/overview/quickstart",
+                  "lab/overview/sandbox"
+                ]
+              },
+              {
+                "group": "Ordering Workflows",
+                "pages": [
                   "lab/workflow/aoe",
-                  "lab/workflow/partials",
-                  "lab/workflow/redraws",
+                  "lab/workflow/cancelling-an-order",
+                  "lab/workflow/ordering",
                   "lab/workflow/clinical-comments",
-                  "lab/workflow/unmatched-results"
+                  "lab/overview/compendium-search",
+                  "lab/workflow/create-test",
+                  "lab/workflow/importing-order",
+                  "lab/overview/insurance",
+                  "lab/overview/physicians",
+                  "lab/workflow/order-requirements",
+                  "lab/workflow/order-transactions",
+                  "lab/overview/idempotency",
+                  "lab/workflow/communications",
+                  "lab/workflow/scheduled-orders"
                 ]
               },
               {
-                "group": "Results",
-                "pages": [
-                  "lab/results/result-formats",
-                  "lab/results/galleri-results",
-                  "lab/results/reference-range-parsing",
-                  "lab/results/critical-results",
-                  "lab/results/follow-up"
-                ]
-              },
-              {
-                "group": "At-Home Phlebotomy",
-                "pages": [
-                  "lab/at-home-phlebotomy/overview",
-                  "lab/at-home-phlebotomy/service-tiers",
-                  "lab/at-home-phlebotomy/order-appointment-lifecycle",
-                  "lab/at-home-phlebotomy/webhooks",
-                  "lab/at-home-phlebotomy/communications"
-                ]
-              },
-              {
-                "group": "Walk-in",
+                "group": "Walk-in (Patient Service Center) Orders",
                 "pages": [
                   "lab/walk-in/overview",
+                  "lab/overview/locations",
                   "lab/walk-in/order-lifecycle",
                   {
                     "group": "PSC Appointment Scheduling",
                     "expanded": true,
                     "pages": [
                       "lab/walk-in/psc-appointment-scheduling",
-                      "lab/walk-in/psc-appointment-scheduling-opt-ins"
+                      "lab/walk-in/psc-appointment-scheduling-opt-ins",
+                      "lab/walk-in/psc-appointment-errors"
                     ]
                   },
-                  "lab/walk-in/webhooks",
-                  "lab/walk-in/communications"
+                  "lab/walk-in/webhooks"
                 ]
               },
               {
-                "group": "At-Home Testkits",
+                "group": "Mobile Phlebotomy Orders",
+                "pages": [
+                  "lab/at-home-phlebotomy/overview",
+                  "lab/at-home-phlebotomy/service-tiers",
+                  "lab/at-home-phlebotomy/order-appointment-lifecycle",
+                  "lab/at-home-phlebotomy/webhooks"
+                ]
+              },
+              {
+                "group": "At-Home Test Kit Orders",
                 "pages": [
                   "lab/testkits/overview",
                   "lab/testkits/order-lifecycle",
                   "lab/testkits/status-details",
-                  "lab/testkits/webhooks",
-                  "lab/testkits/communications"
+                  "lab/workflow/order-registrable-testkit",
+                  "lab/workflow/registrable-testkit-proxy-inventory-workflows",
+                  "lab/testkits/webhooks"
                 ]
               },
               {
-                "group": "On-site Collections",
+                "group": "On-site Collection Orders",
                 "pages": [
                   "lab/on-site-collection/overview",
                   "lab/on-site-collection/order-lifecycle",
-                  "lab/on-site-collection/webhooks",
-                  "lab/on-site-collection/communications"
+                  "lab/on-site-collection/webhooks"
+                ]
+              },
+              {
+                "group": "Results and Follow-up",
+                "pages": [
+                  "lab/results/overview",
+                  "lab/results/result-formats",
+                  "lab/overview/turnaround-times",
+                  "lab/results/reference-range-parsing",
+                  "lab/workflow/partials",
+                  "lab/results/critical-results",
+                  "lab/workflow/redraws",
+                  "lab/workflow/unmatched-results",
+                  "lab/results/follow-up",
+                  "lab/results/galleri-results"
                 ]
               },
               {
@@ -250,7 +250,7 @@
                 ]
               },
               {
-                "group": "At-home Phlebotomy",
+                "group": "Mobile Phlebotomy",
                 "pages": [
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
@@ -1729,6 +1729,26 @@
     {
       "source": "/api-reference/lab-testing/psc-schedulling/:slug*",
       "destination": "/api-reference/lab-testing/psc-scheduling/:slug*"
+    },
+    {
+      "source": "/lab/walk-in/communications",
+      "destination": "/lab/workflow/communications"
+    },
+    {
+      "source": "/lab/at-home-phlebotomy/communications",
+      "destination": "/lab/workflow/communications"
+    },
+    {
+      "source": "/lab/testkits/communications",
+      "destination": "/lab/workflow/communications"
+    },
+    {
+      "source": "/lab/on-site-collection/communications",
+      "destination": "/lab/workflow/communications"
+    },
+    {
+      "source": "/lab/overview/communications",
+      "destination": "/lab/workflow/communications"
     }
   ]
 }

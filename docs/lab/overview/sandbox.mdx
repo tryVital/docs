@@ -11,7 +11,7 @@ Every created team comes with 4 standard `Lab Tests` to allow the customer to te
 
 - **Test Kit**: At-home collection using shipped test kits
 - **Walk-in Test**: Patient visits a Patient Service Center (PSC) location
-- **At-Home Phlebotomy**: A mobile phlebotomist visits the patient's location
+- **Mobile Phlebotomy**: A mobile phlebotomist visits the patient's location
 - **On-Site Collection**: Collection at the customer's facility
 
 However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Junction generates results based on the associated markers. More on this in the [results section](/lab/overview/sandbox#results).
@@ -24,10 +24,10 @@ Initiating the simulation process will progress the order through the expected s
 
 ## Collection Method Restrictions
 
-### At-Home Phlebotomy
+### Mobile Phlebotomy
 
 <Warning>
-  When testing At-Home Phlebotomy appointments, there are only two specific zip codes allowed:
+  When testing Mobile Phlebotomy appointments, there are only two specific ZIP codes allowed:
 
   - **85004** (Phoenix, AZ) - Uses Getlabs provider
     - And only one specific address: `West Lincoln Street, Phoenix, AZ 85004, USA`

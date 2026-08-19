@@ -1,64 +1,51 @@
 ---
-title: "Opt-In Features"
-description: "Error handling and optional features for scheduling appointments at Patient Service Centers (PSCs)."
+title: "Advanced PSC Scheduling Options"
+description: "Use cached availability, idempotent booking, and asynchronous confirmation for PSC appointments."
 ---
 
-## Availability Cache
+import ContactCsm from '/snippets/contact-csm.mdx';
 
-Junction maintains a fast Availability Cache containing the next 21 days of availability for all locations. Each location is refreshed every 5 minutes on average.
+<ContactCsm />
 
-When you set the `allow_stale` parameter on the [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) endpoint, your request is fulfilled directly from the Availability Cache, provided that:
+These options help integrations manage provider latency and safely retry appointment requests. Availability depends on your Team configuration.
 
-1. All requested locations have a cache hit; and
-2. The cached information is reasonably fresh (less than 15 minutes old).
+## Cached availability
 
-When a request cannot be fulfilled by the Availability Cache, it is routed directly to the PSC Appointment Provider.
+Junction maintains an availability cache containing the next 21 days of availability for supported locations. Each location is refreshed every five minutes on average.
 
-#### When to use
+Set `allow_stale` on the [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) request to use the cache when:
 
-Use `allow_stale` when you need fast response times and can tolerate slightly stale availability data—for example, when displaying initial availability options to a user before they select a specific slot.
+1. Every requested location has a cache entry.
+2. Each entry is less than 15 minutes old.
 
+If the cache cannot fulfill the request, Junction requests availability from the PSC appointment provider.
 
-## Idempotency Key
+Use cached availability when you need a faster initial response and can tolerate the possibility that a displayed slot has recently changed. Always handle slot conflicts when the patient books.
 
-Consider specifying an Idempotency Key (`X-Idempotency-Key` header) when submitting a booking request to the
-[Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) endpoint. Requests with the same
-idempotency key within a 14-day retention window will return the original request's response.
+## Idempotent booking
 
-Note that the response is frozen at the time it is first emitted. For example, if a pending appointment later transitions to confirmed via Async Confirmation, requests with that idempotency key will still return the appointment in its original pending status.
+Provide an `X-Idempotency-Key` header when calling [Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking). Requests with the same key within the 14-day retention window return the response saved for the original request.
 
-#### When to use
+Use an idempotency key when retrying after a connection error or timeout. The original request may have reached Junction even when your system did not receive its response.
 
-When a booking request fails on your side (API consumer side), it could be a transient connection issue or a Junction request queueing issue.
-Your request might have still reached the Junction API server and might have been processed.
+<Note>
+  The saved response does not change when the appointment changes later. If the original response contains a `pending` appointment that later becomes `confirmed`, a retry with the same key still returns the original `pending` response. Retrieve the appointment or process its webhooks to obtain the current state.
+</Note>
 
-Using an Idempotency Key allows your system to safely retry booking requests, without the risk of double booking appointments.
+## Asynchronous confirmation
 
-## Async Confirmation
+By default, booking returns an error when the PSC appointment provider does not acknowledge the request within the synchronous request window. With asynchronous confirmation enabled, Junction waits for `sync_confirmation_timeout_millisecond` and then:
 
-When calling the [Book PSC Appointment](/api-reference/lab-testing/psc-scheduling/appointment-psc-booking) endpoint, Junction by default returns a 500 Internal Server Error if the PSC Appointment Provider fails to acknowledge the booking request.
+- Returns a `reserved` or `confirmed` appointment if the provider responds in time.
+- Creates and returns a `pending` appointment if the provider has not responded.
 
-With Async Confirmation enabled, Junction waits synchronously for the provider to acknowledge the booking request, up to `sync_confirmation_timeout_millisecond` (default: 2.5s, range: 1–10s).
+For a pending appointment, Junction retries in the background until `async_confirmation_timeout_millisecond` elapses. The appointment then transitions to `confirmed` or `cancelled`, depending on the provider response.
 
-- If an acknowledgment is received before the timeout, Junction creates a _reserved_ or _confirmed_ appointment immediately and returns it in the response.
+Subscribe to `labtest.appointment.updated` to receive these transitions. Do not present a pending appointment to the patient as confirmed.
 
-- If no acknowledgment is received before the timeout, Junction creates a placeholder **pending** appointment and returns it in the response.
+The supported configuration ranges are:
 
-#### Background retries
-
-If a pending appointment is created, Junction continues to retry the booking request with the PSC Appointment Provider in the background, up to `async_confirmation_timeout_millisecond` (default: 15min, range: 1min–48hr).
-
-- If an acknowledgment is received before the timeout, the appointment transitions to _reserved_ or _confirmed_ status.
-
-- If the provider still fails to acknowledge after the timeout, the pending appointment transitions to _cancelled_ status.
-
-#### Webhooks
-
-You will receive the `labtest.appointment.updated` event for the initial appointment creation, as well as for all state transitions described above.
-
-#### When to use
-
-Use Async Confirmation when you want to provide a consistently responsive booking experience.
-
-When the PSC Appointment Provider is under stress, Async Confirmation allows you to show a pending appointment to the end patient, and
-manages all the logistics of retrying the booking requests with the provider.
+| Setting | Default | Range |
+| --- | --- | --- |
+| `sync_confirmation_timeout_millisecond` | 2.5 seconds | 1–10 seconds |
+| `async_confirmation_timeout_millisecond` | 15 minutes | 1 minute–48 hours |

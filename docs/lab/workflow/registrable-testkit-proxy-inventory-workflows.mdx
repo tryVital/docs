@@ -1,9 +1,9 @@
 ---
-title: "Proxy Ordering Registrable Testkits"
-description: "Recommended flows for proxy ordering and inventory workflows with registrable testkits."
+title: "Proxy Ordering Registrable Test Kits"
+description: "Recommended proxy-ordering and inventory workflows for registrable test kits."
 ---
 
-Junction's registrable testkit flow supports ordering testkits before the final patient registration step is completed. These are also known as "unregistered" testkits because the patient registration step happens after the kit is ordered.
+Junction's registrable test kit flow supports ordering kits before the final patient registration step. These are also called unregistered test kits because registration happens after the kit is ordered.
 
 The initial [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order) request still requires a `user_id`. That user can be the intended patient if they are already known, or it can be a stock/inventory user that your system uses while the final patient is still unknown.
 
@@ -11,8 +11,8 @@ When the kit is registered with [`POST /v3/order/testkit/register`](/api-referen
 
 This workflow guide outlines recommended implementation patterns for two flows where the patient may not be the person or system initiating the order:
 
-- A user orders a registrable testkit on behalf of another person.
-- A clinic orders registrable testkits in bulk for on-hand inventory.
+- A user orders a registrable test kit on behalf of another person.
+- A clinic orders registrable test kits in bulk for on-hand inventory.
 
 These are general recommendations. Your implementation may need to adjust these patterns based on your specific user model, inventory workflow, registration workflow, and result display/retrieval requirements.
 
@@ -27,22 +27,22 @@ These flows use the following Junction API requests:
 - Use [`POST /v2/user`](/api-reference/user/create-user) to create a Junction user when the intended patient or stock/inventory user does not already exist in Junction.
 - Use [`GET /v2/user/{user_id}`](/api-reference/user/get-user) when you already have the Junction `user_id` and need to retrieve that user.
 - Use [`GET /v2/user/resolve/{client_user_id}`](/api-reference/user/resolve-user) when you have your own `client_user_id` and need to look up the corresponding Junction user.
-- Use [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order) to create a registrable testkit order.
+- Use [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order) to create a registrable test kit order.
 - Use [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order) to register the kit when the final patient information is available.
 
 <Note>
   In the flows below, "create or resolve a user" means: first look up the existing Junction user using `GET /v2/user/{user_id}` if you already store the Junction `user_id`, or `GET /v2/user/resolve/{client_user_id}` if you store your own user identifier. If no Junction user exists, create one with `POST /v2/user`.
 </Note>
 
-## Scenario 1: User A orders a testkit for User B
+## Scenario 1: User A orders a test kit for User B
 
 ### Example
 
-User A places an unregistered testkit order for User B. User B is the intended patient and will register the kit using their own demographic information.
+User A places an unregistered test kit order for User B. User B is the intended patient and will register the kit using their own demographic information.
 
 ### Recommended flow
 
-Junction does not model this as a separate proxy-ordering concept. From Junction's perspective, this is still a normal [registrable testkit order](/lab/workflow/order-registrable-testkit). Your application decides whether to bind the order to the final patient at order time or at registration time.
+Junction does not model this as a separate proxy-ordering concept. This remains a standard [registrable test kit order](/lab/workflow/order-registrable-testkit). Your application decides whether to bind the order to the final patient at order time or registration time.
 
 If User B is known before the kit is ordered, create the Junction order directly for User B:
 
@@ -67,7 +67,7 @@ If User A orders the kit before the final patient is known, use the same pattern
 
 ### Example
 
-Your clinic wants to order 100 registrable testkits and keep the physical kits in inventory or on site before the final patients are known. For example, you may need kits available at a location so they can be handed to patients later.
+Your clinic wants to order 100 registrable test kits and keep them in inventory before the final patients are known. For example, a location may need kits available to hand to patients later.
 
 ### Recommended flow
 
@@ -76,7 +76,7 @@ For inventory workflows, create one or more dedicated Junction users to represen
 For example, if you need 100 kits for one clinic location:
 
 1. Create or resolve a Junction stock user for that location, such as `clinic_a_inventory`.
-2. Place 100 registrable testkit orders with [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), using that stock user's Junction `user_id`.
+2. Place 100 registrable test kit orders with [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), using that stock user's Junction `user_id`.
 3. Store the Junction order ID for each inventory order.
 4. When a final patient is assigned to a kit or claims a kit, create or resolve that patient in Junction.
 5. Register the kit with [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), using the Junction order ID, the patient's Junction `user_id`, and the patient's registration details.

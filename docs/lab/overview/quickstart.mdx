@@ -1,43 +1,31 @@
 ---
 title: "Quickstart"
-description: "Step-by-step guide to placing your first lab test order through the Junction API, from user creation to order submission."
+description: "Create a patient, select a lab test, and place your first lab order in the Junction sandbox."
 ---
 
-We have carefully designed Junction's API to ensure a seamless and hassle-free experience for developers. You can get up and running with just a few lines of code. In this guide, we will walk you through the essential steps to order your first lab test.
+This guide creates a patient and places a lab order in the sandbox environment.
 
-### What you need
+## Prerequisites
 
-* If you haven't done so yet, you can get API keys by signing up for a Junction account in the [Dashboard](https://app.junction.com). Detailed instructions are available [here](/home/quickstart#1-api-keys).
-* One of our [client libraries](/home/libraries). The lab testing API is available for the [Python](https://pypi.org/project/junction-api-sdk/) and [TypeScript](https://www.npmjs.com/package/@junction-api/sdk) SDKs. If none of those fit your use case, you can always directly call the API. Email [support@junction.com](mailto:support@junction.com) for specific library support.
+- A sandbox Team and API key from the [Junction Dashboard](https://app.junction.com). See [API Keys](/home/quickstart#1-api-keys).
+- Your sandbox [base URL](/api-details/junction-api#environments).
+- An HTTP client or a supported [Junction SDK](/home/libraries).
 
-In the following, replace `{{BASE_URL}}` with your team's [environment URL](/api-details/junction-api#environments).
+The examples use `{{BASE_URL}}` for your sandbox base URL and `YOUR_API_KEY` for your Team API key. The API key header remains `x-vital-api-key`.
 
-### (1) Creating a user
+## 1. Create a patient
 
-In the context of our API, a user refers to the patient who will be undergoing the lab test. All you need to provide is a string identifying the user on your side (`client_user_id`). The response to this call returns the userId on our side, which you'll be able to use for future requests.
-
-You can find more details in our [API quickstart guide](/home/quickstart#3-creating-your-first-user).
+In the Junction API, a user represents a patient. Set `client_user_id` to the stable identifier your system uses for that patient.
 
 <CodeGroup>
 
-```bash Creating a Junction user (bash)
+```bash cURL
 curl --request POST \
-     --url {{BASE_URL}}/v2/user/ \
-     --header 'Accept: application/json' \
-     --header 'Content-Type: application/json' \
-     --header 'x-vital-api-key: <YOUR_API_KEY>' \
-     --data '{"client_user_id":"<YOUR_CLIENT_USER_ID>"}'
-```
-
-```typescript TypeScript
-import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
-
-const client = new JunctionClient({
-    apiKey: "YOUR_API_KEY",
-    environment: JunctionEnvironment.Sandbox,
-});
-
-const data = await client.user.create({ clientUserId: "<client_user_id>" });
+  --url '{{BASE_URL}}/v2/user' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'x-vital-api-key: YOUR_API_KEY' \
+  --data '{"client_user_id":"patient-123"}'
 ```
 
 ```python Python
@@ -49,399 +37,158 @@ client = Junction(
     environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.user.create(client_user_id="<client_user_id>")
+user = client.user.create(client_user_id="patient-123")
 ```
 
-```java Java
-import com.junction.api.Junction;
-import com.junction.api.core.Environment;
-import com.junction.api.resources.user.requests.UserCreateBody;
+```typescript TypeScript
+import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
 
-Junction client = Junction.builder()
-    .apiKey("YOUR_API_KEY")
-    .environment(Environment.SANDBOX)
-    .build();
+const client = new JunctionClient({
+  apiKey: "YOUR_API_KEY",
+  environment: JunctionEnvironment.Sandbox,
+});
 
-var data = client.user().create(
-    UserCreateBody.builder()
-        .clientUserId("<client_user_id>")
-        .build()
-);
-```
-
-```go Go
-import (
-    "context"
-
-    junction "github.com/junction-api/junction-go"
-    "github.com/junction-api/junction-go/client"
-    "github.com/junction-api/junction-go/option"
-)
-
-c := client.NewClient(
-    option.WithApiKey("YOUR_API_KEY"),
-    option.WithBaseURL(junction.Environments.Sandbox),
-)
-
-response, err := c.User.Create(context.TODO(), &junction.UserCreateBody{
-    ClientUserId: "<client_user_id>",
-})
-if err != nil {
-    return err
-}
-fmt.Printf("Received data %s\n", response)
+const user = await client.user.create({ clientUserId: "patient-123" });
 ```
 
 </CodeGroup>
 
-### (2) Listing available tests
+Save the returned user `id`. You will provide it as `user_id` when creating the order. See [Create User](/api-reference/user/create-user) for the complete request and response.
 
-To retrieve the set of lab tests you have access to, use the `/v3/lab_tests` API endpoint. In Sandbox, you will already have access to a default set of tests. Once you're ready to head to production, we can [set up a call](/lab/overview/introduction#production-launch) and get you ready for launch!
+## 2. Select a lab test
+
+Retrieve the lab tests available to your sandbox Team:
 
 <CodeGroup>
 
-```bash Listing available tests (bash)
+```bash cURL
 curl --request GET \
-     --url {{BASE_URL}}/v3/lab_tests/ \
-     --header 'Accept: application/json' \
-     --header 'x-vital-api-key: <YOUR_API_KEY>' \
-     --header 'Content-Type: application/json'
+  --url '{{BASE_URL}}/v3/lab_test' \
+  --header 'Accept: application/json' \
+  --header 'x-vital-api-key: YOUR_API_KEY'
 ```
 
 ```python Python
-from junction import Junction
-from junction.environment import JunctionEnvironment
-
-client = Junction(
-    api_key="YOUR_API_KEY",
-    environment=JunctionEnvironment.SANDBOX,
-)
-
-data = client.lab_tests.get()
+lab_tests = client.lab_tests.get_paginated()
 ```
 
 ```typescript TypeScript
-import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
-
-const client = new JunctionClient({
-    apiKey: "YOUR_API_KEY",
-    environment: JunctionEnvironment.Sandbox,
-});
-
-const data = await client.labTests.get();
-```
-
-
-```java Java
-import com.junction.api.Junction;
-import com.junction.api.core.Environment;
-
-Junction client = Junction.builder()
-    .apiKey("YOUR_API_KEY")
-    .environment(Environment.SANDBOX)
-    .build();
-
-var data = client.labTests().get();
-```
-
-```go Go
-import (
-    "context"
-
-    junction "github.com/junction-api/junction-go"
-    "github.com/junction-api/junction-go/client"
-    "github.com/junction-api/junction-go/option"
-)
-
-c := client.NewClient(
-    option.WithApiKey("YOUR_API_KEY"),
-    option.WithBaseURL(junction.Environments.Sandbox),
-)
-
-response, err := c.LabTests.Get(context.TODO(), nil)
-if err != nil {
-    return err
-}
-fmt.Printf("Received data %s\n", response)
+const labTests = await client.labTests.getPaginated();
 ```
 
 </CodeGroup>
 
-This will return a list of all the available tests to you. They include a description, turnaround time and price:
+Select a test that supports the collection method you want to exercise and save its `id`. See [Get Available Tests](/api-reference/lab-testing/tests-paginated) for filters and pagination.
 
-```json Response
-{
-  "lab_tests": [
-    {
-      "id": "e2eaa385-a311-4f17-b33f-2165e3d24dd9",
-      "name": "Lipids Panel",
-      "description": "Cholesterol tests",
-      "sample_type": "dried blood spot",
-      "method": "testkit",
-      "price": 10.0,
-      "is_active": true,
-      "lab": {
-          "slug": "USSL",
-          "name": "US Specialty Lab",
-          "first_line_address": "123 Main St",
-          "city": "New York",
-          "zipcode": "10001",
-      },
-      "markers": [
-          {
-              "name": "Thyroid Stimulating Hormone",
-              "slug": "tsh",
-              "description": "",
-              "min_value": 100,
-              "max_value": 200,
-              "unit": "fg/L"
-          }
-      ],
-    }
-  ]
-}
-```
+<Note>
+  Sandbox Teams include tests for the standard collection modalities. You can also [create a custom lab test](/lab/workflow/create-test) when you need a specific marker set.
+</Note>
 
-You can then use the test `id` when creating an order.
+## 3. Create the order
 
-### (3) Placing an order
-
-Ordering a test for your user is as simple as making an API call. Ensure all patient name fields (`first_name`, `last_name`, `receiver_name`) follow our [name validation requirements](/lab/workflow/order-requirements#patient-name-validation):
+Provide the patient ID, select the lab test in `order_set`, and include the patient's demographics and collection address. Patient names must meet the [patient name requirements](/lab/workflow/order-requirements#patient-name-validation).
 
 <CodeGroup>
 
-```bash Ordering a test (bash)
+```bash cURL
 curl --request POST \
-     --url {{BASE_URL}}/v3/order/ \
-     --header 'Accept: application/json' \
-     --header 'x-vital-api-key: <API_KEY>' \
-     --header 'Content-Type: application/json' \
-     --data '
-{
-  "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "patient_details": {
-    "dob": "2022-07-06T22:20:26.796Z",
-    "gender": "male | female",
-    "email": "test@test.com"
-  },
-  "patient_address": {
-    "receiver_name": "John Doe",
-    "street": "Hazel Road",
-    "street_number": "102",
-    "city": "San Francisco",
-    "state": "CA",
-    "zip": "91789",
-    "country": "U.S.",
-    "phone_number": "+14158180852"
-  },
-  "lab_test_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "physician": {
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john@doe.com",
-    "npi": "123456789",
-    "licensed_states": ["CA", "NY"],
-    "created_at": "2022-07-06T22:20:26.796Z",
-    "updated_at": "2022-07-06T22:20:26.796Z"
-  }
-}
-'
+  --url '{{BASE_URL}}/v3/order' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'x-vital-api-key: YOUR_API_KEY' \
+  --data '{
+    "user_id": "YOUR_USER_ID",
+    "order_set": {
+      "lab_test_ids": ["YOUR_LAB_TEST_ID"]
+    },
+    "patient_details": {
+      "first_name": "John",
+      "last_name": "Doe",
+      "dob": "1990-01-01",
+      "gender": "male",
+      "phone_number": "+11234567890",
+      "email": "patient@example.com"
+    },
+    "patient_address": {
+      "receiver_name": "John Doe",
+      "first_line": "256 West Lincoln Street",
+      "city": "Phoenix",
+      "state": "AZ",
+      "zip": "85004",
+      "country": "US",
+      "phone_number": "+11234567890"
+    }
+  }'
 ```
 
 ```python Python
-from junction import Gender, Junction, PatientAddressWithValidation, PatientDetailsWithValidation
-from junction.environment import JunctionEnvironment
+from junction import Gender, OrderSetRequest, PatientAddressWithValidation, PatientDetailsWithValidation
 
-client = Junction(
-    api_key="YOUR_API_KEY",
-    environment=JunctionEnvironment.SANDBOX,
-)
-
-data = client.lab_tests.create_order(
-    user_id="<user_id>",
-    lab_test_id="<lab_test_id>",
+order = client.lab_tests.create_order(
+    user_id="YOUR_USER_ID",
+    order_set=OrderSetRequest(
+        lab_test_ids=["YOUR_LAB_TEST_ID"],
+    ),
     patient_details=PatientDetailsWithValidation(
         first_name="John",
         last_name="Doe",
-        dob="2020-01-01",
+        dob="1990-01-01",
         gender=Gender.MALE,
-        phone_number="+1123456789",
-        email="email@email.com",
+        phone_number="+11234567890",
+        email="patient@example.com",
     ),
     patient_address=PatientAddressWithValidation(
-        first_line="123 Main St.",
-        second_line="Apt. 208",
-        city="San Francisco",
-        state="CA",
-        zip="91189",
+        receiver_name="John Doe",
+        first_line="256 West Lincoln Street",
+        city="Phoenix",
+        state="AZ",
+        zip="85004",
         country="US",
-        phone_number="+1123456789",
+        phone_number="+11234567890",
     ),
 )
 ```
 
 ```typescript TypeScript
-import { JunctionClient, JunctionEnvironment } from "@junction-api/sdk";
-
-const client = new JunctionClient({
-    apiKey: "YOUR_API_KEY",
-    environment: JunctionEnvironment.Sandbox,
+const order = await client.labTests.createOrder({
+  userId: "YOUR_USER_ID",
+  orderSet: {
+    labTestIds: ["YOUR_LAB_TEST_ID"],
+  },
+  patientDetails: {
+    firstName: "John",
+    lastName: "Doe",
+    dob: "1990-01-01",
+    gender: "male",
+    phoneNumber: "+11234567890",
+    email: "patient@example.com",
+  },
+  patientAddress: {
+    receiverName: "John Doe",
+    firstLine: "256 West Lincoln Street",
+    city: "Phoenix",
+    state: "AZ",
+    zip: "85004",
+    country: "US",
+    phoneNumber: "+11234567890",
+  },
 });
-
-const data = await client.labTests.createOrder({
-    userId: "<user_id>",
-    labTestId: "<lab_test_id>",
-    patientDetails: {
-        firstName: "John",
-        lastName: "Doe",
-        dob: "2020-01-01",
-        gender: "male",
-        phoneNumber: "+1123456789",
-        email: "email@email.com",
-    },
-    patientAddress: {
-        firstLine: "123 Main St.",
-        secondLine: "Apt. 208",
-        city: "San Francisco",
-        state: "CA",
-        zip: "91189",
-        country: "US",
-        phoneNumber: "+1123456789",
-    },
-});
-```
-
-```java Java
-import com.junction.api.Junction;
-import com.junction.api.core.Environment;
-import com.junction.api.resources.labtests.requests.CreateOrderRequestCompatible;
-import com.junction.api.types.Gender;
-import com.junction.api.types.PatientAddressWithValidation;
-import com.junction.api.types.PatientDetailsWithValidation;
-
-Junction client = Junction.builder()
-    .apiKey("YOUR_API_KEY")
-    .environment(Environment.SANDBOX)
-    .build();
-
-var data = client.labTests().createOrder(
-    CreateOrderRequestCompatible.builder()
-        .userId("<user_id>")
-        .patientDetails(PatientDetailsWithValidation.builder()
-            .firstName("John")
-            .lastName("Doe")
-            .dob("2020-01-01")
-            .gender(Gender.MALE)
-            .phoneNumber("+1123456789")
-            .email("email@email.com")
-            .build())
-        .patientAddress(PatientAddressWithValidation.builder()
-            .firstLine("123 Main St.")
-            .city("San Francisco")
-            .state("CA")
-            .zip("91189")
-            .country("US")
-            .build())
-        .labTestId("<lab_test_id>")
-        .build()
-);
-```
-
-```go Go
-import (
-    "context"
-
-    junction "github.com/junction-api/junction-go"
-    "github.com/junction-api/junction-go/client"
-    "github.com/junction-api/junction-go/option"
-)
-
-c := client.NewClient(
-    option.WithApiKey("YOUR_API_KEY"),
-    option.WithBaseURL(junction.Environments.Sandbox),
-)
-
-labTestId := "<lab_test_id>"
-response, err := c.LabTests.CreateOrder(context.TODO(), &junction.CreateOrderRequestCompatible{
-    UserId:    "<user_id>",
-    LabTestId: &labTestId,
-    PatientDetails: &junction.PatientDetailsWithValidation{
-        FirstName:   "John",
-        LastName:    "Doe",
-        Dob:         "2020-01-01",
-        Gender:      junction.GenderMale,
-        PhoneNumber: "+1123456789",
-        Email:       "email@email.com",
-    },
-    PatientAddress: &junction.PatientAddressWithValidation{
-        FirstLine:   "123 Main St.",
-        City:        "San Francisco",
-        State:       "CA",
-        Zip:         "91189",
-        Country:     "US",
-    },
-})
-if err != nil {
-    return err
-}
-fmt.Printf("Received data %s\n", response)
 ```
 
 </CodeGroup>
 
-```json Response
-{
-        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "user_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "patient_details": {"dob": "2020-01-01", "gender": "male"},
-        "patient_address": {
-            "receiver_name": "John Doe",
-            "first_line": "123 Main St.",
-            "second_line": "Apt. 208",
-            "city": "San Francisco",
-            "state": "CA",
-            "zip": "91189",
-            "country": "United States",
-            "phone_number": "+1123456789",
-        },
-        "details": {
-            "type": "testkit",
-            "data": {
-                "id": "a655f0e4-6405-4a1d-80b7-66f06c2108a7",
-                "shipment": {
-                    "id": "d55210cc-3d9f-4115-8262-5013f700c7be",
-                    "outbound_tracking_number": "<outbound_tracking_number>",
-                    "outbound_tracking_url": "<outbound_tracking_url>",
-                    "inbound_tracking_number": "<inbound_tracking_number>",
-                    "inbound_tracking_url": "<inbound_tracking_url>",
-                    "outbound_courier": "usps",
-                    "inbound_courier": "usps",
-                    "notes": "<notes>",
-                    "created_at": "2020-01-01T00:00:00.000Z",
-                    "updated_at": "2020-01-01T00:00:00.000Z",
-                },
-                "created_at": "2020-01-01T00:00:00Z",
-                "updated_at": "2020-01-01T00:00:00Z",
-            },
-        },
-        "diagnostic_lab_test": {
-            "name": "Lipids Panel",
-            "description": "Cholesterol test",
-            "method": "testkit",
-        },
-        "sample_id": "123456789",
-        "notes": "This is a note",
-        "created_at": "2020-01-01T00:00:00Z",
-        "updated_at": "2020-01-01T00:00:00Z",
-        "status": "collecting_sample",
-        "events": [
-            {
-                "id": 1,
-                "created_at": "2022-01-01T00:00:00Z",
-                "status": "received.testkit.ordered",
-            }
-    ],
-}
-```
+The response contains the new order under `order`. Creating this initial order also creates an order transaction representing the full testing journey. Save `order.id` and `order_transaction.id`: use the order ID for order-specific operations and the transaction ID to group the initial order with any related orders and retrieve their combined results. Inspect `order.status` and `order.events` as the individual order progresses. See [Create Order](/api-reference/lab-testing/create-order) for all ordering options.
 
-As demonstrated in this Quickstart Guide, integrating with our API is straightforward, allowing you to access a wide range of lab tests with minimal effort. Placing an order for a lab test is as simple as making a request to the appropriate endpoint. With our user-friendly design and clear documentation, you can harness the power of our clinical test API to enhance your application and deliver a seamless experience to your users.
+## 4. Test the order workflow
+
+Sandbox orders remain in their initial state until you simulate their progression. Use the Junction Dashboard or the [Simulate Order endpoint](/api-reference/lab-testing/simulate-order), then verify that your integration receives the expected [webhook events](/webhooks/introduction).
+
+See [Testing in Sandbox](/lab/overview/sandbox) for supported simulations, modality-specific test data, and result customization.
+
+## Next steps
+
+- Learn how order statuses work in [Order Status and Lifecycle](/lab/workflow/lab-test-lifecycle).
+- Learn how related orders and combined results work in [Order Transactions](/lab/workflow/order-transactions).
+- Review the workflow for the order's [testing modality](/lab/overview/testing-modalities).
+- Configure [patient communications](/lab/workflow/communications) if Junction should contact the patient.
+- Continue through the integration lifecycle with [Orders and Results](/lab/overview/orders-and-results).
