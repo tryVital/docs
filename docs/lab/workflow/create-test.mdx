@@ -3,6 +3,8 @@ title: "Creating a Lab Test"
 description: "Create custom lab tests by selecting biomarker IDs and collection methods, then submit them for Junction approval before ordering."
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
 Junction provides a way to create your own lab tests. A lab test is a collection or pre-set of orderable markers. These are made up of:
 
 1. One or more marker IDs or Provider IDs.
@@ -13,6 +15,18 @@ Once a Lab Test is created and approved, you can use it when making an order.
 <Warning>
   When you create a Lab Test, it is not immediately available. We need to validate and approve it on our side, before you can use it when making orders.
 </Warning>
+
+#### At-Home Phlebotomy Auto-Approval
+
+<FeatureBeta />
+
+For eligible teams and labs, Junction evaluates an `at_home_phlebotomy` lab test when it is created. The lab test is created with a status of `active` and can be ordered immediately when:
+
+- Collection Instructions are available for every marker.
+- Every marker is enabled for *à la carte* ordering, unless your team uses a delegated flow.
+- The estimated draw is fewer than 15 tubes. An estimate of 15 tubes or more is rejected.
+
+If an eligible at-home phlebotomy test does not meet one of these requirements, creation returns HTTP 400 and no lab test is created.
 
 ### Example
 

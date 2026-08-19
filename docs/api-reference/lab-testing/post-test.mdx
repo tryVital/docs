@@ -4,6 +4,16 @@ description: "Create or submit lab tests via the Junction API. Requires authenti
 openapi: 'POST /v3/lab_tests'
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+#### At-Home Phlebotomy Auto-Approval
+
+<FeatureBeta />
+
+This beta applies only to the at-home phlebotomy auto-approval behavior; `POST /v3/lab_tests` remains generally available. For eligible teams and labs, an `at_home_phlebotomy` Lab Test is created with `status: "active"` instead of `pending_approval` when every marker is *à la carte* enabled (unless the team uses a delegated flow), has available collection instructions, and the estimated draw is fewer than 15 tubes.
+
+If this evaluation fails, the request returns HTTP 400 and no Lab Test is created.
+
 <RequestExample>
 
 ```python Python

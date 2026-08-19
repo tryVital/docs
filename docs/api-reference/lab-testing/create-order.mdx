@@ -4,9 +4,19 @@ description: "Create or submit order via the Junction API. Requires authenticati
 openapi: "POST /v3/order"
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
 <Note>
 Patient name fields (`first_name`, `last_name`) must follow specific validation rules due to lab restrictions. See [Patient Name Validation](/lab/workflow/order-requirements#patient-name-validation) for complete details.
 </Note>
+
+#### At-Home Phlebotomy Order Validation
+
+<FeatureBeta />
+
+This beta applies only to validation of at-home phlebotomy tests; `POST /v3/order` remains generally available. An inline or derived at-home phlebotomy Lab Test from `order_set`, including one with `add_on` markers, is subject to the same auto-approval validation as `POST /v3/lab_tests`. For eligible teams and labs, all markers must be *à la carte* enabled unless the team uses a delegated flow, have available collection instructions, and have an estimated draw of fewer than 15 tubes. If validation fails, the request returns HTTP 400 and no derived Lab Test or order is created.
+
+A referenced Lab Test must be `active`. A pending at-home phlebotomy test that was created before auto-evaluation applied to the current team, or by a team without this capability, can return HTTP 400 when ordered.
 
 
 <RequestExample>

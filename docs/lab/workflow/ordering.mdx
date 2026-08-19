@@ -3,7 +3,10 @@ title: "Choosing Tests and Markers"
 description: "Choose saved lab tests, à la carte markers, or a combination of both when defining what a lab order should include."
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
 Use the `order_set` field when you [create an order](/api-reference/lab-testing/create-order) to define the tests and markers the laboratory should perform. You can reference reusable lab tests, select markers directly from the [compendium](/lab/overview/compendium-search), or combine both approaches.
+
+# Concepts
 
 | Approach | Use when |
 | --- | --- |
@@ -142,6 +145,12 @@ client.lab_tests.create_order(
 When you provide `add_on`, you must also provide `collection_method`.
 </Note>
 
+#### At-Home Phlebotomy Validation
+
+<FeatureBeta />
+
+An inline or derived at-home phlebotomy lab test from `order_set`, including one with `add_on` markers, is subject to the same auto-approval validation as a lab test created with [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test). For eligible teams and labs, all markers must be *à la carte* enabled unless your team uses a delegated flow, have available collection instructions, and have an estimated draw of fewer than 15 tubes. If validation fails, the order request returns HTTP 400 and no derived lab test or order is created.
+
 
 ## Choose a collection method
 
@@ -207,6 +216,7 @@ The API validates the selected tests, markers, laboratories, and collection meth
 - `cannot set both marker_ids and provider_ids in add_on`: Use either Junction marker IDs or provider IDs, not both.
 - `cannot order lab_tests from multiple labs`: All referenced lab tests must belong to the same partner laboratory.
 - `cannot order lab tests with multiple collection methods`: Provide one compatible `collection_method` when combining lab tests.
+- `test is not acitve`: A referenced lab test is still pending approval or otherwise inactive. It cannot be ordered until its status is `active`.
 
 ## Related guides
 
