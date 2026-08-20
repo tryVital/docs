@@ -2,10 +2,9 @@
 
 ## Quickstart
 
-- Ensure you have nodejs 18 installed and run `yarn install` to get started.
-- Ensure you have mintlify installed globally by running `npm install -g mintlify`.
+- Ensure you have Node.js 18 installed, then run `corepack enable` and `pnpm install`.
+- Run `pnpm start` from the repository root to start the local Mintlify development server.
 - To pull the latest changes from the openapi spec in production, run `wget https://api.tryvital.io/openapi.json -O ./docs/swagger.json`, or for the openapi spec in sandbox `wget https://api.sandbox.tryvital.io/openapi.json -O ./docs/swagger.json`.
-- Make sure you `cd` into the `docs` directory before running `mintlify dev` to view the docs locally.
 
 ## Deployment
 
