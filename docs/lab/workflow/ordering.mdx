@@ -6,7 +6,6 @@ description: "Choose saved lab tests, à la carte markers, or a combination of b
 import FeatureBeta from '/snippets/feature-beta.mdx';
 Use the `order_set` field when you [create an order](/api-reference/lab-testing/create-order) to define the tests and markers the laboratory should perform. You can reference reusable lab tests, select markers directly from the [compendium](/lab/overview/compendium-search), or combine both approaches.
 
-
 | Approach | Use when |
 | --- | --- |
 | One saved lab test | You repeatedly order a predefined set of markers. |
@@ -143,7 +142,6 @@ client.lab_tests.create_order(
 <Note>
 When you provide `add_on`, you must also provide `collection_method`.
 </Note>
-
 
 
 ## Choose a collection method
