@@ -20,7 +20,7 @@ experimentation.
 </Card>
 
 <Card title="Aggregate in floating time" icon="timeline-arrow" horizontal>
-  Work with time zone agnostic outputs that are indexed in the user's perception of time (i.e., _floating time_).
+  Work with outputs indexed in the user's local perception of time. Review the [time and data semantics](/sense/query-dsl/time-and-data-semantics) before interpreting daily buckets as elapsed time or data coverage.
 </Card>
 
 ## Query API and Continuous Query
@@ -43,6 +43,9 @@ You can use Junction Sense through two mediums:
 <Steps>
   <Step title="Experiment with Query API">
     Start with Query API if you need quick insights, one-time analysis or query experimentation using an individual user's data.
+  </Step>
+  <Step title="Confirm time and source semantics">
+    Check the table index, floating-time behavior, provider attribution, and prioritization before treating an output as a production data contract.
   </Step>
   <Step title="Productize with Continuous Query">
     Switch to Continuous Query once you have queries which you wish to turn into a continuously updated, named dataset and to receive change events for.

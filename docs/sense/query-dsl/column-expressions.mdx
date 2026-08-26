@@ -279,11 +279,15 @@ the implicit [Data Prioritization](/sense/data-prioritization) behavior would be
 
 | Column                                | Python DSL                           | JSON DSL                           | Available in |
 | ------------------------------------- | ------------------------------------ | -----------------------------------|----------------------------- |
-| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | All Tables |
-| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | All Tables |
-| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | All summary tables |
+| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | Summary and timeseries tables except Readiness Scores |
+| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | Summary and timeseries tables except Readiness Scores |
+| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | Summary tables except Readiness Scores |
 | Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id" }` | Workout Stream timeseries only |
 | Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only |
+
+<Note>
+`source_device_id` is an optional table column on supported summary resources, not a Source Column expression. For example, use `Activity.col("source_device_id")` or `{ "activity": "source_device_id" }`. Do not use `{ "source": "source_device_id" }`. Coverage and stability vary by provider.
+</Note>
 
 ## Index Column expression
 
@@ -297,7 +301,9 @@ index using the special Index Column expression:
 | Sleep summary<br/>`sleep`            | Session end datetime   | `Sleep.index()`     | `{ "index": "sleep" }` |
 | Readiness scores<br/>`derived_readiness` | Calendar date       | `DerivedReadiness.index()` | `{ "index": "derived_readiness" }` |
 | Workout summary<br/>`workout`        | Session start datetime | `Workout.index()`   | `{ "index": "workout" }` |
+| Meal summary<br/>`meal`              | Calendar date          | `Meal.index()`      | `{ "index": "meal" }` |
 | Menstrual cycle<br/>`menstrual_cycle`| Period start date      | `MenstrualCycle.index()` | `{ "index": "menstrual_cycle" }` |
+| Timeseries<br/>`timeseries`           | Sample timestamp       | `Timeseries.index()` | `{ "index": "timeseries" }` |
 | Profile<br/>`profile`                | Updated At (UTC) datetime | `Profile.index()`| `{ "index": "profile" }` |
 
 

@@ -41,6 +41,10 @@ While Continuous Query uses the same [Query DSL](/sense/query-dsl/) as the Query
 - The query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
 
 <Note>
+An ungrouped Readiness Scores query is a supported exception when it directly selects the `date` column and readiness values. See [Readiness Scores](/sense/query-dsl/readiness-scores).
+</Note>
+
+<Note>
   Please reach out if your use case is limited by these restrictions.
 </Note>
 
@@ -51,6 +55,15 @@ data event to your [Webhook or ETL Pipeline destinations](/webhooks/introduction
 
 This data event includes only the delta (new rows or changed rows with respect to the [group keys](/sense/query-dsl/select-clause#select-the-group-key-columns)).
 To re-fetch the whole result set, use the [Get Result Table](/api-reference/sense/continuous-query/get-result-table) endpoint.
+
+Treat this event as a notification that the result table changed, not as an ordered event log:
+
+- The event does not include a query evaluation timestamp, sequence number, result version, or task ID.
+- Webhook delivery can be retried or arrive out of order. Deduplicate webhook retries with the `svix-id` header; do not use `svix-timestamp` as query evaluation time or an ordering key.
+- Fetch the latest result table before making a stateful workflow decision. This prevents an older or retried delivery from regressing application state.
+- The `data` object uses columnar JSON. Arrays at the same position form one row. For example, index `0` in every array belongs to the same changed row.
+
+If you only need to trigger a refresh, enqueue the `query_id` and `user_id`, return a successful response promptly, and fetch the current table asynchronously.
 
 ```json
 {

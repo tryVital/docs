@@ -1,0 +1,83 @@
+---
+title: "Time and data semantics"
+description: "Understand how Junction Sense indexes records, creates local-time buckets, handles source corrections, and interprets summary and timeseries data."
+icon: clock
+---
+
+Junction Sense aggregates normalized wearable data. Before choosing an aggregate function, identify what one input row represents and which timestamp or date Sense uses as the table index.
+
+## Start with the table index
+
+`date_trunc`, `oldest`, and `newest` all use the selected table's index.
+
+| Table | Index used by Sense |
+| --- | --- |
+| Activity | Calendar date |
+| Body | Measurement datetime |
+| Sleep | Session end datetime |
+| Workout | Session start datetime |
+| Meal | Calendar date |
+| Menstrual Cycle | Period start date |
+| Readiness Scores | Calendar date |
+| Timeseries | Sample timestamp |
+| Profile | `updated_at` in UTC |
+
+For example, a sleep session that starts before midnight and ends after midnight belongs to the local-day bucket containing its session end.
+
+## Floating time
+
+Except for Profile, Sense evaluates dates and times in **floating time**: the local date and clock time associated with the record, without converting every record to one shared UTC timeline.
+
+This preserves the user's experience of time. A 7:00 AM sample remains 7:00 AM when grouped by hour, even when the user changes time zones.
+
+For timeseries data, Sense derives floating time from each sample's stored time zone offset. If the offset is missing or unusable, Sense uses an offset of zero. Historical offset quality depends on the provider.
+
+### Consequences for daily buckets
+
+- A local-day bucket does not represent a fixed 24-hour elapsed interval. Travel can cause one bucket to span more or less elapsed time.
+- Daylight saving transitions are not normalized. A spring-forward or fall-back day remains one local calendar day.
+- A result does not distinguish a short local day from incomplete wear time, delayed sync, or missing provider data.
+- The minimum and maximum floating timestamps describe local clock positions. Do not subtract them to calculate elapsed UTC duration across an offset change.
+- Sense does not normalize sums or means by the number of elapsed hours in a bucket.
+
+If elapsed duration or data completeness matters, retrieve the underlying data and apply the completeness rules required by your application.
+
+## Resource-specific behavior
+
+### Activity
+
+Activity is a normalized daily summary. In normal ingestion paths, Sense receives one current summary per user, provider, and calendar date. A provider correction updates that logical daily summary instead of adding another device contribution.
+
+`source_device_id` is optional attribution metadata. It is not a source-prioritization key, and grouping by it cannot recover separate device records that a provider already combined into one daily summary.
+
+`time_zone_offset` is the last observed offset reported for the day. It does not describe wear duration, coverage, or time spent in each time zone. Activity intensity fields are provider-defined daily values and are not guaranteed to partition a 24-hour day.
+
+### Sleep
+
+Sleep is indexed by the floating session end datetime. Sense aggregates the normalized `duration_second` stored on each Sleep record; it does not recalculate session duration during query evaluation. How the provider integration obtains that duration can vary.
+
+The optional `time_zone` field describes the normalized Sleep record. Do not use it to infer time zone transitions within a session.
+
+### Timeseries
+
+Sense uses the samples and intervals stored from the provider. It does not resample them to a uniform cadence or reconcile all overlapping intervals.
+
+Within the same stored series, a correction at the exact same timestamp replaces the earlier value. Values at different timestamps remain separate, even when their intervals overlap. Aggregates such as `sum` operate on the values that remain, so overlapping intervals can both contribute.
+
+Sampling frequency, interval length, and update behavior vary by provider and resource. Validate representative provider data before depending on a fixed cadence or non-overlapping intervals.
+
+## Summary and timeseries values are independent
+
+A provider's summary metric and its related timeseries are separate normalized products. They may use different provider endpoints, synchronization windows, or provider-defined calculations. Sense does not require a summary total to equal an aggregate calculated from timeseries samples.
+
+Use summary tables when you want the provider's normalized daily or session-level metric. Use timeseries when your application needs sample-level analysis, custom coverage rules, or elapsed-time calculations.
+
+## Query design checklist
+
+Before deploying a query:
+
+1. Confirm the table index and whether it matches the date assignment your application expects.
+2. Decide whether you need the prioritized result or separate provider and source-type groups.
+3. Check whether missing data can be distinguished from a valid low or short result.
+4. Verify sample cadence, interval overlap, and source attribution with representative providers.
+5. Use the [Query API](/sense/using-query-api) to test travel, daylight saving, duplicate-index, and sparse-data cases before creating a Continuous Query.

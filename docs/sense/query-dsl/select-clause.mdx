@@ -63,6 +63,15 @@ Aggregate a [Table Column expression](/sense/query-dsl/column-expressions) with 
 The specified aggregate function is applied to each and every group created by the `group_by` clause.
 The result set is N aggregated values where N is the number of groups.
 
+| Function | Input semantics |
+| --- | --- |
+| `count` | Counts non-null values in the selected column. |
+| `mean` | Calculates the unweighted arithmetic mean of the input rows. A mean of precomputed session or daily metrics is not weighted by duration or sample count. |
+| `oldest` / `newest` | Selects the value from the row with the earliest or latest [table index](/sense/query-dsl/time-and-data-semantics#start-with-the-table-index). If multiple rows have the same index, the tie result is not defined. |
+| `sum` | Adds the stored input values. Sense does not normalize for elapsed bucket duration or reconcile overlapping timeseries intervals. |
+
+See [Time and data semantics](/sense/query-dsl/time-and-data-semantics) for floating-time, correction, overlap, and completeness behavior.
+
 
 <AccordionGroup>
 <Accordion title="Statistical functions" icon="chart-column" iconType="duotone" defaultOpen>
