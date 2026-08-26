@@ -13,6 +13,8 @@ Within each group outlined by your [Group By clause](/sense/query-dsl/group-by-c
 * Keep only data from the sub-group that has the highest Source Type priority, or the highest Provider priority when multiple sub-groups exist
   for the same Source Type.
 
+The selected provider and source-type pair contributes the complete aggregate output for that group. Sense does not combine individual fields from different source pairs.
+
 <Note>
 Data prioritization works only in a [Group By](/sense/query-dsl/group-by-clause) context.
 </Note>
@@ -20,6 +22,16 @@ Data prioritization works only in a [Group By](/sense/query-dsl/group-by-clause)
 <Note>
 If both the _Provider_ and _Source Type_ Source Columns are present in the [Group By clause](/sense/query-dsl/group-by-clause),
 the implicit [Data Prioritization](/sense/data-prioritization) behavior would be disabled.
+</Note>
+
+## Scope of prioritization
+
+Prioritization uses the provider and source type. It does not rank individual devices, source device IDs, or source app IDs.
+
+To inspect source-specific results, group by both `source_provider` and `source_type`. This produces a separate result for each available pair and disables implicit selection of one winning pair. You can also group by a resource's optional `source_device_id` table column when it is available, but provider coverage for that field varies.
+
+<Note>
+[Readiness Scores](/sense/query-dsl/readiness-scores) select the highest-priority eligible Sleep source internally for each date. The public `derived_readiness` table does not expose source fields, so it cannot be grouped by provider or source type.
 </Note>
 
 <Accordion title="Example" defaultOpen>

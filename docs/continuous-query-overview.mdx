@@ -57,7 +57,7 @@ Continuous Query runs your Junction Sense Queries automatically across all users
 
   **Example: First Glucose Reading of Each Day**
 
-  - Capture fasting glucose values (first measurement per day)
+  - Capture the first observed glucose value in each local-day bucket
   - Group by data source and provider for device comparison
   - Track morning glucose patterns over time
   - [View example →](/sense/examples#first-glucose-measurement-of-the-day-grouped-by-source-type-and-provider)
@@ -144,7 +144,7 @@ Calculate meaningful insights using built-in [aggregation functions](/sense/quer
 - **Sum** - Total steps, cumulative calories
 - **Min/Max** - Lowest/highest values in a period
 - **Standard Deviation** - Variability in metrics
-- **Newest/Oldest** - Most recent or first value (useful for fasting glucose, chronotype)
+- **Newest/Oldest** - Value from the latest or earliest table index (useful for the first observed glucose value or the latest chronotype)
 
 ### Multi-Dimensional Grouping
 

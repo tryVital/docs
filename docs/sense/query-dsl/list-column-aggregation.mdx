@@ -138,14 +138,14 @@ The predicate grammar is the same as the top-level [WHERE clause](/sense/query-d
 
 A scalar-output subquery in a grouped query must be wrapped in an outer aggregate.
 
-Period end, cycle end, and number of meaningful flow days, one row per cycle:
+Period end, cycle end, and number of meaningful flow days, one row per period-start date:
 
 <CodeGroup>
 ```python Python DSL
 va.select(
     va.group_key("*"),
-    va.MenstrualCycle.col("period_end").newest(),
-    va.MenstrualCycle.col("cycle_end").newest(),
+    va.MenstrualCycle.col("period_end").max(),
+    va.MenstrualCycle.col("cycle_end").max(),
     va.MenstrualCycle.col("menstrual_flow")
         .unnest_and_select(lambda col: col.count())
         .where("flow != 'none'")
@@ -159,8 +159,8 @@ va.select(
 {
     "select": [
         { "group_key": "*" },
-        { "func": "newest", "arg": { "menstrual_cycle": "period_end" } },
-        { "func": "newest", "arg": { "menstrual_cycle": "cycle_end" } },
+        { "func": "max", "arg": { "menstrual_cycle": "period_end" } },
+        { "func": "max", "arg": { "menstrual_cycle": "cycle_end" } },
         {
             "func": "mean",
             "arg": {
@@ -179,6 +179,14 @@ va.select(
 }
 ```
 </CodeGroup>
+
+More than one normalized Menstrual Cycle record can share a period-start date, including records attributed to different source apps within the selected provider and source type. The outer aggregate combines those record-level scalars:
+
+- `sum(inner_count)` counts matching elements across the records.
+- `min(inner_min)` and `max(inner_max)` select the extrema across the records.
+- `mean(inner_mean)` is an unweighted mean of the record-level means, not a pooled mean of all list elements.
+
+For a pooled mean, calculate an inner `sum` and `count`, aggregate each with outer `sum`, and divide the resulting totals in your application. Avoid `oldest` or `newest` when records can share the same period-start index because ties are not defined.
 
 ## Supported aggregates
 

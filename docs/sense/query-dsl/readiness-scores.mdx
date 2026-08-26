@@ -18,6 +18,8 @@ The `derived_readiness` table returns one row per user and calendar day with:
 
 Junction Sense computes these metrics for you, so you can query readiness directly without building custom scoring pipelines.
 
+For each date, Junction selects the highest-priority eligible Sleep provider and source type before materializing the Readiness Scores row. The public table does not expose `source_provider`, `source_type`, or other source-attribution columns. Query the Sleep table separately if you need to audit source changes or compare providers.
+
 ## What you can do
 
 - Pull one scored row per day for charting or downstream analytics.

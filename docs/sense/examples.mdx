@@ -390,7 +390,7 @@ va.select(
 
 ## Menstrual Cycle Summary
 
-Period end, cycle end, mean basal body temperature, and number of meaningful flow days — one row per cycle.
+Period end, cycle end, mean basal body temperature, and number of meaningful flow days — one row per period-start date.
 
 <CodeGroup>
 ```python Python DSL
@@ -398,8 +398,8 @@ import vitalx.aggregation as va
 
 va.select(
     va.group_key("*"),
-    va.MenstrualCycle.col("period_end").newest(),
-    va.MenstrualCycle.col("cycle_end").newest(),
+    va.MenstrualCycle.col("period_end").max(),
+    va.MenstrualCycle.col("cycle_end").max(),
     va.MenstrualCycle.col("basal_body_temperature")
         .unnest_and_select(lambda col: col.field("value").mean())
         .mean(),
@@ -416,8 +416,8 @@ va.select(
 {
   "select": [
     { "group_key": "*" },
-    { "func": "newest", "arg": { "menstrual_cycle": "period_end" } },
-    { "func": "newest", "arg": { "menstrual_cycle": "cycle_end" } },
+    { "func": "max", "arg": { "menstrual_cycle": "period_end" } },
+    { "func": "max", "arg": { "menstrual_cycle": "cycle_end" } },
     {
       "func": "mean",
       "arg": {

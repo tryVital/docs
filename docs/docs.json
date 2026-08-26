@@ -1194,6 +1194,7 @@
                 "group": "Junction Sense",
                 "pages": [
                   "sense/overview",
+                  "sense/time-and-data-semantics",
                   "continuous-query-overview",
                   "sense/using-continuous-query",
                   "sense/managing-queries",
