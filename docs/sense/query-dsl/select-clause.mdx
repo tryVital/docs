@@ -67,10 +67,10 @@ The result set is N aggregated values where N is the number of groups.
 | --- | --- |
 | `count` | Counts non-null values in the selected column. |
 | `mean` | Calculates the unweighted arithmetic mean of the input rows. A mean of precomputed session or daily metrics is not weighted by duration or sample count. |
-| `oldest` / `newest` | Selects the value from the row with the earliest or latest [table index](/sense/time-and-data-semantics#start-with-the-table-index). If multiple rows have the same index, the tie result is not defined. |
+| `oldest` / `newest` | Selects the value from the row with the earliest or latest [table index](/sense/query-dsl/time-and-data-semantics#start-with-the-table-index). If multiple rows have the same index, the tie result is not defined. |
 | `sum` | Adds the stored input values. Sense does not normalize for elapsed bucket duration or reconcile overlapping timeseries intervals. |
 
-See [Time and data semantics](/sense/time-and-data-semantics) for floating-time, correction, overlap, and completeness behavior.
+See [Time and data semantics](/sense/query-dsl/time-and-data-semantics) for floating-time, correction, overlap, and completeness behavior.
 
 
 <AccordionGroup>

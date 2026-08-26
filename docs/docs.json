@@ -1194,7 +1194,6 @@
                 "group": "Junction Sense",
                 "pages": [
                   "sense/overview",
-                  "sense/time-and-data-semantics",
                   "continuous-query-overview",
                   "sense/using-continuous-query",
                   "sense/managing-queries",
@@ -1206,6 +1205,7 @@
               {
                 "group": "Query DSL",
                 "pages": [
+                  "sense/query-dsl/time-and-data-semantics",
                   "sense/query-dsl/column-expressions",
                   "sense/query-dsl/select-clause",
                   "sense/query-dsl/group-by-clause",
