@@ -387,8 +387,8 @@
                 "group": "Bring Your Own OAuth",
                 "pages": [
                   "wearables/connecting-providers/bring-your-own-oauth/overview",
-                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials",
-                  "wearables/connecting-providers/bring-your-own-oauth/callback-endpoints"
+                  "wearables/connecting-providers/bring-your-own-oauth/callback-endpoints",
+                  "wearables/connecting-providers/bring-your-own-oauth/sharing-credentials"
                 ]
               },
               {
@@ -400,65 +400,66 @@
               {
                 "group": "Providers",
                 "pages": [
-                  "wearables/providers/introduction",
-                  "wearables/providers/resources",
-                  "wearables/providers/update-frequency",
                   "wearables/providers/historical-data-pull-range",
-                  "wearables/providers/test_data"
+                  "wearables/providers/resources",
+                  "wearables/providers/introduction",
+                  "wearables/providers/test_data",
+                  "wearables/providers/update-frequency"
                 ]
               },
               {
                 "group": "Connecting Providers",
                 "pages": [
+                  "wearables/connecting-providers/custom_widget",
+                  "webhooks/connection-errors",
                   "wearables/connecting-providers/introduction",
-                  "wearables/connecting-providers/link_flow",
                   "wearables/connecting-providers/launching_link",
-                  "wearables/connecting-providers/auth_types",
                   "wearables/connecting-providers/errors",
-                  "wearables/connecting-providers/custom_widget"
+                  "wearables/connecting-providers/link_flow",
+                  "wearables/connecting-providers/auth_types"
                 ]
               },
               {
                 "group": "Device Data",
                 "pages": [
-                  "wearables/providers/data-primary-key",
-                  "wearables/providers/timestamps-and-time-zones",
                   "wearables/providers/data-attributions",
                   "wearables/providers/data-ingestion-bounds",
-                  "wearables/providers/heart-rate-zones"
+                  "wearables/providers/heart-rate-zones",
+                  "wearables/providers/data-primary-key",
+                  "wearables/providers/timestamps-and-time-zones"
                 ]
               },
               {
                 "group": "Mobile SDKs",
                 "pages": [
-                  "wearables/sdks/installation",
-                  "wearables/sdks/authentication",
-                  "wearables/sdks/vital-core",
                   {
                     "group": "Health SDK",
                     "pages": [
-                      "wearables/sdks/health/overview",
-                      "wearables/sdks/health/connection-policies"
+                      "wearables/sdks/health/connection-policies",
+                      "wearables/sdks/health/overview"
                     ]
                   },
-                  "wearables/sdks/vital-devices"
+                  "wearables/sdks/installation",
+                  "wearables/sdks/vital-core",
+                  "wearables/sdks/vital-devices",
+                  "wearables/sdks/authentication"
                 ]
               },
               {
                 "group": "Provider Guides",
                 "pages": [
                   "wearables/guides/abbott-libreview",
-                  "wearables/guides/apple-healthkit",
                   "wearables/guides/android-health-connect",
-                  "wearables/guides/samsung-health",
-                  "wearables/guides/dexcom_v3",
+                  "wearables/guides/apple-healthkit",
                   "wearables/guides/dexcom",
+                  "wearables/guides/dexcom_v3",
                   "wearables/guides/fitbit",
                   "wearables/guides/garmin",
                   "wearables/guides/google_fit",
                   "wearables/guides/google-health",
                   "wearables/guides/omron",
                   "wearables/guides/polar",
+                  "wearables/guides/samsung-health",
                   "wearables/guides/strava",
                   "wearables/guides/whoop"
                 ]

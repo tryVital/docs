@@ -1,0 +1,64 @@
+---
+title: "Handle Connection Errors"
+description: "Use connection lifecycle webhooks and the Junction API to detect, reconcile, and recover provider connections that require user action."
+---
+
+Provider connections are long-lived dependencies on user credentials, provider APIs, and networks. A connection that works today can later fail because access was revoked, credentials expired, permissions changed, or a provider invalidated its authorization.
+
+In other words: the universe has entropy, systems fail, and every connection eventually meets its end. So treat reconnection as normal to your product lifecycle rather than something unexpected.
+
+## Suggested connection lifecycle
+
+Junction provides two webhook events for the connection lifecycle:
+
+- [`provider.connection.error`](/event-catalog/provider.connection.error) indicates that a connection has entered an error state and requires attention.
+- [`provider.connection.created`](/event-catalog/provider.connection.created) indicates that a provider was connected successfully.
+
+A typical implementation uses these events to keep the connection experience in sync with Junction:
+
+<Steps>
+  <Step title="Handle the connection error event">
+    Use `user_id` or `client_user_id` to identify the user and `data.provider` to identify the affected provider. The event also includes an `error_type`, `message`, and `error_details` for diagnosis.
+
+    Error types are non-exhaustive, so implementations should accept values they do not recognize.
+  </Step>
+
+  <Step title="Prompt the user to reconnect">
+    Use the event to present a reconnection option at the point that makes sense for your product. Explain that the connection needs attention and provide a way to reconnect it.
+
+    Follow the [Junction Link flow](/wearables/connecting-providers/link_flow) and generate a new Link token for the existing Junction user. The provider can be passed when generating the token to open Link directly to the relevant connection flow.
+  </Step>
+
+  <Step title="Handle the successful connection event">
+    Use `provider.connection.created` to recognize that the provider was connected successfully and update your application's connection experience as appropriate.
+  </Step>
+</Steps>
+
+For example, an application might display:
+
+> Your connection needs attention. Reconnect your device or account to resume syncing.
+
+The exact notification channel, application state, and reconnection experience are up to your implementation.
+
+## Reconcile connection status
+
+The [Get User Connections endpoint](/api-reference/user/get-users-connected-providers) returns the current providers for a Junction user, including whether each connection is `connected` or in an `error` state.
+
+You can use this endpoint when you need to:
+
+- Confirm the current state before presenting a reconnection prompt.
+- Refresh connection state when a user opens your application.
+- Reconcile your records after webhook delivery or processing failures.
+- Periodically check connection state if that fits your application's requirements.
+
+How often you reconcile—and whether you do so in response to an event, user activity, or a scheduled process—depends on your product and infrastructure.
+
+## Webhook handling considerations
+
+- Verify webhook signatures as described in [Authenticating Webhooks](/webhooks/introduction#authenticating-webhooks).
+- Return a `2xx` response within 15 seconds to acknowledge delivery.
+- Make processing idempotent because unsuccessful deliveries are retried according to the [webhook retry policy](/webhooks/retry-policy).
+- Monitor failed deliveries and disabled endpoints in the Junction Dashboard.
+- The user, provider, `error_type`, `svix-id`, and receipt time can help diagnose delivery or connection issues.
+
+With this lifecycle in place, connection failures can become a self-service reconnection flow.
