@@ -55,7 +55,7 @@ Wearable data events have the following extended standard structure:
 * A `data` field, which comprises:
    * The UUID of the Junction user for which this event is intended — note that this is not the `client_user_id` of the Junction user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
-      * `name`: The human-readable name of the source
+      * `name`: The human-readable name of the source.
       * `slug`: The stable identifier Junction assigned to the source — see [Supported providers](/wearables/providers/introduction) for the complete list.
       * `logo`: The URL to an icon representing the source.
    * Any number of event-specific fields.
