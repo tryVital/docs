@@ -411,7 +411,7 @@
                 "group": "Connecting Providers",
                 "pages": [
                   "wearables/connecting-providers/custom_widget",
-                  "webhooks/connection-errors",
+                  "wearables/connecting-providers/connection-errors",
                   "wearables/connecting-providers/introduction",
                   "wearables/connecting-providers/launching_link",
                   "wearables/connecting-providers/errors",

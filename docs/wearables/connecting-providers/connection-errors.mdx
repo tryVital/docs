@@ -22,13 +22,11 @@ A typical implementation uses these events to keep the connection experience in 
 
     Error types are non-exhaustive, so implementations should accept values they do not recognize.
   </Step>
-
   <Step title="Prompt the user to reconnect">
     Use the event to present a reconnection option at the point that makes sense for your product. Explain that the connection needs attention and provide a way to reconnect it.
 
     Follow the [Junction Link flow](/wearables/connecting-providers/link_flow) and generate a new Link token for the existing Junction user. The provider can be passed when generating the token to open Link directly to the relevant connection flow.
   </Step>
-
   <Step title="Handle the successful connection event">
     Use `provider.connection.created` to recognize that the provider was connected successfully and update your application's connection experience as appropriate.
   </Step>
@@ -38,7 +36,7 @@ For example, an application might display:
 
 > Your connection needs attention. Reconnect your device or account to resume syncing.
 
-The exact notification channel, application state, and reconnection experience are up to your implementation.
+The exact notification channel, application state, and reconnection experience are up to your implementation. 
 
 ## Reconcile connection status
 
@@ -52,13 +50,3 @@ You can use this endpoint when you need to:
 - Periodically check connection state if that fits your application's requirements.
 
 How often you reconcile—and whether you do so in response to an event, user activity, or a scheduled process—depends on your product and infrastructure.
-
-## Webhook handling considerations
-
-- Verify webhook signatures as described in [Authenticating Webhooks](/webhooks/introduction#authenticating-webhooks).
-- Return a `2xx` response within 15 seconds to acknowledge delivery.
-- Make processing idempotent because unsuccessful deliveries are retried according to the [webhook retry policy](/webhooks/retry-policy).
-- Monitor failed deliveries and disabled endpoints in the Junction Dashboard.
-- The user, provider, `error_type`, `svix-id`, and receipt time can help diagnose delivery or connection issues.
-
-With this lifecycle in place, connection failures can become a self-service reconnection flow.
