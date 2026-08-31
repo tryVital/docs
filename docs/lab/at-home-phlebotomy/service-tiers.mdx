@@ -29,7 +29,7 @@ The recommended high-level flow for selecting an appointment at Junction is:
 
 - Place a Mobile Phlebotomy order with the [`POST /v3/order`](/api-reference/lab-testing/create-order) endpoint.
 - Wait for the `Requisition Ready` status updates through our Webhooks.
-- Fetch Provider data via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint, the response payload should look like this:
+- Fetch Provider data via the [`GET /v3/order/area/info`](/api-reference/lab-testing/area-info) endpoint. The response payload should look like this:
 
 ```json
 {
