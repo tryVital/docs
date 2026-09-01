@@ -90,20 +90,20 @@ fmt.Printf("Received data %s\n", response)
         "user_id": {
           "title": "User Id",
           "type": "string",
-          "description": "User id returned by vital create user request. This id should be stored in your database against the user and used for all interactions with the vital api.",
+          "description": "User id returned by Junction create user request. This id should be stored in your database against the user and used for all interactions with the Junction api.",
           "format": "uuid"
         },
         "user_key": {
           "title": "User Key",
           "type": "string",
-          "description": "User key returned by vital create user key request. This key should be stored in your database against the user and used for all interactions with the vital api.",
+          "description": "User key returned by Junction create user key request. This key should be stored in your database against the user and used for all interactions with the Junction api.",
           "format": "uuid",
           "deprecated": true
         },
         "id": {
           "title": "Id",
           "type": "string",
-          "description": "The Vital Order ID",
+          "description": "The Junction Order ID",
           "format": "uuid"
         },
         "team_id": {
@@ -369,7 +369,7 @@ fmt.Printf("Received data %s\n", response)
               "description": "Schema for a LabTest in the database."
             }
           ],
-          "description": "The Vital Test associated with the order"
+          "description": "The Junction Test associated with the order"
         },
         "details": {
           "title": "Details",
@@ -392,7 +392,7 @@ fmt.Printf("Received data %s\n", response)
                     "id": {
                       "title": "Id",
                       "type": "string",
-                      "description": "The Vital walk-in test Order ID",
+                      "description": "The Junction walk-in test Order ID",
                       "format": "uuid"
                     },
                     "created_at": {
@@ -433,7 +433,7 @@ fmt.Printf("Received data %s\n", response)
                     "id": {
                       "title": "Id",
                       "type": "string",
-                      "description": "The Vital TestKit Order ID",
+                      "description": "The Junction TestKit Order ID",
                       "format": "uuid"
                     },
                     "shipment": {
@@ -456,7 +456,7 @@ fmt.Printf("Received data %s\n", response)
                             "id": {
                               "title": "Id",
                               "type": "string",
-                              "description": "The Vital Shipment ID",
+                              "description": "The Junction Shipment ID",
                               "format": "uuid"
                             },
                             "outbound_tracking_number": {
@@ -492,7 +492,7 @@ fmt.Printf("Received data %s\n", response)
                             "notes": {
                               "title": "Notes",
                               "type": "string",
-                              "description": "Notes associated to the Vital shipment"
+                              "description": "Notes associated to the Junction shipment"
                             }
                           },
                           "description": "Schema for a Shipment in the client facing API.\n\nTo be used as part of a ClientFacingTestkitOrder.",
