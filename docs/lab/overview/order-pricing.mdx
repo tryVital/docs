@@ -1,0 +1,122 @@
+---
+title: "Order Pricing"
+description: "Stay on top of the latest marker and panel prices, and generate cost estimations for your order sets."
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+## Pricing APIs
+
+Pricing data are included only on request. You can opt-in via `include_pricing=true` in the request URL query.
+
+| Catalog endpoints | Response |
+| --- | --- |
+| [Get Available Biomarkers](/api-reference/lab-testing/biomarkers)<br />`GET /v3/lab_tests/markers?include_pricing=true` | `pricing.data` is keyed by Junction marker ID. |
+| [Get Available Tests](/api-reference/lab-testing/tests-paginated)<br />`GET /v3/lab_test?include_pricing=true` | `pricing.data` is keyed by lab test ID. Each entry contains the panel's `pricing` and, when applicable, a `marker_breakdown`. |
+
+You can also generate cost estimation for order sets given a wider set of ordering parameters, including but not limited to billing type, priority (STAT) and US State.
+
+| Endpoint | Response |
+| --- | --- |
+| [Estimate order set pricing](/api-reference/lab-testing/estimate-order-set-pricing)<br />`POST /v3/lab_test/estimate_order_set_pricing` | `data` contains one estimate for each submitted order set, in request order, with aggregate and component pricing. |
+
+By default, all Pricing APIs assume the use of Junction house [lab accounts](/lab/overview/lab-accounts) and so the Junction lab compendium pricing would apply. To estimate order sets when
+using alternative [lab accounts](/lab/overview/lab-accounts), you must explicitly pass the respective `lab_account_id` to the API endpoints. 
+
+<Note>
+All pricing objects are **estimates** provided as is, and do not constitute a quote. The final charge can vary based on service conditions and order details.
+</Note>
+
+## Interpreting the pricing objects
+
+A specified pricing object consists of a **base price**, and 0 or more additive modifiers.
+
+The simplest pricing consists of only the base price:
+
+```json
+{
+  "base_amount_minor": 1000,
+  "modifiers": []
+}
+```
+
+This means the subject is always $10.00 (1000 US cents). All amounts are encoded in the smallest denomination of the currency.
+
+When the subject has multiple conditional prices, the pricing object will include one or more _additive_ modifiers:
+
+```json
+{
+  "base_amount_minor": 1000,
+  "modifiers": [
+    {
+      "delta_amount_minor": 250,
+      "conditions": {
+        "us_state": {
+          "any_of": ["CA", "NY"]
+        }
+      }
+    },
+    {
+      "delta_amount_minor": {
+        "minimum": 500,
+        "maximum": 900
+      },
+      "conditions": {
+        "reflex": {}
+      }
+    }
+  ]
+}
+```
+
+### Calculating a price
+
+<Steps>
+<Step title="Start with `base_amount_minor`."></Step>
+<Step title="Select every modifier for which **all** conditions match.">
+Conditions are additive and conjunctive.
+
+For example, a modifier containing both `us_state` and `reflex` applies only when the state matches **and** reflex testing occurs.
+
+When multiple independent modifiers match, add all of them.
+
+<Warning>
+You must ignore modifiers with unrecognized conditions, since Junction may add new conditions as we see fit.
+
+You can allowlist either by inspecting the keys in the modifier object, or by comparing
+the `keys` field if your language's serialization stack does not support said inspection.
+</Warning>
+
+<Note>
+Junction guarantees that there is never an overlap in US State groups across all modifiers (`conditions.us_state.any_of`).
+
+It is safe for you to simply match eligible modifiers by doing an inclusion check on
+`conditions.us_state.any_of` and the rest of the relevant conditions.
+</Note>
+
+</Step>
+<Step title="Add each matching `delta_amount_minor` to the base amount."></Step>
+</Steps>
+
+### Prices in integer and closed ranges
+
+A modifier delta can be an integer (a flat price) or a closed range (the minimum and maximum possible prices). In the example above:
+
+- The price in California or New York without reflex testing is $12.50.
+- The price in California or New York with reflex testing is between \$17.50 and \$21.50.
+- The price in another state with reflex testing is between \$15.00 and \$19.00.
+
+
+### Unspecified pricing
+
+When Junction cannot provide a numeric price, the pricing object contains an `unspecified` field, instead of `base_amount_minor` and `modifiers`:
+
+```json
+{
+  "unspecified": "price_unavailable"
+}
+```
+
+Do not interpret an unspecified price as zero. Display an appropriate fallback or refer to your Junction contract instead.
