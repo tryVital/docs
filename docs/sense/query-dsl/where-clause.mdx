@@ -27,7 +27,7 @@ Column identifiers follow the Continuous Query column names. See [Column Mapping
 </Note>
 
 <Note>
-Inside a subquery over a scalar-element list (for example, `List[Utf8]` note `tags`), the reserved identifier `element` refers to the list element itself — e.g. `"element != 'unspecified'"`. Struct-element list predicates reference the struct field names directly. See [List-column aggregation](/sense/query-dsl/list-column-aggregation#filter-elements-with-where) for the full context.
+Inside a subquery over a scalar-element list (for example, `List[Utf8]` like `tags`), the reserved identifier `element` refers to the list element itself — e.g. `"element != 'unspecified'"`. Struct-element list predicates reference the struct field names directly. See [List-column aggregation](/sense/query-dsl/list-column-aggregation#filter-elements-with-where) for the full context.
 </Note>
 
 ## Filter rows before grouping
