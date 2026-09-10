@@ -107,6 +107,7 @@
                   "lab/workflow/lab-test-lifecycle",
                   "lab/overview/orders-and-results",
                   "lab/overview/lab-accounts",
+                  "lab/overview/order-pricing",
                   "lab/overview/quickstart",
                   "lab/overview/sandbox"
                 ]
@@ -284,6 +285,7 @@
                   "api-reference/lab-testing/patch-lab-test",
                   "api-reference/lab-testing/lab-test-markers",
                   "api-reference/lab-testing/order-set-marker",
+                  "api-reference/lab-testing/estimate-order-set-pricing",
                   "api-reference/lab-testing/lab-test-collection-instructions-pdf"
                 ]
               },
