@@ -425,6 +425,7 @@
                 "group": "Device Data",
                 "pages": [
                   "wearables/providers/data-attributions",
+                  "wearables/providers/metric-sources-and-limitations",
                   "wearables/providers/data-ingestion-bounds",
                   "wearables/providers/heart-rate-zones",
                   "wearables/providers/data-primary-key",
