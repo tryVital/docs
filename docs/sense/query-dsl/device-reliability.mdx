@@ -43,7 +43,7 @@ Creating a Device Reliability Continuous Query queues its initial snapshot. Junc
 | `window_end_date` | Date | No | Last calendar date included in the snapshot. |
 | `window_duration_day` | Integer | No | Number of calendar days in the snapshot. This is always `30`. |
 | `presence_day_count` | Integer | No | Number of distinct dates with at least one normalized record or sample. |
-| `presence_coverage` | Number | No | Present-date ratio: `presence_day_count / 30`. |
+| `presence_coverage` | Number | No | Present-date ratio: `presence_day_count / window_duration_day`. |
 | `presence_gap_count` | Integer | No | Number of consecutive missing-date runs, including runs at either edge of the window. |
 | `presence_gap_maximum_day` | Integer | No | Length of the longest consecutive missing-date run. |
 | `presence_recency_day` | Integer | Yes | Calendar days from the most recent present date through `window_end_date`; `null` when the window has no present date. |
