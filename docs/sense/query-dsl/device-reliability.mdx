@@ -138,37 +138,6 @@ Device Reliability uses direct identity columns rather than time buckets:
 
 Device Reliability does not support a DateTrunc or index expression, filters over calculated values, cross-table joins, ALIGN or carry, FHIR export, provider priority overrides, configurable windows, or historical result snapshots.
 
-### Aggregate by an identity column
-
-This query returns one row per provider for each user. `group_key.0` identifies the provider; `mean.presence_coverage` is the unweighted mean across its source-type and resource rows; and `max.presence_recency_day` is the largest non-null recency among them, or `null` if they are all `null`.
-
-<CodeGroup>
-```python Python DSL
-import vitalx.aggregation as va
-
-va.select(
-    va.group_key("*"),
-    va.Reliability.col("presence_coverage").mean(),
-    va.Reliability.col("presence_recency_day").max(),
-).group_by(
-    va.Reliability.col("source_provider")
-)
-```
-
-```jsonc JSON DSL
-{
-  "select": [
-    { "group_key": "*" },
-    { "func": "mean", "arg": { "reliability": "presence_coverage" } },
-    { "func": "max", "arg": { "reliability": "presence_recency_day" } }
-  ],
-  "group_by": [
-    { "reliability": "source_provider" }
-  ]
-}
-```
-</CodeGroup>
-
 ## Limitations
 
 - Presence means that at least one normalized record or sample exists on a date. It does not measure whether optional fields are complete, and a real numeric zero counts as present.
