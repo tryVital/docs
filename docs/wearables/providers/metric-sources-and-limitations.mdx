@@ -1,0 +1,60 @@
+---
+title: "Junction Calculated Metrics"
+description: "Identify wearable summary fields that Junction calculates."
+---
+
+Junction sometimes has to calculate some summary fields from related provider data. The tables below identify those fields by provider and explain the inputs and limitations that can affect their interpretation.
+
+## Daily activity summaries
+
+| Provider | Fields | Source and limitation |
+| --- | --- | --- |
+| WHOOP | `steps` | Calculated from distance recorded during walking and running workouts. Movement outside those workouts and other workout types do not contribute, so this is not an all-day step count. |
+| WHOOP | `daily_movement`, `distance` | Sum of distance from walking and running workouts, not total movement throughout the day. |
+| WHOOP | `calories_active` | Sum of calories across workouts for the day. |
+| WHOOP | `medium`, `high` | Derived from time in workout heart-rate zones. |
+| Fitbit | `calories_active` | Calculated from Fitbit's total and basal calorie values. |
+| Fitbit | `heart_rate.min_bpm`, `heart_rate.avg_bpm`, `heart_rate.max_bpm` | Calculated from available Fitbit intraday heart-rate samples. Availability depends on Fitbit intraday access. |
+| Garmin | `calories_total` | Combines Garmin's active and basal calorie values. |
+| Google Fit | `calories_total` | Combines Google Fit's expended and basal calorie values. |
+| Apple HealthKit, Android Health Connect, and Samsung Health | `calories_total` | Combines active and basal energy submitted through the SDK. |
+| Ultrahuman | `steps`, `daily_movement`, `distance` | Summed from the provider's samples for the day. |
+| Ultrahuman | `heart_rate.min_bpm`, `heart_rate.avg_bpm`, `heart_rate.max_bpm` | Calculated from available provider heart-rate samples. |
+
+## Sleep summaries
+
+Sleep providers expose different combinations of sessions, stages, and timeseries. Junction may assemble the normalized sleep summary from those components.
+
+| Provider | Fields | Source and limitation |
+| --- | --- | --- |
+| WHOOP | `total` | Sum of the light, deep, and REM stages reported by WHOOP. |
+| Fitbit | `hr_lowest`, `hr_average`, `average_hrv` | Calculated from heart-rate and HRV samples within the sleep session. |
+| Garmin | `hr_lowest`, `hr_average`, `hr_dip`, `efficiency`, `type` | Calculated from the sleep interval, stages, and available heart-rate samples. |
+| Google Health | `efficiency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate` | Calculated from the sleep session and matching samples from the same source device. Sample-derived fields remain unavailable when Junction cannot identify an exact source device. |
+| Google Fit | `total`, `awake`, `light`, `rem`, `deep`, `efficiency`, `type` | Assembled from Google Fit sleep segments and the session interval. |
+| Apple HealthKit, Android Health Connect, and Samsung Health | `total`, `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate`, `efficiency`, `type` | Assembled from sleep stages and other samples submitted through the SDK. Fields are omitted when the required samples are unavailable. |
+| Eight Sleep | `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate`, `efficiency`, `type` | Calculated from Eight Sleep stages, timeseries, and session boundaries. |
+| Ultrahuman | `total`, `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `type` | Stage durations are assembled from the provider's sleep-stage proportions; other fields use its sleep graph and session boundaries. |
+| Polar | `total`, `duration`, `hr_lowest`, `hr_average`, `efficiency`, `type` | Calculated from Polar stages, interruptions, heart-rate samples, and session boundaries. |
+| Withings | `duration`, `type` | Junction uses the session interval when Withings does not report time in bed and determines the sleep type from duration. |
+
+## Workout summaries
+
+For any provider, Junction can fill missing workout heart-rate averages, maximums, and zone durations from heart-rate samples associated with that workout. Provider-reported summary values take precedence.
+
+| Provider | Fields | Source and limitation |
+| --- | --- | --- |
+| Garmin | Heart-rate zones, `average_watts`, `max_watts` | Calculated from Garmin workout samples when detailed samples are available. |
+| Peloton | `max_speed`, `max_watts` | Calculated from the Peloton workout stream. |
+| Runkeeper | `average_hr`, `max_hr` | Calculated from workout heart-rate samples. A provider-reported average takes precedence. |
+| Strava | `calories` | Converted from Strava's reported workout energy when Strava omits calories. |
+| Zwift | `average_speed`, `max_speed`, elevation extrema, `max_watts`, `map` | Calculated from the Zwift workout stream. |
+
+Session end times may also be reconstructed from a provider-reported start time and duration when the provider does not return an explicit end time.
+
+## Body summaries
+
+| Provider | Fields | Source and limitation |
+| --- | --- | --- |
+| Garmin | `muscle_mass_percentage`, `bone_mass_percentage` | Calculated from Garmin's reported component mass and body weight. |
+| Withings | `muscle_mass_percentage`, `water_percentage`, `bone_mass_percentage` | Calculated from Withings' reported component mass and body weight. |
