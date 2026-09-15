@@ -127,8 +127,6 @@ continuous_query = {
 ```
 </CodeGroup>
 
-Submit this object to the [Create Continuous Query endpoint](/api-reference/sense/continuous-query/create). The latest result for a user is available through the [Get Result Table endpoint](/api-reference/sense/continuous-query/get-result-table).
-
 ## Query rules
 
 Device Reliability uses direct identity columns rather than time buckets:
@@ -140,44 +138,9 @@ Device Reliability uses direct identity columns rather than time buckets:
 
 Device Reliability does not support a DateTrunc or index expression, filters over calculated values, cross-table joins, ALIGN or carry, FHIR export, provider priority overrides, configurable windows, or historical result snapshots.
 
-### Filter an ungrouped snapshot
-
-The identity columns must remain selected even when the query filters them:
-
-<CodeGroup>
-```python Python DSL
-import vitalx.aggregation as va
-
-va.select(
-    va.Reliability.col("source_provider"),
-    va.Reliability.col("source_type"),
-    va.Reliability.col("resource"),
-    va.Reliability.col("presence_coverage"),
-    va.Reliability.col("reliability_status"),
-    va.Reliability.col("connection_status"),
-).where(
-    "source_provider = 'oura' AND resource = 'sleep'"
-)
-```
-
-```jsonc JSON DSL
-{
-  "select": [
-    { "reliability": "source_provider" },
-    { "reliability": "source_type" },
-    { "reliability": "resource" },
-    { "reliability": "presence_coverage" },
-    { "reliability": "reliability_status" },
-    { "reliability": "connection_status" }
-  ],
-  "where": "source_provider = 'oura' AND resource = 'sleep'"
-}
-```
-</CodeGroup>
-
 ### Aggregate by an identity column
 
-This query produces one row per source provider:
+This query returns one row per provider for each user. `group_key.0` identifies the provider; `mean.presence_coverage` is the unweighted mean across its source-type and resource rows; and `max.presence_recency_day` is the largest non-null recency among them, or `null` if they are all `null`.
 
 <CodeGroup>
 ```python Python DSL
@@ -210,4 +173,4 @@ va.select(
 
 - Presence means that at least one normalized record or sample exists on a date. It does not measure whether optional fields are complete, and a real numeric zero counts as present.
 - Reliability thresholds are cadence-agnostic. Healthy episodic, weekly, or monthly resources can therefore be classified as `sparse_by_pattern`, `degraded`, or `stale`.
-- Device Reliability excludes `profile`, `device`, `device_legacy`, `workout_stream`, `hypnogram`, and `sleep_stream`. It also excludes data from the generic `manual` provider.
+- Device Reliability excludes `profile`, `device`, `device_legacy`, `workout_stream`, `hypnogram`, and `sleep_stream`.
