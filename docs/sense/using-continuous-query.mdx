@@ -1,6 +1,6 @@
 ---
 title: Using Continuous Query
-description: "Create Continuous Queries in Junction Sense that automatically evaluate as new data arrives and push result changes via webhooks or ETL pipelines."
+description: "Create Continuous Queries in Junction Sense that evaluate automatically and push result changes via webhooks or ETL pipelines."
 ---
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
@@ -11,11 +11,10 @@ You can create a **Continuous Query** to have your Junction Sense [Query](/sense
 
 <AccordionGroup>
 <Accordion title="Automatic Evaluation" icon="wand-sparkles" defaultOpen>
-Continuous Query runs automatically on all existing and new Users in your Team.
+Continuous Query runs automatically on all existing and new users in your team.
 </Accordion>
 <Accordion title="Continuous Change Monitoring" icon="camera-cctv" defaultOpen>
-Continuous Query is scheduled intelligently in response to any new data points or updates discovered through device data connections
-made through [Junction Link](/wearables/connecting-providers/introduction) and [Junction Mobile SDKs](/wearables/sdks/health/overview).
+Most Continuous Queries are scheduled intelligently in response to new data points or updates discovered through device data connections made through [Junction Link](/wearables/connecting-providers/introduction) and [Junction Mobile SDKs](/wearables/sdks/health/overview). Some virtual resources, such as [Device Reliability](/sense/query-dsl/device-reliability), refresh on a resource-specific schedule instead.
 </Accordion>
 <Accordion title="Result Pushing" icon="webhook" defaultOpen>
 Junction pushes any Continuous Query result table changes to your Webhook or ETL Pipeline destinations.
@@ -35,13 +34,17 @@ With Continuous Query, you can focus on adding value to your product with the ag
 
 ## Continuous Query requirements
 
-While Continuous Query uses the same [Query DSL](/sense/query-dsl/) as the Query API, some restrictions are in place:
+Continuous Query uses the same [Query DSL syntax](/sense/query-dsl/) as the Query API, but some resources and query shapes are available only through Continuous Query:
 
-- The query must [group by a truncated datetime](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime).
-- The query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
+- For most resources, the query must [group by a truncated datetime](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime).
+- Every grouped query must [select all group key columns](/sense/query-dsl/select-clause#select-the-group-key-columns).
 
 <Note>
 An ungrouped Readiness Scores query is a supported exception when it directly selects the `date` column and readiness values. See [Readiness Scores](/sense/query-dsl/readiness-scores).
+</Note>
+
+<Note>
+[Device Reliability](/sense/query-dsl/device-reliability) is a Continuous Query-only resource with no datetime index. An ungrouped query must select its provider, source type, and resource identity. A grouped query must use a non-empty subset of those identity columns.
 </Note>
 
 <Note>

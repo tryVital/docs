@@ -34,6 +34,16 @@ Column expressions for Electrocardiogram, Sleep Cycle, and lab testing biomarker
 | Menstrual cycle<br/>`menstrual_cycle` | `MenstrualCycle.col("$1")` | `{ "menstrual_cycle": "$1" }` |
 | Profile<br/>`profile`                    | `Profile.col("$1")`   | `{ "profile": "$1" }` |
 
+### Continuous Query-only virtual tables
+
+| Table | Python DSL | JSON DSL |
+| --- | --- | --- |
+| [Device Reliability](/sense/query-dsl/device-reliability)<br/>`reliability` | `Reliability.col("$1")` | `{ "reliability": "$1" }` |
+
+<Note>
+Device Reliability has no Index Column expression. Select its provider, source type, and resource identity with `Reliability.col(...)` rather than a Source Column expression.
+</Note>
+
 ### Column Mappings
 
 Map summary resource properties to their Continuous Query column equivalents.
@@ -279,9 +289,9 @@ the implicit [Data Prioritization](/sense/data-prioritization) behavior would be
 
 | Column                                | Python DSL                           | JSON DSL                           | Available in |
 | ------------------------------------- | ------------------------------------ | -----------------------------------|----------------------------- |
-| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | Summary and timeseries tables except Readiness Scores |
-| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | Summary and timeseries tables except Readiness Scores |
-| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | Summary tables except Readiness Scores |
+| Provider                              | `Source.col("source_provider")`      | `{ "source": "source_provider" }`  | Summary and timeseries tables except Readiness Scores and Device Reliability |
+| Source Type                           | `Source.col("source_type")`          | `{ "source": "source_type" }`      | Summary and timeseries tables except Readiness Scores and Device Reliability |
+| Source App ID                         | `Source.col("source_app_id")`        | `{ "source": "source_app_id" }`    | Summary tables except Readiness Scores and Device Reliability |
 | Workout ID                            | `Source.col("source_workout_id")`    | `{ "source": "source_workout_id" }` | Workout Stream timeseries only |
 | Sport                                 | `Source.col("source_sport")`         | `{ "source": "source_sport" }`     | Workout Stream timeseries only |
 
