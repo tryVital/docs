@@ -14,6 +14,10 @@ WHOOP is a [BYOO](/wearables/connecting-providers/bring-your-own-oauth/overview)
 Then, you can configure the WHOOP integration in the Junction Dashboard by navigating to the Config > Custom Credentials page and clicking "Setup" next to WHOOP V2.
 ![WHOOP V2 config](/img/whoop_config.png)
 
+## Data semantics
+
+WHOOP does not report the daily step count used in Junction activity summaries. Junction calculates `steps` from distance recorded during walking and running workouts, so the value does not include movement outside those workouts or other workout types. See [Junction-Calculated Metrics](/wearables/providers/metric-sources-and-limitations) for more information about non-direct summary fields.
+
 ## Limitations
 
 WHOOP sets forth the following limitation:

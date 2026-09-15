@@ -1,0 +1,15 @@
+---
+title: "Estimate order set pricing"
+description: "Estimate the USD price of one or more lab testing order sets before creating an order."
+openapi: 'POST /v3/lab_test/estimate_order_set_pricing'
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+Returns the estimated price and component-level breakdown for each supplied order set. The response order matches the request order: `data[0]` contains the estimate for `order_sets[0]`, and so on.
+
+<Note>
+  All amounts are in the smallest denomination of the response currency. For USD, `base_amount_minor: 1500` means $15.00. Estimates can change when conditional charges, such as reflex testing or critical care, apply.
+</Note>
