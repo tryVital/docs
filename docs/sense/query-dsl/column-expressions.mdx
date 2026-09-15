@@ -41,7 +41,7 @@ Column expressions for Electrocardiogram, Sleep Cycle, and lab testing biomarker
 | [Device Reliability](/sense/query-dsl/device-reliability)<br/>`reliability` | `Reliability.col("$1")` | `{ "reliability": "$1" }` |
 
 <Note>
-Device Reliability has no Index Column expression. Select its provider, source type, and resource identity with `Reliability.col(...)` rather than a Source Column expression.
+Device Reliability Continuous Queries do not support Index Column expressions. Select their provider, source type, and resource identity with `Reliability.col(...)` rather than a Source Column expression.
 </Note>
 
 ### Column Mappings
@@ -301,7 +301,7 @@ the implicit [Data Prioritization](/sense/data-prioritization) behavior would be
 
 ## Index Column expression
 
-Each Junction resource has a primary datetime index. Your Query Instruction can reference this datetime
+The Junction resources listed below have a primary datetime index. Your Query Instruction can reference this datetime
 index using the special Index Column expression:
 
 | Table                                | Index                  | Python DSL          | JSON DSL |

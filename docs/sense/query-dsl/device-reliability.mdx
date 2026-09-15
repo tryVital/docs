@@ -30,7 +30,7 @@ window_start_date = window_end_date - 29 days
 
 The window fields are returned in every row. Use them to identify the dates represented by a result rather than assuming a particular refresh time.
 
-Creating a Device Reliability Continuous Query queues its initial snapshot. Junction then refreshes it daily. Each refresh updates the rows identified by provider, source type, and resource; it does not append a history of earlier windows.
+Creating a Device Reliability Continuous Query queues its initial snapshot. Junction then refreshes it daily. Each refresh updates the current result table; it does not append a history of earlier windows.
 
 ## Available columns
 
@@ -131,7 +131,7 @@ Submit this object to the [Create Continuous Query endpoint](/api-reference/sens
 
 ## Query rules
 
-Device Reliability uses identity columns instead of a datetime index:
+Device Reliability uses direct identity columns rather than time buckets:
 
 - An ungrouped query must directly select `source_provider`, `source_type`, and `resource`. It can also select any other Reliability columns.
 - A grouped query must group by a unique, non-empty subset of `source_provider`, `source_type`, and `resource`, and it must select every group key. Other selected expressions must be aggregates over Reliability columns.

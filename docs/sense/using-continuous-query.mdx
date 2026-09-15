@@ -44,7 +44,7 @@ An ungrouped Readiness Scores query is a supported exception when it directly se
 </Note>
 
 <Note>
-[Device Reliability](/sense/query-dsl/device-reliability) is a Continuous Query-only resource with no datetime index. An ungrouped query must select its provider, source type, and resource identity. A grouped query must use a non-empty subset of those identity columns.
+[Device Reliability](/sense/query-dsl/device-reliability) is a Continuous Query-only resource that does not support Index Column or Date Truncate expressions. An ungrouped query must select its provider, source type, and resource identity. A grouped query must use a non-empty subset of those identity columns.
 </Note>
 
 <Note>
@@ -56,7 +56,7 @@ An ungrouped Readiness Scores query is a supported exception when it directly se
 When a Continuous Query is re-evaluated and the result set has changed, Junction sends a [Result Table Changed](/event-catalog/continuous_query.result_table.changed)
 data event to your [Webhook or ETL Pipeline destinations](/webhooks/introduction).
 
-This data event includes only the delta (new rows or changed rows with respect to the [group keys](/sense/query-dsl/select-clause#select-the-group-key-columns)).
+This data event includes only the delta: new rows or changed rows with respect to the result row keys. Grouped queries use [`group_key.*` columns](/sense/query-dsl/select-clause#select-the-group-key-columns), ungrouped Readiness Scores queries use `date`, and ungrouped Device Reliability queries use `source_provider`, `source_type`, and `resource`.
 To re-fetch the whole result set, use the [Get Result Table](/api-reference/sense/continuous-query/get-result-table) endpoint.
 
 Treat this event as a notification that the result table changed, not as an ordered event log:
