@@ -7,7 +7,7 @@ description: "Monitor whether expected device data has been present for each use
 
 ## Why It Matters
 
-A complete device dataset and one missing six days a week look identical to anything downstream. When a user's average heart rate shifts or their sleep pattern changes, you can't tell whether that's real signal or inconsistent device use—and when a device stops syncing entirely, you often find out weeks later, after the gap has already affected a report, a risk model, or a care decision.
+A complete device dataset and one missing six days a week look identical to anything downstream. When a user's average heart rate shifts or their sleep pattern changes, you can't tell whether that's real signal or inconsistent device use, and when a device stops syncing entirely, you often find out weeks later, after the gap has already affected a report, a risk model, or a care decision.
 
 Device Reliability measures missingness rather than filling it in. The same window and the same data always produce the same answer.
 
@@ -22,13 +22,40 @@ Every day, Junction evaluates the last 30 days of data presence for each user, b
 
 ### Reliability Statuses
 
-| Status | What it means |
-| :-- | :-- |
-| `reliable` | Data is arriving consistently. Gaps in the data are meaningful. |
-| `degraded` | Data is arriving, but with enough missing days to warrant caution. |
-| `sparse_by_pattern` | Data arrives intermittently but recently. Often a device used occasionally, like a smart scale, rather than a failure. |
-| `stale` | This source used to produce data and has gone quiet. Prompt the user to sync or reconnect. |
-| `insufficient_history` | Junction has never observed this data, so no conclusion can be drawn yet. |
+<table>
+  <colgroup>
+    <col width="211" />
+    <col width="532" />
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>What it means</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`reliable`</td>
+      <td>Data is arriving consistently. Gaps in the data are meaningful.</td>
+    </tr>
+    <tr>
+      <td>`degraded`</td>
+      <td>Data is arriving, but with enough missing days to warrant caution.</td>
+    </tr>
+    <tr>
+      <td>`sparse_by_pattern`</td>
+      <td>Data arrives intermittently but recently. Often a device used occasionally, like a smart scale, rather than a failure.</td>
+    </tr>
+    <tr>
+      <td>`stale`</td>
+      <td>This source used to produce data and has gone quiet. Prompt the user to sync or reconnect.</td>
+    </tr>
+    <tr>
+      <td>`insufficient_history`</td>
+      <td>Junction has never observed this data, so no conclusion can be drawn yet.</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Common Use Cases
 
