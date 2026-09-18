@@ -1,0 +1,145 @@
+---
+title: Device Reliability
+description: "Monitor daily wearable data presence by provider, source type, and resource with Junction Sense Continuous Query."
+icon: shield-check
+---
+
+## Overview
+
+Device Reliability reports whether Junction has received data consistently for each provider, source type, and resource connected to a user. It helps you distinguish a missing measurement from a period when the expected source data was not present.
+
+The `reliability` table returns the latest 30-day snapshot. An ungrouped query contains one row for each monitored combination of:
+
+- `source_provider`
+- `source_type`
+- `resource`
+
+Each row includes coverage, gap, and recency diagnostics; a `reliability_status`; and the provider's current `connection_status`.
+
+<Warning>
+Device Reliability is available only through [Continuous Query](/sense/using-continuous-query). You cannot use the `reliability` table with the synchronous Query API, even though Reliability expressions appear in the shared Query DSL schema.
+</Warning>
+
+## How the snapshot works
+
+Each snapshot covers exactly 30 completed floating calendar days, including both `window_start_date` and `window_end_date`:
+
+```text
+window_start_date = window_end_date - 29 days
+```
+
+The window fields are returned in every row. Use them to identify the dates represented by a result rather than assuming a particular refresh time.
+
+Creating a Device Reliability Continuous Query queues its initial snapshot. Junction then refreshes it daily. Each refresh updates the current result table; it does not append a history of earlier windows.
+
+## Available columns
+
+| Column | Type | Nullable | Meaning |
+| --- | --- | --- | --- |
+| `source_provider` | String | No | Provider slug, such as `oura` or `garmin`. |
+| `source_type` | String | No | Source type associated with the provider data. |
+| `resource` | String | No | Junction resource being monitored. |
+| `window_start_date` | Date | No | First calendar date included in the snapshot. |
+| `window_end_date` | Date | No | Last calendar date included in the snapshot. |
+| `window_duration_day` | Integer | No | Number of calendar days in the snapshot. This is always `30`. |
+| `presence_day_count` | Integer | No | Number of distinct dates with at least one normalized record or sample. |
+| `presence_coverage` | Number | No | Present-date ratio: `presence_day_count / window_duration_day`. |
+| `presence_gap_count` | Integer | No | Number of consecutive missing-date runs, including runs at either edge of the window. |
+| `presence_gap_maximum_day` | Integer | No | Length of the longest consecutive missing-date run. |
+| `presence_recency_day` | Integer | Yes | Calendar days from the most recent present date through `window_end_date`; `null` when the window has no present date. |
+| `presence_gap_mean_day` | Number | Yes | Mean calendar-day spacing between consecutive present dates; `null` with fewer than two present dates. |
+| `presence_gap_standard_deviation_day` | Number | Yes | Population standard deviation of the calendar-day spacing between consecutive present dates; `null` with fewer than two present dates. |
+| `reliability_status` | String | No | Data-presence classification for the row. |
+| `connection_status` | String | No | Current provider connection status: `connected`, `disconnected`, `paused`, or `error`. |
+
+## Reliability status
+
+Junction assigns `reliability_status` by evaluating the following rules in order. The first matching rule wins.
+
+| Order | Condition | Status |
+| --- | --- | --- |
+| 1 | No observation history has been recorded for the identity. | `insufficient_history` |
+| 2 | The identity was observed previously, but the current window has zero present dates. | `stale` |
+| 3 | `presence_recency_day` is at least `12`. | `stale` |
+| 4 | `presence_coverage` is below `0.5` and `presence_recency_day` is at most `3`. | `sparse_by_pattern` |
+| 5 | `presence_coverage` is below `0.7`. | `degraded` |
+| 6 | None of the preceding conditions match. | `reliable` |
+
+`connection_status` is reported separately and does not change `reliability_status`. For example, a disconnected provider can retain a reliability classification based on presence during the current window.
+
+## Create a Device Reliability query
+
+The following example selects the complete Device Reliability snapshot and uses a customer-owned `device-reliability` slug.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+query = va.select(
+    va.Reliability.col("source_provider"),
+    va.Reliability.col("source_type"),
+    va.Reliability.col("resource"),
+    va.Reliability.col("window_start_date"),
+    va.Reliability.col("window_end_date"),
+    va.Reliability.col("window_duration_day"),
+    va.Reliability.col("presence_day_count"),
+    va.Reliability.col("presence_coverage"),
+    va.Reliability.col("presence_gap_count"),
+    va.Reliability.col("presence_gap_maximum_day"),
+    va.Reliability.col("presence_recency_day"),
+    va.Reliability.col("presence_gap_mean_day"),
+    va.Reliability.col("presence_gap_standard_deviation_day"),
+    va.Reliability.col("reliability_status"),
+    va.Reliability.col("connection_status"),
+).finalize()
+
+continuous_query = {
+    "slug": "device-reliability",
+    "title": "Device Reliability",
+    "query": query.model_dump(mode="json", exclude_none=True),
+}
+```
+
+```jsonc JSON DSL
+{
+  "slug": "device-reliability",
+  "title": "Device Reliability",
+  "query": {
+    "select": [
+      { "reliability": "source_provider" },
+      { "reliability": "source_type" },
+      { "reliability": "resource" },
+      { "reliability": "window_start_date" },
+      { "reliability": "window_end_date" },
+      { "reliability": "window_duration_day" },
+      { "reliability": "presence_day_count" },
+      { "reliability": "presence_coverage" },
+      { "reliability": "presence_gap_count" },
+      { "reliability": "presence_gap_maximum_day" },
+      { "reliability": "presence_recency_day" },
+      { "reliability": "presence_gap_mean_day" },
+      { "reliability": "presence_gap_standard_deviation_day" },
+      { "reliability": "reliability_status" },
+      { "reliability": "connection_status" }
+    ]
+  }
+}
+```
+</CodeGroup>
+
+## Query rules
+
+Device Reliability uses direct identity columns rather than time buckets:
+
+- An ungrouped query must directly select `source_provider`, `source_type`, and `resource`. It can also select any other Reliability columns.
+- A grouped query must group by a unique, non-empty subset of `source_provider`, `source_type`, and `resource`, and it must select every group key. Other selected expressions must be aggregates over Reliability columns.
+- A `where` clause can filter only `source_provider`, `source_type`, and `resource`.
+- A Reliability query cannot reference another table.
+
+Device Reliability does not support a DateTrunc or index expression, filters over calculated values, cross-table joins, ALIGN or carry, FHIR export, provider priority overrides, configurable windows, or historical result snapshots.
+
+## Limitations
+
+- Presence means that at least one normalized record or sample exists on a date. It does not measure whether optional fields are complete, and a real numeric zero counts as present.
+- Reliability thresholds are cadence-agnostic. Healthy episodic, weekly, or monthly resources can therefore be classified as `sparse_by_pattern`, `degraded`, or `stale`.
+- Device Reliability excludes `profile`, `device`, `device_legacy`, `workout_stream`, `hypnogram`, and `sleep_stream`.
