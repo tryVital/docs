@@ -1,0 +1,98 @@
+---
+title: "Device Reliability"
+description: "Monitor whether expected device data has been present for each user, so you can trust the data before you build on it."
+---
+
+[Device Reliability](/sense/query-dsl/device-reliability) reports whether Junction has been receiving data consistently from each of a user's connected devices, for each type of data you care about. Instead of writing your own row-counting checks against raw data, you create one Continuous Query and Junction keeps a daily-refreshed reliability snapshot for every user in your team.
+
+## Why It Matters
+
+A complete device dataset and one missing six days a week look identical to anything downstream. When a user's average heart rate shifts or their sleep pattern changes, you can't tell whether that's real signal or inconsistent device use—and when a device stops syncing entirely, you often find out weeks later, after the gap has already affected a report, a risk model, or a care decision.
+
+Device Reliability measures missingness rather than filling it in. The same window and the same data always produce the same answer.
+
+## How It Works
+
+Every day, Junction evaluates the last 30 days of data presence for each user, broken down by provider (such as `oura` or `garmin`), source type (watch, ring, scale, cuff), and resource (sleep, activity, glucose, and more). Each combination gets:
+
+- **Coverage** - How many of the last 30 days had data, and how big the gaps were
+- **Recency** - How long since data last arrived
+- **Reliability status** - A single categorical verdict on the current window
+- **Connection status** - Whether the user's account link is still active, reported separately, because a connected account with no data and a disconnected account are different problems
+
+### Reliability Statuses
+
+| Status | What it means |
+| :-- | :-- |
+| `reliable` | Data is arriving consistently. Gaps in the data are meaningful. |
+| `degraded` | Data is arriving, but with enough missing days to warrant caution. |
+| `sparse_by_pattern` | Data arrives intermittently but recently. Often a device used occasionally, like a smart scale, rather than a failure. |
+| `stale` | This source used to produce data and has gone quiet. Prompt the user to sync or reconnect. |
+| `insufficient_history` | Junction has never observed this data, so no conclusion can be drawn yet. |
+
+## Common Use Cases
+
+<Accordion title="Gate Model Inputs">
+  Only feed a user's data into risk scores or clinical logic when coverage clears your bar.
+
+  **Use case highlights:**
+
+  - Replace ad-hoc `count()`-based cold-start gating with one consistent signal
+  - Apply the same coverage threshold across every provider and resource
+  - [View the query reference →](/sense/query-dsl/device-reliability)
+</Accordion>
+
+<Accordion title="Catch Silent Failures Early">
+  A `stale` status on a previously active device is your earliest, cheapest intervention point.
+
+  **Use case highlights:**
+
+  - Trigger a re-sync push notification instead of discovering a month-long data gap
+  - Track `connection_status` separately to distinguish a quiet device from a broken link
+</Accordion>
+
+<Accordion title="Compare Data Quality Across Your Population">
+  See which providers and device types deliver dependable data for your users.
+
+  **Use case highlights:**
+
+  - Compare presence coverage across providers, source types, and resources
+  - Identify where onboarding or engagement needs work
+  - Feed reliability rollups into reporting dashboards through ETL pipelines
+</Accordion>
+
+<Accordion title="Explain the Data Honestly">
+  When you show a trend to a clinician or a member, you can also show how complete the underlying data is.
+
+  **Use case highlights:**
+
+  - Surface coverage and recency alongside aggregated metrics
+  - Distinguish real physiological change from inconsistent device use
+</Accordion>
+
+## Good to Know
+
+- Results are a current snapshot, not a history. Each daily refresh updates the same rows with the latest 30-day window.
+- Reliability thresholds are cadence-agnostic. Healthy episodic, weekly, or monthly resources can appear `sparse_by_pattern`, `degraded`, or `stale`.
+- Expected resources are determined per provider, not per device model, so a source can show `insufficient_history` for resources its specific device never produces.
+
+<Note>
+  Device Reliability is a Continuous Query-only resource. It cannot be run through the synchronous Query API. See [Continuous Query requirements](/sense/using-continuous-query#continuous-query-requirements).
+</Note>
+
+## What's Next?
+
+**Query Reference**
+
+- Field definitions, status rules, query examples, and limitations
+- [View Device Reliability reference →](/sense/query-dsl/device-reliability)
+
+**Deploy a Query**
+
+- Create a Device Reliability Continuous Query for every user in your team
+- [View API reference →](/api-reference/sense/continuous-query/create)
+
+**Getting Started Guide**
+
+- Step-by-step tutorial for creating and managing Continuous Queries
+- [Get started →](/sense/using-continuous-query)
