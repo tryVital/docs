@@ -194,7 +194,7 @@ Use the [Query DSL](/sense/query-dsl/) to specify what data to aggregate, how to
 
 **Step 2: Validate the Query**
 
-Use the Junction Dashboard Query Editor to preview resources supported by Query API. For a Continuous Query-only resource such as Device Reliability, the [Create Continuous Query endpoint](/api-reference/sense/continuous-query/create) validates the query when you submit it.
+Use the [Junction Dashboard Query](/sense/managing-queries) Editor to preview resources supported by Query API. For a Continuous Query-only resource such as Device Reliability, the [Create Continuous Query endpoint](/api-reference/sense/continuous-query/create) validates the query when you submit it.
 
 **Step 3: Deploy Query**
 
@@ -208,7 +208,7 @@ Set up webhooks or ETL pipelines to receive result updates automatically.
 
 ## Query API vs. Continuous Query
 
-Most resources use the same Query DSL with both products, making it easy to prototype with Query API and deploy to production with Continuous Query. Some virtual resources are Continuous Query-only: [Device Reliability](/sense/query-dsl/device-reliability) must be validated and created as a Continuous Query rather than run through Query API.
+Most resources use the same Query DSL with both products, making it easy to prototype with Query API and deploy to production with Continuous Query. Some virtual resources are Continuous Query: [Device Reliability](/sense/query-dsl/device-reliability) must be validated and created as a Continuous Query rather than run through Query API.
 
 [Compare in detail →](/sense/overview#query-api-and-continuous-query)
 
