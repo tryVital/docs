@@ -138,6 +138,43 @@ Device Reliability uses direct identity columns rather than time buckets:
 
 Device Reliability does not support a DateTrunc or index expression, filters over calculated values, cross-table joins, ALIGN or carry, FHIR export, provider priority overrides, configurable windows, or historical result snapshots.
 
+### Aggregate by provider
+
+The following grouped query returns the lowest sleep coverage per provider for each user:
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+query = (
+    va.select(
+        va.group_key("*"),
+        va.Reliability.col("presence_coverage").min(),
+    )
+    .group_by(
+        va.Reliability.col("source_provider"),
+    )
+    .where("resource = 'sleep'")
+    .finalize()
+)
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "group_key": "*" },
+    { "func": "min", "arg": { "reliability": "presence_coverage" } }
+  ],
+  "group_by": [
+    { "reliability": "source_provider" }
+  ],
+  "where": "resource = 'sleep'"
+}
+```
+</CodeGroup>
+
+The result contains `group_key.0` for `source_provider` and `min` for the lowest `presence_coverage` across that provider's source types.
+
 ## Limitations
 
 - Presence means that at least one normalized record or sample exists on a date. It does not measure whether optional fields are complete, and a real numeric zero counts as present.
