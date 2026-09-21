@@ -8,7 +8,7 @@ icon: shield-check
 
 Device Reliability reports whether Junction has received data consistently for each provider, source type, and resource connected to a user. It helps you distinguish a missing measurement from a period when the expected source data was not present.
 
-The `reliability` table returns the latest 30-day snapshot. An ungrouped query contains one row for each monitored combination of:
+The `reliability` table returns the latest 30-day snapshot. An ungrouped query contains one row per user for each monitored combination of:
 
 - `source_provider`
 - `source_type`
@@ -54,12 +54,22 @@ Creating a Device Reliability Continuous Query queues its initial snapshot. Junc
 
 ## Reliability status
 
+A combination means one `source_provider`, `source_type`, and `resource` for one user.
+
+Each status is a plain verdict on the current window:
+
+- `reliable`: Data is arriving consistently. Gaps in the data are meaningful.
+- `degraded`: Data is arriving, but with enough missing days to warrant caution in coverage-sensitive use cases.
+- `sparse_by_pattern`: Data arrives intermittently but recently. This often reflects an occasionally used device, such as a smart scale, rather than a failure.
+- `stale`: The combination produced data before and has gone quiet. Prompt the user to sync or reconnect.
+- `insufficient_history`: Data for the combination has not yet been observed.
+
 Junction assigns `reliability_status` by evaluating the following rules in order. The first matching rule wins.
 
 | Order | Condition | Status |
 | --- | --- | --- |
-| 1 | No observation history has been recorded for the identity. | `insufficient_history` |
-| 2 | The identity was observed previously, but the current window has zero present dates. | `stale` |
+| 1 | No observation history has been recorded for the combination. | `insufficient_history` |
+| 2 | The combination was observed previously, but the current window has zero present dates. | `stale` |
 | 3 | `presence_recency_day` is at least `12`. | `stale` |
 | 4 | `presence_coverage` is below `0.5` and `presence_recency_day` is at most `3`. | `sparse_by_pattern` |
 | 5 | `presence_coverage` is below `0.7`. | `degraded` |
@@ -179,4 +189,5 @@ The result contains `group_key.0` for `source_provider` and `min` for the lowest
 
 - Presence means that at least one normalized record or sample exists on a date. It does not measure whether optional fields are complete, and a real numeric zero counts as present.
 - Reliability thresholds are cadence-agnostic. Healthy episodic, weekly, or monthly resources can therefore be classified as `sparse_by_pattern`, `degraded`, or `stale`.
+- Expected resources are determined per provider, not per device model. A provider and source-type combination may therefore show `insufficient_history` for resources its specific device never produces—for example, a smart scale may be listed with `insufficient_history` for sleep. A row leaves `insufficient_history` once Junction has observed that resource for the same provider and source type at least once.
 - Device Reliability excludes `profile`, `device`, `device_legacy`, `workout_stream`, `hypnogram`, and `sleep_stream`.
