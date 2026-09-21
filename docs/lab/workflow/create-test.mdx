@@ -1,36 +1,48 @@
 ---
 title: "Creating a Lab Test"
-description: "Create custom lab tests by selecting biomarker IDs and collection methods, then submit them for Junction approval before ordering."
+description: "Create a reusable lab test from orderable markers and understand when it is ready to use."
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
+A lab test is a reusable set of markers for a specific partner laboratory and collection method. Create a lab test when you expect to order the same group of markers more than once. For one-off selections, you can instead [choose markers à la carte](/lab/workflow/ordering#choose-markers-à-la-carte) when creating an order.
 
-Junction provides a way to create your own lab tests. A lab test is a collection or pre-set of orderable markers. These are made up of:
+## Before you create a lab test
 
-1. One or more marker IDs or Provider IDs.
-2. The collection method: `testkit`, `walk_in_test`, `at_home_phlebotomy`, or `on_site_collection`.
+Your lab test must include:
 
-Once a Lab Test is created and approved, you can use it when making an order.
+- One or more active, orderable markers from the same partner laboratory.
+- One collection method supported by that laboratory: `testkit`, `walk_in_test`, `at_home_phlebotomy`, or `on_site_collection`.
+- Either Junction `marker_ids` or the laboratory's `provider_ids`. Do not provide both.
 
-<Warning>
-  When you create a Lab Test, it is not immediately available. We need to validate and approve it on our side, before you can use it when making orders.
-</Warning>
+We recommend using `provider_ids` when the laboratory supplies them because they are shared across environments. Otherwise, use `marker_ids`.
 
-#### At-Home Phlebotomy Auto-Approval
+<Note>
+  [Contact the Junction team](/home/getting-support) if you need help confirming your panel requirements.
+</Note>
 
-<FeatureBeta />
+## Approval status
 
-For eligible teams and labs, Junction evaluates an `at_home_phlebotomy` lab test when it is created. The lab test is created with a status of `active` and can be ordered immediately when:
+The `status` in the create response determines whether the lab test can be ordered. Only lab tests with a status of `active` can be used in an order.
 
-- Collection Instructions are available for every marker.
-- Every marker is enabled for *à la carte* ordering, if your team does not use a delegated flow.
-- The estimated draw is fewer than 15 tubes. An estimate of 15 tubes or more is rejected.
+In production, the initial status depends on the collection method and marker configuration:
 
-If an eligible at-home phlebotomy test does not meet one of these requirements, creation returns HTTP 400 and no lab test is created.
+| Collection method | Status after creation |
+| --- | --- |
+| `at_home_phlebotomy` | `pending_approval`. Mobile phlebotomy lab tests currently require review because of panel constraints from our phlebotomy provider, even when every marker is enabled for à-la-carte ordering. |
+| `testkit` | `pending_approval`. Test kit lab tests require review. |
+| `walk_in_test` | `active` when every marker is enabled for à-la-carte ordering; otherwise `pending_approval`. |
+| `on_site_collection` | `active` when every marker is enabled for à-la-carte ordering; otherwise `pending_approval`. |
 
-### Example
+For teams using a delegated lab account, walk-in and on-site lab tests are created as `active` regardless of the markers' à-la-carte settings.
 
-To begin, make a request to our [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) endpoint, in order to choose the markers you want to test for.
+If a production lab test is created with `pending_approval`, Junction reviews the panel before changing its status to `active`. You can check the current status using the [List Lab Tests endpoint](/api-reference/lab-testing/tests-paginated).
+
+<Note>
+  In Sandbox, newly created lab tests are active immediately. Production approval rules are not applied in Sandbox.
+</Note>
+
+## 1. Find markers
+
+Use [`GET /v3/lab_tests/markers`](/api-reference/lab-testing/biomarkers) to find the markers available for the partner laboratory. The response indicates whether each marker supports à-la-carte ordering.
 
 ```json Get all markers
 {
@@ -44,7 +56,8 @@ To begin, make a request to our [`GET /v3/lab_tests/markers`](/api-reference/lab
       "provider_id": "070085",
       "type": null,
       "unit": null,
-      "price": "N/A"
+      "price": "N/A",
+      "a_la_carte_enabled": true
     },
     {
       "id": 2,
@@ -55,7 +68,8 @@ To begin, make a request to our [`GET /v3/lab_tests/markers`](/api-reference/lab
       "provider_id": "006056",
       "type": null,
       "unit": null,
-      "price": "N/A"
+      "price": "N/A",
+      "a_la_carte_enabled": true
     }
   ],
   "total": 2,
@@ -64,11 +78,13 @@ To begin, make a request to our [`GET /v3/lab_tests/markers`](/api-reference/lab
 }
 ```
 
-With this information, you can create a lab test using [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test).
+You can set the `a_la_carte_enabled` query parameter to `true` to return only markers that support à-la-carte ordering.
 
-As an example, let's say you wanted a test from `Labcorp`, with markers with provider IDs `006056` and `070085`:
+## 2. Create the lab test
 
-```python Create a new test
+Use [`POST /v3/lab_tests`](/api-reference/lab-testing/post-test) with the selected marker or provider IDs. The following Sandbox example creates a Labcorp walk-in test from provider IDs:
+
+```python Create a lab test
 from junction import Junction, LabTestCollectionMethod
 from junction.environment import JunctionEnvironment
 
@@ -77,51 +93,55 @@ client = Junction(
     environment=JunctionEnvironment.SANDBOX,
 )
 
-data = client.lab_tests.create(
+lab_test = client.lab_tests.create(
     name="Example test",
     description="Example test",
-    method=LabTestCollectionMethod.AT_HOME_PHLEBOTOMY,
-    provider_ids=["006056", "070085"],  # or use the marker ids e.g marker_ids=[1, 2]
+    method=LabTestCollectionMethod.WALK_IN_TEST,
+    provider_ids=["006056", "070085"],
 )
 ```
 
-<Note>
-  It is possible to create a test with either the marker id or provider id. Provider ids are the recommended way, since these are shared across environments. Not all labs provide these, so in their absence, use the marker id.
-</Note>
-
-Once your lab test creation is successful you will receive the following response:
+The response contains the new lab test and its current status:
 
 ```json
 {
-  "lab_test": {
-    "name": "Example test",
-    "description": "Example test",
-    "sample_type": "serum",
-    "method": "at_home_phlebotomy",
-    "price": 10,
-    "is_active": false,
-    "status": "pending_approval",
-    "lab": {
-      "slug": "labcorp",
-      "name": "LabCorp",
-      "first_line_address": "123 Main St",
-      "city": "San Francisco",
-      "zipcode": "91789"
+  "id": "2e82a1d4-e2e6-421c-9c54-2210d667ce48",
+  "slug": "a94e3005-example-test",
+  "name": "Example test",
+  "sample_type": "serum",
+  "method": "walk_in_test",
+  "price": 0,
+  "is_active": true,
+  "status": "active",
+  "fasting": false,
+  "lab": {
+    "id": 1,
+    "slug": "labcorp",
+    "name": "Labcorp"
+  },
+  "markers": [
+    {
+      "id": 2,
+      "name": "ABO Grouping",
+      "slug": "abo-grouping",
+      "description": "ABO Grouping",
+      "lab_id": 1,
+      "provider_id": "006056",
+      "a_la_carte_enabled": true
     },
-    "markers": [
-      {
-        "name": "17-OH Progesterone LCMS",
-        "slug": "17-oh-progesterone-lcms",
-        "description": "17-OH Progesterone LCMS"
-      },
-      {
-        "name": "ABO Grouping",
-        "slug": "abo-grouping",
-        "description": "ABO Grouping"
-      }
-    ]
-  }
+    {
+      "id": 1,
+      "name": "17-OH Progesterone LCMS",
+      "slug": "17-oh-progesterone-lcms",
+      "description": "17-OH Progesterone LCMS",
+      "lab_id": 1,
+      "provider_id": "070085",
+      "a_la_carte_enabled": true
+    }
+  ],
+  "is_delegated": false,
+  "auto_generated": false
 }
 ```
 
-Note that `status` is set to `pending_approval`. You can verify when it changes to `active` by calling the [lab tests endpoint](/api-reference/lab-testing/tests-paginated). The `is_active` field is deprecated; use `status` instead.
+The deprecated `is_active` field mirrors whether `status` is `active`. Use `status` in new integrations.
