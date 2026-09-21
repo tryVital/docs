@@ -46,7 +46,7 @@ Creating a Device Reliability Continuous Query queues its initial snapshot. Junc
 | `presence_coverage` | Number | No | Present-date ratio: `presence_day_count / window_duration_day`. |
 | `presence_gap_count` | Integer | No | Number of consecutive missing-date runs, including runs at either edge of the window. |
 | `presence_gap_maximum_day` | Integer | No | Length of the longest consecutive missing-date run. |
-| `presence_recency_day` | Integer | Yes | Calendar days from the most recent present date through `window_end_date`; `null` when the window has no present date. |
+| `presence_recency_day` | Integer | Yes | `window_end_date` minus the most recent present date, in calendar days. This is `0` when data is present on `window_end_date` and `null` when the window has no present date. |
 | `presence_gap_mean_day` | Number | Yes | Mean calendar-day spacing between consecutive present dates; `null` with fewer than two present dates. |
 | `presence_gap_standard_deviation_day` | Number | Yes | Population standard deviation of the calendar-day spacing between consecutive present dates; `null` with fewer than two present dates. |
 | `reliability_status` | String | No | Data-presence classification for the row. |

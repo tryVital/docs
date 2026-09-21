@@ -1200,7 +1200,8 @@
                   "sense/overview",
                   "continuous-query-overview",
                   "sense/using-continuous-query",
-                  "untitled-page",
+                  "sense/device-reliability",
+                  "sense/managing-queries",
                   "sense/data-prioritization",
                   "sense/using-query-api",
                   "sense/examples"
