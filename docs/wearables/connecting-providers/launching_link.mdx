@@ -127,8 +127,16 @@ based on the Link flow outcome:
 
 | Flow state | Query parameters |
 | ---------- | ---------------- |
-| Success    | `state=success`  |
+| Success    | `state=success`, `provider=<provider_slug>`, and `isMobile=<true or false>` |
 | Error      | See [Link Errors](/wearables/connecting-providers/errors). |
+
+For successful provider connections, `provider` is the connected provider's slug and `isMobile`
+indicates whether Junction Link identified the final callback request as mobile. Both parameters
+are encoded as strings and appear exactly once.
+
+Junction preserves existing non-empty query parameters that do not conflict with Link parameters.
+If the supplied `redirect_url` already contains `state`, `provider`, or `isMobile`, the
+Junction-generated value replaces it. Do not rely on query parameter ordering.
 
 </Accordion>
 <Accordion title="Option 2: Using the `useVitalLink` React hook (`@tryvital/vital-link`)" icon="react" iconType="sharp-solid">
