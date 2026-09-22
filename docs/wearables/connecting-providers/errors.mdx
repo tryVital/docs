@@ -20,7 +20,18 @@ https://example.com/vital/callback
 ?state=error
 &error_type=provider_credential_error
 &error=Invalid%20username%20or%20password
+&provider=oura
+&isMobile=false
 ```
+
+`provider` is included when the provider is known, and `isMobile` is included when the client
+context is available. Treat both parameters as optional because some errors occur before Junction
+Link has that context. When included, `provider` contains the provider slug and `isMobile` is the
+string `true` or `false`. Each Junction-generated parameter appears once.
+
+Junction preserves existing non-empty query parameters that do not conflict with Link parameters.
+If Junction generates a parameter already present in the supplied `redirect_url`, the generated
+value replaces it. Do not rely on query parameter ordering.
 
 
 ### JSON Response
