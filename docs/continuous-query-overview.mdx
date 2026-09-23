@@ -1,13 +1,13 @@
 ---
 title: "Continuous Query Overview"
-description: "Automatically aggregate raw activity and biometric data from connected devices into structured datasets that update as new data arrives."
+description: "Automatically transform connected-device data into structured datasets that update when data changes or a resource-specific schedule runs."
 ---
 
-[Continuous Query](/sense/using-continuous-query) automatically transforms raw activity and biometric data from 300+ connected devices into structured, aggregated datasets that update as new data arrives. Instead of building complex data pipelines or repeatedly polling APIs, you define your query once and Junction handles the rest—from data ingestion and aggregation to intelligent scheduling and delivery.
+[Continuous Query](/sense/using-continuous-query) automatically transforms raw activity and biometric data from 300+ connected devices into structured datasets that stay up to date. Instead of building complex data pipelines or repeatedly polling APIs, you define your query once and Junction handles the rest—from data ingestion and aggregation to scheduling and delivery.
 
 ## How It Works
 
-Continuous Query runs your Junction Sense Queries automatically across all users in your team. When new data arrives from connected devices—whether via cloud providers or [mobile SDKs](/wearables/sdks/health/overview)—Junction intelligently schedules query re-evaluation and pushes any changes to your configured destinations.
+Continuous Query runs your Junction Sense queries automatically across all users in your team. Junction schedules most queries when new data arrives from cloud providers or [mobile SDKs](/wearables/sdks/health/overview). Virtual resources can use a resource-specific refresh schedule. Junction pushes any result changes to your configured destinations.
 
 ### Key Capabilities
 
@@ -23,7 +23,7 @@ Continuous Query runs your Junction Sense Queries automatically across all users
   </Column>
   <Column>
     <Card title="Intelligent Scheduling" icon="timer">
-      Junction monitors data connections and schedules queries in response to new data points or updates
+      Junction responds to new data points or uses a resource-specific refresh schedule, depending on the query
     </Card>
 
     <Card title="Pull Access" icon="arrow-down-to-bracket">
@@ -50,6 +50,17 @@ Continuous Query runs your Junction Sense Queries automatically across all users
   - Track maximum daily calorie burn and minimum step counts
   - Group activity data by week for trend analysis
   - [View example →](/sense/examples#weekly-insights-into-users-activity)
+</Accordion>
+
+<Accordion title="Device Data Reliability">
+  Monitor whether expected data has been present without building a separate completeness pipeline.
+
+  **Use case highlights:**
+
+  - Compare presence coverage across providers, source types, and resources
+  - Identify stale, sparse, or degraded data feeds
+  - Track connection status separately from observed data presence
+  - [View Device Reliability →](/sense/query-dsl/device-reliability)
 </Accordion>
 
 <Accordion title="Continuous Glucose Monitoring">
@@ -113,7 +124,7 @@ Continuous Query runs your Junction Sense Queries automatically across all users
 
 ## Supported Data Sources
 
-Continuous Query works with the following health data resources:
+Continuous Query works with the following health data resources and virtual tables:
 
 - **Activity** - Steps, calories, distance, active duration, resting heart rate
 - **Sleep** - Duration, stages, efficiency, scores, heart rate during sleep, sleep type filtering
@@ -121,6 +132,7 @@ Continuous Query works with the following health data resources:
 - **Body** - Weight, BMI, body fat percentage, temperature
 - **Meal** - Nutritional intake, macros, timing
 - **Time Series** - Continuous measurements including heart rate, glucose, HRV, steps, body temperature
+- **Device Reliability** - Daily presence, gap, recency, reliability status, and connection status by provider, source type, and resource
 
 Each query focuses on a single data resource, ensuring clean schemas and optimal performance. For multi-resource analysis, create separate queries and join results in your application layer.
 
@@ -164,9 +176,11 @@ When users connect multiple devices, Junction's source prioritization ensures da
 - Override priorities at the query level for experiments
 - Optionally split results by data source for comparative analysis
 
+[View source prioritization reference →](/sense/data-prioritization)
+
 ### Filtering & Refinement
 
-Use WHERE clauses to focus on specific data subsets:
+Use [WHERE](/sense/query-dsl/where-clause) clauses to focus on specific data subsets:
 
 - Filter for main sleep sessions (`type = 'long_sleep'`)
 - Target specific workout types or activity levels
@@ -180,7 +194,7 @@ Use the [Query DSL](/sense/query-dsl/) to specify what data to aggregate, how to
 
 **Step 2: Validate the Query**
 
-Use the Junction Dashboard Query Editor to preview and validate the result table schema and catch any issues before creation.
+Use the [Junction Dashboard Query](/sense/managing-queries) Editor to preview resources supported by Query API. For a Continuous Query-only resource such as Device Reliability, the [Create Continuous Query endpoint](/api-reference/sense/continuous-query/create) validates the query when you submit it.
 
 **Step 3: Deploy Query**
 
@@ -194,7 +208,7 @@ Set up webhooks or ETL pipelines to receive result updates automatically.
 
 ## Query API vs. Continuous Query
 
-Both use the same Query DSL, making it easy to prototype with Query API and deploy to production with Continuous Query.
+Most resources use the same Query DSL with both products, making it easy to prototype with [Query API](/sense/using-query-api) and deploy to production with [Continuous Query](/sense/using-continuous-query). _Some virtual resources, including [Device Reliability](/sense/query-dsl/device-reliability), are only available through Continuous Query and cannot be accessed with Query API._
 
 [Compare in detail →](/sense/overview#query-api-and-continuous-query)
 
