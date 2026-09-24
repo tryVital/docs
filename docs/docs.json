@@ -286,6 +286,7 @@
                   "api-reference/lab-testing/lab-test-markers",
                   "api-reference/lab-testing/order-set-marker",
                   "api-reference/lab-testing/estimate-order-set-pricing",
+                  "api-reference/lab-testing/lab-test-collection-instructions",
                   "api-reference/lab-testing/lab-test-collection-instructions-pdf"
                 ]
               },
