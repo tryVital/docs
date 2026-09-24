@@ -1,9 +1,69 @@
 ---
 title: "API"
-description: "Changelog of Junction Wearables API updates including Sense readiness scores, WHERE clause support, and derived readiness query tables."
+description: "Changelog of Junction Wearables API and Junction Sense."
 ---
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
+
+### Junction Sense: Device Reliability (September 2026)
+
+Junction Sense now supports a Continuous Query-only `reliability` table that reports the latest 30 completed floating calendar days of data presence for each provider, source type, and resource. It includes coverage, gap, recency, reliability status, and current connection status, so you can tell whether gaps in a user's data reflect inconsistent device use or a source that has gone quiet before relying on that data downstream.
+
+See [Device Reliability](/sense/query-dsl/device-reliability) for the query contract, field definitions, daily refresh semantics, examples, and supported resources.
+
+<Accordion title="Details" defaultOpen icon="shield-check" iconType="duotone">
+
+- Device Reliability results are a latest snapshot that Junction refreshes daily. Each refresh updates the current result table rather than appending historical snapshots.
+- Presence means that a normalized record or sample exists on a date. It does not measure optional-field completeness, and a real numeric zero counts as present.
+- Classification thresholds are cadence-agnostic, so healthy episodic, weekly, or monthly resources can appear sparse, degraded, or stale.
+
+<CodeGroup>
+```python Python DSL
+import vitalx.aggregation as va
+
+va.select(
+    va.Reliability.col("source_provider"),
+    va.Reliability.col("source_type"),
+    va.Reliability.col("resource"),
+    va.Reliability.col("window_start_date"),
+    va.Reliability.col("window_end_date"),
+    va.Reliability.col("window_duration_day"),
+    va.Reliability.col("presence_day_count"),
+    va.Reliability.col("presence_coverage"),
+    va.Reliability.col("presence_gap_count"),
+    va.Reliability.col("presence_gap_maximum_day"),
+    va.Reliability.col("presence_recency_day"),
+    va.Reliability.col("presence_gap_mean_day"),
+    va.Reliability.col("presence_gap_standard_deviation_day"),
+    va.Reliability.col("reliability_status"),
+    va.Reliability.col("connection_status"),
+)
+```
+
+```jsonc JSON DSL
+{
+  "select": [
+    { "reliability": "source_provider" },
+    { "reliability": "source_type" },
+    { "reliability": "resource" },
+    { "reliability": "window_start_date" },
+    { "reliability": "window_end_date" },
+    { "reliability": "window_duration_day" },
+    { "reliability": "presence_day_count" },
+    { "reliability": "presence_coverage" },
+    { "reliability": "presence_gap_count" },
+    { "reliability": "presence_gap_maximum_day" },
+    { "reliability": "presence_recency_day" },
+    { "reliability": "presence_gap_mean_day" },
+    { "reliability": "presence_gap_standard_deviation_day" },
+    { "reliability": "reliability_status" },
+    { "reliability": "connection_status" }
+  ]
+}
+```
+</CodeGroup>
+
+</Accordion>
 
 ### Junction Sense: ALIGN clause (May 2026)
 
