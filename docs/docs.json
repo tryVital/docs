@@ -1200,9 +1200,10 @@
                   "sense/overview",
                   "continuous-query-overview",
                   "sense/using-continuous-query",
+                  "sense/device-reliability",
                   "sense/managing-queries",
-                  "sense/using-query-api",
                   "sense/data-prioritization",
+                  "sense/using-query-api",
                   "sense/examples"
                 ]
               },
@@ -1217,7 +1218,8 @@
                   "sense/query-dsl/align-clause",
                   "sense/query-dsl/list-column-aggregation",
                   "sense/query-dsl/sleep-analysis",
-                  "sense/query-dsl/readiness-scores"
+                  "sense/query-dsl/readiness-scores",
+                  "sense/query-dsl/device-reliability"
                 ]
               },
               {

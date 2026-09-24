@@ -6,13 +6,24 @@ Lab accounts contain the configuration Junction needs to place orders and receiv
 
 A Team can have multiple lab accounts linked, including multiple accounts for the same lab, but each order uses only one lab account.
 
+## Lab account statuses
+
+A lab account's [`status`](/api-reference/org-management/lab-accounts/get-lab-accounts#parameter-one-of-0) indicates whether it is being configured (`pending`), ready to launch (`ready_to_launch`), available for ordering (`active`), or disabled (`suspended`).
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | The account is not available for ordering and is pending configuration or certification. |
+| `ready_to_launch` | The account has passed certification and is ready for go-live. The account can be used to place orders when in this status. |
+| `active` | The account is live and can be used for ordering. |
+| `suspended` | The account is disabled and can't be used to place an order. |
+
 ## Ordering with a lab account ID
 
 <Note>
   You only need to provide `lab_account_id` if you have your own account with a core lab. If your Team uses Junction's platform accounts, you do not need to provide it when placing an order.
 </Note>
 
-If you have your own core lab account, provide [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when you want an order to be placed with that account rather than Junction's platform account. This makes your intended account explicit and ensures that Junction uses that lab account's configuration when routing the order. Your lab account must be active, linked to your Team, and associated with the lab selected for the order.
+If you have your own core lab account, provide [`lab_account_id`](/api-reference/lab-testing/create-order#body-lab-account-id-one-of-0) when you want an order to be placed with that account rather than Junction's platform account. This makes your intended account explicit and ensures that Junction uses that lab account's configuration when routing the order. Your lab account must have an orderable status (`active` or `ready_to_launch`), be linked to your Team, and be associated with the lab selected for the order.
 
 The relevant fields in the [Create Order](/api-reference/lab-testing/create-order) request are:
 
@@ -34,12 +45,12 @@ When `lab_account_id` is omitted from a [Create Order](/api-reference/lab-testin
 | Lab accounts linked to your Team for the selected lab | Account selection |
 | --- | --- |
 | No lab accounts are linked | Junction uses its platform account when one is available to your Team for that lab. |
-| Exactly one active lab account is linked | Junction uses your active linked account. |
-| More than one active lab account is linked | Junction does not select an account because it cannot determine which of your accounts you intended to use. |
-| Lab accounts are linked, but none is active | Junction does not fall back to its platform account. |
+| Exactly one orderable lab account is linked | Junction uses your linked account. |
+| More than one orderable lab account is linked | Junction does not select an account because it cannot determine which of your accounts you intended to use. |
+| Lab accounts are linked, but none has an orderable status | Junction does not fall back to its platform account. |
 
 <Warning>
-  If more than one active lab account is linked to your Team for the selected lab, the order may be rejected unless you provide `lab_account_id`. Junction cannot place the order if no active account is available.
+  If more than one orderable lab account is linked to your Team for the selected lab, the order may be rejected unless you provide `lab_account_id`. Junction cannot place the order if no orderable account is available.
 </Warning>
 
 ## Billing types
