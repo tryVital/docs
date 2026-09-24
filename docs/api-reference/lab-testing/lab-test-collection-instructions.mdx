@@ -1,0 +1,41 @@
+---
+title: "Get Collection Instructions for Lab Test"
+description: "Retrieve lab test collection instructions via the Junction API. Requires authentication with your team API key."
+openapi: "GET /v3/lab_test/{lab_test_id}/collection_instructions"
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/lab_test/<lab_test_id>/collection_instructions' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: YOUR_API_KEY'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json Response
+{
+  "total_tubes": 2,
+  "lab": {
+    "id": 26,
+    "slug": "quest",
+    "name": "Quest",
+    "first_line_address": "100 Tri State International #100",
+    "city": "Lincolnshire",
+    "zipcode": "60069",
+    "collection_methods": ["at_home_phlebotomy", "walk_in_test"],
+    "sample_types": ["serum", "saliva", "urine"],
+    "logo_url": null
+  }
+}
+```
+
+</ResponseExample>
