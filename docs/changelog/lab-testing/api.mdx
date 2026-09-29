@@ -1,5 +1,6 @@
 ---
-title: "API"
+title: "Lab Testing API changelog"
+sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
@@ -125,9 +126,9 @@ You can now provide instructions for phlebotomists through two new optional fiel
   ## Updated Endpoints
 
   - **POST /v3/order** – `patient_address` now accepts an optional `access_notes` field.
-  - **POST /v3/order/{order_id}/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
-  - **POST /v3/order/{order_id}/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
-  - **PATCH /v3/order/{order_id}/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/&#123;order_id&#125;/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/&#123;order_id&#125;/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
+  - **PATCH /v3/order/&#123;order_id&#125;/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
 
   Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#access-notes-and-appointment-notes) for details.
 </Accordion>
@@ -163,7 +164,7 @@ Introducing the Lab Report Parsing API – extract structured biomarker data fro
   ## New Endpoints
 
   - **POST /lab_report/v1/parser/job** – Upload a lab report to create a parsing job
-  - **GET /lab_report/v1/parser/job/{job_id}** – Retrieve job status and extracted results
+  - **GET /lab_report/v1/parser/job/&#123;job_id&#125;** – Retrieve job status and extracted results
 
   ## Key Features
 
