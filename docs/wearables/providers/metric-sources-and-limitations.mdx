@@ -25,6 +25,8 @@ Junction sometimes has to calculate some summary fields from related provider da
 
 Sleep providers expose different combinations of sessions, stages, and timeseries. Junction may assemble the normalized sleep summary from those components.
 
+The legacy `total`, `awake`, `light`, `rem`, and `deep` fields return `0` when their values are unavailable. These fields are deprecated. Use `stage_asleep_second`, `stage_awake_second`, `stage_light_second`, `stage_rem_second`, and `stage_deep_second` to distinguish an unavailable value (`null`) from a recorded zero.
+
 | Provider | Fields | Source and limitation |
 | --- | --- | --- |
 | WHOOP | `total` | Sum of the light, deep, and REM stages reported by WHOOP. |
@@ -32,7 +34,7 @@ Sleep providers expose different combinations of sessions, stages, and timeserie
 | Garmin | `hr_lowest`, `hr_average`, `hr_dip`, `efficiency`, `type` | Calculated from the sleep interval, stages, and available heart-rate samples. |
 | Google Health | `efficiency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate` | Calculated from the sleep session and matching samples from the same source device. Sample-derived fields remain unavailable when Junction cannot identify an exact source device. |
 | Google Fit | `total`, `awake`, `light`, `rem`, `deep`, `efficiency`, `type` | Assembled from Google Fit sleep segments and the session interval. |
-| Apple HealthKit, Android Health Connect, and Samsung Health | `total`, `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate`, `efficiency`, `type` | Assembled from sleep stages and other samples submitted through the SDK. When no light, deep, or REM samples are available, the sleep summary API returns `total: 0`. Missing stage durations also appear as `0`, so zero does not necessarily mean no sleep. |
+| Apple HealthKit, Android Health Connect, and Samsung Health | `total`, `awake`, `light`, `rem`, `deep`, `stage_asleep_second`, `stage_awake_second`, `stage_light_second`, `stage_rem_second`, `stage_deep_second`, `latency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate`, `efficiency`, `type` | Assembled from sleep stages and other samples submitted through the SDK. Stage durations may be unavailable when the source provides an in-bed interval without the corresponding stage samples. |
 | Eight Sleep | `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate`, `efficiency`, `type` | Calculated from Eight Sleep stages, timeseries, and session boundaries. |
 | Ultrahuman | `total`, `awake`, `light`, `rem`, `deep`, `latency`, `hr_lowest`, `type` | Stage durations are assembled from the provider's sleep-stage proportions; other fields use its sleep graph and session boundaries. |
 | Polar | `total`, `duration`, `hr_lowest`, `hr_average`, `efficiency`, `type` | Calculated from Polar stages, interruptions, heart-rate samples, and session boundaries. |
