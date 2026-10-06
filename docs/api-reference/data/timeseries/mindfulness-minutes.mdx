@@ -1,6 +1,6 @@
 ---
 title: "Mindfulness Minutes"
-description: "Get grouped mindfulness minutes timeseries data for a user over a date range with the Junction Timeseries API."
+description: "Get a user's mindfulness minutes timeseries samples for a date range, grouped by provider."
 openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes/grouped"
 ---
 
@@ -114,7 +114,7 @@ fmt.Printf("Received data %s\n", response)
       {
         "data": [
           {
-            "end": "2026-09-30T13:25:01.562997+00:00",
+            "end": "2026-10-06T10:42:08.821675+00:00",
             "start": "2023-02-13T14:57:24+00:00",
             "unit": "min",
             "value": 42
