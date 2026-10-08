@@ -4,6 +4,22 @@ sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Labcorp AccuDraw collection instructions (Oct 2026)
+
+When enabled for your team, Junction generates a specimen collection guide PDF using Labcorp AccuDraw for orders using `at_home_phlebotomy`, `walk_in_test`, or `on_site_collection` modalities. The guide helps phlebotomists or clinical staff collect and prepare specimens, with container quantities, collection sequence, special draw instructions, and transport and shipping details based on the order's test codes and selected [Lab Accounts](/lab/overview/lab-accounts) configuration.
+
+Junction attempts to generate the guide before requisition submission. A guide generation failure does not prevent the requisition from being submitted. Download the saved guide through [Get Collection Instructions PDF for Order](/api-reference/lab-testing/order-collection-instructions-pdf).
+
+See [Collection Instructions: LabCorp](/api-reference/lab-testing/create-order#labcorp) for generation timing, availability, and partial-guide behavior, or [contact Junction support](/home/getting-support) to enable collection instructions and PDF access.
+
+### Set fasting requirements when creating an order (Oct 2026)
+
+You can now set `order_set.parameters.fasting` to `fasting_required` or `fasting_not_required` when creating an order, without changing your saved lab tests.
+
+If the parameter is omitted or `null`, orders using only `lab_test_ids` require fasting if any selected lab test requires it. Orders using `add_on` require fasting by default. Explicit fasting answers in `aoe_answers` continue to take precedence for the corresponding questions.
+
+See [Fasting requirement](/api-reference/lab-testing/create-order#fasting-requirement) for details and an example.
+
 ### Copy production panels into sandbox and promote sandbox panels (Oct 2026)
 
 When enabled for your team, **Copy from production** on the sandbox **Your Panels** page lets you select up to 25 active production panels across pages, including shared and default panels. Each panel receives its own success or error result.

@@ -46,7 +46,7 @@ When `lab_account_id` is omitted from a [Create Order](/api-reference/lab-testin
 | --- | --- |
 | No lab accounts are linked | Junction uses its platform account when one is available to your Team for that lab. |
 | Exactly one orderable lab account is linked | Junction uses your linked account. |
-| More than one orderable lab account is linked | Junction does not select an account because it cannot determine which of your accounts you intended to use. |
+| More than one orderable lab account is linked | When multiple accounts are available, provide `lab_account_id` to specify which account to use. Otherwise, depending on the ordering lab, Junction may default to placing the order through a Junction platform account. |
 | Lab accounts are linked, but none has an orderable status | Junction does not fall back to its platform account. |
 
 <Warning>
