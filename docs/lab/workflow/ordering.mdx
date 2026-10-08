@@ -1,6 +1,6 @@
 ---
-title: "Choosing Tests and Markers"
-description: "Choose saved lab tests, à la carte markers, or a combination of both when defining what a lab order should include."
+title: "Configuring Lab Orders"
+description: "Choose tests and markers, select a collection method, and configure fasting requirements for lab orders."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
@@ -186,6 +186,40 @@ This beta applies only to auto-approval of at-home phlebotomy tests. When orderi
 
 A referenced lab test must be `active`. A pending at-home phlebotomy test that was created before auto-evaluation applied to the current team can return HTTP 400 when ordered.
 
+
+## Fasting requirement
+
+Set `order_set.parameters.fasting` to override the fasting requirement for the order. This parameter specifies whether fasting is required before sample collection. It does not record whether the patient has actually fasted.
+
+| Value | Behavior |
+| --- | --- |
+| `"fasting_required"` | Require fasting for this order, regardless of the selected lab tests' fasting settings. |
+| `"fasting_not_required"` | Do not require fasting for this order, regardless of the selected lab tests' fasting settings. |
+| Omitted or `null` | Use the default behavior described below. |
+
+When you omit the parameter or set it to `null`:
+
+- With `lab_test_ids` only, fasting is required if any selected lab test requires it. For a single lab test, its fasting setting is preserved.
+- With `add_on`, fasting is required by default, including when you also provide `lab_test_ids`.
+
+Use `order_set.lab_test_ids` instead of the top-level `lab_test_id` when supplying this parameter. For example, include the following `order_set` in your create-order request to order a saved lab test without requiring fasting:
+
+```json
+{
+  "order_set": {
+    "lab_test_ids": ["5b41f610-ebc5-4803-8f0c-a61c3bdc7faf"],
+    "parameters": {
+      "fasting": "fasting_not_required"
+    }
+  }
+}
+```
+
+The override applies to the lab test used for this order. It does not change your saved lab tests, and normal test approval and ordering requirements still apply.
+
+<Note>
+Explicit fasting answers supplied in `aoe_answers` take precedence over the lab test's effective fasting setting for the corresponding [Ask on Order Entry (AOE) question](/lab/workflow/aoe). If you do not supply a fasting answer, Junction uses the effective fasting setting, including any override from `order_set.parameters.fasting`.
+</Note>
 
 ## Find markers available à la carte
 
