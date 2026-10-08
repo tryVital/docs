@@ -1,6 +1,6 @@
 ---
 title: "Creating a Lab Test"
-description: "Create a reusable lab test from orderable markers and understand when it is ready to use."
+description: "Create a reusable lab test from orderable markers, check its approval status, and copy or promote panels between sandbox and production."
 ---
 
 A lab test is a reusable set of markers for a specific partner laboratory and collection method. Create a lab test when you expect to order the same group of markers more than once. For one-off selections, you can instead [choose markers à la carte](/lab/workflow/ordering#choose-markers-à-la-carte) when creating an order.
@@ -39,6 +39,48 @@ If a production lab test is created with `pending_approval`, Junction reviews th
 <Note>
   In Sandbox, newly created lab tests are active immediately. Production approval rules are not applied in Sandbox.
 </Note>
+
+## Copying and promoting panels in the dashboard
+
+You can reuse a panel across environments from **Lab Testing → Your Panels** in the dashboard. Both actions create a new panel for the same team in the other environment, with a new lab test ID. Use the destination panel's ID when creating orders there.
+
+<Note>
+  **Copy from production** and **Promote to Production** are enabled separately for your team. If an action is unavailable, [contact Junction support](/home/getting-support).
+</Note>
+
+### Copy production panels into sandbox
+
+1. Select **Sandbox** in the dashboard and open **Lab Testing → Your Panels**.
+2. Click **Copy from production**.
+3. Search for active production panels available to your team, including shared and default panels. Select up to **25 panels**; selections are retained as you search and move between pages.
+4. Click **Copy selected** and review the success or error shown for each panel.
+
+Successful copies appear in sandbox and can be used for [sandbox ordering and simulation](/lab/overview/sandbox). If a panel name is already in use, the copy gets a **Production copy** suffix, with a number when needed.
+
+Panels already copied into sandbox are marked **Already in sandbox** and cannot be selected again. A production panel created by promoting a sandbox panel is also marked **Already in sandbox**, because its original sandbox panel already exists.
+
+### Promote sandbox panels to production
+
+1. Select **Sandbox** in the dashboard and open **Lab Testing → Your Panels**.
+2. For one eligible panel, open its actions menu and choose **Promote to Production**. To promote several, select up to **25 panels** across pages and use the promotion action.
+3. Confirm **Promote to Production**. For a batch, review the success or error shown for each panel.
+4. Open **Production → Lab Testing → Your Panels** to find the new panels. A successful single-panel promotion opens the production panel list automatically.
+
+Only active, customer-created sandbox panels can be promoted. Default and automatically generated panels are ineligible. Panels marked **Copied from Production** cannot be promoted back as new production panels. An already-promoted panel cannot be promoted a second time, even if its production panel has been archived.
+
+Production marker availability and the [production approval rules](#approval-status) apply. A promotion can succeed with a status of `pending_approval`; the production panel can be ordered only when its status becomes `active`.
+
+### What carries over
+
+Both actions preserve the panel's name, description, partner laboratory, markers, collection method, and fasting requirement. The destination resolves its own marker IDs, pricing, approval status, and operational settings. Production pricing and settings are not copied into sandbox.
+
+The panels remain independent: editing or archiving one does not update the other. These actions create new panels; they do not synchronize changes or update an existing destination panel. Archiving a destination panel does not allow its source panel to be copied or promoted again.
+
+### Errors and partial results
+
+A panel cannot be copied or promoted if its laboratory or required markers are unavailable in the destination, or its markers lack laboratory provider IDs. A failed panel is not partially created. Other panels in the same batch can still succeed; use the per-panel results to identify failures before trying again.
+
+If the dashboard cannot check whether panels were already copied or promoted, the action is disabled until that check succeeds. Refresh the page and contact support if the error persists.
 
 ## 1. Find markers
 
