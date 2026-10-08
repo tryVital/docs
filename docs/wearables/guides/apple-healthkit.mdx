@@ -21,6 +21,15 @@ for managing and inspecting health data permissions and automatic data sync.
 </Card>
 
 
+## Limited historical access
+
+On iOS 27 and later, users can grant access to a limited window of recent HealthKit data instead of their full
+history. The user’s HealthKit authorization window may limit how much historical data Junction can backfill.
+The SDK can only sync data that HealthKit allows your app to read.
+
+See Apple's [limited authorization guidance](https://developer.apple.com/documentation/healthkit/authorizing-access-to-health-data#Respond-to-limited-authorization)
+and the [SDK read permission guidance](/wearables/sdks/health/overview#limited-historical-access-on-ios) for details.
+
 ## Sync Frequency
 
 | App state  | Behavior |
