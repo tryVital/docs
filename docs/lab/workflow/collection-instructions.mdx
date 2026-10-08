@@ -1,0 +1,31 @@
+---
+title: "Collection Instructions"
+description: "Use specimen collection guides to prepare, handle, and transport samples for lab orders."
+---
+
+## Labcorp
+
+When enabled for your team, Junction uses Labcorp AccuDraw to generate a specimen collection guide PDF for Labcorp orders using `at_home_phlebotomy`, `walk_in_test`, or `on_site_collection` modalities. This guide is separate from the requisition and is intended for phlebotomists or clinical staff collecting and preparing the specimens. [Contact Junction support](/home/getting-support) to enable collection instructions and PDF access.
+
+### What the guide contains
+
+Junction generates the guide from the order's Labcorp test codes and selected lab account (see [Lab Accounts](/lab/overview/lab-accounts)), so the handling and shipping instructions reflect the account used for that order. Based on the instructions returned by AccuDraw, the PDF includes:
+
+- Required collection containers and quantities, with tube images when available.
+- The collection sequence, container sizes, expected sample yields, and special draw instructions.
+- Transport containers, storage temperatures, processing volumes, and shipping details, including destination labs when supplied.
+- The Labcorp account and test codes and names covered by the guide.
+
+If AccuDraw returns instructions for only some tests, the PDF is labeled as a partial guide and lists the uncovered tests with guidance from Labcorp.
+
+### When instructions are generated
+
+After the order is created, Junction attempts to generate and save the guide before submitting the requisition to Labcorp. For orders with a future `activate_by` date, generation is deferred until the order is due for submission. These guides are not automatically generated for sandbox orders or testkit orders.
+
+A failure to generate the guide does not prevent requisition submission. A successfully created order or requisition therefore does not guarantee that collection instructions are available.
+
+### Downloading and using the guide
+
+Retrieve the saved PDF with [Get Collection Instructions PDF for Order](/api-reference/lab-testing/order-collection-instructions-pdf): `GET /v3/order/{order_id}/collection_instruction_pdf`. The endpoint returns `application/pdf` when the guide is available and `404` when the order has no saved guide. Downloading does not generate or regenerate instructions.
+
+For at-home phlebotomy appointments, Junction attaches the saved guide to the provider's appointment when available. Booking does not call AccuDraw again and can continue if the guide is unavailable.

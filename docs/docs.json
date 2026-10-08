@@ -119,6 +119,7 @@
                   "lab/workflow/cancelling-an-order",
                   "lab/workflow/ordering",
                   "lab/workflow/clinical-comments",
+                  "lab/workflow/collection-instructions",
                   "lab/overview/compendium-search",
                   "lab/workflow/create-test",
                   "lab/workflow/importing-order",
