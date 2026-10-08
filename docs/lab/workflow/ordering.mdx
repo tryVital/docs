@@ -189,7 +189,7 @@ A referenced lab test must be `active`. A pending at-home phlebotomy test that w
 
 ## Fasting requirement
 
-Set `order_set.parameters.fasting` in the [Create Order request](/api-reference/lab-testing/create-order) to override the fasting requirement for the order. This parameter specifies whether fasting is required before sample collection. It does not record whether the patient has actually fasted.
+Set `order_set.parameters.fasting` in the [Create Order request](/api-reference/lab-testing/create-order) to override the fasting requirement for the order. It applies to saved lab tests (`lab_test_ids`), à la carte markers (`add_on`), and combinations of both. This parameter specifies whether fasting is required before sample collection. It does not record whether the patient has actually fasted.
 
 | Value | Behavior |
 | --- | --- |
@@ -214,6 +214,24 @@ Use `order_set.lab_test_ids` instead of the top-level `lab_test_id` when supplyi
   }
 }
 ```
+
+For à la carte ordering, place `parameters` alongside `add_on` inside `order_set`. Include `collection_method`, which is required whenever you use `add_on`. For example, include these fields in your create-order request to order an à la carte marker without requiring fasting:
+
+```json
+{
+  "collection_method": "walk_in_test",
+  "order_set": {
+    "add_on": {
+      "provider_ids": ["322022"]
+    },
+    "parameters": {
+      "fasting": "fasting_not_required"
+    }
+  }
+}
+```
+
+The same override works when using `add_on.marker_ids` instead of `add_on.provider_ids`, or when combining `add_on` with `lab_test_ids`.
 
 The override applies to the lab test used for this order. It does not change your saved lab tests, and normal test approval and ordering requirements still apply.
 
