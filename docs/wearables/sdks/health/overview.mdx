@@ -447,6 +447,14 @@ permission grants and denials after the user has gone through the [Ask for Permi
 
 </Note>
 
+### Limited historical access on iOS
+
+On iOS 27 and later, users can grant access to a limited window of recent HealthKit data instead of their full
+history. The user’s HealthKit authorization window may limit how much historical data Junction can backfill.
+
+See Apple's [limited authorization guidance](https://developer.apple.com/documentation/healthkit/authorizing-access-to-health-data#Respond-to-limited-authorization)
+for details.
+
 ## Automatic Data Sync
 
 Junction Health SDK automates data sync for you on both Android and iOS. Please first consult
