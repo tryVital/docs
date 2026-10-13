@@ -1,0 +1,200 @@
+---
+title: "Lab Test Versioning"
+description: "Learn how Junction preserves panel marker sets across orders and how to read, update, and audit lab test versions."
+---
+
+Lab test versioning lets you update a panel's biomarkers without changing orders that have already been created.
+
+Each lab test keeps the same `id` throughout its lifetime. When its marker membership changes, Junction creates a new immutable version of that marker set and increments the numeric `version`.
+
+## How versioning works
+
+- New lab tests begin at version `1`.
+- Changing the complete marker set creates the next version.
+- Changing only the panel name, status, or other metadata does not create a version.
+- Submitting the same marker set is a no-op and returns the current version.
+- Historical versions are read-only.
+
+Junction always selects the latest version when you create an order. You continue to provide a `lab_test_id`; you do not provide a version number in the order request.
+
+When the order is created, Junction pins the selected version to that order. Subsequent panel updates do not affect the order's requisition, expected results, result processing, or billing.
+
+| Action | Version used |
+| --- | --- |
+| Create a new order | Latest version at order creation |
+| Read an existing order | Version pinned to that order |
+| Update only panel metadata | Current version; no new version |
+| Change panel marker membership | New latest version |
+| Recreate or redraw an order | Latest version when the new order is created |
+
+## Read the latest version
+
+Use the existing [Get Lab Test endpoint](/api-reference/lab-testing/get-lab-test) without a `version` query parameter:
+
+```bash
+curl --request GET \
+  --url '{{BASE_URL}}/v3/lab_tests/<lab_test_id>' \
+  --header "x-vital-api-key: <your_api_key>"
+```
+
+The response includes the version represented by its marker list:
+
+```json
+{
+  "id": "5af405fc-fafb-49e8-b0bf-fe9d91df6a7d",
+  "version": 3,
+  "name": "Comprehensive wellness panel",
+  "markers": [
+    {
+      "id": 6859,
+      "name": "17-Hydroxyprogesterone",
+      "provider_id": "17180"
+    }
+  ]
+}
+```
+
+If you omit `version`, the endpoint always returns the latest version.
+
+## Read a historical version
+
+Pass the version number to the same endpoint:
+
+```bash
+curl --request GET \
+  --url '{{BASE_URL}}/v3/lab_tests/<lab_test_id>?version=2' \
+  --header "x-vital-api-key: <your_api_key>"
+```
+
+The response's `version` and `markers` fields describe that immutable historical version. Junction returns `404` if the lab test or requested version does not exist or is unavailable to your team.
+
+Historical reads are useful when you need to display or audit the exact marker configuration used by an older order. Only marker membership is versioned; mutable metadata such as the panel name and status reflects the lab test's current values.
+
+## List version history
+
+Use the [version-history endpoint](/api-reference/lab-testing/lab-test-version-history) to list versions from newest to oldest:
+
+```bash
+curl --request GET \
+  --url '{{BASE_URL}}/v3/lab_tests/<lab_test_id>/version?size=50' \
+  --header "x-vital-api-key: <your_api_key>"
+```
+
+```json
+{
+  "data": [
+    {
+      "version": 3,
+      "created_at": "2026-10-12T14:30:00Z",
+      "markers": [
+        {
+          "id": 6859,
+          "name": "17-Hydroxyprogesterone",
+          "provider_id": "17180"
+        }
+      ]
+    },
+    {
+      "version": 2,
+      "created_at": "2026-09-30T09:00:00Z",
+      "markers": [
+        {
+          "id": 6859,
+          "name": "17-Hydroxyprogesterone",
+          "provider_id": "17180"
+        },
+        {
+          "id": 8213,
+          "name": "17-Hydroxypregnenolone",
+          "provider_id": "8352"
+        }
+      ]
+    }
+  ],
+  "next_cursor": null
+}
+```
+
+The endpoint returns up to 100 versions per request. When `next_cursor` is present, pass it unchanged in the next request.
+
+## Create a new version
+
+Send the panel's complete desired marker membership in `marker_ids` when [updating the lab test](/api-reference/lab-testing/patch-lab-test):
+
+```bash
+curl --request PATCH \
+  --url '{{BASE_URL}}/v3/lab_tests/<lab_test_id>' \
+  --header "content-type: application/json" \
+  --header "x-vital-api-key: <your_api_key>" \
+  --data '{
+    "marker_ids": [6859, 8213, 9120]
+  }'
+```
+
+`marker_ids` is a replacement set, not a list of additions or removals. Include every marker that should belong to the new version.
+
+If the set differs from the current version, Junction creates the next version and returns it:
+
+```json
+{
+  "id": "5af405fc-fafb-49e8-b0bf-fe9d91df6a7d",
+  "version": 4,
+  "markers": [
+    { "id": 6859, "name": "17-Hydroxyprogesterone" },
+    { "id": 8213, "name": "17-Hydroxypregnenolone" },
+    { "id": 9120, "name": "Ferritin" }
+  ]
+}
+```
+
+This new version becomes the default for all subsequent orders. Existing orders remain pinned to their previous version.
+
+Test-kit panels cannot be edited through this endpoint.
+
+## Identify the version used by an order
+
+Order responses include the pinned version in `order.lab_test.version`:
+
+```json
+{
+  "order": {
+    "id": "0d89ebda-359c-4f63-9eb7-1f5963bd19cc",
+    "lab_test": {
+      "id": "5af405fc-fafb-49e8-b0bf-fe9d91df6a7d",
+      "version": 2,
+      "name": "Comprehensive wellness panel",
+      "markers": []
+    }
+  }
+}
+```
+
+To retrieve that exact marker set later, read the lab test using the returned version:
+
+```text
+GET /v3/lab_tests/5af405fc-fafb-49e8-b0bf-fe9d91df6a7d?version=2
+```
+
+Do not assume an existing order uses the lab test's current latest version.
+
+## Custom markers and lab accounts
+
+Account-owned custom markers require the matching `lab_account_id` when you create or update a panel version that contains them.
+
+Omit `lab_account_id` when the marker set contains only standard markers. A lab account selected for marker discovery does not make an ordinary-marker panel account-specific.
+
+Junction rejects custom markers when the supplied account is missing, unavailable to your team, or does not own the marker. It does not fall back to another marker with the same provider code.
+
+## Pricing and checkout
+
+Pricing estimates and checkout quotes are calculated for a specific panel version. If a panel receives a newer version before checkout completes, Junction rejects the stale quote instead of silently changing the order's markers or price.
+
+Request a new quote, review the updated price and marker set, and then retry checkout.
+
+## Recommended integration practices
+
+1. Store or log `order.lab_test.version` alongside the order ID when auditing orders.
+2. Treat `marker_ids` in an update as the full desired set.
+3. Refresh the lab test after an update and use the returned `version`.
+4. Re-fetch pricing if checkout reports that a quote is stale.
+5. Use historical reads for audit and display purposes only; do not offer historical versions as order choices.
