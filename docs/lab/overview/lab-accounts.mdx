@@ -17,6 +17,15 @@ A lab account's [`status`](/api-reference/org-management/lab-accounts/get-lab-ac
 | `active` | The account is live and can be used for ordering. |
 | `suspended` | The account is disabled and can't be used to place an order. |
 
+## Delegated status
+
+A lab account's `delegated_flow` specifies whether your physicians or Junction's physician network are responsible for ordering and critical-result follow-up. “Delegated” means that responsibility sits with you. This is separate from the account's operational `status` described above.
+
+- **`fully_delegated`**: You supply the ordering physicians and handle critical-result follow-up.
+- **`order_delegated`**: You supply the ordering physicians; Junction handles critical-result follow-up.
+- **`result_delegated`**: Junction's physician network handles ordering; you handle critical-result follow-up.
+- **`not_delegated`**: Junction handles both ordering physicians and critical-result follow-up.
+
 ## Ordering with a lab account ID
 
 <Note>
