@@ -1,5 +1,5 @@
 ---
-openapi: post /v1/org/{org_id}/team/{team_id}/create_access_token
+openapi: post /v1/org/{org_id}/team/{team_id}/create_api_access_token
 title: "Create Team API Access Token"
 description: "Create a short-lived Junction API access token for a team."
 ---
@@ -20,7 +20,9 @@ This endpoint is rate limited to prevent abuse. Cache and reuse the access token
 <RequestExample>
 ```bash cURL
 curl --request POST \
-  --url https://api.management.junction.com/v1/org/{org_id}/team/{team_id}/create_access_token \
-  --header 'X-Management-Key: <management-key>'
+  --url https://api.management.junction.com/v1/org/{org_id}/team/{team_id}/create_api_access_token \
+  --header 'X-Management-Key: <management-key>' \
+  --header 'Content-Type: application/json' \
+  --data '{"env":"sandbox"}'
 ```
 </RequestExample>
