@@ -14,7 +14,9 @@ Every created team comes with 4 standard `Lab Tests` to allow the customer to te
 - **Mobile Phlebotomy**: A mobile phlebotomist visits the patient's location
 - **On-Site Collection**: Collection at the customer's facility
 
-However, since most customers choose to have their own custom lab tests, you should create your own tests using the [API](/lab/workflow/create-test). This is encouraged, as Junction generates results based on the associated markers. More on this in the [results section](/lab/overview/sandbox#results).
+For custom panels, you can [create a lab test through the API](/lab/workflow/create-test) or [copy an existing production panel into sandbox](/lab/workflow/create-test#copy-production-panels-into-sandbox) from **Your Panels** in the dashboard, when copying is enabled for your team. Copies are independent sandbox panels with new lab test IDs and sandbox pricing and settings. Junction generates simulated results based on their associated markers; see the [results section](#results).
+
+When a customer-created sandbox panel is ready for production, use [Promote to Production](/lab/workflow/create-test#promote-sandbox-panels-to-production). This creates a separate production panel subject to production marker availability and approval rules. A sandbox panel copied from production cannot be promoted back as a new production panel.
 
 ## Lifecycle
 

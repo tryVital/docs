@@ -17,6 +17,15 @@ A lab account's [`status`](/api-reference/org-management/lab-accounts/get-lab-ac
 | `active` | The account is live and can be used for ordering. |
 | `suspended` | The account is disabled and can't be used to place an order. |
 
+## Delegated status
+
+A lab account's `delegated_flow` specifies whether your physicians or Junction's physician network are responsible for ordering and critical-result follow-up. “Delegated” means that responsibility sits with you. This is separate from the account's operational `status` described above.
+
+- **`fully_delegated`**: You supply the ordering physicians and handle critical-result follow-up.
+- **`order_delegated`**: You supply the ordering physicians; Junction handles critical-result follow-up.
+- **`result_delegated`**: Junction's physician network handles ordering; you handle critical-result follow-up.
+- **`not_delegated`**: Junction handles both ordering physicians and critical-result follow-up.
+
 ## Ordering with a lab account ID
 
 <Note>
@@ -46,7 +55,7 @@ When `lab_account_id` is omitted from a [Create Order](/api-reference/lab-testin
 | --- | --- |
 | No lab accounts are linked | Junction uses its platform account when one is available to your Team for that lab. |
 | Exactly one orderable lab account is linked | Junction uses your linked account. |
-| More than one orderable lab account is linked | Junction does not select an account because it cannot determine which of your accounts you intended to use. |
+| More than one orderable lab account is linked | When multiple accounts are available, provide `lab_account_id` to specify which account to use. Otherwise, depending on the ordering lab, Junction may default to placing the order through a Junction platform account. |
 | Lab accounts are linked, but none has an orderable status | Junction does not fall back to its platform account. |
 
 <Warning>

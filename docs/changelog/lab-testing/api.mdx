@@ -1,7 +1,32 @@
 ---
-title: "API"
+title: "Lab Testing API changelog"
+sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
+
+### Labcorp AccuDraw collection instructions (Oct 2026)
+
+When enabled for your team, Junction generates a specimen collection guide PDF using Labcorp AccuDraw for orders using `at_home_phlebotomy`, `walk_in_test`, or `on_site_collection` modalities. The guide helps phlebotomists or clinical staff collect and prepare specimens, with container quantities, collection sequence, special draw instructions, and transport and shipping details based on the order's test codes and selected [Lab Accounts](/lab/overview/lab-accounts) configuration.
+
+Junction attempts to generate the guide before requisition submission. A guide generation failure does not prevent the requisition from being submitted. Download the saved guide through [Get Collection Instructions PDF for Order](/api-reference/lab-testing/order-collection-instructions-pdf).
+
+See [Collection Instructions: Labcorp](/lab/workflow/collection-instructions#labcorp) for generation timing, availability, and partial-guide behavior, or [contact Junction support](/home/getting-support) to enable collection instructions and PDF access.
+
+### Set fasting requirements when creating an order (Oct 2026)
+
+You can now set `order_set.parameters.fasting` to `fasting_required` or `fasting_not_required` when creating an order, without changing your saved lab tests.
+
+If the parameter is omitted or `null`, orders using only `lab_test_ids` require fasting if any selected lab test requires it. Orders using `add_on` require fasting by default. Explicit fasting answers in `aoe_answers` continue to take precedence for the corresponding questions.
+
+See [Fasting requirement](/lab/workflow/ordering#fasting-requirement) for details and an example.
+
+### Copy production panels into sandbox and promote sandbox panels (Oct 2026)
+
+When enabled for your team, **Copy from production** on the sandbox **Your Panels** page lets you select up to 25 active production panels across pages, including shared and default panels. Each panel receives its own success or error result.
+
+**Promote to Production** supports active, customer-created sandbox panels, with production marker availability and approval rules applied. Both actions create independent panels with new IDs and destination pricing and settings. Already-linked panels cannot be copied or promoted again, and a sandbox copy of a production panel cannot be promoted back as a new production panel.
+
+The two actions are enabled separately. See [Copying and promoting panels](/lab/workflow/create-test#copying-and-promoting-panels-in-the-dashboard) for instructions and restrictions, or [contact Junction support](/home/getting-support) if an action is unavailable.
 
 ### New Galleri cancer signal origin and subcategory values (Aug 2026)
 
@@ -125,9 +150,9 @@ You can now provide instructions for phlebotomists through two new optional fiel
   ## Updated Endpoints
 
   - **POST /v3/order** – `patient_address` now accepts an optional `access_notes` field.
-  - **POST /v3/order/{order_id}/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
-  - **POST /v3/order/{order_id}/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
-  - **PATCH /v3/order/{order_id}/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/&#123;order_id&#125;/phlebotomy/appointment/book** – Request body now accepts an optional `appointment_notes` field.
+  - **POST /v3/order/&#123;order_id&#125;/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
+  - **PATCH /v3/order/&#123;order_id&#125;/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
 
   Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#access-notes-and-appointment-notes) for details.
 </Accordion>
@@ -163,7 +188,7 @@ Introducing the Lab Report Parsing API – extract structured biomarker data fro
   ## New Endpoints
 
   - **POST /lab_report/v1/parser/job** – Upload a lab report to create a parsing job
-  - **GET /lab_report/v1/parser/job/{job_id}** – Retrieve job status and extracted results
+  - **GET /lab_report/v1/parser/job/&#123;job_id&#125;** – Retrieve job status and extracted results
 
   ## Key Features
 
@@ -329,7 +354,7 @@ The API always responds with 14 days' worth of slots.
 Junction now supports ordering à la carte, as well as a revamped ordering flow.
 
 <Accordion title="Details" defaultOpen icon="billboard" iconType="duotone">
-  See [Choosing Tests and Markers](/lab/workflow/ordering) for the supported options.
+  See [Configuring Lab Orders](/lab/workflow/ordering) for the supported options.
 </Accordion>
 
 ### Partial Results Webhook (Jul 2024)
