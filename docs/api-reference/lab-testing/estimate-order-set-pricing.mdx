@@ -4,10 +4,6 @@ description: "Estimate the USD price of one or more lab testing order sets befor
 openapi: 'POST /v3/lab_test/estimate_order_set_pricing'
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
-
-<FeatureBeta />
-
 Returns the estimated price and component-level breakdown for each supplied order set. The response order matches the request order: `data[0]` contains the estimate for `order_sets[0]`, and so on.
 
 <Note>
