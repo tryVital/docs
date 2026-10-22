@@ -1,7 +1,7 @@
 ---
 openapi: post /v1/org/{org_id}/team/{team_id}/create_api_access_token
 title: "Create Team API Access Token"
-description: "Create a short-lived Junction API access token for a team."
+description: "Create a short-lived API access token that acts with Team Admin privileges for a team. Tokens expire after 10 minutes and the endpoint is rate limited."
 ---
 
 import OrgManagementAPI from '/snippets/org-management-api.mdx';
