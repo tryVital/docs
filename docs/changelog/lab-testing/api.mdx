@@ -4,6 +4,16 @@ sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Order Pricing API (Oct 2026)
+
+You can now retrieve marker and panel pricing and estimate costs before creating lab orders.
+
+- Add `include_pricing=true` to [Get Available Biomarkers](/api-reference/lab-testing/biomarkers) or [Get Available Tests](/api-reference/lab-testing/tests-paginated) to include pricing in catalog responses.
+- Use [Estimate order set pricing](/api-reference/lab-testing/estimate-order-set-pricing) (`POST /v3/lab_test/estimate_order_set_pricing`) to estimate one or more order sets, with aggregate and component pricing based on parameters such as billing type, STAT priority, and US state.
+- Pass `lab_account_id` to retrieve pricing for a specific lab account. By default, pricing uses Junction platform lab accounts.
+
+Prices are estimates, and final charges can vary based on service conditions and order details. See the [Order Pricing guide](/lab/overview/order-pricing) for pricing objects, conditional modifiers, and sandbox pricing.
+
 ### Labcorp AccuDraw collection instructions (Oct 2026)
 
 When enabled for your team, Junction generates a specimen collection guide PDF using Labcorp AccuDraw for orders using `at_home_phlebotomy`, `walk_in_test`, or `on_site_collection` modalities. The guide helps phlebotomists or clinical staff collect and prepare specimens, with container quantities, collection sequence, special draw instructions, and transport and shipping details based on the order's test codes and selected [Lab Accounts](/lab/overview/lab-accounts) configuration.
