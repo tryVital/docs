@@ -1,13 +1,11 @@
 ---
 title: "Turnaround Times"
-description: "Understand historical turnaround estimates for markers, panels, and orders, percentile estimates, and order completion tracking."
+description: "Review turnaround time estimates for lab test results at the marker, panel, and order levels with 95th and 99th percentile metrics."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 For a comprehensive Dashboard-focused overview of turnaround times, check out [the product guide](https://support.junction.com/articles/9137043704-turnaround-time). This page focuses on the API aspects.
-
-The following describes the existing estimates for teams outside the historical percentile beta. See [Historical percentile estimates](#historical-percentile-estimates) for beta behavior.
 
 We have two different turnaround time metrics:
 
@@ -91,6 +89,8 @@ Use [Get order tracking](/api-reference/lab-testing/get-order-tracking) to retri
 - Ordered markers and their completion estimates and progress statuses.
 - ETA revisions in `updates`, including their reason, source, and affected markers.
 
+`results` lists expected result markers and any additional received result markers. An entry does not mean its result has been received; use `status` to determine completion.
+
 Marker progress uses these statuses:
 
 | Status | Meaning |
@@ -99,11 +99,9 @@ Marker progress uses these statuses:
 | `incomplete` | Some, but not all, required results have been received. |
 | `resulted` | All required results have been received. |
 
-Junction records completion estimates and revisions using information attributed to the lab (`lab`), Junction (`junction`), or the patient (`patient`). Each revision's `source` identifies where that information came from. Handle unrecognized `status` and `source` values in your integration, as new values may be added.
+Junction records completion estimates and revisions using information attributed to the lab (`lab`), Junction (`junction`), or the patient (`patient`). Each revision's `source` identifies where that information came from. New status and source values may be added. Include a default case when handling these fields.
 
 The first tracking ETA is created when Junction's operations team records an ETA update for the order. Until an estimate is recorded, completion estimates can be `null`; there is no automatic deadline for an estimate to become available. Placing an order or receiving a partial result does not automatically create one. The first recorded estimate establishes the baseline; `updates` contains subsequent revisions.
-
-When collection information is available, `collected_at.collected_at` contains the recorded collection time. The endpoint returns `is_inferred=false` and `inferred_from=null` for this information.
 
 ### Webhook notifications
 
