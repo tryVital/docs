@@ -1,0 +1,92 @@
+---
+title: "Get order tracking"
+description: "Retrieve completion estimates, marker progress, and ETA revisions for an order."
+openapi: "GET /v3/order/{order_id}/tracking"
+version: "beta"
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+Requires order tracking access and an API key for the team that owns the order.
+
+Completion estimates and collection information can be `null`. The first recorded estimate establishes the baseline; `updates` contains subsequent revisions.
+
+These estimates are separate from the historical turnaround times in an order's `lab_test` object. See [Turnaround Times](/lab/overview/turnaround-times#order-tracking-and-eta-revisions) for details and [labtest.order_tracking.updated](/event-catalog/labtest.order_tracking.updated) for webhook notifications.
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+     --url '{{BASE_URL}}/v3/order/<order_id>/tracking' \
+     --header 'accept: application/json' \
+     --header 'x-vital-api-key: YOUR_API_KEY'
+```
+
+</RequestExample>
+
+In this example, the initial completion estimate was October 24. A later update based on information from the lab moved it to October 26 for the outstanding marker.
+
+`results` lists expected result markers and any additional received result markers. An entry does not mean its result has been received; use `status` to determine completion.
+
+<ResponseExample>
+
+```json Response
+{
+  "order_id": "0ee312e2-6773-4a21-a6e1-506882cd98ed",
+  "expected_at": {
+    "final_results": {
+      "original_estimate": "2026-10-24T17:00:00Z",
+      "current_estimate": "2026-10-26T17:00:00Z"
+    }
+  },
+  "collected_at": {
+    "collected_at": "2026-10-20T09:00:00Z",
+    "is_inferred": false,
+    "inferred_from": null
+  },
+  "markers": [
+    {
+      "id": 1,
+      "name": "Hemoglobin A1c",
+      "slug": "hemoglobin-a1c",
+      "provider_id": "1234",
+      "status": "pending",
+      "expected_at": {
+        "original_estimate": "2026-10-24T17:00:00Z",
+        "current_estimate": "2026-10-26T17:00:00Z"
+      },
+      "results": [
+        {
+          "id": 101,
+          "name": "Hemoglobin A1c",
+          "slug": "hemoglobin-a1c",
+          "provider_id": "1234"
+        }
+      ]
+    }
+  ],
+  "updates": [
+    {
+      "created_at": "2026-10-22T10:00:00Z",
+      "reason": "The lab needs additional processing time.",
+      "revised_estimate": "2026-10-26T17:00:00Z",
+      "source": "lab",
+      "impacted_markers": [
+        {
+          "id": 1,
+          "name": "Hemoglobin A1c",
+          "provider_id": "1234",
+          "estimates": {
+            "original_estimate": "2026-10-24T17:00:00Z",
+            "current_estimate": "2026-10-26T17:00:00Z"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+</ResponseExample>

@@ -212,6 +212,7 @@
                   "api-reference/lab-testing/create-order",
                   "api-reference/lab-testing/get-orders",
                   "api-reference/lab-testing/get-order",
+                  "api-reference/lab-testing/get-order-tracking",
                   "api-reference/lab-testing/cancel-order",
                   "api-reference/lab-testing/requisition-pdf",
                   "api-reference/lab-testing/abn-pdf",
@@ -347,7 +348,8 @@
                 "group": "Orders",
                 "pages": [
                   "event-catalog/labtest.order.created",
-                  "event-catalog/labtest.order.updated"
+                  "event-catalog/labtest.order.updated",
+                  "event-catalog/labtest.order_tracking.updated"
                 ]
               },
               {

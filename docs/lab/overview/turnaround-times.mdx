@@ -1,9 +1,13 @@
 ---
 title: "Turnaround Times"
-description: "Review turnaround time estimates for lab test results at the marker, panel, and order levels with 95th and 99th percentile metrics."
+description: "Understand historical turnaround estimates for markers, panels, and orders, percentile estimates, and order completion tracking."
 ---
 
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
 For a comprehensive Dashboard-focused overview of turnaround times, check out [the product guide](https://support.junction.com/articles/9137043704-turnaround-time). This page focuses on the API aspects.
+
+The following describes the existing estimates for teams outside the historical percentile beta. See [Historical percentile estimates](#historical-percentile-estimates) for beta behavior.
 
 We have two different turnaround time metrics:
 
@@ -40,3 +44,71 @@ An order's turnaround time is the same as its panel, so we don't repeat that inf
 2. Worst-case result by date
 
 These will be null unless the order's lab test has a non-null turnaround time _and_ the sample collection has already been performed. The time of sample collection is what we add to the panel turnaround times to determine the expected and worst-case result by dates. [Retrieving an order](/api-reference/lab-testing/get-order) is an example of where this is included.
+
+## Historical percentile estimates
+
+<FeatureBeta />
+
+Turnaround time (TAT) measures the time from sample collection to results. This beta adds explicit percentile estimates based on historical turnaround times to marker responses.
+
+A percentile describes the historical distribution of turnaround times: p50 is the median, p90 is the 90th percentile, and p95 is the 95th percentile. For example, a p90 estimate of 5 days means 90% of the historical turnaround times were 5 days or less. These describe historical results rather than guarantees for a particular order.
+
+| Field | Percentile | Historical window |
+| --- | --- | --- |
+| `p50_tat_days_past_7_days` | 50th | 7-day |
+| `p90_tat_days_past_7_days` | 90th | 7-day |
+| `p95_tat_days_past_7_days` | 95th | 7-day |
+| `p50_tat_days_past_90_days` | 50th | 90-day |
+| `p90_tat_days_past_90_days` | 90th | 90-day |
+| `p95_tat_days_past_90_days` | 95th | 90-day |
+
+Estimates are expressed in calendar days.
+
+For enrolled teams, all six fields are included and can be `null` when unavailable. Outside the beta, these six fields are omitted and the existing estimates remain unchanged.
+
+The marker-level `common_tat_days` and `worst_case_tat_days` fields are deprecated but remain available for compatibility. In the beta, they use `p90_tat_days_past_90_days` and `p95_tat_days_past_90_days`, respectively, including `null` when those estimates are unavailable.
+
+### Panels and orders in the beta
+
+In the beta, `common_tat_days` and `worst_case_tat_days` represent the 90-day p90 and p95 estimates, so returned values may differ from your existing estimates.
+
+Both panel estimates can be `null` when marker estimates are unavailable.
+
+The six explicit percentile fields belong to individual markers; they are not returned at the top level of a panel. The panel-level `common_tat_days` and `worst_case_tat_days` fields remain supported.
+
+For enrolled teams, the deprecated order fields `expected_result_by_date` and `worst_case_result_by_date` use these percentile-based panel estimates. They are separate from the completion estimates returned by order tracking.
+
+## Order tracking and ETA revisions
+
+<FeatureBeta />
+
+Historical percentile estimates and order tracking can be enabled independently. Historical TAT describes how long similar tests have taken; order tracking provides completion estimates and revisions for a specific order.
+
+Use [Get order tracking](/api-reference/lab-testing/get-order-tracking) to retrieve:
+
+- Original and current estimated completion times in `expected_at.final_results`.
+- Collection information in `collected_at`, or `null` when the collection time is unavailable.
+- Ordered markers and their completion estimates and progress statuses.
+- ETA revisions in `updates`, including their reason, source, and affected markers.
+
+Marker progress uses these statuses:
+
+| Status | Meaning |
+| --- | --- |
+| `pending` | No required results have been received for the marker. |
+| `incomplete` | Some, but not all, required results have been received. |
+| `resulted` | All required results have been received. |
+
+Junction records completion estimates and revisions using information attributed to the lab (`lab`), Junction (`junction`), or the patient (`patient`). Each revision's `source` identifies where that information came from. Handle unrecognized `status` and `source` values in your integration, as new values may be added.
+
+The first tracking ETA is created when Junction's operations team records an ETA update for the order. Until an estimate is recorded, completion estimates can be `null`; there is no automatic deadline for an estimate to become available. Placing an order or receiving a partial result does not automatically create one. The first recorded estimate establishes the baseline; `updates` contains subsequent revisions.
+
+When collection information is available, `collected_at.collected_at` contains the recorded collection time. The endpoint returns `is_inferred=false` and `inferred_from=null` for this information.
+
+### Webhook notifications
+
+The [labtest.order_tracking.updated](/event-catalog/labtest.order_tracking.updated) webhook captures an immutable tracking snapshot when an ETA revision is recorded. Its `data` contains `order_id`, `expected_at.final_results`, `collected_at`, `markers`, and `updates`, matching the tracking endpoint's response structure.
+
+This webhook requires order tracking access and does not notify you of every collection or result change. Later changes do not alter an earlier event's snapshot; use the tracking endpoint for current state.
+
+For webhook handling, see [Event Structure](/webhooks/event-structure) and [Retry Policy](/webhooks/retry-policy).
