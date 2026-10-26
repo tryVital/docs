@@ -35,7 +35,8 @@
       "sharp@<0.35.4": "^0.35.4",
       "socket.io-parser@>=4 <4.2.7": "^4.2.7",
       "source-map-js@>=1 <1.2.2": "^1.2.2",
-      "ws@>=8 <8.21.0": "^8.21.0"
+      "ws@>=8 <8.21.0": "^8.21.0",
+      "proxy-addr@<2.0.8": "^2.0.8"
     }
   },
   "packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264"
