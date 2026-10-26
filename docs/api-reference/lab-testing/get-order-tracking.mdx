@@ -9,11 +9,6 @@ import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-Requires order tracking access and an API key for the team that owns the order.
-
-Completion estimates and collection information can be `null`. The first recorded estimate establishes the baseline; `updates` contains subsequent revisions.
-
-These estimates are separate from the historical turnaround times in an order's `lab_test` object. See [Turnaround Times](/lab/overview/turnaround-times#order-tracking-and-eta-revisions) for details and [labtest.order_tracking.updated](/event-catalog/labtest.order_tracking.updated) for webhook notifications.
 
 <RequestExample>
 
@@ -25,10 +20,6 @@ curl --request GET \
 ```
 
 </RequestExample>
-
-In this example, the initial completion estimate was October 24. A later update based on information from the lab moved it to October 26 for the outstanding marker.
-
-`results` lists expected result markers and any additional received result markers. An entry does not mean its result has been received; use `status` to determine completion.
 
 <ResponseExample>
 
