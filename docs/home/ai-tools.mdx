@@ -1,0 +1,116 @@
+---
+title: "Docs MCP Server"
+description: "Connect Claude, ChatGPT, Cursor, VS Code and other AI tools to the Junction docs through our MCP server, so they can search and read the docs while you build."
+---
+
+The Junction docs are available as an [MCP](https://modelcontextprotocol.io) server. Connect it to your AI assistant or coding agent and it can search and read these docs directly, instead of relying on what it remembers about the Junction API.
+
+The server URL is:
+
+```
+https://docs.junction.com/mcp
+```
+
+It's read-only, covers the public docs and API reference, and needs no API key.
+
+## Setup
+
+<Tabs>
+  <Tab title="Claude Code">
+    ```bash
+    claude mcp add --transport http junction-docs https://docs.junction.com/mcp
+    ```
+  </Tab>
+  <Tab title="Claude.ai / Claude Desktop">
+    1. Go to **Settings → Connectors**.
+    2. Click **Add custom connector**.
+    3. Name it `Junction Docs` and set the URL to `https://docs.junction.com/mcp`.
+  </Tab>
+  <Tab title="Codex">
+    ```bash
+    codex mcp add junction-docs --url https://docs.junction.com/mcp
+    ```
+
+    Or add it to `~/.codex/config.toml`:
+
+    ```toml
+    [mcp_servers.junction-docs]
+    url = "https://docs.junction.com/mcp"
+    ```
+  </Tab>
+  <Tab title="ChatGPT">
+    1. Go to **Settings → Apps & Connectors → Advanced settings** and turn on **Developer mode**.
+    2. Back in **Apps & Connectors**, click **Create**.
+    3. Name it `Junction Docs`, set the URL to `https://docs.junction.com/mcp` and set authentication to **No authentication**.
+
+    Custom connectors depend on your ChatGPT plan and workspace settings.
+  </Tab>
+  <Tab title="OpenAI API">
+    Pass the server as a remote MCP tool in the Responses API:
+
+    ```python
+    from openai import OpenAI
+
+    client = OpenAI()
+
+    response = client.responses.create(
+        model="gpt-5",
+        tools=[
+            {
+                "type": "mcp",
+                "server_label": "junction_docs",
+                "server_url": "https://docs.junction.com/mcp",
+                "require_approval": "never",
+            }
+        ],
+        input="How do I order an at-home phlebotomy test with Junction?",
+    )
+
+    print(response.output_text)
+    ```
+  </Tab>
+  <Tab title="Cursor">
+    Add to `~/.cursor/mcp.json` (or `.cursor/mcp.json` in your project):
+
+    ```json
+    {
+      "mcpServers": {
+        "junction-docs": {
+          "url": "https://docs.junction.com/mcp"
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="VS Code">
+    Add to `.vscode/mcp.json` in your project:
+
+    ```json
+    {
+      "servers": {
+        "junction-docs": {
+          "type": "http",
+          "url": "https://docs.junction.com/mcp"
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+Any other MCP client that supports Streamable HTTP can connect using the same URL.
+
+## Example prompts
+
+Once connected, ask your assistant things like:
+
+* "Using the Junction docs, write a function that creates a user and orders a walk-in lab test."
+* "Which webhook events does Junction send when a lab result is ready?"
+* "What's the difference between Junction's at-home phlebotomy service tiers?"
+* "How do I sync Apple Health data using the Junction Mobile SDK?"
+
+If your assistant doesn't pick up the docs on its own, mention "Junction docs" in the prompt.
+
+## Reporting docs issues
+
+The server also lets your assistant submit feedback when it finds a page that's wrong, outdated or unclear. You can also reach us through [Getting Support](/home/getting-support).
