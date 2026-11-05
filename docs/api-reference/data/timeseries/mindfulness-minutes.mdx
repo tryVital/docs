@@ -1,6 +1,6 @@
 ---
 title: "Mindfulness Minutes"
-description: "Retrieve grouped mindfulness minutes timeseries data for a user, organized by provider and source."
+description: "Retrieve mindfulness minutes timeseries data for a user within a date range, grouped by the provider and device that recorded it."
 openapi: "GET /v2/timeseries/{user_id}/mindfulness_minutes/grouped"
 ---
 
@@ -114,7 +114,7 @@ fmt.Printf("Received data %s\n", response)
       {
         "data": [
           {
-            "end": "2026-10-29T14:10:46.506585+00:00",
+            "end": "2026-11-05T10:08:48.294608+00:00",
             "start": "2023-02-13T14:57:24+00:00",
             "unit": "min",
             "value": 42

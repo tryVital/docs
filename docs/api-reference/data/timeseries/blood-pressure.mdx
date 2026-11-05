@@ -1,6 +1,6 @@
 ---
 title: "Blood Pressure"
-description: "Retrieve grouped systolic and diastolic blood pressure timeseries data for a user, organized by provider and source."
+description: "Retrieve blood pressure timeseries data for a user within a date range, grouped by the provider and device that recorded it."
 openapi: "GET /v2/timeseries/{user_id}/blood_pressure/grouped"
 ---
 
@@ -116,7 +116,7 @@ fmt.Printf("Received data %s\n", response)
           {
             "diastolic": 75,
             "systolic": 125,
-            "timestamp": "2026-10-29T14:05:47+00:00",
+            "timestamp": "2026-11-05T10:03:48+00:00",
             "unit": "mmHg"
           }
         ],
