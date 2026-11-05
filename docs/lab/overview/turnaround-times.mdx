@@ -1,53 +1,29 @@
 ---
 title: "Turnaround Times"
-description: "Review turnaround time estimates for lab test results at the marker, panel, and order levels with 95th and 99th percentile metrics."
+description: "Review historical turnaround time percentiles and how they apply to markers, panels, and orders."
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
+For a comprehensive Dashboard-focused overview of turnaround times, check out [the product guide](https://support.junction.com/articles/9137043704-turnaround-time) (its p95/p99 estimates describe the deprecated TAT behavior). This page covers the current percentile estimates and API behavior.
 
-For a comprehensive Dashboard-focused overview of turnaround times, check out [the product guide](https://support.junction.com/articles/9137043704-turnaround-time). This page focuses on the API aspects.
+Turnaround time (TAT) measures the time from sample collection to results. Marker responses include historical p50, p90, and p95 estimates over 7-day and 90-day windows.
 
-We have two different turnaround time metrics:
+The existing `common_tat_days` and `worst_case_tat_days` fields use the p90 and p95 estimates over the past 90 days, respectively.
 
-1. Common turnaround time which 95% of orders should fall within.
-2. Worst-case turnaround time which 99% of orders should fall within.
-
-Furthermore, each operates on three distinct levels:
+Turnaround time estimates apply at three levels:
 
 1. Markers
 2. Panels
 3. Orders
 
 <Note>
-Turnaround times are calculated from historical data. For some tests, we may not yet have enough data to make a determination on their turnaround time. We won't include turnaround times for these tests in our API responses.
+Turnaround times are calculated from historical data. Estimates are `null` when there is insufficient data to calculate them.
 </Note>
 
 <Warning>
-  We recalculate expected turnaround times regularly using the latest live data. Values might change dramatically from time to time to reflect real-world logistical circumstances.
+We recalculate turnaround time estimates regularly using the latest historical data. Values may change to reflect real-world logistical circumstances.
 </Warning>
 
-## Marker turnaround times
-
-Marker turnaround times are based on historical orders of each marker. If a marker has been ordered enough such that we can make a statistically viable determination on its average turnaround time, we will include these in payloads containing marker data. For example, the response body for [retrieving markers for a lab test](/api-reference/lab-testing/lab-test-markers) includes the common and worst-case number of days to receive results for that marker after collection time. If we don't have enough data for that marker, those values will be null.
-
-## Panel turnaround times
-
-Panels comprise one or more markers, and the turnaround time for the panel is the largest turnaround time among its constituent markers. Just like in marker response bodies, lab test response bodies return the common and worst-case turnaround times (in days) for the panel. You can see this when [getting all available tests](/api-reference/lab-testing/tests-paginated), for example. If any of the markers in the panel have null turnaround times, then the panel also has a null turnaround time.
-
-## Order turnaround times
-
-An order's turnaround time is the same as its panel, so we don't repeat that information in the top-level order response body. You can still find that information in the `lab_test` object within the response body if you need it. Instead, the top-level body includes two related fields:
-
-1. Expected result by date
-2. Worst-case result by date
-
-These will be null unless the order's lab test has a non-null turnaround time _and_ the sample collection has already been performed. The time of sample collection is what we add to the panel turnaround times to determine the expected and worst-case result by dates. [Retrieving an order](/api-reference/lab-testing/get-order) is an example of where this is included.
-
 ## Historical percentile estimates
-
-<FeatureBeta />
-
-Turnaround time (TAT) measures the time from sample collection to results. This beta adds explicit percentile estimates based on historical turnaround times to marker responses.
 
 A percentile describes the historical distribution of turnaround times: p50 is the median, p90 is the 90th percentile, and p95 is the 95th percentile. For example, a p90 estimate of 5 days means 90% of the historical turnaround times were 5 days or less. These describe historical results rather than guarantees for a particular order.
 
@@ -62,19 +38,41 @@ A percentile describes the historical distribution of turnaround times: p50 is t
 
 Estimates are expressed in calendar days.
 
-For enrolled teams, all six fields are included and can be `null` when unavailable. Outside the beta, these six fields are omitted and the existing estimates remain unchanged.
+All six fields are included in marker responses and can be `null` when unavailable. They are not returned at the top level of a panel.
 
-The marker-level `common_tat_days` and `worst_case_tat_days` fields are deprecated but remain available for compatibility. In the beta, they use `p90_tat_days_past_90_days` and `p95_tat_days_past_90_days`, respectively, including `null` when those estimates are unavailable.
+## Marker turnaround times
 
-### Panels and orders in the beta
+Marker turnaround times are based on historical orders of each marker. Responses containing marker data, such as [retrieving markers for a lab test](/api-reference/lab-testing/lab-test-markers), include the six percentile fields listed above. Each estimate can be `null` when unavailable.
 
-In the beta, `common_tat_days` and `worst_case_tat_days` represent the 90-day p90 and p95 estimates, so returned values may differ from your existing estimates.
+The existing `common_tat_days` and `worst_case_tat_days` fields remain available for backward compatibility and now reflect the p90 and p95 estimates over the past 90 days, respectively.
 
-Both panel estimates can be `null` when marker estimates are unavailable.
+## Panel turnaround times
 
-The six explicit percentile fields belong to individual markers; they are not returned at the top level of a panel. The panel-level `common_tat_days` and `worst_case_tat_days` fields remain supported.
+Panel turnaround times are based on the largest corresponding estimate among the panel's markers. Responses containing lab test data, such as [retrieving a lab test](/api-reference/lab-testing/get-lab-test), include `common_tat_days` and `worst_case_tat_days`. Each estimate can be `null` when unavailable. If any marker's corresponding estimate is `null`, the panel estimate is also `null`.
 
-For enrolled teams, the deprecated order fields `expected_result_by_date` and `worst_case_result_by_date` use these percentile-based panel estimates. They are separate from the completion estimates returned by order tracking.
+The `common_tat_days` and `worst_case_tat_days` fields reflect the p90 and p95 estimates over the past 90 days, respectively, expressed in calendar days.
+
+## Order turnaround times
+
+Order turnaround times are based on the panel's estimates and the sample collection time. Responses containing order data, such as [retrieving an order](/api-reference/lab-testing/get-order), include the panel's turnaround time fields in `lab_test` and two date fields at the top level. Each date can be `null` when the corresponding panel estimate or sample collection time is unavailable.
+
+| Field | Estimate |
+| --- | --- |
+| `expected_result_by_date` | Collection time plus the panel's `common_tat_days` (p90 over the past 90 days). |
+| `worst_case_result_by_date` | Collection time plus the panel's `worst_case_tat_days` (p95 over the past 90 days). |
+
+## Backward compatibility
+
+Existing fields remain available for backward compatibility, but their values now use the newer percentile estimates and may differ from previous values.
+
+| Existing field | Current behavior |
+| --- | --- |
+| Marker `common_tat_days` | Uses `p90_tat_days_past_90_days`, replacing the previous p95 estimate. |
+| Marker `worst_case_tat_days` | Uses `p95_tat_days_past_90_days`, replacing the previous p99 estimate. |
+| Panel `common_tat_days` and `worst_case_tat_days` | Use the largest corresponding p90 and p95 estimates over the past 90 days among the panel's markers. |
+| Order `expected_result_by_date` and `worst_case_result_by_date` | Use collection time plus the corresponding percentile-based panel estimate. |
+
+Existing estimates can change or become `null` when historical estimates are unavailable. Order date fields are also `null` until sample collection has occurred.
 
 ## Order tracking and ETA revisions
 
@@ -82,16 +80,14 @@ For enrolled teams, the deprecated order fields `expected_result_by_date` and `w
 Coming soon. Interested in this feature? Get in touch with your Customer Success Manager.
 </Note>
 
-Historical percentile estimates and order tracking can be enabled independently. Historical TAT describes how long similar tests have taken; order tracking provides completion estimates and revisions for a specific order.
+Order tracking provides completion estimates and revisions for a specific order. These are separate from historical TAT estimates, which describe how long similar tests have taken.
 
 Use [Get order tracking](/api-reference/lab-testing/get-order-tracking) to retrieve:
 
 - Original and current estimated completion times in `expected_at.final_results`.
 - Collection information in `collected_at`, or `null` when the collection time is unavailable.
-- Ordered markers and their completion estimates and progress statuses.
+- Ordered markers and their completion estimates and progress statuses. `markers[].results` lists expected result markers and any additional received result markers. An entry does not mean its result has been received; use `markers[].status` to determine completion.
 - ETA revisions in `updates`, including their reason, source, and affected markers.
-
-`results` lists expected result markers and any additional received result markers. An entry does not mean its result has been received; use `status` to determine completion.
 
 Marker progress uses these statuses:
 
@@ -101,9 +97,9 @@ Marker progress uses these statuses:
 | `incomplete` | Some, but not all, required results have been received. |
 | `resulted` | All required results have been received. |
 
-Junction records completion estimates and revisions using information attributed to the lab (`lab`), Junction (`junction`), or the patient (`patient`). Each revision's `source` identifies where that information came from. New status and source values may be added. Include a default case when handling these fields.
+The Junction operations team may update an order's estimated completion time as new information becomes available. Each revision's `source` identifies whether the information came from the lab (`lab`), Junction (`junction`), or the patient (`patient`). New status and source values may be added. Include a default case when handling these fields.
 
-The first tracking ETA is created when Junction's operations team records an ETA update for the order. Until an estimate is recorded, completion estimates can be `null`; there is no automatic deadline for an estimate to become available. Placing an order or receiving a partial result does not automatically create one. The first recorded estimate establishes the baseline; `updates` contains subsequent revisions.
+Completion estimates can be `null` when unavailable. `expected_at.final_results.original_estimate` contains the initial estimate, `expected_at.final_results.current_estimate` contains the current estimate, and `updates` contains subsequent revisions.
 
 ### Webhook notifications
 
