@@ -5,7 +5,7 @@ description: "Deprecated features in the Junction Wearables API, including the h
 
 ### Non-grouped timeseries endpoints
 
-<Warning>The deprecation cycle ends on **14 September 2026**. The API endpoints will be removed afterwards.</Warning>
+<Warning>The deprecation cycle ended on **14 September 2026**. The API endpoints were removed on 22 September 2026.</Warning>
 
 We have introduced [Get Grouped Timeseries](/changelog/wearables/api#grouped-timeseries-feb-2024) endpoints since February 2024.
 Check out the [Get Heartrate](/api-reference/data/timeseries/heartrate) endpoint for an example. It has been supported by all Junction API
@@ -19,7 +19,7 @@ The [Get Grouped Timeseries](/changelog/wearables/api#grouped-timeseries-feb-202
 | Category | Status | API endpoint path | API SDKs |
 | -------- | ------ | ----------------- | ------- |
 | Get Grouped Timeseries | 🟢 Supported | `/v2/timeseries/{user_id}/{resource}/grouped` | `vitals.{resource}_grouped` |
-| Get Timeseries (Legacy) | ⚠️ Deprecated | `/v2/timeseries/{user_id}/{resource}` | `vitals.{resource}` |
+| Get Timeseries (Legacy) | 🔴 Removed | `/v2/timeseries/{user_id}/{resource}` | `vitals.{resource}` |
 
 <Card title="Recommended Action" icon="lightbulb-exclamation-on">
 For Junction API SDKs, the client methods for the Get Timeseries (Legacy) endpoints have been marked as deprecated since 2024. Make sure you use the
@@ -32,7 +32,7 @@ For direct API calls, make sure your request URL paths include `/grouped`, your 
 
 ### The `hypnogram` timeseries type
 
-<Warning>The deprecation cycle ends on ~~31 January 2025~~ **14 September 2026**. The resource will be removed afterwards.</Warning>
+<Warning>The deprecation cycle ended on **14 September 2026**. The resource was removed on 22 September 2026.</Warning>
 
 We have introduced a new Sleep Cycle summary type (`sleep_cycle`) which captures the detailed hypnogram of a sleep session.
 It replaces the existing `hypnogram` timeseries type. More details can be found here: [Sleep Cycle Summary](/api-reference/data/sleep-cycle/get-summary).
@@ -44,7 +44,7 @@ Stop processing the `historical.timeseries.hypnogram.created`, `daily.timeseries
 
 ### Redefining Source and Provider
 
-<Warning>The deprecation cycle ends on ~~31 July 2024~~ **14 September 2026**. The deprecated fields will be removed afterwards.</Warning>
+<Warning>The deprecation cycle ended on **14 September 2026**. The deprecated fields were removed on 22 September 2026.</Warning>
 
 Junction has redefined what _Source_ and _Provider_ mean across our API and event schemas:
 
@@ -275,7 +275,7 @@ To migrate to the new definitions, Junction is announcing the following deprecat
 
 ### The `is_final` flag in `historical.data.*.created` events
 
-<Warning>The deprecation cycle ends on ~~30 June 2024~~ **14 September 2026**. The deprecated fields will be removed afterwards.</Warning>
+<Warning>The deprecation cycle ended on **14 September 2026**. The deprecated fields were removed on 22 September 2026.</Warning>
 
 We are removing the `is_final` flag from the Historical Pull Completed (`historical.data.*.created`) events.
 

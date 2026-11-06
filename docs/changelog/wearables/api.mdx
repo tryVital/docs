@@ -5,6 +5,17 @@ description: "Changelog of Junction Wearables API and Junction Sense."
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Removed deprecated endpoints and fields (September 2026)
+
+On 22 September 2026, after their deprecation cycles ended on 14 September 2026, we removed:
+
+- The legacy non-grouped timeseries endpoints (`GET /v2/timeseries/{user_id}/{resource}`). Use the `/grouped` variants.
+- The `hypnogram` timeseries resource and its events. Use the [Sleep Cycle summary](/api-reference/data/sleep-cycle/get-summary).
+- The deprecated `Source` fields (`name`, `slug`, `logo`) and the `source` field on `provider.connection.created` events.
+- The `is_final` flag on `historical.data.*.created` events.
+
+See [Deprecations](/changelog/wearables/deprecations) for migration details.
+
 ### Junction Sense: Device Reliability (September 2026)
 
 Junction Sense now supports a Continuous Query-only `reliability` table that reports the latest 30 completed floating calendar days of data presence for each provider, source type, and resource. It includes coverage, gap, recency, reliability status, and current connection status, so you can tell whether gaps in a user's data reflect inconsistent device use or a source that has gone quiet before relying on that data downstream.

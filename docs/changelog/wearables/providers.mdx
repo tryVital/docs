@@ -3,6 +3,22 @@ title: "Providers and Resources"
 description: "Changelog of wearable provider updates including Health SDK Explicit Connect mode, sync progress logs, and provider-specific improvements."
 ---
 
+### Sleep summary: nullable sleep stage fields (Oct 2026)
+
+The [Sleep summary](/api-reference/data/sleep/get-summary) now includes nullable stage duration fields, in seconds:
+
+| New field | Replaces |
+| --------- | -------- |
+| `stage_asleep_second` | `total` |
+| `stage_awake_second` | `awake` |
+| `stage_light_second` | `light` |
+| `stage_rem_second` | `rem` |
+| `stage_deep_second` | `deep` |
+
+Some sleep sessions have a bedtime interval but no stage samples to calculate durations from. The existing fields return `0` in that case, so an unavailable value looks the same as a recorded zero. The new fields return `null` when a duration is unavailable, and `0` only when the provider recorded zero.
+
+`total`, `awake`, `light`, `rem`, and `deep` are unchanged but now marked as deprecated. Move to the `stage_*_second` fields and treat `null` as unavailable.
+
 ### Strava is BYOO-only (July 2026)
 
 New Strava connections and reconnects now require [Bring Your Own OAuth](/wearables/connecting-providers/bring-your-own-oauth/overview) credentials.

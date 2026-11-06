@@ -4,6 +4,23 @@ sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Lab account `owner` and order `lab_account_id` (Oct 2026)
+
+Two additive fields make it easier to see which [Lab Account](/lab/overview/lab-accounts) applies:
+
+- Lab account objects now include `owner`, which is `platform` for Junction platform lab accounts and `customer` for your own lab accounts. This enum is non-exhaustive.
+- Order objects now include `lab_account_id`, the lab account used for the order. It is `null` when no lab account is recorded.
+
+### Lab test version history (Oct 2026)
+
+Lab tests now keep an immutable version history of their marker set.
+
+- [Update Lab Test](/api-reference/lab-testing/patch-lab-test) (`PATCH /v3/lab_tests/{lab_test_id}`) accepts `marker_ids` or `provider_ids` to replace the panel's complete marker membership. Pass an optional `lab_account_id` to resolve the markers against a specific lab account. A changed marker set creates a new default version that all subsequent orders use. Existing orders stay on the version they were created with.
+- Lab test objects now include `version`, the marker-set version the response represents, and `updated_at`.
+- Use [Get Lab Test Version History](/api-reference/lab-testing/lab-test-version-history) (`GET /v3/lab_tests/{lab_test_id}/version`) to list previous versions, newest first, with the markers in each version. Results are paginated with `next_cursor` and `size`.
+
+Existing lab tests start at version 1.
+
 ### Order Pricing API (Oct 2026)
 
 You can now retrieve marker and panel pricing and estimate costs before creating lab orders.
@@ -37,6 +54,24 @@ When enabled for your team, **Copy from production** on the sandbox **Your Panel
 **Promote to Production** supports active, customer-created sandbox panels, with production marker availability and approval rules applied. Both actions create independent panels with new IDs and destination pricing and settings. Already-linked panels cannot be copied or promoted again, and a sandbox copy of a production panel cannot be promoted back as a new production panel.
 
 The two actions are enabled separately. See [Copying and promoting panels](/lab/workflow/create-test#copying-and-promoting-panels-in-the-dashboard) for instructions and restrictions, or [contact Junction support](/home/getting-support) if an action is unavailable.
+
+### New order status details for lab rejections (Sept 2026)
+
+We added `status_detail` values that give the reason when a lab rejects a sample or an order:
+
+| `status_detail` | Meaning |
+| --------------- | ------- |
+| `sample_damaged_in_transit` | The specimen was damaged in transit and could not be tested. |
+| `sample_integrity_compromised` | The specimen's integrity was compromised, and the lab gave no narrower reason. |
+| `sample_not_provided` | The kit reached the lab with no specimen to test. |
+| `consent_missing` | A required consent or guardian signature was not supplied. |
+| `lab_not_certified_for_state` | The lab is not certified to run the test for the patient's state. |
+| `collection_device_expired` | The collection device was past its expiry date. |
+| `kit_not_registered` | The kit reached the lab without being registered. |
+| `collection_site_unrecognised` | The lab could not attribute the sample to a known collection site. |
+| `rejected_on_request` | The order was rejected at the request of the patient or the ordering party. |
+
+These values are additive. Integrations that match `status_detail` exhaustively should add them or handle unknown values gracefully. See [Test Kit Status Details](/lab/testkits/status-details) for the existing values.
 
 ### New Galleri cancer signal origin and subcategory values (Aug 2026)
 
