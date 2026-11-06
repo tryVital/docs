@@ -64,17 +64,17 @@
               {
                 "group": "User Management",
                 "pages": [
-                  "api-reference/user/create-user",
                   "api-reference/user/get-user",
                   "api-reference/user/resolve-user",
-                  "api-reference/user/patch-user",
-                  "api-reference/user/delete-user",
-                  "api-reference/user/undo-delete-user",
                   "api-reference/user/get-users",
-                  "api-reference/user/upsert-info",
                   "api-reference/user/get-info-latest",
+                  "api-reference/user/get-latest-insurance",
+                  "api-reference/user/create-user",
+                  "api-reference/user/undo-delete-user",
                   "api-reference/user/create-insurance-beta",
-                  "api-reference/user/get-latest-insurance"
+                  "api-reference/user/patch-user",
+                  "api-reference/user/upsert-info",
+                  "api-reference/user/delete-user"
                 ]
               },
               {
@@ -210,21 +210,21 @@
               {
                 "group": "Orders",
                 "pages": [
-                  "api-reference/lab-testing/create-order",
                   "api-reference/lab-testing/get-orders",
                   "api-reference/lab-testing/get-order",
-                  "api-reference/lab-testing/cancel-order",
                   "api-reference/lab-testing/requisition-pdf",
                   "api-reference/lab-testing/abn-pdf",
                   "api-reference/lab-testing/labels-pdf",
+                  "api-reference/lab-testing/order-collection-instructions-pdf",
+                  "api-reference/lab-testing/create-order",
+                  "api-reference/lab-testing/cancel-order",
                   "api-reference/lab-testing/create-unregistered-order",
                   "api-reference/lab-testing/register-order",
-                  "api-reference/lab-testing/patch-order",
                   "api-reference/lab-testing/import-order",
                   "api-reference/lab-testing/simulate-order",
-                  "api-reference/lab-testing/order-collection-instructions-pdf",
-                  "api-reference/lab-testing/update-order-draw-completed",
-                  "api-reference/lab-testing/resend-order-events"
+                  "api-reference/lab-testing/resend-order-events",
+                  "api-reference/lab-testing/patch-order",
+                  "api-reference/lab-testing/update-order-draw-completed"
                 ]
               },
               {
@@ -256,24 +256,24 @@
               {
                 "group": "Mobile Phlebotomy",
                 "pages": [
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
+                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment",
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-availability",
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-booking",
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-request",
                   "api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling",
-                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons",
-                  "api-reference/lab-testing/at-home-phlebotomy/get-appointment"
+                  "api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling"
                 ]
               },
               {
                 "group": "Patient Service Center (PSC)",
                 "pages": [
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons",
+                  "api-reference/lab-testing/psc-scheduling/get-psc-appointment",
                   "api-reference/lab-testing/psc-scheduling/appointment-psc-availability",
                   "api-reference/lab-testing/psc-scheduling/appointment-psc-booking",
                   "api-reference/lab-testing/psc-scheduling/appointment-psc-rescheduling",
-                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling",
-                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancellation-reasons",
-                  "api-reference/lab-testing/psc-scheduling/get-psc-appointment"
+                  "api-reference/lab-testing/psc-scheduling/appointment-psc-cancelling"
                 ]
               },
               {
@@ -285,13 +285,13 @@
                   "api-reference/lab-testing/lab-test-version-history",
                   "api-reference/lab-testing/biomarkers",
                   "api-reference/lab-testing/labs",
-                  "api-reference/lab-testing/post-test",
-                  "api-reference/lab-testing/patch-lab-test",
                   "api-reference/lab-testing/lab-test-markers",
+                  "api-reference/lab-testing/lab-test-collection-instructions",
+                  "api-reference/lab-testing/lab-test-collection-instructions-pdf",
+                  "api-reference/lab-testing/post-test",
                   "api-reference/lab-testing/order-set-marker",
                   "api-reference/lab-testing/estimate-order-set-pricing",
-                  "api-reference/lab-testing/lab-test-collection-instructions",
-                  "api-reference/lab-testing/lab-test-collection-instructions-pdf"
+                  "api-reference/lab-testing/patch-lab-test"
                 ]
               },
               {
@@ -309,26 +309,26 @@
                 "pages": [
                   "api-reference/lab-testing/unmatched-results/list-unmatched-results",
                   "api-reference/lab-testing/unmatched-results/get-unmatched-result",
+                  "api-reference/lab-testing/unmatched-results/list-unmatched-result-test-cases",
+                  "api-reference/lab-testing/unmatched-results/get-unmatched-result-test",
                   "api-reference/lab-testing/unmatched-results/accept-unmatched-result",
                   "api-reference/lab-testing/unmatched-results/resolve-unmatched-result",
-                  "api-reference/lab-testing/unmatched-results/list-unmatched-result-test-cases",
-                  "api-reference/lab-testing/unmatched-results/create-unmatched-result-test",
-                  "api-reference/lab-testing/unmatched-results/get-unmatched-result-test"
+                  "api-reference/lab-testing/unmatched-results/create-unmatched-result-test"
                 ]
               },
               {
                 "group": "Lab Report Parsing",
                 "pages": [
-                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job",
-                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job"
+                  "api-reference/lab-testing/lab-report-parsing/get-lab-report-parser-job",
+                  "api-reference/lab-testing/lab-report-parsing/post-lab-report-parser-job"
                 ]
               },
               {
                 "group": "Health Insurance",
                 "pages": [
                   "api-reference/lab-testing/insurance/search-diagnosis",
-                  "api-reference/lab-testing/insurance/validate-icd-codes",
                   "api-reference/lab-testing/insurance/search-payor-get",
+                  "api-reference/lab-testing/insurance/validate-icd-codes",
                   "api-reference/lab-testing/insurance/create-payor"
                 ]
               },
@@ -497,9 +497,9 @@
               {
                 "group": "Link",
                 "pages": [
+                  "api-reference/link/link-oauth-provider",
                   "api-reference/link/generate-link-token",
                   "api-reference/link/create-code",
-                  "api-reference/link/link-oauth-provider",
                   "api-reference/link/link-password-provider",
                   "api-reference/link/link-email-provider",
                   "api-reference/link/link-demo-provider",
@@ -1243,17 +1243,17 @@
               {
                 "group": "Junction API",
                 "pages": [
-                  "api-reference/sense/query-one",
                   "api-reference/sense/continuous-query/get-task-history",
-                  "api-reference/sense/continuous-query/get-result-table"
+                  "api-reference/sense/continuous-query/get-result-table",
+                  "api-reference/sense/query-one"
                 ]
               },
               {
                 "group": "Junction Management API",
                 "pages": [
+                  "api-reference/sense/continuous-query/list",
                   "api-reference/sense/continuous-query/create",
-                  "api-reference/sense/continuous-query/update",
-                  "api-reference/sense/continuous-query/list"
+                  "api-reference/sense/continuous-query/update"
                 ]
               }
             ]
@@ -1320,9 +1320,9 @@
               {
                 "group": "Members",
                 "pages": [
-                  "api-reference/org-management/connect/create-member",
                   "api-reference/org-management/connect/list-members",
                   "api-reference/org-management/connect/get-member",
+                  "api-reference/org-management/connect/create-member",
                   "api-reference/org-management/connect/resolve-member",
                   "api-reference/org-management/connect/update-member",
                   "api-reference/org-management/connect/delete-member"
@@ -1364,11 +1364,11 @@
                 "group": "Team",
                 "pages": [
                   "api-reference/org-management/team/list-teams",
-                  "api-reference/org-management/team/create-team",
                   "api-reference/org-management/team/get-team",
-                  "api-reference/org-management/team/delete-team",
+                  "api-reference/org-management/team/create-team",
+                  "api-reference/org-management/team/resolve-team",
                   "api-reference/org-management/team/update-team",
-                  "api-reference/org-management/team/resolve-team"
+                  "api-reference/org-management/team/delete-team"
                 ]
               },
               {
@@ -1390,8 +1390,8 @@
                 "pages": [
                   "api-reference/org-management/team-custom-credentials/get-team-custom-credentials",
                   "api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials",
-                  "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials",
-                  "api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials"
+                  "api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials",
+                  "api-reference/org-management/team-custom-credentials/delete-team-custom-credentials"
                 ]
               },
               {
@@ -1407,13 +1407,13 @@
                 "pages": [
                   "api-reference/org-management/team-webhook/list",
                   "api-reference/org-management/team-webhook/get",
-                  "api-reference/org-management/team-webhook/create",
-                  "api-reference/org-management/team-webhook/patch",
-                  "api-reference/org-management/team-webhook/delete",
                   "api-reference/org-management/team-webhook/get-headers",
-                  "api-reference/org-management/team-webhook/update-headers",
                   "api-reference/org-management/team-webhook/get-secret",
-                  "api-reference/org-management/team-webhook/rotate-secret"
+                  "api-reference/org-management/team-webhook/create",
+                  "api-reference/org-management/team-webhook/rotate-secret",
+                  "api-reference/org-management/team-webhook/patch",
+                  "api-reference/org-management/team-webhook/update-headers",
+                  "api-reference/org-management/team-webhook/delete"
                 ]
               },
               {

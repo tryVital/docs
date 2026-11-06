@@ -127,14 +127,20 @@ Orders use `client_bill` by default. Set `billing_type` to `commercial_insurance
 
 ### Diagnosis codes
 
+<Warning>
+Order creation checks only that diagnosis codes exist and are active. It does not check for conflicting code combinations. Call [Validate ICD Codes](/api-reference/lab-testing/insurance/validate-icd-codes) before [Create Order](/api-reference/lab-testing/create-order) to perform these additional checks.
+
+Passing validation does not guarantee that the order meets all other ordering requirements or that an insurer will cover the tests.
+</Warning>
+
 Commercial insurance orders require at least one valid diagnosis code. Use [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) to find supported codes.
 
-Before sending a create-order request that includes diagnosis codes:
+Before sending a [Create Order](/api-reference/lab-testing/create-order) request that includes diagnosis codes:
 
 1. Collect the complete set of codes for the order.
 2. Send the codes to [Validate ICD Codes](/api-reference/lab-testing/insurance/validate-icd-codes).
 3. Inspect `valid`, `errors`, `violations`, and `warnings`. Resolve errors and conflicts with the ordering clinician, then validate the revised list again.
-4. When `valid` is `true` and any warnings have been reviewed, send the same code list in the create-order request's `icd_codes` field.
+4. When `valid` is `true` and any warnings have been reviewed, send the same code list in the [Create Order](/api-reference/lab-testing/create-order) request's `icd_codes` field.
 
 Validate the codes together so the endpoint can check for conflicts between them:
 
@@ -198,7 +204,11 @@ Have the ordering clinician review the underlying diagnosis before changing the 
 </Accordion>
 <Accordion title="Conflicting code combinations">
 
-Code pairs matched by an `excludes1` rule appear in `violations` and make `valid` false. For example, validating `G93.32` and `R53.82` together returns:
+**Excludes1** is an ICD-10-CM coding instruction indicating that two diagnosis codes generally should not be reported together. An exception applies when the diagnoses represent unrelated conditions, which requires clinical or coding review.
+
+Junction flags combinations covered by these instructions in `violations` and returns `valid: false`. The validator only checks the codes and catalog rules. It cannot determine whether the unrelated-conditions exception applies.
+
+For example, validating `G93.32` and `R53.82` together returns:
 
 ```json
 {
@@ -215,12 +225,14 @@ Code pairs matched by an `excludes1` rule appear in `violations` and make `valid
 }
 ```
 
-Both codes can be individually active while their combination fails validation. Have the ordering clinician resolve the conflict, then validate the revised list.
+Both codes can be individually active while their combination fails validation. Have the ordering clinician or coder review the combination and determine whether it should be changed or an exception applies. If the code list changes, validate it again. A combination covered by an Excludes1 instruction will still be flagged even when a clinician determines that the conditions are unrelated.
 
 </Accordion>
 <Accordion title="Warnings without validation failure">
 
-Code pairs matched by an `excludes2` rule appear in `warnings`. Warnings alone do not make `valid` false. For example, validating `E28.2` and `K90.9` together can return:
+**Excludes2** is an ICD-10-CM coding instruction indicating that one diagnosis does not include the other condition. A patient can have both conditions, and both codes may be reported together when appropriate.
+
+Junction returns these combinations in `warnings` for review. They are not prohibited combinations, and warnings alone do not make `valid` false. For example, validating `E28.2` and `K90.9` together can return:
 
 ```json
 {
@@ -241,8 +253,6 @@ Review warnings with the ordering clinician before proceeding.
 
 </Accordion>
 </AccordionGroup>
-
-Order creation checks that submitted codes exist and are active, but does not run the conflict checks automatically. Validation does not guarantee that the order meets all other ordering requirements or that an insurer will cover the tests.
 
 ## Common errors
 
