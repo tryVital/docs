@@ -129,6 +129,121 @@ Orders use `client_bill` by default. Set `billing_type` to `commercial_insurance
 
 Commercial insurance orders require at least one valid diagnosis code. Use [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) to find supported codes.
 
+Before sending a create-order request that includes diagnosis codes:
+
+1. Collect the complete set of codes for the order.
+2. Send the codes to [Validate ICD Codes](/api-reference/lab-testing/insurance/validate-icd-codes).
+3. Inspect `valid`, `errors`, `violations`, and `warnings`. Resolve errors and conflicts with the ordering clinician, then validate the revised list again.
+4. When `valid` is `true` and any warnings have been reviewed, send the same code list in the create-order request's `icd_codes` field.
+
+Validate the codes together so the endpoint can check for conflicts between them:
+
+```bash
+curl --request POST \
+     --url 'https://api.us.junction.com/v3/insurance/validate_icd_codes' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
+     --data '{"codes": ["I10"]}'
+```
+
+A code set that passes validation returns:
+
+```json
+{
+  "valid": true,
+  "errors": [],
+  "violations": [],
+  "warnings": []
+}
+```
+
+The validation endpoint returns HTTP 200 even when the codes fail validation. An HTTP 200 alone is not enough to proceed with ordering.
+
+#### Validation errors and warnings
+
+The examples below illustrate validation results, not recommendations about which diagnoses to use.
+
+<AccordionGroup>
+<Accordion title="Unknown or inactive codes">
+
+Codes that are missing or inactive in Junction's catalog appear in `errors`. For example, validating `G93.3`, a parent category that requires a more specific code, returns:
+
+```json
+{
+  "valid": false,
+  "errors": ["Unknown or inactive codes: G93.3"],
+  "violations": [],
+  "warnings": []
+}
+```
+
+Have the ordering clinician select the appropriate complete code for the documented diagnosis, then validate the updated list.
+
+</Accordion>
+<Accordion title="Missing primary diagnosis">
+
+A set containing only secondary-only codes requires an underlying primary diagnosis. For example, validating `G63` alone returns:
+
+```json
+{
+  "valid": false,
+  "errors": ["Secondary-only codes require an underlying (primary) diagnosis: G63"],
+  "violations": [],
+  "warnings": []
+}
+```
+
+Have the ordering clinician review the underlying diagnosis before changing the code list.
+
+</Accordion>
+<Accordion title="Conflicting code combinations">
+
+Code pairs matched by an `excludes1` rule appear in `violations` and make `valid` false. For example, validating `G93.32` and `R53.82` together returns:
+
+```json
+{
+  "valid": false,
+  "errors": [],
+  "violations": [
+    {
+      "code": "G93.32",
+      "conflicts_with": "R53.82",
+      "type": "excludes1"
+    }
+  ],
+  "warnings": []
+}
+```
+
+Both codes can be individually active while their combination fails validation. Have the ordering clinician resolve the conflict, then validate the revised list.
+
+</Accordion>
+<Accordion title="Warnings without validation failure">
+
+Code pairs matched by an `excludes2` rule appear in `warnings`. Warnings alone do not make `valid` false. For example, validating `E28.2` and `K90.9` together can return:
+
+```json
+{
+  "valid": true,
+  "errors": [],
+  "violations": [],
+  "warnings": [
+    {
+      "code": "E28.2",
+      "overlaps_with": "K90.9",
+      "type": "excludes2"
+    }
+  ]
+}
+```
+
+Review warnings with the ordering clinician before proceeding.
+
+</Accordion>
+</AccordionGroup>
+
+Order creation checks that submitted codes exist and are active, but does not run the conflict checks automatically. Validation does not guarantee that the order meets all other ordering requirements or that an insurer will cover the tests.
+
 ## Common errors
 
 Junction rejects a commercial insurance order when:

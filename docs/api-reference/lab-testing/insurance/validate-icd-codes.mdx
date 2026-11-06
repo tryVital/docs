@@ -1,0 +1,43 @@
+---
+title: "Validate ICD Codes"
+description: "Check ICD-10-CM codes for unknown or inactive codes, missing primary diagnoses, and conflicting code combinations before ordering."
+openapi: "POST /v3/insurance/validate_icd_codes"
+---
+
+Validate a set of ICD-10-CM codes before creating an order. Authenticate with your team API key and provide the codes in the `codes` array.
+
+The endpoint returns HTTP 200 when validation completes, including when the codes fail validation. Inspect the response body before proceeding:
+
+| Field | Meaning |
+| --- | --- |
+| `valid` | `true` when there are no errors or violations. Warnings alone do not make the result invalid. |
+| `errors` | Messages identifying unknown or inactive codes, or secondary-only codes submitted without an underlying primary diagnosis. |
+| `violations` | Conflicting code pairs found in the catalog's `excludes1` rules. Each entry contains `code`, `conflicts_with`, and `type`. |
+| `warnings` | Code overlaps found in the catalog's `excludes2` rules. Each entry contains `code`, `overlaps_with`, and `type`. |
+
+Order creation checks that submitted codes exist and are active, but does not run these conflict checks. Call this endpoint separately to check code combinations. A valid response does not guarantee that the order meets all other ordering requirements or that an insurer will cover the tests.
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+     --url 'https://api.us.junction.com/v3/insurance/validate_icd_codes' \
+     --header 'Content-Type: application/json' \
+     --header 'x-vital-api-key: YOUR_API_KEY' \
+     --data '{"codes": ["G93.3"]}'
+```
+
+</RequestExample>
+
+<ResponseExample>
+
+```json "Unknown or inactive code"
+{
+  "valid": false,
+  "errors": ["Unknown or inactive codes: G93.3"],
+  "violations": [],
+  "warnings": []
+}
+```
+
+</ResponseExample>
