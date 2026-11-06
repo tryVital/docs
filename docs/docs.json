@@ -200,6 +200,12 @@
                 "pages": [
                   "lab/report-parsing/overview"
                 ]
+              },
+              {
+                "group": "AI Assistants",
+                "pages": [
+                  "lab/patient-connector/overview"
+                ]
               }
             ]
           },
