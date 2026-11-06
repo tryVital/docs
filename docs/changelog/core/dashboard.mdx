@@ -3,6 +3,20 @@ title: "Dashboard"
 description: "Changelog of Junction Dashboard updates including compendium search, lab account selection, and patient demographics improvements."
 ---
 
+### SMS reminders setting (Nov 2026)
+
+You can now turn patient SMS reminders on or off yourself, under **Team settings → General → SMS settings → SMS reminders**. Previously, Junction support had to enable them for you.
+
+The setting controls these reminders:
+
+- [Test kit collection reminders](/lab/workflow/communications#collection-reminders) for kits still with the patient
+- [Walk-in booking reminders](/lab/workflow/communications#appointment-reminders) after requisition creation
+- [Appointment reminders](/lab/workflow/communications#appointment-reminders) before appointments scheduled through Junction
+
+Reminders are sent only when **Patient SMS texts** is also enabled, and they include a Junction User Portal link. Patient opt-outs still apply. When reminders are off, the reminder templates stay visible in the Dashboard but can't be edited, and any custom copy is kept.
+
+Teams with Patient Experience enabled have SMS reminders turned on by default. If your team had already saved a reminder setting, it is unchanged.
+
 ### Cross-Compendium Marker Search (Mar 2026)
 
 The Dashboard now includes a cross-compendium search tool that lets you search for markers across multiple labs and convert lab tests from one provider to another.
