@@ -6,13 +6,14 @@ description: "Changelog of Junction Lab Testing API updates including custom req
 
 ### Improved diagnosis code search (Nov 2026)
 
-[Get search diagnosis](/api-reference/lab-testing/insurance/search-diagnosis) (`GET /v3/insurance/search/diagnosis`) now uses improved search across ICD-10-CM codes:
+[Get search diagnosis](/api-reference/lab-testing/insurance/search-diagnosis) (`GET /v3/insurance/search/diagnosis`) now finds ICD-10-CM codes using the terms clinicians actually search for, not only the official code descriptions:
 
-- Clinical terms, synonyms and common abbreviations now find codes whose official descriptions use different wording. For example, `hyperthyroidism` returns E05.90, `Graves' disease` returns E05.00, and `history of splenectomy` returns Z90.81.
-- Results are ranked by relevance and tolerate minor typos. When relevance is equal, codes that are ordered more often rank first.
+- Clinical terms, synonyms and common abbreviations now match codes whose descriptions use different wording. For example, `hyperthyroidism` returns the E05 thyrotoxicosis codes, `Graves' disease` returns E05.00, `history of splenectomy` returns Z90.81, and `afib` returns the I48 atrial fibrillation codes.
+- Minor typos are tolerated. For example, `hyperthyrodism` still returns the E05 codes.
+- Results are ranked by relevance. Among similarly relevant results, codes that are ordered more often rank first.
 - Queries shaped like an ICD-10 code, with or without the dot (for example `E05.9` or `e0590`), match codes by prefix.
 
-The response format is unchanged and returns up to 50 active codes.
+The response format is unchanged and returns up to 50 active codes. Codes are updated from the CDC's annual ICD-10-CM release.
 
 ### Lab account `owner` and order `lab_account_id` (Oct 2026)
 
