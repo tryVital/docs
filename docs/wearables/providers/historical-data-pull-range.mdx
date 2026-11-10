@@ -26,3 +26,28 @@ You can specify a number of days to backfill that uniformly applies to all resou
 The Team Data Pull Preferences you specified are _advisory_. There are scenarios in which Junction systems
 may not adhere strictly to your stated preferences.
 </Info>
+
+
+### Apple HealthKit (iOS SDK)
+
+The iOS SDK defaults to **90 days** of historical data. You can change this using
+`numberOfDaysToBackFill` when configuring `VitalHealthKitClient`. The SDK caps this setting at
+**1,095 days** (3 years).
+
+```swift
+VitalHealthKitClient.configure(
+  .init(numberOfDaysToBackFill: 180)
+)
+```
+
+For each resource, the SDK uses the first available value in this order:
+
+1. The resource-specific Team Data Pull Preference.
+2. The provider-wide Team Data Pull Preference.
+3. The SDK's `numberOfDaysToBackFill` setting (90 days by default).
+
+The historical range is anchored to the SDK's initial sync state. The SDK retains that state, so changing
+configuration or team pull preferences does not automatically restart or extend an existing historical backfill.
+[Data ingestion bounds](/wearables/providers/data-ingestion-bounds) and the user's
+[HealthKit authorization window](/wearables/guides/apple-healthkit#limited-historical-access) can further restrict
+the data available to sync.
