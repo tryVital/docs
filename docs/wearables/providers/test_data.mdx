@@ -7,7 +7,7 @@ description: "Using demo users to build and test your Junction integration."
 This feature is currently available for the following providers:
 
 - Apple HealthKit
-- Fitbit
+- WHOOP (`whoop_v2`)
 - Oura
 - Freestyle Libre
 
@@ -41,6 +41,8 @@ After creating the user, the `Users` page of your dashboard will look like this:
 
 Now you can create a demo connection for the Junction user you just created, in this case `150db84c-537c-4cad-a6e9-24dc589d7fa2`. You can directly hit the [API endpoint](/api-reference/link/link-demo-provider) or use one of our client libraries, as shown below:
 
+Use an SDK version that includes `whoop_v2` in `DemoProviders`, or use the HTTP request below.
+
 <CodeGroup>
 
 ```bash Creating a demo connection
@@ -49,7 +51,7 @@ curl --request POST \
      --header 'Accept: application/json' \
      --header 'Content-Type: application/json' \
      --header 'x-vital-api-key: <your_api_key>' \
-     --data '{"user_id": "<user_id>", "provider": "<provider>"}'
+     --data '{"user_id": "<user_id>", "provider": "whoop_v2"}'
 ```
 
 ```typescript TypeScript
@@ -62,7 +64,7 @@ const client = new JunctionClient({
 
 const data = await client.link.connectDemoProvider({
     userId: "<user_id>",
-    provider: "fitbit",
+    provider: "whoop_v2",
 });
 ```
 
@@ -77,7 +79,7 @@ client = Junction(
 
 data = client.link.connect_demo_provider(
     user_id="<user_id>",
-    provider=DemoProviders.FITBIT,
+    provider=DemoProviders.WHOOP_V2,
 )
 ```
 
@@ -95,7 +97,7 @@ Junction client = Junction.builder()
 var data = client.link().connectDemoProvider(
     DemoConnectionCreationPayload.builder()
         .userId("<user_id>")
-        .provider(DemoProviders.FITBIT)
+        .provider(DemoProviders.WHOOP_V_2)
         .build()
 );
 ```
@@ -116,7 +118,7 @@ c := client.NewClient(
 
 response, err := c.Link.ConnectDemoProvider(context.TODO(), &junction.DemoConnectionCreationPayload{
     UserId:   "<user_id>",
-    Provider: junction.DemoProvidersFitbit,
+    Provider: junction.DemoProvidersWhoopV2,
 })
 if err != nil {
     return err
@@ -126,9 +128,9 @@ fmt.Printf("Received data %s\n", response)
 
 </CodeGroup>
 
-After the demo connection is created, a Fitbit logo will appear beside your user.
+After the demo connection is created, a WHOOP connection will appear beside your user.
 
-<img src="/img/test_data_dashboard_after_connection.png" width={"100%"} />
+WHOOP demo connections provide synthetic workout, sleep, recovery, and activity summaries. Fitbit is no longer available for new demo connections.
 
 From here, everything works exactly the same as if you connected a real device. This means you will receive the following webhook updates:
 
