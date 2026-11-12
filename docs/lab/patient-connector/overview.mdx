@@ -1,0 +1,194 @@
+---
+title: "Lab Testing Connector for AI Assistants"
+description: "Connect your clinic's Junction lab testing connector to Claude or ChatGPT to order lab tests, book a visit and read your results in a conversation."
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+The lab testing connector lets you order lab tests from your clinic, book a visit to a patient service center and read your results, all by chatting with your AI assistant.
+
+With the connector, you can:
+
+- **Find the right test**: see the panels your clinic offers, what each one measures and its price.
+- **Order and pay**: confirm your details and pay on a secure checkout page.
+- **Book your visit**: find appointment times at patient service centers near you, and book, move or cancel your appointment.
+- **Track your order**: see where your order stands and what to do next.
+- **Read your results**: get your results marker by marker in plain language, and download the lab's PDF report.
+
+Access is optional and secure, and you can disconnect at any time.
+
+<Info>
+  Clinics: share this page with your patients, together with your clinic's connector URL.
+</Info>
+
+## Getting started
+
+### Before you start
+
+- **Your clinic's connector URL.** Your clinic gives you this link. It's unique to your clinic and looks like `https://<your-clinic-id>.mcp.us.junction.com/`.
+- **An AI assistant that supports custom connectors**, such as Claude or ChatGPT. Custom connectors depend on your plan and workspace settings.
+- **A US address.** Lab testing is available only in the US, at US patient service centers.
+
+### Connect
+
+<Tabs>
+  <Tab title="Claude">
+    1. In Claude, open **Settings → Connectors**.
+    2. Click **Add custom connector**.
+    3. Name it after your clinic and paste your clinic's connector URL.
+    4. Click **Connect** and sign in with your clinic's account.
+    5. Return to Claude. The connector is now active in your conversations.
+  </Tab>
+  <Tab title="ChatGPT">
+    1. In ChatGPT, open **Settings → Apps & Connectors → Advanced settings** and turn on **Developer mode**.
+    2. Back in **Apps & Connectors**, click **Create**.
+    3. Name it after your clinic, paste your clinic's connector URL and set authentication to **OAuth**.
+    4. Sign in with your clinic's account when prompted.
+  </Tab>
+</Tabs>
+
+Once you're connected, start a new conversation and ask "What can you help me with for lab testing?"
+
+## How sign-in works
+
+The connector uses OAuth 2.0, so you never share your password with your AI assistant.
+
+1. When you first connect, you're sent to your clinic's sign-in page.
+2. You sign in there, and your AI assistant is given access to your lab testing account only.
+3. Your assistant keeps you signed in. If your session expires, you'll be asked to sign in again.
+
+## What you can do
+
+### Find the right test
+
+Ask about the panels your clinic offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. Tax is added at checkout.
+
+**Try asking:**
+
+- "What lab tests can I order?"
+- "Which test checks my cholesterol?"
+- "How much is the thyroid panel in California?"
+
+### Order and pay
+
+Your assistant reads back your details and the panel's price for you to confirm, then gives you a link to a secure Stripe checkout page. You pay on that page, so your card details are never shared with your assistant.
+
+**Try asking:**
+
+- "I'd like to order the diabetes panel."
+- "Can you check the details you have for me?"
+
+### Book your visit
+
+Your assistant finds appointment times at patient service centers near your zip code. You can pick a time before you pay, so it's held for you, or book after paying. You can also walk in with your requisition form.
+
+**Try asking:**
+
+- "What's the earliest appointment near 90210?"
+- "Can I move my appointment to next week?"
+- "Send me my requisition form."
+
+### Track your order
+
+Your assistant shows where each order stands and what happens next, from your visit to your results.
+
+**Try asking:**
+
+- "Has my payment gone through?"
+- "Where's my order?"
+- "When will my results be ready?"
+
+### Read your results
+
+When your results are in, your assistant explains each marker in plain language, shows which ones are out of range and shares the lab's PDF report. Results are for your information and aren't a diagnosis; review them with your clinician.
+
+**Try asking:**
+
+- "Are my results ready?"
+- "Which of my results are out of range?"
+- "What does my HbA1c result mean?"
+
+## Data privacy and security
+
+### What your assistant can access
+
+When you ask, your assistant can see:
+
+- the details on file for you: name, date of birth, sex, phone number, email and address
+- your lab orders, appointments and their status
+- your lab results and documents
+
+### What your assistant can't access
+
+- your card or payment details, which stay on the Stripe checkout page
+- other patients' information
+- anything outside your lab testing account with your clinic
+
+### Security measures
+
+- OAuth 2.0 with PKCE for sign-in
+- HTTPS for all data in transit
+- access limited to your own account
+- links to documents such as your results PDF expire after 15 minutes
+
+### Your control
+
+- Disconnect the connector from your AI assistant's settings at any time.
+- Your assistant asks you to confirm before it pays for, books or cancels anything.
+- Ask your assistant to correct your details, or contact your clinic to delete your information.
+
+## Troubleshooting
+
+### You're asked to sign in again
+
+**Cause:** your session has expired.
+
+**Fix:** in your AI assistant's connector settings, reconnect the connector and sign in again.
+
+### Your assistant can't find any tests
+
+**Cause:** your assistant needs your state to show prices.
+
+**Fix:** tell it which state you live in, or share your address.
+
+### No appointment times are available
+
+**Cause:** there are no open slots near the zip code or on the dates searched.
+
+**Fix:** try a nearby zip code or a later date, or walk in with your requisition form.
+
+### Your results aren't showing
+
+**Cause:** the lab hasn't sent them yet.
+
+**Fix:** ask your assistant where your order stands. It tells you when results are expected.
+
+### A document link doesn't open
+
+**Cause:** document links expire after 15 minutes.
+
+**Fix:** ask your assistant for a new link and open it straight away.
+
+## Best practices
+
+- **Be specific.** "Which test checks my cholesterol and how much is it?" gets a better answer than "What should I test?"
+- **Confirm your details.** Check your name, date of birth and address before you pay, so your order reaches the lab correctly.
+- **Follow up with your clinician.** Your assistant explains your results but doesn't diagnose. Review anything out of range with your clinician.
+
+## Getting help
+
+- **Orders, payments and results:** contact your clinic.
+- **Connecting your AI assistant:** see your assistant's help center for custom connectors.
+
+## Technical specifications
+
+| | |
+| --- | --- |
+| Protocol | [Model Context Protocol](https://modelcontextprotocol.io) (MCP) |
+| Transport | Streamable HTTP |
+| Authentication | OAuth 2.0 authorization code with PKCE, using Client ID Metadata Documents |
+| Protected resource metadata | `/.well-known/oauth-protected-resource` (RFC 9728) |
+| Scopes | `mcp:read`, `mcp:write` |
+| Regions | US |
