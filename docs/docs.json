@@ -212,6 +212,7 @@
                 "pages": [
                   "api-reference/lab-testing/get-orders",
                   "api-reference/lab-testing/get-order",
+                  "api-reference/lab-testing/get-order-tracking",
                   "api-reference/lab-testing/requisition-pdf",
                   "api-reference/lab-testing/abn-pdf",
                   "api-reference/lab-testing/labels-pdf",
@@ -349,7 +350,8 @@
                 "group": "Orders",
                 "pages": [
                   "event-catalog/labtest.order.created",
-                  "event-catalog/labtest.order.updated"
+                  "event-catalog/labtest.order.updated",
+                  "event-catalog/labtest.order_tracking.updated"
                 ]
               },
               {
