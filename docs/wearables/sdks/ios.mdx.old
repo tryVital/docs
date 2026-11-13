@@ -79,7 +79,7 @@ By default, when you create a `userId`, we call `VitalClient.setUserId` internal
 
 ### 2. Connected Source
 
-A connected source is a link between a provider (e.g. Omron, Strava, Fitbit, Garmin) and your user. When you post information, it is expected that a connected source exists for that user and the source of information you are using. If it doesn't exist, the request will fail.
+A connected source is a link between a provider (e.g. Omron, Strava, Garmin) and your user. When you post information, it is expected that a connected source exists for that user and the source of information you are using. If it doesn't exist, the request will fail.
 
 Example: You want to post Ben's Omron data to Vital. Two things need to exist: 1) Ben is a user in Vital 2) A connected source linking Ben's user to Omron.
 

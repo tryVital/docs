@@ -1,6 +1,6 @@
 ---
 title: "Junction Calculated Metrics"
-description: "Identify wearable summary fields that Junction calculates."
+description: "See which wearable summary fields Junction calculates from provider data, with sources and limitations for activity, sleep, workout, and body summaries."
 ---
 
 Junction sometimes has to calculate some summary fields from related provider data. The tables below identify those fields by provider and explain the inputs and limitations that can affect their interpretation.
@@ -13,8 +13,6 @@ Junction sometimes has to calculate some summary fields from related provider da
 | WHOOP | `daily_movement`, `distance` | Sum of distance from walking and running workouts, not total movement throughout the day. |
 | WHOOP | `calories_active` | Sum of calories across workouts for the day. |
 | WHOOP | `medium`, `high` | Derived from time in workout heart-rate zones. |
-| Fitbit | `calories_active` | Calculated from Fitbit's total and basal calorie values. |
-| Fitbit | `heart_rate.min_bpm`, `heart_rate.avg_bpm`, `heart_rate.max_bpm` | Calculated from available Fitbit intraday heart-rate samples. Availability depends on Fitbit intraday access. |
 | Garmin | `calories_total` | Combines Garmin's active and basal calorie values. |
 | Google Fit | `calories_total` | Combines Google Fit's expended and basal calorie values. |
 | Apple HealthKit, Android Health Connect, and Samsung Health | `calories_total` | Combines active and basal energy submitted through the SDK. |
@@ -30,7 +28,6 @@ The legacy `total`, `awake`, `light`, `rem`, and `deep` fields return `0` when t
 | Provider | Fields | Source and limitation |
 | --- | --- | --- |
 | WHOOP | `total` | Sum of the light, deep, and REM stages reported by WHOOP. |
-| Fitbit | `hr_lowest`, `hr_average`, `average_hrv` | Calculated from heart-rate and HRV samples within the sleep session. |
 | Garmin | `hr_lowest`, `hr_average`, `hr_dip`, `efficiency`, `type` | Calculated from the sleep interval, stages, and available heart-rate samples. |
 | Google Health | `efficiency`, `hr_lowest`, `hr_average`, `average_hrv`, `respiratory_rate` | Calculated from the sleep session and matching samples from the same source device. Sample-derived fields remain unavailable when Junction cannot identify an exact source device. |
 | Google Fit | `total`, `awake`, `light`, `rem`, `deep`, `efficiency`, `type` | Assembled from Google Fit sleep segments and the session interval. |
