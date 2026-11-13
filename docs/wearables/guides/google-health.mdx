@@ -22,7 +22,7 @@ You do not need to create a Google Cloud project, configure custom credentials, 
 ## Migrate from Fitbit
 
 <Warning>
-Google will turn down the legacy Fitbit Web API in **September 2026**, after which it will no longer synchronize Fitbit user data. This retirement applies to the legacy API, not Fitbit devices. Migrate existing `fitbit` connections to `google_health` before the shutdown to avoid an interruption. See [Google's retirement notice](https://developers.google.com/health/about) and [migration guide](https://developers.google.com/health/migration).
+The legacy Fitbit integration is retired and no longer synchronizes data. This retirement applies to the legacy integration, not Fitbit devices. Connect new users and reconnect existing `fitbit` users through `google_health`. See [Google's retirement notice](https://developers.google.com/health/about) and [migration guide](https://developers.google.com/health/migration).
 </Warning>
 
 Google Health uses Google OAuth 2.0, so every existing Fitbit user must authorize a new `google_health` connection. Fitbit access and refresh tokens cannot be transferred, and [Link Bulk Import](/api-reference/link/bulk-import) cannot convert a Fitbit grant into a Google Health grant.
@@ -31,7 +31,7 @@ Google Health uses Google OAuth 2.0, so every existing Fitbit user must authoriz
 
 <Step title="Send new connections to Google Health">
 
-Offer `google_health` instead of `fitbit` to new users immediately.
+Offer `google_health` instead of `fitbit` to new users.
 
 </Step>
 
@@ -43,7 +43,7 @@ Reconnect the user to `google_health` with the same Junction user ID, using the 
 
 <Step title="Verify the new connection">
 
-Keep the existing Fitbit connection active until you receive the Google Health [connection-created event](/event-catalog/provider.connection.created), its historical pull completes, representative summary and timeseries resources contain data, and a new update webhook arrives.
+Verify the Google Health [connection-created event](/event-catalog/provider.connection.created), completion of its historical pull, data in representative summary and timeseries resources, and delivery of a new update webhook.
 
 </Step>
 
@@ -56,7 +56,7 @@ Update provider filters, priorities, and downstream handling to use `google_heal
 </Steps>
 
 <Warning>
-During a dual-connection window, the same underlying Fitbit observations can arrive under both `fitbit` and `google_health`. Junction does not automatically deduplicate data across providers. Keep the overlap short and filter or deduplicate using provider filters and each resource's `source` field in downstream processing.
+A Google Health historical pull can overlap with data previously ingested through `fitbit`. Junction does not automatically deduplicate data across providers. Filter or deduplicate overlapping records using provider filters and each resource's `source` field in downstream processing.
 </Warning>
 
 ## Data parity with Fitbit
