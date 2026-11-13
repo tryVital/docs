@@ -13,7 +13,7 @@ There are two broad resource categories provided by Junction:
 There is no relation in resource availability between these two categories. Some providers do offer both,
 while some providers offer only one category. For example:
 
-* Fitbit provides daily activity summaries, as well as **some** high-frequency activity timeseries data.
+* Google Health provides daily activity summaries and activity timeseries data, including steps and distance.
 * Oura provides only a daily activity summary, without any complementary high-frequency activity timeseries data.
 
 There is also no strict relation between a field in a _Summary_ type and a _Timeseries_ type.
@@ -77,15 +77,15 @@ Peak rate                  | Example Scenario
 -------------------------- | ------------------------------
 1 sample every 3 seconds   | Apple Watch workouts
 1 sample every 15 seconds  | Garmin
-1 sample every 1-15 minutes | Apple Watch, Fitbit
+1 sample every 1-15 minutes | Apple Watch
 
 
 Resources that fall into this category:
 
 Resource | Events | Notable Providers
 ----------------- | ------------------------------ | --------------
-`heartrate`      | `daily.data.heartrate.*`      | Apple, Fitbit, Garmin
-`calories_active` | `daily.data.calories_active.*` | Apple, Fitbit, Garmin
+`heartrate`      | `daily.data.heartrate.*`      | Apple, Google Health, Garmin
+`calories_active` | `daily.data.calories_active.*` | Apple, Google Health, Garmin
 
 
 ### High Frequency Timeseries
@@ -94,7 +94,6 @@ Minute-level peak sampling rate; typically 100s samples per day.
 
 Peak rate                   | Example Scenario
 --------------------------- | ---------------------------------------
-1 sample every 1 minute     | Fitbit Intraday timeseries data
 1 sample every 15 minutes   | Garmin all-day activity timeseries data ("epochs")
 
 
@@ -102,14 +101,14 @@ Resources that fall into this category:
 
 Resource | Events | Notable Providers
 ----------------- | --------------------------------- | --------------
-`steps`            | `daily.data.steps.*`             | Apple, Fitbit, Garmin
+`steps`            | `daily.data.steps.*`             | Apple, Google Health, Garmin
 `calories_basal`   | `daily.data.calories_basal.*`    | Apple
-`distance`         | `daily.data.distance.*`          | Apple, Fitbit, Garmin
+`distance`         | `daily.data.distance.*`          | Apple, Google Health, Garmin
 `glucose`          | `daily.data.glucose.*`           | LibreView, Dexcom
 `stress_level`     | `daily.data.stress_level.*`      | Garmin
-`hrv`              | `daily.data.hrv.*`               | Garmin, Fitbit
-`respiratory_rate` | `daily.data.respiratory_rate.*`  | Garmin, Fitbit
-`blood_oxygen`     | `daily.data.blood_oxygen.*`  | Fitbit
+`hrv`              | `daily.data.hrv.*`               | Garmin, Google Health
+`respiratory_rate` | `daily.data.respiratory_rate.*`  | Garmin, Google Health
+`blood_oxygen`     | `daily.data.blood_oxygen.*`  | Google Health
 `daylight_exposure`| `daily.data.daylight_exposure.*` | Apple
 `stand_duration`   | `daily.data.stand_duration.*`    | Apple
 
@@ -272,7 +271,7 @@ Providers marked with `*` mean that Junction calculates the field's value. In so
 
 <Warning>
 
-Even if a field is listed for a provider, it doesn't mean it will always contain data. For example, Fitbit is capable of generating HRV data. However, HRV data is only available for specific high-end devices. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
+Even if a field is listed for a provider, it doesn't mean it will always contain data. For example, HRV availability from Fitbit devices through Google Health depends on the device capabilities. Another common scenario is Apple HealthKit data. If the user doesn't give permission to a particular field, it won't be available. **Be mindful of these situations and similar ones**.
 
 </Warning>
 
