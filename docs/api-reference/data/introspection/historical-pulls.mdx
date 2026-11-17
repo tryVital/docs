@@ -12,6 +12,33 @@ Diagnose user historical data unavailability through the User Resources Introspe
 This API offers detailed insights into all provider connections and collected historical resources of all users in your team,
 empowering you to perform an initial diagnosis of any user connection issue with ease.
 
+## Completed historical range
+
+Each resource under `data[].provider[provider].pulled[resource]` includes:
+
+| Field | Meaning |
+| --- | --- |
+| `completed_range_start` | Earliest start date among successfully completed chunks, as `YYYY-MM-DD`. |
+| `completed_range_end` | Latest end date among successfully completed chunks, as `YYYY-MM-DD`. |
+
+Both fields are `null` before any known chunk completion or when chunk progress
+is unavailable, including Garmin and indirectly fetched workout streams.
+The final successful chunk also contributes to these bounds.
+
+The Dashboard displays these fields in the **Range Completed** column. They
+describe the dates processed so far, whereas `range_start` and `range_end`
+describe the requested historical interval. A completed chunk can contain no data.
+Permanently failed chunks may leave gaps within the completed bounds.
+
+The existing `status` and `days_with_data` fields are unchanged. `days_with_data`
+counts dates represented in processed data; it is not a count of completed chunks
+or proof that every date in the completed range has data.
+
+[Historical Pull Progress webhooks](/event-catalog/historical-pull-progress)
+report the dates of each completed non-final chunk using
+`completed_chunk_start_date` and `completed_chunk_end_date`. The tracker aggregates
+those dates, including the final chunk, into the two bounds above.
+
 <Warning>
 Please note that `user_limit` is an upper bound and the endpoint can return data for fewer users.
 This would be the case if any of the top selected users had no available resource information.

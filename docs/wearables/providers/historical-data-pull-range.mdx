@@ -12,6 +12,23 @@ can be estimated by `[now - days_to_pull, now]`.
 
 <HistoricalPullLimitTable />
 
+### Recent history first
+
+Backend historical pulls prioritize chunks covering the latest 30 days across
+resources before moving on to older history. This changes which data becomes
+available first, not the total historical range requested.
+
+Chunks normally cover up to 30 days. Smaller provider-specific limits remain in
+effect, and Withings retains its existing chunk sizes. Provider dependencies and
+date boundaries can also affect chunk sizes and resource order. This scheduling
+applies to backend pulls, not Apple HealthKit or Health Connect SDK syncs.
+
+For example, an Oura connection with 180 days of requested history can make recent
+sleep and activity data available before the older months finish loading. Use
+[progress webhooks](/event-catalog/historical-pull-progress) to fetch each completed
+chunk, or inspect the completed bounds through the
+[Historical Pulls API](/api-reference/data/introspection/historical-pulls).
+
 
 ### Customizing historical data pull range
 

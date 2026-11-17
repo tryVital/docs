@@ -680,6 +680,12 @@
             "icon": "envelope",
             "groups": [
               {
+                "group": "Historical Progress",
+                "pages": [
+                  "event-catalog/historical-pull-progress"
+                ]
+              },
+              {
                 "group": "Connection & Devices",
                 "pages": [
                   "event-catalog/provider.connection.created",

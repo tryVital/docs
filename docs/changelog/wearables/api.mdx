@@ -5,6 +5,20 @@ description: "Changelog of Junction Wearables API and Junction Sense."
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
+### Historical backfill progress (upcoming)
+
+- New [`historical.data.{RESOURCE}.in_progress` webhooks](/event-catalog/historical-pull-progress)
+  notify you when a non-final historical chunk has finished ingestion, so you can
+  fetch that data before the full backfill completes.
+- The [Historical Pulls API](/api-reference/data/introspection/historical-pulls)
+  adds nullable `completed_range_start` and `completed_range_end` fields, shown as
+  **Range Completed** in the Dashboard.
+- Backend pulls [prioritize the latest 30 days](/wearables/providers/historical-data-pull-range#recent-history-first)
+  across resources, preserving smaller provider limits and Withings chunk sizes.
+
+Existing historical completion events remain unchanged. See the progress event
+documentation for provider and SDK limitations.
+
 ### Removed deprecated endpoints and fields (September 2026)
 
 On 22 September 2026, after their deprecation cycles ended on 14 September 2026, we removed:

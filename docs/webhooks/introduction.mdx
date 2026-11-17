@@ -52,7 +52,24 @@ You can inspect the status of historical data backfill jobs of each individual u
 [Junction API](/api-reference/data/introspection/historical-pulls).
 </Note>
 
-Once the historical data backfill job of a specific [resource](/wearables/providers/resources) has **fully** completed, Junction sends a **Historical Pull Completion** event for the resource:
+### Historical pull progress
+
+For supported backend providers, Junction [prioritizes recent history](/wearables/providers/historical-data-pull-range#recent-history-first)
+so you can use recent data while older history is still loading.
+
+After a non-final chunk finishes ingestion, Junction sends
+`historical.data.{RESOURCE}.in_progress`. Use its `completed_chunk_start_date`
+and `completed_chunk_end_date` to fetch that chunk through the Data Access API.
+The `history_start_date` and `history_end_date` fields describe the full requested
+interval for the resource; `historical_pull_id` groups progress events from the same run.
+
+See [Historical Pull Progress](/event-catalog/historical-pull-progress) for the
+payload, an Oura example, and supported sync types. The final chunk sends the
+existing completion event instead, so a one-chunk backfill has no progress event.
+
+### Historical pull completion
+
+Once the historical data backfill job of a specific [resource](/wearables/providers/resources) completes, Junction sends a **Historical Pull Completion** event for the resource:
 
 <AccordionGroup>
 
