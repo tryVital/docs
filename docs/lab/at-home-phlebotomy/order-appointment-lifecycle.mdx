@@ -3,8 +3,6 @@ title: "Order and Appointment Lifecycle"
 description: "Reference for all order and appointment lifecycle statuses in the mobile phlebotomy flow, from order creation through results delivery."
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
-
 **Mobile Phlebotomy** orders are composed of two different lifecycles, the **Order** lifecycle and
 the **Appointment** lifecycle, detailed in the following sections.
 
@@ -85,7 +83,15 @@ and returned when using the [GET Appointment endpoint](/api-reference/lab-testin
 
 ## Scheduling appointments before a requisition has been created
 
-<FeatureBeta />
+<Note>
+  This feature is **off by default**. You can turn it on or off for your Team in the Junction Dashboard under
+  **Team settings → General → Appointments without requisition**, or via the [PATCH Update Team endpoint](https://docs.junction.com/api-reference/org-management/team/update-team).
+
+  Before enabling it, make sure your system handles the `reserved` appointment status and Junction's
+  [auto-cancellation](https://docs.junction.com/lab/at-home-phlebotomy/order-appointment-lifecycle#auto-cancellation-of-appointments-without-requisition)
+  of appointments whose requisition isn't created within the established timeframes. If disabled, new appointment bookings
+  for orders without a requisition will be rejected.
+</Note>
 
 When this feature is enabled on your Team, you can create a Mobile Phlebotomy appointment even before the requisition has been created for
 the corresponding Order (i.e., reaching the `requisition_created` status).
