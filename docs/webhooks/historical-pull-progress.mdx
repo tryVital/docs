@@ -1,0 +1,80 @@
+---
+title: "Historical Pull Progress"
+description: "Use historical.data.*.in_progress to fetch completed historical chunks before the full backfill finishes."
+---
+
+Junction sends `historical.data.{RESOURCE}.in_progress` after a historical chunk
+finishes ingestion for a [resource](/wearables/providers/resources). For example,
+`historical.data.sleep.in_progress` reports a completed sleep chunk.
+
+Use this notification to fetch the completed dates through the Data Access API
+while older history is still loading. The event contains dates and identifiers,
+not the resource's data records.
+
+## When events are sent
+
+- A successfully processed non-final chunk can emit a progress event, including
+  when the provider returns no data for those dates.
+- The final chunk uses the existing `historical.data.{RESOURCE}.created`
+  completion event instead. A backfill consisting of one chunk has no progress event.
+- A failed chunk does not emit a progress event.
+
+Progress events apply to supported backend historical pulls. Garmin, Apple HealthKit
+and Health Connect SDK syncs, and workout streams fetched through follow-up jobs
+do not report chunk progress through this event.
+
+The `device` resource does not emit historical progress or completion events.
+Device notifications use `provider.device.created` and `provider.device.updated`.
+
+## Payload
+
+The event uses the [standard webhook envelope](/webhooks/event-structure).
+The following fields are inside `data`:
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `user_id` | UUID | The Junction user whose history is being fetched. |
+| `provider` | string | The provider slug, such as `oura`. |
+| `historical_pull_id` | UUID | Identifies the historical pull run. Use it to group progress events from the same run across resources. |
+| `completed_chunk_start_date` | date | Inclusive first date of the chunk that just completed. |
+| `completed_chunk_end_date` | date | Inclusive last date of the chunk that just completed. |
+| `history_start_date` | date | First date of the historical interval requested for the resource. |
+| `history_end_date` | date | Last date of the historical interval requested for the resource. |
+
+Dates use `YYYY-MM-DD`. The completed chunk dates describe one chunk, not all
+history completed so far. Completion means the chunk was processed; it does not
+mean the provider had records for every date in that chunk.
+
+```json Oura sleep progress
+{
+  "event_type": "historical.data.sleep.in_progress",
+  "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+  "client_user_id": "a9a75457-8bbf-49a4-a609-751b0d7a99fd",
+  "team_id": "6b74423d-0504-4470-9afb-477252ccf67a",
+  "data": {
+    "user_id": "fac593ed-f371-4aea-9210-9332f1b19bec",
+    "provider": "oura",
+    "historical_pull_id": "ce0753db-6b70-4ef5-a181-eebea6cb635a",
+    "completed_chunk_start_date": "2026-10-15",
+    "completed_chunk_end_date": "2026-11-13",
+    "history_start_date": "2026-08-01",
+    "history_end_date": "2026-11-13"
+  }
+}
+```
+
+For this event, query the [Sleep API](/api-reference/data/sleep/get-summary) for
+the user and `oura` provider, using October 15 through November 13 as the date range.
+You do not need to wait for the older history to finish.
+
+Subscribe to the relevant `historical.data.{RESOURCE}.in_progress` event types
+in your webhook endpoint configuration. Keep your existing
+`historical.data.{RESOURCE}.created` subscriptions to receive the final notification.
+The existing completion event and its `start_date` / `end_date` fields are unchanged.
+
+## Progress in the tracker
+
+The [Historical Pulls API](/api-reference/data/introspection/historical-pulls)
+and the Dashboard's **Range Completed** column aggregate completed chunk dates.
+They show the earliest start and latest end reported so far, rather than a list
+of individual chunks. Permanently failed chunks may leave gaps within these bounds.

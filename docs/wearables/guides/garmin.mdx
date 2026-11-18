@@ -20,6 +20,10 @@ However, if you query Junction API immediately, you would observe **no historica
 The Historical Pull Completion event for Garmin connections does not indicate availability of historical data through the Junction API.
 </Warning>
 
+Garmin does not emit [Historical Pull Progress events](/webhooks/historical-pull-progress).
+Its `completed_range_start` and `completed_range_end` tracker fields remain `null`.
+Use the incremental Data Events below to receive the historical data as it arrives.
+
 </Step>
 
 <Step title="The Incremental Data stage">
