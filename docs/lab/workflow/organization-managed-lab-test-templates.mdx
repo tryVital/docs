@@ -1,0 +1,73 @@
+---
+title: "Organization-Managed Lab Test Templates"
+description: "Define a lab panel once, publish it to selected teams, and manage its shared lifecycle across your organization."
+---
+
+Organization-managed lab test templates let you define a lab panel once and make the same panel available to selected teams in your organization. The template has a stable `template_id`, and its first publication creates one stable `lab_test_id` shared by every assigned team.
+
+Use templates when several teams should order the same panel and receive future panel updates together. After publication, your integration can store the organization-level `template_id` and shared `lab_test_id`, then reuse that lab test ID across assigned teams. You do not need to resolve or maintain a separate lab-test mapping for each team.
+
+## How templates work
+
+| Concept | Description |
+| --- | --- |
+| Template | The organization-level panel definition and its team assignments. |
+| Draft | Editable changes waiting for publication. |
+| Template version | An immutable snapshot created when a changed definition is published. |
+| Managed lab test | The shared panel used by every assigned team for pricing, quotes, and orders. |
+| Lab-test version | The panel version pinned by an order or quote. |
+
+A template controls the panel name, description, partner laboratory, collection method, fasting requirement, marker membership, and optional lab account. The collection method cannot change after creation, and the laboratory cannot change after the first publication.
+
+The template does not replace the Lab Testing API. After publication, assigned teams use the shared `lab_test_id` with the existing pricing, quote, and order endpoints.
+
+## Template lifecycle
+
+1. Create a draft with the panel definition and the teams that should receive it.
+2. Publish the draft to create the shared lab test and make it available to those teams.
+3. Update the draft when the panel definition or desired team set changes.
+4. Publish again to apply all staged changes atomically.
+
+The first publication creates template version `1`, one shared lab test, and lab-test version `1`. A later definition change creates one new template version and one new shared lab-test version. Assignment-only changes do not create a version.
+
+Publication is atomic within the selected environment and region. If the panel is invalid for any selected team, Junction applies no changes.
+
+## Add or remove teams
+
+You can add a newly created team to an already published template without republishing the panel definition. The assignment endpoint adds the team to the desired set and immediately grants access to the existing shared `lab_test_id`.
+
+The operation is idempotent, so it is safe to retry after creating a team. It does not release unpublished draft changes or create a new template or lab-test version.
+
+To remove a team, replace the template's complete desired team set and publish. Removing a team hides the panel from new orders for that team but preserves the shared panel, version history, and existing order references. Re-adding the team restores access to the same `lab_test_id`.
+
+## Use the panel across teams
+
+The publish response and template detail both return the stable `lab_test_id`. Every assigned team uses that same ID, so clients can read it after publication and reuse it with the existing pricing, quote, and order APIs.
+
+The resolver endpoints provide assignment checks rather than team-specific lab test IDs:
+
+| Resolver | Purpose | Team context |
+| --- | --- | --- |
+| Management API resolver | Optionally verify an explicit team's assignment. This is usually unnecessary because template detail already returns `lab_test_id` and `active_team_ids`. | Send an explicit `team_id` with Management credentials. |
+| Lab Testing API resolver | Verify that the template is currently assigned and available to the team represented by a Team API key. This avoids distributing Management credentials to team-scoped services. | The Team API key identifies the team. |
+
+Both resolvers return the same shared `lab_test_id`; neither creates or selects a team-specific lab test. The team-scoped resolver returns `404 Not Found` after the team is unassigned or the template is archived, making it useful as an authorization and availability check. Resolvers also return `404 Not Found` when the template is unpublished or outside the caller's organization, environment, or region.
+
+We recommend storing both stable IDs after publication and calling the team-scoped resolver only when your integration needs to confirm the current assignment under a Team API key.
+
+## Updates and version history
+
+Every assigned team sees the same current panel definition. Publishing an update does not rewrite existing orders or quotes: each order and quote continues to reference the lab-test version that was current when it was created.
+
+Publishing an unchanged draft is idempotent and creates no version. Adding, removing, or restoring a team also creates no version. See [Lab Test Versioning](/lab/workflow/lab-test-versioning) for the behavior of pinned order and quote versions.
+
+## Scope and access
+
+A template belongs to one organization, API environment, and region. Only teams in that scope can be assigned. Team administrators cannot manage organization templates.
+
+All assigned teams must be compatible with the shared panel configuration. Junction validates the complete team set before publishing or adding a team and does not create hidden team-specific overrides.
+
+## Next steps
+
+- Use the [Lab Test Templates API reference](/api-reference/org-management/lab-test-templates/list-lab-test-templates) for endpoint schemas and request details.
+- Review [Creating a Lab Test](/lab/workflow/create-test) for standalone, team-owned panels.

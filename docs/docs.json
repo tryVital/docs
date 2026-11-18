@@ -123,6 +123,7 @@
                   "lab/workflow/collection-instructions",
                   "lab/overview/compendium-search",
                   "lab/workflow/create-test",
+                  "lab/workflow/organization-managed-lab-test-templates",
                   "lab/workflow/lab-test-versioning",
                   "lab/workflow/importing-order",
                   "lab/overview/insurance",
@@ -1530,6 +1531,20 @@
                 "pages": [
                   "api-reference/org-management/lab-accounts/get-lab-accounts",
                   "api-reference/org-management/lab-accounts/update-lab-account-teams"
+                ]
+              },
+              {
+                "group": "Lab Test Templates",
+                "pages": [
+                  "api-reference/org-management/lab-test-templates/list-lab-test-templates",
+                  "api-reference/org-management/lab-test-templates/get-lab-test-template",
+                  "api-reference/org-management/lab-test-templates/create-lab-test-template",
+                  "api-reference/org-management/lab-test-templates/update-lab-test-template",
+                  "api-reference/org-management/lab-test-templates/publish-lab-test-template",
+                  "api-reference/org-management/lab-test-templates/assign-lab-test-template-team",
+                  "api-reference/org-management/lab-test-templates/resolve-lab-test-template-team",
+                  "api-reference/org-management/lab-test-templates/list-lab-test-template-versions",
+                  "api-reference/org-management/lab-test-templates/archive-lab-test-template"
                 ]
               }
             ]
