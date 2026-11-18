@@ -63,7 +63,7 @@ and `completed_chunk_end_date` to fetch that chunk through the Data Access API.
 The `history_start_date` and `history_end_date` fields describe the full requested
 interval for the resource; `historical_pull_id` groups progress events from the same run.
 
-See [Historical Pull Progress](/event-catalog/historical-pull-progress) for the
+See [Historical Pull Progress](/webhooks/historical-pull-progress) for the
 payload, an Oura example, and supported sync types. The final chunk sends the
 existing completion event instead, so a one-chunk backfill has no progress event.
 

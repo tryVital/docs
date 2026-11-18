@@ -25,7 +25,7 @@ applies to backend pulls, not Apple HealthKit or Health Connect SDK syncs.
 
 For example, an Oura connection with 180 days of requested history can make recent
 sleep and activity data available before the older months finish loading. Use
-[progress webhooks](/event-catalog/historical-pull-progress) to fetch each completed
+[progress webhooks](/webhooks/historical-pull-progress) to fetch each completed
 chunk, or inspect the completed bounds through the
 [Historical Pulls API](/api-reference/data/introspection/historical-pulls).
 

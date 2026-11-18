@@ -30,7 +30,7 @@ describe the dates processed so far, whereas `range_start` and `range_end`
 describe the requested historical interval. A completed chunk can contain no data.
 Permanently failed chunks may leave gaps within the completed bounds.
 
-[Historical Pull Progress webhooks](/event-catalog/historical-pull-progress)
+[Historical Pull Progress webhooks](/webhooks/historical-pull-progress)
 report the dates of each completed non-final chunk using
 `completed_chunk_start_date` and `completed_chunk_end_date`. The tracker aggregates
 those dates, including the final chunk, into the two bounds above.

@@ -682,7 +682,7 @@
               {
                 "group": "Historical Progress",
                 "pages": [
-                  "event-catalog/historical-pull-progress"
+                  "webhooks/historical-pull-progress"
                 ]
               },
               {
@@ -702,6 +702,7 @@
                     "pages": [
                       "event-catalog/daily.data.activity.created",
                       "event-catalog/daily.data.activity.updated",
+                      "event-catalog/historical.data.activity.in_progress",
                       "event-catalog/historical.data.activity.created"
                     ]
                   },
@@ -710,6 +711,7 @@
                     "pages": [
                       "event-catalog/daily.data.body.created",
                       "event-catalog/daily.data.body.updated",
+                      "event-catalog/historical.data.body.in_progress",
                       "event-catalog/historical.data.body.created"
                     ]
                   },
@@ -718,6 +720,7 @@
                     "pages": [
                       "event-catalog/daily.data.meal.created",
                       "event-catalog/daily.data.meal.updated",
+                      "event-catalog/historical.data.meal.in_progress",
                       "event-catalog/historical.data.meal.created"
                     ]
                   },
@@ -726,6 +729,7 @@
                     "pages": [
                       "event-catalog/daily.data.menstrual_cycle.created",
                       "event-catalog/daily.data.menstrual_cycle.updated",
+                      "event-catalog/historical.data.menstrual_cycle.in_progress",
                       "event-catalog/historical.data.menstrual_cycle.created"
                     ]
                   },
@@ -734,6 +738,7 @@
                     "pages": [
                       "event-catalog/daily.data.profile.created",
                       "event-catalog/daily.data.profile.updated",
+                      "event-catalog/historical.data.profile.in_progress",
                       "event-catalog/historical.data.profile.created"
                     ]
                   },
@@ -742,6 +747,7 @@
                     "pages": [
                       "event-catalog/daily.data.electrocardiogram.created",
                       "event-catalog/daily.data.electrocardiogram.updated",
+                      "event-catalog/historical.data.electrocardiogram.in_progress",
                       "event-catalog/historical.data.electrocardiogram.created"
                     ]
                   },
@@ -750,6 +756,7 @@
                     "pages": [
                       "event-catalog/daily.data.sleep.created",
                       "event-catalog/daily.data.sleep.updated",
+                      "event-catalog/historical.data.sleep.in_progress",
                       "event-catalog/historical.data.sleep.created"
                     ]
                   },
@@ -758,6 +765,7 @@
                     "pages": [
                       "event-catalog/daily.data.sleep_cycle.created",
                       "event-catalog/daily.data.sleep_cycle.updated",
+                      "event-catalog/historical.data.sleep_cycle.in_progress",
                       "event-catalog/historical.data.sleep_cycle.created"
                     ]
                   },
@@ -766,6 +774,7 @@
                     "pages": [
                       "event-catalog/daily.data.workouts.created",
                       "event-catalog/daily.data.workouts.updated",
+                      "event-catalog/historical.data.workouts.in_progress",
                       "event-catalog/historical.data.workouts.created"
                     ]
                   },
@@ -774,6 +783,7 @@
                     "pages": [
                       "event-catalog/daily.data.workout_stream.created",
                       "event-catalog/daily.data.workout_stream.updated",
+                      "event-catalog/historical.data.workout_stream.in_progress",
                       "event-catalog/historical.data.workout_stream.created"
                     ]
                   }
@@ -787,6 +797,7 @@
                     "pages": [
                       "event-catalog/daily.data.calories_active.created",
                       "event-catalog/daily.data.calories_active.updated",
+                      "event-catalog/historical.data.calories_active.in_progress",
                       "event-catalog/historical.data.calories_active.created"
                     ]
                   },
@@ -795,6 +806,7 @@
                     "pages": [
                       "event-catalog/daily.data.calories_basal.created",
                       "event-catalog/daily.data.calories_basal.updated",
+                      "event-catalog/historical.data.calories_basal.in_progress",
                       "event-catalog/historical.data.calories_basal.created"
                     ]
                   },
@@ -803,6 +815,7 @@
                     "pages": [
                       "event-catalog/daily.data.distance.created",
                       "event-catalog/daily.data.distance.updated",
+                      "event-catalog/historical.data.distance.in_progress",
                       "event-catalog/historical.data.distance.created"
                     ]
                   },
@@ -811,6 +824,7 @@
                     "pages": [
                       "event-catalog/daily.data.floors_climbed.created",
                       "event-catalog/daily.data.floors_climbed.updated",
+                      "event-catalog/historical.data.floors_climbed.in_progress",
                       "event-catalog/historical.data.floors_climbed.created"
                     ]
                   },
@@ -819,6 +833,7 @@
                     "pages": [
                       "event-catalog/daily.data.steps.created",
                       "event-catalog/daily.data.steps.updated",
+                      "event-catalog/historical.data.steps.in_progress",
                       "event-catalog/historical.data.steps.created"
                     ]
                   },
@@ -827,6 +842,7 @@
                     "pages": [
                       "event-catalog/daily.data.vo2_max.created",
                       "event-catalog/daily.data.vo2_max.updated",
+                      "event-catalog/historical.data.vo2_max.in_progress",
                       "event-catalog/historical.data.vo2_max.created"
                     ]
                   },
@@ -835,6 +851,7 @@
                     "pages": [
                       "event-catalog/daily.data.workout_duration.created",
                       "event-catalog/daily.data.workout_duration.updated",
+                      "event-catalog/historical.data.workout_duration.in_progress",
                       "event-catalog/historical.data.workout_duration.created"
                     ]
                   },
@@ -843,6 +860,7 @@
                     "pages": [
                       "event-catalog/daily.data.wheelchair_push.created",
                       "event-catalog/daily.data.wheelchair_push.updated",
+                      "event-catalog/historical.data.wheelchair_push.in_progress",
                       "event-catalog/historical.data.wheelchair_push.created"
                     ]
                   },
@@ -851,6 +869,7 @@
                     "pages": [
                       "event-catalog/daily.data.stand_hour.created",
                       "event-catalog/daily.data.stand_hour.updated",
+                      "event-catalog/historical.data.stand_hour.in_progress",
                       "event-catalog/historical.data.stand_hour.created"
                     ]
                   },
@@ -859,6 +878,7 @@
                     "pages": [
                       "event-catalog/daily.data.stand_duration.created",
                       "event-catalog/daily.data.stand_duration.updated",
+                      "event-catalog/historical.data.stand_duration.in_progress",
                       "event-catalog/historical.data.stand_duration.created"
                     ]
                   },
@@ -867,6 +887,7 @@
                     "pages": [
                       "event-catalog/daily.data.fall.created",
                       "event-catalog/daily.data.fall.updated",
+                      "event-catalog/historical.data.fall.in_progress",
                       "event-catalog/historical.data.fall.created"
                     ]
                   }
@@ -880,6 +901,7 @@
                     "pages": [
                       "event-catalog/daily.data.workout_distance.created",
                       "event-catalog/daily.data.workout_distance.updated",
+                      "event-catalog/historical.data.workout_distance.in_progress",
                       "event-catalog/historical.data.workout_distance.created"
                     ]
                   },
@@ -888,6 +910,7 @@
                     "pages": [
                       "event-catalog/daily.data.workout_swimming_stroke.created",
                       "event-catalog/daily.data.workout_swimming_stroke.updated",
+                      "event-catalog/historical.data.workout_swimming_stroke.in_progress",
                       "event-catalog/historical.data.workout_swimming_stroke.created"
                     ]
                   }
@@ -901,6 +924,7 @@
                     "pages": [
                       "event-catalog/daily.data.afib_burden.created",
                       "event-catalog/daily.data.afib_burden.updated",
+                      "event-catalog/historical.data.afib_burden.in_progress",
                       "event-catalog/historical.data.afib_burden.created"
                     ]
                   },
@@ -909,6 +933,7 @@
                     "pages": [
                       "event-catalog/daily.data.blood_pressure.created",
                       "event-catalog/daily.data.blood_pressure.updated",
+                      "event-catalog/historical.data.blood_pressure.in_progress",
                       "event-catalog/historical.data.blood_pressure.created"
                     ]
                   },
@@ -917,6 +942,7 @@
                     "pages": [
                       "event-catalog/daily.data.blood_oxygen.created",
                       "event-catalog/daily.data.blood_oxygen.updated",
+                      "event-catalog/historical.data.blood_oxygen.in_progress",
                       "event-catalog/historical.data.blood_oxygen.created"
                     ]
                   },
@@ -925,6 +951,7 @@
                     "pages": [
                       "event-catalog/daily.data.electrocardiogram_voltage.created",
                       "event-catalog/daily.data.electrocardiogram_voltage.updated",
+                      "event-catalog/historical.data.electrocardiogram_voltage.in_progress",
                       "event-catalog/historical.data.electrocardiogram_voltage.created"
                     ]
                   },
@@ -933,6 +960,7 @@
                     "pages": [
                       "event-catalog/daily.data.glucose.created",
                       "event-catalog/daily.data.glucose.updated",
+                      "event-catalog/historical.data.glucose.in_progress",
                       "event-catalog/historical.data.glucose.created"
                     ]
                   },
@@ -941,6 +969,7 @@
                     "pages": [
                       "event-catalog/daily.data.insulin_injection.created",
                       "event-catalog/daily.data.insulin_injection.updated",
+                      "event-catalog/historical.data.insulin_injection.in_progress",
                       "event-catalog/historical.data.insulin_injection.created"
                     ]
                   },
@@ -949,6 +978,7 @@
                     "pages": [
                       "event-catalog/daily.data.heartrate.created",
                       "event-catalog/daily.data.heartrate.updated",
+                      "event-catalog/historical.data.heartrate.in_progress",
                       "event-catalog/historical.data.heartrate.created"
                     ]
                   },
@@ -957,6 +987,7 @@
                     "pages": [
                       "event-catalog/daily.data.hrv.created",
                       "event-catalog/daily.data.hrv.updated",
+                      "event-catalog/historical.data.hrv.in_progress",
                       "event-catalog/historical.data.hrv.created"
                     ]
                   },
@@ -965,6 +996,7 @@
                     "pages": [
                       "event-catalog/daily.data.heart_rate_alert.created",
                       "event-catalog/daily.data.heart_rate_alert.updated",
+                      "event-catalog/historical.data.heart_rate_alert.in_progress",
                       "event-catalog/historical.data.heart_rate_alert.created"
                     ]
                   },
@@ -973,6 +1005,7 @@
                     "pages": [
                       "event-catalog/daily.data.respiratory_rate.created",
                       "event-catalog/daily.data.respiratory_rate.updated",
+                      "event-catalog/historical.data.respiratory_rate.in_progress",
                       "event-catalog/historical.data.respiratory_rate.created"
                     ]
                   },
@@ -981,6 +1014,7 @@
                     "pages": [
                       "event-catalog/daily.data.forced_expiratory_volume_1.created",
                       "event-catalog/daily.data.forced_expiratory_volume_1.updated",
+                      "event-catalog/historical.data.forced_expiratory_volume_1.in_progress",
                       "event-catalog/historical.data.forced_expiratory_volume_1.created"
                     ]
                   },
@@ -989,6 +1023,7 @@
                     "pages": [
                       "event-catalog/daily.data.forced_vital_capacity.created",
                       "event-catalog/daily.data.forced_vital_capacity.updated",
+                      "event-catalog/historical.data.forced_vital_capacity.in_progress",
                       "event-catalog/historical.data.forced_vital_capacity.created"
                     ]
                   },
@@ -997,6 +1032,7 @@
                     "pages": [
                       "event-catalog/daily.data.peak_expiratory_flow_rate.created",
                       "event-catalog/daily.data.peak_expiratory_flow_rate.updated",
+                      "event-catalog/historical.data.peak_expiratory_flow_rate.in_progress",
                       "event-catalog/historical.data.peak_expiratory_flow_rate.created"
                     ]
                   },
@@ -1005,6 +1041,7 @@
                     "pages": [
                       "event-catalog/daily.data.inhaler_usage.created",
                       "event-catalog/daily.data.inhaler_usage.updated",
+                      "event-catalog/historical.data.inhaler_usage.in_progress",
                       "event-catalog/historical.data.inhaler_usage.created"
                     ]
                   },
@@ -1013,6 +1050,7 @@
                     "pages": [
                       "event-catalog/daily.data.heart_rate_recovery_one_minute.created",
                       "event-catalog/daily.data.heart_rate_recovery_one_minute.updated",
+                      "event-catalog/historical.data.heart_rate_recovery_one_minute.in_progress",
                       "event-catalog/historical.data.heart_rate_recovery_one_minute.created"
                     ]
                   }
@@ -1026,6 +1064,7 @@
                     "pages": [
                       "event-catalog/daily.data.fat.created",
                       "event-catalog/daily.data.fat.updated",
+                      "event-catalog/historical.data.fat.in_progress",
                       "event-catalog/historical.data.fat.created"
                     ]
                   },
@@ -1034,6 +1073,7 @@
                     "pages": [
                       "event-catalog/daily.data.weight.created",
                       "event-catalog/daily.data.weight.updated",
+                      "event-catalog/historical.data.weight.in_progress",
                       "event-catalog/historical.data.weight.created"
                     ]
                   },
@@ -1042,6 +1082,7 @@
                     "pages": [
                       "event-catalog/daily.data.body_mass_index.created",
                       "event-catalog/daily.data.body_mass_index.updated",
+                      "event-catalog/historical.data.body_mass_index.in_progress",
                       "event-catalog/historical.data.body_mass_index.created"
                     ]
                   },
@@ -1050,6 +1091,7 @@
                     "pages": [
                       "event-catalog/daily.data.lean_body_mass.created",
                       "event-catalog/daily.data.lean_body_mass.updated",
+                      "event-catalog/historical.data.lean_body_mass.in_progress",
                       "event-catalog/historical.data.lean_body_mass.created"
                     ]
                   },
@@ -1058,6 +1100,7 @@
                     "pages": [
                       "event-catalog/daily.data.waist_circumference.created",
                       "event-catalog/daily.data.waist_circumference.updated",
+                      "event-catalog/historical.data.waist_circumference.in_progress",
                       "event-catalog/historical.data.waist_circumference.created"
                     ]
                   },
@@ -1066,6 +1109,7 @@
                     "pages": [
                       "event-catalog/daily.data.body_temperature.created",
                       "event-catalog/daily.data.body_temperature.updated",
+                      "event-catalog/historical.data.body_temperature.in_progress",
                       "event-catalog/historical.data.body_temperature.created"
                     ]
                   },
@@ -1074,6 +1118,7 @@
                     "pages": [
                       "event-catalog/daily.data.body_temperature_delta.created",
                       "event-catalog/daily.data.body_temperature_delta.updated",
+                      "event-catalog/historical.data.body_temperature_delta.in_progress",
                       "event-catalog/historical.data.body_temperature_delta.created"
                     ]
                   },
@@ -1082,6 +1127,7 @@
                     "pages": [
                       "event-catalog/daily.data.basal_body_temperature.created",
                       "event-catalog/daily.data.basal_body_temperature.updated",
+                      "event-catalog/historical.data.basal_body_temperature.in_progress",
                       "event-catalog/historical.data.basal_body_temperature.created"
                     ]
                   }
@@ -1095,6 +1141,7 @@
                     "pages": [
                       "event-catalog/daily.data.note.created",
                       "event-catalog/daily.data.note.updated",
+                      "event-catalog/historical.data.note.in_progress",
                       "event-catalog/historical.data.note.created"
                     ]
                   }
@@ -1108,6 +1155,7 @@
                     "pages": [
                       "event-catalog/daily.data.caffeine.created",
                       "event-catalog/daily.data.caffeine.updated",
+                      "event-catalog/historical.data.caffeine.in_progress",
                       "event-catalog/historical.data.caffeine.created"
                     ]
                   },
@@ -1116,6 +1164,7 @@
                     "pages": [
                       "event-catalog/daily.data.carbohydrates.created",
                       "event-catalog/daily.data.carbohydrates.updated",
+                      "event-catalog/historical.data.carbohydrates.in_progress",
                       "event-catalog/historical.data.carbohydrates.created"
                     ]
                   },
@@ -1124,6 +1173,7 @@
                     "pages": [
                       "event-catalog/daily.data.water.created",
                       "event-catalog/daily.data.water.updated",
+                      "event-catalog/historical.data.water.in_progress",
                       "event-catalog/historical.data.water.created"
                     ]
                   }
@@ -1137,6 +1187,7 @@
                     "pages": [
                       "event-catalog/daily.data.sleep_apnea_alert.created",
                       "event-catalog/daily.data.sleep_apnea_alert.updated",
+                      "event-catalog/historical.data.sleep_apnea_alert.in_progress",
                       "event-catalog/historical.data.sleep_apnea_alert.created"
                     ]
                   },
@@ -1145,6 +1196,7 @@
                     "pages": [
                       "event-catalog/daily.data.sleep_breathing_disturbance.created",
                       "event-catalog/daily.data.sleep_breathing_disturbance.updated",
+                      "event-catalog/historical.data.sleep_breathing_disturbance.in_progress",
                       "event-catalog/historical.data.sleep_breathing_disturbance.created"
                     ]
                   },
@@ -1153,6 +1205,7 @@
                     "pages": [
                       "event-catalog/daily.data.mindfulness_minutes.created",
                       "event-catalog/daily.data.mindfulness_minutes.updated",
+                      "event-catalog/historical.data.mindfulness_minutes.in_progress",
                       "event-catalog/historical.data.mindfulness_minutes.created"
                     ]
                   },
@@ -1161,6 +1214,7 @@
                     "pages": [
                       "event-catalog/daily.data.stress_level.created",
                       "event-catalog/daily.data.stress_level.updated",
+                      "event-catalog/historical.data.stress_level.in_progress",
                       "event-catalog/historical.data.stress_level.created"
                     ]
                   },
@@ -1169,6 +1223,7 @@
                     "pages": [
                       "event-catalog/daily.data.uv_exposure.created",
                       "event-catalog/daily.data.uv_exposure.updated",
+                      "event-catalog/historical.data.uv_exposure.in_progress",
                       "event-catalog/historical.data.uv_exposure.created"
                     ]
                   },
@@ -1177,6 +1232,7 @@
                     "pages": [
                       "event-catalog/daily.data.daylight_exposure.created",
                       "event-catalog/daily.data.daylight_exposure.updated",
+                      "event-catalog/historical.data.daylight_exposure.in_progress",
                       "event-catalog/historical.data.daylight_exposure.created"
                     ]
                   },
@@ -1185,6 +1241,7 @@
                     "pages": [
                       "event-catalog/daily.data.handwashing.created",
                       "event-catalog/daily.data.handwashing.updated",
+                      "event-catalog/historical.data.handwashing.in_progress",
                       "event-catalog/historical.data.handwashing.created"
                     ]
                   }
