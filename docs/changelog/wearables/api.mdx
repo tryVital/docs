@@ -5,7 +5,12 @@ description: "Changelog of Junction Wearables API and Junction Sense."
 
 import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
-### Historical backfill progress
+### Historical backfill progress (November 2026)
+
+New historical progress webhooks let you use completed historical data while older
+history is still loading, without waiting for the full backfill to finish.
+
+<Accordion title="Details" defaultOpen icon="clock" iconType="duotone">
 
 - New [`historical.data.{RESOURCE}.in_progress` webhooks](/webhooks/historical-pull-progress)
   notify you when a non-final historical chunk has finished ingestion, so you can
@@ -18,6 +23,8 @@ import HorizonAIBeta from '/snippets/horizon-ai-beta.mdx';
 
 Existing historical completion events remain unchanged. See the progress event
 documentation for provider and SDK limitations.
+
+</Accordion>
 
 ### Removed deprecated endpoints and fields (September 2026)
 
