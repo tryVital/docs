@@ -80,7 +80,13 @@ An order can have multiple appointment records over time, but the [Get PSC Appoi
 ## Scheduling appointments before a requisition has been created
 
 <Note>
-  This feature is available upon request. To enable, please get in touch with your Customer Success Manager.
+  This feature is **off by default**. You can turn it on or off for your Team in the Junction Dashboard under
+  **Team settings → General → Appointments without requisition**, or via the [PATCH Update Team endpoint](https://docs.junction.com/api-reference/org-management/team/update-team).
+
+  Before enabling it, make sure your system handles the `reserved` appointment status and Junction's
+  [auto-cancellation](https://docs.junction.com/lab/walk-in/order-lifecycle#auto-cancellation-of-appointments-without-requisition)
+  of appointments whose requisition isn't created within the established timeframes. If disabled, new appointment bookings
+  for orders without a requisition will be rejected.
 </Note>
 
 When this feature is enabled on your Team, you can create a Patient Service Center (PSC) appointment even before the requisition has been created for the corresponding Order (i.e., reaching the `requisition_created` status).
