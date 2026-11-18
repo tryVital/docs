@@ -1,6 +1,6 @@
 ---
 title: "Historical Pull Progress"
-description: "Use historical.data.{RESOURCE}.in_progress to fetch completed historical chunks before the full backfill finishes."
+description: "Use historical.data.*.in_progress to fetch completed historical chunks before the full backfill finishes."
 ---
 
 Junction sends `historical.data.{RESOURCE}.in_progress` after a historical chunk
@@ -17,12 +17,14 @@ not the resource's data records.
   when the provider returns no data for those dates.
 - The final chunk uses the existing `historical.data.{RESOURCE}.created`
   completion event instead. A backfill consisting of one chunk has no progress event.
-- A failed chunk does not emit a progress event. Handle duplicate notifications
-  idempotently because a chunk can be processed again during a retry.
+- A failed chunk does not emit a progress event.
 
 Progress events apply to supported backend historical pulls. Garmin, Apple HealthKit
 and Health Connect SDK syncs, and workout streams fetched through follow-up jobs
 do not report chunk progress through this event.
+
+The `device` resource does not emit historical progress or completion events.
+Device notifications use `provider.device.created` and `provider.device.updated`.
 
 ## Payload
 

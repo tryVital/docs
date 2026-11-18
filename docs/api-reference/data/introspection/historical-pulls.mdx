@@ -30,10 +30,6 @@ describe the dates processed so far, whereas `range_start` and `range_end`
 describe the requested historical interval. A completed chunk can contain no data.
 Permanently failed chunks may leave gaps within the completed bounds.
 
-The existing `status` and `days_with_data` fields are unchanged. `days_with_data`
-counts dates represented in processed data; it is not a count of completed chunks
-or proof that every date in the completed range has data.
-
 [Historical Pull Progress webhooks](/event-catalog/historical-pull-progress)
 report the dates of each completed non-final chunk using
 `completed_chunk_start_date` and `completed_chunk_end_date`. The tracker aggregates
