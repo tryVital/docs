@@ -172,3 +172,12 @@ The webhook payload body may have the following information if the appointment i
 <br/>
 
 <Info>The `event_data` field contains relevant information regarding the current appointment status, and may be specific for each `provider`.</Info>
+
+### Junction-initiated cancellations
+
+When Junction cancels an appointment for a known reason, the `cancelled` entry in `events` includes `cancellation_reason`. It is `null` for other events and for cancellations without a known reason. This enum is non-exhaustive, so handle unknown values.
+
+| `cancellation_reason` | Meaning |
+| --- | --- |
+| `site_closed` | The patient service center is closed. Junction cancels confirmed upcoming bookings at disabled Quest, Sonora Quest and Labcorp sites, and texts the patient a link to rebook at another location. |
+

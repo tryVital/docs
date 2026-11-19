@@ -4,6 +4,14 @@ sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### Appointment cancellation reason (Nov 2026)
+
+Appointment events now include `cancellation_reason`, which says why Junction cancelled an appointment. It is only set on `cancelled` events that Junction initiated for a known reason, and is `null` otherwise. This enum is non-exhaustive.
+
+- `site_closed`: the patient service center is closed. Junction cancels confirmed upcoming bookings at disabled Quest, Sonora Quest and Labcorp sites, and texts the patient a link to rebook at another location.
+
+These cancellations arrive through the existing [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhook, so no new subscription is needed. See [Walk-in webhooks](/lab/walk-in/webhooks#junction-initiated-cancellations).
+
 ### Improved diagnosis code search (Nov 2026)
 
 [Get search diagnosis](/api-reference/lab-testing/insurance/search-diagnosis) (`GET /v3/insurance/search/diagnosis`) now finds ICD-10-CM codes using the terms clinicians actually search for, not only the official code descriptions:
