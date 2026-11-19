@@ -12,10 +12,10 @@ The lab testing connector lets you order lab tests from your clinic, book a visi
 With the connector, you can:
 
 - **Find the right test**: see the panels your clinic offers, what each one measures and its price.
-- **Order and pay**: confirm your details and pay on a secure checkout page.
+- **Order and pay**: confirm the panel and price, then pay on a secure checkout page.
 - **Book your visit**: find appointment times at patient service centers near you, and book, move or cancel your appointment.
 - **Track your order**: see where your order stands and what to do next.
-- **Read your results**: get your results marker by marker in plain language, and download the lab's PDF report.
+- **Read your results**: see each marker and which are out of range, and download the lab's PDF report.
 
 Access is optional and secure, and you can disconnect at any time.
 
@@ -63,7 +63,7 @@ The connector uses OAuth 2.0, so you never share your password with your AI assi
 
 ### Find the right test
 
-Ask about the panels your clinic offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. Tax is added at checkout.
+Ask about the panels your clinic offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. If another lab is cheaper, quicker or closer for you, your assistant tells you the trade-off. Tax is added at checkout.
 
 **Try asking:**
 
@@ -73,16 +73,16 @@ Ask about the panels your clinic offers. Your assistant shows what each one meas
 
 ### Order and pay
 
-Your assistant reads back your details and the panel's price for you to confirm, then gives you a link to a secure Stripe checkout page. You pay on that page, so your card details are never shared with your assistant.
+Once you've chosen a panel and agreed to its price, your assistant gives you a link to a secure checkout page powered by Stripe. That page collects the details the lab needs and your consent, then takes payment, so your card details are never shared with your assistant.
 
 **Try asking:**
 
 - "I'd like to order the diabetes panel."
-- "Can you check the details you have for me?"
+- "Which lab will process my test?"
 
 ### Book your visit
 
-Your assistant finds appointment times at patient service centers near your zip code. You can pick a time before you pay, so it's held for you, or book after paying. You can also walk in with your requisition form.
+Your assistant finds appointment times at patient service centers near your zip code. You can pick a time at least a day ahead before you pay, so it's held for you while you check out. For an earlier time, pay first and then book. You can also walk in with your requisition form.
 
 **Try asking:**
 
@@ -92,7 +92,7 @@ Your assistant finds appointment times at patient service centers near your zip 
 
 ### Track your order
 
-Your assistant shows where each order stands and what happens next, from your visit to your results.
+Your assistant shows where each order stands and what happens next, from your visit to your results. To cancel an order, contact your provider's support; your assistant can give you their details.
 
 **Try asking:**
 
@@ -102,13 +102,13 @@ Your assistant shows where each order stands and what happens next, from your vi
 
 ### Read your results
 
-When your results are in, your assistant explains each marker in plain language, shows which ones are out of range and shares the lab's PDF report. Results are for your information and aren't a diagnosis; review them with your clinician.
+When your results are in, your assistant lists each marker with its value, shows which ones the lab flagged as out of range and shares the lab's PDF report. It doesn't interpret your results or give medical advice, so review them with your clinician.
 
 **Try asking:**
 
 - "Are my results ready?"
 - "Which of my results are out of range?"
-- "What does my HbA1c result mean?"
+- "Send me my results PDF."
 
 ## Data privacy and security
 
@@ -137,7 +137,7 @@ When you ask, your assistant can see:
 
 - Disconnect the connector from your AI assistant's settings at any time.
 - Your assistant asks you to confirm before it pays for, books or cancels anything.
-- Ask your assistant to correct your details, or contact your clinic to delete your information.
+- Ask your assistant to correct your details, or contact your provider's support to delete your information.
 
 ## Troubleshooting
 
@@ -174,12 +174,12 @@ When you ask, your assistant can see:
 ## Best practices
 
 - **Be specific.** "Which test checks my cholesterol and how much is it?" gets a better answer than "What should I test?"
-- **Confirm your details.** Check your name, date of birth and address before you pay, so your order reaches the lab correctly.
-- **Follow up with your clinician.** Your assistant explains your results but doesn't diagnose. Review anything out of range with your clinician.
+- **Check your details at checkout.** Make sure your name, date of birth and address are right before you pay, so your order reaches the lab correctly.
+- **Follow up with your clinician.** Your assistant shows your results but doesn't interpret them. Review anything out of range with your clinician.
 
 ## Getting help
 
-- **Orders, payments and results:** contact your clinic.
+- **Orders, payments and results:** ask your assistant for your provider's support contact, or contact them directly.
 - **Connecting your AI assistant:** see your assistant's help center for custom connectors.
 
 ## Technical specifications
