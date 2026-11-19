@@ -1,17 +1,17 @@
 ---
 title: "Lab Testing Connector for AI Assistants"
-description: "Connect your clinic's Junction lab testing connector to Claude or ChatGPT to order lab tests, book a visit and read your results in a conversation."
+description: "Connect the Junction lab testing connector to your AI assistant to order lab tests, book a visit and read your results in a conversation."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-The lab testing connector lets you order lab tests from your clinic, book a visit to a patient service center and read your results, all by chatting with your AI assistant.
+The lab testing connector lets you order lab tests from your lab testing provider, book a visit to a patient service center and read your results, all by chatting with your AI assistant.
 
 With the connector, you can:
 
-- **Find the right test**: see the panels your clinic offers, what each one measures and its price.
+- **Find the right test**: see the panels your provider offers, what each one measures and its price.
 - **Order and pay**: confirm the panel and price, then pay on a secure checkout page.
 - **Book your visit**: find appointment times at patient service centers near you, and book, move or cancel your appointment.
 - **Track your order**: see where your order stands and what to do next.
@@ -19,51 +19,34 @@ With the connector, you can:
 
 Access is optional and secure, and you can disconnect at any time.
 
-<Info>
-  Clinics: share this page with your patients, together with your clinic's connector URL.
-</Info>
-
 ## Getting started
 
 ### Before you start
 
-- **Your clinic's connector URL.** Your clinic gives you this link. It's unique to your clinic and looks like `https://<your-clinic-id>.mcp.us.junction.com/`.
-- **An AI assistant that supports custom connectors**, such as Claude or ChatGPT. Custom connectors depend on your plan and workspace settings.
+- **An AI assistant that offers the lab testing connector.** Look for it in your assistant's connectors or apps. If your assistant supports custom connectors instead, your provider gives you a connector URL that looks like `https://<provider-id>.mcp.us.junction.com/`.
 - **A US address.** Lab testing is available only in the US, at US patient service centers.
 
 ### Connect
 
-<Tabs>
-  <Tab title="Claude">
-    1. In Claude, open **Settings → Connectors**.
-    2. Click **Add custom connector**.
-    3. Name it after your clinic and paste your clinic's connector URL.
-    4. Click **Connect** and sign in with your clinic's account.
-    5. Return to Claude. The connector is now active in your conversations.
-  </Tab>
-  <Tab title="ChatGPT">
-    1. In ChatGPT, open **Settings → Apps & Connectors → Advanced settings** and turn on **Developer mode**.
-    2. Back in **Apps & Connectors**, click **Create**.
-    3. Name it after your clinic, paste your clinic's connector URL and set authentication to **OAuth**.
-    4. Sign in with your clinic's account when prompted.
-  </Tab>
-</Tabs>
+1. In your AI assistant, open its connectors or apps and choose the lab testing connector. For a custom connector, add a new one and paste your provider's connector URL.
+2. Click **Connect** and approve the connection.
+3. Return to your assistant. The connector is now active in your conversations.
 
 Once you're connected, start a new conversation and ask "What can you help me with for lab testing?"
 
-## How sign-in works
+## How connecting works
 
-The connector uses OAuth 2.0, so you never share your password with your AI assistant.
+The connector uses OAuth 2.0, so you never share a password with your AI assistant.
 
-1. When you first connect, you're sent to your clinic's sign-in page.
-2. You sign in there, and your AI assistant is given access to your lab testing account only.
-3. Your assistant keeps you signed in. If your session expires, you'll be asked to sign in again.
+1. When you first connect, you approve the connection in one step. You can browse panels and prices straight away.
+2. The first time you order, the checkout page asks for your details and your consent, including HIPAA authorization, before you pay.
+3. Your assistant can only reach your own lab testing account. If your connection expires, you'll be asked to reconnect.
 
 ## What you can do
 
 ### Find the right test
 
-Ask about the panels your clinic offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. If another lab is cheaper, quicker or closer for you, your assistant tells you the trade-off. Tax is added at checkout.
+Ask about the panels your provider offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. If another lab is cheaper, quicker or closer for you, your assistant tells you the trade-off. Tax is added at checkout.
 
 **Try asking:**
 
@@ -124,7 +107,7 @@ When you ask, your assistant can see:
 
 - your card or payment details, which stay on the Stripe checkout page
 - other patients' information
-- anything outside your lab testing account with your clinic
+- anything outside your lab testing account with your provider
 
 ### Security measures
 
@@ -141,11 +124,11 @@ When you ask, your assistant can see:
 
 ## Troubleshooting
 
-### You're asked to sign in again
+### You're asked to reconnect
 
-**Cause:** your session has expired.
+**Cause:** your connection has expired.
 
-**Fix:** in your AI assistant's connector settings, reconnect the connector and sign in again.
+**Fix:** in your AI assistant's connector settings, reconnect the connector.
 
 ### Your assistant can't find any tests
 
@@ -180,7 +163,7 @@ When you ask, your assistant can see:
 ## Getting help
 
 - **Orders, payments and results:** ask your assistant for your provider's support contact, or contact them directly.
-- **Connecting your AI assistant:** see your assistant's help center for custom connectors.
+- **Connecting your AI assistant:** see your assistant's help center.
 
 ## Technical specifications
 
