@@ -1,177 +1,150 @@
 ---
-title: "Lab Testing Connector for AI Assistants"
-description: "Connect the Junction lab testing connector to your AI assistant to order lab tests, book a visit and read your results in a conversation."
+title: "Patient MCP Server"
+description: "Let your agent order lab tests, book patient service center visits and read results on behalf of a patient, through Junction's Model Context Protocol server."
 ---
 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <FeatureBeta />
 
-The lab testing connector lets you order lab tests from your lab testing provider, book a visit to a patient service center and read your results, all by chatting with your AI assistant.
+Junction's Patient MCP server lets an agent act for a patient across the whole lab testing journey: finding a panel, paying, booking a visit at a patient service center, tracking the order and reading the results. It speaks the [Model Context Protocol](https://modelcontextprotocol.io) (MCP), so any MCP-capable agent can use it without a custom integration.
 
-With the connector, you can:
+Typical integrations include:
 
-- **Find the right test**: see the panels your provider offers, what each one measures and its price.
-- **Order and pay**: confirm the panel and price, then pay on a secure checkout page.
-- **Book your visit**: find appointment times at patient service centers near you, and book, move or cancel your appointment.
-- **Track your order**: see where your order stands and what to do next.
-- **Read your results**: see each marker and which are out of range, and download the lab's PDF report.
+- **AI assistant platforms** that offer lab testing to their users as a connector or app.
+- **Health and wellness apps** whose own agent orders and explains tests for their members.
+- **Agentic systems** that run lab testing as one step in a wider workflow, such as a care or coaching program.
 
-Access is optional and secure, and you can disconnect at any time.
+Each connection is authorized by one patient and acts only for that patient. Junction remains the provider of record for ordering, payment, scheduling and results, and your agent drives the conversation.
 
-## Getting started
+## How it works
 
-### Before you start
+1. **Your team gets its own server.** Junction provisions an MCP server for your team, with the panels your patients can order and their prices.
+2. **The patient connects.** Your platform starts an OAuth flow and the patient approves the connection. Your agent can list panels and prices straight away.
+3. **The agent helps the patient choose and pay.** When the patient picks a panel, the agent opens a checkout session and gives the patient a secure, hosted checkout link. The checkout page collects any missing patient details and consent, including HIPAA authorization, and takes payment. Card details never pass through your agent.
+4. **The agent books the visit.** The agent finds slots at nearby patient service centers, and books, moves or cancels the appointment. The patient can also walk in with their requisition form.
+5. **The agent tracks the order and shares results.** The agent reports where the order stands and, once results arrive, returns them marker by marker with the lab's PDF report.
 
-- **An AI assistant that offers the lab testing connector.** Look for it in your assistant's connectors or apps. If your assistant supports custom connectors instead, your provider gives you a connector URL that looks like `https://<provider-id>.mcp.us.junction.com/`.
-- **A US address.** Lab testing is available only in the US, at US patient service centers.
+## Getting access
 
-### Connect
+The Patient MCP server is in closed beta. Contact your Junction account team to enable it for your team. We'll configure:
 
-1. In your AI assistant, open its connectors or apps and choose the lab testing connector. For a custom connector, add a new one and paste your provider's connector URL.
-2. Click **Connect** and approve the connection.
-3. Return to your assistant. The connector is now active in your conversations.
+- the panels your patients can order, and their pricing
+- the support contact the agent gives patients when they need help
+- your server URLs
 
-Once you're connected, start a new conversation and ask "What can you help me with for lab testing?"
+| Environment | Server URL |
+| --- | --- |
+| Sandbox | `https://<team-id>.mcp.sandbox.us.junction.com/` |
+| Production | `https://<team-id>.mcp.us.junction.com/` |
 
-## How connecting works
+Use sandbox to build and test your integration. Orders there never reach a real lab, and you can move them through their lifecycle with the `simulate_order` tool.
 
-The connector uses OAuth 2.0, so you never share a password with your AI assistant.
+## Authentication
 
-1. When you first connect, you approve the connection in one step. You can browse panels and prices straight away.
-2. The first time you order, the checkout page asks for your details and your consent, including HIPAA authorization, before you pay.
-3. Your assistant can only reach your own lab testing account. If your connection expires, you'll be asked to reconnect.
+The server follows the [MCP authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization). Tokens are scoped to a single patient.
 
-## What you can do
+| | |
+| --- | --- |
+| Discovery | Protected resource metadata at `/.well-known/oauth-protected-resource` (RFC 9728), which names the authorization server |
+| Grant | OAuth 2.0 authorization code with PKCE (`S256`), and refresh tokens |
+| Client registration | Client ID Metadata Documents: use the URL of your client metadata document as your `client_id` |
+| Client authentication | None (public clients) |
+| Scopes | `mcp:read`, `mcp:write`, and `offline_access` for refresh tokens |
+| Token use | Bearer token in the `Authorization` header |
 
-### Find the right test
+### Patient consent
 
-Ask about the panels your provider offers. Your assistant shows what each one measures, its price for your state and whether you need to fast beforehand. If another lab is cheaper, quicker or closer for you, your assistant tells you the trade-off. Tax is added at checkout.
+Connecting asks the patient for one approval and no other input. Junction collects the patient's details, terms acceptance and HIPAA authorization on the checkout page the first time they order, so a patient can browse panels and prices before sharing anything.
 
-**Try asking:**
+## Tools
 
-- "What lab tests can I order?"
-- "Which test checks my cholesterol?"
-- "How much is the thyroid panel in California?"
+| Tool | What it does |
+| --- | --- |
+| `list_panels` | Lists the panels your team offers, with each one's price for the patient's state. Accepts keyword search. |
+| `get_panel` | Returns one panel in full: markers, fasting, turnaround and price. |
+| `get_profile` | Returns the patient's details on file. |
+| `update_profile` | Saves or corrects the patient's details. Panel pricing needs only the patient's state. |
+| `start_checkout_session` | Opens checkout for a panel and returns the checkout URL. Pass a slot to hold an appointment during checkout. |
+| `find_appointment_slots` | Finds patient service center slots near a ZIP code, for a panel before payment or for a paid order. |
+| `book_appointment` | Books a slot for a paid order. |
+| `reschedule_appointment` | Moves an existing appointment to a new slot. |
+| `cancel_appointment` | Cancels an appointment. The order stays active. |
+| `list_orders` | Lists the patient's orders with status, appointment and whether a requisition is ready. |
+| `get_results` | Returns an order's results marker by marker, with a disclaimer. |
+| `get_order_document` | Returns a short-lived download link for the requisition form or the results PDF. |
+| `get_support_contact` | Returns the provider's name and support contact. |
+| `connection_doctor` | Reports the connection's identity and the capabilities your platform advertises, for debugging. |
+| `simulate_order` | Sandbox only. Moves a test order to its next lifecycle step. |
 
-### Order and pay
+### Resources
 
-Once you've chosen a panel and agreed to its price, your assistant gives you a link to a secure checkout page powered by Stripe. That page collects the details the lab needs and your consent, then takes payment, so your card details are never shared with your assistant.
+| Resource | Contents |
+| --- | --- |
+| `junction://guides/patient_journey` | How the agent should guide a patient through ordering, booking and results, including how to handle each error. |
+| `junction://guides/results_disclaimer` | The fixed disclaimer wording shown with results. |
 
-**Try asking:**
+The server's instructions tell agents to read `junction://guides/patient_journey` before helping a patient. Tool responses leave out the wording the guide holds, so an agent that skips it gives patients incomplete answers. If your platform can preload resources, preload this one.
 
-- "I'd like to order the diabetes panel."
-- "Which lab will process my test?"
+## Agent requirements
 
-### Book your visit
+Your agent must follow the patient journey guide. In particular, it must:
 
-Your assistant finds appointment times at patient service centers near your zip code. You can pick a time at least a day ahead before you pay, so it's held for you while you check out. For an earlier time, pay first and then book. You can also walk in with your requisition form.
+- Show disclaimers returned with results and documents word for word.
+- Confirm with the patient before it starts checkout, books, moves or cancels anything.
+- Report results as the lab gives them, without interpreting them or giving medical advice, and point the patient to their clinician.
+- Tell a patient who describes a possible emergency to call 911 or go to the nearest emergency room, before anything else.
+- Pass on checkout and document links exactly as returned.
+- Keep internal IDs, slot IDs and error codes out of what it says to the patient.
 
-**Try asking:**
+## Checkout and payment
 
-- "What's the earliest appointment near 90210?"
-- "Can I move my appointment to next week?"
-- "Send me my requisition form."
+`start_checkout_session` returns a link to a hosted checkout page powered by Stripe. The page shows the final amount with tax, collects any missing patient details and consent, and takes payment. Each patient has one payment link per panel: starting checkout again replaces the earlier link.
 
-### Track your order
+If the patient picks an appointment slot before paying, pass it to `start_checkout_session` and the slot is held through checkout. Slots chosen before payment start at least a day out; for a sooner visit, the patient pays first and the agent books afterwards. A new order can take a few minutes to appear in `list_orders` after payment.
 
-Your assistant shows where each order stands and what happens next, from your visit to your results. To cancel an order, contact your provider's support; your assistant can give you their details.
+## Results and documents
 
-**Try asking:**
+`get_results` returns each marker with its result, unit, reference range and the lab's flag, along with a disclaimer to show the patient. When results can't be shown in chat, the tool returns `results_unavailable`; share the lab's PDF report instead.
 
-- "Has my payment gone through?"
-- "Where's my order?"
-- "When will my results be ready?"
+Links from `get_order_document` expire after 15 minutes. Request a link when the patient needs it, not ahead of time.
 
-### Read your results
+## Errors
 
-When your results are in, your assistant lists each marker with its value, shows which ones the lab flagged as out of range and shares the lab's PDF report. It doesn't interpret your results or give medical advice, so review them with your clinician.
+Tools report failures as MCP tool errors with a stable code. The patient journey guide tells the agent how to handle each one.
 
-**Try asking:**
+| Code | Meaning |
+| --- | --- |
+| `address_required` | The tool needs the patient's state or ZIP code. |
+| `address_invalid`, `phone_invalid` | The address or phone number on file couldn't be verified. |
+| `invalid_search` | The appointment search parameters are invalid. |
+| `not_found` | The panel, order or appointment doesn't exist for this patient. |
+| `panel_unavailable` | The panel can't be ordered. |
+| `checkout_unavailable` | Payments can't be taken right now. |
+| `no_slots` | No slots were found within 25 miles. |
+| `slot_unavailable` | The slot is taken or its ID has expired. Slot IDs last 30 minutes. |
+| `scheduling_unavailable` | Appointments can't be booked here. The patient can walk in with their requisition. |
+| `no_requisition_yet` | The lab hasn't issued the requisition, so the visit can't be booked yet. |
+| `already_booked` | The order already has an appointment. |
+| `no_appointment` | The order has no appointment to change or cancel. |
+| `already_cancelled` | The appointment is already cancelled. |
+| `cannot_reschedule` | The appointment can't be moved. Cancel it and book a new slot instead. |
+| `booking_in_progress` | The lab is still confirming a booking. |
+| `order_not_bookable` | The order is cancelled, completed or partially resulted. |
+| `results_not_ready` | The results aren't in yet. |
+| `results_unavailable` | The results can't be shown in chat. |
+| `document_unavailable` | The document isn't available for the order's current status. |
+| `step_not_allowed` | Sandbox only: `simulate_order` can't move the order to that step. |
 
-- "Are my results ready?"
-- "Which of my results are out of range?"
-- "Send me my results PDF."
-
-## Data privacy and security
-
-### What your assistant can access
-
-When you ask, your assistant can see:
-
-- the details on file for you: name, date of birth, sex, phone number, email and address
-- your lab orders, appointments and their status
-- your lab results and documents
-
-### What your assistant can't access
-
-- your card or payment details, which stay on the Stripe checkout page
-- other patients' information
-- anything outside your lab testing account with your provider
-
-### Security measures
-
-- OAuth 2.0 with PKCE for sign-in
-- HTTPS for all data in transit
-- access limited to your own account
-- links to documents such as your results PDF expire after 15 minutes
-
-### Your control
-
-- Disconnect the connector from your AI assistant's settings at any time.
-- Your assistant asks you to confirm before it pays for, books or cancels anything.
-- Ask your assistant to correct your details, or contact your provider's support to delete your information.
-
-## Troubleshooting
-
-### You're asked to reconnect
-
-**Cause:** your connection has expired.
-
-**Fix:** in your AI assistant's connector settings, reconnect the connector.
-
-### Your assistant can't find any tests
-
-**Cause:** your assistant needs your state to show prices.
-
-**Fix:** tell it which state you live in, or share your address.
-
-### No appointment times are available
-
-**Cause:** there are no open slots near the zip code or on the dates searched.
-
-**Fix:** try a nearby zip code or a later date, or walk in with your requisition form.
-
-### Your results aren't showing
-
-**Cause:** the lab hasn't sent them yet.
-
-**Fix:** ask your assistant where your order stands. It tells you when results are expected.
-
-### A document link doesn't open
-
-**Cause:** document links expire after 15 minutes.
-
-**Fix:** ask your assistant for a new link and open it straight away.
-
-## Best practices
-
-- **Be specific.** "Which test checks my cholesterol and how much is it?" gets a better answer than "What should I test?"
-- **Check your details at checkout.** Make sure your name, date of birth and address are right before you pay, so your order reaches the lab correctly.
-- **Follow up with your clinician.** Your assistant shows your results but doesn't interpret them. Review anything out of range with your clinician.
-
-## Getting help
-
-- **Orders, payments and results:** ask your assistant for your provider's support contact, or contact them directly.
-- **Connecting your AI assistant:** see your assistant's help center.
+Patients can't cancel an order through the server. Direct them to the support contact from `get_support_contact`.
 
 ## Technical specifications
 
 | | |
 | --- | --- |
-| Protocol | [Model Context Protocol](https://modelcontextprotocol.io) (MCP) |
-| Transport | Streamable HTTP |
+| Protocol | [Model Context Protocol](https://modelcontextprotocol.io) |
+| Transport | Streamable HTTP, stateless |
 | Authentication | OAuth 2.0 authorization code with PKCE, using Client ID Metadata Documents |
-| Protected resource metadata | `/.well-known/oauth-protected-resource` (RFC 9728) |
-| Scopes | `mcp:read`, `mcp:write` |
+| Scopes | `mcp:read`, `mcp:write`, `offline_access` |
 | Regions | US |
+| Collection | Walk-in visits at Quest, Sonora Quest and Labcorp patient service centers |
