@@ -1,0 +1,150 @@
+---
+title: "Patient MCP Server"
+description: "Let your agent order lab tests, book patient service center visits and read results on behalf of a patient, through Junction's Model Context Protocol server."
+---
+
+import FeatureBeta from '/snippets/feature-beta.mdx';
+
+<FeatureBeta />
+
+Junction's Patient MCP server lets an agent act for a patient across the whole lab testing journey: finding a panel, paying, booking a visit at a patient service center, tracking the order and reading the results. It speaks the [Model Context Protocol](https://modelcontextprotocol.io) (MCP), so any MCP-capable agent can use it without a custom integration.
+
+Typical integrations include:
+
+- **AI assistant platforms** that offer lab testing to their users as a connector or app.
+- **Health and wellness apps** whose own agent orders and explains tests for their members.
+- **Agentic systems** that run lab testing as one step in a wider workflow, such as a care or coaching program.
+
+Each connection is authorized by one patient and acts only for that patient. Junction remains the provider of record for ordering, payment, scheduling and results, and your agent drives the conversation.
+
+## How it works
+
+1. **Your team gets its own server.** Junction provisions an MCP server for your team, with the panels your patients can order and their prices.
+2. **The patient connects.** Your platform starts an OAuth flow and the patient approves the connection. Your agent can list panels and prices straight away.
+3. **The agent helps the patient choose and pay.** When the patient picks a panel, the agent opens a checkout session and gives the patient a secure, hosted checkout link. The checkout page collects any missing patient details and consent, including HIPAA authorization, and takes payment. Card details never pass through your agent.
+4. **The agent books the visit.** The agent finds slots at nearby patient service centers, and books, moves or cancels the appointment. The patient can also walk in with their requisition form.
+5. **The agent tracks the order and shares results.** The agent reports where the order stands and, once results arrive, returns them marker by marker with the lab's PDF report.
+
+## Getting access
+
+The Patient MCP server is in closed beta. Contact your Junction account team to enable it for your team. We'll configure:
+
+- the panels your patients can order, and their pricing
+- the support contact the agent gives patients when they need help
+- your server URLs
+
+| Environment | Server URL |
+| --- | --- |
+| Sandbox | `https://<team-id>.mcp.sandbox.us.junction.com/` |
+| Production | `https://<team-id>.mcp.us.junction.com/` |
+
+Use sandbox to build and test your integration. Orders there never reach a real lab, and you can move them through their lifecycle with the `simulate_order` tool.
+
+## Authentication
+
+The server follows the [MCP authorization specification](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization). Tokens are scoped to a single patient.
+
+| | |
+| --- | --- |
+| Discovery | Protected resource metadata at `/.well-known/oauth-protected-resource` (RFC 9728), which names the authorization server |
+| Grant | OAuth 2.0 authorization code with PKCE (`S256`), and refresh tokens |
+| Client registration | Client ID Metadata Documents: use the URL of your client metadata document as your `client_id` |
+| Client authentication | None (public clients) |
+| Scopes | `mcp:read`, `mcp:write`, and `offline_access` for refresh tokens |
+| Token use | Bearer token in the `Authorization` header |
+
+### Patient consent
+
+Connecting asks the patient for one approval and no other input. Junction collects the patient's details, terms acceptance and HIPAA authorization on the checkout page the first time they order, so a patient can browse panels and prices before sharing anything.
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| `list_panels` | Lists the panels your team offers, with each one's price for the patient's state. Accepts keyword search. |
+| `get_panel` | Returns one panel in full: markers, fasting, turnaround and price. |
+| `get_profile` | Returns the patient's details on file. |
+| `update_profile` | Saves or corrects the patient's details. Panel pricing needs only the patient's state. |
+| `start_checkout_session` | Opens checkout for a panel and returns the checkout URL. Pass a slot to hold an appointment during checkout. |
+| `find_appointment_slots` | Finds patient service center slots near a ZIP code, for a panel before payment or for a paid order. |
+| `book_appointment` | Books a slot for a paid order. |
+| `reschedule_appointment` | Moves an existing appointment to a new slot. |
+| `cancel_appointment` | Cancels an appointment. The order stays active. |
+| `list_orders` | Lists the patient's orders with status, appointment and whether a requisition is ready. |
+| `get_results` | Returns an order's results marker by marker, with a disclaimer. |
+| `get_order_document` | Returns a short-lived download link for the requisition form or the results PDF. |
+| `get_support_contact` | Returns the provider's name and support contact. |
+| `connection_doctor` | Reports the connection's identity and the capabilities your platform advertises, for debugging. |
+| `simulate_order` | Sandbox only. Moves a test order to its next lifecycle step. |
+
+### Resources
+
+| Resource | Contents |
+| --- | --- |
+| `junction://guides/patient_journey` | How the agent should guide a patient through ordering, booking and results, including how to handle each error. |
+| `junction://guides/results_disclaimer` | The fixed disclaimer wording shown with results. |
+
+The server's instructions tell agents to read `junction://guides/patient_journey` before helping a patient. Tool responses leave out the wording the guide holds, so an agent that skips it gives patients incomplete answers. If your platform can preload resources, preload this one.
+
+## Agent requirements
+
+Your agent must follow the patient journey guide. In particular, it must:
+
+- Show disclaimers returned with results and documents word for word.
+- Confirm with the patient before it starts checkout, books, moves or cancels anything.
+- Report results as the lab gives them, without interpreting them or giving medical advice, and point the patient to their clinician.
+- Tell a patient who describes a possible emergency to call 911 or go to the nearest emergency room, before anything else.
+- Pass on checkout and document links exactly as returned.
+- Keep internal IDs, slot IDs and error codes out of what it says to the patient.
+
+## Checkout and payment
+
+`start_checkout_session` returns a link to a hosted checkout page powered by Stripe. The page shows the final amount with tax, collects any missing patient details and consent, and takes payment. Each patient has one payment link per panel: starting checkout again replaces the earlier link.
+
+If the patient picks an appointment slot before paying, pass it to `start_checkout_session` and the slot is held through checkout. Slots chosen before payment start at least a day out; for a sooner visit, the patient pays first and the agent books afterwards. A new order can take a few minutes to appear in `list_orders` after payment.
+
+## Results and documents
+
+`get_results` returns each marker with its result, unit, reference range and the lab's flag, along with a disclaimer to show the patient. When results can't be shown in chat, the tool returns `results_unavailable`; share the lab's PDF report instead.
+
+Links from `get_order_document` expire after 15 minutes. Request a link when the patient needs it, not ahead of time.
+
+## Errors
+
+Tools report failures as MCP tool errors with a stable code. The patient journey guide tells the agent how to handle each one.
+
+| Code | Meaning |
+| --- | --- |
+| `address_required` | The tool needs the patient's state or ZIP code. |
+| `address_invalid`, `phone_invalid` | The address or phone number on file couldn't be verified. |
+| `invalid_search` | The appointment search parameters are invalid. |
+| `not_found` | The panel, order or appointment doesn't exist for this patient. |
+| `panel_unavailable` | The panel can't be ordered. |
+| `checkout_unavailable` | Payments can't be taken right now. |
+| `no_slots` | No slots were found within 25 miles. |
+| `slot_unavailable` | The slot is taken or its ID has expired. Slot IDs last 30 minutes. |
+| `scheduling_unavailable` | Appointments can't be booked here. The patient can walk in with their requisition. |
+| `no_requisition_yet` | The lab hasn't issued the requisition, so the visit can't be booked yet. |
+| `already_booked` | The order already has an appointment. |
+| `no_appointment` | The order has no appointment to change or cancel. |
+| `already_cancelled` | The appointment is already cancelled. |
+| `cannot_reschedule` | The appointment can't be moved. Cancel it and book a new slot instead. |
+| `booking_in_progress` | The lab is still confirming a booking. |
+| `order_not_bookable` | The order is cancelled, completed or partially resulted. |
+| `results_not_ready` | The results aren't in yet. |
+| `results_unavailable` | The results can't be shown in chat. |
+| `document_unavailable` | The document isn't available for the order's current status. |
+| `step_not_allowed` | Sandbox only: `simulate_order` can't move the order to that step. |
+
+Patients can't cancel an order through the server. Direct them to the support contact from `get_support_contact`.
+
+## Technical specifications
+
+| | |
+| --- | --- |
+| Protocol | [Model Context Protocol](https://modelcontextprotocol.io) |
+| Transport | Streamable HTTP, stateless |
+| Authentication | OAuth 2.0 authorization code with PKCE, using Client ID Metadata Documents |
+| Scopes | `mcp:read`, `mcp:write`, `offline_access` |
+| Regions | US |
+| Collection | Walk-in visits at Quest, Sonora Quest and Labcorp patient service centers |
