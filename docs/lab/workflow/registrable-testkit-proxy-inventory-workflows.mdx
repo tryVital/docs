@@ -77,27 +77,28 @@ For example, if you need 100 kits for one clinic location:
 
 1. Create or resolve a Junction stock user for that location, such as `clinic_a_inventory`.
 2. Place 100 registrable test kit orders with [`POST /v3/order/testkit`](/api-reference/lab-testing/create-unregistered-order), using that stock user's Junction `user_id`.
-3. Store the Junction order ID for each inventory order.
+3. Store the Junction order ID for each inventory order, along with the `sample_id` printed on the kit you assign to it.
 4. When a final patient is assigned to a kit or claims a kit, create or resolve that patient in Junction.
-5. Register the kit with [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), using the Junction order ID, the patient's Junction `user_id`, and the patient's registration details.
+5. Register the kit with [`POST /v3/order/testkit/register`](/api-reference/lab-testing/register-order), using the kit's `sample_id`, the patient's Junction `user_id`, and the patient's registration details. Junction finds the order from the `sample_id`.
 6. Junction rebinds the order from the stock user to the patient user during registration. Results are associated with the patient user.
 
 ## Example inventory mapping
 
-Your inventory tracking may look like this. The only Junction identifier you need to keep for registration is the order ID. Any extra fields are application-specific.
+Your inventory tracking may look like this. Registration is keyed by the kit's `sample_id`, so keep it alongside the Junction order ID. Any extra fields are application-specific.
 
 | Field | Description |
 | --- | --- |
 | Junction order ID | The Junction order created for this kit |
+| Sample ID | The `sample_id` printed on the kit, used to register it |
 | Patient ID | Your patient ID, once the kit is assigned or claimed |
 | Patient Junction user ID | The Junction user supplied at registration time |
 | Status | Example inventory status maintained by your application |
 
-| Junction Order ID | Patient ID | Patient Junction User ID | Status |
-| --- | --- | --- | --- |
-| order\_001 | null | null | available |
-| order\_002 | patient\_123 | junction\_user\_123 | registered |
-| order\_003 | patient\_456 | junction\_user\_456 | registered |
+| Junction Order ID | Sample ID | Patient ID | Patient Junction user ID | Status |
+| --- | --- | --- | --- | --- |
+| order\_001 | sample\_001 | null | null | available |
+| order\_002 | sample\_002 | patient\_123 | junction\_user\_123 | registered |
+| order\_003 | sample\_003 | patient\_456 | junction\_user\_456 | registered |
 
 ## Webhook and event attribution
 

@@ -37,7 +37,7 @@ For teams using a delegated lab account, walk-in and on-site lab tests are creat
 If a production lab test is created with `pending_approval`, Junction reviews the panel before changing its status to `active`. You can check the current status using the [List Lab Tests endpoint](/api-reference/lab-testing/tests-paginated).
 
 <Note>
-  In Sandbox, newly created lab tests are active immediately. Production approval rules are not applied in Sandbox.
+  In Sandbox, newly created lab tests are active immediately, except test kit lab tests, which start as `pending_approval` unless the lab is USSL or CRL. Other production approval rules are not applied in Sandbox.
 </Note>
 
 ## Copying and promoting panels in the dashboard
