@@ -58,7 +58,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
   </Step>
 
   <Step title="Create or resolve an integration-managed member">
-    Use the [Create Integration-Managed Member endpoint](/api-reference/org-management/connect/create-member) to create the member that should be signed in through Junction Connect. Include team role bindings for every team the member should access.
+    Use the [Create Integration-Managed member endpoint](/api-reference/org-management/connect/create-member) to create the member that should be signed in through Junction Connect. Include a team role binding for every team the member should access. Each team role binding makes the member a Team Admin of that team.
 
     ```bash cURL
     curl --request POST \
@@ -71,8 +71,7 @@ Junction Management API requests use `https://api.management.junction.com/` and 
         "email": "alex@example.com",
         "team_role_bindings": [
           {
-            "team_id": "00000000-0000-0000-0000-000000000000",
-            "role": "admin"
+            "team_id": "00000000-0000-0000-0000-000000000000"
           }
         ]
       }'

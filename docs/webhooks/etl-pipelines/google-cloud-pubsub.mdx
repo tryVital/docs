@@ -16,21 +16,22 @@ Each event is published with these Cloud Pub/Sub message attributes:
 
 | Type | Key | Value |
 | --- | --- | --- |
+| Attribute | `content-type` | `application/json`: UTF-8 JSON document |
 | Attribute | `event-type` | Junction event type, e.g., `daily.data.activity.created` |
-| Attribute | `blob-type` | `json`: UTF-8 JSON document |
-| Attribute | `blob-codec` | `gzip`: The blob is compressed by gzip. `null` or absent: The blob is uncompressed. |
 | Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
-| Ordering Key | - | Junction User ID (If you have enabled Event Ordering) |
+| Attribute | `user-id` | Junction user ID. Present only when the event relates to a user. |
+| Attribute | `content-encoding` | `gzip`: The blob is compressed by gzip. Absent: The blob is uncompressed. |
+| Ordering Key | - | Junction user ID (If you have enabled Event Ordering) |
 
 <Info>
-Payloads smaller than 1KiB would not be compressed. You must check `blob-codec` to identify if decompression of
+Payloads smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if decompression of
 the message payload blob is necessary.
 </Info>
 
 <Info>
-At this time, Junction publishes exclusively JSON blobs (`blob-type == json`).
+At this time, Junction publishes exclusively JSON blobs (`content-type == application/json`).
 
-Having said that, you are strongly encouraged to check for and drop any events with unrecognized `blob-type` and `blob-codec`.
+Having said that, you are strongly encouraged to check for and drop any events with unrecognized `content-type` and `content-encoding`.
 </Info>
 
 ## Pub/Sub event ordering
