@@ -16,7 +16,7 @@ and it will move from the `ordered` to the `requisition_created` status when the
 
 If you want to query all placed orders, you may use the [Get Orders endpoint](/api-reference/lab-testing/get-orders), passing an `order_activation_types` query parameter, which accepts the following values `["current", "scheduled"]`.
 - If the parameter is not provided, every order is returned.
-- If `current` is provided, orders with a `null` `activate_by` date or with `activate_by` set before the current date are returned.
+- If `current` is provided, orders with a `null` `activate_by` date or with `activate_by` set on or before the current date are returned.
 - If `scheduled` is provided, orders with an `activate_by` date greater than the current date are returned.
 
 Placing a scheduled order for January 6, 2025 would look like this:

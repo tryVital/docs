@@ -133,7 +133,7 @@ Order creation checks only that diagnosis codes exist and are active. It does no
 Passing validation does not guarantee that the order meets all other ordering requirements or that an insurer will cover the tests.
 </Warning>
 
-Commercial insurance orders require at least one valid diagnosis code. Use [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) to find supported codes.
+Commercial insurance orders require at least one valid diagnosis code. Quest orders accept at most 12 diagnosis codes. Use [Search ICD Code](/api-reference/lab-testing/insurance/search-diagnosis) to find supported codes.
 
 Before sending a [Create Order](/api-reference/lab-testing/create-order) request that includes diagnosis codes:
 
@@ -262,6 +262,7 @@ Junction rejects a commercial insurance order when:
 - The patient's state does not support commercial insurance for the selected lab account.
 - The selected test or one of its markers is not available for commercial insurance in the patient's state.
 - `icd_codes` is missing or contains an invalid diagnosis code.
+- `icd_codes` contains more than 12 codes on a Quest order. Create Order returns `400` with `A maximum of 12 ICD codes can be submitted for Quest orders`.
 - The user does not have patient demographics or a primary insurance record.
 
 ## Medicare and Medicaid location inference

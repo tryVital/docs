@@ -23,7 +23,8 @@ If an `initial` order is eligible for a redraw, rather than transitioning the [l
 - The order transaction's `status` field will be as follows:
   - `active` - one or more orders belonging to the order transaction are in progress
   - `completed` - all expected lab work for this transaction is completed and no further updates are expected
-  - `cancelled` - the initial order has been cancelled (and there's no redraw order), or both the initial and redraw orders have been cancelled
+  - `cancelled` - the initial order has been cancelled and there's no redraw order
+  - If the redraw order is cancelled, the order transaction's `status` is set to `completed`, since the `initial` order in `redraw_available` cannot be cancelled
 
 ### Webhooks
 
