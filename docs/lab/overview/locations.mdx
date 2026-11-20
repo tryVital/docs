@@ -14,9 +14,13 @@ Call the [Area Info endpoint](/api-reference/lab-testing/area-info) with the pat
   "zip_code": "85004",
   "central_labs": {
     "labcorp": {
-      "within_radius": 5,
-      "radius": "25",
-      "capabilities": ["stat", "appointment_scheduling_with_lab"]
+      "patient_service_centers": {
+        "within_radius": 5,
+        "radius": "25",
+        "capabilities": ["stat", "appointment_scheduling_with_lab"]
+      },
+      "supported_bill_types": ["client_bill"],
+      "lab_id": 27
     }
   }
 }
@@ -42,7 +46,7 @@ Call the [PSC Info endpoint](/api-reference/lab-testing/psc-info) to retrieve ad
         "phone_number": "480-878-3988",
         "hours": null
       },
-      "distance": "25",
+      "distance": 25,
       "site_code": "ABC",
       "capabilities": ["appointment_scheduling_with_lab"]
     }
