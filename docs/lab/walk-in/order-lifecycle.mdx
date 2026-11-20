@@ -159,7 +159,7 @@ When this feature is enabled on your Team, you can book appointments with Quest 
     The Appointment starts with the `reserved` status.
   </Step>
   <Step title="Waiting for Appointment Confirmation">
-    The appointment is being created asynchronously.
+    The appointment is being created asynchronously. If Sonora Quest has not confirmed the appointment within about 40 minutes, Junction cancels it.
   </Step>
   <Step title="Appointment has been created">
     The appointment has now been created.
@@ -177,7 +177,7 @@ When this feature is enabled on your Team, you can book appointments with Quest 
 
 ### Appointment Booking Failure
 
-If we are unable to book the Appointment asynchronously, then:
+If we are unable to book the Appointment asynchronously, or Sonora Quest does not confirm it within about 40 minutes, then:
 
 - The Appointment will move to the `cancelled` status.
 - Junction will send a `labtest.appointment.updated` event for the cancelled Appointment.

@@ -9,14 +9,14 @@ These options help integrations manage provider latency and safely retry appoint
 
 Junction maintains an availability cache containing the next 21 days of availability for supported locations. Each location is refreshed every five minutes on average.
 
-Set `allow_stale` on the [PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) request to use the cache when:
+[PSC Appointment Availability](/api-reference/lab-testing/psc-scheduling/appointment-psc-availability) uses the cache by default for providers that support it (Quest, Sonora Quest, and Labcorp). Junction serves cached availability when:
 
 1. Every requested location has a cache entry.
 2. Each entry is less than 15 minutes old.
 
-If the cache cannot fulfill the request, Junction requests availability from the PSC appointment provider.
+If the cache cannot fulfill the request, Junction requests availability from the PSC appointment provider. Set `allow_stale` to `false` to always request live availability from the provider.
 
-Use cached availability when you need a faster initial response and can tolerate the possibility that a displayed slot has recently changed. Always handle slot conflicts when the patient books.
+Cached availability gives a faster response, but a displayed slot may have recently changed. Always handle slot conflicts when the patient books.
 
 ## Idempotent booking
 

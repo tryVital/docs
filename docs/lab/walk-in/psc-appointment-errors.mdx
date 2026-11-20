@@ -9,14 +9,7 @@ PSC appointment errors fall into four broad categories: unavailable slots, inval
 
 Appointment availability can change between searching and booking. When a slot is no longer available, ask the patient to select another time and request fresh availability.
 
-Sandbox and production can return different status codes for a slot conflict:
-
-| Environment | Typical status | Behavior |
-| --- | --- | --- |
-| Sandbox | `400` | The mock provider does not reproduce every production conflict. |
-| Production | `404` | The provider reports that the requested slot is no longer available. |
-
-Handle both `400` and `404` as possible slot-unavailability responses when the message indicates a slot conflict.
+When the requested slot is no longer available, booking and rescheduling return `400` with `error_type` set to `appointment_slot_unavailable` in both sandbox and production. Branch on `error_type` rather than the status code or message text.
 
 | Example message | Recommended action |
 | --- | --- |
@@ -36,7 +29,7 @@ Handle both `400` and `404` as possible slot-unavailability responses when the m
 | `radius must be provided when using zip_code` | Include a search radius. |
 | `site_codes must be less than or equal to 3` | Send no more than three site codes. |
 
-Several invalid requests return `400`. If the response does not include a machine-readable error code, inspect the message to distinguish errors that require different corrective actions.
+Several invalid requests return `400`. When the response includes an `error_type`, branch on it. If it does not, inspect the message to distinguish errors that require different corrective actions.
 
 ## Order-state errors
 
@@ -63,7 +56,7 @@ Several invalid requests return `400`. If the response does not include a machin
 | --- | --- | --- |
 | `401` | The API key is missing or invalid. | Verify the environment and Team API key. |
 | `403` | The Team cannot access the order or operation. | Verify ownership and Team configuration. |
-| `503` | PSC appointment scheduling is not enabled. | Contact your Customer Success Manager. |
+| `503` | Quest PSC appointment scheduling is currently unavailable. | Retry later, or let the patient walk in. Contact support if it persists. |
 
 ## Testing error handling
 
