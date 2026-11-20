@@ -7,7 +7,7 @@ description: "Create or submit order PSC appointment book via the Junction API. 
 import FeatureBeta from '/snippets/feature-beta.mdx';
 
 <Tip>
-This endpoint supports optional `idempotency_key` and Async Confirmation features. These features are currently in closed beta. See [PSC Appointment Scheduling](/lab/walk-in/psc-appointment-scheduling#beta-features) for more info.
+This endpoint supports idempotent retries through the optional `X-Idempotency-Key` request header, and asynchronous confirmation. Both are available for Quest, Sonora Quest, and Labcorp appointments. See [Advanced PSC Scheduling Options](/lab/walk-in/psc-appointment-scheduling-opt-ins) for more info.
 </Tip>
 
 <RequestExample>
