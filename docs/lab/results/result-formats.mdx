@@ -95,7 +95,7 @@ Results can fall into one of the following categories:
 
 3. `ResultType.COMMENT` - A text result, e.g., `Positive`
 
-    In this case, the `result` field will be a string representation of the text, and the `value` field will be `-1`.
+    In this case, the `result` field will be a string representation of the text, and the `value` field will be `-1` or `null`.
 
     Note that you will also find the `Positive` value in the `notes` field.
 
@@ -115,6 +115,7 @@ Interpretation is a string value that can be one of the following:
 2. `Interpretation.ABNORMAL` - The result is outside of normal parameters.
 3. `Interpretation.CRITICAL` - The result is outside of critical parameters.
     In this case, refer to the [critical values](/lab/results/critical-results) section.
+4. `Interpretation.UNKNOWN` - The lab did not provide an interpretation, for example for some comment-type results.
 
 
 #### Standardization - LOINC
@@ -290,9 +291,9 @@ source_markers: List[ParentBiomarkerData] | None = None
 ```
 
 `inferred_failure_type` is the Junction-assigned error type.
-The error type is inferred from the comments received from the lab. They are to help assess possible root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve a more granular understanding of failure modes.
+The error type is inferred from the comments received from the lab. They are to help assess possible root causes of missing results, and aid the customer in identifying issues in aggregate. The way that we infer these error types is subject to change as we continue to refine and achieve a more granular understanding of failure modes, and new values may be added to this list.
 
-1. `quantity_not_sufficient_failure`
+1. `quantity_not_sufficient_failure` or `insufficient_volume`
 
    The lab could not process this result due to an insufficient quantity of collected sample. This could be due to the patient refusing to collect more, the phlebotomist being unable to collect the proper volume of blood from the patient, or the phlebotomist not collecting all of the sample they were meant to collect.
 

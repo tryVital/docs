@@ -3,26 +3,29 @@ title: "Order and Follow-up Physician"
 description: "Choose between using Junction's physician network, your own physicians, or a hybrid approach for lab test ordering and result review."
 ---
 
-For an order to be valid/complete, both the request and the results need to be validated by a physician. As such, Junction provides three flows:
+For an order to be valid/complete, both the request and the results need to be validated by a physician. As such, Junction provides four flows, which correspond to a lab account's [delegated status](/lab/overview/lab-accounts#delegated-status):
 
 ## 1. Order and Results through Junction Physician Network
 
-The validation of both the order and the results is done by Junction's physician network.
+The validation of both the order and the results is done by Junction's physician network (`not_delegated`).
 
 For each order, Junction's physician network validates the requisition and, when the results are available, they are uploaded to Junction's physician network to be evaluated for abnormal/critical results.
 On the physician's judgment, the patient may receive a phone call regarding their results.
 
 ## 2. Order and Results with Customer Physician Network
 
-In this flow, the Customer must specify a `physician` when making an order request. Both the order and the results are the responsibility of the Customer's chosen physician.
+In this flow, the Customer must specify a `physician` when making an order request. Both the order and the results are the responsibility of the Customer's chosen physician (`fully_delegated`).
 
 ## 3. Order with Junction Physician Network and Results with Customer Physician Network
 
-In this flow, the Customer does not specify a `physician` when making an order request - they use Junction's physician network.
+In this flow, the Customer does not specify a `physician` when making an order request - they use Junction's physician network (`result_delegated`).
 
 However, the results aren't uploaded to Junction's physician network, and it's the Customer's physician's responsibility to validate the results and do the follow-ups.
 
+## 4. Order with Customer Physician Network and Results through Junction Physician Network
+
+In this flow, the Customer's physician is responsible for the order, and Junction's physician network handles critical-result follow-up (`order_delegated`).
 
 <Warning>
-When there are critical results, Junction's physician network will always be notified.
+Junction's physician network follows up on critical results only in flows 1 and 4 (`not_delegated` and `order_delegated`). In flows 2 and 3, critical-result follow-up is the Customer's responsibility.
 </Warning>

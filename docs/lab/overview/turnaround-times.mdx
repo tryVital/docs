@@ -9,6 +9,10 @@ Turnaround time (TAT) measures the time from sample collection to results. Marke
 
 The existing `common_tat_days` and `worst_case_tat_days` fields use the p90 and p95 estimates over the past 90 days, respectively.
 
+<Note>
+Percentile estimates apply when transparent turnaround times are enabled for your team. Otherwise, the percentile fields are omitted, and `common_tat_days` and `worst_case_tat_days` use Junction's previous estimate. Contact your Customer Success Manager to enable transparent turnaround times.
+</Note>
+
 Turnaround time estimates apply at three levels:
 
 1. Markers
@@ -38,13 +42,13 @@ A percentile describes the historical distribution of turnaround times: p50 is t
 
 Estimates are expressed in calendar days.
 
-All six fields are included in marker responses and can be `null` when unavailable. They are not returned at the top level of a panel.
+When enabled for your team, all six fields are included in marker responses and can be `null` when unavailable. They are not returned at the top level of a panel.
 
 ## Marker turnaround times
 
-Marker turnaround times are based on historical orders of each marker. Responses containing marker data, such as [retrieving markers for a lab test](/api-reference/lab-testing/lab-test-markers), include the six percentile fields listed above. Each estimate can be `null` when unavailable.
+Marker turnaround times are based on historical orders of each marker. Responses containing marker data, such as [retrieving markers for a lab test](/api-reference/lab-testing/lab-test-markers), include the six percentile fields listed above when enabled for your team. Each estimate can be `null` when unavailable.
 
-The existing `common_tat_days` and `worst_case_tat_days` fields remain available for backward compatibility and now reflect the p90 and p95 estimates over the past 90 days, respectively.
+The existing `common_tat_days` and `worst_case_tat_days` fields remain available for backward compatibility and, when enabled for your team, reflect the p90 and p95 estimates over the past 90 days, respectively.
 
 ## Panel turnaround times
 
@@ -63,7 +67,7 @@ Order turnaround times are based on the panel's estimates and the sample collect
 
 ## Backward compatibility
 
-Existing fields remain available for backward compatibility, but their values now use the newer percentile estimates and may differ from previous values.
+Existing fields remain available for backward compatibility. When transparent turnaround times are enabled for your team, their values use the newer percentile estimates and may differ from previous values.
 
 | Existing field | Current behavior |
 | --- | --- |
