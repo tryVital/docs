@@ -173,7 +173,7 @@ const client = new JunctionClient({
 });
 
 const data = await client.link.connectPasswordProvider({
-    provider: "whoop",
+    provider: "peloton",
     username: "<username>",
     password: "<password>",
 });
@@ -189,7 +189,7 @@ client = Junction(
 )
 
 data = client.link.connect_password_provider(
-    PasswordProviders.WHOOP,
+    PasswordProviders.PELOTON,
     username="<username>",
     password="<password>",
 )
@@ -207,7 +207,7 @@ Junction client = Junction.builder()
     .build();
 
 var data = client.link().connectPasswordProvider(
-    PasswordProviders.WHOOP,
+    PasswordProviders.PELOTON,
     IndividualProviderData.builder()
         .username("<username>")
         .password("<password>")
@@ -230,7 +230,7 @@ c := client.NewClient(
 )
 
 response, err := c.Link.ConnectPasswordProvider(context.TODO(), &junction.IndividualProviderData{
-    Provider: junction.PasswordProvidersWhoop,
+    Provider: junction.PasswordProvidersPeloton,
     Username: "<username>",
     Password: "<password>",
 })
