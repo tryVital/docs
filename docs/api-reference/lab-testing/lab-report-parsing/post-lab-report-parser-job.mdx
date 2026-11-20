@@ -98,7 +98,7 @@ response, err := c.LabReport.ParserCreateJob(context.TODO(), &junction.CreateLab
 if err != nil {
     return err
 }
-fmt.Printf("Job ID: %s\n", response.JobId)
+fmt.Printf("Job ID: %s\n", response.Id)
 ```
 
 </RequestExample>
@@ -107,8 +107,9 @@ fmt.Printf("Job ID: %s\n", response.JobId)
 
 ```json Response
 {
-  "job_id": "550e8400-e29b-41d4-a716-446655440000",
+  "id": "550e8400-e29b-41d4-a716-446655440000",
   "status": "started",
+  "failure_reason": null,
   "data": null,
   "needs_human_review": false,
   "is_reviewed": false
