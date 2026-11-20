@@ -110,7 +110,7 @@ Every group_by column must be projected in `select` (via `group_key("*")` or eac
 When you create a Continuous Query or submit a synchronous Query with ALIGN, the following must hold:
 
 1. `group_by` must contain at least one [Date Truncate expression](/sense/query-dsl/group-by-clause#group-by-a-truncated-datetime). `carry_forward`, `carry_backward`, and `carry_nearest` all operate over the truncated datetime axis.
-2. `max_age` / `span` must be greater than or equal to the `group_by` Date Truncate period. A carry window smaller than the bucket size could never reach an adjacent bucket and is rejected rather than silently no-op'd.
+2. `max_age` / `span` must be greater than or equal to the `group_by` Date Truncate period. A carry window smaller than the bucket size could never reach an adjacent bucket and is rejected rather than silently no-op'd. This rule is only enforced when you create a Continuous Query, not on the synchronous Query API.
 3. Every `group_by` column must be projected in `select` - use `group_key("*")` for the common case.
 4. `group_by` cannot mix a Date Truncate expression with a [Date Part expression](/sense/query-dsl/group-by-clause#group-by-a-date-or-time-component) (such as day-of-month). Date Part values are derived from the same date column as the bucket and treating them as independent partition keys would produce impossible combinations like (February, day-of-month=30).
 
