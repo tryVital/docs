@@ -119,7 +119,9 @@ The endpoint returns up to 100 versions per request. When `next_cursor` is prese
 
 ## Create a new version
 
-Send the panel's complete desired marker membership in `marker_ids` when [updating the lab test](/api-reference/lab-testing/patch-lab-test):
+Panels managed by your organization through [lab test templates](/lab/workflow/organization-managed-lab-test-templates) can't be changed this way. The Team API rejects their update with HTTP `403`; change their markers through the [Lab Test Templates API](/api-reference/org-management/lab-test-templates/update-lab-test-template) instead.
+
+For a team-owned panel, send the panel's complete desired marker membership in `marker_ids` when [updating the lab test](/api-reference/lab-testing/patch-lab-test):
 
 ```bash
 curl --request PATCH \
