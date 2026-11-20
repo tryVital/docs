@@ -205,4 +205,4 @@ The subquery's inner aggregate function is added as a prefix, matching the stand
 - Struct field extract → `$FUNC.$COLUMN.$FIELD` (e.g., `mean.basal_body_temperature.value`).
 - `{ "element": true }` → `$FUNC.$COLUMN.element` (e.g., `sum.tags.element`).
 
-When the subquery is wrapped in an outer aggregate, the outer func prefix composes on top following the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules — e.g. `mean.mean.basal_body_temperature.value` reads as "mean of per-cycle mean of `basal_body_temperature.value`".
+When the subquery is wrapped in an outer aggregate, the output name follows the standard [SELECT clause](/sense/query-dsl/select-clause#aggregate-a-table-column) rules. If the query aggregates two or more distinct columns, the outer func prefix composes on top of the subquery name — e.g. `mean.mean.basal_body_temperature.value` reads as "mean of per-cycle mean of `basal_body_temperature.value`". Otherwise, the output name is the outer func alone, e.g. `mean`.

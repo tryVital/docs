@@ -98,8 +98,9 @@ See [Time and data semantics](/sense/query-dsl/time-and-data-semantics) for floa
 </Accordion>
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-* the aggregation function name, e.g., `sum`; or
-* if the Split by Source mode is enabled — `$FUNCTION_NAME.$SOURCE_COLUMN_NAME`, e.g., `mean.efficiency`.
+* if the query aggregates two or more distinct columns — `$FUNCTION_NAME.$SOURCE_COLUMN_NAME`, e.g., `mean.efficiency`;
+* otherwise, for a timeseries aggregate — `$FUNCTION_NAME.$FIELD_NAME`, e.g., `mean.value`;
+* otherwise — the aggregation function name, e.g., `sum`.
 </Accordion>
 </AccordionGroup>
 
@@ -166,7 +167,7 @@ See [List-column aggregation](/sense/query-dsl/list-column-aggregation) for the 
 Select the primary datetime index of the table using the [Index Column expression](/sense/query-dsl/column-expressions#index-column-expression).
 
 <Accordion title="Output column name" icon="line-columns" iconType="duotone" defaultOpen>
-`timestamp` (constant).
+`index` (constant).
 </Accordion>
 
 <CodeGroup>
