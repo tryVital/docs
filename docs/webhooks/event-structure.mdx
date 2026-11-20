@@ -32,12 +32,14 @@ Schemas and examples are available through [the Event Catalog tab in the Webhook
 ```json Example: Provider connection created
 {
   "data": {
-    "source": {
+    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
+    "provider": {
       "logo": "https://storage.googleapis.com/vital-assets/freestyle.png",
       "name": "Freestyle Libre BLE",
       "slug": "freestyle_libre_ble"
     },
-    "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
+    "external_user_id": null,
+    "resource_availability": { ... }
   },
   "event_type": "provider.connection.created",
   "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2",
@@ -55,9 +57,13 @@ Wearable data events have the following extended standard structure:
 * A `data` field, which comprises:
    * The UUID of the Junction user for which this event is intended — note that this is not the `client_user_id` of the Junction user. (JSON path: `$.data.user_id`)
    * The metadata about the data source of this event (JSON path: `$.data.source`)
-      * `name`: The human-readable name of the source.
-      * `slug`: The stable identifier Junction assigned to the source — see [Supported providers](/wearables/providers/introduction) for the complete list.
-      * `logo`: The URL to an icon representing the source.
+      * `provider`: The stable identifier Junction assigned to the provider — see [Supported providers](/wearables/providers/introduction) for the complete list.
+      * `type`: The type of app or device which recorded the data, e.g., `watch` or `phone`. This is `unknown` when Junction can't infer it.
+      * `app_id`, `device_id`, `sport` and `workout_id`: Additional details about the source, when applicable.
+   * Timeseries data events also include the metadata about the provider (JSON path: `$.data.provider`)
+      * `name`: The human-readable name of the provider.
+      * `slug`: The stable identifier Junction assigned to the provider.
+      * `logo`: The URL to an icon representing the provider.
    * Any number of event-specific fields.
 
 
@@ -68,9 +74,8 @@ Wearable data events have the following extended standard structure:
 
     # Common wearable data event fields
     "source": {
-      "logo": "https://path/to/example",
-      "name": "Garmin",
-      "slug": "garmin"
+      "provider": "garmin",
+      "type": "watch"
     },
     "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
   },
@@ -98,9 +103,8 @@ The object is made available directly at the top-level `data` field (JSON path: 
 
     # Common wearable data event fields
     "source": {
-      "logo": "https://path/to/example",
-      "name": "Garmin",
-      "slug": "garmin"
+      "provider": "garmin",
+      "type": "watch"
     },
     "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
   },
@@ -130,9 +134,8 @@ The object is made available directly at the top-level `data` field (JSON path: 
 
     # Common wearable data event fields
     "source": {
-      "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
-      "name": "Apple HealthKit",
-      "slug": "apple_health_kit"
+      "provider": "apple_health_kit",
+      "type": "watch"
     },
     "user_id": "4a29dbc7-6db3-4c83-bfac-70a20a4be1b2"
   },
@@ -182,6 +185,10 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 
     # Common wearable data event fields
     "source": {
+      "provider": "apple_health_kit",
+      "type": "watch"
+    },
+    "provider": {
       "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
       "name": "Apple HealthKit",
       "slug": "apple_health_kit"
@@ -231,6 +238,10 @@ and some may even send updates ASAP on time buckets that have incomplete data. F
 
     # Common wearable data event fields
     "source": {
+      "provider": "apple_health_kit",
+      "type": "watch"
+    },
+    "provider": {
       "logo": "https://storage.googleapis.com/vital-assets/apple_health.png",
       "name": "Apple HealthKit",
       "slug": "apple_health_kit"
@@ -268,9 +279,8 @@ e.g., [the Workout Stream endpoint](/api-reference/data/workouts/get-stream) `GE
 
     # Common wearable data event fields
     "source": {
-      "logo": "https://storage.googleapis.com/vital-assets/garmin.png",
-      "name": "Garmin",
-      "slug": "garmin"
+      "provider": "garmin",
+      "type": "watch"
     },
     "user_id": "bf6222fb-3b81-4201-9630-118bfee01e03"
   },
