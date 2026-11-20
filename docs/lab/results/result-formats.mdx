@@ -42,7 +42,7 @@ The `status` field can be one of the following:
 
 1. `ResultStatus.PARTIAL` - The results are partial.
     Labs can return results before all biomarkers are available.
-    Junction makes these results available to you as soon as we receive them, but does not send a webhook notification for `partial` results.
+    Junction makes these results available to you as soon as we receive them. Webhook notifications for `partial` results are off by default in production and on by default in sandbox, and can be enabled for your team. See [Partial Result Notifications](/lab/workflow/partials).
 
     This means that if you probe the API for results, you might get a `partial` result, even if there was no webhook for a `labtest.order.updated` event.
 
