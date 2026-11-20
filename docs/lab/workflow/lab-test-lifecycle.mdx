@@ -66,7 +66,7 @@ Below is a full list of all the available statuses by test modality. The names s
 
 - `received.testkit.ordered`
 - `received.testkit.awaiting_registration`
-- `received.testkit.testkit_registered`
+- `received.testkit.registered`
 - `received.testkit.requisition_created`
 - `received.testkit.requisition_bypassed`
 - `collecting_sample.testkit.transit_customer`
@@ -78,6 +78,7 @@ Below is a full list of all the available statuses by test modality. The names s
 - `sample_with_lab.testkit.delivered_to_lab`
 - `sample_with_lab.testkit.lab_processing_blocked`
 - `completed.testkit.completed`
+- `completed.testkit.corrected`
 - `failed.testkit.failure_to_deliver_to_customer`
 - `failed.testkit.failure_to_deliver_to_lab`
 - `failed.testkit.sample_error`
@@ -96,6 +97,7 @@ Below is a full list of all the available statuses by test modality. The names s
 - `collecting_sample.walk_in_test.redraw_available`
 - `sample_with_lab.walk_in_test.partial_results`
 - `completed.walk_in_test.completed`
+- `completed.walk_in_test.corrected`
 - `failed.walk_in_test.sample_error`
 - `cancelled.walk_in_test.cancelled`
 
@@ -110,6 +112,7 @@ Below is a full list of all the available statuses by test modality. The names s
 - `collecting_sample.at_home_phlebotomy.appointment_cancelled`
 - `sample_with_lab.at_home_phlebotomy.partial_results`
 - `completed.at_home_phlebotomy.completed`
+- `completed.at_home_phlebotomy.corrected`
 - `failed.at_home_phlebotomy.sample_error`
 - `cancelled.at_home_phlebotomy.cancelled`
 
@@ -118,8 +121,13 @@ Below is a full list of all the available statuses by test modality. The names s
 - `received.on_site_collection.ordered`
 - `received.on_site_collection.requisition_created`
 - `received.on_site_collection.requisition_bypassed`
-- `collecting_sample.on_site_collection.draw_completed`
+- `sample_with_lab.on_site_collection.draw_completed`
 - `sample_with_lab.on_site_collection.partial_results`
 - `completed.on_site_collection.completed`
+- `completed.on_site_collection.corrected`
 - `failed.on_site_collection.sample_error`
 - `cancelled.on_site_collection.cancelled`
+
+<Note>
+  The `corrected` statuses mean final results were amended by the laboratory after completion. They are available when corrected results are enabled for your team. Contact your Customer Success Manager to enable them.
+</Note>

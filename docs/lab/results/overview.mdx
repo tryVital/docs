@@ -29,7 +29,7 @@ See [Result Formats](/lab/results/result-formats) for the structured schema, PDF
 
 ## Partial results
 
-Partial results can be available before an order completes. By default, your integration may retrieve a partial result without receiving a webhook for that partial update. Teams that need proactive notifications can request [Partial Result Notifications](/lab/workflow/partials).
+Partial results can be available before an order completes. By default in production, your integration may retrieve a partial result without receiving a webhook for that partial update. In sandbox, partial result webhooks are on by default. Teams that need proactive notifications in production can request [Partial Result Notifications](/lab/workflow/partials).
 
 Do not treat a partial result as final, and do not assume every ordered marker will be present until the result reaches `final`.
 
