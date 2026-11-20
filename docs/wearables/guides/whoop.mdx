@@ -16,7 +16,7 @@ Then, you can configure the WHOOP integration in the Junction Dashboard by navig
 
 ## Data semantics
 
-WHOOP does not report the daily step count used in Junction activity summaries. Junction calculates `steps` from distance recorded during walking and running workouts, so the value does not include movement outside those workouts or other workout types. See [Junction-Calculated Metrics](/wearables/providers/metric-sources-and-limitations) for more information about non-direct summary fields.
+When WHOOP reports a step count for a cycle, Junction uses it as `steps` in the activity summary. Otherwise, Junction calculates `steps` from distance recorded during walking and running workouts, so the value does not include movement outside those workouts or other workout types. See [Junction-Calculated Metrics](/wearables/providers/metric-sources-and-limitations) for more information about non-direct summary fields.
 
 ## Limitations
 

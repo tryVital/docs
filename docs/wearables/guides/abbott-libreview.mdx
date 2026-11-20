@@ -67,12 +67,12 @@ implications, as well as how to properly handle floating time data.
 LibreView, in addition to standard CGM data, provides insights manually added by the user.
 This data is available in the following types:
 
-* `note`: A general note added by the user, often providing context for other entries.
+* `note`: A general note added by the user, often providing context for other entries. Notes logged at the same timestamp are merged into one sample, with their text joined by `; `. Each note is tagged as `exercise`, `food`, `insulin_injection` or `unspecified`.
 * `carbohydrates`: Grams of carbohydrates logged by the user.
 * `insulin_injection`: Units of insulin injected by the user, categorized as either `rapid_acting` or `long_acting`.
 
 <Info>
-  Timestamps for these events have hourly granularity and are marked with the beginning of the hour.
+  Timestamps for `carbohydrates` and `insulin_injection` have hourly granularity and are marked with the beginning of the hour. `note` samples use the timestamp the note was logged at.
 </Info>
 
 ## Connecting a LibreView patient account (`abbott_libreview`)
