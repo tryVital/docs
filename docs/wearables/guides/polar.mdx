@@ -1,10 +1,14 @@
 ---
 title: "Polar"
-description: "Understand Polar integration limitations where historical data backfill is only available for sleep and sleep stream resources."
+description: "Understand which Polar resources support historical data backfill and how far back Junction can pull them."
 ---
 
 ## Historical backfill with Polar
 
-Polar, unlike most other providers, doesn't offer historical data for most of its resources.
-The only resources that do have it are Sleep and Sleep Stream - 28 days each.
+Junction backfills these Polar resources:
 
+- Activity and Steps
+- Body, Weight and Profile
+- Sleep, including Sleep Cycle, Heart Rate, HRV and Respiratory Rate
+
+The default backfill window is 28 days. You can change it through [Team Data Pull Preferences](/wearables/providers/historical-data-pull-range): Activity can be configured up to 365 days, and the other resources up to 28 days.
