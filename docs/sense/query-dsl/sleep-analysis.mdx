@@ -73,7 +73,7 @@ Chronotype categories are based on the sleep midpoint time:
 import vitalx.aggregation as va
 
 va.select(
-    va.Sleep.chronotype().latest()
+    va.Sleep.chronotype().newest()
 ).group_by(
     va.date_trunc(va.Sleep.index(), 1, "week")
 )
@@ -82,7 +82,7 @@ va.select(
 ```jsonc JSON DSL
 {
     "select": [
-        { "func": "latest", "arg": { "value_macro": "chronotype" } }
+        { "func": "newest", "arg": { "value_macro": "chronotype" } }
     ],
     "group_by": [
         {

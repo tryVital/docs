@@ -34,15 +34,16 @@ For each date, Junction selects the highest-priority eligible Sleep provider and
 
 Readiness Scores are computed from each user's daily **long sleep** session using:
 
-- sleep duration
-- resting heart rate during sleep
-- HRV during sleep
-- Junction sleep score
+- asleep duration
+- minimum heart rate during sleep
+- HRV during sleep (mean RMSSD, falling back to mean SDNN when RMSSD is missing)
+
+The Junction sleep score for the same session is returned as `sleep_score`. It isn't an input to the recovery, stress, or strain scores.
 
 ### Baseline and warm-up
 
 - Recovery and stress are personalized against a rolling baseline from prior nights.
-- Baseline window is 21 days, with a minimum of 7 prior observations.
+- The baseline is the previous 21 scored nights from the same provider and source type, with a minimum of 7 nights.
 - Before enough history exists, `recovery_score`, `stress_score`, and `strain_score` can be `null`.
 
 ### Recovery score (0-100)
@@ -50,7 +51,7 @@ Readiness Scores are computed from each user's daily **long sleep** session usin
 Recovery combines three signals:
 
 - HRV relative to personal baseline (higher is better)
-- resting heart rate relative to baseline (lower is better)
+- minimum sleeping heart rate relative to baseline (lower is better)
 - sleep duration relative to an 8-hour target
 
 The combined signal is mapped to a `0-100` scale with a logistic curve.  
@@ -76,7 +77,7 @@ Higher `strain_score` means greater expected load/strain.
 
 ### Missing-data behavior
 
-- Missing HRV or resting heart rate: `recovery_score` and `stress_score` are `null`.
+- Missing HRV or minimum sleeping heart rate: `recovery_score` and `stress_score` are `null`.
 - Missing sleep duration: `strain_score` is `null`.
 - `sleep_score` is returned when available.
 
