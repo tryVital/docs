@@ -12,11 +12,11 @@ Some biomarkers require answers to clinical questions. This is referred to as AO
 There are 4 types of AOE:
 
 1. `choice`
-2. `multiple_choice`
+2. `multi_choice`
 3. `numeric`
 4. `text`
 
-`choice` and `multiple_choice` have a set list of answers to pick from, while `numeric` and `text` don't, and are free-form responses.
+`choice` and `multi_choice` have a set list of answers to pick from, while `numeric` and `text` don't, and are free-form responses.
 
 AOE questions can also be required or optional.
 
@@ -65,9 +65,9 @@ As an example, let's look at the `Lead, Blood (Adult)` marker. We have omitted s
 
 Each question has its own `id`, which will be required to answer it. The types we refer to above are an enum that is represented by `type`.
 
-The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multiple_choice`, otherwise it is empty.
+The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multi_choice`, otherwise it is empty.
 
-`required` determines whether the questions MUST be answered in order for the order to be valid; otherwise, an error will be shown: `Missing required questions - "question"`.
+`required` determines whether the questions MUST be answered in order for the order to be valid; otherwise, an error will be shown: `Missing required questions. IDs - [<question_id>, ...].`.
 
 ## How to answer
 
@@ -140,7 +140,7 @@ In order to answer the required question, you will need the `marker_id` which is
 
 The `answer` field contains the actual answer to the question and its value will depend on the type and question itself.
 
-1. `choice` and `multiple_choice`
+1. `choice` and `multi_choice`
 
 In this case, the `answer` should contain the `code` field from the [`answers` list](#where-to-find-the-questions).
 
