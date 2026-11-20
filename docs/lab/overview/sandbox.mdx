@@ -9,10 +9,10 @@ To enable customers to simulate the ordering process in the sandbox environment,
 
 Every created team comes with 4 standard `Lab Tests` to allow the customer to test all 4 collection modalities:
 
-- **Test Kit**: At-home collection using shipped test kits
-- **Walk-in Test**: Patient visits a Patient Service Center (PSC) location
-- **Mobile Phlebotomy**: A mobile phlebotomist visits the patient's location
-- **On-Site Collection**: Collection at the customer's facility
+- **Test Kit** (`general_wellness_female_002`): At-home collection using shipped test kits
+- **Walk-in Test** (`comprehensive_metabolic_panel`): Patient visits a Patient Service Center (PSC) location
+- **Mobile Phlebotomy** (`lipid_panel_athome`): A mobile phlebotomist visits the patient's location
+- **On-Site Collection** (`comprehensive_metabolic_panel_on_site`): Collection at the customer's facility
 
 For custom panels, you can [create a lab test through the API](/lab/workflow/create-test) or [copy an existing production panel into sandbox](/lab/workflow/create-test#copy-production-panels-into-sandbox) from **Your Panels** in the dashboard, when copying is enabled for your team. Copies are independent sandbox panels with new lab test IDs and sandbox pricing and settings. Junction generates simulated results based on their associated markers; see the [results section](#results).
 
