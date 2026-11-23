@@ -54,9 +54,9 @@ We have a feature request in our backlog to support more representative sandbox 
 
 ## Results
 
-To allow customers to test, Junction generates fake results for each lab test based on the [expected markers](/lab/results/result-formats#expected-results).
+By default, Junction generates synthetic results for each lab test based on the [expected markers](/lab/results/result-formats#expected-results).
 
-The generated JSON results will cycle through all possible [result types](/lab/results/result-formats#resulttype):
+Synthetic JSON results cycle through all possible [result types](/lab/results/result-formats#resulttype):
 
 - `numeric`: Numerical values with reference ranges
 - `comment`: Textual commentary results
@@ -74,7 +74,7 @@ The generated JSON results will cycle through all possible [result types](/lab/r
 
 You can customize the end response of the results via the body of the [Simulate Order](/api-reference/lab-testing/simulate-order) endpoint.
 
-There are three avenues of customization currently:
+There are four avenues of customization currently:
 
 ### 1. Interpretation
 
@@ -119,6 +119,25 @@ Supplying this field will generate missing biomarkers in the result to simulate 
 ```
 
 This simulates scenarios where some biomarkers fail processing or are unavailable, which is common in real-world lab operations.
+
+In the Dashboard, interpretation, result-type, and missing-result controls are available for walk-in, mobile phlebotomy, and on-site collection orders. Test kit simulations retain their static sample-result behavior, so the Dashboard hides these advanced synthetic controls for test kit orders.
+
+### 4. Data Source
+
+The `data_source` field controls how Junction selects structured result values:
+
+- `synthetic`: Generates values for the expected results. This is the default.
+- `observed`: Selects previously observed structured values. This option supports Quest, BioReference, and Labcorp orders.
+
+```json
+{
+  "data_source": "observed"
+}
+```
+
+Observed values are selected independently for each expected result, so they do not represent one complete laboratory report. When no eligible observed value is available for an expected result, Junction returns that result as missing. An observed simulation requires coverage for at least one expected result.
+
+The static example PDF returned in sandbox does not reflect synthetic or observed JSON results.
 
 ## Environment-Specific Behavior
 
