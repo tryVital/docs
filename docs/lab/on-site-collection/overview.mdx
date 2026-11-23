@@ -24,6 +24,39 @@ With on-site collection, the patient has their sample collected at a customer-ma
 - **Patient instructions:** Tell patients when and where to attend and provide any preparation instructions associated with the order.
 - **Availability:** On-site collection must be enabled and configured for your Team before you place orders.
 
+## Preparing an on-site draw in the Dashboard
+
+After creating an on-site order, select **View instructions now** in the success
+notification. You can also open the saved order and choose **Start on-site collection**
+once a sample ID is available.
+
+1. **Tubes & instructions:** Review tube types, quantities, and the collection and
+   processing instructions returned by the laboratory. Guidance is available for
+   Quest, Labcorp, and BioReference when enabled for your team. Retry a failed
+   request or use the order's collection-instructions PDF when available.
+2. **Labels:** Check the collection time and number of labels, then generate the
+   PDF. The time defaults to your current local time and is printed on every label.
+   Preview, open, or print the PDF. Changing the time or count requires regenerating
+   the labels before continuing.
+3. **Confirm collection:** After the blood has been collected and the tubes labeled,
+   select **Yes, mark as collected**. This updates the order to `draw_completed`.
+   Choose **Not yet** to leave without recording collection.
+
+Generating or printing labels does not mark the draw complete. API integrations
+can record a completed draw with [Update Order Draw Completed](/api-reference/lab-testing/update-order-draw-completed).
+
+Instructions support direct links to a saved order:
+
+```text
+/team/{team_id}/{environment}/lab-testing/order/{order_id}?collection=instructions
+```
+
+The link requires normal Dashboard access to that team and order. It opens the
+instructions again after a reload. If the sample ID is still being assigned,
+the guide waits until it is available. After a draw is recorded, the start action
+is hidden; linked instructions remain available for viewing without another
+collection submission.
+
 ## Related guides
 
 - [On-site Collection Order Lifecycle](/lab/on-site-collection/order-lifecycle)
