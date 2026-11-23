@@ -40,6 +40,12 @@ If a production lab test is created with `pending_approval`, Junction reviews th
   In Sandbox, newly created lab tests are active immediately, except test kit lab tests, which start as `pending_approval` unless the lab is USSL or CRL. Other production approval rules are not applied in Sandbox.
 </Note>
 
+## Checking and editing fasting requirements
+
+Open a panel from **Lab Testing → Your Panels** to see **Fasting required** in its details. For an editable panel, choose **Edit panel**, change **Fasting required**, and save your changes.
+
+You can also read `fasting` through the [Get Lab Test endpoint](/api-reference/lab-testing/get-lab-test) or update it through the [Update A Test endpoint](/api-reference/lab-testing/patch-lab-test). Test-kit panels cannot be updated through that endpoint. For organization-managed panels, change the fasting setting through the [organization's lab test template](/lab/workflow/organization-managed-lab-test-templates).
+
 ## Copying and promoting panels in the dashboard
 
 You can reuse a panel across environments from **Lab Testing → Your Panels** in the dashboard. Both actions create a new panel for the same team in the other environment, with a new lab test ID. Use the destination panel's ID when creating orders there.

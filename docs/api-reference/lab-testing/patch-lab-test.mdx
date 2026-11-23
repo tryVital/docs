@@ -4,6 +4,10 @@ description: "Partially update lab tests via the Junction API. Requires authenti
 openapi: 'PATCH /v3/lab_tests/{lab_test_id}'
 ---
 
+To change whether a saved panel requires fasting, send `{"fasting": true}` or `{"fasting": false}`. You can update fasting alone or alongside other editable fields. Omitting `fasting` or sending `null` preserves the saved value. A fasting-only change does not create a new marker version.
+
+Existing panel edit restrictions apply: test-kit panels cannot be updated through this endpoint, and organization-managed panels must be changed through their [lab test template](/lab/workflow/organization-managed-lab-test-templates).
+
 <RequestExample>
 
 ```python Python
