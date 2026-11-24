@@ -17,6 +17,8 @@ Each lab test keeps the same `id` throughout its lifetime. When its marker membe
 
 Junction always selects the latest version when you create an order. You continue to provide a `lab_test_id`; you do not provide a version number in the order request.
 
+If an explicit fasting override conflicts with a panel changed while the order request is being resolved, the API returns `409` with `error_type: order_creation_conflicted`. Read the latest panel before submitting a new order request.
+
 When the order is created, Junction pins the selected version to that order. Subsequent panel updates do not affect the order's requisition, expected results, result processing, or billing.
 
 | Action | Version used |
