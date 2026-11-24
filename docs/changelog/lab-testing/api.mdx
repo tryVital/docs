@@ -4,6 +4,12 @@ sidebarTitle: "API"
 description: "Changelog of Junction Lab Testing API updates including custom requisition comments, report parsing, and order management enhancements."
 ---
 
+### PSC location names in appointment responses (Nov 2026)
+
+PSC appointments booked or rescheduled through Junction are now linked to the selected patient service center. `location_name` is returned on later appointment reads, cancellation responses and [`labtest.appointment.updated`](/event-catalog/labtest.appointment.updated) webhooks, not only in the booking and rescheduling responses.
+
+`location_name` is the current name of the linked PSC. It is `null` for appointments with no linked PSC, including bookings made before this change that have not been rescheduled. See [PSC appointment scheduling](/lab/walk-in/psc-appointment-scheduling).
+
 ### Appointment cancellation reason (Nov 2026)
 
 Appointment events now include `cancellation_reason`, which says why Junction cancelled an appointment. It is only set on `cancelled` events that Junction initiated for a known reason, and is `null` otherwise. This enum is non-exhaustive.
