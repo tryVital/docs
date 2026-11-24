@@ -194,9 +194,9 @@ We have introduced three opt-in features to the PSC Appointment Scheduling API t
 <Accordion title="Details" defaultOpen icon="pencil" iconType="duotone">
   You can now:
 
-  * [Query PSC availability through our minutely-updated cache](/lab/walk-in/psc-appointment-scheduling-opt-ins#availability-cache) to improve your slot searching and selection experience.
-  * [Specify an Idempotency Key](/lab/walk-in/psc-appointment-scheduling-opt-ins#idempotency-key) to ensure that your booking CTA is resilient against any network connectivity issues.
-  * [Adopt the Async Confirmation flow](/lab/walk-in/psc-appointment-scheduling-opt-ins#async-confirmation) to buffer your booking experience from any instability and unavailability of the underlying PSC Provider API.
+  * [Query PSC availability through our minutely-updated cache](/lab/walk-in/psc-appointment-scheduling-opt-ins#cached-availability) to improve your slot searching and selection experience.
+  * [Specify an Idempotency Key](/lab/walk-in/psc-appointment-scheduling-opt-ins#idempotent-booking) to ensure that your booking CTA is resilient against any network connectivity issues.
+  * [Adopt the Async Confirmation flow](/lab/walk-in/psc-appointment-scheduling-opt-ins#asynchronous-confirmation) to buffer your booking experience from any instability and unavailability of the underlying PSC Provider API.
 
   Check out the [PSC Appointment Scheduling: Opt-in Features](/lab/walk-in/psc-appointment-scheduling-opt-ins) for details.
 </Accordion>
@@ -224,7 +224,7 @@ You can now provide instructions for phlebotomists through two new optional fiel
   - **POST /v3/order/&#123;order_id&#125;/phlebotomy/appointment/request** – Request body now accepts an optional `appointment_notes` field.
   - **PATCH /v3/order/&#123;order_id&#125;/phlebotomy/appointment/reschedule** – Request body now accepts an optional `appointment_notes` field.
 
-  Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#access-notes-and-appointment-notes) for details.
+  Both fields are returned in the appointment response. See the [At-Home Phlebotomy overview](/lab/at-home-phlebotomy/overview#instructions-for-the-phlebotomist) for details.
 </Accordion>
 
 ### Custom Comments on Requisitions (Mar 2026)
