@@ -66,9 +66,9 @@ curl --request GET \
   --header "x-vital-api-key: <your_api_key>"
 ```
 
-The response's `version` and `markers` fields describe that immutable historical version. Junction returns `404` if the lab test or requested version does not exist or is unavailable to your team.
+The response's `version`, `markers`, and `fasting` fields describe that immutable historical version. Junction returns `404` if the lab test or requested version does not exist or is unavailable to your team.
 
-Historical reads are useful when you need to display or audit the exact marker configuration used by an older order. Only marker membership is versioned; mutable metadata such as the panel name and status reflects the lab test's current values.
+Historical reads are useful when you need to display or audit the exact marker configuration and fasting requirement used by an older order. Marker membership and fasting are versioned; mutable metadata such as the panel name and status reflects the lab test's current values.
 
 ## List version history
 
