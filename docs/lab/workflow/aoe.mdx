@@ -6,7 +6,9 @@ description: "Handle Ask on Order Entry (AOE) questions required for certain bio
 Some biomarkers require answers to clinical questions. This is referred to as AOE. These can be as simple as the volume of a particular marker or the patient's ethnicity.
 
 <Note>
-  Questions that are related to fasting (e.g., code `FSTING`) do not need to be answered. Junction uses the default value you provided for fasting at the [lab test](/api-reference/lab-testing/post-test) creation time. However, if you do answer them, then the answered value overrides the preset test value.
+  When creating a new order, fasting questions (for example, code `FSTING`) can be left unanswered. Junction uses the fasting setting of the selected [lab test version](/api-reference/lab-testing/post-test). An explicit answer overrides that setting for its question.
+
+  If Junction staff recreate an order using a panel with a different fasting setting, fresh answers are required for every fasting question on that panel. Copied answers cannot satisfy this requirement. Unrelated answers and the original order are preserved.
 </Note>
 
 There are 4 types of AOE:
