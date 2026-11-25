@@ -1,21 +1,23 @@
 ---
 title: "Lab Test Versioning"
-description: "Learn how Junction preserves panel marker sets across orders and how to read, update, and audit lab test versions."
+description: "Learn how Junction preserves panel marker sets and fasting requirements across orders and how to read, update, and audit lab test versions."
 ---
 
-Lab test versioning lets you update a panel's biomarkers without changing orders that have already been created.
+Lab test versioning lets you update a panel's biomarkers or fasting requirement without changing orders that have already been created.
 
-Each lab test keeps the same `id` throughout its lifetime. When its marker membership changes, Junction creates a new immutable version of that marker set and increments the numeric `version`.
+Each lab test keeps the same `id` throughout its lifetime. When its marker membership or fasting requirement changes, Junction creates a new immutable version and increments the numeric `version`. Each version preserves both its marker set and its fasting requirement.
 
 ## How versioning works
 
 - New lab tests begin at version `1`.
-- Changing the complete marker set creates the next version.
-- Changing only the panel name, status, or other metadata does not create a version.
-- Submitting the same marker set is a no-op and returns the current version.
+- Changing the complete marker set or fasting requirement creates the next version. Changing both together creates one new version.
+- Changing only the panel name or status does not create a version.
+- Submitting the same marker set and fasting requirement is a no-op and returns the current version.
 - Historical versions are read-only.
 
 Junction always selects the latest version when you create an order. You continue to provide a `lab_test_id`; you do not provide a version number in the order request.
+
+If an explicit fasting override conflicts with a panel changed while the order request is being resolved, the API returns `409` with `error_type: order_creation_conflicted`. Read the latest panel before submitting a new order request.
 
 When the order is created, Junction pins the selected version to that order. Subsequent panel updates do not affect the order's requisition, expected results, result processing, or billing.
 
@@ -23,8 +25,8 @@ When the order is created, Junction pins the selected version to that order. Sub
 | --- | --- |
 | Create a new order | Latest version at order creation |
 | Read an existing order | Version pinned to that order |
-| Update only panel metadata | Current version; no new version |
-| Change panel marker membership | New latest version |
+| Update only the panel name or status | Current version; no new version |
+| Change panel marker membership or fasting | New latest version |
 | Recreate or redraw an order | Latest version when the new order is created |
 
 ## Read the latest version
@@ -66,9 +68,9 @@ curl --request GET \
   --header "x-vital-api-key: <your_api_key>"
 ```
 
-The response's `version` and `markers` fields describe that immutable historical version. Junction returns `404` if the lab test or requested version does not exist or is unavailable to your team.
+The response's `version`, `markers`, and `fasting` fields describe that immutable historical version. Junction returns `404` if the lab test or requested version does not exist or is unavailable to your team.
 
-Historical reads are useful when you need to display or audit the exact marker configuration used by an older order. Only marker membership is versioned; mutable metadata such as the panel name and status reflects the lab test's current values.
+Historical reads are useful when you need to display or audit the exact marker configuration and fasting requirement used by an older order. Marker membership and fasting are versioned; mutable metadata such as the panel name and status reflects the lab test's current values.
 
 ## List version history
 
