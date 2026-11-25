@@ -13,11 +13,15 @@ Use templates when several teams should order the same panel and receive future 
 | --- | --- |
 | Template | The organization-level panel definition and its team assignments. |
 | Draft | Editable changes waiting for publication. |
-| Template version | An immutable snapshot created when a changed definition is published. |
+| Template version | An immutable snapshot created when a versioned definition change is published. |
+| Active version | The approved version currently used for new orders. |
+| Pending version | A marker or lab-account update awaiting Junction approval while the active version remains available. |
 | Managed lab test | The shared panel used by every assigned team for pricing, quotes, and orders. |
 | Lab-test version | The panel version pinned by an order or quote. |
 
 A template controls the panel name, description, partner laboratory, collection method, fasting requirement, marker membership, and optional lab account. The collection method cannot change after creation, and the laboratory cannot change after the first publication.
+
+Name and description changes update the live template and managed lab test without creating a new template or lab-test version. Marker, fasting, and lab-account changes are versioned when published.
 
 The template does not replace the Lab Testing API. After publication, assigned teams use the shared `lab_test_id` with the existing pricing, quote, and order endpoints.
 
@@ -28,9 +32,17 @@ The template does not replace the Lab Testing API. After publication, assigned t
 3. Update the draft when the panel definition or desired team set changes.
 4. Publish again to apply all staged changes atomically.
 
-The first publication creates template version `1`, one shared lab test, and lab-test version `1`. A later definition change creates one new template version and one new shared lab-test version. Assignment-only changes do not create a version.
+The first publication creates template version `1`, one shared lab test, and lab-test version `1`. A later versioned definition change creates one new template version and one new shared lab-test version. Assignment-only changes and name or description updates do not create a version.
 
 Publication is atomic within the selected environment and region. If the panel is invalid for any selected team, Junction applies no changes.
+
+## Approval and ordering continuity
+
+A marker or lab-account change may require Junction approval. In that case, publication creates a pending candidate while the last approved version remains active and orderable. Existing and new orders continue to use the active version until Junction approves the candidate.
+
+Approval promotes the candidate without changing the shared `lab_test_id`. Discarding a pending candidate cancels it, preserves it in version history for audit, and restores the draft definition and desired team set from the active version.
+
+If the first publication requires approval, no earlier active version exists, so assigned teams cannot resolve or order the panel until approval.
 
 ## Add or remove teams
 
@@ -59,13 +71,25 @@ We recommend storing both stable IDs after publication and calling the team-scop
 
 Every assigned team sees the same current panel definition. Publishing an update does not rewrite existing orders or quotes: each order and quote continues to reference the lab-test version that was current when it was created.
 
-Publishing an unchanged draft is idempotent and creates no version. Adding, removing, or restoring a team also creates no version. See [Lab Test Versioning](/lab/workflow/lab-test-versioning) for the behavior of pinned order and quote versions.
+Publishing an unchanged draft is idempotent and creates no version. Adding, removing, or restoring a team also creates no version. Cancelled pending versions remain visible in history but cannot be ordered. See [Lab Test Versioning](/lab/workflow/lab-test-versioning) for the behavior of pinned order and quote versions.
+
+## Managed lab tests
+
+Team-facing lab-test responses identify organization-managed panels with `managed_by_org_template: true`.
+
+A managed lab test cannot be edited through team-authorized lab-test mutation endpoints. Attempts to change its name, active state, markers, or other editable panel fields return `403 Forbidden`. Organization administrators should update managed panels through the template endpoints instead.
 
 ## Scope and access
 
-A template belongs to one organization, API environment, and region. Only teams in that scope can be assigned. Team administrators cannot manage organization templates.
+A template belongs to one organization, API environment, and region. Only teams in that scope can be assigned. Organization administrators and authorized Management Keys can manage templates; team administrators cannot read or mutate organization templates through the Management API.
 
 All assigned teams must be compatible with the shared panel configuration. Junction validates the complete team set before publishing or adding a team and does not create hidden team-specific overrides.
+
+## Archive a template
+
+Archiving a template is irreversible in the initial release. It removes all active team bindings and prevents further edits, publications, or assignments while preserving the shared lab test, immutable versions, cancelled candidates, existing orders, and quotes.
+
+After archive, team-scoped and explicit-team resolvers return `404 Not Found`, and assignment attempts are rejected.
 
 ## Next steps
 
