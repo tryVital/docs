@@ -8,7 +8,7 @@ Some biomarkers require answers to clinical questions. This is referred to as AO
 <Note>
   When creating a new order, fasting questions (for example, code `FSTING`) can be left unanswered. Junction uses the fasting setting of the selected [lab test version](/api-reference/lab-testing/post-test). An explicit answer overrides that setting for its question.
 
-  If Junction staff recreate an order using a panel with a different fasting setting, fresh answers are required for every fasting question on that panel. Copied answers cannot satisfy this requirement. Unrelated answers and the original order are preserved.
+  If an order is recreated using a panel with a different fasting setting, fresh answers are required for every fasting question on that panel. Copied answers cannot satisfy this requirement. The original order’s answers and fasting setting remain unchanged.
 </Note>
 
 There are 4 types of AOE:
@@ -70,6 +70,12 @@ Each question has its own `id`, which will be required to answer it. The types w
 The `answers` list contains a list of possible answers in the case that `type` is one of `choice` or `multi_choice`, otherwise it is empty.
 
 `required` determines whether the questions MUST be answered in order for the order to be valid; otherwise, an error will be shown: `Missing required questions. IDs - [<question_id>, ...].`.
+
+## Accepting an unmatched result
+
+For teams with unmatched-result review enabled, before accepting a result for a selected order, call `POST /v3/unmatched_result/{raw_result_id}/preview_accept` with `order_id`. The response’s `fasting_questions` lists the replacement panel’s questions that require fresh answers, without catalog defaults. The preview reads the catalog without creating an order or panel, and validates any answers supplied in `aoe_answers`.
+
+Send the answers using the format below in `POST /v3/unmatched_result/{raw_result_id}/accept`. Answers must identify both the marker and question; one answer cannot satisfy the same question on another marker. Conflicting answers for the same pair are rejected. Actions that release an existing order or import a new order do not accept fresh answers through this field.
 
 ## How to answer
 
