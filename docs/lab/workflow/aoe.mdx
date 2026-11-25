@@ -73,9 +73,9 @@ The `answers` list contains a list of possible answers in the case that `type` i
 
 ## Accepting an unmatched result
 
-For teams with unmatched-result review enabled, before accepting a result for a selected order, call `POST /v3/unmatched_result/{raw_result_id}/preview_accept` with `order_id`. The response’s `fasting_questions` lists the replacement panel’s questions that require fresh answers, without catalog defaults. The preview reads the catalog without creating an order or panel, and validates any answers supplied in `aoe_answers`.
+For teams with unmatched-result review enabled, before accepting a result, call `POST /v3/unmatched_result/{raw_result_id}/preview_accept`. Supply `order_id` to select an order, or omit it to preview the default acceptance target. The response’s `required_questions` lists fresh fasting questions and any other required questions that lack a copied answer or catalog default. Returned questions have no defaults. The preview reads the catalog without creating an order or panel, and validates any answers supplied in `aoe_answers`.
 
-Send the answers using the format below in `POST /v3/unmatched_result/{raw_result_id}/accept`. Answers must identify both the marker and question; one answer cannot satisfy the same question on another marker. Conflicting answers for the same pair are rejected. Actions that release an existing order or import a new order do not accept fresh answers through this field.
+Send the answers using the format below in `POST /v3/unmatched_result/{raw_result_id}/accept`. Answers must identify both the marker and question; one answer cannot satisfy the same question on another marker. Conflicting answers for the same pair are rejected. A retry for an existing replacement keeps its saved answers: identical answers may be replayed, but changed answers are rejected. Actions that release an existing order or import a new order do not accept fresh answers through this field.
 
 ## How to answer
 
