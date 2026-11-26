@@ -201,6 +201,12 @@
                 "pages": [
                   "lab/report-parsing/overview"
                 ]
+              },
+              {
+                "group": "Agents",
+                "pages": [
+                  "lab/patient-connector/overview"
+                ]
               }
             ]
           },
