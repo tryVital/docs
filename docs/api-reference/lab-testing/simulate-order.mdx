@@ -4,12 +4,20 @@ openapi: "POST /v3/order/{order_id}/test"
 description: "Create or submit order test via the Junction API. Requires authentication with your team API key."
 ---
 
+The request body is optional. By default, Junction generates synthetic results. Set `data_source` to `observed` to select previously observed structured values for Quest, BioReference, or Labcorp sandbox orders.
+
+Observed values are selected independently for each expected result and do not represent one complete laboratory report. Expected results without eligible observed coverage are returned as missing. The request fails when no expected result has observed coverage.
+
+Completed or cancelled orders cannot be simulated. Junction rejects the request before starting provider work or changing the order.
+
 <RequestExample>
 
 ```bash cURL
 curl --request POST \
      --url '{{BASE_URL}}/v3/order/<order_id>/test' \
-     --header 'x-vital-api-key: {YOUR_KEY}'
+     --header 'content-type: application/json' \
+     --header 'x-vital-api-key: {YOUR_KEY}' \
+     --data '{"data_source":"observed"}'
 ```
 
 </RequestExample>
