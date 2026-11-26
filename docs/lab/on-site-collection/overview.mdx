@@ -3,7 +3,7 @@ title: "Overview"
 description: "Understand how lab orders are collected at customer-managed locations such as clinics and wellness events."
 ---
 
-import FeatureBeta from '/snippets/feature-beta.mdx';
+import FeatureBeta from "/snippets/feature-beta.mdx";
 
 <FeatureBeta />
 
@@ -23,6 +23,46 @@ With on-site collection, the patient has their sample collected at a customer-ma
 - **Collection logistics:** Your program is responsible for defining where and when collection occurs.
 - **Patient instructions:** Tell patients when and where to attend and provide any preparation instructions associated with the order.
 - **Availability:** On-site collection must be enabled and configured for your Team before you place orders.
+
+## Preparing an on-site draw in the Dashboard
+
+After creating an on-site order, select **View instructions now** in the success
+notification. You can also open the saved order and choose **Start on-site collection**
+while its sample ID is being assigned.
+
+1. **Tubes & instructions:** Review tube types, quantities, and the collection and
+   processing instructions returned by the laboratory. Guidance is available for
+   Quest, Labcorp, and BioReference. Retry a failed
+   request or use the order's collection-instructions PDF when available.
+2. **Labels:** Check the collection time and number of labels, then generate the
+   PDF. The time defaults to your current local time and is printed on every label.
+   Preview, open, or print the PDF. Changing the time or count requires regenerating
+   the labels before continuing.
+3. **Confirm collection:** After the blood has been collected and the tubes labeled,
+   select **Yes, mark as collected**. This updates the order to `draw_completed`.
+   Choose **Not yet** to leave without recording collection.
+
+Generating or printing labels does not mark the draw complete. API integrations
+can record a completed draw with [Update Order Draw Completed](/api-reference/lab-testing/update-order-draw-completed).
+
+Instructions support direct links to a saved order:
+
+```text
+/team/{team_id}/{environment}/lab-testing/orders?order_id={order_id}&collection=instructions
+```
+
+The link requires normal Dashboard access to that team and order. It opens the
+existing order-details drawer and instructions, including after a reload. Closing
+the instructions returns to the drawer; closing the drawer leaves the Orders page
+and Dashboard navigation available.
+
+Instructions are available while the sample ID is being assigned. An amber
+**Awaiting assignment** badge appears beside **Sample**, and the Dashboard checks
+for assignment automatically. **Check again** refreshes the saved order manually.
+Labels remain unavailable until the sample ID arrives. After a draw is recorded,
+the start action is hidden; linked instructions remain available for viewing
+without another collection submission. Cancelled and resulted orders have
+read-only instructions and retain existing downloads.
 
 ## Related guides
 
