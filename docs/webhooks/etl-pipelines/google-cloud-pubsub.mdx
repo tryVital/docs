@@ -21,7 +21,7 @@ Each event is published with these Cloud Pub/Sub message attributes:
 | Attribute | `idempotency-key` | The event delivery ID; only unique amongst all events from the same user and of the same event type. |
 | Attribute | `user-id` | Junction user ID. Present only when the event relates to a user. |
 | Attribute | `content-encoding` | `gzip`: The blob is compressed by gzip. Absent: The blob is uncompressed. |
-| Ordering Key | - | Junction user ID (If you have enabled Event Ordering) |
+| Ordering Key | - | Junction user ID, or the Junction order ID for an unassigned bulk test kit order (if you have enabled Event Ordering) |
 
 <Info>
 Payloads smaller than 1KiB would not be compressed. You must check `content-encoding` to identify if decompression of
@@ -36,7 +36,9 @@ Having said that, you are strongly encouraged to check for and drop any events w
 
 ## Pub/Sub event ordering
 
-If you wish to receive events for each Junction user in their publication order, Junction supports Pub/Sub Event Ordering, and uses the Junction User ID as the event ordering key.
+If you wish to receive events in their publication order, Junction supports Pub/Sub Event Ordering. User-scoped events use the Junction user ID as the ordering key. Order events emitted before a bulk test kit is assigned to a patient use the Junction order ID instead.
+
+After registration assigns the patient, new order events use the Junction user ID. Ordering is preserved within each key, but not across this change of key. Use event timestamps and identifiers when reconciling a delayed pre-registration event with a later assigned event, and fetch the order for its current state.
 
 Junction publishes all events through the `us-central1` and `europe-west1` PubSub regional endpoints.
 
