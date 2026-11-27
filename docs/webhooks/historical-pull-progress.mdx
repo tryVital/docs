@@ -19,9 +19,26 @@ not the resource's data records.
   completion event instead. A backfill consisting of one chunk has no progress event.
 - A failed chunk does not emit a progress event.
 
-Progress events apply to supported backend historical pulls. Garmin, Apple HealthKit
-and Health Connect SDK syncs, and workout streams fetched through follow-up jobs
-do not report chunk progress through this event.
+Progress events apply to supported backend historical pulls and the iOS SDK's
+recent-first historical sync. Garmin, Health Connect SDK syncs, and workout streams
+fetched through backend follow-up jobs do not report chunk progress through this event.
+
+### iOS recent history
+
+For a new automatic sync covering more than 30 days, the iOS SDK uploads the latest
+30 days across supported resources first, then starts the full historical sync
+once those uploads are accepted. Junction can send one `in_progress` milestone
+per resource after the recent pass finishes ingestion. The SDK does not wait for
+the webhook; daily sync continues as usual after full history.
+
+Use the completed chunk dates to fetch the recent window. Keep listening for
+`historical.data.{RESOURCE}.created` to fetch the full history when it completes;
+the full pass does not send additional progress milestones. Retries may redeliver
+the same milestone.
+
+Histories of 30 days or less run once and send completion only. Existing syncs are
+not restarted by an SDK upgrade. This flow requires both an iOS SDK version with
+recent-first support and backend support; older versions keep their existing behavior.
 
 The `device` resource does not emit historical progress or completion events.
 Device notifications use `provider.device.created` and `provider.device.updated`.
