@@ -14,6 +14,30 @@ Junction will trigger two kinds of webhook events, [`labtest.order.created`](/ev
 The `labtest.order.created` event is triggered when an order is created in the system,
 having the `ordered` status, and all subsequent status changes will trigger a `labtest.order.updated` event in the system.
 
+## Bulk test kits before patient assignment
+
+A test kit created through Junction's bulk fulfillment workflow can exist before its patient is known. During this temporary state:
+
+- `data.user_id` is `null`.
+- The top-level `user_id` and `client_user_id` fields are omitted.
+- The event is delivered to the team that owns the order.
+
+The identity fields in a pre-registration event look like this:
+
+```json Unassigned Test Kit Order Created
+{
+  "data": {
+    "id": "e1c380c1-7df4-487f-869e-f1be0193ca25",
+    "team_id": "f07f59d2-2903-4bcd-a2ac-3e87fa47c4bc",
+    "user_id": null
+  },
+  "event_type": "labtest.order.created",
+  "team_id": "f07f59d2-2903-4bcd-a2ac-3e87fa47c4bc"
+}
+```
+
+Registration assigns the patient. The registration event and later order events then include the patient's `user_id` and `client_user_id` in the standard user-scoped webhook shape. A pre-registration event already queued for delivery does not change after assignment, so use the order ID and event timestamps if events from both scopes overlap.
+
 The webhook payload body will have the following information if the Order is in the `requisition_created` status:
 
 ```json Test Kit Order Updated
